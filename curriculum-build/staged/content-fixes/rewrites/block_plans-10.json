@@ -1,0 +1,59 @@
+{
+ "collection": "block_plans",
+ "row_id": 10,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P91",
+   "wrong": "Swipe card \"Never end a sentence with a preposition.\" is filed on the \"Settled rule\" side, while its own feedback says it is a myth, not a rule.",
+   "correct": "State the settled position: ending a sentence with a preposition is acceptable; the \"never\" rule is a myth."
+  }
+ ],
+ "edits": [
+  {
+   "path": "blocks[7].data.statements[2].text",
+   "before": "Never end a sentence with a preposition.",
+   "after": "Ending a sentence with a preposition is acceptable."
+  },
+  {
+   "path": "blocks[7].data.statements[2].feedback",
+   "before": "No modern style guide enforces this one; it is a myth, not a rule.",
+   "after": "Modern style guides agree this is fine; the old 'never end with a preposition' rule is a myth, not a rule."
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[7].data.statements[2].text",
+   "before": "Never end a sentence with a preposition.",
+   "after": "Ending a sentence with a preposition is acceptable."
+  },
+  {
+   "path": "blocks[7].data.statements[2].feedback",
+   "before": "No modern style guide enforces this one; it is a myth, not a rule.",
+   "after": "Modern style guides agree this is fine; the old 'never end with a preposition' rule is a myth, not a rule."
+  }
+ ],
+ "judge_a": {
+  "index": 3,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 3,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "the one edit used JSON syntax and matched 0 places",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

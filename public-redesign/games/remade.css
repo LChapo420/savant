@@ -1,0 +1,71 @@
+#game-root { font-family:system-ui,sans-serif; color:#edf2ff; background:#10172c; padding:18px; border-radius:16px; max-width:1060px; margin:auto; }
+#game-root * { box-sizing:border-box; }
+#game-root [hidden] { display:none !important; }
+#game-root .rg-header, #game-root .rg-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:10px; justify-content:space-between; }
+#game-root h2 { margin:0; font-size:1.5rem; }
+#game-root .rg-topic, #game-root .rg-help { color:#b9c7e6; font-size:.9rem; line-height:1.6; }
+#game-root .rg-layout { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr); gap:16px; margin-top:14px; }
+#game-root .rg-stage { background:#18233e; border:1px solid #465777; border-radius:12px; padding:12px; min-width:0; position:relative; }
+#game-root .rg-status { min-height:2.7em; line-height:1.4; margin:10px 0; color:#a8e0ff; }
+#game-root button, #game-root .rg-link, #game-root select { font:inherit; color:#edf2ff; background:#293d65; border:1px solid #6882ae; border-radius:8px; padding:9px 12px; cursor:pointer; touch-action:manipulation; }
+#game-root button:hover:not(:disabled) { background:#3e5684; }
+#game-root button:disabled { opacity:.5; cursor:default; }
+#game-root button:focus-visible, #game-root canvas:focus-visible, #game-root a:focus-visible { outline:3px solid #facc15; outline-offset:3px; }
+#game-root .rg-choices { display:grid; gap:8px; }
+#game-root .rg-choice { text-align:left; overflow-wrap:anywhere; }
+#game-root .rg-choice.correct { background:#17523c; border-color:#6ee7b7; }
+#game-root .rg-choice.incorrect { background:#663244; border-color:#fda4af; }
+#game-root .rg-prompt, #game-root .rg-feedback { white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.5; }
+#game-root .rg-feedback { margin:12px 0; }
+#game-root canvas { display:block; width:100%; height:auto; background:#0a1122; border-radius:8px; touch-action:none; }
+#game-root .rg-controls { display:flex; gap:6px; flex-wrap:wrap; margin:12px 0; }
+#game-root .rg-grid { display:grid; gap:5px; margin:10px 0; }
+#game-root .rg-grid button { min-height:44px; padding:6px; font-weight:700; }
+#game-root .rg-grid button.selected, #game-root .rg-controls .selected { border:2px solid #facc15; background:#59461c; }
+#game-root .rg-grid button.player { background:#195e82; }
+#game-root .rg-grid button.bot { background:#752f53; }
+#game-root .rg-grid button.matched { background:#195c41; }
+#game-root .rg-grid button.winning { border:3px solid #facc15; }
+#game-root .rg-score { font-weight:700; margin:10px 0; color:#facc15; }
+#game-root .rg-stake-field { height:280px; position:relative; overflow:hidden; border-radius:12px; background:linear-gradient(#172d50,#334c78); }
+#game-root .rg-stake-caption { position:absolute; bottom:4px; width:100%; text-align:center; font-size:.85rem; }
+#game-root .rg-coin { position:absolute; left:calc(50% - 60px); top:60px; width:120px; height:120px; border:8px double #fde68a; background:#c9951a; border-radius:50%; display:grid; place-items:center; font-size:2.3rem; font-weight:800; transition:transform .6s; }
+#game-root .rg-balloon { position:absolute; left:calc(50% - 35px); width:70px; height:85px; border-radius:50% 50% 40% 40%; background:#ef4444; color:#fde68a; text-align:center; font-size:3rem; transition:bottom .7s; }
+#game-root .rg-balloon::after { content:""; position:absolute; left:25px; bottom:-25px; width:20px; height:20px; background:#a16207; border-top:8px solid #e2e8f0; }
+#game-root .rg-rope-flag { position:absolute; top:95px; font-size:3rem; color:#fb7185; transition:left .5s; }
+#game-root .rg-stake-field:has(.rg-rope-flag)::before { content:""; position:absolute; top:145px; left:10%; right:10%; height:8px; background:#d6a45b; }
+#game-root .rg-modal { position:fixed; inset:0; z-index:100; padding:20px; display:flex; align-items:center; justify-content:center; background:rgba(5,10,24,.9); }
+#game-root .rg-modal-card { width:min(460px,100%); background:#18233e; border:1px solid #6882ae; padding:24px; border-radius:14px; text-align:center; }
+#game-root .rg-link { text-decoration:none; display:inline-block; }
+#game-root .rg-dpad { display:grid; grid-template:repeat(3,50px)/repeat(3,50px); gap:5px; margin:15px auto; width:max-content; background:#202937; border:4px solid #596475; padding:10px; border-radius:25px; }
+#game-root .rg-dpad [data-direction="up"] { grid-area:1/2; }
+#game-root .rg-dpad [data-direction="left"] { grid-area:2/1; }
+#game-root .rg-dpad [data-direction="right"] { grid-area:2/3; }
+#game-root .rg-dpad [data-direction="down"] { grid-area:3/2; }
+#game-root .rg-word { font-size:1.8rem; letter-spacing:3px; overflow-wrap:anywhere; }
+#game-root .rg-gallows { font-size:1.5rem; }
+#game-root .rg-mancala { display:grid; grid-template-columns:55px repeat(6,minmax(0,1fr)) 55px; grid-template-rows:95px 95px; gap:7px; padding:14px; background:repeating-linear-gradient(5deg,#966631,#966631 6px,#ac7940 8px); border:8px solid #684320; border-radius:45px; }
+#game-root .rg-pit { display:flex; flex-wrap:wrap; align-content:center; justify-content:center; gap:3px; border-radius:50%; padding:6px; background:#533719; box-shadow:inset 0 5px 9px #281709; }
+#game-root .rg-store { border-radius:40px; }
+#game-root .rg-stone { width:9px; height:9px; background:radial-gradient(circle at 30% 25%,#cffafe,#0284c7); border-radius:50%; }
+#game-root .rg-die { font-size:5rem; width:95px; text-align:center; background:white; color:#172033; border-radius:14px; margin:10px auto; }
+#game-root .rolling { animation:rg-roll .2s linear 5; }
+@keyframes rg-roll { 50% {transform:rotate(25deg) scale(.85);} }
+#game-root .rg-flipping { animation:rg-flip .65s ease; }
+@keyframes rg-flip { 50% {transform:rotateY(720deg) translateY(-25px);} }
+#game-root .rg-simon-glow { filter:brightness(2.5); box-shadow:0 0 16px 8px white,inset 0 0 25px white; transform:scale(1.05); border:3px solid white; }
+#game-root .rg-card-row { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+#game-root .rg-card { width:74px; height:105px; background:#fff; color:#161b22; border:2px solid #bcc6d8; border-radius:8px; position:relative; white-space:pre-line; box-shadow:0 4px 5px #060b18; }
+#game-root .rg-card.red {color:#c62828;}
+#game-root .rg-card.back {background:repeating-linear-gradient(45deg,#192f6a,#192f6a 5px,#334f93 5px,#334f93 10px);color:white;display:grid;place-items:center;font-size:2rem;}
+#game-root .rg-card-corner {position:absolute;left:4px;top:2px;font-size:14px;line-height:15px;}
+#game-root .rg-card-center {position:absolute;left:22px;top:27px;font-size:36px;}
+#game-root .rg-card-bottom {position:absolute;right:4px;bottom:2px;transform:rotate(180deg);font-size:14px;line-height:15px;}
+#game-root input {max-width:100%;font:inherit;padding:7px;border-radius:5px;}
+#game-root .rg-nes {display:flex;align-items:center;justify-content:space-around;gap:15px;padding:12px;background:#babdc3;border:8px solid #777c85;border-radius:12px;}
+#game-root .rg-nes .rg-dpad {margin:0;}
+#game-root .rg-nes button.action {border-radius:50%;background:#bd263d;width:55px;height:55px;}
+#game-root .rg-portrait {max-width:440px;margin:auto;}
+#game-root .rg-uno-card {width:82px;min-height:120px;border:4px solid white;border-radius:12px;font-weight:800;box-shadow:0 4px 6px #080f20;}
+#game-root .rg-uno-top {padding:14px;border:3px solid white;border-radius:12px;font-weight:800;}
+@media(max-width:700px) { #game-root .rg-layout { grid-template-columns:1fr; } #game-root { padding:12px; } }

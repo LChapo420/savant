@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create an account | Savant</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="header"></header>
+  <main class="auth">
+    <div class="card auth-card">
+      <h1 id="title">Create your account</h1>
+      <div id="error" class="notice notice-error hidden" role="alert"></div>
+
+      <!-- Step 1: the age screen. Neutral: no default answer, every year offered,
+           nothing that says which answer leads where. -->
+      <section id="step-age" aria-labelledby="title">
+        <p class="auth-sub">First, your date of birth and where you live. We ask everyone.</p>
+        <form id="age-form" novalidate>
+          <fieldset class="field dob">
+            <legend>Date of birth</legend>
+            <div class="dob-row">
+              <label><span class="visually-hidden">Month</span>
+                <select id="birth_month" required><option value="">Month</option></select>
+              </label>
+              <label><span class="visually-hidden">Year</span>
+                <select id="birth_year" required><option value="">Year</option></select>
+              </label>
+            </div>
+          </fieldset>
+          <label class="field"><span>Country you live in</span>
+            <select id="country" required><option value="">Choose a country</option></select>
+          </label>
+          <button class="btn btn-primary btn-block btn-lg" id="age-submit" type="submit">Continue</button>
+        </form>
+        <p class="tiny muted age-why">We keep the month and year with your account. It decides how your account is set up. <a href="/privacy">Privacy policy</a></p>
+      </section>
+
+      <!-- Step 2a: at or over the country's age of digital consent. -->
+      <section id="step-self" class="hidden">
+        <p class="auth-sub">Next you pick your subjects and take a short placement quiz for each one.</p>
+        <form id="form" novalidate>
+          <label class="field"><span>Name</span>
+            <input type="text" id="display_name" autocomplete="name" required minlength="2" maxlength="32">
+          </label>
+          <label class="field"><span>Email</span>
+            <input type="email" id="email" autocomplete="email" required>
+          </label>
+          <label class="field"><span>Password</span>
+            <input type="password" id="password" autocomplete="new-password" required minlength="8">
+            <span class="tiny muted field-hint">At least 8 characters.</span>
+          </label>
+          <button class="btn btn-primary btn-block btn-lg" id="submit" type="submit">Create account</button>
+        </form>
+        <p class="tiny muted age-why">By creating an account you agree to how Savant uses your data, set out in the <a href="/privacy">privacy policy</a>.</p>
+      </section>
+
+      <!-- Step 2b: under the country's age of digital consent. No child email. -->
+      <section id="step-parent" class="hidden">
+        <p class="auth-sub">A parent or guardian needs to agree before everything in your account opens. We will send them one email. You can start learning now.</p>
+        <form id="child-form" novalidate>
+          <label class="field"><span>First name or a nickname</span>
+            <input type="text" id="child_name" autocomplete="nickname" required minlength="2" maxlength="32">
+          </label>
+          <label class="field"><span>Username</span>
+            <input type="text" id="username" autocomplete="username" required minlength="3" maxlength="24" autocapitalize="none" spellcheck="false">
+            <span class="tiny muted field-hint">You sign in with this. Not your real name or an email.</span>
+          </label>
+          <label class="field"><span>Password</span>
+            <input type="password" id="child_password" autocomplete="new-password" required minlength="8">
+            <span class="tiny muted field-hint">At least 8 characters.</span>
+          </label>
+          <label class="field"><span>Your parent's or guardian's email</span>
+            <input type="email" id="parent_email" autocomplete="off" required>
+          </label>
+          <button class="btn btn-primary btn-block btn-lg" id="child-submit" type="submit">Create account and email my parent</button>
+        </form>
+        <p class="tiny muted age-why">Until they agree, the camera, the microphone and AI chat stay off. Everything with taps and buttons works. <a href="/privacy#children">How we look after children's data</a></p>
+      </section>
+
+      <!-- Step 3: the request went out. -->
+      <section id="step-sent" class="hidden" aria-live="polite">
+        <p class="auth-sub" id="sent-text">We emailed your parent or guardian.</p>
+        <p class="muted">Ask them to check their inbox, and the spam folder too. If nobody answers in <span id="sent-days">14</span> days, this account is deleted.</p>
+        <a class="btn btn-primary btn-block btn-lg" id="sent-next" href="/style-quiz?next=/onboarding">Start</a>
+      </section>
+
+      <p class="auth-switch">
+        Already have one? <a href="/login">Sign in</a>
+      </p>
+    </div>
+  </main>
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/age-screen.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

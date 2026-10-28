@@ -1,0 +1,32 @@
+{
+ "doc": "Specs for the new lesson lines the staged plan proposes. The free drafter writes the line; verify-skill-curricula.js checks it with the subject's own validate.js rules, and two free judges review it.",
+ "specs": [
+  {
+   "id": "piano-P05-interleave",
+   "subject": "piano", "draft": "P05", "insert_after": "Shape One Practice Session From Warm-Up to Review", "tag": "Practice",
+   "learner": "Elementary 2 (about ABRSM Grade 2), child or adult, already plays C, G, D, F and A major scales",
+   "teach": "Once each short unit (a scale, a chord change, a 2-bar figure) has been played correctly once, practise the units in a shuffled order instead of repeating one many times; it feels worse during practice but the next day's cold take is better, and our own sense of how well we learned points the wrong way, so check the next-day cold-take log.",
+   "facts": ["Random-order practice of short melodies was retained better two days later than fixed-order practice, while learners judged the opposite (Abushanab and Bishara 2013).", "Shuffle only after each unit has had one correct run; do not shuffle long pieces."],
+   "example": "the G, D, F and A major scales in a shuffled order",
+   "avoid": ["Practise in Small Chunks Then Link Them", "Interleaving and Spacing Pieces Across the Week", "Major Key Tour: Scales, Triads and Cadences"]
+  },
+  {
+   "id": "basketball-B04-sample",
+   "subject": "basketball", "draft": "B04", "insert_after": "Box Score and Shooting Percentages From Your Games", "tag": "Analytics",
+   "learner": "Ages 10-12, first 5v5 club player who just learned to compute shooting percentage",
+   "teach": "Ten shots tell you very little: 7 of 10 and 5 of 10 cannot be told apart reliably, so log at least fifty attempts over several days before deciding whether a change to your shot worked.",
+   "facts": ["With 10 attempts the 95% range around 7 of 10 runs from about 40% to about 89%, and around 5 of 10 from about 24% to about 76%, so the ranges overlap.", "At 50 attempts the 95% margin for a 70% shooter is about 13 percentage points either way."],
+   "example": "7 of 10 on Monday and 5 of 10 on Tuesday from the same spot",
+   "avoid": ["Box Score and Shooting Percentages From Your Games", "Lineups and On-Off Splits"]
+  },
+  {
+   "id": "basketball-B05-cold-set",
+   "subject": "basketball", "draft": "B05", "insert_after": "Short Daily Sessions Beat One Long Cram", "tag": "Practice",
+   "learner": "Ages 12-14 club or middle-school player, full-size ring",
+   "teach": "Judge what you learned by your first set of the next day from that spot, taken after the general warm-up but before shooting that spot again, because repeating one shot many times in a row makes today's percentage look better than what you will keep.",
+   "facts": ["In motor-learning studies, blocked (same-shot) practice gives the best scores during practice but varied or random practice gives better retention and transfer (contextual interference; in novices' jump shots blocked practice was most accurate during practice, Shamshiri et al. 2025).", "Log the first ten shots from the spot the next day as the cold score."],
+   "example": "ten elbow jump shots the next day before any other shooting from the elbow",
+   "avoid": ["Short Daily Sessions Beat One Long Cram", "Deliberate Practice: One Focus, Then Game-Speed Reps", "Five-Minute Shooting Warm-Up Routine"]
+  }
+ ]
+}

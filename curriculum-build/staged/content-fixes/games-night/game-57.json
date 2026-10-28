@@ -1,0 +1,4502 @@
+{
+ "row_id": 57,
+ "engine_id": "bingo",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 83,
+ "generated_at": "2026-10-25T07:01:42.490Z",
+ "writer": "nvidia/nemotron-3-ultra-550b-a55b:free, minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 128,
+  "code_rejected": 20,
+  "sent_to_judges": 108,
+  "kept": 45,
+  "keep_rate_of_written": 0.352,
+  "judges": {
+   "both_answered": 108,
+   "picked_same_option": 102,
+   "a_picked_key": 99,
+   "b_picked_key": 101,
+   "models_a": [
+    "minimax/minimax-m3.1-flash",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "z-ai/glm-5.3"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash"
+   ]
+  },
+  "complete": false,
+  "set_problems": [
+   "45 questions, expected 50"
+  ]
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "bingo",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 83,
+   "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides",
+   "title": "Usage Debates and Style Guides: Listen to a Model",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q29",
+    "prompt": "In the model, the guide says that headlines should be written in the active voice. Which headline follows the guide?",
+    "choices": [
+     "Students Build Solar Model.",
+     "Solar Model Built by Students.",
+     "New Solar Model Unveiled by Students.",
+     "Solar Model Is Being Built by Students."
+    ],
+    "answerIndex": 0,
+    "explanation": "The headline Students Build Solar Model is in the active voice because the students perform the action.",
+    "difficulty": 3,
+    "skill": "Identify active voice in a headline",
+    "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q4",
+    "prompt": "What is the primary role of a style guide?",
+    "choices": [
+     "A definition of word meanings beyond dictionary entries",
+     "A final authority on grammar for every audience",
+     "A replacement for judging the needs of readers",
+     "A set of consistent conventions for a publication or field"
+    ],
+    "answerIndex": 3,
+    "explanation": "A style guide establishes consistent conventions for writing within a particular publication, organization, or field.",
+    "difficulty": 2,
+    "skill": "Understanding the purpose of style guides",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which verb correctly completes the sentence: The book ___ on the desk all afternoon?",
+    "choices": [
+     "lay",
+     "laid",
+     "lied",
+     "layed"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lay is the past tense of lie when the meaning is to rest in a place.",
+    "difficulty": 4,
+    "skill": "Distinguishing commonly confused verbs",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q30",
+    "prompt": "In the model, the guide says a range of years should use an en dash with both years written in full. Which sentence follows the guide?",
+    "choices": [
+     "The study ran from 2010-2012.",
+     "The study ran from 2010–2012.",
+     "The study ran from 2010—2012.",
+     "The study ran from 2010 - 2012."
+    ],
+    "answerIndex": 1,
+    "explanation": "The guide specifies an en dash between two fully written years, which is the mark used in 2010–2012.",
+    "difficulty": 3,
+    "skill": "Select the correct dash for a date range",
+    "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which phrase correctly completes the sentence: I could ___ finish the work on time?",
+    "choices": [
+     "could of",
+     "could has",
+     "could of have",
+     "could have"
+    ],
+    "answerIndex": 3,
+    "explanation": "Could have combines the modal could with the past participle have to express an unrealized possibility.",
+    "difficulty": 2,
+    "skill": "Resolving a common usage error",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence uses parallel structure in its list of activities?",
+    "choices": [
+     "She enjoys to hike, swimming, and biking.",
+     "She enjoys hiking, swimming, and biking.",
+     "She enjoys hiking, to swim, and biking.",
+     "She enjoys hiking, swimming, and to bike."
+    ],
+    "answerIndex": 1,
+    "explanation": "Hiking, swimming, and biking are all gerunds, so the list has parallel structure.",
+    "difficulty": 3,
+    "skill": "Parallel structure",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q8",
+    "prompt": "In an MLA works-cited entry, how are three or more authors represented?",
+    "choices": [
+     "The first author's given name, followed by et al.",
+     "The surname and initials of every author",
+     "The first and last authors' full names",
+     "The first author's surname, followed by et al."
+    ],
+    "answerIndex": 3,
+    "explanation": "For a work with three or more authors, MLA lists the first author and then et al.",
+    "difficulty": 3,
+    "skill": "MLA author listing",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q38",
+    "prompt": "A professional guide requires decision-making as a closed compound with one hyphen. Which spelling follows the guide?",
+    "choices": [
+     "decisionmaking",
+     "decision-making",
+     "decisions-making",
+     "decision-make"
+    ],
+    "answerIndex": 1,
+    "explanation": "Decision-making is the closed compound spelling with one hyphen required by the guide.",
+    "difficulty": 2,
+    "skill": "Hyphenating Compound Words",
+    "topic": "Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q44",
+    "prompt": "In a model about usage debates and style guides, how does a disputed usage differ from a grammatical error?",
+    "choices": [
+     "Disputed usage concerns consistency across a publication, while a grammatical error concerns whether a sentence communicates a clear idea.",
+     "Disputed usage is usually settled by a majority vote, while a grammatical error is settled only by dictionaries.",
+     "Disputed usage depends on a guide's chosen convention, while a grammatical error depends on the writer's intended emphasis.",
+     "Disputed usage involves competing conventions, while a grammatical error violates an established rule."
+    ],
+    "answerIndex": 3,
+    "explanation": "A usage debate concerns competing conventions, whereas a grammatical error breaks a rule that defines standard grammatical structure.",
+    "difficulty": 4,
+    "skill": "Distinguishing usage debates from grammatical errors",
+    "topic": "Usage Debates and Style Guides — Listening to a Model"
+   },
+   {
+    "id": "q42",
+    "prompt": "A style guide says not to hyphenate an adverb ending in -ly when it modifies a following adjective. Which sentence follows the guide?",
+    "choices": [
+     "The highly-regarded professor spoke.",
+     "The highly regarded professor spoke.",
+     "The highly regarded, professor spoke.",
+     "The highly regarded professor, spoke."
+    ],
+    "answerIndex": 1,
+    "explanation": "The guide prohibits a hyphen after an -ly adverb, so the correct sentence leaves the phrase open.",
+    "difficulty": 3,
+    "skill": "Applying style guide conventions for adverb-adjective hyphenation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which sentence uses subject-verb agreement correctly?",
+    "choices": [
+     "The list of approved books is on the website.",
+     "The list of approved books are on the website.",
+     "The list of approved books were on the website.",
+     "The list of approved books is are on the website."
+    ],
+    "answerIndex": 0,
+    "explanation": "The subject is list, a singular noun, so the verb is is.",
+    "difficulty": 2,
+    "skill": "Subject-verb agreement",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q1",
+    "prompt": "According to the AP Stylebook, how should the compound modifier 'well known' be punctuated when it precedes a noun?",
+    "choices": [
+     "well-known",
+     "well known",
+     "well known—",
+     "well known:"
+    ],
+    "answerIndex": 0,
+    "explanation": "AP hyphenates compound modifiers before a noun.",
+    "difficulty": 3,
+    "skill": "Compound modifier hyphenation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which pair matches the noun meaning a basic rule with the adjective meaning chief or main?",
+    "choices": [
+     "principal, principle",
+     "principle, principal",
+     "principled, principal",
+     "principle, principled"
+    ],
+    "answerIndex": 1,
+    "explanation": "Principle is the noun for a basic rule, while principal is the adjective meaning chief or main.",
+    "difficulty": 3,
+    "skill": "Distinguishing principal and principle",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which APA parenthetical citation correctly includes a page number for a 2020 work by Smith?",
+    "choices": [
+     "(Smith 2020, p. 24)",
+     "(2020, Smith, p. 24)",
+     "(Smith, 2020, p. 24)",
+     "(Smith, p. 24, 2020)"
+    ],
+    "answerIndex": 2,
+    "explanation": "APA uses a comma after the author's name and year and includes p. before a page number.",
+    "difficulty": 4,
+    "skill": "Apply APA in-text citation format",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which term names a publication's own customized set of editorial conventions?",
+    "choices": [
+     "voice shift",
+     "usage debate",
+     "house style",
+     "copy source"
+    ],
+    "answerIndex": 2,
+    "explanation": "House style refers to the editorial conventions adopted by a particular publication or organization.",
+    "difficulty": 2,
+    "skill": "Identifying house style",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q15",
+    "prompt": "According to the AP Stylebook, where does a comma belong when it is part of a direct quotation?",
+    "choices": [
+     "Before the opening quotation mark",
+     "After the closing quotation mark",
+     "Inside the closing quotation mark",
+     "Between the final word and the opening quotation mark"
+    ],
+    "answerIndex": 2,
+    "explanation": "AP style places a quotation's comma inside the closing quotation mark.",
+    "difficulty": 3,
+    "skill": "Applying quotation-mark punctuation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q12",
+    "prompt": "In a Chicago bibliography entry for a book, how is the first author's name normally presented?",
+    "choices": [
+     "Surname first, with the first name abbreviated",
+     "First name first, followed by the surname",
+     "Both names abbreviated to initials",
+     "Surname first, followed by the full first name"
+    ],
+    "answerIndex": 3,
+    "explanation": "Chicago bibliography entries typically place the first author's surname first and spell out the given name.",
+    "difficulty": 5,
+    "skill": "Apply Chicago author-name format",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q41",
+    "prompt": "A style guide requires a hyphen after the prefix re- when the root word begins with the letter e. Which spelling follows the guide?",
+    "choices": [
+     "re-enter",
+     "reenter",
+     "re- enter",
+     "re–enter"
+    ],
+    "answerIndex": 0,
+    "explanation": "The guide calls for a hyphen between the prefix re- and a root word starting with e, so re-enter is correct.",
+    "difficulty": 3,
+    "skill": "Applying style guide conventions for prefix hyphenation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q37",
+    "prompt": "A rail guide says to use 24-hour notation with a colon and no a.m. or p.m. Which time is written correctly?",
+    "choices": [
+     "13:45",
+     "1:45 p.m.",
+     "13.45",
+     "01:45 p.m."
+    ],
+    "answerIndex": 0,
+    "explanation": "13:45 is 24-hour notation with a colon and no a.m. or p.m., exactly as the guide specifies.",
+    "difficulty": 2,
+    "skill": "Writing Time Formats",
+    "topic": "Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q13",
+    "prompt": "According to the AP Stylebook, how are U.S. state names written in ordinary news copy?",
+    "choices": [
+     "Spell out every state name",
+     "Abbreviate every state name",
+     "Use postal abbreviations only in headings",
+     "Abbreviate state names only in legal documents"
+    ],
+    "answerIndex": 0,
+    "explanation": "The AP Stylebook calls for spelling out U.S. state names in stories, articles, and most general writing.",
+    "difficulty": 3,
+    "skill": "Apply AP state-name conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q31",
+    "prompt": "A guide requires closely related independent clauses to be joined with a semicolon rather than a comma or coordinating conjunction. Which sentence follows the guide?",
+    "choices": [
+     "The team practiced carefully and the final match began at noon.",
+     "The team practiced carefully, the final match began at noon.",
+     "The team practiced carefully; the final match began at noon.",
+     "The team practiced carefully because the final match began at noon."
+    ],
+    "answerIndex": 2,
+    "explanation": "The semicolon correctly joins two closely related independent clauses, and the guide requires that construction.",
+    "difficulty": 4,
+    "skill": "Applying a Punctuation Rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q5",
+    "prompt": "According to the Chicago Manual of Style, how is the title of a book presented in a bibliography?",
+    "choices": [
+     "In italics",
+     "In quotation marks",
+     "In bold type",
+     "In plain text only"
+    ],
+    "answerIndex": 0,
+    "explanation": "The Chicago Manual of Style presents book titles in italics in bibliographies.",
+    "difficulty": 2,
+    "skill": "Applying Chicago title formatting",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q32",
+    "prompt": "A guide says to use whom after a preposition when it refers to a person. Which sentence follows the guide?",
+    "choices": [
+     "The award went to who did the club select.",
+     "The award went to whom did the club select.",
+     "The award went to who the club selected.",
+     "The award went to whom the club selected."
+    ],
+    "answerIndex": 3,
+    "explanation": "Choice D correctly uses whom as the object of the preposition to.",
+    "difficulty": 3,
+    "skill": "Applying an object-pronoun convention",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q39",
+    "prompt": "A newsletter's guide requires dates in day-month-year order, with the month written as a word and no comma. Which date follows the guide?",
+    "choices": [
+     "8 March, 2026",
+     "March 8, 2026",
+     "8 March 2026",
+     "03/08/2026"
+    ],
+    "answerIndex": 2,
+    "explanation": "8 March 2026 uses the required day-month-year order, spells out the month, and contains no comma.",
+    "difficulty": 3,
+    "skill": "Formatting Dates",
+    "topic": "Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q24",
+    "prompt": "A publisher's guide says to use a serial comma before and in a list of three or more items. Which sentence follows the guide?",
+    "choices": [
+     "We need pencils pens, ink and folders.",
+     "We need pencils, pens ink, and folders.",
+     "We need pencils pens, ink, and folders.",
+     "We need pencils, pens, ink, and folders."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence places a comma after every item and includes the required comma before the final and.",
+    "difficulty": 2,
+    "skill": "Applying serial-comma rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q43",
+    "prompt": "A style guide requires a comma before etc. when it concludes a list. Which sentence follows the guide?",
+    "choices": [
+     "We need pens, pencils, paper, etc",
+     "We need pens, pencils, paper etc.",
+     "We need pens, pencils, paper, etc.",
+     "We need pens, pencils, paper; etc."
+    ],
+    "answerIndex": 2,
+    "explanation": "The guide calls for a comma before etc., so the sentence with the comma is correct.",
+    "difficulty": 3,
+    "skill": "Applying style guide conventions for etc. punctuation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q27",
+    "prompt": "A guide requires singular they when a person's gender is unknown. Which sentence follows the guide?",
+    "choices": [
+     "The writer sent the proposal because she had questions about it.",
+     "The writer sent the proposal because he had questions about it.",
+     "The writer sent the proposal because they had questions about it.",
+     "The writer sent the proposal because their had questions about it."
+    ],
+    "answerIndex": 2,
+    "explanation": "Singular they refers to the writer without assigning a gender and agrees with the singular subject the writer.",
+    "difficulty": 4,
+    "skill": "Applying pronoun conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q18",
+    "prompt": "What is a usage debate?",
+    "choices": [
+     "A calculation of how often a convention is used",
+     "A disagreement over which language convention is preferred",
+     "A comparison of grammar rules across centuries",
+     "A decision about which topic a text should discuss"
+    ],
+    "answerIndex": 1,
+    "explanation": "A usage debate is a disagreement among speakers or writers about which language convention is preferred.",
+    "difficulty": 2,
+    "skill": "Recognizing usage debates",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q6",
+    "prompt": "In Chicago notes-and-bibliography style, how is the first note number marked in the text?",
+    "choices": [
+     "With a parenthesized number",
+     "With a superscript number",
+     "With a bracketed number",
+     "With an underlined number"
+    ],
+    "answerIndex": 1,
+    "explanation": "Chicago style uses a superscript number to identify the first source note in the text.",
+    "difficulty": 3,
+    "skill": "Recognizing Chicago source-note markers",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q22",
+    "prompt": "In a model discussion of usage debates and style guides, what does the style-guide portion most directly do?",
+    "choices": [
+     "It proves that every disputed usage is grammatically correct.",
+     "It shows how a disputed convention can be settled for a publication.",
+     "It demonstrates that all publications follow identical rules.",
+     "It eliminates the need to consider a text's audience."
+    ],
+    "answerIndex": 1,
+    "explanation": "The style-guide portion shows how a publication establishes a consistent convention for a disputed usage.",
+    "difficulty": 3,
+    "skill": "Understanding style guides in model discussions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q23",
+    "prompt": "In the model, the guide uses fewer for countable nouns and less for uncountable nouns. Which sentence follows that convention?",
+    "choices": [
+     "There are less chairs and fewer sand in the room.",
+     "There are fewer chairs and less chairs in the room.",
+     "There are fewer chairs and less sand in the room.",
+     "There are fewer sand and less chairs in the room."
+    ],
+    "answerIndex": 2,
+    "explanation": "Fewer correctly modifies the countable noun chairs, while less correctly modifies the uncountable noun sand.",
+    "difficulty": 2,
+    "skill": "Applying quantity modifiers",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q3",
+    "prompt": "According to the Chicago Manual of Style, how is the possessive of a plural noun ending in s formed?",
+    "choices": [
+     "By adding a hyphen after the final s",
+     "By adding an apostrophe and another s",
+     "By adding an apostrophe after the final s",
+     "By adding an apostrophe before the final s"
+    ],
+    "answerIndex": 2,
+    "explanation": "Chicago adds only an apostrophe after the final s to form the possessive of a plural noun ending in s.",
+    "difficulty": 4,
+    "skill": "Forming plural possessives in Chicago style",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q36",
+    "prompt": "A guide requires an organization's full name followed by its abbreviation in parentheses on first mention. Which sentence follows the guide?",
+    "choices": [
+     "The National Weather Service NWS issued a storm warning.",
+     "The NWS (National Weather Service) issued a storm warning.",
+     "The National Weather Service, or NWS, issued a storm warning.",
+     "The National Weather Service (NWS) issued a storm warning."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence gives the organization's full name before introducing its abbreviation in parentheses on first mention.",
+    "difficulty": 3,
+    "skill": "Introducing Abbreviations",
+    "topic": "Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q26",
+    "prompt": "A magazine's guide says to spell out numbers from one through nine but use numerals for 10 and above. Which sentence follows the guide?",
+    "choices": [
+     "The club has twelve members and 4 officers.",
+     "The club has 12 members and four officers.",
+     "The club has 12 members and 4 officers.",
+     "The club has twelve members and four officers."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence uses the numeral 12 because it is at least 10 and spells out four because it is below 10.",
+    "difficulty": 3,
+    "skill": "Applying numeral conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q33",
+    "prompt": "A handbook directs writers to expand the abbreviation etc. as and so on. Which phrase should be used?",
+    "choices": [
+     "and so on",
+     "etc.",
+     "et cetera",
+     "and others"
+    ],
+    "answerIndex": 0,
+    "explanation": "Choice B spells out the abbreviation as and so on, exactly as the guide directs.",
+    "difficulty": 2,
+    "skill": "Expanding an abbreviation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which pair correctly separates a style preference from a grammatical rule?",
+    "choices": [
+     "whether the article has three sections; whether a verb agrees with its subject",
+     "whether the article discusses ancient Rome; whether a verb agrees with its subject",
+     "whether headings use title case; whether longer words sound more precise",
+     "whether headings use title case; whether a verb agrees with its subject"
+    ],
+    "answerIndex": 3,
+    "explanation": "Heading capitalization is a style preference, while subject-verb agreement is a grammatical rule.",
+    "difficulty": 3,
+    "skill": "Distinguishing style from grammar",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q14",
+    "prompt": "Under MLA 9th edition, when is an access date generally included in a works-cited entry?",
+    "choices": [
+     "Require it for every online source",
+     "Generally omit it unless it is needed",
+     "Omit it for every published source",
+     "Require it only for sources without an author"
+    ],
+    "answerIndex": 1,
+    "explanation": "MLA 9th edition does not generally require an access date, but one can be included when it helps identify a source that lacks a publication date or may change.",
+    "difficulty": 4,
+    "skill": "Determine when MLA access dates are needed",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q21",
+    "prompt": "A style guide specifies one space after a period. Which instruction follows the guide?",
+    "choices": [
+     "Leave one space after each sentence-ending period.",
+     "Leave no space after each sentence-ending period.",
+     "Leave two spaces after each sentence-ending period.",
+     "Leave one space before each sentence-ending period."
+    ],
+    "answerIndex": 0,
+    "explanation": "The guide requires one space after each sentence-ending period, not zero, two, or a space before the period.",
+    "difficulty": 2,
+    "skill": "Applying a spacing rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q34",
+    "prompt": "A guide permits the contraction of who is only when a question asks about identity or responsibility. Which sentence uses that contraction correctly?",
+    "choices": [
+     "Whose responsible for the keys?",
+     "Who's responsible for the keys?",
+     "Who responsible for the keys?",
+     "Whos responsible for the keys?"
+    ],
+    "answerIndex": 1,
+    "explanation": "Choice A correctly uses who's as the contraction of who is.",
+    "difficulty": 3,
+    "skill": "Distinguishing a contraction from a possessive word",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q25",
+    "prompt": "A style guide requires an em dash with no spaces around it. Which sentence follows the guide?",
+    "choices": [
+     "The bus arrived late—so the team missed its ride.",
+     "The bus arrived late — so the team missed its ride.",
+     "The bus arrived late - so the team missed its ride.",
+     "The bus arrived late--so the team missed its ride."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses one em dash immediately between the two independent clauses without surrounding spaces.",
+    "difficulty": 3,
+    "skill": "Applying punctuation conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q35",
+    "prompt": "A writer is preparing an article for a magazine with a house style guide. The guide conflicts with the writer’s personal preference. What should the writer do?",
+    "choices": [
+     "Choose whichever rule appears first",
+     "Use the writer’s personal preference",
+     "Follow the magazine’s guide",
+     "Ask the magazine’s readers to decide"
+    ],
+    "answerIndex": 2,
+    "explanation": "A house style guide establishes the editorial conventions a writer should follow when preparing content for that publication.",
+    "difficulty": 2,
+    "skill": "Applying a publication’s style guide",
+    "topic": "Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q45",
+    "prompt": "A corporate style guide requires the percent sign to be used only with numerals, never with spelled-out numbers. Which sentence follows the guide?",
+    "choices": [
+     "The survey showed a 12% increase.",
+     "The survey showed a twelve percent increase.",
+     "The survey showed a twelve% increase.",
+     "The survey showed a 12 percent increase."
+    ],
+    "answerIndex": 0,
+    "explanation": "The guide permits the percent sign only alongside numerals.",
+    "difficulty": 3,
+    "skill": "Applying Style Guide Conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q40",
+    "prompt": "A magazine's guide does not clearly resolve one disputed punctuation practice. What should the writer do next?",
+    "choices": [
+     "Remove every sentence containing the disputed practice.",
+     "Apply the writer's personal preference without checking.",
+     "Use the rule found in the most online style guides.",
+     "Ask the magazine's editor to clarify the practice."
+    ],
+    "answerIndex": 3,
+    "explanation": "An editor can clarify how the magazine's own guide should be applied, so asking one is the appropriate next step.",
+    "difficulty": 4,
+    "skill": "Resolving Unclear Style Rules",
+    "topic": "Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q28",
+    "prompt": "In the model, the guide states that Dr. must be written with a period when referring to a person with a doctoral degree. Which sentence follows the rule?",
+    "choices": [
+     "Drs. Patel will lead the discussion.",
+     "Doctor Patel will lead the discussion.",
+     "Dr Patel will lead the discussion.",
+     "Dr. Patel will lead the discussion."
+    ],
+    "answerIndex": 3,
+    "explanation": "The guide requires Dr. with a period, so Dr. Patel is the correctly formatted form.",
+    "difficulty": 2,
+    "skill": "Apply an explicit model instruction",
+    "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q7",
+    "prompt": "How are entries indented in an APA reference list?",
+    "choices": [
+     "Without any indentation",
+     "With a first-line indent",
+     "With a hanging indent",
+     "With a centered first line"
+    ],
+    "answerIndex": 2,
+    "explanation": "APA uses a hanging indent so the first line begins at the left margin and subsequent lines are indented.",
+    "difficulty": 3,
+    "skill": "Formatting APA reference lists",
+    "topic": "Usage Debates and Style Guides"
+   }
+  ],
+  "feedback": {
+   "correct": "Correct — that rule is settled (for now) by your style guide.",
+   "incorrect": "Not quite — check which guide the question follows; guides disagree.",
+   "win": "Full line! You know how style guides settle usage debates.",
+   "lose": "The bingo balls stalled out. Review how style guides settle disputed usage and try again.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "According to the AP Stylebook, how should the compound modifier 'well known' be punctuated when it precedes a noun?",
+   "choices": [
+    "well known",
+    "well-known",
+    "well known—",
+    "well known:"
+   ],
+   "answerIndex": 1,
+   "explanation": "AP hyphenates compound modifiers before a noun.",
+   "difficulty": 3,
+   "skill": "Compound modifier hyphenation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "AP style hyphenates the compound modifier well-known when it precedes a noun.",
+      "url": "https://en.wikipedia.org/wiki/Compound_modifier",
+      "quote": "Other adverbs (such as well ) can commonly be used as adjectives; these adverbs without the -ly suffix therefore commonly take a hyphen. For example, one could speak of a well-known actress or a little-known actress.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "AP Stylebook advises hyphenating compound adjectives that precede a noun (e.g., ‘well‑known’).",
+      "url": "https://en.wikipedia.org/wiki/Compound_modifier",
+      "quote": "one could speak of a well-known actress",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which pair matches the noun meaning a basic rule with the adjective meaning chief or main?",
+   "choices": [
+    "principal, principle",
+    "principle, principal",
+    "principled, principal",
+    "principle, principled"
+   ],
+   "answerIndex": 1,
+   "explanation": "Principle is the noun for a basic rule, while principal is the adjective meaning chief or main.",
+   "difficulty": 3,
+   "skill": "Distinguishing principal and principle",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Principle is a noun meaning basic rule; principal is an adjective meaning chief or main.",
+      "url": "https://en.wiktionary.org/wiki/principle",
+      "quote": "Principle (\"moral rule\"), as a noun, is often confused with principal, which can be an adjective (\"most important\") or a noun (\"school principal\").",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "According to the Chicago Manual of Style, how is the possessive of a plural noun ending in s formed?",
+   "choices": [
+    "By adding an apostrophe after the final s",
+    "By adding an apostrophe and another s",
+    "By adding a hyphen after the final s",
+    "By adding an apostrophe before the final s"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago adds only an apostrophe after the final s to form the possessive of a plural noun ending in s.",
+   "difficulty": 4,
+   "skill": "Forming plural possessives in Chicago style",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Chicago Manual rules that a plural noun ending in s has a possessive formed by adding an apostrophe after the last s.",
+      "url": "https://en.wikipedia.org/wiki/English_possessive",
+      "quote": "But a plural noun ending in -s only adds the apostrophe (for example: Peasants' Revolt )",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "What is the primary role of a style guide?",
+   "choices": [
+    "A set of consistent conventions for a publication or field",
+    "A final authority on grammar for every audience",
+    "A replacement for judging the needs of readers",
+    "A definition of word meanings beyond dictionary entries"
+   ],
+   "answerIndex": 0,
+   "explanation": "A style guide establishes consistent conventions for writing within a particular publication, organization, or field.",
+   "difficulty": 2,
+   "skill": "Understanding the purpose of style guides",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "According to the Chicago Manual of Style, how is the title of a book presented in a bibliography?",
+   "choices": [
+    "In italics",
+    "In quotation marks",
+    "In bold type",
+    "In plain text only"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Chicago Manual of Style presents book titles in italics in bibliographies.",
+   "difficulty": 2,
+   "skill": "Applying Chicago title formatting",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In Chicago notes-and-bibliography style, how is the first note number marked in the text?",
+   "choices": [
+    "With a superscript number",
+    "With a parenthesized number",
+    "With a bracketed number",
+    "With an underlined number"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago style uses a superscript number to identify the first source note in the text.",
+   "difficulty": 3,
+   "skill": "Recognizing Chicago source-note markers",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "How are entries indented in an APA reference list?",
+   "choices": [
+    "With a hanging indent",
+    "With a first-line indent",
+    "Without any indentation",
+    "With a centered first line"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA uses a hanging indent so the first line begins at the left margin and subsequent lines are indented.",
+   "difficulty": 3,
+   "skill": "Formatting APA reference lists",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In an MLA works-cited entry, how are three or more authors represented?",
+   "choices": [
+    "The first author's surname, followed by et al.",
+    "The surname and initials of every author",
+    "The first and last authors' full names",
+    "The first author's given name, followed by et al."
+   ],
+   "answerIndex": 0,
+   "explanation": "For a work with three or more authors, MLA lists the first author and then et al.",
+   "difficulty": 3,
+   "skill": "MLA author listing",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses subject-verb agreement correctly?",
+   "choices": [
+    "The list of approved books is on the website.",
+    "The list of approved books are on the website.",
+    "The list of approved books were on the website.",
+    "The list of approved books is are on the website."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subject is list, a singular noun, so the verb is is.",
+   "difficulty": 2,
+   "skill": "Subject-verb agreement",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses parallel structure in its list of activities?",
+   "choices": [
+    "She enjoys hiking, swimming, and biking.",
+    "She enjoys to hike, swimming, and biking.",
+    "She enjoys hiking, to swim, and biking.",
+    "She enjoys hiking, swimming, and to bike."
+   ],
+   "answerIndex": 0,
+   "explanation": "Hiking, swimming, and biking are all gerunds, so the list has parallel structure.",
+   "difficulty": 3,
+   "skill": "Parallel structure",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which APA parenthetical citation correctly includes a page number for a 2020 work by Smith?",
+   "choices": [
+    "(Smith 2020, p. 24)",
+    "(Smith, 2020, p. 24)",
+    "(2020, Smith, p. 24)",
+    "(Smith, p. 24, 2020)"
+   ],
+   "answerIndex": 1,
+   "explanation": "APA uses a comma after the author's name and year and includes p. before a page number.",
+   "difficulty": 4,
+   "skill": "Apply APA in-text citation format",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In a Chicago bibliography entry for a book, how is the first author's name normally presented?",
+   "choices": [
+    "Surname first, followed by the full first name",
+    "First name first, followed by the surname",
+    "Both names abbreviated to initials",
+    "Surname first, with the first name abbreviated"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago bibliography entries typically place the first author's surname first and spell out the given name.",
+   "difficulty": 5,
+   "skill": "Apply Chicago author-name format",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "According to the AP Stylebook, how are U.S. state names written in ordinary news copy?",
+   "choices": [
+    "Spell out every state name",
+    "Abbreviate every state name",
+    "Use postal abbreviations only in headings",
+    "Abbreviate state names only in legal documents"
+   ],
+   "answerIndex": 0,
+   "explanation": "The AP Stylebook calls for spelling out U.S. state names in stories, articles, and most general writing.",
+   "difficulty": 3,
+   "skill": "Apply AP state-name conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Under MLA 9th edition, when is an access date generally included in a works-cited entry?",
+   "choices": [
+    "Require it for every online source",
+    "Generally omit it unless it is needed",
+    "Omit it for every published source",
+    "Require it only for sources without an author"
+   ],
+   "answerIndex": 1,
+   "explanation": "MLA 9th edition does not generally require an access date, but one can be included when it helps identify a source that lacks a publication date or may change.",
+   "difficulty": 4,
+   "skill": "Determine when MLA access dates are needed",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "According to the AP Stylebook, where does a comma belong when it is part of a direct quotation?",
+   "choices": [
+    "Inside the closing quotation mark",
+    "After the closing quotation mark",
+    "Before the opening quotation mark",
+    "Between the final word and the opening quotation mark"
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style places a quotation's comma inside the closing quotation mark.",
+   "difficulty": 3,
+   "skill": "Applying quotation-mark punctuation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "AP Stylebook places commas that are part of a quotation inside the closing quotation mark.",
+      "url": "https://en.wikipedia.org/wiki/Quotation_Mark",
+      "quote": "North American printing usually puts full stops and commas (but not colons, semicolons, exclamation or question marks) inside the closing quotation mark, whether it is part of the original quoted material or not.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which phrase correctly completes the sentence: I could ___ finish the work on time?",
+   "choices": [
+    "could of",
+    "could have",
+    "could of have",
+    "could has"
+   ],
+   "answerIndex": 1,
+   "explanation": "Could have combines the modal could with the past participle have to express an unrealized possibility.",
+   "difficulty": 2,
+   "skill": "Resolving a common usage error",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which verb correctly completes the sentence: The book ___ on the desk all afternoon?",
+   "choices": [
+    "lay",
+    "laid",
+    "lied",
+    "layed"
+   ],
+   "answerIndex": 0,
+   "explanation": "Lay is the past tense of lie when the meaning is to rest in a place.",
+   "difficulty": 4,
+   "skill": "Distinguishing commonly confused verbs",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What is a usage debate?",
+   "choices": [
+    "A disagreement over which language convention is preferred",
+    "A calculation of how often a convention is used",
+    "A comparison of grammar rules across centuries",
+    "A decision about which topic a text should discuss"
+   ],
+   "answerIndex": 0,
+   "explanation": "A usage debate is a disagreement among speakers or writers about which language convention is preferred.",
+   "difficulty": 2,
+   "skill": "Recognizing usage debates",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which term names a publication's own customized set of editorial conventions?",
+   "choices": [
+    "house style",
+    "usage debate",
+    "voice shift",
+    "copy source"
+   ],
+   "answerIndex": 0,
+   "explanation": "House style refers to the editorial conventions adopted by a particular publication or organization.",
+   "difficulty": 2,
+   "skill": "Identifying house style",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which pair correctly separates a style preference from a grammatical rule?",
+   "choices": [
+    "whether headings use title case; whether a verb agrees with its subject",
+    "whether the article discusses ancient Rome; whether a verb agrees with its subject",
+    "whether headings use title case; whether longer words sound more precise",
+    "whether the article has three sections; whether a verb agrees with its subject"
+   ],
+   "answerIndex": 0,
+   "explanation": "Heading capitalization is a style preference, while subject-verb agreement is a grammatical rule.",
+   "difficulty": 3,
+   "skill": "Distinguishing style from grammar",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide specifies one space after a period. Which instruction follows the guide?",
+   "choices": [
+    "Leave one space after each sentence-ending period.",
+    "Leave no space after each sentence-ending period.",
+    "Leave two spaces after each sentence-ending period.",
+    "Leave one space before each sentence-ending period."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires one space after each sentence-ending period, not zero, two, or a space before the period.",
+   "difficulty": 2,
+   "skill": "Applying a spacing rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In a model discussion of usage debates and style guides, what does the style-guide portion most directly do?",
+   "choices": [
+    "It shows how a disputed convention can be settled for a publication.",
+    "It proves that every disputed usage is grammatically correct.",
+    "It demonstrates that all publications follow identical rules.",
+    "It eliminates the need to consider a text's audience."
+   ],
+   "answerIndex": 0,
+   "explanation": "The style-guide portion shows how a publication establishes a consistent convention for a disputed usage.",
+   "difficulty": 3,
+   "skill": "Understanding style guides in model discussions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model, the guide uses fewer for countable nouns and less for uncountable nouns. Which sentence follows that convention?",
+   "choices": [
+    "There are fewer chairs and less sand in the room.",
+    "There are fewer chairs and less chairs in the room.",
+    "There are less chairs and fewer sand in the room.",
+    "There are fewer sand and less chairs in the room."
+   ],
+   "answerIndex": 0,
+   "explanation": "Fewer correctly modifies the countable noun chairs, while less correctly modifies the uncountable noun sand.",
+   "difficulty": 2,
+   "skill": "Applying quantity modifiers",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publisher's guide says to use a serial comma before and in a list of three or more items. Which sentence follows the guide?",
+   "choices": [
+    "We need pencils pens, ink and folders.",
+    "We need pencils, pens, ink, and folders.",
+    "We need pencils pens, ink, and folders.",
+    "We need pencils, pens ink, and folders."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence places a comma after every item and includes the required comma before the final and.",
+   "difficulty": 2,
+   "skill": "Applying serial-comma rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires an em dash with no spaces around it. Which sentence follows the guide?",
+   "choices": [
+    "The bus arrived late - so the team missed its ride.",
+    "The bus arrived late — so the team missed its ride.",
+    "The bus arrived late—so the team missed its ride.",
+    "The bus arrived late--so the team missed its ride."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence uses one em dash immediately between the two independent clauses without surrounding spaces.",
+   "difficulty": 3,
+   "skill": "Applying punctuation conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's guide says to spell out numbers from one through nine but use numerals for 10 and above. Which sentence follows the guide?",
+   "choices": [
+    "The club has 12 members and four officers.",
+    "The club has twelve members and 4 officers.",
+    "The club has 12 members and 4 officers.",
+    "The club has twelve members and four officers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses the numeral 12 because it is at least 10 and spells out four because it is below 10.",
+   "difficulty": 3,
+   "skill": "Applying numeral conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A guide requires singular they when a person's gender is unknown. Which sentence follows the guide?",
+   "choices": [
+    "The writer sent the proposal because they had questions about it.",
+    "The writer sent the proposal because he had questions about it.",
+    "The writer sent the proposal because she had questions about it.",
+    "The writer sent the proposal because their had questions about it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Singular they refers to the writer without assigning a gender and agrees with the singular subject the writer.",
+   "difficulty": 4,
+   "skill": "Applying pronoun conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model, the guide states that Dr. must be written with a period when referring to a person with a doctoral degree. Which sentence follows the rule?",
+   "choices": [
+    "Dr. Patel will lead the discussion.",
+    "Doctor Patel will lead the discussion.",
+    "Dr Patel will lead the discussion.",
+    "Drs. Patel will lead the discussion."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires Dr. with a period, so Dr. Patel is the correctly formatted form.",
+   "difficulty": 2,
+   "skill": "Apply an explicit model instruction",
+   "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model, the guide says that headlines should be written in the active voice. Which headline follows the guide?",
+   "choices": [
+    "Students Build Solar Model.",
+    "Solar Model Built by Students.",
+    "New Solar Model Unveiled by Students.",
+    "Solar Model Is Being Built by Students."
+   ],
+   "answerIndex": 0,
+   "explanation": "The headline Students Build Solar Model is in the active voice because the students perform the action.",
+   "difficulty": 3,
+   "skill": "Identify active voice in a headline",
+   "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model, the guide says a range of years should use an en dash with both years written in full. Which sentence follows the guide?",
+   "choices": [
+    "The study ran from 2010–2012.",
+    "The study ran from 2010-2012.",
+    "The study ran from 2010—2012.",
+    "The study ran from 2010 - 2012."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide specifies an en dash between two fully written years, which is the mark used in 2010–2012.",
+   "difficulty": 3,
+   "skill": "Select the correct dash for a date range",
+   "topic": "Activity 1 of 9 (quiz/game): Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A guide requires closely related independent clauses to be joined with a semicolon rather than a comma or coordinating conjunction. Which sentence follows the guide?",
+   "choices": [
+    "The team practiced carefully; the final match began at noon.",
+    "The team practiced carefully, the final match began at noon.",
+    "The team practiced carefully and the final match began at noon.",
+    "The team practiced carefully because the final match began at noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon correctly joins two closely related independent clauses, and the guide requires that construction.",
+   "difficulty": 4,
+   "skill": "Applying a Punctuation Rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "The guide requires semicolons to join closely related independent clauses.",
+      "url": "https://en.wikipedia.org/wiki/Semicolon",
+      "quote": "A semicolon is most commonly used to link (in a single sentence) two independent clauses that are closely related in thought.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A guide says to use whom after a preposition when it refers to a person. Which sentence follows the guide?",
+   "choices": [
+    "The award went to who did the club select.",
+    "The award went to whom did the club select.",
+    "The award went to who the club selected.",
+    "The award went to whom the club selected."
+   ],
+   "answerIndex": 3,
+   "explanation": "Choice D correctly uses whom as the object of the preposition to.",
+   "difficulty": 3,
+   "skill": "Applying an object-pronoun convention",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A handbook directs writers to expand the abbreviation etc. as and so on. Which phrase should be used?",
+   "choices": [
+    "etc.",
+    "and so on",
+    "et cetera",
+    "and others"
+   ],
+   "answerIndex": 1,
+   "explanation": "Choice B spells out the abbreviation as and so on, exactly as the guide directs.",
+   "difficulty": 2,
+   "skill": "Expanding an abbreviation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A guide permits the contraction of who is only when a question asks about identity or responsibility. Which sentence uses that contraction correctly?",
+   "choices": [
+    "Who's responsible for the keys?",
+    "Whose responsible for the keys?",
+    "Who responsible for the keys?",
+    "Whos responsible for the keys?"
+   ],
+   "answerIndex": 0,
+   "explanation": "Choice A correctly uses who's as the contraction of who is.",
+   "difficulty": 3,
+   "skill": "Distinguishing a contraction from a possessive word",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A writer is preparing an article for a magazine with a house style guide. The guide conflicts with the writer’s personal preference. What should the writer do?",
+   "choices": [
+    "Follow the magazine’s guide",
+    "Use the writer’s personal preference",
+    "Choose whichever rule appears first",
+    "Ask the magazine’s readers to decide"
+   ],
+   "answerIndex": 0,
+   "explanation": "A house style guide establishes the editorial conventions a writer should follow when preparing content for that publication.",
+   "difficulty": 2,
+   "skill": "Applying a publication’s style guide",
+   "topic": "Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A guide requires an organization's full name followed by its abbreviation in parentheses on first mention. Which sentence follows the guide?",
+   "choices": [
+    "The National Weather Service (NWS) issued a storm warning.",
+    "The NWS (National Weather Service) issued a storm warning.",
+    "The National Weather Service, or NWS, issued a storm warning.",
+    "The National Weather Service NWS issued a storm warning."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence gives the organization's full name before introducing its abbreviation in parentheses on first mention.",
+   "difficulty": 3,
+   "skill": "Introducing Abbreviations",
+   "topic": "Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rail guide says to use 24-hour notation with a colon and no a.m. or p.m. Which time is written correctly?",
+   "choices": [
+    "13:45",
+    "1:45 p.m.",
+    "13.45",
+    "01:45 p.m."
+   ],
+   "answerIndex": 0,
+   "explanation": "13:45 is 24-hour notation with a colon and no a.m. or p.m., exactly as the guide specifies.",
+   "difficulty": 2,
+   "skill": "Writing Time Formats",
+   "topic": "Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A professional guide requires decision-making as a closed compound with one hyphen. Which spelling follows the guide?",
+   "choices": [
+    "decision-making",
+    "decisionmaking",
+    "decisions-making",
+    "decision-make"
+   ],
+   "answerIndex": 0,
+   "explanation": "Decision-making is the closed compound spelling with one hyphen required by the guide.",
+   "difficulty": 2,
+   "skill": "Hyphenating Compound Words",
+   "topic": "Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newsletter's guide requires dates in day-month-year order, with the month written as a word and no comma. Which date follows the guide?",
+   "choices": [
+    "8 March 2026",
+    "March 8, 2026",
+    "8 March, 2026",
+    "03/08/2026"
+   ],
+   "answerIndex": 0,
+   "explanation": "8 March 2026 uses the required day-month-year order, spells out the month, and contains no comma.",
+   "difficulty": 3,
+   "skill": "Formatting Dates",
+   "topic": "Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's guide does not clearly resolve one disputed punctuation practice. What should the writer do next?",
+   "choices": [
+    "Ask the magazine's editor to clarify the practice.",
+    "Apply the writer's personal preference without checking.",
+    "Use the rule found in the most online style guides.",
+    "Remove every sentence containing the disputed practice."
+   ],
+   "answerIndex": 0,
+   "explanation": "An editor can clarify how the magazine's own guide should be applied, so asking one is the appropriate next step.",
+   "difficulty": 4,
+   "skill": "Resolving Unclear Style Rules",
+   "topic": "Listen to a Model - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a hyphen after the prefix re- when the root word begins with the letter e. Which spelling follows the guide?",
+   "choices": [
+    "re-enter",
+    "reenter",
+    "re- enter",
+    "re–enter"
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide calls for a hyphen between the prefix re- and a root word starting with e, so re-enter is correct.",
+   "difficulty": 3,
+   "skill": "Applying style guide conventions for prefix hyphenation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says not to hyphenate an adverb ending in -ly when it modifies a following adjective. Which sentence follows the guide?",
+   "choices": [
+    "The highly regarded professor spoke.",
+    "The highly-regarded professor spoke.",
+    "The highly regarded, professor spoke.",
+    "The highly regarded professor, spoke."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide prohibits a hyphen after an -ly adverb, so the correct sentence leaves the phrase open.",
+   "difficulty": 3,
+   "skill": "Applying style guide conventions for adverb-adjective hyphenation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma before etc. when it concludes a list. Which sentence follows the guide?",
+   "choices": [
+    "We need pens, pencils, paper, etc.",
+    "We need pens, pencils, paper etc.",
+    "We need pens, pencils, paper, etc",
+    "We need pens, pencils, paper; etc."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide calls for a comma before etc., so the sentence with the comma is correct.",
+   "difficulty": 3,
+   "skill": "Applying style guide conventions for etc. punctuation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In a model about usage debates and style guides, how does a disputed usage differ from a grammatical error?",
+   "choices": [
+    "Disputed usage involves competing conventions, while a grammatical error violates an established rule.",
+    "Disputed usage is usually settled by a majority vote, while a grammatical error is settled only by dictionaries.",
+    "Disputed usage depends on a guide's chosen convention, while a grammatical error depends on the writer's intended emphasis.",
+    "Disputed usage concerns consistency across a publication, while a grammatical error concerns whether a sentence communicates a clear idea."
+   ],
+   "answerIndex": 0,
+   "explanation": "A usage debate concerns competing conventions, whereas a grammatical error breaks a rule that defines standard grammatical structure.",
+   "difficulty": 4,
+   "skill": "Distinguishing usage debates from grammatical errors",
+   "topic": "Usage Debates and Style Guides — Listening to a Model",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A corporate style guide requires the percent sign to be used only with numerals, never with spelled-out numbers. Which sentence follows the guide?",
+   "choices": [
+    "The survey showed a 12% increase.",
+    "The survey showed a twelve percent increase.",
+    "The survey showed a twelve% increase.",
+    "The survey showed a 12 percent increase."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide permits the percent sign only alongside numerals.",
+   "difficulty": 3,
+   "skill": "Applying Style Guide Conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the Chicago Manual of Style, how is the possessive of a singular noun ending in 's' formed?",
+   "choices": [
+    "Add 's (e.g., James's)",
+    "Add only an apostrophe (e.g., James')",
+    "Either 's or only an apostrophe is acceptable",
+    "Never add an apostrophe"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago Manual of Style forms the possessive of singular nouns ending in s by adding 's.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "According to the AP Stylebook, how should the number 12 be written in running text?",
+   "choices": [
+    "Twelve",
+    "12",
+    "Twelve (spelled out)",
+    "12 (numeral)"
+   ],
+   "answerIndex": 1,
+   "explanation": "AP Stylebook uses numerals for numbers 10 and above.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "According to the MLA Handbook, how should major words in the title of an English-language book be capitalized in a works-cited entry?",
+   "choices": [
+    "By capitalizing the first letter of each major word",
+    "By capitalizing every letter of each major word",
+    "By capitalizing only the first word",
+    "By writing all major words in lowercase"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA uses title case for English-language book titles, capitalizing major words while leaving many short function words lowercase.",
+   "reason": "explanation-key: the explanation describes option 4 (score 2.33) more than the keyed option 1 (score 0.67)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "According to the AP Stylebook, how should 3:00 p.m. be written when minutes are omitted?",
+   "choices": [
+    "3 p.m.",
+    "3 PM",
+    "3 pm",
+    "3.00 p.m."
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style uses numerals with lowercase a.m. or p.m. and retains the periods.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In a Chicago notes-and-bibliography bibliography entry, how are the names of two authors normally joined?",
+   "choices": [
+    "With the word and",
+    "With an ampersand",
+    "With a comma and no conjunction",
+    "With a slash"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago bibliography entries normally use the word and to join the names of two authors.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which style guide recommends the use of the serial (Oxford) comma in lists?",
+   "choices": [
+    "The Chicago Manual of Style",
+    "The Associated Press Stylebook",
+    "The MLA Handbook",
+    "The APA Publication Manual"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Chicago Manual of Style recommends the serial comma in lists.",
+   "reason": "A: not exactly one correct (Options 0, 2, and 3 all recommend the serial comma, so there is no unique answer.) | B: not exactly one correct (Multiple correct options)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "According to the AP Stylebook, how should the titles of books be formatted in running text?",
+   "choices": [
+    "In quotation marks",
+    "In italics",
+    "Capitalized only",
+    "Underlined"
+   ],
+   "answerIndex": 0,
+   "explanation": "The AP Stylebook places book titles in quotation marks.",
+   "reason": "A: picked 1 not 0 | B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "Which usage debate involves placing an adverb between 'to' and the verb?",
+   "choices": [
+    "Split infinitive",
+    "Who versus whom",
+    "Less versus fewer",
+    "Affect versus effect"
+   ],
+   "answerIndex": 0,
+   "explanation": "The split infinitive debate concerns inserting an adverb between 'to' and the verb.",
+   "reason": "source: \"Placing an adverb between “to” and the verb is called a split infinitive.\": supports_key; \"The split infinitive debate concerns placing an adverb between 'to' and the verb.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "What does the MLA Handbook advise regarding the serial comma?",
+   "choices": [
+    "It recommends using the serial comma",
+    "It forbids the serial comma",
+    "It leaves the serial comma optional",
+    "It uses the serial comma only in citations"
+   ],
+   "answerIndex": 0,
+   "explanation": "The MLA Handbook recommends using the serial comma.",
+   "reason": "source: \"The MLA Handbook recommends using the serial comma in a series.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which style guide prefers the word 'percent' spelled out rather than the symbol % in running text?",
+   "choices": [
+    "APA Publication Manual",
+    "Chicago Manual of Style",
+    "Associated Press Stylebook",
+    "MLA Handbook"
+   ],
+   "answerIndex": 0,
+   "explanation": "The APA Publication Manual spells out 'percent' in running text.",
+   "reason": "A: picked 1 not 0 (Options 1 and 2 are both defensible because the question gives no numerical scope for the rule.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "In the Chicago Manual of Style, how should the number 85 be written in running text?",
+   "choices": [
+    "Eighty-five",
+    "85",
+    "Eighty five",
+    "85 (numeral)"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago spells out numbers from zero through one hundred.",
+   "reason": "source: \"The Chicago Manual of Style recommends spelling out numbers below 100 in running text.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "According to the MLA Handbook, how should the title of a journal article be formatted in a works-cited entry?",
+   "choices": [
+    "In italics",
+    "In quotation marks",
+    "Underlined",
+    "Bolded"
+   ],
+   "answerIndex": 1,
+   "explanation": "MLA requires journal article titles to be placed in quotation marks.",
+   "reason": "source: \"MLA style places the title of a journal article in quotation marks.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "What capitalization style does the APA Publication Manual recommend for level 1 headings?",
+   "choices": [
+    "Title Case",
+    "Sentence case",
+    "All caps",
+    "Lowercase"
+   ],
+   "answerIndex": 1,
+   "explanation": "APA uses sentence case for level 1 headings.",
+   "reason": "A: picked 0 not 1 | B: picked 0 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "Which pronoun does the Chicago Manual of Style recommend for the object of a preposition in formal writing?",
+   "choices": [
+    "who",
+    "whom",
+    "whoever",
+    "whomever"
+   ],
+   "answerIndex": 1,
+   "explanation": "Chicago recommends 'whom' for the object of a preposition.",
+   "reason": "source: \"Chicago Manual of Style recommends using whom for the object of a preposition in formal writing.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which style guide recommends using an en dash (–) for number ranges in running text?",
+   "choices": [
+    "The Chicago Manual of Style",
+    "The AP Stylebook",
+    "The MLA Handbook",
+    "The APA Publication Manual"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Chicago Manual of Style specifies an en dash for number ranges, while the other guides use a hyphen.",
+   "reason": "A: not exactly one correct (Both Chicago and AP recommend en dashes for inclusive number ranges in running text, so the options are not mutually exclusive.) | B: not exactly one correct (Both Chicago and AP Stylebooks recommend using an en dash for number ranges, so there is more than one defensible correct option.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "According to the AP Stylebook, how should the abbreviation for United States be written in running text?",
+   "choices": [
+    "U.S.",
+    "US",
+    "United States",
+    "U.S.A."
+   ],
+   "answerIndex": 0,
+   "explanation": "The AP Stylebook requires the abbreviation U.S. with periods in running text.",
+   "reason": "source: \"The AP Stylebook writes the abbreviation for United States in running text as U.S. with periods.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "In the MLA Handbook, how should the title of a book be formatted in a works‑cited entry?",
+   "choices": [
+    "In italics",
+    "In quotation marks",
+    "In bold",
+    "Underlined"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA style italicizes book titles in the works‑cited list.",
+   "reason": "source: \"The MLA Handbook italicizes book titles in works-cited entries.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which style guide advises spelling out numbers one through nine and using numerals for 10 and above in running text?",
+   "choices": [
+    "The AP Stylebook",
+    "The Chicago Manual of Style",
+    "The MLA Handbook",
+    "The APA Publication Manual"
+   ],
+   "answerIndex": 0,
+   "explanation": "The AP Stylebook spells out numbers one through nine and uses figures for 10 and higher.",
+   "reason": "A: not exactly one correct (Both AP and Chicago advise spelling out numbers one through nine and using numerals for 10 and above in running text, so the options are not) | B: not exactly one correct (Both Chicago Manual of Style and MLA Handbook spell out numbers 1–9 and use numerals for 10 and above, so multiple defensible options exist.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "According to the APA Publication Manual, when should the percent sign (%) be used instead of the word “percent”?",
+   "choices": [
+    "In scientific and statistical contexts",
+    "In all running text",
+    "Only in tables and figures",
+    "Never; APA always spells out “percent”"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA allows the percent sign in scientific and statistical writing but prefers the word “percent” in general prose.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which style guide recommends capitalizing the first word after a colon only when it begins a complete sentence?",
+   "choices": [
+    "The Chicago Manual of Style",
+    "The AP Stylebook",
+    "The MLA Handbook",
+    "The APA Publication Manual"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago style capitalizes the first word after a colon only if what follows is a complete sentence.",
+   "reason": "A: picked 1 not 0 (Both AP and Chicago recommend capitalizing the first word after a colon when the following text is a complete sentence, so the options are n)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which pair matches the word meaning a result with the verb meaning to influence?",
+   "choices": [
+    "affect, effect",
+    "effect, affect",
+    "effective, affect",
+    "effecting, effect"
+   ],
+   "answerIndex": 1,
+   "explanation": "Effect is the noun for a result, while affect is the verb meaning to influence.",
+   "reason": "B: not exactly one correct (Both option 0 (affect, effect) and option 1 (effect, affect) contain the word meaning a result (effect) and the verb meaning to influence (a)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to the APA Publication Manual, how should two authors be joined in a parenthetical citation?",
+   "choices": [
+    "With an ampersand",
+    "With the word and",
+    "With a slash",
+    "With a comma"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA uses an ampersand between the names of two authors in a parenthetical citation.",
+   "reason": "source: \"APA Style uses an ampersand (&) to join two authors in parentheses.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to the APA Publication Manual, how are three or more authors represented in an in-text citation?",
+   "choices": [
+    "By the first author followed by et al.",
+    "By all authors' full names",
+    "By only the final author's name",
+    "By a numbered list of authors"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA represents three or more authors in an in-text citation with the first author's name followed by et al.",
+   "reason": "source: \"APA Style cites three or more authors with the first author followed by et al.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to the MLA Handbook, how should a URL beginning with http:// be presented in a works-cited entry?",
+   "choices": [
+    "With the full http:// prefix retained",
+    "With the http:// prefix omitted",
+    "Enclosed in angle brackets after the prefix",
+    "Replaced by a DOI-style identifier"
+   ],
+   "answerIndex": 1,
+   "explanation": "The MLA Handbook recommends omitting the http:// prefix from URLs in works-cited entries.",
+   "reason": "source: \"The MLA Handbook (8th/9th edition) states that URLs should appear without the http:// or https:// prefix in works-cited \": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to the APA Publication Manual, how should the title of a book appear in a reference-list entry?",
+   "choices": [
+    "Quoted and written in sentence case",
+    "Italicized and written in title case",
+    "Italicized and written in sentence case",
+    "Quoted and written in title case"
+   ],
+   "answerIndex": 2,
+   "explanation": "APA formats a book title in italics and uses sentence case for its words.",
+   "reason": "source: \"APA 7th edition requires book titles in reference list entries to be italicized and in sentence case.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to the Chicago Manual of Style, how should an em dash be spaced?",
+   "choices": [
+    "With one space before it",
+    "With one space after it",
+    "With one space on each side",
+    "With no space on either side"
+   ],
+   "answerIndex": 3,
+   "explanation": "The Chicago Manual of Style uses a closed em dash with no spaces on either side.",
+   "reason": "source: \"Chicago Manual of Style, 17th ed., 13.12 requires em dashes to have no spaces on either side.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Under the traditional distinction discussed in usage debates, which pairing of less and fewer is correct?",
+   "choices": [
+    "Less with uncountable nouns and fewer with countable nouns",
+    "Fewer with uncountable nouns and less with countable nouns",
+    "Less with both types of nouns and never with countable nouns",
+    "Fewer with both types of nouns and never with uncountable nouns"
+   ],
+   "answerIndex": 0,
+   "explanation": "The traditional rule uses less with uncountable nouns such as flour and fewer with countable nouns such as books.",
+   "reason": "source: \"Less is used with uncountable nouns; fewer is used with countable nouns.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "According to the MLA Handbook, where should the final punctuation appear when a sentence ends with a parenthetical citation?",
+   "choices": [
+    "Before the parenthetical citation",
+    "Inside the parenthetical citation",
+    "After the parenthetical citation",
+    "In place of the parenthetical citation"
+   ],
+   "answerIndex": 2,
+   "explanation": "MLA places the sentence’s final punctuation after the closing parenthesis of a parenthetical citation.",
+   "reason": "A: picked 1 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to MLA style, which parenthetical citation correctly gives an author's surname and page 24?",
+   "choices": [
+    "(Smith 24)",
+    "(Smith, 24)",
+    "Smith (24)",
+    "(24 Smith)"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA parenthetical citations place the author's surname and page number together without a comma.",
+   "reason": "source: \"MLA parenthetical citations use the author’s surname followed by the page number, with no comma\": supports_key"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "How does the APA Publication Manual recommend displaying a DOI in a reference-list entry?",
+   "choices": [
+    "As a https://doi.org/ URL",
+    "As a doi.org address without a protocol",
+    "With the DOI label in square brackets",
+    "As a DOI number followed by a colon"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA style presents a DOI as a URL beginning with https://doi.org/.",
+   "reason": "source: \"APA recommends including the full HTTPS DOI URL\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "If a publication has adopted a style guide, what should writers do when another style guide recommends a different rule?",
+   "choices": [
+    "Follow the adopted guide consistently",
+    "Use whichever rule is shorter",
+    "Mix the guides according to the topic",
+    "Ask each writer to choose independently"
+   ],
+   "answerIndex": 0,
+   "explanation": "The adopted style guide provides the publication's agreed conventions and should be applied consistently.",
+   "reason": "source: \"When a publication adopts a style guide, writers should consistently follow it\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In the MLA Handbook, 9th edition, which piece of information is no longer required in a works-cited entry?",
+   "choices": [
+    "The place of publication",
+    "The author's birth date",
+    "The page range of the work",
+    "The date the work was created"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ninth edition no longer requires the place of publication in a works-cited entry.",
+   "reason": "source: \"The 9th edition of The MLA Handbook no longer requires the place of publication in works-cited entries.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence contains no dangling modifier?",
+   "choices": [
+    "After the storm passed, the family went outside.",
+    "After the storm passed, going outside was safe.",
+    "Hiking up the hill, the trail became steep.",
+    "Running through the park, the rain soaked my shoes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subject family performs the action went, so the introductory phrase does not dangle.",
+   "reason": "A: not exactly one correct (two defensible options) | B: not exactly one correct (two defensible options)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "According to the APA Publication Manual, how is the title of a journal article presented in a reference-list entry?",
+   "choices": [
+    "In quotation marks and sentence case",
+    "In italics and title case",
+    "Without quotation marks in title case",
+    "Without quotation marks in sentence case"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA reference entries place a journal article title in quotation marks and use sentence case for its title.",
+   "reason": "A: picked 3 not 0 | B: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "In an MLA works-cited entry, how is the title of the journal containing an article presented?",
+   "choices": [
+    "In quotation marks and sentence case",
+    "In quotation marks and title case",
+    "In italics and sentence case",
+    "In italics and title case"
+   ],
+   "answerIndex": 2,
+   "explanation": "MLA italicizes a journal title as the container and capitalizes its major words.",
+   "reason": "A: picked 3 not 2 | B: picked 3 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "According to the AP Stylebook, how is a series of three items normally punctuated?",
+   "choices": [
+    "Without a comma before the final and",
+    "With a comma before the final and",
+    "With a semicolon before the final and",
+    "With a colon before the final and"
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style omits a comma before the final and in a simple three-item series.",
+   "reason": "source: \"AP Stylebook disallows a comma before the final \"and\" in a series of three items.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In MLA style, which parenthetical citation refers to a work by two authors, Smith and Jones, when no page number is needed?",
+   "choices": [
+    "(Smith and Jones)",
+    "(Smith & Jones)",
+    "(Smith; Jones)",
+    "(Smith, Jones)"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA uses the word and between two authors inside a parenthetical citation.",
+   "reason": "source: \"MLA parenthetical citation for two authors uses \"and\" between the names.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which APA parenthetical citation identifies a 2020 work by a single author named Smith when no page number is required?",
+   "choices": [
+    "(Smith, 2020)",
+    "(Smith 2020)",
+    "(Smith, 2020, p.)",
+    "(Smith 2020, p.)"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA includes a comma between the author's name and the year and omits a page number when one is not needed.",
+   "reason": "source: \"APA parenthetical citation for a single author uses a comma between the surname and the year.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In an APA 7th edition reference-list entry, how is the name of a journal presented?",
+   "choices": [
+    "Italicized and written in title case",
+    "Quoted and written in sentence case",
+    "Quoted and written in title case",
+    "Italicized and written in sentence case"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA style presents a journal name in italics with title-case capitalization.",
+   "reason": "source: \"APA 7th edition lists journal names italicized with title case.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In an MLA 9th edition works-cited entry, what normally appears first when a web page has no named author?",
+   "choices": [
+    "The title of the webpage",
+    "The name of the website's owner",
+    "The date the page was accessed",
+    "The URL of the webpage"
+   ],
+   "answerIndex": 0,
+   "explanation": "When an MLA source has no named author, the title of the webpage normally begins the works-cited entry.",
+   "reason": "source: \"MLA 9 cites a webpage with no author by starting with the title.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "According to the AP Stylebook, how should the word \"email\" be capitalized in running text?",
+   "choices": [
+    "Email",
+    "e-mail",
+    "email",
+    "E-mail"
+   ],
+   "answerIndex": 2,
+   "explanation": "AP style treats \"email\" as a common noun and writes it in all lowercase.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In APA 7th edition, what is the correct format for a DOI in a reference entry?",
+   "choices": [
+    "https://doi.org/10.xxxx/xxxxx",
+    "doi:10.xxxx/xxxxx",
+    "DOI:10.xxxx/xxxxx",
+    "http://doi.org/10.xxxx/xxxxx"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA 7 requires DOIs to be presented as a full HTTPS URL beginning with https://doi.org/.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "Which heading correctly applies Chicago-style headline capitalization?",
+   "choices": [
+    "The Rise of Modern Cities",
+    "The Rise of modern Cities",
+    "The Rise Of Modern Cities",
+    "The Rise of Modern cities"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago headline style capitalizes the principal words in titles while lowercasing short prepositions such as of.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "According to the AP Stylebook, which time expression is punctuated correctly?",
+   "choices": [
+    "at 9 a.m.",
+    "at 9 A.M.",
+    "at 9 am",
+    "at 9 a. m."
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style uses lowercase a.m. and p.m. with a period after each letter.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A guide requires sentence case for headings, with no proper nouns in the heading Modern Cities. What should the editor do?",
+   "choices": [
+    "Change Modern Cities to Modern cities.",
+    "Change Modern cities to Modern Cities.",
+    "Change MODERN CITIES to Modern Cities.",
+    "Change Modern Cities to modern cities."
+   ],
+   "answerIndex": 0,
+   "explanation": "With sentence case and no proper nouns, only the first word is capitalized, so Modern cities is correct.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A guide requires sentence case for headings but preserves the standard capitalization of official names. Which heading follows the guide?",
+   "choices": [
+    "The NASA budget",
+    "The nasa budget",
+    "The NASA Budget",
+    "The N.A.S.A. budget"
+   ],
+   "answerIndex": 0,
+   "explanation": "The heading keeps NASA in its standard capitalization while using lowercase budget as required by sentence case.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In the model, the guide states that the word internet should always be written in lowercase, even at the beginning of a sentence. Which sentence follows the guide?",
+   "choices": [
+    "The internet helped the travelers.",
+    "The Internet helped the travelers.",
+    "Internet speeds increased overnight.",
+    "Our Internet connection was slow."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires internet in lowercase, including at the beginning of a sentence.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In the model, the guide requires an abbreviation to be spelled out on its first mention and followed by the abbreviation in parentheses. Which sentence follows the rule?",
+   "choices": [
+    "The National Aeronautics and Space Administration (NASA) launched the program.",
+    "The National Aeronautics and Space Administration launched the program.",
+    "The NASA (National Aeronautics and Space Administration) launched the program.",
+    "The National Aeronautics and Space Administration (nasa) launched the program."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires the full agency name before the abbreviation in parentheses, followed by the abbreviation in later use.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In the model, the guide states that the publication writes web site as two words with neither word capitalized. Which sentence follows the guide?",
+   "choices": [
+    "The web site opened slowly.",
+    "The website opened slowly.",
+    "The Web site opened slowly.",
+    "The web Site opened slowly."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide uses two lowercase words, web site, in the phrase shown.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A club's guide says list items begin with capital letters and end with periods. Which item follows the guide?",
+   "choices": [
+    "review the schedule before the meeting.",
+    "Review the schedule before the meeting.",
+    "Review the schedule before the meeting",
+    "Review schedule before meeting."
+   ],
+   "answerIndex": 1,
+   "explanation": "Choice B begins the item with a capital letter and ends it with a period, matching both rules.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "In the Chicago Manual of Style, how are numbers zero through one hundred treated in nontechnical prose?",
+   "choices": [
+    "Spelled out",
+    "Written as numerals",
+    "Hyphenated",
+    "Capitalized"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago recommends spelling out whole numbers from zero through one hundred in general prose.",
+   "reason": "source: \"The Chicago Manual of Style lists numbers zero through one hundred as written out in nontechnical prose.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "According to MLA 9th edition, how should a work with no known author be alphabetized in the works‑cited list?",
+   "choices": [
+    "By title ignoring initial articles",
+    "By the word Anonymous",
+    "By the publisher name",
+    "By the date of publication"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA alphabetizes authorless works by the first significant word of the title, ignoring initial articles.",
+   "reason": "source: \"MLA 9th edition prescribes alphabetizing works with no author by the first significant word of the title, ignoring initi\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "According to the AP Stylebook, when should the abbreviation \"U.S.\" be used instead of \"United States\"?",
+   "choices": [
+    "Only in headlines",
+    "When used as an adjective",
+    "Only in formal documents",
+    "Never; always spell out"
+   ],
+   "answerIndex": 1,
+   "explanation": "AP style uses \"U.S.\" as an adjective (e.g., U.S. policy) but spells out \"United States\" as a noun.",
+   "reason": "source: \"AP Stylebook dictates that \"U.S.\" is used when the abbreviation functions as an adjective; the noun form is \"United Stat\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "In the Chicago Manual of Style, how are the titles of articles in periodicals formatted in a bibliography?",
+   "choices": [
+    "In quotation marks",
+    "In italics",
+    "In bold",
+    "Underlined"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago places article titles in quotation marks while italicizing the periodical title.",
+   "reason": "source: \"Chicago style places article titles in periodicals in quotation marks, while the periodical title itself is italicized.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which MLA parenthetical citation correctly cites a quotation on page 12 by two authors?",
+   "choices": [
+    "(Smith and Jones 12)",
+    "(Smith & Jones 12)",
+    "(Smith, and Jones 12)",
+    "(Smith and Jones, 12)"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA uses the word and between two authors in a parenthetical citation and places the page number without a comma.",
+   "reason": "source: \"MLA parenthetical citations list two authors as (Last1 and Last2 page) with no comma before the page number.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "When Chicago style presents a full calendar date, which order does it normally use?",
+   "choices": [
+    "August 15, 2020",
+    "15 August 2020",
+    "2020 August 15",
+    "Aug. 15, 2020"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago style normally presents full calendar dates in month-day-year order.",
+   "reason": "source: \"Chicago style orders full calendar dates as month day, year in the text.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "According to AP style, how is the singular possessive of the name James formed?",
+   "choices": [
+    "James's",
+    "Jameses'",
+    "James'",
+    "Jameses"
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style adds an apostrophe followed by s to form the singular possessive of a proper name ending in s.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "According to the AP Stylebook, which sentence uses the serial comma correctly?",
+   "choices": [
+    "The package contained pencils, pens, and erasers.",
+    "The package contained pencils, pens and erasers.",
+    "The package contained pencils, and pens, erasers.",
+    "The package contained pencils pens, and erasers."
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style uses a serial comma before and in a series of three or more items.",
+   "reason": "A: picked 1 not 0 | B: picked 1 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A magazine's guide says to spell aluminum with one l and no final e. Which sentence follows the guide?",
+   "choices": [
+    "The bridge is made of aluminum.",
+    "The bridge is made of aluminium.",
+    "The bridge is made of aluminumm.",
+    "The bridge is made of alum inum."
+   ],
+   "answerIndex": 0,
+   "explanation": "The option uses aluminum exactly as the guide specifies, with one l and no final e.",
+   "reason": "source: \"Aluminum is spelled with one 'l' and no final 'e'.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A guide says subject relative clauses referring to people must use who, not that or whom. Which sentence follows the guide?",
+   "choices": [
+    "The coach who led the practice chose the drills.",
+    "The player which led the practice chose the drills.",
+    "The teammate whom the coach praised chose the drills.",
+    "The student that led the practice chose the drills."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires who in a subject relative clause referring to a person, which matches the coach.",
+   "reason": "source: \"The guide requires the relative pronoun \"who\" for clauses referring to people.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A guide requires numerals for percentages and says to place the percent sign directly after the numeral. Which sentence follows the guide?",
+   "choices": [
+    "About 45% of the seats were already reserved.",
+    "About 45 % of the seats were already reserved.",
+    "About 45percent of the seats were already reserved.",
+    "About forty-five% of the seats were already reserved."
+   ],
+   "answerIndex": 0,
+   "explanation": "The option follows the guide by using a numeral and placing the percent sign directly after 45.",
+   "reason": "source: \"The guide requires using numerals for percentages with a percent sign directly after the numeral.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A guide requires the term wheelchair user instead of person confined to a wheelchair. Which sentence follows the guide?",
+   "choices": [
+    "The wheelchair user entered the room.",
+    "The person confined to a wheelchair entered the room.",
+    "The chair-confined person entered the room.",
+    "The person using a wheelchair entered the room."
+   ],
+   "answerIndex": 0,
+   "explanation": "The option uses the exact term wheelchair user required by the guide.",
+   "reason": "source: \"The guide requires the term \"wheelchair user\" to describe such a person.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A city publication's guide says to prefer toward over towards. Which form should an editor use in We walked ___ the river?",
+   "choices": [
+    "toward",
+    "towards",
+    "towardst",
+    "towrad"
+   ],
+   "answerIndex": 0,
+   "explanation": "The option uses the guide's preferred spelling, toward.",
+   "reason": "source: \"The guide prefers \"toward\" over \"towards.\"\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A magazine's guide prefers the American spelling of the adverb meaning at a later time. Which sentence follows the guide?",
+   "choices": [
+    "After the game, the coach spoke afterwards.",
+    "After the game, the coach spoke afterward.",
+    "After the game, the coach spoke after word.",
+    "After the game, the coach spoke after word's."
+   ],
+   "answerIndex": 1,
+   "explanation": "Choice B uses afterward, the spelling preferred by the guide.",
+   "reason": "source: \"In American English, the adverb meaning 'at a later time' is spelled 'afterward' (without -s), while 'afterwards' is mor\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A publication's guide says quoted phrases in captions use single quotation marks and places sentence-ending periods outside them. Which caption follows the guide?",
+   "choices": [
+    "The panel called the plan \"a bold experiment\".",
+    "The panel called the plan a bold experiment.",
+    "The panel called the plan 'a bold experiment'.",
+    "The panel called the plan 'a bold experiment.'"
+   ],
+   "answerIndex": 2,
+   "explanation": "Choice C uses single quotation marks and places the sentence-ending period outside them, as the guide requires.",
+   "reason": "A: picked 3 not 2 (both (2) and (3) satisfy the guide, so not exactly one correct)"
+  },
+  {
+   "round": 2,
+   "stage": "code",
+   "prompt": "A publisher's guide says to capitalize Internet every time it appears. Which sentence follows that rule?",
+   "choices": [
+    "The Internet was unavailable for an hour.",
+    "The internet was unavailable for an hour.",
+    "the Internet was unavailable for an hour.",
+    "The INTERNET was unavailable for an hour."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence capitalizes Internet as the guide requires.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 2,
+   "stage": "code",
+   "prompt": "A style guide states that monetary amounts should be written with the dollar sign before the numeral, without a space, and the word dollars should not appear when the symbol is used. Which sentence follows the guide?",
+   "choices": [
+    "The ticket costs $12.50.",
+    "The ticket costs 12.50 dollars.",
+    "The ticket costs $ 12.50.",
+    "The ticket costs twelve dollars and fifty cents."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence places the dollar sign directly before the numeral with no space and omits the word dollars.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A style guide requires the phrase different from and rejects different than. Which sentence follows the guide?",
+   "choices": [
+    "The result was different than what we expected.",
+    "The result was different as what we expected.",
+    "The result was different from what we expected.",
+    "The result was different to what we expected."
+   ],
+   "answerIndex": 2,
+   "explanation": "The guide explicitly prefers different from, and the phrase fits after the linking verb was in this sentence.",
+   "reason": "source: \"\"different from\" is the preferred phrase over \"different than\".\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A guide says affect is generally a verb and effect is generally a noun. Which sentence follows the guide?",
+   "choices": [
+    "The noise can have an affect on concentration.",
+    "The noise can have an effecting on concentration.",
+    "The noise can have an effective on concentration.",
+    "The noise can have an effect on concentration."
+   ],
+   "answerIndex": 3,
+   "explanation": "Effect is the noun naming the influence produced by noise, so it is the word that belongs after the article an.",
+   "reason": "source: \"\"Effect\" is a noun meaning result; \"affect\" is a verb meaning to influence.\": supports_key"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A style guide uses American spelling with a z. Which sentence follows the guide?",
+   "choices": [
+    "The organisation published its annual report.",
+    "The organization published its annual report.",
+    "The organized published its annual report.",
+    "The organizing published its annual report."
+   ],
+   "answerIndex": 1,
+   "explanation": "Organization uses the z spelling required by the guide, and the plural subject takes the verb published.",
+   "reason": "source: \"American English spells organization with a z.\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A professional organization's guide requires the singular noun telephone instead of the shorter noun phone. Which sentence follows the guide?",
+   "choices": [
+    "Please use the phone to contact the office.",
+    "Please use the phones to contact the office.",
+    "Please use the telephony to contact the office.",
+    "Please use the telephone to contact the office."
+   ],
+   "answerIndex": 3,
+   "explanation": "Telephone is the required singular noun naming the device, and it appears in the object position after use.",
+   "reason": "source: \"The guide requires the word \"telephone\", not the shorter \"phone\".\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A guide says to use a colon before a list that follows an introducing expression. Which sentence follows the guide?",
+   "choices": [
+    "The workshop includes the following: planning, editing, and proofreading.",
+    "The workshop includes the following, planning, editing, and proofreading.",
+    "The workshop includes the following; planning, editing, and proofreading.",
+    "The workshop includes the following planning, editing, and proofreading."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon marks the introduction of the list after the expression the following.",
+   "reason": "source: \"Use a colon before a list that follows an introductory expression.\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A school guide asks writers to use person-first language for people with disabilities and to call facilities accessible when they support independent use. Which sentence follows the guide?",
+   "choices": [
+    "Disabled students may use accessible study rooms.",
+    "Students with disabilities may use accessible study rooms.",
+    "Students with disability may use accessible study rooms.",
+    "Students with disabilities may use restricted study rooms."
+   ],
+   "answerIndex": 1,
+   "explanation": "Students with disabilities uses the required person-first wording, and accessible study rooms matches the guide's description of supportive facilities.",
+   "reason": "source: \"Person‑first language requires \"students with disabilities\".\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "A style guide requires the word percent to be spelled out in running text and the symbol % to be used only in tables. Which sentence follows the guide?",
+   "choices": [
+    "The survey showed that 20 percent of respondents agreed.",
+    "The survey showed that 20% of respondents agreed.",
+    "The survey showed that twenty percent of respondents agreed.",
+    "The survey showed that 20 per cent of respondents agreed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence spells out the word percent and uses a numeral for the number, as the guide directs.",
+   "reason": "A: not exactly one correct | B: not exactly one correct (Both options 0 and 2 comply with the guide because they spell out “percent” in running text; option 3 uses “per cent.”)"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "A style guide directs writers to abbreviate months to three letters followed by a period when a specific date is given, but to spell out the month when it appears alone. Which sentence follows the guide?",
+   "choices": [
+    "The deadline is Mar. 3, 2025.",
+    "The deadline is March 3, 2025.",
+    "The deadline is Mar 3, 2025.",
+    "The deadline is 3 Mar. 2025."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence abbreviates the month with a period in a full date, as the guide requires.",
+   "reason": "A: not exactly one correct (Both (0) and (3) abbreviate March as “Mar.” with a period in a specific date. The stated guide does not specify date order, so (3) also foll) | B: not exactly one correct (Two defensible options (0 and 3).)"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In a model about usage debates, why might the presenter show a disputed convention used in an example sentence?",
+   "choices": [
+    "To demonstrate how the style guide applies the convention in context.",
+    "To compare the convention with unrelated grammar topics.",
+    "To eliminate the need to read the guide's written rule.",
+    "To establish that every publication follows the same convention."
+   ],
+   "answerIndex": 0,
+   "explanation": "The example shows readers how the style guide applies its chosen convention to actual language.",
+   "reason": "source: \"In usage-debate presentations, examples demonstrate how a style guide applies a disputed convention in context.\": not_addressed"
+  },
+  {
+   "round": 3,
+   "stage": "code",
+   "prompt": "According to the Chicago Manual of Style, how should the abbreviation e.g. be punctuated within a sentence?",
+   "choices": [
+    "e.g.,",
+    "e.g.",
+    "eg,",
+    "eg."
+   ],
+   "answerIndex": 0,
+   "explanation": "The Chicago Manual of Style requires a comma after e.g. when it appears in a sentence.",
+   "reason": "explanation-key: the explanation quotes option 2, not the keyed option 1"
+  },
+  {
+   "round": 3,
+   "stage": "code",
+   "prompt": "A house style guide requires that the word website be written as one lowercase word. Which spelling follows the guide?",
+   "choices": [
+    "website",
+    "Web site",
+    "web site",
+    "Web-site"
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide specifies the single-word lowercase form website.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 3,
+   "stage": "code",
+   "prompt": "According to the Chicago Manual of Style, how should the abbreviation i.e. be punctuated when it appears mid‑sentence?",
+   "choices": [
+    "i.e.,",
+    "i.e.;",
+    "i.e.",
+    "i.e.:"
+   ],
+   "answerIndex": 0,
+   "explanation": "Chicago recommends placing a comma after i.e. when it occurs within a sentence.",
+   "reason": "explanation-key: the explanation quotes option 3, not the keyed option 1"
+  },
+  {
+   "round": 3,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "In AP style, how should the abbreviation for United States be written when used as a noun?",
+   "choices": [
+    "U.S.",
+    "US",
+    "U.S",
+    "us."
+   ],
+   "answerIndex": 0,
+   "explanation": "AP style uses U.S. with periods when the abbreviation functions as a noun.",
+   "reason": "source: \"AP Stylebook uses U.S. with periods when abbreviated.\": not_addressed"
+  },
+  {
+   "round": 3,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "A style guide dictates that the en dash be used for page ranges without spaces. Which format follows the guide?",
+   "choices": [
+    "pp. 12–15",
+    "pp. 12 - 15",
+    "pp.12–15",
+    "pp. 12– 15"
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide calls for an en dash directly connecting the numbers with no spaces.",
+   "reason": "source: \"The en dash is used without spaces on either side.\": not_addressed"
+  },
+  {
+   "round": 3,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "According to the MLA Handbook, the title of a journal article should be formatted how in a works-cited entry?",
+   "choices": [
+    "In quotation marks",
+    "In italics",
+    "Underlined",
+    "In bold"
+   ],
+   "answerIndex": 0,
+   "explanation": "MLA places article titles in quotation marks while journal titles are italicized.",
+   "reason": "source: \"The MLA Handbook requires quotation marks around journal article titles in works-cited entries.\": not_addressed"
+  },
+  {
+   "round": 3,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "In APA 7th edition, how should a DOI be presented in a reference list entry?",
+   "choices": [
+    "As a URL beginning with https://doi.org/",
+    "As the raw DOI number only",
+    "In parentheses after the title",
+    "Omitted unless the source lacks a URL"
+   ],
+   "answerIndex": 0,
+   "explanation": "APA 7th edition requires DOIs to be displayed as a full URL starting with https://doi.org/.",
+   "reason": "source: \"APA 7th edition requires DOIs to be formatted as URLs beginning with https://doi.org/\": not_addressed"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 3,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  }
+ ],
+ "applied": false
+}

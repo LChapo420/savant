@@ -1,0 +1,2805 @@
+{
+ "row_id": 41,
+ "engine_id": "whack-a-mole",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 59,
+ "generated_at": "2026-10-24T23:57:19.424Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 57,
+  "code_rejected": 1,
+  "sent_to_judges": 56,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 56,
+   "picked_same_option": 56,
+   "a_picked_key": 56,
+   "b_picked_key": 56,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "minimax/minimax-m3.1-flash",
+    "openai/gpt-oss-20b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "whack-a-mole",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 59,
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "title": "Voice and Mood Rubric Check",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 7,
+    "end": 9,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q36",
+    "prompt": "Which sentence fulfills a rubric that requires subjunctive mood expressing a present wish with a plural subject using “were”?",
+    "choices": [
+     "If the guidelines were clearer, I would understand.",
+     "I wish the guidelines was clearer.",
+     "I hope the guidelines are clearer.",
+     "I wish the guidelines were clearer."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence uses the present‑wish subjunctive (“were”) with a plural subject (“the guidelines”).",
+    "difficulty": 8,
+    "skill": "Voice and Mood",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which sentence meets a rubric requiring simple present active voice with the teacher as the subject?",
+    "choices": [
+     "The teacher has explained the concept clearly.",
+     "The concept is explained clearly by the teacher.",
+     "The teacher will explain the concept clearly.",
+     "The teacher explains the concept clearly."
+    ],
+    "answerIndex": 3,
+    "explanation": "The teacher explains the concept clearly is in simple present active voice with the teacher as the subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q38",
+    "prompt": "Which sentence meets a rubric calling for an imperative passive construction using “let” that addresses the reader indirectly and has “the minutes” as the object?",
+    "choices": [
+     "Let the minutes recorded by the secretary.",
+     "Let the minutes be recorded by the secretary.",
+     "Have the minutes recorded by the secretary.",
+     "The minutes should be recorded by the secretary."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence uses the “let” imperative passive (“Let the minutes be recorded”) with “the minutes” as the object and includes the agent “by the secretary.”",
+    "difficulty": 8,
+    "skill": "Voice and Mood",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which sentence satisfies a rubric requiring future perfect passive voice with the findings as the subject and no agent mentioned?",
+    "choices": [
+     "The findings will have been verified by next week.",
+     "The findings will be verified by next week.",
+     "The findings have been verified by next week.",
+     "The findings are verified by next week."
+    ],
+    "answerIndex": 0,
+    "explanation": "The findings will have been verified by next week employs future perfect passive voice with the findings as subject and no agent mentioned.",
+    "difficulty": 9,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q26",
+    "prompt": "Which sentence meets a rubric calling for present perfect passive voice with the data as the subject and the agent \"by the analyst\" included?",
+    "choices": [
+     "The data was analyzed by the analyst.",
+     "The data has been analyzed by the analyst.",
+     "The analyst has analyzed the data.",
+     "The data will have been analyzed by the analyst."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence is in present perfect passive voice, has the data as subject, and includes the agent by the analyst.",
+    "difficulty": 8,
+    "skill": "voice and mood selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which sentence best meets a rubric requiring simple past passive voice, with the scholarship as the subject and no agent named?",
+    "choices": [
+     "The scholarship was quietly revoked by the committee after the deadline.",
+     "The scholarship was quietly revoked after the deadline.",
+     "The committee quietly revoked the scholarship after the deadline.",
+     "The scholarship is quietly revoked after the deadline."
+    ],
+    "answerIndex": 1,
+    "explanation": "The scholarship is the subject, revoked is a simple past passive verb, and no agent is identified with a by-phrase.",
+    "difficulty": 8,
+    "skill": "Apply a rubric criterion for simple past passive voice",
+    "topic": "Using Voice and Mood for Effect (Rubric Check)"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which sentence meets a rubric requiring simple past passive voice with the experiment as the subject and the agent \"by the researchers\" included?",
+    "choices": [
+     "The experiment has been conducted by the researchers last week.",
+     "The researchers conducted the experiment last week.",
+     "The experiment was conducted by the researchers last week.",
+     "The experiment will be conducted by the researchers last week."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence uses simple past passive voice, makes the experiment the subject, and includes the agent \"by the researchers\".",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q1",
+    "prompt": "Which sentence best meets a rubric requiring simple past active voice with the person as the subject?",
+    "choices": [
+     "The captain chose the shorter route before sunset.",
+     "The shorter route was chosen by the captain before sunset.",
+     "The captain was chosen the shorter route before sunset.",
+     "The choosing of the shorter route was done by the captain before sunset."
+    ],
+    "answerIndex": 0,
+    "explanation": "In this sentence, the captain is the grammatical subject and chose is the simple past active verb, directly showing that the captain made the choice.",
+    "difficulty": 7,
+    "skill": "Apply a rubric criterion for simple past active voice",
+    "topic": "Using Voice and Mood for Effect (Rubric Check)"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which sentence satisfies a rubric that calls for a real conditional with an if‑clause in simple present and a main clause using \"might\" + base verb?",
+    "choices": [
+     "If the weather improves, the event could start on time.",
+     "If the weather improved, the event might start on time.",
+     "If the weather improves, the event will start on time.",
+     "If the weather improves, the event might start on time."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence forms a real conditional with a present‑tense if‑clause and a main clause using might plus the base verb.",
+    "difficulty": 8,
+    "skill": "voice and mood selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which sentence meets a rubric calling for present subjunctive mood in a that‑clause expressing a recommendation, with \"the council\" as the subject?",
+    "choices": [
+     "It is essential that the council approves the plan.",
+     "It is essential that the council approve the plan.",
+     "It is essential that the council should approve the plan.",
+     "It is essential that the council approved the plan."
+    ],
+    "answerIndex": 1,
+    "explanation": "The subjunctive mood uses the base form \"approve\" after \"essential that\", matching the rubric.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which sentence meets a rubric calling for a real conditional with an if‑clause in simple present and a main clause using “could” + base verb?",
+    "choices": [
+     "If the server ran smoothly, the backup could finish early.",
+     "If the server runs smoothly, the backup could finish early.",
+     "If the server runs smoothly, the backup can finish early.",
+     "If the server had run smoothly, the backup could have finished early."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence pairs a present‑tense if‑clause with a main clause using “could” plus the base verb, forming a real conditional.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which sentence meets a rubric requiring simple past active voice with “the journalist” as the subject?",
+    "choices": [
+     "The article was published by the journalist yesterday.",
+     "The journalist published the article yesterday.",
+     "The journalist has published the article yesterday.",
+     "Yesterday the article is published by the journalist."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence uses simple past active voice with the journalist as the subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which sentence matches a rubric that asks for a counterfactual past conditional: an if‑clause in past perfect and a main clause with \"would have\" + past participle?",
+    "choices": [
+     "If the data had been accurate, the model predicts the outcome.",
+     "If the data were accurate, the model would predict the outcome.",
+     "If the data was accurate, the model would have predicted the outcome.",
+     "If the data had been accurate, the model would have predicted the outcome."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence correctly pairs a past‑perfect if‑clause with a \"would have\" perfect conditional main clause.",
+    "difficulty": 9,
+    "skill": "Voice and Mood Selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which sentence satisfies a rubric requiring a conditional main clause (\"would\" + base verb) with an if‑clause in simple past for a hypothetical future situation?",
+    "choices": [
+     "If the team had practiced more, they would have won the championship.",
+     "If the team practices more, they will win the championship.",
+     "If the team practiced more, they would win the championship.",
+     "If the team practices more, they would win the championship."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence pairs a simple‑past if‑clause with a \"would\" conditional main clause to show a hypothetical future.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which sentence fulfills a rubric requiring future continuous active voice with \"the team\" as the subject?",
+    "choices": [
+     "The team presents the findings at the conference every year.",
+     "The findings will be presented by the team at the conference next week.",
+     "The team presented the findings at the conference last week.",
+     "The team will be presenting the findings at the conference next week."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first option uses future continuous active voice with \"the team\" as the subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q39",
+    "prompt": "Which sentence fulfills a rubric requiring future perfect active voice with “the committee” as the subject?",
+    "choices": [
+     "The committee has decided the issue by Friday.",
+     "The committee will decide the issue by Friday.",
+     "The committee will have decided the issue by Friday.",
+     "The committee would have decided the issue by Friday."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence uses future perfect active (“will have decided”) with “the committee” as the subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which sentence satisfies a rubric calling for present perfect active voice with the committee as the subject?",
+    "choices": [
+     "The committee will approve the proposal.",
+     "The proposal has been approved by the committee.",
+     "The committee had approved the proposal.",
+     "The committee has approved the proposal."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence uses present perfect active voice and makes the committee the subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q44",
+    "prompt": "Which sentence meets a rubric calling for an imperative mood in passive voice using a 'let' construction that addresses the reader indirectly with 'the application' as the subject?",
+    "choices": [
+     "Let the application submit by noon.",
+     "Submit the application by noon.",
+     "The application should be submitted by noon.",
+     "Let the application be submitted by noon."
+    ],
+    "answerIndex": 3,
+    "explanation": "Let the application be submitted by noon is an imperative passive construction using let that indirectly addresses the reader with the application as subject.",
+    "difficulty": 7,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which sentence matches a rubric requiring subjunctive mood expressing a present wish with a singular subject using 'were'?",
+    "choices": [
+     "She wishes the schedule is flexible.",
+     "She wishes the schedule was flexible.",
+     "She wishes the schedule were flexible.",
+     "She wishes the schedule would be flexible."
+    ],
+    "answerIndex": 2,
+    "explanation": "She wishes the schedule were flexible expresses a present wish in the subjunctive mood using were with a singular subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which sentence satisfies a rubric requiring an imperative mood in passive voice using a \"let\" construction that addresses the reader indirectly?",
+    "choices": [
+     "Please submit the report by Friday.",
+     "Submit the report by Friday.",
+     "The report must be submitted by Friday.",
+     "Let the report be submitted by Friday."
+    ],
+    "answerIndex": 3,
+    "explanation": "The let‑construction creates a passive imperative directing that the report be submitted by Friday.",
+    "difficulty": 8,
+    "skill": "voice and mood selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence meets a rubric asking for subjunctive mood expressing a present wish, using \"were\" with a singular subject?",
+    "choices": [
+     "I wish the deadline was later.",
+     "I wish the deadline were later.",
+     "I wish the deadline would be later.",
+     "I wish the deadline is later."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence uses the subjunctive \"were\" to express a present unreal wish with a singular subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q6",
+    "prompt": "Which sentence best meets a rubric calling for active voice in the main clause and subjunctive mood for a present unreal condition?",
+    "choices": [
+     "If the portal were open, the revision could be submitted tonight.",
+     "If the portal were open, the writer could submit the revision tonight.",
+     "If the portal is open, the writer could submit the revision tonight.",
+     "If the portal is open, the revision could be submitted tonight."
+    ],
+    "answerIndex": 1,
+    "explanation": "Were marks the present unreal condition, while the active main clause makes the writer the explicit doer of submit.",
+    "difficulty": 9,
+    "skill": "Combine active voice and subjunctive mood",
+    "topic": "Using Voice and Mood for Effect (Rubric Check)"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which sentence fulfills a rubric that calls for an imperative mood in active voice addressing the reader directly?",
+    "choices": [
+     "You will submit your draft by Friday.",
+     "Your draft should be submitted by Friday.",
+     "The draft is submitted by Friday.",
+     "Submit your draft by Friday."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence uses the imperative mood in active voice to give a direct command to the reader.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which sentence satisfies a rubric calling for present passive voice with “the proposal” as the subject and no agent named?",
+    "choices": [
+     "The committee reviews the proposal regularly.",
+     "The proposal was reviewed regularly.",
+     "The proposal is reviewed regularly.",
+     "The proposal has been reviewed regularly."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence uses present passive voice with the proposal as subject and omits the agent.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which sentence best meets a rubric requiring past perfect active voice with the researcher as the subject?",
+    "choices": [
+     "The researcher completes the analysis before the deadline.",
+     "The analysis had been completed by the researcher before the deadline.",
+     "The researcher had completed the analysis before the deadline.",
+     "The researcher will have completed the analysis by the deadline."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence uses past perfect active voice with the researcher as the subject.",
+    "difficulty": 8,
+    "skill": "voice and mood selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q41",
+    "prompt": "Which sentence satisfies a rubric calling for past perfect passive voice with the hypothesis as the subject and the agent 'by the scientists' included?",
+    "choices": [
+     "The hypothesis had been tested by the scientists before the conference.",
+     "The hypothesis was tested by the scientists before the conference.",
+     "The hypothesis has been tested by the scientists before the conference.",
+     "The hypothesis will have been tested by the scientists before the conference."
+    ],
+    "answerIndex": 0,
+    "explanation": "The hypothesis had been tested by the scientists before the conference uses past perfect passive voice with the hypothesis as subject and includes the agent by the scientists.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which sentence meets a rubric requiring past perfect passive voice with “the manuscript” as the subject and includes the agent “by the editor”?",
+    "choices": [
+     "The manuscript had been revised by the editor before the deadline.",
+     "The manuscript was revised by the editor before the deadline.",
+     "The editor had revised the manuscript before the deadline.",
+     "The manuscript has been revised by the editor before the deadline."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option uses the past perfect passive construction “had been revised” with the required subject and agent.",
+    "difficulty": 8,
+    "skill": "Identify past perfect passive construction with specified subject and agent",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which sentence uses the subjunctive mood to describe a present condition that is not true?",
+    "choices": [
+     "If the bell is louder, we would hear it upstairs.",
+     "If the bell had been louder, we would have heard it upstairs.",
+     "If the bell were louder, we would hear it upstairs.",
+     "If the bell was louder, we would hear it upstairs."
+    ],
+    "answerIndex": 2,
+    "explanation": "Were expresses the present unreal condition required by the subjunctive mood in an if-clause.",
+    "difficulty": 8,
+    "skill": "Identify subjunctive mood in a present unreal condition",
+    "topic": "Using Voice and Mood for Effect (Rubric Check)"
+   },
+   {
+    "id": "q31",
+    "prompt": "Which sentence matches a rubric asking for a counterfactual past conditional using an if‑clause in the past perfect and a main clause with “could have” + past participle?",
+    "choices": [
+     "If the data had been accurate, the model would have predicted the outcome.",
+     "If the data were accurate, the model could predict the outcome.",
+     "If the data had been accurate, the model could have predicted the outcome.",
+     "If the data was accurate, the model could have predicted the outcome."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option combines a past‑perfect if‑clause with “could have” plus a past participle in the main clause.",
+    "difficulty": 9,
+    "skill": "Identify third conditional with “could have” construction",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which sentence meets a rubric calling for present perfect passive voice with \"the results\" as the subject and no agent mentioned?",
+    "choices": [
+     "The results have been analyzed.",
+     "The results are analyzed.",
+     "The results were analyzed.",
+     "The results will have been analyzed."
+    ],
+    "answerIndex": 0,
+    "explanation": "Present perfect passive is formed with \"have been\" plus the past participle, matching the rubric’s specifications.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q25",
+    "prompt": "Which sentence fulfills a rubric requiring subjunctive mood in a that‑clause expressing a suggestion, with the committee as the subject?",
+    "choices": [
+     "It is suggested that the committee review the policy.",
+     "It is suggested that the committee reviews the policy.",
+     "The committee is suggested to review the policy.",
+     "The committee reviews the policy as suggested."
+    ],
+    "answerIndex": 0,
+    "explanation": "The that‑clause employs the base‑form verb review, marking the subjunctive mood for a suggestion with the committee as subject.",
+    "difficulty": 8,
+    "skill": "voice and mood selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which sentence fulfills a rubric that requires future passive voice with the report as the subject and no agent named?",
+    "choices": [
+     "The report will be published next month.",
+     "The report will publish next month.",
+     "The report is published next month.",
+     "The report was published next month."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence uses future passive voice, makes the report the subject, and omits an agent.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which sentence best meets a rubric requiring simple past active voice with the student as the subject?",
+    "choices": [
+     "The rewriting of the essay was done by the freshman after class.",
+     "The essay was rewritten by the freshman after class.",
+     "The freshman was rewriting the essay after class.",
+     "The freshman rewrote the essay after class."
+    ],
+    "answerIndex": 3,
+    "explanation": "The freshman is the subject and rewrote is the simple past active verb, so the sentence directly identifies the student as the actor.",
+    "difficulty": 7,
+    "skill": "Apply a rubric criterion for active voice",
+    "topic": "Using Voice and Mood for Effect (Rubric Check)"
+   },
+   {
+    "id": "q35",
+    "prompt": "Which sentence meets a rubric calling for future passive voice with “the schedule” as the subject and the agent “by the coordinator” included?",
+    "choices": [
+     "The coordinator will post the schedule tomorrow.",
+     "The schedule is posted by the coordinator tomorrow.",
+     "The schedule will be posted by the coordinator tomorrow.",
+     "The schedule will have been posted by the coordinator tomorrow."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence uses future passive (“will be posted”) with “the schedule” as subject and names the agent “by the coordinator.”",
+    "difficulty": 8,
+    "skill": "Voice and Mood",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q49",
+    "prompt": "Which sentence meets a rubric that asks for a present subjunctive in a that‑clause expressing a wish, using the base form \"be\" with a singular subject?",
+    "choices": [
+     "I wish that she be allowed to attend the workshop.",
+     "I wish that she was allowed to attend the workshop.",
+     "I wish that she were allowed to attend the workshop.",
+     "I wish that she is allowed to attend the workshop."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first option uses the present subjunctive \"be\" in a that‑clause expressing a wish with a singular subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q46",
+    "prompt": "Which sentence best meets a rubric requiring present continuous active voice with \"the analyst\" as the subject?",
+    "choices": [
+     "The data is being reviewed by the analyst right now.",
+     "The analyst is reviewing the data right now.",
+     "The analyst reviewed the data yesterday.",
+     "The analyst will review the data tomorrow."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first option uses present continuous active voice with \"the analyst\" as the subject.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which sentence satisfies a rubric that calls for present perfect active voice with “the team” as the subject?",
+    "choices": [
+     "The team has finished the project ahead of schedule.",
+     "The team finished the project ahead of schedule.",
+     "The team had finished the project ahead of schedule.",
+     "The project has been finished by the team ahead of schedule."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option uses the present perfect active “has finished” with the required subject “the team.”",
+    "difficulty": 8,
+    "skill": "Identify present perfect active construction with a given subject",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which sentence matches a rubric asking for a counterfactual past conditional with an if‑clause in past perfect and a main clause using \"might have\" + past participle?",
+    "choices": [
+     "If the data were accurate, the model might predict the outcome.",
+     "If the data had been accurate, the model might have predicted the outcome.",
+     "If the data had been accurate, the model would predict the outcome.",
+     "If the data is accurate, the model might have predicted the outcome."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first option uses a past‑perfect if‑clause and a main clause with \"might have\" plus a past participle, forming a counterfactual past conditional.",
+    "difficulty": 9,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q27",
+    "prompt": "Which sentence matches a rubric that asks for future active voice with the author as the subject using \"will write\"?",
+    "choices": [
+     "The author writes the final chapter next month.",
+     "The final chapter will be written by the author next month.",
+     "The author will write the final chapter next month.",
+     "The author would write the final chapter next month."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence uses future active voice with the author as subject and the modal will write.",
+    "difficulty": 8,
+    "skill": "voice and mood selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q21",
+    "prompt": "Which sentence matches a rubric asking for future perfect passive voice with “the results” as the subject and no agent mentioned?",
+    "choices": [
+     "The results will have been compiled by Friday.",
+     "The results will be compiled by Friday.",
+     "The results have been compiled by Friday.",
+     "The results are compiled by Friday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence uses future perfect passive (“will have been compiled”) with the results as subject and no agent.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q47",
+    "prompt": "Which sentence satisfies a rubric calling for past continuous passive voice with \"the report\" as the subject and the agent \"by the editor\" included?",
+    "choices": [
+     "The report had been edited by the editor before the deadline.",
+     "The editor was editing the report when the power failed.",
+     "The report was being edited by the editor when the power failed.",
+     "The report will be edited by the editor tomorrow."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first option uses past continuous passive voice with \"the report\" as the subject and includes the agent \"by the editor\".",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which sentence meets a rubric requiring an imperative sentence in active voice that politely addresses the reader using “please”?",
+    "choices": [
+     "Please have the document reviewed before Friday.",
+     "Review the document before Friday.",
+     "You should review the document before Friday.",
+     "Please review the document before Friday."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option is an active‑voice imperative that begins with “please” to address the reader politely.",
+    "difficulty": 8,
+    "skill": "Recognize polite active‑voice imperative with “please”",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which sentence best meets a rubric requiring passive voice for a requirement and leaving the person responsible unnamed?",
+    "choices": [
+     "The application must be submitted before noon on Friday.",
+     "The application must be submitted by the applicant before noon on Friday.",
+     "We must submit the application before noon on Friday.",
+     "The application must submit before noon on Friday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The passive construction must be submitted focuses on the application as the thing requiring action without naming who must do it.",
+    "difficulty": 7,
+    "skill": "Evaluate passive voice for an impersonal requirement",
+    "topic": "Using Voice and Mood for Effect (Rubric Check)"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which sentence fulfills a rubric that requires subjunctive mood in a that‑clause expressing a demand, with “the director” as the subject?",
+    "choices": [
+     "It was required that the director approved the budget.",
+     "It is required that the director approves the budget.",
+     "The director is required to approve the budget.",
+     "It is required that the director approve the budget."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence uses the present subjunctive “approve” in a that‑clause after a demand expression.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Application",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which sentence satisfies a rubric requiring past perfect passive voice with “the policy” as the subject and the agent “by the board” included?",
+    "choices": [
+     "The policy was approved by the board before the meeting.",
+     "The policy had been approved by the board before the meeting.",
+     "The board had approved the policy before the meeting.",
+     "The policy has been approved by the board before the meeting."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence uses past perfect passive construction (“had been approved”) with “the policy” as subject and includes the agent “by the board.”",
+    "difficulty": 8,
+    "skill": "Voice and Mood",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which sentence fulfills a rubric requiring future perfect active voice with \"the team\" as the subject?",
+    "choices": [
+     "The team has completed the project by Friday.",
+     "The team will complete the project by Friday.",
+     "The team will have completed the project by Friday.",
+     "The team would have completed the project by Friday."
+    ],
+    "answerIndex": 2,
+    "explanation": "Future perfect active is formed with \"will have\" plus the past participle, satisfying the rubric.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which sentence fulfills a rubric that asks for a real conditional with an if‑clause in simple present and a main clause using 'will' + base verb?",
+    "choices": [
+     "If the library opened early, the students would study there.",
+     "If the library opens early, the students will study there.",
+     "If the library opens early, the students would study there.",
+     "If the library will open early, the students will study there."
+    ],
+    "answerIndex": 1,
+    "explanation": "If the library opens early, the students will study there is a real conditional with a simple‑present if‑clause and a will‑future main clause.",
+    "difficulty": 9,
+    "skill": "Voice and Mood Application",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which sentence satisfies a rubric calling for future perfect passive voice with “the proposal” as the subject and no agent mentioned?",
+    "choices": [
+     "The proposal will be reviewed by Friday.",
+     "The proposal will have been reviewed by Friday.",
+     "The proposal has been reviewed by Friday.",
+     "The team will have reviewed the proposal by Friday."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option uses the future perfect passive “will have been reviewed” with the required subject and no agent.",
+    "difficulty": 8,
+    "skill": "Identify future perfect passive construction with specified subject and no agent",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which sentence satisfies a rubric requiring present perfect passive voice with “the budget” as the subject and the agent “by the treasurer” included?",
+    "choices": [
+     "The budget has been reviewed by the treasurer.",
+     "The budget was reviewed by the treasurer.",
+     "The treasurer has reviewed the budget.",
+     "The budget is reviewed by the treasurer."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence uses present perfect passive (“has been reviewed”) with “the budget” as subject and includes the agent “by the treasurer.”",
+    "difficulty": 8,
+    "skill": "Voice and Mood",
+    "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which sentence satisfies a rubric that requires simple past passive voice with \"the manuscript\" as the subject and includes the agent \"by the editor\"?",
+    "choices": [
+     "The manuscript was revised by the editor yesterday.",
+     "The editor revised the manuscript yesterday.",
+     "The manuscript is revised by the editor yesterday.",
+     "The manuscript had been revised by the editor yesterday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence uses simple past passive construction (was + past participle) with the required subject and agent.",
+    "difficulty": 8,
+    "skill": "Voice and Mood Selection",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  ],
+  "feedback": {
+   "correct": "Whack! That choice shows a real command of voice and mood.",
+   "incorrect": "The mole slipped away — reconsider what the sentence emphasizes or imagines.",
+   "win": "Five moles whacked! You can now choose voice and mood deliberately and defend your choices against the rubric.",
+   "lose": "The moles burrowed free. Review when active or passive voice fits, and how if-clauses and subjunctive wishes work, then try again.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Which sentence best meets a rubric requiring simple past active voice with the person as the subject?",
+   "choices": [
+    "The captain chose the shorter route before sunset.",
+    "The shorter route was chosen by the captain before sunset.",
+    "The captain was chosen the shorter route before sunset.",
+    "The choosing of the shorter route was done by the captain before sunset."
+   ],
+   "answerIndex": 0,
+   "explanation": "In this sentence, the captain is the grammatical subject and chose is the simple past active verb, directly showing that the captain made the choice.",
+   "difficulty": 7,
+   "skill": "Apply a rubric criterion for simple past active voice",
+   "topic": "Using Voice and Mood for Effect (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best meets a rubric requiring simple past passive voice, with the scholarship as the subject and no agent named?",
+   "choices": [
+    "The scholarship was quietly revoked after the deadline.",
+    "The scholarship was quietly revoked by the committee after the deadline.",
+    "The committee quietly revoked the scholarship after the deadline.",
+    "The scholarship is quietly revoked after the deadline."
+   ],
+   "answerIndex": 0,
+   "explanation": "The scholarship is the subject, revoked is a simple past passive verb, and no agent is identified with a by-phrase.",
+   "difficulty": 8,
+   "skill": "Apply a rubric criterion for simple past passive voice",
+   "topic": "Using Voice and Mood for Effect (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the subjunctive mood to describe a present condition that is not true?",
+   "choices": [
+    "If the bell were louder, we would hear it upstairs.",
+    "If the bell had been louder, we would have heard it upstairs.",
+    "If the bell is louder, we would hear it upstairs.",
+    "If the bell was louder, we would hear it upstairs."
+   ],
+   "answerIndex": 0,
+   "explanation": "Were expresses the present unreal condition required by the subjunctive mood in an if-clause.",
+   "difficulty": 8,
+   "skill": "Identify subjunctive mood in a present unreal condition",
+   "topic": "Using Voice and Mood for Effect (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best meets a rubric requiring simple past active voice with the student as the subject?",
+   "choices": [
+    "The freshman rewrote the essay after class.",
+    "The essay was rewritten by the freshman after class.",
+    "The freshman was rewriting the essay after class.",
+    "The rewriting of the essay was done by the freshman after class."
+   ],
+   "answerIndex": 0,
+   "explanation": "The freshman is the subject and rewrote is the simple past active verb, so the sentence directly identifies the student as the actor.",
+   "difficulty": 7,
+   "skill": "Apply a rubric criterion for active voice",
+   "topic": "Using Voice and Mood for Effect (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best meets a rubric requiring passive voice for a requirement and leaving the person responsible unnamed?",
+   "choices": [
+    "The application must be submitted before noon on Friday.",
+    "The application must be submitted by the applicant before noon on Friday.",
+    "We must submit the application before noon on Friday.",
+    "The application must submit before noon on Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive construction must be submitted focuses on the application as the thing requiring action without naming who must do it.",
+   "difficulty": 7,
+   "skill": "Evaluate passive voice for an impersonal requirement",
+   "topic": "Using Voice and Mood for Effect (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best meets a rubric calling for active voice in the main clause and subjunctive mood for a present unreal condition?",
+   "choices": [
+    "If the portal were open, the writer could submit the revision tonight.",
+    "If the portal were open, the revision could be submitted tonight.",
+    "If the portal is open, the writer could submit the revision tonight.",
+    "If the portal is open, the revision could be submitted tonight."
+   ],
+   "answerIndex": 0,
+   "explanation": "Were marks the present unreal condition, while the active main clause makes the writer the explicit doer of submit.",
+   "difficulty": 9,
+   "skill": "Combine active voice and subjunctive mood",
+   "topic": "Using Voice and Mood for Effect (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric requiring simple past passive voice with the experiment as the subject and the agent \"by the researchers\" included?",
+   "choices": [
+    "The experiment was conducted by the researchers last week.",
+    "The researchers conducted the experiment last week.",
+    "The experiment has been conducted by the researchers last week.",
+    "The experiment will be conducted by the researchers last week."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses simple past passive voice, makes the experiment the subject, and includes the agent \"by the researchers\".",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric calling for present perfect active voice with the committee as the subject?",
+   "choices": [
+    "The committee has approved the proposal.",
+    "The proposal has been approved by the committee.",
+    "The committee had approved the proposal.",
+    "The committee will approve the proposal."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses present perfect active voice and makes the committee the subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric that requires future passive voice with the report as the subject and no agent named?",
+   "choices": [
+    "The report will be published next month.",
+    "The report will publish next month.",
+    "The report is published next month.",
+    "The report was published next month."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses future passive voice, makes the report the subject, and omits an agent.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric asking for subjunctive mood expressing a present wish, using \"were\" with a singular subject?",
+   "choices": [
+    "I wish the deadline were later.",
+    "I wish the deadline was later.",
+    "I wish the deadline would be later.",
+    "I wish the deadline is later."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses the subjunctive \"were\" to express a present unreal wish with a singular subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric requiring a conditional main clause (\"would\" + base verb) with an if‑clause in simple past for a hypothetical future situation?",
+   "choices": [
+    "If the team practiced more, they would win the championship.",
+    "If the team practices more, they will win the championship.",
+    "If the team had practiced more, they would have won the championship.",
+    "If the team practices more, they would win the championship."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence pairs a simple‑past if‑clause with a \"would\" conditional main clause to show a hypothetical future.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric that calls for an imperative mood in active voice addressing the reader directly?",
+   "choices": [
+    "Submit your draft by Friday.",
+    "Your draft should be submitted by Friday.",
+    "The draft is submitted by Friday.",
+    "You will submit your draft by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses the imperative mood in active voice to give a direct command to the reader.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric that requires simple past passive voice with \"the manuscript\" as the subject and includes the agent \"by the editor\"?",
+   "choices": [
+    "The manuscript was revised by the editor yesterday.",
+    "The editor revised the manuscript yesterday.",
+    "The manuscript is revised by the editor yesterday.",
+    "The manuscript had been revised by the editor yesterday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses simple past passive construction (was + past participle) with the required subject and agent.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for present subjunctive mood in a that‑clause expressing a recommendation, with \"the council\" as the subject?",
+   "choices": [
+    "It is essential that the council approve the plan.",
+    "It is essential that the council approves the plan.",
+    "It is essential that the council should approve the plan.",
+    "It is essential that the council approved the plan."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive mood uses the base form \"approve\" after \"essential that\", matching the rubric.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric requiring future perfect active voice with \"the team\" as the subject?",
+   "choices": [
+    "The team will have completed the project by Friday.",
+    "The team will complete the project by Friday.",
+    "The team has completed the project by Friday.",
+    "The team would have completed the project by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "Future perfect active is formed with \"will have\" plus the past participle, satisfying the rubric.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence matches a rubric that asks for a counterfactual past conditional: an if‑clause in past perfect and a main clause with \"would have\" + past participle?",
+   "choices": [
+    "If the data had been accurate, the model would have predicted the outcome.",
+    "If the data were accurate, the model would predict the outcome.",
+    "If the data was accurate, the model would have predicted the outcome.",
+    "If the data had been accurate, the model predicts the outcome."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence correctly pairs a past‑perfect if‑clause with a \"would have\" perfect conditional main clause.",
+   "difficulty": 9,
+   "skill": "Voice and Mood Selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for present perfect passive voice with \"the results\" as the subject and no agent mentioned?",
+   "choices": [
+    "The results have been analyzed.",
+    "The results are analyzed.",
+    "The results were analyzed.",
+    "The results will have been analyzed."
+   ],
+   "answerIndex": 0,
+   "explanation": "Present perfect passive is formed with \"have been\" plus the past participle, matching the rubric’s specifications.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric requiring simple past active voice with “the journalist” as the subject?",
+   "choices": [
+    "The journalist published the article yesterday.",
+    "The article was published by the journalist yesterday.",
+    "The journalist has published the article yesterday.",
+    "Yesterday the article is published by the journalist."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses simple past active voice with the journalist as the subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric calling for present passive voice with “the proposal” as the subject and no agent named?",
+   "choices": [
+    "The proposal is reviewed regularly.",
+    "The proposal was reviewed regularly.",
+    "The committee reviews the proposal regularly.",
+    "The proposal has been reviewed regularly."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses present passive voice with the proposal as subject and omits the agent.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric that requires subjunctive mood in a that‑clause expressing a demand, with “the director” as the subject?",
+   "choices": [
+    "It is required that the director approve the budget.",
+    "It is required that the director approves the budget.",
+    "The director is required to approve the budget.",
+    "It was required that the director approved the budget."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses the present subjunctive “approve” in a that‑clause after a demand expression.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence matches a rubric asking for future perfect passive voice with “the results” as the subject and no agent mentioned?",
+   "choices": [
+    "The results will have been compiled by Friday.",
+    "The results will be compiled by Friday.",
+    "The results have been compiled by Friday.",
+    "The results are compiled by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses future perfect passive (“will have been compiled”) with the results as subject and no agent.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for a real conditional with an if‑clause in simple present and a main clause using “could” + base verb?",
+   "choices": [
+    "If the server runs smoothly, the backup could finish early.",
+    "If the server ran smoothly, the backup could finish early.",
+    "If the server runs smoothly, the backup can finish early.",
+    "If the server had run smoothly, the backup could have finished early."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence pairs a present‑tense if‑clause with a main clause using “could” plus the base verb, forming a real conditional.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best meets a rubric requiring past perfect active voice with the researcher as the subject?",
+   "choices": [
+    "The researcher had completed the analysis before the deadline.",
+    "The analysis had been completed by the researcher before the deadline.",
+    "The researcher completes the analysis before the deadline.",
+    "The researcher will have completed the analysis by the deadline."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses past perfect active voice with the researcher as the subject.",
+   "difficulty": 8,
+   "skill": "voice and mood selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric that calls for a real conditional with an if‑clause in simple present and a main clause using \"might\" + base verb?",
+   "choices": [
+    "If the weather improves, the event might start on time.",
+    "If the weather improved, the event might start on time.",
+    "If the weather improves, the event will start on time.",
+    "If the weather improves, the event could start on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence forms a real conditional with a present‑tense if‑clause and a main clause using might plus the base verb.",
+   "difficulty": 8,
+   "skill": "voice and mood selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric requiring subjunctive mood in a that‑clause expressing a suggestion, with the committee as the subject?",
+   "choices": [
+    "It is suggested that the committee review the policy.",
+    "It is suggested that the committee reviews the policy.",
+    "The committee is suggested to review the policy.",
+    "The committee reviews the policy as suggested."
+   ],
+   "answerIndex": 0,
+   "explanation": "The that‑clause employs the base‑form verb review, marking the subjunctive mood for a suggestion with the committee as subject.",
+   "difficulty": 8,
+   "skill": "voice and mood selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for present perfect passive voice with the data as the subject and the agent \"by the analyst\" included?",
+   "choices": [
+    "The data has been analyzed by the analyst.",
+    "The data was analyzed by the analyst.",
+    "The analyst has analyzed the data.",
+    "The data will have been analyzed by the analyst."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence is in present perfect passive voice, has the data as subject, and includes the agent by the analyst.",
+   "difficulty": 8,
+   "skill": "voice and mood selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence matches a rubric that asks for future active voice with the author as the subject using \"will write\"?",
+   "choices": [
+    "The author will write the final chapter next month.",
+    "The final chapter will be written by the author next month.",
+    "The author writes the final chapter next month.",
+    "The author would write the final chapter next month."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses future active voice with the author as subject and the modal will write.",
+   "difficulty": 8,
+   "skill": "voice and mood selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric requiring an imperative mood in passive voice using a \"let\" construction that addresses the reader indirectly?",
+   "choices": [
+    "Let the report be submitted by Friday.",
+    "Submit the report by Friday.",
+    "The report must be submitted by Friday.",
+    "Please submit the report by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The let‑construction creates a passive imperative directing that the report be submitted by Friday.",
+   "difficulty": 8,
+   "skill": "voice and mood selection",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric requiring past perfect passive voice with “the manuscript” as the subject and includes the agent “by the editor”?",
+   "choices": [
+    "The manuscript had been revised by the editor before the deadline.",
+    "The manuscript was revised by the editor before the deadline.",
+    "The editor had revised the manuscript before the deadline.",
+    "The manuscript has been revised by the editor before the deadline."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option uses the past perfect passive construction “had been revised” with the required subject and agent.",
+   "difficulty": 8,
+   "skill": "Identify past perfect passive construction with specified subject and agent",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric calling for future perfect passive voice with “the proposal” as the subject and no agent mentioned?",
+   "choices": [
+    "The proposal will be reviewed by Friday.",
+    "The proposal has been reviewed by Friday.",
+    "The proposal will have been reviewed by Friday.",
+    "The team will have reviewed the proposal by Friday."
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct option uses the future perfect passive “will have been reviewed” with the required subject and no agent.",
+   "difficulty": 8,
+   "skill": "Identify future perfect passive construction with specified subject and no agent",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence matches a rubric asking for a counterfactual past conditional using an if‑clause in the past perfect and a main clause with “could have” + past participle?",
+   "choices": [
+    "If the data had been accurate, the model would have predicted the outcome.",
+    "If the data were accurate, the model could predict the outcome.",
+    "If the data was accurate, the model could have predicted the outcome.",
+    "If the data had been accurate, the model could have predicted the outcome."
+   ],
+   "answerIndex": 3,
+   "explanation": "The correct option combines a past‑perfect if‑clause with “could have” plus a past participle in the main clause.",
+   "difficulty": 9,
+   "skill": "Identify third conditional with “could have” construction",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric requiring an imperative sentence in active voice that politely addresses the reader using “please”?",
+   "choices": [
+    "Please review the document before Friday.",
+    "Review the document before Friday.",
+    "You should review the document before Friday.",
+    "Please have the document reviewed before Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option is an active‑voice imperative that begins with “please” to address the reader politely.",
+   "difficulty": 8,
+   "skill": "Recognize polite active‑voice imperative with “please”",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric that calls for present perfect active voice with “the team” as the subject?",
+   "choices": [
+    "The team had finished the project ahead of schedule.",
+    "The team finished the project ahead of schedule.",
+    "The team has finished the project ahead of schedule.",
+    "The project has been finished by the team ahead of schedule."
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct option uses the present perfect active “has finished” with the required subject “the team.”",
+   "difficulty": 8,
+   "skill": "Identify present perfect active construction with a given subject",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric requiring past perfect passive voice with “the policy” as the subject and the agent “by the board” included?",
+   "choices": [
+    "The policy had been approved by the board before the meeting.",
+    "The policy was approved by the board before the meeting.",
+    "The board had approved the policy before the meeting.",
+    "The policy has been approved by the board before the meeting."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses past perfect passive construction (“had been approved”) with “the policy” as subject and includes the agent “by the board.”",
+   "difficulty": 8,
+   "skill": "Voice and Mood",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for future passive voice with “the schedule” as the subject and the agent “by the coordinator” included?",
+   "choices": [
+    "The schedule will be posted by the coordinator tomorrow.",
+    "The schedule is posted by the coordinator tomorrow.",
+    "The coordinator will post the schedule tomorrow.",
+    "The schedule will have been posted by the coordinator tomorrow."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses future passive (“will be posted”) with “the schedule” as subject and names the agent “by the coordinator.”",
+   "difficulty": 8,
+   "skill": "Voice and Mood",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric that requires subjunctive mood expressing a present wish with a plural subject using “were”?",
+   "choices": [
+    "I wish the guidelines were clearer.",
+    "I wish the guidelines was clearer.",
+    "I hope the guidelines are clearer.",
+    "If the guidelines were clearer, I would understand."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses the present‑wish subjunctive (“were”) with a plural subject (“the guidelines”).",
+   "difficulty": 8,
+   "skill": "Voice and Mood",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric requiring present perfect passive voice with “the budget” as the subject and the agent “by the treasurer” included?",
+   "choices": [
+    "The budget has been reviewed by the treasurer.",
+    "The budget was reviewed by the treasurer.",
+    "The treasurer has reviewed the budget.",
+    "The budget is reviewed by the treasurer."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses present perfect passive (“has been reviewed”) with “the budget” as subject and includes the agent “by the treasurer.”",
+   "difficulty": 8,
+   "skill": "Voice and Mood",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for an imperative passive construction using “let” that addresses the reader indirectly and has “the minutes” as the object?",
+   "choices": [
+    "Let the minutes be recorded by the secretary.",
+    "Let the minutes recorded by the secretary.",
+    "Have the minutes recorded by the secretary.",
+    "The minutes should be recorded by the secretary."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses the “let” imperative passive (“Let the minutes be recorded”) with “the minutes” as the object and includes the agent “by the secretary.”",
+   "difficulty": 8,
+   "skill": "Voice and Mood",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric requiring future perfect active voice with “the committee” as the subject?",
+   "choices": [
+    "The committee will have decided the issue by Friday.",
+    "The committee will decide the issue by Friday.",
+    "The committee has decided the issue by Friday.",
+    "The committee would have decided the issue by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses future perfect active (“will have decided”) with “the committee” as the subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric requiring simple present active voice with the teacher as the subject?",
+   "choices": [
+    "The teacher explains the concept clearly.",
+    "The concept is explained clearly by the teacher.",
+    "The teacher will explain the concept clearly.",
+    "The teacher has explained the concept clearly."
+   ],
+   "answerIndex": 0,
+   "explanation": "The teacher explains the concept clearly is in simple present active voice with the teacher as the subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric calling for past perfect passive voice with the hypothesis as the subject and the agent 'by the scientists' included?",
+   "choices": [
+    "The hypothesis had been tested by the scientists before the conference.",
+    "The hypothesis was tested by the scientists before the conference.",
+    "The hypothesis has been tested by the scientists before the conference.",
+    "The hypothesis will have been tested by the scientists before the conference."
+   ],
+   "answerIndex": 0,
+   "explanation": "The hypothesis had been tested by the scientists before the conference uses past perfect passive voice with the hypothesis as subject and includes the agent by the scientists.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric that asks for a real conditional with an if‑clause in simple present and a main clause using 'will' + base verb?",
+   "choices": [
+    "If the library opens early, the students will study there.",
+    "If the library opened early, the students would study there.",
+    "If the library opens early, the students would study there.",
+    "If the library will open early, the students will study there."
+   ],
+   "answerIndex": 0,
+   "explanation": "If the library opens early, the students will study there is a real conditional with a simple‑present if‑clause and a will‑future main clause.",
+   "difficulty": 9,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence matches a rubric requiring subjunctive mood expressing a present wish with a singular subject using 'were'?",
+   "choices": [
+    "She wishes the schedule were flexible.",
+    "She wishes the schedule was flexible.",
+    "She wishes the schedule is flexible.",
+    "She wishes the schedule would be flexible."
+   ],
+   "answerIndex": 0,
+   "explanation": "She wishes the schedule were flexible expresses a present wish in the subjunctive mood using were with a singular subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric calling for an imperative mood in passive voice using a 'let' construction that addresses the reader indirectly with 'the application' as the subject?",
+   "choices": [
+    "Let the application be submitted by noon.",
+    "Submit the application by noon.",
+    "The application should be submitted by noon.",
+    "Let the application submit by noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "Let the application be submitted by noon is an imperative passive construction using let that indirectly addresses the reader with the application as subject.",
+   "difficulty": 7,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric requiring future perfect passive voice with the findings as the subject and no agent mentioned?",
+   "choices": [
+    "The findings will have been verified by next week.",
+    "The findings will be verified by next week.",
+    "The findings have been verified by next week.",
+    "The findings are verified by next week."
+   ],
+   "answerIndex": 0,
+   "explanation": "The findings will have been verified by next week employs future perfect passive voice with the findings as subject and no agent mentioned.",
+   "difficulty": 9,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best meets a rubric requiring present continuous active voice with \"the analyst\" as the subject?",
+   "choices": [
+    "The analyst is reviewing the data right now.",
+    "The data is being reviewed by the analyst right now.",
+    "The analyst reviewed the data yesterday.",
+    "The analyst will review the data tomorrow."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option uses present continuous active voice with \"the analyst\" as the subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric calling for past continuous passive voice with \"the report\" as the subject and the agent \"by the editor\" included?",
+   "choices": [
+    "The report was being edited by the editor when the power failed.",
+    "The editor was editing the report when the power failed.",
+    "The report had been edited by the editor before the deadline.",
+    "The report will be edited by the editor tomorrow."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option uses past continuous passive voice with \"the report\" as the subject and includes the agent \"by the editor\".",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric requiring future continuous active voice with \"the team\" as the subject?",
+   "choices": [
+    "The team will be presenting the findings at the conference next week.",
+    "The findings will be presented by the team at the conference next week.",
+    "The team presented the findings at the conference last week.",
+    "The team presents the findings at the conference every year."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option uses future continuous active voice with \"the team\" as the subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric that asks for a present subjunctive in a that‑clause expressing a wish, using the base form \"be\" with a singular subject?",
+   "choices": [
+    "I wish that she be allowed to attend the workshop.",
+    "I wish that she was allowed to attend the workshop.",
+    "I wish that she were allowed to attend the workshop.",
+    "I wish that she is allowed to attend the workshop."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option uses the present subjunctive \"be\" in a that‑clause expressing a wish with a singular subject.",
+   "difficulty": 8,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence matches a rubric asking for a counterfactual past conditional with an if‑clause in past perfect and a main clause using \"might have\" + past participle?",
+   "choices": [
+    "If the data had been accurate, the model might have predicted the outcome.",
+    "If the data were accurate, the model might predict the outcome.",
+    "If the data had been accurate, the model would predict the outcome.",
+    "If the data is accurate, the model might have predicted the outcome."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option uses a past‑perfect if‑clause and a main clause with \"might have\" plus a past participle, forming a counterfactual past conditional.",
+   "difficulty": 9,
+   "skill": "Voice and Mood Application",
+   "topic": "Write Your Own (Rubric Check) - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which sentence satisfies a rubric requiring a negative imperative in active voice that directly addresses the reader?",
+   "choices": [
+    "Never share your password.",
+    "You should never share your password.",
+    "Your password must not be shared.",
+    "Sharing your password is prohibited."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence is a direct negative imperative in active voice addressing the reader.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence satisfies a rubric requiring a negative imperative in active voice that directly addresses the reader?",
+   "choices": [
+    "Do not submit the form until it is signed.",
+    "Don't submit the form until it is signed.",
+    "You must not submit the form until it is signed.",
+    "The form must not be submitted until it is signed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses the negative imperative \"Do not\" with an active verb, directly addressing the reader as required.",
+   "reason": "A: not exactly one correct (Both options 0 and 1 are grammatical negative imperatives; the rubric does not specify a preference.) | B: not exactly one correct (Options 0 and 1 are both negative imperatives in the active voice addressed to the reader; contraction does not disqualify option 1.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence fulfills a rubric that requires a mandative subjunctive in a that‑clause expressing necessity, with “the director” as the subject and the verb “be”?",
+   "choices": [
+    "It is vital that the director is notified immediately.",
+    "It is vital that the director be notified immediately.",
+    "It is vital that the director should be notified immediately.",
+    "It was vital that the director was notified immediately."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct option uses the subjunctive form “be” after “that” to express necessity.",
+   "reason": "B: not exactly one correct (Options 1 and 2 are both defensible mandative constructions: “the director be notified” uses the bare infinitive, while “the director should)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence satisfies a rubric requiring an imperative passive construction using \"be\" that directly addresses the reader?",
+   "choices": [
+    "Be submitted by Friday.",
+    "Let the report be submitted by Friday.",
+    "Submit the report by Friday.",
+    "The report must be submitted by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option is an imperative passive formed with \"be\" that directly addresses the reader.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence best meets a rubric requiring active voice with the volunteer as the main-clause subject and subjunctive mood in an if-clause expressing a present unreal condition?",
+   "choices": [
+    "If the laboratory is closed, the volunteer could finish the inventory tomorrow.",
+    "If the laboratory were closed, the volunteer could finish the inventory tomorrow.",
+    "If the laboratory were closed, the inventory could be finished tomorrow.",
+    "If the laboratory had been closed, the volunteer could finish the inventory tomorrow."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence uses the subjunctive were in the if-clause and keeps the main clause active with the volunteer as its subject.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence best meets a rubric requiring a that-clause expressing necessity, subjunctive mood, the witness as its subject, and the base-form verb remain?",
+   "choices": [
+    "It is vital that the witness remains seated throughout the hearing.",
+    "It is vital that the witness should remain seated throughout the hearing.",
+    "It is vital that the witness remain seated throughout the hearing.",
+    "It is vital that the witness remained seated throughout the hearing."
+   ],
+   "answerIndex": 2,
+   "explanation": "This sentence places the base-form verb remain after that in a that-clause expressing necessity, which is the required subjunctive form.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence best meets a rubric requiring a mixed conditional with a past-perfect if-clause and would plus a base-form verb in the main clause to describe a present result?",
+   "choices": [
+    "If the engine fails, the pilot would be circling the airport now.",
+    "If the engine had failed, the pilot would have circled the airport now.",
+    "If the engine was to fail, the pilot would be circling the airport now.",
+    "If the engine had failed, the pilot would be circling the airport now."
+   ],
+   "answerIndex": 3,
+   "explanation": "This sentence combines a past-perfect if-clause with would plus a base-form verb in the main clause to describe a present result.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

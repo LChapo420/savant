@@ -1,0 +1,148 @@
+{
+  "subject": "basketball",
+  "version": 1,
+  "status": "STAGED, not live. Owner approval needed (see curriculum-build/SKILL-CURRICULA.md, section 9).",
+  "doc": "Novice-to-elite progression for the playing path B01-B08, the high-level path B09-B13 (with coaching, officiating, analytics and front-office tracks) and B14-B15. Each stage maps onto existing grades (content/basketball-grades.js). Basketball is learned on the court: the app proves what it can measure (decisions on clips, knowledge, counted makes and dribbles the learner confirms, filmed sets), compares physical numbers only with the learner's own baseline, and never gates a child on athletic measures. Ruleset: FIBA Official Basketball Rules 2026 v1.0 is the default (worldwide, mini to Olympic); NBA, WNBA, NCAA and NFHS differences are named where taught. Numbers marked [R] are design values to be normed.",
+  "evidence_tags": { "V": "opened and read", "S": "search summary only", "P": "Savant's earlier research (curriculum-build/basketball/research)", "L": "computed or checked by code in this folder (rulebook text, binomial power)", "R": "design inference" },
+  "sources": {
+    "fiba2026": { "cite": "FIBA Official Basketball Rules 2026 v1.0 (assets.fiba.basketball ... official-rules-2026-v1-0.pdf), text checked by code", "tag": "L" },
+    "nbarules": { "cite": "NBA Official Rulebook 2025-26, official.nba.com rule pages 1, 5, 7, 12, text checked by code", "tag": "L" },
+    "nbayouth": { "cite": "NBA & USA Basketball Youth Guidelines (youthguidelines.nba.com): weekly maxima 3/5/10/14 h, rest days 2/2/1/1, specialisation not before 14", "tag": "L" },
+    "chua2021": { "cite": "Chua, Jimenez-Diaz, Lewthwaite, Kim & Wulf (2021) Psych Bull: external focus beats internal for retention g=0.58 and transfer g=0.58", "tag": "P" },
+    "shamshiri2025": { "cite": "Shamshiri et al. (2025) jump shot, novices: blocked best in acquisition, differential learning best transfer", "tag": "P" },
+    "increasing_ci": { "cite": "9-week RCT, 106 novices: increasing schedule (blocked -> serial -> random) best for basketball skills", "tag": "P" },
+    "rojas2000": { "cite": "Rojas et al. (2000) Ergonomics: a defender changes jump-shot kinematics", "tag": "P" },
+    "abad2020": { "cite": "Abad Robles et al. (2020) meta-analysis: game-based approaches improve decision making (ES 0.89) not execution", "tag": "P" },
+    "zhu2024": { "cite": "Zhu et al. (2024): perceptual-cognitive training lab ES 1.51 v game transfer 0.65; sport-specific stimuli", "tag": "P" },
+    "rosch2021": { "cite": "Rosch, Schultz & Honer (2021) IJERPH 18(5):2331, video-based 4v4 passing-decision test: split-half reliability accuracy r=0.92, RT r=0.84; German U16 national team 84.0% v sports-class 57.4%; 10% more accuracy tripled the odds of elite status (https://pmc.ncbi.nlm.nih.gov/articles/PMC7967709)", "tag": "V" },
+    "tran2008": { "cite": "Tran & Silverberg (2008) J Sports Sci 26(11) 1147-1155: simulated free throws, launch ~52 deg, up to 3 Hz backspin, aim toward the back of the ring, release as high as consistency allows (model: 70% shooter, 2.134 m release)", "tag": "V" },
+    "li2025ssg": { "cite": "Li et al. (2025) Biol Sport: 1v1 and 2v2 give more technical actions than 3v3/4v4", "tag": "P" },
+    "mckay2021": { "cite": "McKay et al. (2021): reduced feedback frequency has no robust effect; self-controlled feedback helps retention (Wang 2025)", "tag": "P" },
+    "schussler2024": { "cite": "Schussler et al. (2024): self + expert video beats either alone", "tag": "P" },
+    "longo2012": { "cite": "Longo et al. (2012) FIFA 11+ in basketball: injuries 0.95 v 2.16 per 1,000 exposures", "tag": "P" },
+    "rae": { "cite": "Relative-age effect in youth basketball selection (Deng 2025, Bilgic 2025, Irid 2026)", "tag": "P" },
+    "gullich2022": { "cite": "Gullich, Macnamara & Hambrick (2022): world-class adults did more childhood multisport practice", "tag": "P" },
+    "guadagnoli2004": { "cite": "Guadagnoli & Lee (2004) challenge point framework", "tag": "S" },
+    "posecv": { "cite": "2D pose angle errors ~6-7 deg at best and strongly view-dependent (Duvelek 2026; Oliosi 2026; Edriss 2025)", "tag": "P" }
+  },
+  "competence_model": {
+    "components": [
+      { "id": "movement", "what": "Run, stop, jump, land, change direction with control", "evidence": "coach/parent/learner checklist on clips; camera pose 'estimated' flags (never a gate for minors)", "source": "self + camera(estimated)" },
+      { "id": "ball_skills", "what": "Handling, passing, shooting, finishing with both hands", "evidence": "counted sets (makes/attempts by zone and hand, dribbles in 30 s), learner-confirmed; camera make/miss and dribble counts as estimates the learner can correct", "source": "tap + camera(estimated) + audio(estimated)" },
+      { "id": "shooting_form", "what": "Balance, set point, release, follow-through", "evidence": "side-on filmed set from a prescribed spot; pose metrics compared only with the learner's own earlier takes from the same spot", "source": "camera(estimated) + self" },
+      { "id": "decisions", "what": "Reads and choices in game situations", "evidence": "decision clips (pause, predict, choose; Basketball_Play / Check_Play), accuracy and response time; then the same cue in a small-sided game, logged", "source": "screen" },
+      { "id": "defence_team", "what": "On-ball and team defence, spacing, transition", "evidence": "clip reads plus film self-review with anchor clips; optional coach/teammate confirmation; NOT machine-graded in live play", "source": "screen + self + human" },
+      { "id": "knowledge", "what": "Rules (named ruleset), concepts, analytics, history", "evidence": "unit bank through unit_belief", "source": "items" },
+      { "id": "health_load", "what": "Warm-up, landing, load, sleep, pain and concussion rules", "evidence": "session logs: warm-up done, sRPE x minutes same day, pain check; weekly totals against the age caps", "source": "self-log" }
+    ]
+  },
+  "gate_rules": {
+    "proof_only": "Skips and passes need measured evidence. Counts the learner confirms are evidence; a bare 'I can do it' is not.",
+    "cold": "Skill gates use the first scored set after the warm-up on a day 20+ hours after that skill's last practice (day-2 cold test; research/02 'two-day cadence').",
+    "two_sessions": "Every counted gate is spread over at least two sessions on different days.",
+    "proportion_gate": "A make-rate gate passes when the Beta(1+makes, 1+misses) posterior gives P(true rate >= threshold) >= the gate confidence (0.9 for 20-attempt gates, 0.8 for longer ones) with at least n_min attempts, re-checked after every cold set of 10. verify-skill-curricula.js computes, for every gate, the makes needed and simulates the sequential checking: a shooter 10 points below the threshold passes by luck in about 3% or fewer of cases, one 10 points above passes in about 97-99% (L; basketball/drills.json). The per-gate numbers below are shorthand for this rule.",
+    "own_baseline": "Athletic numbers (jump, sprint, agility) are never gates and never ranked against others; growth against the learner's own baseline only (rae).",
+    "camera_honesty": "Camera and pose outputs are labelled 'estimated', editable, and never the only evidence for a gate (posecv). Defence and live decisions are never machine-graded.",
+    "ruleset": "Rules items name the body. The default is FIBA 2026; a learner who sets their league (NBA/WNBA, NCAA, NFHS) gets that body's items and a 'differences' unit."
+  },
+  "stages": [
+    { "id": "BB0", "name": "Ball explorer", "grades": ["basketball_ball_explorer"], "draft": "B01", "who": "Ages 3-6 or adult day one",
+      "objectives": ["Runs, stops, jumps and lands softly; balances on one foot", "Throws, catches and bounces a soft ball with either hand", "Scores into a low target; knows our basket and theirs", "Stops and tells a grown-up when something hurts or after a head bump"],
+      "exit": { "performance": [
+        { "metric": "catch_and_bounce", "test": "10 catches from a soft toss; 10 bounces each hand", "threshold": "growth from own baseline; shown, not gated", "source": "self/parent count" },
+        { "metric": "low_target", "test": "throws into a low ring/bucket from 1 step", "threshold": "logged; no gate", "source": "count" },
+        { "metric": "safety_rule", "test": "says or shows what to do when it hurts", "threshold": "right on two days (voice/tap)", "source": "tap" } ] },
+      "practice": { "session_minutes": "10-20 play, parent present", "mix": { "movement_games": 0.4, "ball_games": 0.45, "safety_and_fun": 0.15 } },
+      "feedback": ["Voice-led, praise effort and specific success, external cues ('make the ball land in the bucket')"],
+      "evidence": ["chua2021", "gullich2022"] },
+    { "id": "BB1", "name": "Mini starter", "grades": ["basketball_mini_starter"], "draft": "B02", "who": "Ages 6-8 mini-basketball, low ring, small ball",
+      "objectives": ["Jump stop, stride stop, pivots and triple threat", "Dribbles with either hand while looking up; chest and bounce passes", "Lay-up from one and two steps; one-hand form shooting at a low ring", "2v1 choices: pass, shoot or dribble; travel and double dribble"],
+      "exit": { "performance": [
+        { "metric": "layup_both_hands", "test": "lay-ups at a low ring, 10 per hand over 2 sessions", "threshold": "P(rate >= 0.5) >= 0.9 for EACH hand, n >= 20 per hand", "source": "count (camera estimate optional)", "tag": "R" },
+        { "metric": "dribble_look_up", "test": "30 s dribble each hand while calling out a held-up number", "threshold": "weak hand count >= 70% of strong hand (own ratio, not absolute)", "source": "count / audio estimate", "tag": "R" },
+        { "metric": "decisions_2v1", "test": "10 clips/diagrams: pass, shoot or dribble", "threshold": ">= 8/10", "source": "screen", "tag": "R" },
+        { "metric": "rules_basics", "test": "travel, double dribble, out of bounds items", "threshold": "unit_belief", "source": "items" } ] },
+      "practice": { "session_minutes": "30-60, 1-2 a week (NBA youth: ages 7-8 1 practice of 30-60 min, max 3 h/week, 2 rest days)", "mix": { "movement_footwork_athletic": 0.33, "ball_skills": 0.37, "defence": 0.08, "small_games_decisions": 0.08, "rules": 0.05, "health_mental": 0.09 } },
+      "feedback": ["Summary after each set; learner may ask for a video replay", "One external cue per skill"],
+      "evidence": ["nbayouth", "chua2021", "li2025ssg"] },
+    { "id": "BB2", "name": "Mini player", "grades": ["basketball_mini_player"], "draft": "B03", "who": "Ages 8-10, 3v3 and 4v4",
+      "objectives": ["One-hand form shots from 1 m with a guide hand", "Give-and-go, cut and fill, 2v1 and 3v2 fast breaks", "Keep a gap and slide to stay in front; everyone guards their own player", "Neuromuscular warm-up and the pain/head-knock rule every session"],
+      "exit": { "performance": [
+        { "metric": "form_shots_1m", "test": "one-hand form shots from 1 m at the age's ring, 2 sessions", "threshold": "P(rate >= 0.6) >= 0.8, n >= 40", "source": "count", "tag": "R" },
+        { "metric": "layups_both_hands_full_ring_or_age_ring", "test": "lay-ups off a dribble, each hand", "threshold": "P(rate >= 0.6) >= 0.9 per hand, n >= 20 per hand", "source": "count", "tag": "R" },
+        { "metric": "decision_clips", "test": "3v3 reads (open teammate, cut, fill)", "threshold": ">= 80% on 15 clips", "source": "screen", "tag": "R" },
+        { "metric": "warmup_habit", "test": "warm-up logged before court sessions", "threshold": ">= 90% of sessions over 4 weeks (habit, not skill; shown not gated)", "source": "log" } ] },
+      "practice": { "session_minutes": "45-75, 2 a week max 5 h (ages 9-11), 2 rest days", "mix": { "movement_footwork_athletic": 0.3, "ball_skills": 0.38, "defence": 0.1, "small_games_decisions": 0.1, "rules": 0.05, "health_mental": 0.07 }, "schedule": "increasing contextual interference: blocked until a set's success >= 70%, then serial, then random (spots, hands, passes)" },
+      "evidence": ["increasing_ci", "longo2012", "nbayouth"] },
+    { "id": "BB3", "name": "Junior club player", "grades": ["basketball_junior_club_player"], "draft": "B04", "who": "Ages 10-12, first 5v5 man-to-man",
+      "objectives": ["Crossover and first-step moves; Mikan drill; full-speed lay-ups both sides", "Free-throw routine; closeouts; box out", "Spacing and drive-and-kick; block v charge", "Box score and shooting percentages from own games"],
+      "exit": { "performance": [
+        { "metric": "free_throws", "test": "free throws at the age's line and ring, routine every shot, 3 sessions", "threshold": "P(rate >= 0.5) >= 0.8, n >= 60", "source": "count", "tag": "R" },
+        { "metric": "mikan_30s", "test": "Mikan drill makes in 30 s", "threshold": "growth over own baseline >= 20% (shown); the gate is lay-ups both hands as BB2 at full speed", "source": "count", "tag": "R" },
+        { "metric": "decision_clips", "test": "drive-and-kick, help, closeout reads (Rosch-style 4v4 first-person clips)", "threshold": ">= 80% on 18 clips, response time within the learner's band", "source": "screen", "tag": "R" },
+        { "metric": "film_it", "test": "filmed set rated against anchor clips (form, footwork)", "threshold": "completed with self-rating; optional coach confirmation", "source": "camera + self" } ] },
+      "practice": { "session_minutes": "60-90, 2-4 a week, max 10 h/week (ages 12-14 bands), 1 rest day", "mix": { "movement_footwork_athletic": 0.15, "ball_skills": 0.33, "defence": 0.15, "team_decisions": 0.18, "rules": 0.05, "health_mental": 0.1, "knowledge": 0.04 } },
+      "evidence": ["rosch2021", "abad2020", "rojas2000"] },
+    { "id": "BB4-5", "name": "Youth team player to youth advanced", "grades": ["basketball_youth_team_player", "basketball_youth_advanced"], "draft": "B05-B06",
+      "who": "Ages 12-16, full-size ring",
+      "objectives": ["Jump shot from set shot; catch-and-shoot off cuts; shoot off screens and hand-offs", "Ball screens as handler and screener; read help and second line", "Help-side defence, ball-screen coverage, zones", "Shot clocks and game rules by league; eFG% and TS% from own log"],
+      "exit": { "performance": [
+        { "metric": "spot_shooting_by_zone", "test": "5 spots, catch-and-shoot, 3 sessions; the zone's own threshold (mid-range, then 3-point once the age's line is reached)", "threshold": "P(rate >= zone threshold) >= 0.8, n >= 50 per zone; thresholds normed by age band [R]", "source": "count (+ camera shot chart as estimate)", "tag": "R" },
+        { "metric": "free_throws", "test": "FIBA line (5.80 m from the inner edge of the endline)", "threshold": "P(rate >= 0.65) >= 0.8, n >= 100", "source": "count", "tag": "R" },
+        { "metric": "decision_clips", "test": "ball-screen, help and transition reads", "threshold": ">= 80% on 24 clips", "source": "screen", "tag": "R" },
+        { "metric": "game_showcase", "test": "a logged game with film self-review against the rubric", "threshold": "completed; reads rated; coach confirmation optional", "source": "film + self" } ] },
+      "practice": { "mix": { "movement_footwork_athletic": 0.15, "ball_skills": 0.32, "defence": 0.15, "team_decisions": 0.18, "rules": 0.05, "health_mental": 0.1, "knowledge": 0.05 }, "schedule": "varied practice from the start for experienced learners; each technique ends under a defender, decision or fatigue constraint" },
+      "evidence": ["rojas2000", "tran2008", "rosch2021"] },
+    { "id": "BB6-7", "name": "Varsity to elite junior", "grades": ["basketball_varsity", "basketball_elite_junior"], "draft": "B07-B08",
+      "objectives": ["Shot diet toward rim, free throws and corner threes", "Full ball-screen and off-ball systems; recognition of man, zone, press, junk", "Imagery, routines, return-to-play steps", "Self-scouting with shot charts"],
+      "exit": { "performance": [
+        { "metric": "shooting_profile", "test": "logged game and practice shots by zone over 4+ weeks", "threshold": "posterior zone rates shown with intervals; gates as BB4-5 at varsity thresholds [R]", "source": "count + camera estimate" },
+        { "metric": "decision_clips", "test": "varsity-level clips", "threshold": ">= 80% on 30 clips", "source": "screen" },
+        { "metric": "film_review", "test": "own game film reviewed against anchor clips; 5 reads tagged with the curriculum's names", "threshold": "completed; coach confirmation recommended", "source": "film + human" } ] },
+      "evidence": ["zhu2024", "schussler2024"] },
+    { "id": "BB8-12", "name": "Collegiate to All-Star and Olympic (taught as what such players, coaches, referees and executives know and do)", "grades": ["basketball_collegiate", "basketball_high_major", "basketball_professional", "basketball_elite_professional", "basketball_all_star_and_olympic"], "draft": "B09-B13",
+      "objectives": ["Systems, scouting, analytics, officiating, coaching and front-office tasks at that level"],
+      "exit": { "performance": [
+        { "metric": "applied_tasks", "test": "scouting report, game plan, officiating clip test, analytics project", "threshold": "rubric + verifiable computations", "source": "screen" },
+        { "metric": "external_stats", "test": "imported game stats (if the learner plays)", "threshold": "shown, never required", "source": "import" } ] },
+      "honesty": "No selection, scholarship or pro claims (NCAA: 3.6% of US high-school boys' players play NCAA; ~1% of NCAA men are drafted, research/02 section 4)." }
+  ],
+  "decision_clip_test_design": {
+    "doc": "Every decision clip set follows the validated format of rosch2021 where it can: first-person view, pause at the moment of decision, 4 options (right/left, inside/outside or pass/shoot/drive/reset), each clip shown twice in random blocks, accuracy primary, response time secondary. Without licensed real clips, the app's SVG court (Basketball_Play) renders the situations; transfer from screen to court is smaller than in-app scores (zhu2024), so each decision lesson ends with a small-sided game on court that uses the same cue, logged.",
+    "reliability_target": "split-half (Spearman-Brown) >= 0.8 for any clip set used as a gate, measured after 100 learners; sets that miss it are practice only [R]"
+  },
+  "practice_engine": {
+    "two_day_lessons": "Day A: 5-8 min screen (model clip, ONE external cue, why/when) -> warm-up -> court session card -> log. Day B: warm-up -> cold first scored set (the retention score) -> clip recall.",
+    "contextual_interference": "Novices: blocked until a set's success reaches ~70%, then serial, then random (spots, hands, passes); experienced learners varied from the start (increasing_ci, shamshiri2025).",
+    "challenge_point": "Shooting distance, defender pressure and time limits are set so practice success sits around 50-70%; in-practice percentages are never used as gates (guadagnoli2004).",
+    "representative": "Every technique lesson ends under a defender, a decision or fatigue (rojas2000).",
+    "small_sided": "1v1-3v3 games are the default transfer activity (li2025ssg).",
+    "aim_cue": "Shooting cues name a target outside the body. Aim language follows tran2008: the ball should drop past the front of the rim toward the middle-to-back of the ring, not 'just over the front rim' (see lesson-changes.json).",
+    "load": "Weekly organised hours capped by age (3/5/10/14 h for 7-8/9-11/12-14/high school), minimum rest days 2/2/1/1, sRPE x minutes logged the same day (nbayouth). Other sports count toward load and earn credit under 14.",
+    "safety": "Mandatory 10-15 min 11+-style warm-up before court work; pain that changes movement = stop; head knock with any symptom = out for the day and clinician clearance."
+  },
+  "feedback_rules": [
+    "Summary after a set, not after every rep; the learner can request a video review at any time (mckay2021)",
+    "One external, preferably distal cue at a time ('swish toward the back of the rim', 'push the floor away') (chua2021)",
+    "Self + model video side by side, reused across the grade (schussler2024)",
+    "Camera numbers say 'estimated' and can be corrected; unsure shots are asked about, not guessed"
+  ],
+  "adaptation": {
+    "levers": [
+      { "id": "entry", "rule": "Placement mixes 3 decision-clip checks, 2 knowledge checks, 3 court baselines (form-shot set, 30 s dribble count each hand, lay-ups both hands) and a readiness/health screen. Court baselines become the 'before' numbers; a high baseline can place later, but each skipped unit still needs knowledge proof and the stage's counted gates." },
+      { "id": "probe_first", "rule": "Each motor lesson opens with the day-B style cold set as a probe (e.g., 10 shots from the lesson's spot); passing the lesson's proportion gate over two sessions marks it known; otherwise the full lesson runs." },
+      { "id": "difficulty", "rule": "Distance, defender and time pressure step up when a set's success > 70% and down when < 40% (challenge point)." },
+      { "id": "miss_pattern", "rule": "Logged miss directions (short/long/left/right, from the learner's tap or the camera estimate) route to the matching fix drill: short -> legs/arc, long -> softer touch/arc, left/right -> alignment; one cue at a time." },
+      { "id": "weak_hand", "rule": "When weak-hand counts are below 70% of strong-hand counts, weak-hand reps get 2:1 priority in ball-handling and finishing sets until the ratio closes." },
+      { "id": "access", "rule": "No hoop, no partner, indoor only, limited time: the session card swaps to equivalent drills (wall passes, tape targets, ghost drills, imagery) without removing any objective; objectives that need a hoop wait in the queue and are flagged." },
+      { "id": "load_and_age", "rule": "Age caps and rest days override every other lever; streaks count rest, imagery and clip days." },
+      { "id": "role_preference", "rule": "From B05 the learner can weight guard, wing or post skills in electives; core objectives stay." },
+      { "id": "ruleset", "rule": "Rules items follow the learner's league (default FIBA)." }
+    ],
+    "never": ["Never gate or rank a child on athletic numbers", "Never treat a camera estimate as the only proof", "Never exceed the age's weekly cap or skip rest days", "Never machine-grade defence or live decisions"]
+  },
+  "needs_from_other_builds": [
+    { "from": "basketball pose agent (MediaPipe in public/engine/basketball, services/basketball-checks.js)", "need": "the event shape {t, kind: shot|dribble|hit, x, y, made?, confidence, source} per SKILL-APPS-MECHANICS 4, so gates can read confirmed counts and keep camera estimates separate; release-frame and miss-direction estimates for the miss_pattern lever" },
+    { "from": "content owner", "need": "licensed or self-filmed decision clips; until then SVG court scenes" }
+  ]
+}

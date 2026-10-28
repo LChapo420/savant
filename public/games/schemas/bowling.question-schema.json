@@ -1,0 +1,63 @@
+{
+  "engineId": "bowling",
+  "displayName": "Bowling",
+  "difficulty": "low",
+  "mechanic": "Ten-frame bowling with user-selected lane starting position, throw angle and power. Ball-to-pin and pin-to-pin physics knock pins down. Correct question unlocks each ball; wrong retries. Two balls per frame and earned tenth-frame bonus ball.",
+  "questionType": "multiple_choice",
+  "questionCount": 50,
+  "questionCountNote": "50 unique questions per level. A round only ever moves forward through them: losing, answering wrong, or pressing Play again continues at the next unseen question, so the pool must outlast many rounds.",
+  "choicesPerQuestion": 4,
+  "answerIndexRange": [
+    0,
+    3
+  ],
+  "difficultyScale": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat",
+    "label": "low"
+  },
+  "requiresExplanation": true,
+  "requiresTopicTag": true,
+  "plainTextOnly": true,
+  "distractorRules": "Wrong options must be the same kind of thing as the right one — same units, same part of speech, same level of detail, similar length. No option may be identifiable by its shape or position; each must be a mistake somebody at this level would actually make.",
+  "payloadShape": {
+    "schemaVersion": 1,
+    "meta": [
+      "subject",
+      "grade",
+      "level",
+      "topic",
+      "title",
+      "ageRange"
+    ],
+    "settings": {
+      "questionCount": 50,
+      "choicesPerTurn": 4,
+      "difficulty": {
+        "start": 2,
+        "end": 5,
+        "curve": "flat"
+      },
+      "timeLimitSec": null
+    },
+    "questions": [
+      "id",
+      "prompt",
+      "choices[4]",
+      "answerIndex",
+      "explanation",
+      "difficulty",
+      "skill",
+      "topic"
+    ],
+    "feedback": [
+      "correct",
+      "incorrect",
+      "win",
+      "lose",
+      "draw",
+      "outOfQuestions"
+    ]
+  }
+}

@@ -1,0 +1,719 @@
+{
+ "seed": 20261023,
+ "learners_per_profile": 6,
+ "validation": {
+  "chess": {
+   "ok": true,
+   "problems": [],
+   "notes": [],
+   "stats": {
+    "stages": 10,
+    "metrics": 31,
+    "provable": 30,
+    "knowledge_objectives": 862
+   }
+  },
+  "piano": {
+   "ok": true,
+   "problems": [],
+   "notes": [
+    "PI11-16: no machine-provable metric (capstones[human]); its performance part is attested, not gated"
+   ],
+   "stats": {
+    "stages": 8,
+    "metrics": 29,
+    "provable": 25,
+    "knowledge_objectives": 1443
+   }
+  },
+  "basketball": {
+   "ok": true,
+   "problems": [],
+   "notes": [],
+   "stats": {
+    "stages": 7,
+    "metrics": 24,
+    "provable": 19,
+    "knowledge_objectives": 1185
+   }
+  }
+ },
+ "subjects": {
+  "chess": {
+   "today": {
+    "learners": 48,
+    "completed_share": 1,
+    "days": 255.08333333333334,
+    "minutes": 5762,
+    "minutes_per_stage": 960.3333333333334,
+    "sittings": 0,
+    "unproven_at_exit": 1,
+    "competent_at_exit": 0.3385416666666667,
+    "mean_p_exit": 0.3521353095527553,
+    "mean_p30": 0.2508926270350508,
+    "false_proof_rate": 0,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 0.225,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 0.10833333333333334,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 409.6666666666667,
+      "competent_at_exit": 0.13333333333333333,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 0.8,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 5762,
+      "days": 233,
+      "competent_at_exit": 0.44166666666666665,
+      "skipped": 0
+     }
+    }
+   },
+   "gate": {
+    "learners": 48,
+    "completed_share": 0.625,
+    "days": 468.8,
+    "minutes": 12537.2,
+    "minutes_per_stage": 3209.788990825688,
+    "sittings": 510.7,
+    "unproven_at_exit": 0,
+    "competent_at_exit": 1,
+    "mean_p_exit": 0.9769607336524607,
+    "mean_p30": 0.8436679148919344,
+    "false_proof_rate": 0.001221001221001221,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 14618,
+      "days": 550.6666666666666,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 21584,
+      "days": 759.3333333333334,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 7464,
+      "days": 296.6666666666667,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 0,
+      "minutes": 22940,
+      "days": 900,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 0,
+      "minutes": 11963.666666666666,
+      "days": 900,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 0,
+      "minutes": 19032.666666666668,
+      "days": 900,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 8331.333333333334,
+      "days": 327.3333333333333,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 10688.666666666666,
+      "days": 410,
+      "competent_at_exit": 1,
+      "skipped": 0
+     }
+    }
+   },
+   "adaptive": {
+    "learners": 48,
+    "completed_share": 0.6666666666666666,
+    "days": 436.84375,
+    "minutes": 11875.03125,
+    "minutes_per_stage": 2809.6133333333332,
+    "sittings": 513.375,
+    "unproven_at_exit": 0,
+    "competent_at_exit": 0.9813581890812251,
+    "mean_p_exit": 0.9273358706673419,
+    "mean_p30": 0.7058999992280282,
+    "false_proof_rate": 0,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 13172.333333333334,
+      "days": 474.1666666666667,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 16645.333333333332,
+      "days": 603.5,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 7125.333333333333,
+      "days": 270.8333333333333,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 0.3333333333333333,
+      "minutes": 23029.333333333332,
+      "days": 881.3333333333334,
+      "competent_at_exit": 0.9619047619047619,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 0,
+      "minutes": 10604.5,
+      "days": 900,
+      "competent_at_exit": 0.8260869565217391,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 0,
+      "minutes": 16151.833333333334,
+      "days": 900,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 8054.333333333333,
+      "days": 308.3333333333333,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 10577.5,
+      "days": 391.6666666666667,
+      "competent_at_exit": 0.9833333333333333,
+      "skipped": 0
+     }
+    }
+   }
+  },
+  "piano": {
+   "today": {
+    "learners": 48,
+    "completed_share": 1,
+    "days": 307.3541666666667,
+    "minutes": 5499,
+    "minutes_per_stage": 1099.8,
+    "sittings": 0,
+    "unproven_at_exit": 1,
+    "competent_at_exit": 0.45023148148148145,
+    "mean_p_exit": 0.4576553801135062,
+    "mean_p30": 0.32907903852413245,
+    "false_proof_rate": 0,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 0.46296296296296297,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 0.2777777777777778,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 0.027777777777777776,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 477.8333333333333,
+      "competent_at_exit": 0.3333333333333333,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 0.8703703703703703,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 5499,
+      "days": 283,
+      "competent_at_exit": 0.6296296296296297,
+      "skipped": 0
+     }
+    }
+   },
+   "gate": {
+    "learners": 48,
+    "completed_share": 0.625,
+    "days": 424.3333333333333,
+    "minutes": 8971.933333333332,
+    "minutes_per_stage": 3046.8704663212434,
+    "sittings": 357.8,
+    "unproven_at_exit": 0,
+    "competent_at_exit": 0.9985611510791367,
+    "mean_p_exit": 0.942665799033887,
+    "mean_p30": 0.7299777746930932,
+    "false_proof_rate": 0,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 10054.333333333334,
+      "days": 475,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 15370.333333333334,
+      "days": 675,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 5787,
+      "days": 293,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 0,
+      "minutes": 20675.666666666668,
+      "days": 900,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 0,
+      "minutes": 11270,
+      "days": 900,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 0,
+      "minutes": 21202.333333333332,
+      "days": 900,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 6217,
+      "days": 313.6666666666667,
+      "competent_at_exit": 0.9907407407407407,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 7431,
+      "days": 365,
+      "competent_at_exit": 1,
+      "skipped": 0
+     }
+    }
+   },
+   "adaptive": {
+    "learners": 48,
+    "completed_share": 0.625,
+    "days": 421.96666666666664,
+    "minutes": 8487.633333333333,
+    "minutes_per_stage": 2984.6612903225805,
+    "sittings": 519.8333333333334,
+    "unproven_at_exit": 0,
+    "competent_at_exit": 0.967016491754123,
+    "mean_p_exit": 0.8776904647528961,
+    "mean_p30": 0.5658944864202201,
+    "false_proof_rate": 0,
+    "skipped_stages": 5,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 10402.5,
+      "days": 503.3333333333333,
+      "competent_at_exit": 0.9537037037037037,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 13512,
+      "days": 627.5,
+      "competent_at_exit": 0.9722222222222222,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 5646.166666666667,
+      "days": 314.1666666666667,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 0,
+      "minutes": 19303.666666666668,
+      "days": 900,
+      "competent_at_exit": 0.9285714285714286,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 0,
+      "minutes": 10316.166666666666,
+      "days": 900,
+      "competent_at_exit": 0.8604651162790697,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 0,
+      "minutes": 20466.5,
+      "days": 900,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 5511.166666666667,
+      "days": 311.3333333333333,
+      "competent_at_exit": 0.9907407407407407,
+      "skipped": 2
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 7366.333333333333,
+      "days": 353.5,
+      "competent_at_exit": 0.9907407407407407,
+      "skipped": 3
+     }
+    }
+   }
+  },
+  "basketball": {
+   "today": {
+    "learners": 48,
+    "completed_share": 1,
+    "days": 98.77083333333333,
+    "minutes": 3358,
+    "minutes_per_stage": 839.5,
+    "sittings": 0,
+    "unproven_at_exit": 1,
+    "competent_at_exit": 0.36698717948717946,
+    "mean_p_exit": 0.39680773297112487,
+    "mean_p30": 0.2895421764730038,
+    "false_proof_rate": 0,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 0.34615384615384615,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 0.01282051282051282,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 0.8076923076923077,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 153.16666666666666,
+      "competent_at_exit": 0.1794871794871795,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 0,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 3358,
+      "days": 91,
+      "competent_at_exit": 0.5897435897435898,
+      "skipped": 0
+     }
+    }
+   },
+   "gate": {
+    "learners": 48,
+    "completed_share": 0.875,
+    "days": 210.5952380952381,
+    "minutes": 7774.952380952381,
+    "minutes_per_stage": 2682.164705882353,
+    "sittings": 270.8809523809524,
+    "unproven_at_exit": 0,
+    "competent_at_exit": 0.9981884057971014,
+    "mean_p_exit": 0.9676471194065568,
+    "mean_p30": 0.8098918510924041,
+    "false_proof_rate": 0,
+    "skipped_stages": 0,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 6896.666666666667,
+      "days": 163.16666666666666,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 9364,
+      "days": 227.66666666666666,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 4050.6666666666665,
+      "days": 105,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 1,
+      "minutes": 16536.666666666668,
+      "days": 393.6666666666667,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 1,
+      "minutes": 8412.666666666666,
+      "days": 355,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 0,
+      "minutes": 21570,
+      "days": 900,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 3839.3333333333335,
+      "days": 99.33333333333333,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 5324.666666666667,
+      "days": 130.33333333333334,
+      "competent_at_exit": 0.9871794871794872,
+      "skipped": 0
+     }
+    }
+   },
+   "adaptive": {
+    "learners": 48,
+    "completed_share": 0.875,
+    "days": 190.97619047619048,
+    "minutes": 6905.880952380952,
+    "minutes_per_stage": 2397.9593023255816,
+    "sittings": 229.4047619047619,
+    "unproven_at_exit": 0,
+    "competent_at_exit": 0.9892665474060823,
+    "mean_p_exit": 0.9430248987298414,
+    "mean_p30": 0.7245255200392565,
+    "false_proof_rate": 0,
+    "skipped_stages": 8,
+    "plan_problems": 0,
+    "violations": [],
+    "by_profile": {
+     "beginner": {
+      "completed_share": 1,
+      "minutes": 6735.333333333333,
+      "days": 164.16666666666666,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "child": {
+      "completed_share": 1,
+      "minutes": 8329.833333333334,
+      "days": 208.33333333333334,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "talented": {
+      "completed_share": 1,
+      "minutes": 3813,
+      "days": 95.5,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "slow": {
+      "completed_share": 1,
+      "minutes": 12507.333333333334,
+      "days": 317.8333333333333,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "irregular": {
+      "completed_share": 1,
+      "minutes": 8684.666666666666,
+      "days": 376,
+      "competent_at_exit": 1,
+      "skipped": 0
+     },
+     "plateau": {
+      "completed_share": 0,
+      "minutes": 20400.333333333332,
+      "days": 900,
+      "competent_at_exit": 0.5384615384615384,
+      "skipped": 0
+     },
+     "experienced": {
+      "completed_share": 1,
+      "minutes": 3318.3333333333335,
+      "days": 75,
+      "competent_at_exit": 1,
+      "skipped": 4
+     },
+     "returning": {
+      "completed_share": 1,
+      "minutes": 4952.666666666667,
+      "days": 100,
+      "competent_at_exit": 1,
+      "skipped": 4
+     }
+    }
+   }
+  }
+ },
+ "guarantee": {
+  "failures": []
+ },
+ "seconds": 26
+}

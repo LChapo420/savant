@@ -1,0 +1,2063 @@
+<style>
+/* ============================================================
+   THEME: CYBER-FORENSICS / NEON NEUROMANCER
+   Scoped entirely to #base-lesson-body
+   ============================================================ */
+#base-lesson-body{
+  --bg:#050508;
+  --surface:#0C0C15;
+  --surface-2:#14141F;
+  --surface-3:#1C1C2B;
+  --accent:#06B6D4;
+  --accent-dark:#0E7490;
+  --accent-glow:rgba(6,182,212,.5);
+  --pink:#F43F5E;
+  --pink-dark:#9F1239;
+  --pink-glow:rgba(244,63,94,.5);
+  --violet:#A855F7;
+  --violet-dark:#6B21A8;
+  --violet-glow:rgba(168,85,247,.45);
+  --lime:#84CC16;
+  --lime-dark:#4D7C0F;
+  --amber:#F59E0B;
+  --text:#E8F6FA;
+  --muted:#8CA3B4;
+  --line:rgba(6,182,212,.22);
+
+  position:relative;
+  display:block;
+  background:
+    radial-gradient(1100px 560px at 12% -8%, rgba(168,85,247,.16), transparent 62%),
+    radial-gradient(900px 520px at 92% 2%, rgba(6,182,212,.13), transparent 62%),
+    var(--bg);
+  color:var(--text);
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px;
+  line-height:1.62;
+  padding-bottom:80px;
+  -webkit-font-smoothing:antialiased;
+}
+#base-lesson-body *,
+#base-lesson-body *::before,
+#base-lesson-body *::after{ box-sizing:border-box; }
+#base-lesson-body p{ margin:0 0 12px; }
+#base-lesson-body p:last-child{ margin-bottom:0; }
+#base-lesson-body strong{ color:#FFFFFF; }
+#base-lesson-body em{ color:#B9E9F5; font-style:italic; }
+
+/* ---------- HUD ---------- */
+#base-lesson-body .mmb-hud{
+  position:sticky;
+  top:0;
+  z-index:60;
+  background:linear-gradient(180deg, rgba(8,8,14,.97), rgba(8,8,14,.86));
+  border-bottom:1px solid var(--line);
+  box-shadow:0 8px 30px rgba(0,0,0,.65), inset 0 -1px 0 rgba(6,182,212,.18);
+  backdrop-filter:blur(9px);
+  padding:9px 14px 11px;
+}
+#base-lesson-body .mmb-hud-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  max-width:1180px;
+  margin:0 auto;
+}
+#base-lesson-body .mmb-hud-sub{
+  font-size:.76rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:600;
+}
+#base-lesson-body .mmb-hud-spacer{ flex:1 1 auto; }
+#base-lesson-body .mmb-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  padding:5px 10px;
+  border-radius:8px;
+  border:2px solid var(--accent);
+  background:linear-gradient(180deg, rgba(6,182,212,.24), rgba(6,182,212,.06));
+  color:#C9F6FF;
+  box-shadow:0 3px 0 var(--accent-dark);
+  white-space:nowrap;
+}
+#base-lesson-body .mmb-badge-lvl{
+  border-color:var(--violet);
+  background:linear-gradient(180deg, rgba(168,85,247,.3), rgba(168,85,247,.08));
+  color:#EBD9FF;
+  box-shadow:0 3px 0 var(--violet-dark);
+}
+#base-lesson-body .mmb-badge-grade{
+  border-color:var(--amber);
+  background:linear-gradient(180deg, rgba(245,158,11,.22), rgba(245,158,11,.05));
+  color:#FFE6B8;
+  box-shadow:0 3px 0 #92610A;
+}
+#base-lesson-body .mmb-badge-callsign{
+  border-color:var(--lime);
+  background:linear-gradient(180deg, rgba(132,204,22,.2), rgba(132,204,22,.05));
+  color:#E6FBC4;
+  box-shadow:0 3px 0 var(--lime-dark);
+}
+#base-lesson-body .mmb-badge-xp{
+  border-color:var(--pink);
+  background:linear-gradient(180deg, rgba(244,63,94,.24), rgba(244,63,94,.06));
+  color:#FFD6DE;
+  box-shadow:0 3px 0 var(--pink-dark);
+}
+#base-lesson-body .mmb-gauge-wrap{
+  max-width:1180px;
+  margin:9px auto 0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+#base-lesson-body .mmb-gauge-label{
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.16em;
+  color:var(--muted);
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+#base-lesson-body .mmb-gauge{
+  flex:1 1 220px;
+  min-width:150px;
+  height:14px;
+  border-radius:8px;
+  border:2px solid rgba(6,182,212,.35);
+  background:repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 8px, rgba(0,0,0,.35) 8px 10px), #07070D;
+  overflow:hidden;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.8);
+}
+#base-lesson-body .mmb-gauge-fill{
+  height:100%;
+  width:25%;
+  border-radius:6px;
+  background:linear-gradient(90deg, var(--violet), var(--accent) 55%, var(--lime));
+  box-shadow:0 0 14px var(--accent-glow);
+  transition:width .7s cubic-bezier(.2,.8,.25,1);
+}
+#base-lesson-body .mmb-gauge-val{
+  font-size:.66rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  color:var(--accent);
+  text-transform:uppercase;
+  white-space:nowrap;
+  text-shadow:0 0 10px var(--accent-glow);
+}
+
+/* ---------- SECTIONS ---------- */
+#base-lesson-body .mmb-sec{
+  max-width:1180px;
+  margin:0 auto;
+  padding:30px 16px 6px;
+}
+#base-lesson-body .mmb-sec-h{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+}
+#base-lesson-body .mmb-sec-num{
+  flex:0 0 auto;
+  font-size:.66rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  padding:6px 10px;
+  border-radius:8px;
+  color:#04141A;
+  background:linear-gradient(180deg,#5EEAF7,var(--accent));
+  box-shadow:0 3px 0 var(--accent-dark);
+  text-transform:uppercase;
+}
+#base-lesson-body .mmb-sec-t{
+  font-size:1.18rem;
+  font-weight:800;
+  letter-spacing:.02em;
+  margin:0;
+  color:#FFFFFF;
+  line-height:1.3;
+}
+#base-lesson-body .mmb-sec-s{
+  font-size:.78rem;
+  color:var(--muted);
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+#base-lesson-body .mmb-mission{
+  max-width:1180px;
+  margin:16px auto 0;
+  padding:14px 16px;
+  border-radius:12px;
+  border:2px solid rgba(168,85,247,.4);
+  background:linear-gradient(180deg, rgba(168,85,247,.13), rgba(6,182,212,.05));
+  box-shadow:0 5px 0 rgba(0,0,0,.55);
+  font-size:.94rem;
+  color:#E4E9FF;
+}
+#base-lesson-body .mmb-mission b{ color:var(--violet); }
+
+/* ---------- CARDS ---------- */
+#base-lesson-body .mmb-card{
+  background:linear-gradient(180deg, var(--surface-2), var(--surface));
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px 18px;
+  box-shadow:0 6px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.04);
+  margin-bottom:14px;
+}
+#base-lesson-body .mmb-card h3{
+  font-size:.98rem;
+  margin:0 0 10px;
+  color:#FFFFFF;
+  letter-spacing:.02em;
+}
+#base-lesson-body .mmb-eyebrow{
+  font-size:.66rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:8px;
+  text-shadow:0 0 10px var(--accent-glow);
+}
+#base-lesson-body .mmb-grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+#base-lesson-body .mmb-grid-2 > .mmb-card{ margin-bottom:0; }
+
+/* ---------- TAGS ---------- */
+#base-lesson-body .mmb-tag{
+  display:inline-block;
+  font-size:.6rem;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  padding:3px 8px;
+  border-radius:6px;
+  margin-bottom:6px;
+  border:1px solid transparent;
+}
+#base-lesson-body .mmb-tag-grounds{
+  color:#E4FBC2; background:rgba(132,204,22,.18); border-color:rgba(132,204,22,.55);
+}
+#base-lesson-body .mmb-tag-claim{
+  color:#C9F6FF; background:rgba(6,182,212,.18); border-color:rgba(6,182,212,.55);
+}
+#base-lesson-body .mmb-tag-warrant{
+  color:#EDD9FF; background:rgba(168,85,247,.2); border-color:rgba(168,85,247,.6);
+}
+#base-lesson-body .mmb-tag-scope{
+  color:#FFE6B8; background:rgba(245,158,11,.18); border-color:rgba(245,158,11,.6);
+}
+#base-lesson-body .mmb-tag-pink{
+  color:#FFD6DE; background:rgba(244,63,94,.18); border-color:rgba(244,63,94,.6);
+}
+
+/* ---------- LISTS ---------- */
+#base-lesson-body .mmb-list{ margin:0; padding-left:20px; }
+#base-lesson-body .mmb-list li{ margin-bottom:9px; }
+#base-lesson-body .mmb-kv{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:9px 0;
+  border-bottom:1px dashed rgba(6,182,212,.16);
+}
+#base-lesson-body .mmb-kv:last-child{ border-bottom:none; }
+#base-lesson-body .mmb-kv-key{
+  flex:0 0 152px;
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--violet);
+  padding-top:2px;
+}
+#base-lesson-body .mmb-kv-val{ flex:1 1 auto; font-size:.9rem; color:#D8E8F0; }
+
+/* ---------- BUTTONS ---------- */
+#base-lesson-body .mmb-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font:inherit;
+  font-size:.76rem;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  border:2px solid var(--accent);
+  background:linear-gradient(180deg, rgba(6,182,212,.3), rgba(6,182,212,.08));
+  color:#D6FAFF;
+  box-shadow:0 4px 0 var(--accent-dark);
+  transition:transform .08s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  text-align:center;
+}
+#base-lesson-body .mmb-btn:hover{
+  box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  background:linear-gradient(180deg, rgba(6,182,212,.42), rgba(6,182,212,.14));
+}
+#base-lesson-body .mmb-btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 var(--accent-dark);
+}
+#base-lesson-body .mmb-btn:disabled{
+  opacity:.42; cursor:not-allowed; transform:none;
+  box-shadow:0 4px 0 var(--accent-dark);
+}
+#base-lesson-body .mmb-btn-pink{
+  border-color:var(--pink);
+  background:linear-gradient(180deg, rgba(244,63,94,.32), rgba(244,63,94,.08));
+  color:#FFDCE3;
+  box-shadow:0 4px 0 var(--pink-dark);
+}
+#base-lesson-body .mmb-btn-pink:hover{
+  box-shadow:0 4px 18px var(--pink-glow), 0 4px 0 var(--pink-dark);
+  background:linear-gradient(180deg, rgba(244,63,94,.45), rgba(244,63,94,.15));
+}
+#base-lesson-body .mmb-btn-pink:active{ box-shadow:0 2px 0 var(--pink-dark); }
+#base-lesson-body .mmb-btn-pink:disabled{ box-shadow:0 4px 0 var(--pink-dark); }
+
+#base-lesson-body .mmb-btn-violet{
+  border-color:var(--violet);
+  background:linear-gradient(180deg, rgba(168,85,247,.3), rgba(168,85,247,.08));
+  color:#EFDCFF;
+  box-shadow:0 4px 0 var(--violet-dark);
+}
+#base-lesson-body .mmb-btn-violet:hover{
+  box-shadow:0 4px 18px var(--violet-glow), 0 4px 0 var(--violet-dark);
+}
+#base-lesson-body .mmb-btn-violet:active{ box-shadow:0 2px 0 var(--violet-dark); }
+
+#base-lesson-body .mmb-btn-lime{
+  border-color:var(--lime);
+  background:linear-gradient(180deg, rgba(132,204,22,.28), rgba(132,204,22,.07));
+  color:#EAFCC8;
+  box-shadow:0 4px 0 var(--lime-dark);
+}
+#base-lesson-body .mmb-btn-lime:hover{
+  box-shadow:0 4px 18px rgba(132,204,22,.45), 0 4px 0 var(--lime-dark);
+}
+#base-lesson-body .mmb-btn-lime:active{ box-shadow:0 2px 0 var(--lime-dark); }
+#base-lesson-body .mmb-btn-lime:disabled{ box-shadow:0 4px 0 var(--lime-dark); }
+
+/* ---------- WORKED EXAMPLES ---------- */
+#base-lesson-body .mmb-example{
+  border-left:4px solid var(--violet);
+  background:linear-gradient(180deg, rgba(168,85,247,.09), rgba(12,12,21,.9));
+  border-radius:0 12px 12px 0;
+  padding:14px 16px;
+  margin-bottom:14px;
+  border-top:1px solid var(--line);
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+#base-lesson-body .mmb-example-text{
+  font-size:.92rem;
+  color:#DCEBF2;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(6,182,212,.18);
+  border-radius:9px;
+  padding:12px 13px;
+  margin-bottom:12px;
+}
+#base-lesson-body .mmb-example-text mark{
+  background:transparent;
+  padding:1px 4px;
+  border-radius:5px;
+  font-weight:600;
+}
+
+/* ---------- PODS ---------- */
+#base-lesson-body .mmb-pod{
+  background:linear-gradient(180deg, var(--surface-2), var(--surface));
+  border:1px solid var(--line);
+  border-top:4px solid var(--violet);
+  border-radius:12px;
+  padding:16px 17px;
+  box-shadow:0 6px 0 rgba(0,0,0,.5);
+}
+#base-lesson-body .mmb-pod-2{ border-top-color:var(--pink); }
+#base-lesson-body .mmb-pod-3{ border-top-color:var(--accent); }
+#base-lesson-body .mmb-pod-4{ border-top-color:var(--amber); }
+#base-lesson-body .mmb-pod h3{
+  font-size:1rem;
+  margin:0 0 4px;
+  color:#FFFFFF;
+}
+#base-lesson-body .mmb-pod-sub{
+  font-size:.66rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:800;
+  margin-bottom:11px;
+}
+#base-lesson-body .mmb-mini{
+  font-size:.85rem;
+  color:#C9DCE6;
+}
+#base-lesson-body .mmb-mini b{ color:#FFFFFF; }
+#base-lesson-body .mmb-excerpt{
+  font-size:.85rem;
+  font-style:italic;
+  color:#CFE3EC;
+  background:rgba(0,0,0,.4);
+  border-left:3px solid var(--amber);
+  border-radius:0 8px 8px 0;
+  padding:10px 12px;
+  margin:10px 0;
+}
+#base-lesson-body .mmb-breakdown{
+  font-size:.82rem;
+  color:#B9CFDA;
+  border-top:1px dashed rgba(6,182,212,.2);
+  padding-top:10px;
+}
+#base-lesson-body .mmb-breakdown b{ color:var(--lime); }
+
+/* ---------- BRIDGE SIM ---------- */
+#base-lesson-body .mmb-bridge-stage{
+  background:linear-gradient(180deg, #07070E, #030306);
+  border:2px solid rgba(6,182,212,.3);
+  border-radius:14px;
+  padding:8px;
+  box-shadow:0 6px 0 rgba(0,0,0,.6), inset 0 0 40px rgba(6,182,212,.07);
+  margin-bottom:14px;
+  overflow:hidden;
+}
+#base-lesson-body .mmb-bridge-svg{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:340px;
+  border-radius:9px;
+}
+#base-lesson-body .mmb-member{
+  stroke:#2A3A4A;
+  stroke-width:2.4;
+  stroke-dasharray:6 5;
+  transition:stroke .28s ease, stroke-width .28s ease;
+}
+#base-lesson-body .mmb-member.armed{
+  stroke:var(--violet);
+  stroke-width:3.4;
+  stroke-dasharray:5 5;
+}
+#base-lesson-body .mmb-member.locked{
+  stroke:var(--accent);
+  stroke-width:4.4;
+  stroke-dasharray:none;
+  filter:url(#mmbGlow);
+}
+#base-lesson-body .mmb-member.failed{
+  stroke:var(--pink);
+  stroke-width:4.4;
+  stroke-dasharray:none;
+}
+#base-lesson-body .mmb-crack{
+  fill:none;
+  stroke:var(--pink);
+  stroke-width:2.6;
+  stroke-linecap:round;
+  opacity:0;
+  transition:opacity .25s ease;
+  filter:drop-shadow(0 0 5px rgba(244,63,94,.9));
+}
+#base-lesson-body .mmb-crack.show{ opacity:1; }
+#base-lesson-body .mmb-shake{ animation:mmb-shake .32s linear 3; }
+@keyframes mmb-shake{
+  0%,100%{ transform:translate(0,0); }
+  20%{ transform:translate(-7px,3px); }
+  40%{ transform:translate(6px,-3px); }
+  60%{ transform:translate(-5px,2px); }
+  80%{ transform:translate(4px,-1px); }
+}
+
+#base-lesson-body .mmb-chips{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin-bottom:14px;
+}
+#base-lesson-body .mmb-chip{
+  font-size:.62rem;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:9px 6px;
+  border-radius:9px;
+  border:2px solid rgba(140,163,180,.35);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.35));
+  color:var(--muted);
+  box-shadow:0 3px 0 rgba(0,0,0,.55);
+}
+#base-lesson-body .mmb-chip.locked{
+  border-color:var(--accent);
+  color:#CFFAFF;
+  background:linear-gradient(180deg, rgba(6,182,212,.24), rgba(6,182,212,.05));
+  box-shadow:0 3px 0 var(--accent-dark), 0 0 14px var(--accent-glow);
+}
+#base-lesson-body .mmb-chip.failed{
+  border-color:var(--pink);
+  color:#FFD6DE;
+  background:linear-gradient(180deg, rgba(244,63,94,.24), rgba(244,63,94,.05));
+  box-shadow:0 3px 0 var(--pink-dark);
+}
+
+#base-lesson-body .mmb-bay-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  align-items:start;
+}
+#base-lesson-body .mmb-bay-grid > .mmb-card{ margin-bottom:0; }
+#base-lesson-body .mmb-field{ margin-bottom:12px; }
+#base-lesson-body .mmb-field p{ font-size:.9rem; color:#D6E7EF; }
+#base-lesson-body .mmb-options{ display:grid; gap:10px; margin-bottom:14px; }
+#base-lesson-body .mmb-plate{
+  display:flex;
+  gap:11px;
+  width:100%;
+  text-align:left;
+  font:inherit;
+  font-size:.86rem;
+  line-height:1.5;
+  color:var(--text);
+  padding:13px 14px;
+  border-radius:10px;
+  border:2px solid rgba(168,85,247,.35);
+  background:linear-gradient(180deg, var(--surface-3), var(--surface-2));
+  cursor:pointer;
+  box-shadow:0 4px 0 rgba(0,0,0,.55);
+  transition:transform .08s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+#base-lesson-body .mmb-plate:hover{
+  border-color:var(--violet);
+  box-shadow:0 4px 16px var(--violet-glow), 0 4px 0 rgba(0,0,0,.55);
+}
+#base-lesson-body .mmb-plate:active{ transform:translateY(2px); box-shadow:0 2px 0 rgba(0,0,0,.55); }
+#base-lesson-body .mmb-plate.sel{
+  border-color:var(--accent);
+  background:linear-gradient(180deg, rgba(6,182,212,.2), rgba(6,182,212,.05));
+  box-shadow:0 0 0 2px rgba(6,182,212,.25), 0 4px 18px var(--accent-glow), 0 4px 0 var(--accent-dark);
+}
+#base-lesson-body .mmb-plate-num{
+  flex:0 0 26px;
+  height:26px;
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.72rem;
+  font-weight:900;
+  color:#04141A;
+  background:linear-gradient(180deg,#5EEAF7,var(--accent));
+  box-shadow:0 2px 0 var(--accent-dark);
+}
+#base-lesson-body .mmb-plate-txt{ flex:1 1 auto; }
+
+#base-lesson-body .mmb-readout{
+  margin-top:14px;
+  border-radius:12px;
+  border:2px solid rgba(140,163,180,.3);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.45));
+  padding:13px 16px;
+  box-shadow:0 5px 0 rgba(0,0,0,.55);
+}
+#base-lesson-body .mmb-readout-head{
+  font-size:.7rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+#base-lesson-body .mmb-readout-body{ font-size:.9rem; color:#D3E4EC; }
+#base-lesson-body .mmb-readout.ok{
+  border-color:var(--accent);
+  box-shadow:0 5px 0 var(--accent-dark), 0 0 22px rgba(6,182,212,.28);
+}
+#base-lesson-body .mmb-readout.ok .mmb-readout-head{ color:var(--accent); text-shadow:0 0 10px var(--accent-glow); }
+#base-lesson-body .mmb-readout.bad{
+  border-color:var(--pink);
+  box-shadow:0 5px 0 var(--pink-dark), 0 0 22px rgba(244,63,94,.3);
+}
+#base-lesson-body .mmb-readout.bad .mmb-readout-head{ color:var(--pink); text-shadow:0 0 10px var(--pink-glow); }
+#base-lesson-body .mmb-readout.warn{
+  border-color:var(--amber);
+  box-shadow:0 5px 0 #92610A;
+}
+#base-lesson-body .mmb-readout.warn .mmb-readout-head{ color:var(--amber); }
+#base-lesson-body .mmb-cleared{
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#CFFAFF;
+  border:2px dashed var(--accent);
+  border-radius:10px;
+  padding:18px 12px;
+  text-align:center;
+  background:linear-gradient(180deg, rgba(6,182,212,.16), rgba(6,182,212,.03));
+  box-shadow:0 0 22px var(--accent-glow);
+}
+
+/* ---------- DETONATOR ---------- */
+#base-lesson-body .mmb-det-arena{
+  position:relative;
+  border-radius:14px;
+  border:2px solid rgba(244,63,94,.4);
+  background:
+    repeating-linear-gradient(45deg, rgba(244,63,94,.05) 0 12px, transparent 12px 24px),
+    linear-gradient(180deg, #0B0B14, #050508);
+  padding:20px 16px;
+  box-shadow:0 7px 0 rgba(0,0,0,.6), inset 0 0 50px rgba(244,63,94,.08);
+  overflow:hidden;
+}
+#base-lesson-body .mmb-det-target{
+  position:relative;
+  border-radius:12px;
+  border:2px solid rgba(168,85,247,.45);
+  background:linear-gradient(180deg, var(--surface-2), var(--surface));
+  padding:16px;
+  box-shadow:0 6px 0 rgba(0,0,0,.55);
+  transition:transform .5s ease, opacity .5s ease, filter .5s ease;
+}
+#base-lesson-body .mmb-det-plate{
+  border-radius:10px;
+  border:2px solid var(--pink);
+  background:linear-gradient(180deg, rgba(244,63,94,.18), rgba(244,63,94,.04));
+  padding:13px 15px;
+  margin-bottom:14px;
+  box-shadow:0 0 22px rgba(244,63,94,.25), inset 0 0 24px rgba(244,63,94,.08);
+}
+#base-lesson-body .mmb-det-plate-label{
+  font-size:.62rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--pink);
+  margin-bottom:6px;
+  text-shadow:0 0 10px var(--pink-glow);
+}
+#base-lesson-body .mmb-det-plate p{ font-size:.94rem; color:#FFE4E9; margin:0; }
+#base-lesson-body .mmb-det-claim{
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.35);
+  padding:12px 14px;
+}
+#base-lesson-body .mmb-det-claim p{ font-size:.9rem; color:#D9E9F1; margin:0; }
+#base-lesson-body .mmb-det-flash{ animation:mmb-flash .22s steps(1) 3; }
+@keyframes mmb-flash{
+  0%,100%{ background:linear-gradient(180deg, var(--surface-2), var(--surface)); }
+  50%{ background:linear-gradient(180deg, rgba(244,63,94,.45), rgba(244,63,94,.15)); }
+}
+#base-lesson-body .mmb-det-collapsed{
+  transform:scale(.86) rotate(-2deg);
+  opacity:.22;
+  filter:blur(1.5px) grayscale(.6);
+}
+#base-lesson-body .mmb-crackline{
+  position:absolute;
+  top:50%; left:50%;
+  height:2px;
+  width:46%;
+  background:linear-gradient(90deg, var(--pink), rgba(244,63,94,0));
+  transform-origin:0 50%;
+  opacity:0;
+  border-radius:2px;
+  pointer-events:none;
+  box-shadow:0 0 8px var(--pink-glow);
+}
+#base-lesson-body .mmb-det-cracked .mmb-crackline{
+  animation:mmb-crack-in .45s ease forwards;
+}
+@keyframes mmb-crack-in{
+  from{ opacity:0; transform:rotate(var(--r)) scaleX(0); }
+  to{ opacity:.95; transform:rotate(var(--r)) scaleX(1); }
+}
+#base-lesson-body .mmb-frags{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+#base-lesson-body .mmb-frag{
+  position:absolute;
+  border-radius:3px;
+  background:linear-gradient(180deg,#2A2A3E,#14141F);
+  border:1px solid rgba(244,63,94,.65);
+  opacity:0;
+  animation:mmb-frag-fly 1.15s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes mmb-frag-fly{
+  0%{ opacity:1; transform:translate(0,0) rotate(0deg) scale(1); }
+  100%{ opacity:0; transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(.65); }
+}
+#base-lesson-body .mmb-det-actions{
+  display:flex;
+  justify-content:center;
+  margin-top:18px;
+}
+#base-lesson-body .mmb-debrief{
+  margin-top:16px;
+  border-radius:12px;
+  border:2px solid var(--lime);
+  background:linear-gradient(180deg, rgba(132,204,22,.16), rgba(132,204,22,.03));
+  padding:16px 18px;
+  box-shadow:0 6px 0 var(--lime-dark), 0 0 28px rgba(132,204,22,.22);
+  animation:mmb-pop-in .45s cubic-bezier(.2,.9,.3,1.2);
+}
+@keyframes mmb-pop-in{
+  from{ opacity:0; transform:translateY(16px) scale(.96); }
+  to{ opacity:1; transform:translateY(0) scale(1); }
+}
+#base-lesson-body .mmb-debrief h3{
+  margin:0 0 8px;
+  font-size:.94rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--lime);
+  text-shadow:0 0 12px rgba(132,204,22,.6);
+}
+#base-lesson-body .mmb-debrief p{ font-size:.9rem; color:#E1F3D2; }
+
+/* ---------- FORENSICS ---------- */
+#base-lesson-body .mmb-forensic-grid{
+  display:grid;
+  grid-template-columns:1.55fr 1fr;
+  gap:14px;
+  align-items:start;
+}
+#base-lesson-body .mmb-modes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:13px;
+}
+#base-lesson-body .mmb-mode-btn{
+  font:inherit;
+  font-size:.66rem;
+  font-weight:900;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  padding:11px 8px;
+  border-radius:10px;
+  cursor:pointer;
+  border:2px solid rgba(140,163,180,.35);
+  background:linear-gradient(180deg, var(--surface-3), var(--surface-2));
+  color:var(--muted);
+  box-shadow:0 4px 0 rgba(0,0,0,.55);
+  transition:transform .08s ease, box-shadow .18s ease, border-color .18s ease, color .18s ease;
+  line-height:1.35;
+}
+#base-lesson-body .mmb-mode-btn:hover{ border-color:var(--accent); color:#CFFAFF; }
+#base-lesson-body .mmb-mode-btn:active{ transform:translateY(2px); box-shadow:0 2px 0 rgba(0,0,0,.55); }
+#base-lesson-body .mmb-mode-btn.active{
+  border-color:var(--accent);
+  color:#D8FBFF;
+  background:linear-gradient(180deg, rgba(6,182,212,.26), rgba(6,182,212,.06));
+  box-shadow:0 4px 0 var(--accent-dark), 0 0 18px var(--accent-glow);
+}
+#base-lesson-body .mmb-console{
+  border:2px solid rgba(6,182,212,.3);
+  border-radius:12px;
+  background:linear-gradient(180deg, #07070E, #04040A);
+  padding:16px 16px 18px;
+  box-shadow:inset 0 0 40px rgba(6,182,212,.06), 0 5px 0 rgba(0,0,0,.55);
+}
+#base-lesson-body .mmb-passage{
+  font-size:.95rem;
+  line-height:1.85;
+  color:#C4D8E2;
+  margin:0;
+}
+#base-lesson-body .mmb-passage span[data-tag]{
+  border-radius:5px;
+  padding:2px 3px;
+  cursor:pointer;
+  transition:background .25s ease, color .25s ease, box-shadow .25s ease, opacity .25s ease;
+  border-bottom:1px dotted rgba(255,255,255,.25);
+}
+#base-lesson-body .mmb-passage span[data-tag]:hover{ background:rgba(255,255,255,.09); }
+#base-lesson-body .mmb-passage.mmb-mode-grounds span:not([data-tag="grounds"]){ opacity:.34; }
+#base-lesson-body .mmb-passage.mmb-mode-claim span:not([data-tag="claim"]){ opacity:.34; }
+#base-lesson-body .mmb-passage.mmb-mode-warrant span:not([data-tag="warrant"]){ opacity:.34; }
+#base-lesson-body .mmb-passage.mmb-mode-grounds span[data-tag="grounds"]{
+  background:rgba(132,204,22,.22);
+  box-shadow:inset 0 -2px 0 var(--lime), 0 0 12px rgba(132,204,22,.25);
+  color:#EDFCD3;
+}
+#base-lesson-body .mmb-passage.mmb-mode-claim span[data-tag="claim"]{
+  background:rgba(6,182,212,.22);
+  box-shadow:inset 0 -2px 0 var(--accent), 0 0 12px var(--accent-glow);
+  color:#D6FAFF;
+}
+#base-lesson-body .mmb-passage.mmb-mode-warrant span[data-tag="warrant"]{
+  background:rgba(168,85,247,.24);
+  box-shadow:inset 0 -2px 0 var(--violet), 0 0 12px var(--violet-glow);
+  color:#EFDCFF;
+}
+#base-lesson-body .mmb-passage span.mmb-picked{
+  outline:2px solid #FFFFFF;
+  outline-offset:1px;
+}
+#base-lesson-body .mmb-inspector{
+  border:2px solid rgba(168,85,247,.35);
+  border-radius:12px;
+  background:linear-gradient(180deg, var(--surface-2), var(--surface));
+  padding:14px 15px;
+  box-shadow:0 5px 0 rgba(0,0,0,.55);
+  min-height:200px;
+}
+#base-lesson-body .mmb-ins-head{
+  font-size:.66rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--violet);
+  margin-bottom:9px;
+  text-shadow:0 0 10px var(--violet-glow);
+}
+#base-lesson-body .mmb-ins-note{
+  font-size:.83rem;
+  color:#C6D9E3;
+  border-left:3px solid var(--accent);
+  padding:7px 0 7px 10px;
+  margin-bottom:9px;
+  background:rgba(6,182,212,.05);
+  border-radius:0 6px 6px 0;
+}
+#base-lesson-body .mmb-ins-note b{ display:block; color:var(--accent); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:3px; }
+#base-lesson-body .mmb-ins-note.g{ border-left-color:var(--lime); background:rgba(132,204,22,.06); }
+#base-lesson-body .mmb-ins-note.g b{ color:var(--lime); }
+#base-lesson-body .mmb-ins-note.w{ border-left-color:var(--violet); background:rgba(168,85,247,.07); }
+#base-lesson-body .mmb-ins-note.w b{ color:var(--violet); }
+#base-lesson-body .mmb-ins-empty{ font-size:.83rem; color:var(--muted); font-style:italic; }
+
+#base-lesson-body .mmb-hypo-wrap{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:14px;
+}
+#base-lesson-body .mmb-hypo{
+  font:inherit;
+  text-align:left;
+  font-size:.85rem;
+  line-height:1.5;
+  color:var(--text);
+  padding:14px;
+  border-radius:11px;
+  border:2px solid rgba(244,63,94,.35);
+  background:linear-gradient(180deg, var(--surface-3), var(--surface-2));
+  cursor:pointer;
+  box-shadow:0 4px 0 rgba(0,0,0,.55);
+  transition:transform .08s ease, box-shadow .18s ease, border-color .18s ease;
+}
+#base-lesson-body .mmb-hypo:hover{ border-color:var(--pink); box-shadow:0 4px 16px var(--pink-glow), 0 4px 0 rgba(0,0,0,.55); }
+#base-lesson-body .mmb-hypo:active{ transform:translateY(2px); box-shadow:0 2px 0 rgba(0,0,0,.55); }
+#base-lesson-body .mmb-hypo.correct{
+  border-color:var(--lime);
+  background:linear-gradient(180deg, rgba(132,204,22,.22), rgba(132,204,22,.05));
+  box-shadow:0 4px 0 var(--lime-dark), 0 0 20px rgba(132,204,22,.3);
+}
+#base-lesson-body .mmb-hypo.wrong{
+  border-color:var(--pink);
+  background:linear-gradient(180deg, rgba(244,63,94,.18), rgba(244,63,94,.04));
+  opacity:.6;
+}
+#base-lesson-body .mmb-hypo-tag{
+  display:block;
+  font-size:.6rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--pink);
+  margin-bottom:6px;
+}
+#base-lesson-body .mmb-verdict{
+  margin-top:14px;
+  border-radius:12px;
+  padding:15px 17px;
+  font-size:.9rem;
+  border:2px solid var(--lime);
+  background:linear-gradient(180deg, rgba(132,204,22,.16), rgba(132,204,22,.03));
+  box-shadow:0 5px 0 var(--lime-dark), 0 0 26px rgba(132,204,22,.2);
+  animation:mmb-pop-in .45s cubic-bezier(.2,.9,.3,1.2);
+  color:#E4F6D4;
+}
+#base-lesson-body .mmb-verdict.bad{
+  border-color:var(--pink);
+  background:linear-gradient(180deg, rgba(244,63,94,.14), rgba(244,63,94,.03));
+  box-shadow:0 5px 0 var(--pink-dark);
+  color:#FFE0E6;
+}
+
+/* ---------- MATRIX ---------- */
+#base-lesson-body .mmb-table-wrap{
+  overflow-x:auto;
+  border-radius:12px;
+  border:1px solid var(--line);
+  box-shadow:0 6px 0 rgba(0,0,0,.5);
+  margin-bottom:18px;
+}
+#base-lesson-body table.mmb-matrix{
+  width:100%;
+  border-collapse:collapse;
+  min-width:620px;
+  background:linear-gradient(180deg, var(--surface-2), var(--surface));
+  font-size:.85rem;
+}
+#base-lesson-body table.mmb-matrix th{
+  text-align:left;
+  font-size:.64rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#04141A;
+  background:linear-gradient(180deg,#5EEAF7,var(--accent));
+  padding:11px 13px;
+  font-weight:900;
+}
+#base-lesson-body table.mmb-matrix td{
+  padding:11px 13px;
+  border-bottom:1px solid rgba(6,182,212,.13);
+  color:#CBDDE6;
+  vertical-align:top;
+}
+#base-lesson-body table.mmb-matrix tr:last-child td{ border-bottom:none; }
+#base-lesson-body table.mmb-matrix td:first-child{
+  color:#FFFFFF;
+  font-weight:700;
+  white-space:nowrap;
+}
+#base-lesson-body table.mmb-matrix td:nth-child(2){ color:#F0C4CD; }
+
+#base-lesson-body .mmb-protocol{
+  border-radius:12px;
+  border:2px solid rgba(168,85,247,.4);
+  background:linear-gradient(180deg, rgba(168,85,247,.1), rgba(12,12,21,.9));
+  padding:16px 20px;
+  box-shadow:0 6px 0 rgba(0,0,0,.5);
+}
+#base-lesson-body .mmb-protocol ol{
+  margin:0;
+  padding-left:22px;
+  counter-reset:proto;
+  list-style:none;
+}
+#base-lesson-body .mmb-protocol li{
+  position:relative;
+  margin-bottom:14px;
+  padding-left:14px;
+  font-size:.9rem;
+  color:#D5E6EE;
+  border-left:2px solid rgba(168,85,247,.4);
+}
+#base-lesson-body .mmb-protocol li:last-child{ margin-bottom:0; }
+#base-lesson-body .mmb-protocol li strong{
+  display:block;
+  color:var(--violet);
+  font-size:.72rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+
+/* ---------- FINISH ---------- */
+#base-lesson-body .mmb-finish{
+  display:flex;
+  justify-content:center;
+  padding:34px 16px 10px;
+}
+#base-lesson-body .mmb-btn-finish{
+  font-size:1rem;
+  padding:20px 54px;
+  border-radius:14px;
+  letter-spacing:.14em;
+  border:3px solid var(--accent);
+  background:linear-gradient(180deg, rgba(6,182,212,.42), rgba(6,182,212,.12));
+  color:#EAFEFF;
+  box-shadow:0 7px 0 var(--accent-dark), 0 0 40px var(--accent-glow);
+}
+#base-lesson-body .mmb-btn-finish:hover{
+  box-shadow:0 7px 26px var(--accent-glow), 0 7px 0 var(--accent-dark);
+}
+#base-lesson-body .mmb-btn-finish:active{
+  transform:translateY(3px);
+  box-shadow:0 4px 0 var(--accent-dark);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:900px){
+  #base-lesson-body .mmb-forensic-grid{ grid-template-columns:1fr; }
+  #base-lesson-body .mmb-hypo-wrap{ grid-template-columns:1fr; }
+}
+@media (max-width:720px){
+  #base-lesson-body .mmb-grid-2{ grid-template-columns:1fr; }
+  #base-lesson-body .mmb-bay-grid{ grid-template-columns:1fr; }
+  #base-lesson-body .mmb-modes{ grid-template-columns:1fr; }
+  #base-lesson-body .mmb-kv{ flex-direction:column; gap:2px; }
+  #base-lesson-body .mmb-kv-key{ flex:none; }
+  #base-lesson-body .mmb-sec-t{ font-size:1.02rem; }
+  #base-lesson-body .mmb-btn-finish{ padding:17px 30px; font-size:.86rem; }
+  #base-lesson-body .mmb-hud-sub{ width:100%; order:5; }
+}
+@media (max-width:520px){
+  #base-lesson-body .mmb-chips{ grid-template-columns:repeat(2,1fr); }
+}
+@media (prefers-reduced-motion:reduce){
+  #base-lesson-body *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+</style>
+
+<div id="base-lesson-body" class="mmb-root">
+
+  <!-- ============ HUD & TELEMETRY ============ -->
+  <div class="mmb-hud">
+    <div class="mmb-hud-row">
+      <span class="mmb-badge mmb-badge-lvl">⬢ Level 209</span>
+      <span class="mmb-hud-sub">English · Media Motives &amp; Bias: Social, Commercial, Political</span>
+      <span class="mmb-badge mmb-badge-grade">9th–10th Grade · Ages 12–16</span>
+      <span class="mmb-hud-spacer"></span>
+      <span class="mmb-badge mmb-badge-callsign">👁 CALLSIGN: FORENSIC-24</span>
+      <span class="mmb-badge mmb-badge-xp">⚡ XP <b id="mmbXp">0</b></span>
+    </div>
+    <div class="mmb-gauge-wrap">
+      <div class="mmb-gauge-label">Structural Integrity</div>
+      <div class="mmb-gauge"><div class="mmb-gauge-fill" id="mmbGaugeFill"></div></div>
+      <div class="mmb-gauge-val" id="mmbGaugeVal">25% CALIBRATION</div>
+    </div>
+  </div>
+
+  <div class="mmb-mission">
+    <b>MISSION:</b> A four-bay verification bridge spans the Kestrel Gorge, and every bay is missing its load-bearing cross-member. Each missing member is an unstated warrant holding up a claim about media motive and bias — pin a sound warrant and the test train rolls through, pin an unverified assumption and the track buckles.
+  </div>
+
+  <!-- ============ SECTION 01 ============ -->
+  <section class="mmb-sec">
+    <div class="mmb-sec-h">
+      <span class="mmb-sec-num">Section 01</span>
+      <div>
+        <h2 class="mmb-sec-t">Comprehensive Textbook Foundation</h2>
+        <div class="mmb-sec-s">Full domain architecture · Structural model · Verification criteria · Presumption traps</div>
+      </div>
+    </div>
+
+    <div class="mmb-card">
+      <h3>1.1 The Five-Part Structural Model of Any Media Message</h3>
+      <p>Every media message that asks you to believe or do something has the same skeleton. Media-motive analysis means finding each of these five parts — especially the parts the message does not state.</p>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Core Assertion / Outcome</div>
+        <div class="mmb-kv-val">The central claim the message wants you to accept. It usually contains certainty words — <em>proven</em>, <em>definitive</em>, <em>always</em>, <em>everyone knows</em> — and a scope limiter (or, more often, a missing one).</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Empirical Grounds / Inputs</div>
+        <div class="mmb-kv-val">The evidence offered: statistics, studies, quotes, anecdotes, screenshots, "experts." Grounds are the raw material. They are never self-interpreting.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Connecting Bridge / Warrant</div>
+        <div class="mmb-kv-val">The unstated principle that licenses the jump from grounds to claim. This is the most important and most invisible part. It is almost always <em>missing from the text</em> — which is exactly why it is where bias hides.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Scope Qualifiers</div>
+        <div class="mmb-kv-val">Words that bound the claim: <em>some</em>, <em>in this sample</em>, <em>over six weeks</em>, <em>among urban teenagers</em>. When qualifiers vanish between the evidence and the conclusion, the claim has been inflated.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Boundary Conditions</div>
+        <div class="mmb-kv-val">The circumstances under which the claim would be false or would not apply. A message that never names a boundary condition is claiming universal truth without paying for it.</div>
+      </div>
+    </div>
+
+    <div class="mmb-card">
+      <h3>1.2 The Four Core Verification Criteria</h3>
+      <div class="mmb-grid-2">
+        <div class="mmb-card">
+          <span class="mmb-tag mmb-tag-claim">Criterion 1 · Relevance</span>
+          <p class="mmb-mini">Do the grounds actually bear on the claim? A study of <em>adults</em> is not relevant to a claim about <em>teens</em>. A measure of <em>clicks</em> is not relevant to a claim about <em>wellbeing</em>. Relevance fails when the evidence and the conclusion talk about different things.</p>
+        </div>
+        <div class="mmb-card">
+          <span class="mmb-tag mmb-tag-grounds">Criterion 2 · Sufficiency</span>
+          <p class="mmb-mini">Is there <em>enough</em> evidence, of the <em>right kind</em>, to carry the weight of the claim? One anecdote cannot support a generalisation; one survey cannot support a causal law; two weeks cannot support a lifetime recommendation.</p>
+        </div>
+        <div class="mmb-card">
+          <span class="mmb-tag mmb-tag-scope">Criterion 3 · Accuracy</span>
+          <p class="mmb-mini">Are the stated numbers, quotes, and dates factually correct and reported without distortion? Note the subtle case: a statistic can be <em>accurately quoted</em> and still be <em>inaccurate as support</em> for the conclusion drawn from it.</p>
+        </div>
+        <div class="mmb-card">
+          <span class="mmb-tag mmb-tag-warrant">Criterion 4 · Independence</span>
+          <p class="mmb-mini">Is the source free of a stake in the conclusion? Funders, owners, advertisers, political committees, and platform incentives all create pressure on which findings get produced and published. Independence must be <em>verified</em>, never assumed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mmb-card">
+      <h3>1.3 Structural Validity vs. Soundness — The Two Separate Questions</h3>
+      <p><strong>Structural validity</strong> asks only: <em>if</em> the grounds are true and <em>if</em> the unstated warrant is true, does the conclusion follow? This is an internal-consistency question. An argument can be perfectly valid and still be nonsense, because validity says nothing about whether the premises are true.</p>
+      <p><strong>Soundness</strong> asks the harder question: is the argument valid <em>and</em> are the grounds and the warrant actually true and verified? Soundness is validity plus factual verification.</p>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Why this matters</div>
+        <div class="mmb-kv-val">Media messages almost always <em>feel</em> valid, because the missing warrant is one the audience already believes. The forensic move is to supply the warrant out loud and then ask whether it is true. A bridge that is structurally fine but made of cardboard still drops the train.</div>
+      </div>
+    </div>
+
+    <div class="mmb-card">
+      <h3>1.4 Deductive vs. Inductive Systems</h3>
+      <div class="mmb-grid-2">
+        <div class="mmb-card">
+          <span class="mmb-tag mmb-tag-claim">Deductive · Truth-Preserving Certainty</span>
+          <p class="mmb-mini">Moves from a general rule to a specific case. If the premises are true, the conclusion is <em>guaranteed</em>. Strength is measured in validity, not probability. Example: "All statements paid for by an advertiser are commercially motivated; this column is paid for by an advertiser; therefore this column is commercially motivated."</p>
+        </div>
+        <div class="mmb-card">
+          <span class="mmb-tag mmb-tag-grounds">Inductive · Probabilistic Strength</span>
+          <p class="mmb-mini">Moves from specific observations to a general pattern. The conclusion is only <em>probable</em>. Strength depends on sample size, sample representativeness, and how many alternative explanations survive. Most media claims about bias and motive are inductive — which means they must be reported with hedges, not absolutes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mmb-card">
+      <h3>1.5 Presumption Traps Specific to Media Motive Analysis</h3>
+      <ul class="mmb-list">
+        <li><strong>Motive-from-frequency:</strong> treating "they published a lot about X" as proof of intent, when volume may simply reflect newsworthiness.</li>
+        <li><strong>Motive-from-content:</strong> treating "they said something negative about X" as proof of bias, when the negative statement may be accurate.</li>
+        <li><strong>Funder blindness:</strong> analysing the rhetoric while ignoring who paid for the study, the outlet, or the platform.</li>
+        <li><strong>False balance:</strong> presenting two sides as equally evidenced when the grounds are wildly asymmetric — a structural error disguised as neutrality.</li>
+        <li><strong>Omission as proof:</strong> treating an absent viewpoint as deliberate suppression without checking whether it was available, brief, or simply not newsworthy that day.</li>
+        <li><strong>Audience flattery:</strong> grounds that are really identity signals — "readers like you already know" — which suppress the verification step entirely.</li>
+      </ul>
+    </div>
+
+    <div class="mmb-example">
+      <div class="mmb-eyebrow">Worked Example 1 · Commercial Motive</div>
+      <div class="mmb-example-text">
+        <mark style="background:rgba(132,204,22,.2);box-shadow:inset 0 -2px 0 #84CC16;">A 2029 survey of 1,000 shoppers at three gyms, funded by Renew's parent company, found that 78% reported feeling "more focused" after drinking Renew Electrolyte.</mark>
+        <mark style="background:rgba(6,182,212,.2);box-shadow:inset 0 -2px 0 #06B6D4;">Renew Electrolyte measurably improves mental focus, and gyms should stock it.</mark>
+        <mark style="background:rgba(168,85,247,.24);box-shadow:inset 0 -2px 0 #A855F7;">[Unstated] A manufacturer-funded research body produces findings unaffected by its funder's commercial interest.</mark>
+        <mark style="background:rgba(245,158,11,.18);box-shadow:inset 0 -2px 0 #F59E0B;">No comparison group was used; "feeling more focused" is self-reported.</mark>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Relevance</div>
+        <div class="mmb-kv-val">The grounds measure a <em>self-reported feeling</em>; the claim asserts a <em>measurable improvement</em>. Different variables — the bridge does not reach.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Sufficiency</div>
+        <div class="mmb-kv-val">One survey, no control group, no baseline. Insufficient for any causal claim, regardless of how many shoppers were surveyed.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Independence</div>
+        <div class="mmb-kv-val">The funder is named and is the product's parent company. The warrant of independence is not merely unverified — it is contradicted by the text.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Verdict</div>
+        <div class="mmb-kv-val"><strong>Structurally valid, unsound.</strong> If the independence warrant were true, the conclusion would follow. The warrant is unverified and probably false, so the argument collapses at the bridge.</div>
+      </div>
+    </div>
+
+    <div class="mmb-example">
+      <div class="mmb-eyebrow">Worked Example 2 · Social &amp; Political Motive</div>
+      <div class="mmb-example-text">
+        <mark style="background:rgba(132,204,22,.2);box-shadow:inset 0 -2px 0 #84CC16;">At Tuesday's council meeting only three residents spoke, and the agenda was posted 48 hours in advance.</mark>
+        <mark style="background:rgba(6,182,212,.2);box-shadow:inset 0 -2px 0 #06B6D4;">The city council deliberately shut residents out of the transit decision.</mark>
+        <mark style="background:rgba(168,85,247,.24);box-shadow:inset 0 -2px 0 #A855F7;">[Unstated] Low attendance at a single meeting proves intentional exclusion.</mark>
+        <mark style="background:rgba(245,158,11,.18);box-shadow:inset 0 -2px 0 #F59E0B;">The post never states how many meetings were held, how the agenda was publicised, or whether written comment was open.</mark>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Relevance</div>
+        <div class="mmb-kv-val">Attendance is an <em>outcome</em> of many causes: weather, timing, publicity, apathy, satisfaction. It is relevant to turnout, not directly to intent.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Sufficiency</div>
+        <div class="mmb-kv-val">A single meeting is a sample of one. A pattern of exclusion would require evidence across multiple decisions.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Scope</div>
+        <div class="mmb-kv-val">"Deliberately" imports intent; "residents" imports a universal population. Both are unearned by three speakers at one meeting.</div>
+      </div>
+      <div class="mmb-kv">
+        <div class="mmb-kv-key">Verdict</div>
+        <div class="mmb-kv-val"><strong>Unsound at the bridge.</strong> Negate the warrant — "low attendance does not prove intentional exclusion" — and the conclusion loses every support it had.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 02 ============ -->
+  <section class="mmb-sec">
+    <div class="mmb-sec-h">
+      <span class="mmb-sec-num">Section 02</span>
+      <div>
+        <h2 class="mmb-sec-t">The Four Hazard Pods</h2>
+        <div class="mmb-sec-s">Primary unstated assumptions · Failure modes · Structural hazard archetypes</div>
+      </div>
+    </div>
+
+    <div class="mmb-grid-2">
+
+      <div class="mmb-pod mmb-pod-1">
+        <h3>Pod 1 · The Value Trap</h3>
+        <div class="mmb-pod-sub">Presupposing unstated priorities, moral hierarchies, or preferences</div>
+        <p class="mmb-mini"><b>Formal identification rule:</b> The conclusion depends on a ranking — good/bad, important/trivial, should/shouldn't — that is never stated and never defended. Signal words: <em>obviously</em>, <em>clearly</em>, <em>everyone knows</em>, <em>responsible</em>, <em>proper</em>, <em>the right thing</em>. If you can accept every stated fact and still reject the conclusion, you have found a Value Trap.</p>
+        <p class="mmb-mini"><b>Catastrophic failure risk:</b> The reader absorbs a contested moral hierarchy as if it were a measured fact. Because the priority was never stated, it can never be tested — the conclusion feels inevitable while resting on nothing but the writer's preference, and it becomes immune to evidence.</p>
+        <div class="mmb-excerpt">"Any responsible parent would want the district to adopt the new reading list. The books are widely praised, so the only question is whether our schools care about quality."</div>
+        <div class="mmb-breakdown"><b>Diagnostic breakdown:</b> "Responsible parent" smuggles in a ranking — opposition equals irresponsibility — with no grounds offered for it. "Widely praised" is a popularity claim, not a quality measure. <b>Repair:</b> state the value premise explicitly ("adult literary merit outranks parental review rights") and then defend it as a value, not as a fact.</div>
+      </div>
+
+      <div class="mmb-pod mmb-pod-2">
+        <h3>Pod 2 · The Causal Leap</h3>
+        <div class="mmb-pod-sub">Conflating correlation or sequence with direct causation; omitted variable bias</div>
+        <p class="mmb-mini"><b>Formal identification rule:</b> Two variables are shown to move together, and the text silently converts that co-movement into production. The tell: no mechanism is described, no control group exists, and no alternative cause is ruled out. Sequence ("B followed A") is an even weaker form — it adds nothing but ordering.</p>
+        <p class="mmb-mini"><b>Catastrophic failure risk:</b> Policy built on a correlation usually fails or backfires, because the true driver — the omitted variable — is left untouched. The leap also hides reverse causation: the outcome may be causing the supposed cause.</p>
+        <div class="mmb-excerpt">"Teens who use social media more than three hours a day report more anxiety than teens who use it less. Social media is therefore causing an anxiety epidemic."</div>
+        <div class="mmb-breakdown"><b>Diagnostic breakdown:</b> The grounds are a comparison of two groups, not an experiment. The unstated bridge is "co-occurrence implies production." <b>Counter-models:</b> anxiety may drive heavier use (reversal); sleep loss, family stress, or academic pressure may drive both (confounding). <b>Repair:</b> demand a mechanism plus a design that randomises or statistically controls the confounders.</div>
+      </div>
+
+      <div class="mmb-pod mmb-pod-3">
+        <h3>Pod 3 · The Definitional Shift</h3>
+        <div class="mmb-pod-sub">Equivocation; sliding between colloquial and technical senses mid-argument</div>
+        <p class="mmb-mini"><b>Formal identification rule:</b> A key term changes meaning between the evidence and the conclusion. Often one sense is narrow and measurable ("engaged with" = opened the file) while the other is broad and emotional ("engaged with" = enthusiastic). The tell: the word survives the whole argument while its referent does not.</p>
+        <p class="mmb-mini"><b>Catastrophic failure risk:</b> The conclusion appears data-backed, but the data measured a different construct. Authority is transferred from a narrow instrument to a sweeping label — and every downstream decision is made about the label, not the measurement.</p>
+        <div class="mmb-excerpt">"The report found that 60% of students 'engaged with' the new curriculum. Clearly, most students are enthusiastic about it."</div>
+        <div class="mmb-breakdown"><b>Diagnostic breakdown:</b> In the report, "engaged with" is an access metric — the assignment was opened at least once. In the conclusion, it becomes positive emotional investment. Same phrase, different variable. <b>Repair:</b> fix one operational definition per term and re-run the inference; if the conclusion dies, the shift was doing all the work.</div>
+      </div>
+
+      <div class="mmb-pod mmb-pod-4">
+        <h3>Pod 4 · The Micro-Sample Mirage</h3>
+        <div class="mmb-pod-sub">Generalising from non-representative samples, voluntary cohorts, or survivor bias</div>
+        <p class="mmb-mini"><b>Formal identification rule:</b> A broad claim about a whole population rests on a small, self-selected, convenience, or survivor-only sample. The tell: nobody can name the sampling frame — the list of everyone who <em>could</em> have been included. If that list is the group itself (subscribers, followers, volunteers), the sample is circular.</p>
+        <p class="mmb-mini"><b>Catastrophic failure risk:</b> Skewed samples produce confident, quantified claims that collapse the moment they meet the real population. The precision of the number ("94%!") disguises the emptiness of the frame and makes the claim feel more reliable than it is.</p>
+        <div class="mmb-excerpt">"We surveyed our newsletter subscribers, and 94% said they trust our reporting. Readers overwhelmingly consider us the most credible source in the region."</div>
+        <div class="mmb-breakdown"><b>Diagnostic breakdown:</b> The sample is drawn from people who already chose the outlet — a self-selected cohort with a built-in incentive to answer positively. Survivor bias removes everyone who unsubscribed. <b>Repair:</b> replace "readers" with "surveyed subscribers" and the claim shrinks to something the grounds can actually carry.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 03 ============ -->
+  <section class="mmb-sec">
+    <div class="mmb-sec-h">
+      <span class="mmb-sec-num">Section 03</span>
+      <div>
+        <h2 class="mmb-sec-t">Truss-Bridge Pin Joiner</h2>
+        <div class="mmb-sec-s">Variant 04 · Missing cross-member · Load-test the warrant</div>
+      </div>
+    </div>
+
+    <div class="mmb-bridge-stage">
+      <svg id="mmbBridgeSvg" class="mmb-bridge-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Four-bay truss bridge over a canyon with a test train">
+        <defs>
+          <linearGradient id="mmbSkyG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0A0A16"/><stop offset="100%" stop-color="#04040A"/>
+          </linearGradient>
+          <linearGradient id="mmbAbyssG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0B1A24"/><stop offset="55%" stop-color="#050811"/><stop offset="100%" stop-color="#010103"/>
+          </linearGradient>
+          <linearGradient id="mmbDeckG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2C2C42"/><stop offset="100%" stop-color="#12121E"/>
+          </linearGradient>
+          <filter id="mmbGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="3.4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <rect x="0" y="0" width="800" height="300" fill="url(#mmbSkyG)"/>
+        <rect x="0" y="150" width="800" height="150" fill="url(#mmbAbyssG)"/>
+        <ellipse cx="400" cy="152" rx="360" ry="16" fill="#06B6D4" opacity="0.07"/>
+        <ellipse cx="400" cy="150" rx="200" ry="6" fill="#A855F7" opacity="0.10"/>
+
+        <path d="M0,150 L62,150 L62,300 L0,300 Z" fill="#101019" stroke="#1E2A38" stroke-width="1"/>
+        <path d="M738,150 L800,150 L800,300 L738,300 Z" fill="#101019" stroke="#1E2A38" stroke-width="1"/>
+        <line x1="62" y1="150" x2="62" y2="300" stroke="#06B6D4" stroke-width="1" opacity="0.32"/>
+        <line x1="738" y1="150" x2="738" y2="300" stroke="#06B6D4" stroke-width="1" opacity="0.32"/>
+
+        <line x1="60" y1="95" x2="740" y2="95" stroke="#1B3A4A" stroke-width="2.4"/>
+        <line x1="60" y1="150" x2="60" y2="95" stroke="#1B3A4A" stroke-width="2.2"/>
+        <line x1="230" y1="150" x2="230" y2="95" stroke="#1B3A4A" stroke-width="2.2"/>
+        <line x1="400" y1="150" x2="400" y2="95" stroke="#1B3A4A" stroke-width="2.2"/>
+        <line x1="570" y1="150" x2="570" y2="95" stroke="#1B3A4A" stroke-width="2.2"/>
+        <line x1="740" y1="150" x2="740" y2="95" stroke="#1B3A4A" stroke-width="2.2"/>
+
+        <line x1="60" y1="95" x2="230" y2="150" stroke="#153340" stroke-width="1.8"/>
+        <line x1="230" y1="95" x2="400" y2="150" stroke="#153340" stroke-width="1.8"/>
+        <line x1="400" y1="95" x2="570" y2="150" stroke="#153340" stroke-width="1.8"/>
+        <line x1="570" y1="95" x2="740" y2="150" stroke="#153340" stroke-width="1.8"/>
+
+        <line id="mmbMember0" class="mmb-member" x1="60" y1="150" x2="230" y2="95"/>
+        <line id="mmbMember1" class="mmb-member" x1="230" y1="150" x2="400" y2="95"/>
+        <line id="mmbMember2" class="mmb-member" x1="400" y1="150" x2="570" y2="95"/>
+        <line id="mmbMember3" class="mmb-member" x1="570" y1="150" x2="740" y2="95"/>
+
+        <rect x="60" y="146" width="680" height="9" rx="3" fill="url(#mmbDeckG)" stroke="#2A3A4A" stroke-width="1"/>
+
+        <path id="mmbCrack0" class="mmb-crack" d="M145,148 L136,158 L150,164 L139,176 L152,184 L144,196"/>
+        <path id="mmbCrack1" class="mmb-crack" d="M315,148 L306,158 L320,164 L309,176 L322,184 L314,196"/>
+        <path id="mmbCrack2" class="mmb-crack" d="M485,148 L476,158 L490,164 L479,176 L492,184 L484,196"/>
+        <path id="mmbCrack3" class="mmb-crack" d="M655,148 L646,158 L660,164 L649,176 L662,184 L654,196"/>
+
+        <g id="mmbTrain">
+          <rect x="6" y="114" width="70" height="26" rx="5" fill="#F43F5E" stroke="#9F1239" stroke-width="2"/>
+          <rect x="12" y="102" width="26" height="13" rx="3" fill="#A855F7" stroke="#6B21A8" stroke-width="1.6"/>
+          <rect x="46" y="106" width="14" height="9" rx="2" fill="#06B6D4" opacity="0.85"/>
+          <circle cx="76" cy="127" r="3.4" fill="#FBBF24"/>
+          <circle cx="18" cy="140" r="6" fill="#12121E" stroke="#06B6D4" stroke-width="2"/>
+          <circle cx="62" cy="140" r="6" fill="#12121E" stroke="#06B6D4" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="mmb-chips" id="mmbChips">
+      <span class="mmb-chip">BAY 1 · EMPTY</span>
+      <span class="mmb-chip">BAY 2 · EMPTY</span>
+      <span class="mmb-chip">BAY 3 · EMPTY</span>
+      <span class="mmb-chip">BAY 4 · EMPTY</span>
+    </div>
+
+    <div class="mmb-bay-grid">
+      <div class="mmb-card">
+        <div class="mmb-eyebrow" id="mmbBayTitle">BAY 1 · POLITICAL MOTIVE</div>
+        <div class="mmb-field">
+          <span class="mmb-tag mmb-tag-claim">Core Claim</span>
+          <p id="mmbBayClaim">—</p>
+        </div>
+        <div class="mmb-field">
+          <span class="mmb-tag mmb-tag-grounds">Grounds</span>
+          <p id="mmbBayGrounds">—</p>
+        </div>
+        <div class="mmb-field">
+          <span class="mmb-tag mmb-tag-warrant">Missing Cross-Member</span>
+          <p>The connecting bridge between these grounds and this claim is <strong>not stated</strong>. Select the warrant that can actually bear the load.</p>
+        </div>
+      </div>
+
+      <div class="mmb-card">
+        <div class="mmb-eyebrow">Select the Load-Bearing Cross-Member</div>
+        <div class="mmb-options" id="mmbOptions"></div>
+        <button class="mmb-btn mmb-btn-lime" id="mmbRollBtn" type="button">🚂 Roll Test Train</button>
+      </div>
+    </div>
+
+    <div class="mmb-readout" id="mmbReadout">
+      <div class="mmb-readout-head" id="mmbReadoutHead">SYSTEM IDLE</div>
+      <p class="mmb-readout-body" id="mmbReadoutBody">Pin a cross-member warrant to begin the load test. Only a verified bridge survives full tonnage.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 04 ============ -->
+  <section class="mmb-sec">
+    <div class="mmb-sec-h">
+      <span class="mmb-sec-num">Section 04</span>
+      <div>
+        <h2 class="mmb-sec-t">The Negation Detonator</h2>
+        <div class="mmb-sec-s">Active heuristic destruction · Prove the opposite of the assumption</div>
+      </div>
+    </div>
+
+    <div class="mmb-det-arena" id="mmbDetArena">
+      <div class="mmb-frags" id="mmbDetFrags"></div>
+      <div class="mmb-det-target" id="mmbDetTarget">
+        <div class="mmb-det-plate">
+          <div class="mmb-det-plate-label">⚠ Target Implicit Warrant</div>
+          <p>“Engagement metrics — clicks, shares and time-on-app — are valid measures of meaningful human connection, so rising engagement means rising wellbeing.”</p>
+        </div>
+        <div class="mmb-det-claim">
+          <span class="mmb-tag mmb-tag-claim">Core Claim Under Load</span>
+          <p>“Our new recommendation algorithm improves teen mental health.”</p>
+        </div>
+        <div class="mmb-det-cracks" aria-hidden="true"></div>
+      </div>
+      <div class="mmb-det-actions">
+        <button class="mmb-btn mmb-btn-pink" id="mmbDetonate" type="button">💣 Detonate Negation Test</button>
+      </div>
+    </div>
+
+    <div class="mmb-debrief" id="mmbDebrief" hidden>
+      <h3>💥 Detonation Successful</h3>
+      <p>By proving the opposite of the implicit assumption, the entire premise collapsed. The Negation Test proves this assumption was a fatal structural dependency.</p>
+      <p><strong>Tactical diagnostic:</strong> Negate the bridge — engagement is <em>not</em> equivalent to connection, because outrage, compulsion and autoplay also raise clicks, shares and time-on-app. With that bridge removed, the claim that the algorithm improves teen mental health has no load-bearing support of any kind.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 05 ============ -->
+  <section class="mmb-sec">
+    <div class="mmb-sec-h">
+      <span class="mmb-sec-num">Section 05</span>
+      <div>
+        <h2 class="mmb-sec-t">Live Fire Forensics</h2>
+        <div class="mmb-sec-s">Interactive text X-ray · Scan grounds, claims and unstated mechanisms</div>
+      </div>
+    </div>
+
+    <div class="mmb-forensic-grid">
+      <div>
+        <div class="mmb-modes">
+          <button class="mmb-mode-btn" data-mode="grounds" type="button">🟢 Scan Foundation / Grounds</button>
+          <button class="mmb-mode-btn" data-mode="claim" type="button">🔵 Scan Core Claims / Outcomes</button>
+          <button class="mmb-mode-btn" data-mode="warrant" type="button">🟠 Detect Unstated Mechanisms / Warrants</button>
+        </div>
+
+        <div class="mmb-console">
+          <div class="mmb-eyebrow">Intercepted Release · Beverage Industry Wire</div>
+          <p class="mmb-passage" id="mmbPassage">According to the <span data-tag="warrant" data-note="A source whose name implies impartial science, but no funding disclosure appears anywhere in the release. Assuming an industry-named institute is independent is an unstated warrant, and it is the bridge the whole argument stands on.">National Institute for Beverage Science</span>, a <span data-tag="grounds" data-note="Grounds: n = 42, self-selected from a fitness-app user base. Small and non-representative — it cannot carry a claim about 'the modern professional', let alone about schools and workplaces.">landmark 2029 study of 42 participants recruited from a fitness-app user base</span> found that adults who drank one energy drink daily <span data-tag="grounds" data-note="Self-reported alertness, not measured cognition. The outcome variable is a feeling, not a performance metric — a relevance failure between grounds and claim.">reported 18% higher alertness scores</span> than non-drinkers. The Institute's lead researcher, Dr. Aline Marsh, states that <span data-tag="claim" data-note="Core claim: universal in scope ('proven', 'the modern professional'). Both a certainty limiter and a population limiter are missing.">“energy drinks are a proven cognitive enhancer for the modern professional.”</span> Because the study <span data-tag="grounds" data-note="Two weeks and one control variable. Neither addresses sleep, caffeine tolerance, baseline diet, or expectancy effects — insufficient for a causal claim of any strength.">tracked participants for two weeks and controlled for age</span>, <span data-tag="claim" data-note="An absolute certainty claim with no boundary conditions. 'Definitive' would require replication, independent funding, and a representative sample.">the results are definitive</span>. <span data-tag="warrant" data-note="Unstated warrant: dissent is ignorance rather than evidence. This replaces a rebuttal with a motive attack — it makes the claim unfalsifiable by disqualifying anyone who tests it.">Critics who question the findings are simply uninformed about nutrition science.</span> Therefore, <span data-tag="claim" data-note="Policy recommendation. Relevance check fails: alertness feelings are not productivity, and daily safety for adolescents is never addressed anywhere in the release.">schools and workplaces should replace coffee with energy drinks to maximize productivity.</span></p>
+        </div>
+
+        <div class="mmb-hypo-wrap" id="mmbHypoWrap">
+          <button class="mmb-hypo" type="button" data-correct="no">
+            <span class="mmb-hypo-tag">Hypothesis A</span>
+            The sample of 42 is too small, so no conclusion of any kind can be drawn from this study.
+          </button>
+          <button class="mmb-hypo" type="button" data-correct="yes">
+            <span class="mmb-hypo-tag">Hypothesis B</span>
+            The grounds are neither independent nor representative — an undisclosed industry-tied institute plus a self-selected fitness-app cohort — so the causal claim and the universal recommendation both lack a verified warrant.
+          </button>
+          <button class="mmb-hypo" type="button" data-correct="no">
+            <span class="mmb-hypo-tag">Hypothesis C</span>
+            Dr. Aline Marsh is not a properly credentialed scientist, so her statement must be false.
+          </button>
+        </div>
+
+        <div id="mmbForensicClear"></div>
+      </div>
+
+      <div class="mmb-inspector" id="mmbInspector">
+        <div class="mmb-ins-head">Inspector Channel · Idle</div>
+        <p class="mmb-ins-empty">Activate a scan mode to highlight matching structures in the release, or click any highlighted phrase to pull its structural note.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 06 ============ -->
+  <section class="mmb-sec">
+    <div class="mmb-sec-h">
+      <span class="mmb-sec-num">Section 06</span>
+      <div>
+        <h2 class="mmb-sec-t">Quick-Reference Procedural Protocol</h2>
+        <div class="mmb-sec-s">Component · Failure mode · Elimination move</div>
+      </div>
+    </div>
+
+    <div class="mmb-table-wrap">
+      <table class="mmb-matrix">
+        <thead>
+          <tr><th>Component</th><th>Failure Mode</th><th>Elimination Move</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Core Assertion / Outcome</td>
+            <td>Overreach — absolute certainty words with no scope limiter</td>
+            <td>Circle every certainty word (<em>proven, always, definitive, everyone</em>) and rewrite the claim with an explicit bound.</td>
+          </tr>
+          <tr>
+            <td>Empirical Grounds / Inputs</td>
+            <td>Non-representative sample, self-selection, survivor bias, self-report</td>
+            <td>Name the sampling frame. Ask who could not have appeared in the data, and what instrument actually measured.</td>
+          </tr>
+          <tr>
+            <td>Connecting Bridge / Warrant</td>
+            <td>Unstated assumption, causal leap, value trap, definitional shift</td>
+            <td>Write the missing "because…" sentence out loud. If you cannot write it, the argument has no bridge at all.</td>
+          </tr>
+          <tr>
+            <td>Scope Qualifiers</td>
+            <td>Silent generalisation from a narrow finding</td>
+            <td>List the population, time span, and construct actually measured. Compare that list to the claim's list.</td>
+          </tr>
+          <tr>
+            <td>Source Independence</td>
+            <td>Funder interest, advertiser pressure, ownership ties, platform incentives</td>
+            <td>Trace the money and the ownership before evaluating the rhetoric. Follow the incentive, not the tone.</td>
+          </tr>
+          <tr>
+            <td>Definitions</td>
+            <td>Equivocation between colloquial and technical senses</td>
+            <td>Fix one operational definition per key term and re-run the inference. If it dies, the shift was load-bearing.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mmb-protocol">
+      <div class="mmb-eyebrow">The Universal 5-Step Deconstruction Protocol</div>
+      <ol>
+        <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits</strong> — Separate the central assertion from background context and mark every certainty limiter and population limiter.</li>
+        <li><strong>Step 2: Audit Empirical Grounds for Sufficiency</strong> — Check for sample representation, bias, instrument validity, and source independence.</li>
+        <li><strong>Step 3: Extract the Unstated Bridge / Mechanism</strong> — Formulate the implicit connecting principle that links the grounds to the outcome, in one written sentence.</li>
+        <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test</strong> — Logically negate the bridge; if the conclusion collapses, that component is load-bearing and must be verified.</li>
+        <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal</strong> — Check for alternative explanations, bidirectional causality, omitted variables, and definitional shifts.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CLEARANCE ============ -->
+  <section class="mmb-sec mmb-finish">
+    <button class="mmb-btn mmb-btn-finish" id="mmbFinishBtn" type="button">Finish Lesson</button>
+  </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ---------------------------------------------------------
+     GLOBAL STATE + HUD
+     --------------------------------------------------------- */
+  var xp = 0;
+  var baysSolved = 0;
+  var detonatorDone = false;
+  var forensicsDone = false;
+
+  var xpEl = document.getElementById('mmbXp');
+  var gaugeFill = document.getElementById('mmbGaugeFill');
+  var gaugeVal = document.getElementById('mmbGaugeVal');
+
+  function updateHUD() {
+    var integrity = 25 + (baysSolved * 15) + (detonatorDone ? 8 : 0) + (forensicsDone ? 7 : 0);
+    if (integrity > 100) integrity = 100;
+    if (gaugeFill) gaugeFill.style.width = integrity + '%';
+    if (gaugeVal) {
+      gaugeVal.textContent = integrity >= 100
+        ? '100% STRUCTURE SECURED & VERIFIED'
+        : integrity + '% CALIBRATION';
+    }
+    if (xpEl) xpEl.textContent = String(xp);
+  }
+
+  function addXP(n) { xp += n; updateHUD(); }
+
+  function sleep(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  updateHUD();
+
+  /* ---------------------------------------------------------
+     SECTION 03 — TRUSS BRIDGE PIN JOINER
+     --------------------------------------------------------- */
+  var BAY_X = [60, 230, 400, 570, 740];
+
+  var BAYS = [
+    {
+      title: 'BAY 1 · POLITICAL MOTIVE',
+      claim: '“Channel 9 has a partisan agenda against Senator Vance.”',
+      grounds: 'Channel 9 aired three critical segments about Senator Vance in a single week.',
+      options: [
+        {
+          t: 'Sustained critical coverage within one week is, by itself, proof of a coordinated agenda.',
+          ok: false,
+          why: 'This treats volume as intent. Coverage volume measures news volume, not motive, and no independent check is offered. The bridge is a bare assertion — the train drops through it.'
+        },
+        {
+          t: 'A motive claim requires comparing this outlet’s coverage of comparable figures under comparable conditions; only disproportionate treatment can support the agenda inference.',
+          ok: true,
+          why: 'Correct. Motive is inferred from a controlled comparison, not from raw frequency. This warrant is testable, relevant and sufficient — the bay locks under full tonnage.'
+        },
+        {
+          t: 'Journalists who criticise politicians are always driven by personal politics.',
+          ok: false,
+          why: 'This is a sweeping causal generalisation with no grounds at all, and it makes the conclusion unfalsifiable. A universal claim cannot be carried by three segments.'
+        }
+      ]
+    },
+    {
+      title: 'BAY 2 · COMMERCIAL MOTIVE',
+      claim: '“This wellness article is reliable because it comes from a magazine with four million readers.”',
+      grounds: 'The magazine has 4 million monthly readers, and the article quotes a physician.',
+      options: [
+        {
+          t: 'Reliability requires verified source independence: an advertiser-funded outlet faces structural pressure to avoid conclusions that damage sponsor categories, so independence must be checked rather than assumed.',
+          ok: true,
+          why: 'Correct. Independence is a verification criterion, not a by-product of circulation. This bridge connects the grounds to the reliability claim without smuggling in a value preference.'
+        },
+        {
+          t: 'A large readership means the editors are accurate, because so many people would notice errors.',
+          ok: false,
+          why: 'This is a Value Trap: it equates popularity with truth. Four million readers is an audience measure, not an accuracy measure — the bridge carries no relevant load.'
+        },
+        {
+          t: 'Lifestyle magazines are inherently less honest than newspapers.',
+          ok: false,
+          why: 'This reverses the direction of the bias without evidence. It substitutes a new prejudice for the old one and offers no mechanism the train can ride on.'
+        }
+      ]
+    },
+    {
+      title: 'BAY 3 · DEFINITIONAL SHIFT',
+      claim: '“The study proves screen time causes teen anxiety, so the school should ban phones.”',
+      grounds: 'The study reported a correlation of r = 0.21 between total device minutes and self-reported anxiety scores.',
+      options: [
+        {
+          t: 'A measured correlation between device minutes and anxiety licenses a direct causal claim about phone bans.',
+          ok: false,
+          why: 'Two variables moved together; production was never shown. No mechanism, no controls, no ruling out of reverse causation — a classic Causal Leap.'
+        },
+        {
+          t: 'Self-reported anxiety is a valid proxy for clinical anxiety in every population.',
+          ok: false,
+          why: 'An absolute universality claim about an instrument. A self-report scale is a screening signal, not a diagnosis, and it cannot be asserted for every population.'
+        },
+        {
+          t: 'The construct measured must match the construct in the claim: “all device minutes” and “phones in school” are different variables, so the finding cannot transfer without re-measurement.',
+          ok: true,
+          why: 'Correct. This is the Definitional Shift repaired. Once the measured variable and the claimed variable are aligned, the policy conclusion loses its unearned support and the bay holds.'
+        }
+      ]
+    },
+    {
+      title: 'BAY 4 · MICRO-SAMPLE MIRAGE',
+      claim: '“Parents overwhelmingly oppose the new curriculum.”',
+      grounds: 'An online poll on a parent-advocacy website received 1,200 responses; 89% opposed.',
+      options: [
+        {
+          t: 'A large response count guarantees representativeness.',
+          ok: false,
+          why: 'Size is not representativeness. A large self-selected sample is still self-selected — a million volunteers are still volunteers. The bridge fails on relevance.'
+        },
+        {
+          t: 'A voluntary poll hosted by an advocacy group recruits a self-selected cohort; representativeness requires a sampling frame that also reaches non-advocates.',
+          ok: true,
+          why: 'Correct. The sampling frame here is the group itself, which is circular. This warrant names the missing frame and the claim shrinks to what the grounds can carry.'
+        },
+        {
+          t: 'Parents who respond to online polls are typical of all parents.',
+          ok: false,
+          why: 'This is precisely the assumption under test, restated as if it were evidence. The people who chose to answer an advocacy poll are defined by their interest in it.'
+        }
+      ]
+    }
+  ];
+
+  var svg = document.getElementById('mmbBridgeSvg');
+  var train = document.getElementById('mmbTrain');
+  var members = [
+    document.getElementById('mmbMember0'),
+    document.getElementById('mmbMember1'),
+    document.getElementById('mmbMember2'),
+    document.getElementById('mmbMember3')
+  ];
+  var cracks = [
+    document.getElementById('mmbCrack0'),
+    document.getElementById('mmbCrack1'),
+    document.getElementById('mmbCrack2'),
+    document.getElementById('mmbCrack3')
+  ];
+  var chipsEls = root.querySelectorAll('#mmbChips .mmb-chip');
+  var bayTitle = document.getElementById('mmbBayTitle');
+  var bayClaim = document.getElementById('mmbBayClaim');
+  var bayGrounds = document.getElementById('mmbBayGrounds');
+  var optionsWrap = document.getElementById('mmbOptions');
+  var rollBtn = document.getElementById('mmbRollBtn');
+  var readout = document.getElementById('mmbReadout');
+  var readoutHead = document.getElementById('mmbReadoutHead');
+  var readoutBody = document.getElementById('mmbReadoutBody');
+
+  var currentBay = 0;
+  var selectedOption = null;
+  var bayStatus = ['', '', '', ''];
+  var busy = false;
+
+  function setReadout(head, body, kind) {
+    readoutHead.textContent = head;
+    readoutBody.textContent = body;
+    readout.className = 'mmb-readout' + (kind ? ' ' + kind : '');
+  }
+
+  function setTrainX(x) {
+    train.setAttribute('transform', 'translate(' + x + ',0)');
+  }
+
+  function rollTrain(fromX, toX, dur) {
+    return new Promise(function (resolve) {
+      var t0 = null;
+      function step(ts) {
+        if (ts === undefined || ts === null) ts = performance.now();
+        if (t0 === null) t0 = ts;
+        var p = (ts - t0) / dur;
+        if (p > 1) p = 1;
+        var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        setTrainX(fromX + (toX - fromX) * e);
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else {
+          resolve();
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  function updateChips() {
+    for (var i = 0; i < chipsEls.length; i++) {
+      var st = bayStatus[i];
+      var label = st === 'locked' ? 'SECURED' : (st === 'failed' ? 'BUCKLED' : 'EMPTY');
+      chipsEls[i].className = 'mmb-chip' + (st === 'locked' ? ' locked' : (st === 'failed' ? ' failed' : ''));
+      chipsEls[i].textContent = 'BAY ' + (i + 1) + ' · ' + label;
+    }
+  }
+
+  function renderBay() {
+    var bay = BAYS[currentBay];
+    if (!bay) return;
+    bayTitle.textContent = bay.title;
+    bayClaim.textContent = bay.claim;
+    bayGrounds.textContent = bay.grounds;
+    optionsWrap.innerHTML = '';
+    for (var i = 0; i < bay.options.length; i++) {
+      (function (idx) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'mmb-plate';
+        var num = document.createElement('span');
+        num.className = 'mmb-plate-num';
+        num.textContent = String(idx + 1);
+        var txt = document.createElement('span');
+        txt.className = 'mmb-plate-txt';
+        txt.textContent = bay.options[idx].t;
+        b.appendChild(num);
+        b.appendChild(txt);
+        b.addEventListener('click', function () { selectOption(idx); });
+        optionsWrap.appendChild(b);
+      })(i);
+    }
+    selectedOption = null;
+    rollBtn.disabled = false;
+    rollBtn.textContent = '🚂 Roll Test Train';
+  }
+
+  function selectOption(i) {
+    if (busy) return;
+    selectedOption = i;
+    var plates = optionsWrap.querySelectorAll('.mmb-plate');
+    for (var k = 0; k < plates.length; k++) {
+      if (k === i) plates[k].classList.add('sel');
+      else plates[k].classList.remove('sel');
+    }
+    if (members[currentBay]) members[currentBay].classList.add('armed');
+    setReadout(
+      'CROSS-MEMBER ARMED · BAY ' + (currentBay + 1),
+      'Roll the test train to load-test this warrant under full tonnage. If the bridge is unverified, the track will buckle.',
+      'warn'
+    );
+  }
+
+  function renderBayComplete() {
+    bayTitle.textContent = 'BRIDGE COMPLETE · LINE OPEN';
+    bayClaim.textContent = 'All four bays now carry verified warrants.';
+    bayGrounds.textContent = 'Every media-motive claim on this line has an explicit, testable, independently grounded bridge between its evidence and its conclusion.';
+    optionsWrap.innerHTML = '<div class="mmb-cleared">✅ All Cross-Members Pinned — Verification Line Open</div>';
+    rollBtn.disabled = true;
+    rollBtn.textContent = '✅ Line Verified';
+    updateChips();
+  }
+
+  async function runTest() {
+    if (busy) return;
+    var bay = BAYS[currentBay];
+    if (!bay) return;
+    if (selectedOption === null) {
+      setReadout(
+        'NO CROSS-MEMBER PINNED',
+        'The train cannot roll across an unsupported bay. Select one warrant plate, then run the load test.',
+        'warn'
+      );
+      return;
+    }
+
+    busy = true;
+    rollBtn.disabled = true;
+
+    var opt = bay.options[selectedOption];
+    var startX = BAY_X[currentBay] - 110;
+    var midX = (BAY_X[currentBay] + BAY_X[currentBay + 1]) / 2 - 50;
+    var endX = BAY_X[currentBay + 1] + 10;
+
+    setTrainX(startX);
+    await sleep(140);
+    await rollTrain(startX, midX, 900);
+
+    if (opt.ok) {
+      members[currentBay].classList.remove('armed');
+      members[currentBay].classList.add('locked');
+      bayStatus[currentBay] = 'locked';
+      updateChips();
+      setReadout(
+        'WARRANT VERIFIED · BAY ' + (currentBay + 1) + ' SECURED',
+        opt.why,
+        'ok'
+      );
+      await rollTrain(midX, endX, 800);
+      addXP(100);
+      baysSolved++;
+      updateHUD();
+      currentBay++;
+      if (currentBay >= BAYS.length) {
+        setReadout(
+          'BRIDGE COMPLETE · ALL FOUR BAYS SECURED',
+          'Every load-bearing warrant is now explicit, testable and independently grounded. The verification line is open end to end.',
+          'ok'
+        );
+        renderBayComplete();
+      } else {
+        renderBay();
+      }
+    } else {
+      members[currentBay].classList.add('failed');
+      if (cracks[currentBay]) cracks[currentBay].classList.add('show');
+      if (svg) svg.classList.add('mmb-shake');
+      bayStatus[currentBay] = 'failed';
+      updateChips();
+      setReadout(
+        'TRACK BUCKLED · UNVERIFIED ASSUMPTION',
+        opt.why,
+        'bad'
+      );
+      await sleep(1150);
+      if (svg) svg.classList.remove('mmb-shake');
+      await rollTrain(midX, startX, 800);
+      members[currentBay].classList.remove('failed');
+      if (cracks[currentBay]) cracks[currentBay].classList.remove('show');
+      bayStatus[currentBay] = '';
+      updateChips();
+      renderBay();
+    }
+
+    busy = false;
+    if (currentBay < BAYS.length) rollBtn.disabled = false;
+  }
+
+  if (rollBtn) rollBtn.addEventListener('click', runTest);
+  setTrainX(-50);
+  renderBay();
+  updateChips();
+
+  /* ---------------------------------------------------------
+     SECTION 04 — NEGATION DETONATOR
+     --------------------------------------------------------- */
+  var detTarget = document.getElementById('mmbDetTarget');
+  var detonateBtn = document.getElementById('mmbDetonate');
+  var detFrags = document.getElementById('mmbDetFrags');
+  var debrief = document.getElementById('mmbDebrief');
+  var detonating = false;
+
+  function buildCracks() {
+    if (!detTarget) return;
+    var host = detTarget.querySelector('.mmb-det-cracks');
+    if (!host) return;
+    host.innerHTML = '';
+    for (var i = 0; i < 9; i++) {
+      var line = document.createElement('span');
+      line.className = 'mmb-crackline';
+      line.style.setProperty('--r', (i * 40 - 20) + 'deg');
+      line.style.animationDelay = (i * 0.035) + 's';
+      host.appendChild(line);
+    }
+  }
+
+  function spawnFragments() {
+    if (!detFrags) return;
+    detFrags.innerHTML = '';
+    for (var i = 0; i < 20; i++) {
+      var f = document.createElement('span');
+      f.className = 'mmb-frag';
+      f.style.width = (16 + Math.random() * 48).toFixed(0) + 'px';
+      f.style.height = (9 + Math.random() * 26).toFixed(0) + 'px';
+      f.style.left = (8 + Math.random() * 84).toFixed(1) + '%';
+      f.style.top = (8 + Math.random() * 84).toFixed(1) + '%';
+      f.style.setProperty('--dx', (Math.random() * 300 - 150).toFixed(0) + 'px');
+      f.style.setProperty('--dy', (Math.random() * 230 - 50).toFixed(0) + 'px');
+      f.style.setProperty('--rot', (Math.random() * 780 - 390).toFixed(0) + 'deg');
+      f.style.animationDelay = (Math.random() * 0.18).toFixed(2) + 's';
+      detFrags.appendChild(f);
+    }
+  }
+
+  buildCracks();
+
+  if (detonateBtn) {
+    detonateBtn.addEventListener('click', function () {
+      if (detonatorDone || detonating) return;
+      detonating = true;
+      detonateBtn.disabled = true;
+
+      detTarget.classList.add('mmb-det-flash');
+
+      setTimeout(function () {
+        detTarget.classList.remove('mmb-det-flash');
+        detTarget.classList.add('mmb-det-cracked');
+        spawnFragments();
+
+        setTimeout(function () {
+          detTarget.classList.add('mmb-det-collapsed');
+          if (debrief) debrief.hidden = false;
+          detonatorDone = true;
+          addXP(100);
+          detonating = false;
+        }, 950);
+      }, 680);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     SECTION 05 — LIVE FIRE FORENSICS
+     --------------------------------------------------------- */
+  var passage = document.getElementById('mmbPassage');
+  var inspector = document.getElementById('mmbInspector');
+  var modeBtns = root.querySelectorAll('.mmb-mode-btn');
+  var hypoWrap = document.getElementById('mmbHypoWrap');
+  var forensicClear = document.getElementById('mmbForensicClear');
+  var currentMode = null;
+
+  var MODE_LABELS = {
+    grounds: 'Foundation / Grounds',
+    claim: 'Core Claims / Outcomes',
+    warrant: 'Unstated Mechanisms / Warrants'
+  };
+  var NOTE_CLASS = { grounds: 'g', claim: '', warrant: 'w' };
+
+  function getSpans() {
+    return passage ? passage.querySelectorAll('span[data-tag]') : [];
+  }
+
+  function renderInspectorList(mode) {
+    if (!inspector) return;
+    var spans = getSpans();
+    var html = '<div class="mmb-ins-head">Inspector Channel · ' + MODE_LABELS[mode] + '</div>';
+    var count = 0;
+    for (var i = 0; i < spans.length; i++) {
+      if (spans[i].getAttribute('data-tag') === mode) {
+        count++;
+        html += '<div class="mmb-ins-note ' + NOTE_CLASS[mode] + '"><b>Note ' + count + '</b>' +
+                spans[i].getAttribute('data-note') + '</div>';
+      }
+    }
+    if (count === 0) {
+      html += '<p class="mmb-ins-empty">No structures of this type detected in the passage.</p>';
+    }
+    inspector.innerHTML = html;
+  }
+
+  function setMode(mode) {
+    if (!passage) return;
+    currentMode = mode;
+    passage.className = 'mmb-passage mmb-mode-' + mode;
+    for (var i = 0; i < modeBtns.length; i++) {
+      if (modeBtns[i].getAttribute('data-mode') === mode) modeBtns[i].classList.add('active');
+      else modeBtns[i].classList.remove('active');
+    }
+    renderInspectorList(mode);
+  }
+
+  for (var m = 0; m < modeBtns.length; m++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        var mode = btn.getAttribute('data-mode');
+        if (currentMode === mode) {
+          currentMode = null;
+          passage.className = 'mmb-passage';
+          btn.classList.remove('active');
+          inspector.innerHTML = '<div class="mmb-ins-head">Inspector Channel · Idle</div><p class="mmb-ins-empty">Scan mode disengaged. Reactivate a channel to highlight structures.</p>';
+          return;
+        }
+        setMode(mode);
+      });
+    })(modeBtns[m]);
+  }
+
+  (function attachSpanClicks() {
+    var spans = getSpans();
+    for (var i = 0; i < spans.length; i++) {
+      (function (sp) {
+        sp.addEventListener('click', function () {
+          var all = getSpans();
+          for (var k = 0; k < all.length; k++) all[k].classList.remove('mmb-picked');
+          sp.classList.add('mmb-picked');
+          var tag = sp.getAttribute('data-tag');
+          inspector.innerHTML =
+            '<div class="mmb-ins-head">Inspector Channel · Single-Span Read</div>' +
+            '<div class="mmb-ins-note ' + NOTE_CLASS[tag] + '"><b>' +
+            MODE_LABELS[tag] + '</b>' + sp.getAttribute('data-note') + '</div>';
+        });
+      })(spans[i]);
+    }
+  })();
+
+  function handleHypothesis(btn) {
+    if (forensicsDone) return;
+    var correct = btn.getAttribute('data-correct') === 'yes';
+    var allHypos = hypoWrap ? hypoWrap.querySelectorAll('.mmb-hypo') : [];
+
+    if (correct) {
+      btn.classList.add('correct');
+      for (var i = 0; i < allHypos.length; i++) {
+        allHypos[i].disabled = true;
+      }
+      if (forensicClear) {
+        forensicClear.innerHTML =
+          '<div class="mmb-verdict">' +
+          '<strong>✅ STRUCTURAL CLEARANCE GRANTED.</strong> You located the fatal flaw at the bridge, not at the surface. ' +
+          'The grounds fail the Independence criterion (an industry-named institute with no funding disclosure) and the Sufficiency criterion (a self-selected cohort of 42, measured over two weeks, on a self-reported feeling). ' +
+          'With that warrant removed, the causal claim and the universal policy recommendation have no load-bearing support. ' +
+          'Note also the definitional slide from “reported alertness” to “proven cognitive enhancer”, and the motive attack that tries to make the claim unfalsifiable.' +
+          '</div>';
+      }
+      if (!forensicsDone) {
+        forensicsDone = true;
+        addXP(100);
+      }
+    } else {
+      btn.classList.add('wrong');
+      btn.disabled = true;
+      var msg;
+      if (btn.textContent.indexOf('sample of 42') !== -1) {
+        msg = 'Sample size is a weakness, but it is not the fatal flaw. Even a large sample drawn from a fitness-app user base and funded by an interested party would fail the Independence and Relevance criteria. The structure collapses earlier, at the bridge between grounds and claim.';
+      } else {
+        msg = 'Attacking the researcher is a different test than auditing the argument. Credentials do not make a claim true or false — the flaw lives in the bridge between the grounds and the conclusion, not in the person.';
+      }
+      if (forensicClear) {
+        forensicClear.innerHTML = '<div class="mmb-verdict bad">⚠ ' + msg + '</div>';
+      }
+    }
+  }
+
+  if (hypoWrap) {
+    var hypos = hypoWrap.querySelectorAll('.mmb-hypo');
+    for (var h = 0; h < hypos.length; h++) {
+      (function (btn) {
+        btn.addEventListener('click', function () { handleHypothesis(btn); });
+      })(hypos[h]);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     TERMINATION
+     --------------------------------------------------------- */
+  var finishBtn = document.getElementById('mmbFinishBtn');
+  if (finishBtn) {
+    finishBtn.addEventListener('click', function () {
+      if (window.polymathFinishLesson && typeof window.polymathFinishLesson === 'function') {
+        window.polymathFinishLesson();
+      }
+    });
+  }
+});
+</script>

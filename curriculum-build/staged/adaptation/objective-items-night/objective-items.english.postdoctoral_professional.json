@@ -1,0 +1,597 @@
+{
+ "track_id": "english",
+ "grade_id": "postdoctoral_professional",
+ "generated_at": "2026-10-26T03:38:11.723Z",
+ "items": [
+  {
+   "objective_id": "postdoctoral_professional:L135",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "For the service component, what should be documented to show leadership?",
+   "choices": [
+    "Membership in professional societies",
+    "Attendance at departmental meetings",
+    "Chairing a committee with outcomes described",
+    "Number of emails sent to colleagues"
+   ],
+   "answer": "Chairing a committee with outcomes described",
+   "rationale": "Chairing a committee and describing concrete outcomes demonstrates initiative and impact, whereas mere membership, attendance, or email volume do not.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Chairing a committee and describing its outcomes demonstrates leadership and tangible service contributions.",
+      "url": "https://en.wikipedia.org/wiki/Chairing",
+      "quote": "The chair , also chairman , chairwoman , or chairperson , is the presiding officer of an organized group such as a board , committee , or deliberative assembly .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L281",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Before assigning a customer case study, what should an editorial lead do?",
+   "choices": [
+    "Assign the writer and request a rough draft immediately.",
+    "Choose the story and preserve every available detail.",
+    "Create a brief aligning audience, goal, evidence, and deadline.",
+    "Let the writer determine the article’s scope and claims."
+   ],
+   "answer": "Create a brief aligning audience, goal, evidence, and deadline.",
+   "rationale": "A shared brief prevents misalignment and gives the writer clear ownership.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L281",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Two editors disagree about publishing a technical article. What should the lead do?",
+   "choices": [
+    "Ask the writer to choose between the two editors.",
+    "Resolve the issue against the agreed brief and document it.",
+    "Delay publication until every possible objection is settled.",
+    "Vote on the issue and accept the majority view."
+   ],
+   "answer": "Resolve the issue against the agreed brief and document it.",
+   "rationale": "A shared brief resolves standards, while documentation creates team accountability.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L281",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "How should an editorial lead give feedback that improves a writer’s next draft?",
+   "choices": [
+    "Connect specific revisions to the brief and check understanding.",
+    "Discuss traffic metrics only after publication.",
+    "Rewrite the draft without explaining the reasoning.",
+    "Praise the draft broadly and avoid requesting changes."
+   ],
+   "answer": "Connect specific revisions to the brief and check understanding.",
+   "rationale": "Actionable feedback tied to shared criteria enables the writer to improve.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L92",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "A panel has 50 minutes. Which agenda best controls timing?",
+   "choices": [
+    "Allocate 40 minutes for content, 5 for questions, and 5 for transitions and announcements.",
+    "Allocate 50 minutes for content and move questions outside the session.",
+    "Allocate 45 minutes for content and expect questions to fill the remainder.",
+    "Allocate 50 minutes for content and shorten discussion only if necessary."
+   ],
+   "answer": "Allocate 40 minutes for content, 5 for questions, and 5 for transitions and announcements.",
+   "rationale": "This agenda explicitly reserves time for questions and transitions, reducing the risk of the panel exceeding its allotted time.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L92",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "Which pre-event check most reliably finds logistical problems before participants arrive?",
+   "choices": [
+    "Confirm the room, accessibility, equipment, signage, and registration with responsible staff.",
+    "Check only the online listing, assuming the venue and equipment are ready.",
+    "Ask the chair to arrive early without verifying facilities or technical arrangements.",
+    "Confirm that panelists read their papers, but leave operational details unverified."
+   ],
+   "answer": "Confirm the room, accessibility, equipment, signage, and registration with responsible staff.",
+   "rationale": "A systematic check of venue, accessibility, technology, signage, and registration identifies problems while they can still be corrected.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L92",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "Ten minutes before a panel, the moderator cancels. What is the best immediate response?",
+   "choices": [
+    "Begin the first presentation without explanation and let attendees decide what to do.",
+    "Delay the session indefinitely while waiting for the moderator to return.",
+    "Have a prepared panelist moderate briefly, redistribute time, and inform attendees.",
+    "Ask an attendee to reconstruct the missing introduction from memory."
+   ],
+   "answer": "Have a prepared panelist moderate briefly, redistribute time, and inform attendees.",
+   "rationale": "Designating a prepared replacement, adjusting the schedule, and informing attendees allows the panel to proceed safely and professionally.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L356",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "A doctoral program in English seeks to recruit applicants from underrepresented backgrounds. Which selection process is most equitable?",
+   "choices": [
+    "Use a transparent rubric, apply it consistently, and train reviewers against bias.",
+    "Let each reviewer favor applicants from institutions and networks they recognize.",
+    "Reserve all places for applicants from the highest-scoring group on one measure.",
+    "Use informal impressions, but weight recommendations from senior scholars most heavily."
+   ],
+   "answer": "Use a transparent rubric, apply it consistently, and train reviewers against bias.",
+   "rationale": "A transparent, consistently applied rubric and bias training make selection criteria explicit and reduce reliance on familiarity, prestige, or unexamined impressions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L356",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Which partnership approach best supports equity in a community-engaged English Studies project?",
+   "choices": [
+    "Consult community members only after findings are finalized to add citations.",
+    "Invite community members once to share perspectives for a researcher-led project.",
+    "Share planning, funding, interpretation, and decision-making authority with community partners.",
+    "Collect community data freely, then offer a conference presentation as the main benefit."
+   ],
+   "answer": "Share planning, funding, interpretation, and decision-making authority with community partners.",
+   "rationale": "Shared authority makes the scholarship reciprocal and positions community members as collaborators rather than sources of data or validation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L356",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "An English department evaluates an access initiative. Which evaluation approach is most responsible?",
+   "choices": [
+    "Use enrollment totals alone to show that the program is equally accessible to everyone.",
+    "Gather confidential disaggregated outcome data and include participant feedback in improvement decisions.",
+    "Compare only prestigious university partners because their standards are usually higher.",
+    "Treat complaints as individual problems and avoid group-level evidence to protect privacy."
+   ],
+   "answer": "Gather confidential disaggregated outcome data and include participant feedback in improvement decisions.",
+   "rationale": "Confidential disaggregated data can reveal unequal outcomes, while participant feedback helps the department interpret findings and plan meaningful improvements.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L366",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "A team studying urban heat islands needs climate science, geospatial analysis, and public-health input. Which first step would best build an effective interdisciplinary partnership?",
+   "choices": [
+    "Prioritize the discipline with the largest research grant.",
+    "Select collaborators using only publication-record rankings.",
+    "Define a shared problem and clarify each discipline’s role.",
+    "Apply one research method uniformly across all fields."
+   ],
+   "answer": "Define a shared problem and clarify each discipline’s role.",
+   "rationale": "Effective interdisciplinary partnerships begin with a shared problem and clear, complementary roles. Funding, reputation, or methodological uniformity alone do not ensure meaningful integration.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L366",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "A research consortium includes teams from Japan, Germany, Brazil, and Canada. Which practice would best support sustained international collaboration?",
+   "choices": [
+    "Agree on communication norms, decision rights, and milestones.",
+    "Translate every document but avoid joint virtual meetings.",
+    "Let each country’s lead team make all shared decisions.",
+    "Begin collecting data before establishing common procedures."
+   ],
+   "answer": "Agree on communication norms, decision rights, and milestones.",
+   "rationale": "Shared communication norms, decision processes, and milestones provide the coordination needed for geographically distributed teams to work together reliably.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L366",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Researchers from two countries are preparing a joint project. Which agreement component most directly reduces misunderstandings about the partnership?",
+   "choices": [
+    "A list of each partner’s preferred email applications.",
+    "A schedule for annual social events in both countries.",
+    "A plan for combining all findings under one author.",
+    "Rules for data sharing, authorship, budget, and conflicts."
+   ],
+   "answer": "Rules for data sharing, authorship, budget, and conflicts.",
+   "rationale": "Explicit agreements on data, authorship, finances, and conflict procedures clarify responsibilities and reduce cross-border misunderstandings.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L366",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Before launching a joint initiative with unfamiliar institutions, what should a research team do first?",
+   "choices": [
+    "Assess partner expertise, needs, resources, and constraints.",
+    "Secure the most prestigious institution for greater visibility.",
+    "Require every partner to use identical research procedures.",
+    "Collect preliminary data before agreeing on common aims."
+   ],
+   "answer": "Assess partner expertise, needs, resources, and constraints.",
+   "rationale": "An early assessment of expertise, needs, capacity, and constraints allows the team to design a feasible partnership before committing to activities or data collection.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L187",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "A researcher wants a corpus that supports claims about variation across three language communities. Which sampling plan best reduces selection bias?",
+   "choices": [
+    "Use meaningful community strata, then randomly sample speakers within each one.",
+    "Recruit volunteers mainly through the researcher's existing social networks.",
+    "Interview only the most prolific speakers identified in each community.",
+    "Choose speakers found first through one language-learning website."
+   ],
+   "answer": "Use meaningful community strata, then randomly sample speakers within each one.",
+   "rationale": "Stratified sampling with random selection within meaningful groups improves coverage and reduces the risk that convenience or availability determines who is represented.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L187",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Which documentation set best enables another scholar to understand and reuse a released corpus?",
+   "choices": [
+    "Provide a data dictionary, provenance, methods, versions, and known limitations.",
+    "Provide corpus statistics, download links, and the project's social-media address.",
+    "Provide raw files, software licences, and a list of project members.",
+    "Provide sample queries, storage costs, and a general description of the corpus."
+   ],
+   "answer": "Provide a data dictionary, provenance, methods, versions, and known limitations.",
+   "rationale": "Effective corpus documentation explains the data's structure, origin, preparation, version, and limitations, allowing others to interpret and reproduce analyses.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L187",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Before redistributing corpus documents collected from websites, what is the most appropriate first step?",
+   "choices": [
+    "Verify source permissions and terms, then record each item's licence and provenance.",
+    "Treat every webpage as freely reusable because it is publicly accessible.",
+    "Remove authorship and publish the documents under the corpus owner's licence.",
+    "Check only metadata, since document text is outside the data licence."
+   ],
+   "answer": "Verify source permissions and terms, then record each item's licence and provenance.",
+   "rationale": "Public accessibility does not automatically confer reuse rights. Researchers must verify permissions and document the licence, restrictions, and provenance of corpus materials.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L187",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Which release practice best protects participants while still making an interview corpus useful for research?",
+   "choices": [
+    "De-identify direct and indirect identifiers using a documented, risk-based procedure.",
+    "Replace names with initials while retaining employers, locations, and exact ages.",
+    "Publish all identifiers so users can verify the transcripts themselves.",
+    "Remove every rare word and detail from transcripts through automatic filtering."
+   ],
+   "answer": "De-identify direct and indirect identifiers using a documented, risk-based procedure.",
+   "rationale": "A documented, risk-based de-identification procedure addresses both direct identifiers and combinations that could reveal identity, while preserving analytically relevant information.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "postdoctoral_professional:L229",
+   "track_id": "english",
+   "grade_id": "postdoctoral_professional",
+   "skill_id": "academic_writing",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "What sampling method yields unbiased estimates for a national writing program across diverse universities?",
+   "choices": [
+    "Stratified random sampling proportionate to enrollment",
+    "Convenience sampling of volunteer classrooms only",
+    "Cluster sampling of whole universities without stratification",
+    "Purposive selection of high‑performing departments"
+   ],
+   "answer": "Stratified random sampling proportionate to enrollment",
+   "rationale": "Stratified random sampling ensures each university subgroup is represented proportionally, eliminating selection bias that convenience, non‑stratified cluster, or purposive designs introduce.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Stratified random sampling proportionate to enrollment ensures each institution type is represented proportionally.",
+      "url": "https://en.wikipedia.org/wiki/Stratification_(clinical_trials)",
+      "quote": "Proportionate stratified sampling involves selecting participants from each stratum in proportions that match the general population.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Proportionate stratified random sampling preserves the representation of enrollment-size groups in the sample.",
+      "url": "https://en.wikipedia.org/wiki/Stratified_random_sample",
+      "quote": "Proportionate allocation uses a sampling fraction in each of the strata that are proportional to that of the total population.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  }
+ ]
+}

@@ -1,0 +1,646 @@
+{
+ "collection": "block_plans",
+ "row_id": 17,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P93",
+   "wrong": "No subject and no verb — this is an accidental fragment, not a stylistic choice.",
+   "correct": "\"Because the store was closed.\" has a subject and a verb; it is a fragment because it is a dependent clause standing alone.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P94",
+   "wrong": "'Leaving' isn't a main verb here, so there's no complete predicate.",
+   "correct": "The card text is \"Running late again and skipping breakfast.\"; the explanation names \"Leaving\", which is not in it.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P95",
+   "wrong": "Two complete sentences fused together: 'People assume...' and 'but the studies...' have no punctuation or connector joining them.",
+   "correct": "Line 2 has no \"but the studies...\"; its fused clauses are \"People assume longer school days mean more learning\" + \"the studies show the opposite is often true\".",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "No subject and no verb — this is an accidental fragment, not a stylistic choice.",
+   "replace": "The clause has a subject ('the store') and a verb ('was closed'), but it is an accidental fragment because the dependent clause stands alone.",
+   "fixes": [
+    "P93"
+   ]
+  },
+  {
+   "find": "'Leaving' isn't a main verb here, so there's no complete predicate.",
+   "replace": "Here, 'Running' and 'skipping' are non-finite verbs, so the fragment has no finite main verb.",
+   "fixes": [
+    "P94"
+   ]
+  },
+  {
+   "find": "Two complete sentences fused together: 'People assume...' and 'but the studies...' have no punctuation or connector joining them. This is a run-on.",
+   "replace": "Two complete sentences fused together: 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' have no punctuation or connector joining them. This is a run-on.",
+   "fixes": [
+    "P95"
+   ]
+  },
+  {
+   "find": "Found it. Line 2 fuses two complete sentences — 'People assume...' and 'but the studies...' — with no punctuation between them. Fix it with a period, semicolon, or a connector like 'but'.",
+   "replace": "Found it. Line 2 fuses two complete sentences — 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' — with no punctuation or connector between them. Fix it with a period, semicolon, or a connector like 'but'.",
+   "fixes": [
+    "P95"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[0].data.cards[5].explanation",
+   "before": "No subject and no verb — this is an accidental fragment, not a stylistic choice.",
+   "after": "The clause has a subject ('the store') and a verb ('was closed'), but it is an accidental fragment because the dependent clause stands alone.",
+   "fixes": [
+    "P93"
+   ]
+  },
+  {
+   "path": "blocks[0].data.cards[9].explanation",
+   "before": "'Leaving' isn't a main verb here, so there's no complete predicate.",
+   "after": "Here, 'Running' and 'skipping' are non-finite verbs, so the fragment has no finite main verb.",
+   "fixes": [
+    "P94"
+   ]
+  },
+  {
+   "path": "blocks[4].data.lines[1].explanation",
+   "before": "Two complete sentences fused together: 'People assume...' and 'but the studies...' have no punctuation or connector joining them. This is a run-on.",
+   "after": "Two complete sentences fused together: 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' have no punctuation or connector joining them. This is a run-on.",
+   "fixes": [
+    "P95"
+   ]
+  },
+  {
+   "path": "blocks[4].data.completionMessage",
+   "before": "Found it. Line 2 fuses two complete sentences — 'People assume...' and 'but the studies...' — with no punctuation between them. Fix it with a period, semicolon, or a connector like 'but'.",
+   "after": "Found it. Line 2 fuses two complete sentences — 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' — with no punctuation or connector between them. Fix it with a period, semicolon, or a connector like 'but'.",
+   "fixes": [
+    "P95"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Ret_SpeedCategorizer",
+    "purpose": "Rapid fluency sorting sentences into Fragment, Run-on, or Deliberate fragment, rebuilding the fragments/run-ons boundary under time pressure.",
+    "data": {
+     "buckets": [
+      {
+       "color": "error",
+       "hint": "Missing a subject or verb",
+       "id": "fragment",
+       "label": "Fragment"
+      },
+      {
+       "color": "caution",
+       "hint": "Two sentences fused together",
+       "id": "runon",
+       "label": "Run-on"
+      },
+      {
+       "color": "success",
+       "hint": "Short on purpose, for punch",
+       "id": "deliberate",
+       "label": "Deliberate fragment"
+      }
+     ],
+     "cards": [
+      {
+       "correctBucket": "fragment",
+       "explanation": "No verb anywhere — 'over the fence' has no action, so it cannot stand alone.",
+       "id": "c1",
+       "text": "The ball flying over the fence."
+      },
+      {
+       "correctBucket": "runon",
+       "explanation": "Two complete sentences jammed together with no punctuation between them.",
+       "id": "c2",
+       "text": "She studied hard the test was easy."
+      },
+      {
+       "correctBucket": "deliberate",
+       "explanation": "Deliberate fragment: a two-word punch after a full sentence, for emphasis.",
+       "id": "c3",
+       "text": "No way."
+      },
+      {
+       "correctBucket": "deliberate",
+       "explanation": "Deliberate fragment — the speaker could have written a full sentence but chose punch instead.",
+       "id": "c4",
+       "text": "Absolutely not."
+      },
+      {
+       "correctBucket": "runon",
+       "explanation": "Complete sentence, then 'he didn't call' bolted on without punctuation or a connector.",
+       "id": "c5",
+       "text": "He promised to call he never did."
+      },
+      {
+       "correctBucket": "fragment",
+       "explanation": "The clause has a subject ('the store') and a verb ('was closed'), but it is an accidental fragment because the dependent clause stands alone.",
+       "id": "c6",
+       "text": "Because the store was closed."
+      },
+      {
+       "correctBucket": "deliberate",
+       "explanation": "A deliberate fragment used as a rhetorical answer to a question.",
+       "id": "c7",
+       "text": "Never."
+      },
+      {
+       "correctBucket": "fragment",
+       "explanation": "Just a subject with no verb — a mistake, not a style choice.",
+       "id": "c8",
+       "text": "The winning team at the regional finals last spring."
+      },
+      {
+       "correctBucket": "runon",
+       "explanation": "Comma splice: a comma can't join two full sentences on its own.",
+       "id": "c9",
+       "text": "The rain stopped we went outside, the game began."
+      },
+      {
+       "correctBucket": "fragment",
+       "explanation": "Here, 'Running' and 'skipping' are non-finite verbs, so the fragment has no finite main verb.",
+       "id": "c10",
+       "text": "Running late again and skipping breakfast."
+      }
+     ],
+     "prompt": "Sort each item into the right bucket as fast as you can. Trust your first instinct.",
+     "seconds": 75,
+     "showExplanations": true,
+     "title": "Rapid Sort: Fragment, Run-on, or Deliberate?"
+    },
+    "repaired": false,
+    "index": 0
+   },
+   {
+    "block": "Recall_BinarySwipe",
+    "purpose": "Left/right swipes judging statements about end-focus, fronting, and emphasis, retrieving the word-order rules by recognition.",
+    "data": {
+     "instruction": "Swipe right if the statement is true, left if it is false.",
+     "leftHint": "false",
+     "leftLabel": "False",
+     "rightHint": "true",
+     "rightLabel": "True",
+     "statements": [
+      {
+       "correctSide": "right",
+       "feedback": "End-focus: the last position is where the reader's attention lands.",
+       "id": "s1",
+       "tag": "End-focus",
+       "text": "What a reader meets first and last carries the most weight."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "Fronting spotlights whatever you move to the start.",
+       "id": "s2",
+       "tag": "Fronting",
+       "text": "Fronting means moving a word or phrase to the start of the sentence to spotlight it."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "Fronting puts the moved phrase FIRST; the point saved for last is the periodic pattern.",
+       "id": "s3",
+       "tag": "Fronting",
+       "text": "Fronting saves the important idea for the very end of the sentence."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "End-focus: 'without a trace' gets the final emphasis.",
+       "id": "s4",
+       "tag": "End-focus",
+       "text": "'She left without a trace' puts its emphasis on 'without a trace'."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "Parallel structure earns credibility; only matching forms create the rhythm.",
+       "id": "s5",
+       "tag": "Parallel structure",
+       "text": "Parallel structure works best when the matching phrases use different grammatical forms."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "Readers naturally give extra weight to what they read first — so front it deliberately.",
+       "id": "s6",
+       "tag": "Fronting",
+       "text": "Moving a key phrase to the front makes the reader meet it before anything else."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "Deliberate fragments get their punch from breaking the rule on purpose, not from hiding errors.",
+       "id": "s7",
+       "tag": "Fragments",
+       "text": "A deliberate fragment is just an accidental fragment that went unnoticed."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "The first and last slots are the strongest positions in a sentence.",
+       "id": "s8",
+       "tag": "End-focus",
+       "text": "When you rewrite for emphasis, put your strongest words in the first or last position."
+      }
+     ],
+     "summaryBody": "First and last positions carry the most weight. Fronting spotlights a phrase by moving it to the start; parallel structure builds rhythm through matching forms. And a fragment is only deliberate when the break is the point.",
+     "summaryHeading": "Word order rules, recovered",
+     "title": "Recall: Word Order and Emphasis"
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Ret_MisconceptionTrap",
+    "purpose": "A tempting choice set where the 'wrong' answer is a run-on rewritten as a fragment or vice versa, so the learner must apply the boundary, not pattern-match.",
+    "data": {
+     "correctId": "opt2",
+     "notQuiteMessage": "That's the trap.",
+     "options": [
+      {
+       "id": "opt1",
+       "text": "Delete the period: 'Fear is a reasonable response to danger panic is not.' — keep it as one flowing sentence.",
+       "whyNot": "This makes the run-on worse. Fusing two complete sentences with no punctuation at all is exactly the error that blurs the argument; the reader crashes into 'panic' with no signal."
+      },
+      {
+       "id": "opt2",
+       "text": "Split it: 'Fear is a reasonable response to danger. Panic is not.' Then add a deliberate fragment if you want extra punch: 'Not panic.'",
+       "whyNot": "Survives scrutiny: it fixes the run-on with a period, restores clear end-focus on 'not', and the optional deliberate fragment adds punch on purpose — the boundary between accident and choice is respected."
+      },
+      {
+       "id": "opt3",
+       "text": "Replace the period with a comma: 'Fear is a reasonable response to danger, panic is not.'",
+       "whyNot": "That's a comma splice — a comma alone can't join two complete sentences, so this is still a run-on, just with a comma painted on top."
+      },
+      {
+       "id": "opt4",
+       "text": "Turn the second half into a fragment: 'Fear is a reasonable response to danger. Panic is not.' but delete 'Panic' so it reads '...to danger. Is not.'",
+       "whyNot": "It deletes the subject 'Panic', leaving 'Is not.' with nothing to refer to — an accidental fragment, not a deliberate one, because the reader can't recover the missing subject."
+      }
+     ],
+     "prompt": "A persuasive essay contains this sentence: 'Fear is a reasonable response to danger panic is not.' A student offers four fixes. Which fix correctly applies the boundary between fixing a run-on and using a deliberate fragment?",
+     "successMessage": "Survives scrutiny."
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Ret_InterleavedMatrix",
+    "purpose": "A grid mixing rhetorical grammar with advanced syntax: match each sentence to its technique (fronting, parallel structure, periodic, cumulative) and its effect.",
+    "data": {
+     "cells": [
+      {
+       "answer": "Starts with what matters; the point comes first, detail follows.",
+       "colId": "definition",
+       "feedback": "Point first, details tumbling after — that's cumulative.",
+       "rowId": "cumulative",
+       "acceptedAnswers": [
+        "point then detail",
+        "main idea first, then details"
+       ]
+      },
+      {
+       "answer": "Builds suspense; the reader waits for the point, which lands with force at the end.",
+       "colId": "definition",
+       "feedback": "Suspense first, payoff last.",
+       "rowId": "periodic",
+       "acceptedAnswers": [
+        "build-up to a point",
+        "point saved for the end"
+       ]
+      },
+      {
+       "answer": "'Without warning, the lights went out.'",
+       "colId": "example",
+       "feedback": "The spotlighted phrase is up front.",
+       "rowId": "fronting",
+       "acceptedAnswers": [
+        "any sentence starting with a moved phrase"
+       ]
+      },
+      {
+       "answer": "'She came, she saw, she conquered.'",
+       "colId": "example",
+       "feedback": "Same form repeated — rhythm and credibility.",
+       "rowId": "parallel",
+       "acceptedAnswers": [
+        "repeated matching clauses"
+       ]
+      }
+     ],
+     "columns": [
+      {
+       "id": "definition",
+       "label": "What it does"
+      },
+      {
+       "id": "example",
+       "label": "Quick example"
+      }
+     ],
+     "completionMessage": "Grid complete — every technique retrieved from memory.",
+     "matrixSubtitle": "Retrieval from Rhetorical Grammar and Advanced Syntax",
+     "matrixTitle": "Technique Grid: Name and Show",
+     "rows": [
+      {
+       "id": "fronting",
+       "label": "Fronting",
+       "sourceUnit": "Rhetorical Grammar"
+      },
+      {
+       "id": "parallel",
+       "label": "Parallel structure",
+       "sourceUnit": "Rhetorical Grammar"
+      },
+      {
+       "id": "periodic",
+       "label": "Periodic sentence",
+       "sourceUnit": "Advanced Syntax"
+      },
+      {
+       "id": "cumulative",
+       "label": "Cumulative sentence",
+       "sourceUnit": "Advanced Syntax"
+      }
+     ]
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Ret_ForensicAudit",
+    "purpose": "A short persuasive paragraph containing a real run-on, an accidental fragment, and a broken parallelism the learner must click and label, applying every structural rule.",
+    "data": {
+     "artifactLabel": "Persuasive paragraph — draft 1",
+     "artifactType": "essay",
+     "brief": "Click the single line that contains the run-on. Read for two complete sentences fused together with no punctuation or connector.",
+     "completionMessage": "Found it. Line 2 fuses two complete sentences — 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' — with no punctuation or connector between them. Fix it with a period, semicolon, or a connector like 'but'.",
+     "id": "audit1",
+     "lines": [
+      {
+       "explanation": "Clean. One subject ('Students'), one verb ('demand'), one sentence.",
+       "id": "l1",
+       "isError": false,
+       "label": "1",
+       "text": "Students today demand more than grades from their schools."
+      },
+      {
+       "explanation": "Two complete sentences fused together: 'People assume longer school days mean more learning' and 'the studies show the opposite is often true' have no punctuation or connector joining them. This is a run-on.",
+       "id": "l2",
+       "isError": true,
+       "label": "2",
+       "text": "People assume longer school days mean more learning the studies show the opposite is often true."
+      },
+      {
+       "explanation": "Deliberate fragment. The paragraph already set up a full claim, so this short punch is a choice, not an error.",
+       "id": "l3",
+       "isError": false,
+       "label": "3",
+       "text": "Not always."
+      },
+      {
+       "explanation": "Clean sentence, ending on its strongest idea — good end-focus.",
+       "id": "l4",
+       "isError": false,
+       "label": "4",
+       "text": "In schools that tested shorter days, attention stayed sharper and test scores held steady."
+      },
+      {
+       "explanation": "Clean parallelism: three matching verb phrases ('closing', 'moving', 'asking'). Rhythm and credibility intact.",
+       "id": "l5",
+       "isError": false,
+       "label": "5",
+       "text": "Before changing the schedule, districts should close the achievement gap, update the curriculum, and ask the students themselves."
+      }
+     ],
+     "maxMisses": 2,
+     "revealLabel": "Reveal the run-on",
+     "title": "Forensic Audit: Find the Run-on"
+    },
+    "repaired": false,
+    "index": 4
+   },
+   {
+    "block": "Ret_UncuedReconstruct",
+    "purpose": "No-cue rebuild: turn a flat sentence into an emphatic one by assembling a fronted/periodic version from scrambled chips, practising the rewrite skill from memory.",
+    "data": {
+     "answerLabel": "Rebuilt sentence",
+     "completeMessage": "Both rebuilds complete — you rewrote for emphasis from memory, with no cues.",
+     "context": "Flat version: 'The team finally won the championship after ten years of losing.'\n\nRebuild it so the sentence builds toward its payoff, with the key idea saved for the end.",
+     "contextLabel": "Rhetorical rewrite drill",
+     "items": [
+      {
+       "chunks": [
+        {
+         "text": "After ten years of losing,"
+        },
+        {
+         "text": "the team finally won"
+        },
+        {
+         "text": "the championship."
+        },
+        {
+         "text": "the team finally lost"
+        },
+        {
+         "text": "the trophy."
+        }
+       ],
+       "feedback": {
+        "correct": "The delay of 'the championship' until the very end is where the reader's weight lands.",
+        "explanation": "Periodic order: everything builds up, and the payoff arrives last, at the strongest position in the sentence."
+       },
+       "id": "r1",
+       "label": "Rewrite 1",
+       "solution": [
+        "After ten years of losing,",
+        "the team finally won",
+        "the championship."
+       ]
+      },
+      {
+       "chunks": [
+        {
+         "text": "Without hesitation,"
+        },
+        {
+         "text": "she signed the contract"
+        },
+        {
+         "text": "that changed everything."
+        },
+        {
+         "text": "hesitantly she signed"
+        },
+        {
+         "text": "the deal."
+        }
+       ],
+       "feedback": {
+        "correct": "Fronting: 'Without hesitation' is met first, so it gets the first burst of emphasis.",
+        "explanation": "Fronting moves the spotlighted phrase to the start of the sentence, where the reader meets it first."
+       },
+       "id": "r2",
+       "label": "Rewrite 2",
+       "solution": [
+        "Without hesitation,",
+        "she signed the contract",
+        "that changed everything."
+       ]
+      }
+     ],
+     "prompt": "Rebuild each emphatic sentence by dragging the chunks into the right order. No hints — reconstruct it from what you remember.",
+     "title": "No-Cue Rebuild: Rewrite for Emphasis"
+    },
+    "repaired": false,
+    "index": 5
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Classify this item: 'The concert sold out instantly, fans camped outside for tickets, nobody complained about the price.'",
+    "answer": "Run-on",
+    "rationale": "Every clause is complete, and they're joined only by commas — three comma splices make this a run-on, not a fragment or a deliberate stylistic break.",
+    "source": "ai",
+    "hint": "Ask: could each half stand alone as a sentence? If yes and they're fused, you know the answer.",
+    "choices": [
+     "Fragment",
+     "Run-on",
+     "Deliberate fragment",
+     "Balanced sentence"
+    ],
+    "id": "c1",
+    "after": 0,
+    "focus": "Classify a tricky sentence as fragment, run-on, or deliberate fragment"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "The flat sentence 'She closed the door quietly.' is rewritten four ways. Which rewrite uses fronting to put the emphasis on 'quietly'?",
+    "answer": "Quietly, she closed the door.",
+    "rationale": "Fronting moves 'Quietly' to the very start, so the reader meets it first — that's the position fronting uses to spotlight a word.",
+    "source": "ai",
+    "hint": "Fronting puts the spotlighted word in the first position.",
+    "choices": [
+     "She closed the door quietly.",
+     "Quietly, she closed the door.",
+     "She quietly closed the door, and she did it fast.",
+     "The door was closed by her, quietly."
+    ],
+    "id": "c2",
+    "after": 1,
+    "focus": "End-focus: which rewritten sentence puts emphasis on the right word"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "'Fear is a reasonable response to danger panic is not.' Why does the run-on weaken the argument, and which fix is correct?",
+    "answer": "Period after 'danger', then the deliberate fragment 'Not panic.'",
+    "rationale": "A run-on blurs where one claim ends and the next begins, dropping the impact; a period restores end-focus on 'not', and the optional deliberate fragment adds punch without deleting the subject.",
+    "source": "ai",
+    "hint": "A comma can't join two full sentences, and a deliberate fragment still needs to be recoverable.",
+    "choices": [
+     "Comma splice: put a comma after 'danger'",
+     "Delete the period and run both clauses together",
+     "Period after 'danger', then the deliberate fragment 'Not panic.'",
+     "Delete 'panic' and end with 'Is not.'"
+    ],
+    "id": "c3",
+    "after": 2,
+    "focus": "Why a run-on weakens persuasion and which fix is correct"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "'Although the storm knocked out the power and flooded the roads, the town never stopped working.' Is this order periodic or cumulative? Answer with one word.",
+    "answer": "Periodic",
+    "rationale": "The dependent clauses delay the main point ('the town never stopped working') until the end — that build-up to a point is the definition of periodic order.",
+    "source": "ai",
+    "accepts": [
+     "periodic",
+     "periodic sentence"
+    ],
+    "hint": "Where does the main point land — the beginning or the end?",
+    "id": "c4",
+    "after": 3,
+    "focus": "Distinguish periodic vs cumulative order in a sentence"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Here is the paragraph's run-on: 'The volunteers cleared the beach the research team recorded the results and everyone agreed the project was a success, the opposite of what critics predicted.' What is the exact punctuation fix?",
+    "answer": "A period after 'opposite'",
+    "rationale": "The run-on fuses 'the project was a success' with 'the opposite of what critics predicted'; a period after 'success' splits them into two complete sentences.",
+    "source": "ai",
+    "hint": "The fix must separate two complete sentences with a full stop.",
+    "choices": [
+     "A comma after 'often'",
+     "A semicolon after 'studies'",
+     "A period after 'opposite'",
+     "Delete the word 'and'"
+    ],
+    "id": "c5",
+    "after": 4,
+    "focus": "Identify the exact punctuation fix for the paragraph's run-on"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "Rewrite this flat sentence using fronting: 'She signed the contract without hesitation.' Write the full fronted version.",
+    "answer": "Without hesitation, she signed the contract.",
+    "rationale": "Fronting means moving the key phrase to the start of the sentence so the reader meets it first.",
+    "source": "ai",
+    "accepts": [
+     "Without hesitation, she signed the contract.",
+     "Without hesitation she signed the contract."
+    ],
+    "hint": "Move the spotlighted phrase to the very start, before the subject.",
+    "id": "c6",
+    "after": 5,
+    "focus": "Rewrite a flat sentence with fronting or parallel structure for emphasis"
+   }
+  ]
+ }
+}

@@ -1,0 +1,99 @@
+--- a/server.js
++++ b/server.js
+@@ -7,6 +7,13 @@
+  */
+ require('dotenv').config();
+ 
++// Beta launch (curriculum-build/BETA-LAUNCH-KIT.md): errors go to a local,
++// rotated log (no third-party tracker), and the real mail provider is plugged
++// into utils/mailer.js when MAIL_PROVIDER is set.
++const errorLog = require('./services/error-log');
++errorLog.install();
++const mailProvider = require('./utils/mail-transports').installFromEnv();
++
+ // xKiro and UnoRouter are for the build pipeline only: their terms do not cover
+ // children, and no learner's words may reach them (services/providers/xkiro.js,
+ // unorouter.js). Both are switched on by an environment flag, so a server
+@@ -33,6 +40,20 @@
+ const PORT = Number(process.env.PORT || 6767);
+ const isProduction = process.env.NODE_ENV === 'production';
+ 
++// Production refuses to start without what a parent or tester would otherwise
++// silently miss: a mail provider (consent and invite emails), and the app's own
++// public origin for the links in them. Without APP_ORIGIN the consent emails are
++// built from the request's Host header, which a client chooses.
++if (isProduction) {
++  const problems = [];
++  if (!mailProvider && process.env.MAIL_ALLOW_OUTBOX !== '1') problems.push('MAIL_PROVIDER is not set (consent and invite emails could not be sent)');
++  if (!/^https:\/\/[^/]+$/.test(String(process.env.APP_ORIGIN || '').replace(/\/$/, ''))) problems.push('APP_ORIGIN must be the https:// origin of the app, e.g. https://app.example.com');
++  if (problems.length) {
++    console.error(`Refusing to start in production:\n  - ${problems.join('\n  - ')}`);
++    process.exit(1);
++  }
++}
++
+ // A missing generator would mean a learner hitting a dead question mid-session,
+ // so the process refuses to start rather than fail later, in front of someone.
+ const missing = bank.missingSkills();
+@@ -78,8 +99,14 @@
+   console.error('Refusing to start: SESSION_SECRET must be at least 32 characters in production.');
+   process.exit(1);
+ }
++// Sessions survive a restart and do not grow in memory (express-session's
++// MemoryStore does both). SESSION_STORE=memory keeps the old behaviour.
++const sessionStore = (process.env.SESSION_STORE || (isProduction ? 'sqlite' : 'memory')) === 'sqlite'
++  ? new (require('./services/session-store').SqliteSessionStore)()
++  : undefined;
+ app.use(session({
+   name: 'polymath.sid',
++  store: sessionStore,
+   secret: secret || crypto.randomBytes(48).toString('base64url'),
+   resave: false,
+   saveUninitialized: false,
+@@ -93,6 +120,9 @@
+ }));
+ 
+ app.use(attachUser);
++// The private beta: with BETA_GATE=invite only an approved tester's invite code
++// makes an account (middleware/beta-gate.js). Off by default.
++app.use(require('./middleware/beta-gate').betaGate({ db: require('./config/db'), isAdmin: require('./middleware/auth').isAdmin }));
+ // Age screen and parental consent (routes/consent.js). The permissions gate turns
+ // the camera and microphone off in the browser for an account that may not use
+ // them; the API gate keeps a child account's free text away from outside models
+@@ -155,7 +185,12 @@
+   immutable: true, maxAge: '365d', fallthrough: false,
+ }));
+ 
++// /healthz (public, ok or not) and /api/ops/* (admins): routes/ops.js.
++app.use(require('./routes/ops').router);
++
+ app.get('/api/health', (req, res) => {
++  // In production the provider list (and free memory) is for admins only.
++  if (isProduction && !require('./middleware/auth').isAdmin(req.user)) return res.json({ ok: true });
+   res.json({
+     ok: true,
+     ai: require('./services/ai').isEnabled(),
+@@ -194,8 +229,15 @@
+   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+ });
+ 
++app.use(errorLog.expressHandler);
+ // eslint-disable-next-line no-unused-vars
+ app.use((err, req, res, next) => {
++  // A body the parser refused (broken JSON, over the limit) is a 400 or 413 for
++  // the client to fix, not a 500 "something went wrong on our side".
++  const status = Number(err && (err.status || err.statusCode));
++  if (status >= 400 && status < 500 && !res.headersSent) {
++    return res.status(status).json({ error: status === 413 ? 'That request is too large.' : 'That request could not be read.' });
++  }
+   console.error('unhandled:', err);
+   if (res.headersSent) return;
+   res.status(500).json({ error: 'Something went wrong on our side.' });
+@@ -214,6 +256,7 @@
+   const ai = require('./services/ai');
+   const providers = require('./services/providers');
+   console.log(`Polymath listening on http://localhost:${PORT}`);
++  console.log(`  mail: ${mailProvider || 'dev outbox (no MAIL_PROVIDER)'}; sessions: ${sessionStore ? 'sqlite' : 'memory'}; beta gate: ${process.env.BETA_GATE || 'off'}`);
+   if (ai.isEnabled()) {
+     // Each kind of work can be on a different vendor, so say all three rather
+     // than implying one model is doing everything.

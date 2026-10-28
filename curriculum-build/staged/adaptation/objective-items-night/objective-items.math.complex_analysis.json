@@ -1,0 +1,5370 @@
+{
+ "track_id": "math",
+ "grade_id": "complex_analysis",
+ "generated_at": "2026-10-26T03:38:11.816Z",
+ "items": [
+  {
+   "objective_id": "complex_analysis:L10",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "In the complex plane, what are the modulus and an argument of z = −√3 + i? Select the pair whose argument lies in [0°, 360°).",
+   "choices": [
+    "r = 2, θ = 30°",
+    "r = 2, θ = 150°",
+    "r = √3, θ = 150°",
+    "r = 2, θ = 210°"
+   ],
+   "answer": "r = 2, θ = 150°",
+   "rationale": "The modulus is √((−√3)² + 1²) = 2. Since the point lies in quadrant II and its reference angle is 30°, its argument is 150°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L10",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Let z = 3(cos 120° + i sin 120°) and w = 2(cos 30° + i sin 30°). What is the polar form of zw with angle in [0°, 360°)?",
+   "choices": [
+    "6(cos 90° + i sin 90°)",
+    "6(cos 150° + i sin 150°)",
+    "6(cos 210° + i sin 210°)",
+    "12(cos 150° + i sin 150°)"
+   ],
+   "answer": "6(cos 150° + i sin 150°)",
+   "rationale": "Multiplying moduli gives 3·2 = 6, and adding angles gives 120° + 30° = 150°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L10",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Using De Moivre’s theorem, which value is a root of z³ = −1 with a positive imaginary part?",
+   "choices": [
+    "cos 60° + i sin 60°",
+    "cos 120° + i sin 120°",
+    "cos 240° + i sin 240°",
+    "cos 300° + i sin 300°"
+   ],
+   "answer": "cos 60° + i sin 60°",
+   "rationale": "Writing −1 as cos 180° + i sin 180°, the cube-root angles are (180° + 360°k)/3, giving 60°, 180°, and 300°. Only 60° has positive imaginary part.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L10",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which complex number rotates every point 60° counterclockwise about the origin and scales its distance from the origin by 2?",
+   "choices": [
+    "1 + i√3",
+    "√3 + i",
+    "2i",
+    "1 − i√3"
+   ],
+   "answer": "1 + i√3",
+   "rationale": "The required multiplier is 2(cos 60° + i sin 60°), which simplifies to 1 + i√3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L20",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which subset of ℂ is a domain, meaning that it is open and connected?",
+   "choices": [
+    "{z ∈ ℂ : |z| < 1}",
+    "{z ∈ ℂ : |z| ≤ 1}",
+    "{z ∈ ℂ : Re(z) = 0}",
+    "{1}"
+   ],
+   "answer": "{z ∈ ℂ : |z| < 1}",
+   "rationale": "The open unit disk is open and connected, so it is a domain. The closed disk and imaginary axis are not open, and a singleton is not open.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L20",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A curve in ℂ is a map γ:[0,1]→ℂ with which property?",
+   "choices": [
+    "continuous on the entire interval",
+    "analytic on a neighborhood of the interval",
+    "one-to-one on the entire interval",
+    "open as a subset of the complex plane"
+   ],
+   "answer": "continuous on the entire interval",
+   "rationale": "A curve is defined by a continuous map from an interval. Analyticity and injectivity are not required, and openness describes an image set rather than the defining property of a curve.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L20",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Let stereographic projection from N=(0,0,1) onto the plane Z=0 be π(X,Y,Z)=(X+iY)/(1−Z). What is π(P) for P=(8/9,4/9,1/9) on the unit sphere?",
+   "choices": [
+    "1 + i/2",
+    "1 + 2i",
+    "2 + i",
+    "1/2 + i"
+   ],
+   "answer": "1 + i/2",
+   "rationale": "Since 1−Z=8/9, the projection is (8/9+4i/9)/(8/9)=1+i/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L20",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "On the Riemann sphere, which set is open in the topology induced by stereographic projection?",
+   "choices": [
+    "{∞} ∪ {z ∈ ℂ : |z| > 2}",
+    "{∞} ∪ {z ∈ ℂ : |z| ≥ 2}",
+    "{∞} ∪ {z ∈ ℂ : 0 < |z| < 2}",
+    "{∞} alone"
+   ],
+   "answer": "{∞} ∪ {z ∈ ℂ : |z| > 2}",
+   "rationale": "Near infinity, the local coordinate w=1/z sends infinity to 0. The first set becomes |w|<1/2, which is open; the other choices are not open in this coordinate.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L40",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Which limit gives the complex derivative of f at a point z₀?",
+   "choices": [
+    "lim as h→0 over ℂ of [f(z₀+h)−f(z₀)]/h",
+    "lim as h→0 over ℝ of [f(z₀+h)−f(z₀)]/h",
+    "lim as h→0 over ℂ of [f(z₀+h)−f(z₀)]/conj(h)",
+    "lim as h→0 over ℂ of [f(z₀+h)−f(z₀)]/|h|"
+   ],
+   "answer": "lim as h→0 over ℂ of [f(z₀+h)−f(z₀)]/h",
+   "rationale": "A complex derivative requires the difference quotient to approach a limit as h approaches 0 through complex values.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L40",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "For f=u+iv differentiable on an open set, which Cauchy–Riemann equations hold at every point?",
+   "choices": [
+    "uₓ=vᵧ and uᵧ=vₓ",
+    "uₓ=vᵧ and uᵧ=−vₓ",
+    "uₓ=−vᵧ and uᵧ=vₓ",
+    "uₓ=−vᵧ and uᵧ=−vₓ"
+   ],
+   "answer": "uₓ=vᵧ and uᵧ=−vₓ",
+   "rationale": "Equating real and imaginary parts of f′=uₓ+i vₓ=vᵧ−i uᵧ gives uₓ=vᵧ and uᵧ=−vₓ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L40",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let f(z)=z². Which conclusion about this function is correct?",
+   "choices": [
+    "f is analytic on the entire complex plane.",
+    "f is analytic only on the real axis.",
+    "f is analytic only at the origin.",
+    "f is nowhere analytic in the complex plane."
+   ],
+   "answer": "f is analytic on the entire complex plane.",
+   "rationale": "Writing f=(x²−y²)+i(2xy), its continuous partial derivatives satisfy the Cauchy–Riemann equations everywhere, so f is entire.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L40",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let f(0)=0 and, for z=x+iy≠0, f(z)=xy(x+iy)/(x²+y²). At 0, all four real partial derivatives exist and equal 0, so the Cauchy–Riemann equations hold. Which conclusion is valid?",
+   "choices": [
+    "f is not complex differentiable at 0.",
+    "f is complex differentiable at 0.",
+    "f is real differentiable at 0.",
+    "f is analytic in a neighborhood of 0."
+   ],
+   "answer": "f is not complex differentiable at 0.",
+   "rationale": "Along z=t(1+i), f(z)/z=1/2, while along z=t(1−i), f(z)/z=−1/2. Thus no complex derivative exists at 0 despite the partial derivatives and Cauchy–Riemann equations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L125",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Let D be simply connected, let f be analytic on D, and let C be a closed contour in D. What conclusion follows from the extended Cauchy theorem?",
+   "choices": [
+    "The contour integral of f around C is zero.",
+    "The contour integral of f around C is always 2πi.",
+    "The contour integral of f around C depends on f'(0).",
+    "The contour integral of f around C equals the area enclosed."
+   ],
+   "answer": "The contour integral of f around C is zero.",
+   "rationale": "On a simply connected domain, a function analytic throughout the domain has zero integral around every closed contour lying in that domain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L125",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Suppose f is analytic on a domain D. Under what conditions do two closed contours C1 and C2 in D have equal integrals of f(z) dz?",
+   "choices": [
+    "The two contours are homologous in D.",
+    "The two contours are simple closed curves.",
+    "The two contours enclose the same number of poles.",
+    "The two contours have the same initial point."
+   ],
+   "answer": "The two contours are homologous in D.",
+   "rationale": "Cauchy's deformation theorem states that analytic functions have equal integrals over homologous contours in the same domain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L125",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=1/z, consider the counterclockwise unit circle C. Which statement correctly describes contracting C and evaluating its integral?",
+   "choices": [
+    "C cannot be contracted in the punctured plane, and its integral is 2πi.",
+    "C can be contracted in the punctured plane, and its integral is zero.",
+    "C cannot be contracted in the punctured plane, and its integral is zero.",
+    "C can be contracted in the punctured plane, and its integral is 2πi."
+   ],
+   "answer": "C cannot be contracted in the punctured plane, and its integral is 2πi.",
+   "rationale": "The unit circle has nonzero winding number about 0, so it cannot be contracted through contours in the punctured plane. Its integral is 2πi.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L135",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "For f holomorphic on and inside a positively oriented circle C and z0 inside C, let g(ζ)=(f(ζ)-f(z0))/(ζ-z0), extended at z0 by f'(z0). Which statement completes the proof of Cauchy’s integral formula?",
+   "choices": [
+    "g is holomorphic inside C, so ∮C g(ζ)dζ=0 and the target integral equals 2πi f(z0).",
+    "g is holomorphic inside C, so ∮C g(ζ)dζ=2πi f(z0) and the target integral equals 2πi f'(z0).",
+    "g has a pole at z0, so ∮C g(ζ)dζ=0 and the target integral equals 2πi f(z0).",
+    "g has a pole at z0, so ∮C g(ζ)dζ=2πi f'(z0) and the target integral equals 2πi f(z0)."
+   ],
+   "answer": "g is holomorphic inside C, so ∮C g(ζ)dζ=0 and the target integral equals 2πi f(z0).",
+   "rationale": "The extension of g is holomorphic throughout the disk. Since f(ζ)/(ζ-z0)=g(ζ)+f(z0)/(ζ-z0), Cauchy’s theorem gives ∮C g(ζ)dζ=0, leaving 2πi f(z0).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L135",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "Evaluate the counterclockwise contour integral ∮C z^3/(z-1)^2 dz, where C is the circle |z|=2.",
+   "choices": [
+    "6πi",
+    "3πi",
+    "12πi",
+    "6π"
+   ],
+   "answer": "6πi",
+   "rationale": "The derivative form of Cauchy’s formula gives ∮C f(z)/(z-z0)^2 dz=2πi f'(z0). Here f(z)=z^3 and f'(1)=3, so the value is 6πi.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L135",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "If f is holomorphic on and inside the counterclockwise circle |ζ|=2, which formula represents f(z) for every |z|<2?",
+   "choices": [
+    "f(z)=1/(2πi) ∮|ζ|=2 f(ζ)/(ζ-z) dζ",
+    "f(z)=1/(2πi) ∮|ζ|=2 f(ζ)/(z-ζ) dζ",
+    "f(z)=1/(2πi) ∮|ζ|=2 f(z)/(ζ-z) dζ",
+    "f(z)=1/(4πi) ∮|ζ|=2 f(ζ)/(ζ-z) dζ"
+   ],
+   "answer": "f(z)=1/(2πi) ∮|ζ|=2 f(ζ)/(ζ-z) dζ",
+   "rationale": "Cauchy’s integral formula states that f(z)=1/(2πi)∮C f(ζ)/(ζ-z)dζ for z inside the positively oriented contour C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L115",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "In a subdivision proof for a triangle T, why does the sum of the boundary integrals over smaller triangles equal the integral over ∂T?",
+   "choices": [
+    "Internal-edge integrals cancel because the two triangles traverse each shared edge oppositely.",
+    "Internal-edge integrals double because both triangles traverse each shared edge positively.",
+    "Outer-edge integrals cancel because each smaller triangle is oriented independently.",
+    "Vertex integrals cancel because analyticity makes their contributions equal."
+   ],
+   "answer": "Internal-edge integrals cancel because the two triangles traverse each shared edge oppositely.",
+   "rationale": "Adjacent triangles traverse their shared edge in opposite directions, so those contributions cancel. The remaining edges form the oriented boundary of T.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L115",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Assume f is continuous on the closed triangle. Which bound is valid for each boundary segment C of length L(C) in the standard proof?",
+   "choices": [
+    "|∫_C f(z)dz| ≤ L(C) max_(z∈C)|f(z)|",
+    "|∫_C f(z)dz| ≤ L(C) max_(z∈C)|f′(z)|",
+    "|∫_C f(z)dz| ≤ L(C)² max_(z∈C)|f(z)|",
+    "|∫_C f(z)dz| ≤ 2π max_(z∈C)|f(z)|"
+   ],
+   "answer": "|∫_C f(z)dz| ≤ L(C) max_(z∈C)|f(z)|",
+   "rationale": "Continuity on the compact segment makes |f| bounded there, and the modulus estimate gives the stated bound.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L115",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let f be analytic on a disk D, let F be a primitive of f on D, and let γ:[a,b]→D be piecewise C¹. What is ∫_γ f(z)dz?",
+   "choices": [
+    "F(γ(b))−F(γ(a)), by the fundamental theorem for line integrals.",
+    "f(γ(b))−f(γ(a)), by applying the fundamental theorem to f.",
+    "F′(γ(b))−F′(γ(a)), by applying the chain rule to F.",
+    "2πi[f(γ(b))−f(γ(a))], by the Cauchy integral formula."
+   ],
+   "answer": "F(γ(b))−F(γ(a)), by the fundamental theorem for line integrals.",
+   "rationale": "Since F′=f, the complex fundamental theorem for line integrals gives ∫_γ f(z)dz=F(γ(b))−F(γ(a)).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L115",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Using the triangle result, let f be analytic on a disk D, fix a∈D, and define F(z)=∫_a^z f(ζ)dζ. Why is F well-defined and a primitive?",
+   "choices": [
+    "Closed-curve integrals vanish, so the integral is path-independent, and differentiation gives F′(z)=f(z).",
+    "Analyticity makes the integral path-independent, and differentiation gives F′(z)=f′(z).",
+    "Continuity makes the integral path-independent, and differentiation gives F′(z)=the conjugate of f(z).",
+    "Closed-curve integrals vanish, so the integral is path-independent, but differentiation gives F′(z)=f′(z)."
+   ],
+   "answer": "Closed-curve integrals vanish, so the integral is path-independent, and differentiation gives F′(z)=f(z).",
+   "rationale": "The triangle theorem applied to decompositions of closed curves makes the integral path-independent. Differentiating the base-point integral then gives F′(z)=f(z).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L30",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Let f(z)=(z²−1)/(z−1). What is the value of lim_{z→1} f(z)?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "The limit does not exist"
+   ],
+   "answer": "2",
+   "rationale": "For z≠1, f(z)=z+1, so the limit as z approaches 1 is 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L30",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Consider f(z)=z² for z≠0 and f(0)=1. At which points is f continuous?",
+   "choices": [
+    "Only at z=0",
+    "At every z≠0",
+    "At every z in ℂ",
+    "At no point in ℂ"
+   ],
+   "answer": "At every z≠0",
+   "rationale": "The function is a polynomial except at 0, where its limit is 0 but f(0)=1; therefore it is continuous exactly when z≠0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L167",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=z², which calculation verifies the circular mean value property at 0 on |z|=1?",
+   "choices": [
+    "(1/2π)∫₀²π e^(2it)dt=1=f(0)",
+    "(1/2π)∫₀²π e^(2it)dt=0=f(0)",
+    "(1/2π)∫₀²π e^(it)dt=1=f(0)",
+    "(1/2π)∫₀²π 2e^(2it)dt=2=f′(0)"
+   ],
+   "answer": "(1/2π)∫₀²π e^(2it)dt=0=f(0)",
+   "rationale": "Parametrize the unit circle by z=e^(it). Then f(z)=e^(2it), whose average is zero because e^(2it) has zero constant Fourier term. Thus the average equals f(0)=0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L167",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Let f be continuous on an open set Ω. Which additional hypothesis allows Morera’s theorem to conclude that f is holomorphic?",
+   "choices": [
+    "∫_T f̄(z)dz=0 for every closed triangle T⊂Ω.",
+    "∫_T f(z)dz=0 for every closed triangle T⊂Ω.",
+    "∫_T f(z)dz̄=0 for every closed triangle T⊂Ω.",
+    "∫_T f(z)dz=∫_T f̄(z)dz for every closed triangle T⊂Ω."
+   ],
+   "answer": "∫_T f(z)dz=0 for every closed triangle T⊂Ω.",
+   "rationale": "Morera’s theorem states that a continuous function is holomorphic when its contour integral around every closed triangle in the domain is zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L167",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Let f be holomorphic on a connected open set Ω. If |f| has a local maximum at z₀∈Ω, what follows?",
+   "choices": [
+    "f must be nonconstant on Ω and vanish at z₀.",
+    "f must be nonconstant on Ω with f′(z₀)≠0.",
+    "f must be constant on every component of Ω.",
+    "f must be nonconstant on Ω with a pole at z₀."
+   ],
+   "answer": "f must be constant on every component of Ω.",
+   "rationale": "The strong maximum modulus principle says that if |f| has a local maximum at an interior point, then f is constant. Since Ω is connected, f is constant throughout Ω.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L167",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Let f(z)=(z+1)², holomorphic on a neighborhood of the closed unit disk. What is max_{|z|≤1}|f(z)|?",
+   "choices": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "answer": "4",
+   "rationale": "The maximum occurs on |z|=1. There, |f(z)|=|1+e^(it)|²=2+2cos t≤4, with equality at t=0, so the maximum is 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L199",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Let f be holomorphic at a. If f(a)=f'(a)=0 and f''(a)≠0, what is the order of the zero of f at a?",
+   "choices": [
+    "Exactly 1",
+    "Exactly 2",
+    "Exactly 3",
+    "Infinite order"
+   ],
+   "answer": "Exactly 2",
+   "rationale": "The Taylor expansion begins with a nonzero quadratic term, so f has a zero of order 2 at a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L199",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Suppose f is holomorphic near a, has a zero of order 3 at a, and is not identically zero nearby. Which statement about g(z)=f(z)/(z-a)^3 is correct near a?",
+   "choices": [
+    "g is holomorphic at a and g(a) is nonzero.",
+    "g is holomorphic at a and g(a) equals zero.",
+    "g has a removable singularity at a with value zero.",
+    "g has a pole of order three at a."
+   ],
+   "answer": "g is holomorphic at a and g(a) is nonzero.",
+   "rationale": "A zero of order 3 means f(z)=(z-a)^3h(z), where h is holomorphic and h(a)≠0. Thus g extends holomorphically to a with g(a)≠0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L199",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Let f and g be holomorphic on the same connected open set D. If f(z)=g(z) at infinitely many distinct points of D having an accumulation point in D, what must be true?",
+   "choices": [
+    "The functions f and g are identical throughout D.",
+    "They agree only in a neighborhood of the accumulation point.",
+    "They agree at the accumulation point but nowhere else.",
+    "The difference f-g is a nonzero constant throughout D."
+   ],
+   "answer": "The functions f and g are identical throughout D.",
+   "rationale": "The function h=f-g is holomorphic and has zeros accumulating inside D. By the identity theorem, h vanishes identically on the connected domain D.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L199",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "In a proof of the identity theorem, let h be holomorphic on a connected domain D and assume h is not identically zero. Which statement correctly explains why the zeros of h cannot have an accumulation point in D?",
+   "choices": [
+    "Every zero of a nonzero holomorphic function is isolated.",
+    "Every zero of a holomorphic function has infinite order.",
+    "Any accumulation point of zeros must lie outside the domain.",
+    "A nonzero holomorphic function has only finitely many zeros."
+   ],
+   "answer": "Every zero of a nonzero holomorphic function is isolated.",
+   "rationale": "A nonzero holomorphic function has only isolated zeros. Therefore, its zeros cannot have an accumulation point within the domain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L52",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Let f=u+iv be holomorphic. Which calculation correctly proves that u is harmonic?",
+   "choices": [
+    "uₓₓ=vᵧₓ and uᵧᵧ=−vₓᵧ, so uₓₓ+uᵧᵧ=vᵧₓ−vₓᵧ=0",
+    "uₓₓ=vᵧₓ and uᵧᵧ=vₓᵧ, so uₓₓ+uᵧᵧ=2vᵧₓ",
+    "uₓₓ=−vᵧₓ and uᵧᵧ=−vₓᵧ, so uₓₓ+uᵧᵧ=−2vᵧₓ",
+    "uₓₓ=vᵧᵧ and uᵧᵧ=−vₓₓ, so uₓₓ+uᵧᵧ=vᵧᵧ−vₓₓ"
+   ],
+   "answer": "uₓₓ=vᵧₓ and uᵧᵧ=−vₓᵧ, so uₓₓ+uᵧᵧ=vᵧₓ−vₓᵧ=0",
+   "rationale": "The Cauchy–Riemann equations give uₓ=vᵧ and uᵧ=−vₓ. Differentiation yields uₓₓ=vᵧₓ and uᵧᵧ=−vₓᵧ. Equality of mixed partials gives uₓₓ+uᵧᵧ=0, so u is harmonic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L52",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Let f=u+iv be holomorphic. Which calculation correctly proves that v is harmonic?",
+   "choices": [
+    "vₓₓ=−uᵧₓ and vᵧᵧ=uₓᵧ, so vₓₓ+vᵧᵧ=uₓᵧ−uᵧₓ=0",
+    "vₓₓ=−uᵧₓ and vᵧᵧ=−uₓᵧ, so vₓₓ+vᵧᵧ=−2uᵧₓ",
+    "vₓₓ=uᵧₓ and vᵧᵧ=uₓᵧ, so vₓₓ+vᵧᵧ=2uᵧₓ",
+    "vₓₓ=−uᵧᵧ and vᵧᵧ=−uₓₓ, so vₓₓ+vᵧᵧ=−(uₓₓ+uᵧᵧ)"
+   ],
+   "answer": "vₓₓ=−uᵧₓ and vᵧᵧ=uₓᵧ, so vₓₓ+vᵧᵧ=uₓᵧ−uᵧₓ=0",
+   "rationale": "Differentiating the Cauchy–Riemann equations gives vₓₓ=−uᵧₓ and vᵧᵧ=uₓᵧ. Since uₓᵧ=uᵧₓ, their sum is zero, proving that v is harmonic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L52",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "For u(x,y)=x²−y², which function is a harmonic conjugate of u?",
+   "choices": [
+    "2xy+C",
+    "−2xy+C",
+    "2x+y+C",
+    "x²+y²+C"
+   ],
+   "answer": "2xy+C",
+   "rationale": "For v=2xy+C, the Cauchy–Riemann equations hold: vᵧ=2x=uₓ and vₓ=2y=−uᵧ. Thus u+iv is holomorphic, so v is a harmonic conjugate.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L52",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes existence and uniqueness of a harmonic conjugate on a simply connected domain?",
+   "choices": [
+    "A harmonic u has a conjugate, and any two conjugates differ by a constant.",
+    "A harmonic u has a conjugate only when u is constant.",
+    "A nonharmonic u can have a conjugate on a simply connected domain.",
+    "Any two conjugates of a harmonic u differ by a nonconstant linear function."
+   ],
+   "answer": "A harmonic u has a conjugate, and any two conjugates differ by a constant.",
+   "rationale": "On a simply connected domain, every C² harmonic function has a harmonic conjugate. If two conjugates exist, their difference has zero real part and is holomorphic, so it must be a real constant.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L209",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "On an open domain D, each function f_n is holomorphic, and f_n converges uniformly on every compact subset of D. What conclusion is guaranteed?",
+   "choices": [
+    "The limit function is holomorphic throughout the entire domain D.",
+    "The limit function is holomorphic only on a dense subset of D.",
+    "The limit function is necessarily constant throughout the entire domain D.",
+    "The limit function is continuous but need not be holomorphic on D."
+   ],
+   "answer": "The limit function is holomorphic throughout the entire domain D.",
+   "rationale": "Weierstrass' theorem states that a locally uniform limit of holomorphic functions on an open set is holomorphic throughout that set.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L209",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "To prove that a locally uniform limit is holomorphic using Morera's theorem, which action is required?",
+   "choices": [
+    "Show that integrals of f_n around every triangle vanish, then pass to the limit.",
+    "Show that values of f_n on every triangle vanish, then pass to the limit.",
+    "Show that derivatives of f_n on every triangle vanish, then pass to the limit.",
+    "Show that bounds for f_n on every triangle exist, then pass to the limit."
+   ],
+   "answer": "Show that integrals of f_n around every triangle vanish, then pass to the limit.",
+   "rationale": "Each holomorphic f_n has zero integral around every triangle. Local uniform convergence permits passage to the limit in these integrals, so the limit has zero integral around every triangle and is holomorphic by Morera's theorem.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L209",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Which condition correctly defines a normal family of holomorphic functions on an open domain D?",
+   "choices": [
+    "Every sequence has a subsequence converging locally uniformly to a holomorphic function or to infinity.",
+    "Every sequence has a subsequence converging pointwise at each point of the domain.",
+    "Every sequence itself converges locally uniformly to one fixed holomorphic function on D.",
+    "Every sequence has a subsequence converging uniformly on the entire domain, not just compacts."
+   ],
+   "answer": "Every sequence has a subsequence converging locally uniformly to a holomorphic function or to infinity.",
+   "rationale": "Normality requires compact-wise convergence of a subsequence of every sequence, with the extended limit allowed to be infinity. Pointwise or whole-domain uniform convergence is not the defining condition.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L209",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "A family F of holomorphic functions on D is locally bounded, meaning each compact subset has a uniform bound for F. What does Montel's theorem guarantee?",
+   "choices": [
+    "It has a subsequence converging locally uniformly to a holomorphic function.",
+    "It has a subsequence converging locally uniformly to a meromorphic function with poles.",
+    "It has a subsequence converging locally uniformly to infinity throughout D.",
+    "It has a subsequence converging uniformly on the entire domain D."
+   ],
+   "answer": "It has a subsequence converging locally uniformly to a holomorphic function.",
+   "rationale": "Montel's theorem says that a locally bounded family of holomorphic functions is normal. Thus any sequence has a locally uniformly convergent subsequence whose limit is holomorphic; local boundedness rules out an infinite limit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L219",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "For 0<|z|<1, which Laurent series about 0 represents 1/[z(z²−1)]?",
+   "choices": [
+    "Σ_{n=0}^∞ z^{2n−1}",
+    "−Σ_{n=0}^∞ z^{2n−1}",
+    "−Σ_{n=0}^∞ z^{2n+1}",
+    "−Σ_{n=0}^∞ z^{−2n−1}"
+   ],
+   "answer": "−Σ_{n=0}^∞ z^{2n−1}",
+   "rationale": "Since 1/(z²−1)=−1/(1−z²)=−Σ_{n=0}^∞z^{2n}, dividing by z gives −Σ_{n=0}^∞z^{2n−1} for 0<|z|<1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L219",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "For |z|>1, which Laurent series about 0 represents 1/(z²+1)?",
+   "choices": [
+    "Σ_{n=0}^∞ (−1)^n z^{−(2n+2)}",
+    "−Σ_{n=0}^∞ (−1)^n z^{−(2n+2)}",
+    "Σ_{n=0}^∞ (−1)^n z^{−(2n+1)}",
+    "Σ_{n=0}^∞ z^{−(2n+2)}"
+   ],
+   "answer": "Σ_{n=0}^∞ (−1)^n z^{−(2n+2)}",
+   "rationale": "Factoring out z² gives 1/(z²+1)=z⁻²/(1+z⁻²). The geometric series for 1/(1+z⁻²) is Σ_{n=0}^∞(−1)^nz⁻²ⁿ, producing the stated series.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L219",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "For 1<|z|<2, which Laurent series about 0 represents 1/[(z−1)(z−2)]?",
+   "choices": [
+    "−Σ_{n=0}^∞ z^{−(n+1)} + Σ_{m=0}^∞ z^m/2^{m+1}",
+    "Σ_{n=0}^∞ z^{−(n+1)} − Σ_{m=0}^∞ z^m/2^{m+1}",
+    "Σ_{n=0}^∞ z^{−(n+1)} + Σ_{m=0}^∞ z^m/2^{m+1}",
+    "−Σ_{n=0}^∞ z^{−(n+1)} − Σ_{m=0}^∞ z^m/2^{m+1}"
+   ],
+   "answer": "−Σ_{n=0}^∞ z^{−(n+1)} − Σ_{m=0}^∞ z^m/2^{m+1}",
+   "rationale": "For |z|>1, 1/(z−1)=Σ_{n=0}^∞z^{−(n+1)}. For |z|<2, 1/(z−2)=−Σ_{m=0}^∞z^m/2^{m+1}. Their product is the correct Laurent series.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L219",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "Two Laurent series about 0 represent the same function on the same annulus. What must be true?",
+   "choices": [
+    "Every corresponding coefficient is identical.",
+    "Only negative-power coefficients are identical.",
+    "Corresponding coefficients differ by a constant.",
+    "Only the constant coefficients are identical."
+   ],
+   "answer": "Every corresponding coefficient is identical.",
+   "rationale": "The uniqueness theorem for Laurent series states that a function on a fixed annulus has one Laurent representation about the given center, so every corresponding coefficient must be identical.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L251",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=(z²+1)/(z²+2z+2), how does f behave at z=∞ when viewed on the Riemann sphere?",
+   "choices": [
+    "Removable at infinity, with value 1.",
+    "A simple pole at infinity, with value 1.",
+    "An essential singularity at infinity.",
+    "Removable at infinity, with value 0."
+   ],
+   "answer": "Removable at infinity, with value 1.",
+   "rationale": "Since the numerator and denominator have equal degree and leading coefficient 1, f(z) tends to 1 as z tends to infinity. Thus infinity is a removable singularity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L251",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "For g(z)=(z−1)²/[(z−2)³(z+1)], what is the order of the isolated singularity at z=2?",
+   "choices": [
+    "A removable singularity.",
+    "A pole of order 1.",
+    "A pole of order 2.",
+    "A pole of order 3."
+   ],
+   "answer": "A pole of order 3.",
+   "rationale": "The numerator is nonzero at z=2, while the denominator contains exactly three factors of z−2. Therefore, g has a pole of order 3 there.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L251",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "After canceling common factors, what is the degree of the rational map R(z)=(z²+1)/(z³−z) on the Riemann sphere?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "3",
+   "rationale": "The polynomials z²+1 and z³−z have no common roots, so the degree is the larger of their degrees: max(2,3)=3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L251",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "For the Möbius transformation T(z)=(2z+1)/(z−3), what is the ordered pair (T(∞),T(0)) on the Riemann sphere?",
+   "choices": [
+    "(2, −1/3)",
+    "(−2, −1/3)",
+    "(2, 1/3)",
+    "(1/2, −1/3)"
+   ],
+   "answer": "(2, −1/3)",
+   "rationale": "At infinity, the ratio of leading coefficients gives T(∞)=2. Substituting zero gives T(0)=1/(−3)=−1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L241",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Which classification describes f(z) = exp(1/z) at z = 0?",
+   "choices": [
+    "A removable singularity",
+    "B simple pole",
+    "C essential singularity",
+    "D branch point"
+   ],
+   "answer": "C essential singularity",
+   "rationale": "The Laurent series exp(1/z) = 1 + 1/z + 1/(2z²) + ⋯ has infinitely many negative powers of z, so z = 0 is an essential singularity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L241",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "For nonzero w, which formula gives points z_k approaching 0 satisfying exp(1/z_k) = w for every admissible k?",
+   "choices": [
+    "z_k = 1/(log w + πik)",
+    "z_k = 1/(log w + 2πik)",
+    "z_k = 1/(2πik)",
+    "z_k = log w + 2πik"
+   ],
+   "answer": "z_k = 1/(log w + 2πik)",
+   "rationale": "Complex exponentiation has period 2πi, so exp(log w + 2πik) = w. Taking reciprocals gives the stated points, which approach 0 as |k| increases.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L241",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "If f omits D(b,δ) near an essential singularity at 0, which argument gives a contradiction?",
+   "choices": [
+    "Since |f-b| ≥ δ, g = f-b is bounded; extending g makes f removable or a pole.",
+    "Since |f-b| ≤ δ, |1/(f-b)| ≤ 1/δ; extending the reciprocal makes f removable or a pole.",
+    "Since |f-b| ≥ δ, |1/(f-b)| ≤ 1/δ; extending the reciprocal makes f removable or a pole.",
+    "Since |f-b| ≥ δ, |1/(f-b)| ≥ 1/δ; extending the reciprocal makes f removable or a pole."
+   ],
+   "answer": "Since |f-b| ≥ δ, |1/(f-b)| ≤ 1/δ; extending the reciprocal makes f removable or a pole.",
+   "rationale": "Omitting D(b,δ) means |f-b| ≥ δ, so 1/(f-b) is bounded near 0 and extends holomorphically. Its extension makes f either removable or pole-like at 0, contradicting essentiality.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L241",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Which statement of Picard’s theorem applies near an essential singularity?",
+   "choices": [
+    "Every value occurs finitely often near the singularity, with at most one exception.",
+    "Every value occurs infinitely often near the singularity, with no exceptions.",
+    "Every value occurs infinitely often near the singularity, with at most one exception.",
+    "Some open disk of values is omitted near the singularity."
+   ],
+   "answer": "Every value occurs infinitely often near the singularity, with at most one exception.",
+   "rationale": "Great Picard’s theorem states that near an essential singularity every complex value, with at most one exception, is assumed infinitely often.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L82",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "For z = −1 and a = √2, which set is obtained when the complex power z^a is defined using every logarithm of z?",
+   "choices": [
+    "{exp[i√2(π + 2πk)] : k ∈ ℤ}",
+    "{exp[i(√2π + 2k)] : k ∈ ℤ}",
+    "{exp[i(π + 2πk)] : k ∈ ℤ}",
+    "{exp[i√2π + 2πk] : k ∈ ℤ}"
+   ],
+   "answer": "{exp[i√2(π + 2πk)] : k ∈ ℤ}",
+   "rationale": "The logarithms of −1 are i(π + 2πk), k ∈ ℤ. Substituting these into exp(a log z) gives the stated set.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L82",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Using the logarithmic definition of complex roots, which set gives all values of (−8)^(1/3)?",
+   "choices": [
+    "{2 + i√3, −2, 2 − i√3}",
+    "{1 + i, −2, 1 − i}",
+    "{1 + i√3, −2, 1 − i√3}",
+    "{1 + i√3, 2, 1 − i√3}"
+   ],
+   "answer": "{1 + i√3, −2, 1 − i√3}",
+   "rationale": "The logarithms of −8 have arguments (π + 2πk)/3. Dividing by 3 and exponentiating gives magnitudes 2 and angles π/3, π, and 5π/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L82",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "When z^(1/3) is continued once counterclockwise around zero, which outcome correctly describes the value and the branch point?",
+   "choices": [
+    "It is multiplied by e^(2πi); zero is a branch point of order 2",
+    "It is multiplied by e^(2πi/3); zero is a branch point of order 3",
+    "It returns unchanged; zero is an ordinary point of the function",
+    "It is multiplied by e^(πi/3); zero is a branch point of order 6"
+   ],
+   "answer": "It is multiplied by e^(2πi/3); zero is a branch point of order 3",
+   "rationale": "One circuit increases the argument by 2π, so the value is multiplied by exp(2πi/3). Three circuits are needed to return to the original value.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L82",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "How can a Riemann surface for z^(1/2) be informally constructed so that analytic continuation around zero is single-valued?",
+   "choices": [
+    "Take one cut plane and glue each edge to itself",
+    "Take three copies of the full plane and glue them at zero only",
+    "Take two disjoint copies of the plane and never connect them",
+    "Take two copies of a cut plane and cross-glue their cut edges"
+   ],
+   "answer": "Take two copies of a cut plane and cross-glue their cut edges",
+   "rationale": "Two sheets represent the two signs of the square root. Cross-gluing their cut edges exchanges the sheets around zero, making the continuation single-valued on the surface.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L271",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "In a proof of the residue theorem, why may the integral around C be replaced by integrals around small positively oriented circles enclosing each pole?",
+   "choices": [
+    "Boundary integrals cancel on the region between C and the circles.",
+    "Negative Laurent terms vanish on every contour in the region.",
+    "Meromorphicity makes f analytic throughout the whole region.",
+    "Residues remain unchanged under arbitrary contour deformation."
+   ],
+   "answer": "Boundary integrals cancel on the region between C and the circles.",
+   "rationale": "The function is analytic in the region between C and the small circles. Oppositely oriented boundary integrals cancel there, leaving the integral around C equal to the sum of the small-circle integrals.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L271",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "Let C be |z|=2 counterclockwise and f(z)=1/[z^2(z+1)(z-3)]. What is ∮_C f(z) dz?",
+   "choices": [
+    "The value is -πi/18.",
+    "The value is πi/18.",
+    "The value is -πi/36.",
+    "The value is πi/36."
+   ],
+   "answer": "The value is -πi/18.",
+   "rationale": "The poles 0 and -1 are inside C, while 3 is outside. The residues are 2/9 and -1/4, giving a sum of -1/36; multiplying by 2πi gives -πi/18.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L271",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "Let C be |z|=2 traversed clockwise, and let f(z)=e^z/[z(z-1)]. What is ∮_C f(z) dz?",
+   "choices": [
+    "The value is 2πi(1-e).",
+    "The value is 2πi(e+1).",
+    "The value is -2πi(e+1).",
+    "The value is 2π(e-1)."
+   ],
+   "answer": "The value is 2πi(1-e).",
+   "rationale": "The residues at 0 and 1 are -1 and e, so their sum is e-1. The clockwise orientation gives -2πi(e-1), which equals 2πi(1-e).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L284",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Using z = e^(it) on 0 ≤ t ≤ 2π, which contour integral represents ∫₀²π e^(2it) dt?",
+   "choices": [
+    "(1/i) ∮|z|=1 z dz",
+    "i ∮|z|=1 z² dz",
+    "(1/i) ∮|z|=1 z⁻² dz",
+    "∮|z|=1 z² dz"
+   ],
+   "answer": "(1/i) ∮|z|=1 z dz",
+   "rationale": "Since e^(2it) = z² and dt = dz/(iz), the integral becomes (1/i) ∮|z|=1 z dz. The substitution traces the unit circle counterclockwise.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L284",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫₀²π cos t/(5 − 4 cos t) dt by residues.",
+   "choices": [
+    "−π/3",
+    "π/3",
+    "2π/3",
+    "−2π/3"
+   ],
+   "answer": "π/3",
+   "rationale": "With z = e^(it), the integrand becomes −(z²+1)/[2iz(2z−1)(z−2)]. The enclosed poles are 0 and 1/2; their residues sum to −i/6, giving 2πi(−i/6) = π/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L284",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "For z = e^(it), the contour integrand for ∫₀²π dt/(2 + cos t) is 2/[i(z²+4z+1)]. What is the residue at its enclosed pole?",
+   "choices": [
+    "i/√3",
+    "−1/√3",
+    "−i/√3",
+    "1/√3"
+   ],
+   "answer": "−i/√3",
+   "rationale": "The enclosed pole is r = −2+√3. Because the denominator has a simple zero there, the residue is 2/[i(2r+4)] = 2/(2i√3) = −i/√3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L284",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫₀²π dt/(3 + 2 cos t) by converting it to a unit-circle contour integral and summing residues.",
+   "choices": [
+    "2π/√5",
+    "2π/3",
+    "2π/√13",
+    "π/√5"
+   ],
+   "answer": "2π/√5",
+   "rationale": "Using z = e^(it) gives 2/[i(z²+3z+1)]. The enclosed root is (−3+√5)/2, whose residue is −i/√5. Thus the integral is 2πi(−i/√5) = 2π/√5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L261",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "What is the residue of f(z) = e^z/(z − 2) at z = 2?",
+   "choices": [
+    "2e²",
+    "e²",
+    "e²/2",
+    "1/e²"
+   ],
+   "answer": "e²",
+   "rationale": "For a simple pole at z = 2, the residue is lim_{z→2}(z−2)f(z) = e².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L261",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Using a Laurent expansion about z = 0, what is the coefficient of z⁻¹ in e^z/[z²(z − 1)]?",
+   "choices": [
+    "−1",
+    "1",
+    "−2",
+    "2"
+   ],
+   "answer": "−2",
+   "rationale": "Since 1/(z−1) = −(1+z+⋯) and e^z = 1+z+⋯, the coefficient of z¹ in their product is 2. Multiplication by −z⁻² gives residue −2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L261",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Using the quotient formula, what is the residue of (z + 3)/[(z − 2)(z + 1)] at z = 2?",
+   "choices": [
+    "1",
+    "5/3",
+    "3/5",
+    "5"
+   ],
+   "answer": "5/3",
+   "rationale": "The denominator has a simple zero at 2, so the residue is p(2)/q′(2). Here p(2) = 5 and q′(z) = 2z − 1, giving q′(2) = 3 and residue 5/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L189",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A function f is holomorphic on the open disc D(a,R). Which statement follows about the Taylor series of f at a?",
+   "choices": [
+    "It converges to f throughout D(a,R).",
+    "It converges to f only on the real diameter of D(a,R).",
+    "It converges to f outside D(a,R), but not inside it.",
+    "It diverges at a whenever f is not entire on C."
+   ],
+   "answer": "It converges to f throughout D(a,R).",
+   "rationale": "Cauchy’s estimates imply that the Taylor series converges uniformly on every smaller closed disc, and the identity theorem shows that its sum equals f throughout D(a,R).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L189",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "What is the radius of convergence of the power series ∑_{n=0}^∞ n!z^n?",
+   "choices": [
+    "0, since the ratio of successive coefficients is unbounded.",
+    "1, since successive coefficients eventually become constant.",
+    "2, since every second coefficient is zero.",
+    "Infinite, since each coefficient is a factorial."
+   ],
+   "answer": "0, since the ratio of successive coefficients is unbounded.",
+   "rationale": "The ratio of successive term magnitudes is (n+1)|z|, which is unbounded for every z≠0. Thus the series diverges at every nonzero point and has radius of convergence 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L189",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "Which argument correctly proves that the Taylor series of a holomorphic f on D(a,R) represents f there?",
+   "choices": [
+    "Cauchy estimates give uniform convergence on smaller discs; the identity theorem then gives equality.",
+    "Liouville’s theorem gives uniform convergence on smaller discs; the identity theorem then gives equality.",
+    "Cauchy estimates give uniform convergence only on boundaries; Liouville’s theorem then gives equality.",
+    "Cauchy estimates show polynomial growth of derivatives; the maximum modulus principle then gives equality."
+   ],
+   "answer": "Cauchy estimates give uniform convergence on smaller discs; the identity theorem then gives equality.",
+   "rationale": "Cauchy estimates bound the Taylor coefficients and establish uniform convergence on every smaller closed disc. The resulting holomorphic sum has the same derivatives as f at a, so the identity theorem makes the two functions equal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L336",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "For a > 0, consider f(z) = π cot(πz)/(z² + a²). What is the residue of f at a nonzero integer n?",
+   "choices": [
+    "−1/(n² + a²)",
+    "1/[n(n² + a²)]",
+    "1/(n² + a²)",
+    "1/(a² − n²)"
+   ],
+   "answer": "1/(n² + a²)",
+   "rationale": "Since π cot(πz) has residue 1 at every integer and the denominator is nonzero there, the residue is 1/(n² + a²).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L336",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Using the cotangent kernel f(z) = π cot(πz)/(z² + a²), which identity follows by summing the residues at the integers for a > 0?",
+   "choices": [
+    "Σ from n = −∞ to ∞ of 1/(n² + a²) = (π/a)coth(πa)",
+    "Σ from n = −∞ to ∞ of 1/(n² + a²) = (π/a)tanh(πa)",
+    "Σ from n = −∞ to ∞ of 1/(n² + a²) = (π²/a)coth(πa)",
+    "Σ from n = −∞ to ∞ of 1/(n² + a²) = (π/(2a))coth(πa)"
+   ],
+   "answer": "Σ from n = −∞ to ∞ of 1/(n² + a²) = (π/a)coth(πa)",
+   "rationale": "The residues at the integers give the series, while the poles at z = ±ia contribute −πcoth(πa)/a each. Setting the total residue sum to zero gives the stated identity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L336",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "With f(z) = cot(πz)/z², the contour integral tends to zero on suitable expanding squares. What value does the residue calculation give for the sum from n = 1 to ∞ of 1/n²?",
+   "choices": [
+    "π²/12",
+    "π²/6",
+    "π²/3",
+    "π²/2"
+   ],
+   "answer": "π²/6",
+   "rationale": "The residue at zero is −π/3, and each nonzero integer n contributes 1/(πn²). Thus the sum over nonzero integers is π²/3, and symmetry gives π²/6 for positive n.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L336",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Using the cotangent-kernel identity, evaluate the sum from n = 1 to ∞ of 1/(n² + 1).",
+   "choices": [
+    "(π tanh π − 1)/2",
+    "(π coth π + 1)/2",
+    "(π coth π − 1)/4",
+    "(π coth π − 1)/2"
+   ],
+   "answer": "(π coth π − 1)/2",
+   "rationale": "Taking a = 1 in the bilateral identity gives πcoth(π). Removing the n = 0 term and dividing by two yields (πcoth(π) − 1)/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L346",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "For P(z)=∏_{n=1}^∞(1+z/[n(n+2)]), does the product converge locally uniformly, and what is P(1)?",
+   "choices": [
+    "It converges locally uniformly, and P(1)=2.",
+    "It converges locally uniformly, and P(1)=1.",
+    "It does not converge locally uniformly, and P(1)=2.",
+    "It converges only at z=0, and P(1)=1."
+   ],
+   "answer": "It converges locally uniformly, and P(1)=2.",
+   "rationale": "Since ∑|z|/[n(n+2)] converges uniformly on compact sets, the product converges locally uniformly. At z=1, the partial product telescopes to 2(N+1)/(N+2), which tends to 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L346",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "An entire function has simple zeros exactly at 1², 2², 3², and so on. Which expression represents it by Weierstrass factorization, with g entire?",
+   "choices": [
+    "e^{g(z)}∏_{n=1}^∞(1−z/n²)",
+    "e^{g(z)}∏_{n=1}^∞(1−z/n)e^{z/n}",
+    "e^{g(z)}∏_{n=1}^∞(1−z²/n²)",
+    "e^{g(z)}∏_{n=1}^∞(1−z/n²)²"
+   ],
+   "answer": "e^{g(z)}∏_{n=1}^∞(1−z/n²)",
+   "rationale": "Because ∑1/n² converges, the genus-zero canonical product has simple zeros at n². Multiplication by e^{g(z)} adds a zero-free factor and introduces no additional zeros.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L346",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Which identity is the Weierstrass sine product derived from the zeros of sin(πz)?",
+   "choices": [
+    "sin(πz)=πz∏_{n=1}^∞(1−z²/n²)",
+    "sin(πz)=z∏_{n=1}^∞(1−z²/n²)",
+    "sin(πz)=πz²∏_{n=1}^∞(1−z²/n²)",
+    "sin(πz)=πz∏_{n=1}^∞(1+z²/n²)"
+   ],
+   "answer": "sin(πz)=πz∏_{n=1}^∞(1−z²/n²)",
+   "rationale": "The zeros are 0 and the nonzero integers. The factor πz handles the zero at 0, while the product has simple zeros at ±n. The derivative at 0 is π, fixing the normalization.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L346",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Which statement is Mittag-Leffler’s theorem on the complex plane?",
+   "choices": [
+    "f=h+∑pₙ, where h is entire, pₙ are principal parts, and the series converges locally uniformly off the poles.",
+    "f=h+∑pₙ, where h is meromorphic, pₙ are entire polynomials, and the series converges locally uniformly.",
+    "f=h+∏pₙ, where h is entire, pₙ are principal parts, and the product converges locally uniformly.",
+    "f=h+∑qₙ, where h is entire, qₙ are entire functions, and the series converges locally uniformly."
+   ],
+   "answer": "f=h+∑pₙ, where h is entire, pₙ are principal parts, and the series converges locally uniformly off the poles.",
+   "rationale": "Mittag-Leffler reconstructs a meromorphic function by adding principal parts at selected poles to an entire function, with the series converging locally uniformly away from those poles.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L366",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "For f,g analytic inside and on a simple closed contour C, which statement correctly states Rouché's theorem?",
+   "choices": [
+    "On C, |f-g|<|g| implies equal numbers of interior zeros, counting multiplicity.",
+    "On C, |f-g|<|g| implies equal numbers of zeros outside C.",
+    "On C, |f-g|<|g| implies equal interior zero counts only if f and g have no common zeros.",
+    "At one point of C, |f-g|<|g| implies equal numbers of interior zeros."
+   ],
+   "answer": "On C, |f-g|<|g| implies equal numbers of interior zeros, counting multiplicity.",
+   "rationale": "The strict inequality on the entire contour ensures that f and g have the same number of zeros inside C, with multiplicity counted.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L366",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "In the proof, F_t=g+t(f-g). Why does its zero count remain constant for 0≤t≤1?",
+   "choices": [
+    "F_t is nonzero on C, so its winding number about 0 is constant.",
+    "F_t is analytic inside C, so its zero count must stay constant.",
+    "F_t is nonzero inside C, so its zero count must stay constant.",
+    "F_t is constant on C, so its winding number about 0 is constant."
+   ],
+   "answer": "F_t is nonzero on C, so its winding number about 0 is constant.",
+   "rationale": "If F_t vanished on C, then |g|=t|f-g|≤|f-g|<|g|, a contradiction. Thus the homotopy avoids boundary zeros, so its winding number and zero count remain constant.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L366",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "For p(z)=z^3+2z+3 on |z|=2, compare p with z^3+2z, then z^3+2z with z^3. How many zeros of p lie in |z|<2, counting multiplicity?",
+   "choices": [
+    "Exactly 0 zeros",
+    "Exactly 1 zero",
+    "Exactly 2 zeros",
+    "Exactly 3 zeros"
+   ],
+   "answer": "Exactly 3 zeros",
+   "rationale": "On |z|=2, |p-(z^3+2z)|=3 while |z^3+2z|≥4, and |(z^3+2z)-z^3|=4<8=|z^3|. Hence p and z^3 have three interior zeros.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L366",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "For F(z)=z^2+e^z/10 on |z|=1, how many zeros, counted with multiplicity, lie in |z|<1?",
+   "choices": [
+    "Exactly 0 zeros",
+    "Exactly 1 zero",
+    "Exactly 2 zeros",
+    "Exactly 3 zeros"
+   ],
+   "answer": "Exactly 2 zeros",
+   "rationale": "On |z|=1, |e^z/10|≤e/10<1=|z^2|. Rouché's theorem therefore says F and z^2 have the same number of interior zeros, namely two.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L92",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=z² and γ(t)=t+it² on 0≤t≤1, what is ∫γ f(z) dz?",
+   "choices": [
+    "−2/3+(2/3)i",
+    "2/3−(2/3)i",
+    "−2/3−(2/3)i",
+    "2/3+(2/3)i"
+   ],
+   "answer": "−2/3+(2/3)i",
+   "rationale": "Parametrization gives ∫₀¹(t+it²)²(1+2it)dt = −2/3+(2/3)i. Equivalently, the primitive z³/3 gives ((1+i)³)/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L92",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "For γ:[0,1]→C, define rev γ(t)=γ(1−t). Which substitution proves that reversing a path negates its contour integral?",
+   "choices": [
+    "Use u=1−t and obtain −∫₀¹ f(γ(u))γ′(u)du.",
+    "Use u=1−t and obtain ∫₀¹ f(γ(u))γ′(u)du.",
+    "Keep the bounds and obtain −∫₀¹ f(γ(u))γ′(u)du.",
+    "Use u=t−1 and obtain −∫₀¹ f(γ(u))γ′(u)du."
+   ],
+   "answer": "Use u=1−t and obtain −∫₀¹ f(γ(u))γ′(u)du.",
+   "rationale": "The reversed path has derivative −γ′(1−t). Substituting u=1−t and reversing the limits yields the negative of the original integral.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L92",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=z+1 and γ(t)=e^{it} on 0≤t≤π, which parameter integral represents the contour integral ∫_γ f(z) dz?",
+   "choices": [
+    "∫₀^π (e^{it}+1)i e^{it} dt",
+    "∫₀^π (e^{it}+1)e^{it} dt",
+    "∫₀^π (e^{it}+1)i e^{−it} dt",
+    "∫₀^π (e^{it}+1) dt"
+   ],
+   "answer": "∫₀^π (e^{it}+1)i e^{it} dt",
+   "rationale": "By definition, the contour integral is ∫₀^π f(γ(t))γ′(t)dt. Here f(γ(t))=e^{it}+1 and γ′(t)=i e^{it}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L92",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "Let α and β be piecewise-smooth paths on [0,1]. Define (α*β)(t)=α(2t) for 0≤t≤1/2 and β(2t−1) for 1/2<t≤1. For continuous f, which formula holds?",
+   "choices": [
+    "∫_{α*β} f(z) dz = ∫_α f(z) dz + ∫_β f(z) dz",
+    "∫_{α*β} f(z) dz = ∫_α f(z) dz − ∫_β f(z) dz",
+    "∫_{α*β} f(z) dz = 2∫_α f(z) dz + ∫_β f(z) dz",
+    "∫_{α*β} f(z) dz = ∫_α f(z) dz + 2∫_β f(z) dz"
+   ],
+   "answer": "∫_{α*β} f(z) dz = ∫_α f(z) dz + ∫_β f(z) dz",
+   "rationale": "Splitting the parameter integral at t=1/2 and substituting u=2t and u=2t−1 shows that the two path contributions add.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L314",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Using a Bromwich contour and residue theorem, compute the inverse Laplace transform of F(s)=1/(s²+a²), where a>0.",
+   "choices": [
+    "sin(at)/a",
+    "cos(at)",
+    "sinh(at)/a",
+    "t sin(at)/a"
+   ],
+   "answer": "sin(at)/a",
+   "rationale": "The poles are s=±ia. Summing their residues in the Bromwich integral gives e^{iat}/a-e^{-iat}/a=sin(at)/a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L314",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Using the Bromwich inversion formula, find f(t) when F(s)=1/[(s+1)(s+2)] and t≥0.",
+   "choices": [
+    "e^{-t}-e^{-2t}",
+    "e^{-2t}-e^{-t}",
+    "e^{-t}+e^{-2t}",
+    "e^{-t}-2e^{-2t}"
+   ],
+   "answer": "e^{-t}-e^{-2t}",
+   "rationale": "The residues at the simple poles s=-1 and s=-2 are 1 and -1, respectively, so f(t)=e^{-t}-e^{-2t}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L314",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "For the convention F(ω)=∫_{-∞}^{∞}f(t)e^{-iωt}dt, compute the Fourier transform of f(t)=1/(t²+a²), where a>0.",
+   "choices": [
+    "(π/a)e^{-a|ω|}",
+    "(π/a)e^{-aω²}",
+    "(2π/a)e^{-a|ω|}",
+    "(π/a)e^{-|ω|/a}"
+   ],
+   "answer": "(π/a)e^{-a|ω|}",
+   "rationale": "Closing the contour in the appropriate half-plane and including the pole at ia gives F(ω)=πe^{-a|ω|}/a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L314",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "For the convention F(ω)=∫_{-∞}^{∞}f(t)e^{-iωt}dt, compute the Fourier transform of f(t)=e^{-at²}, where a>0.",
+   "choices": [
+    "√(π/a)e^{-ω²/(4a)}",
+    "√(π/a)e^{-ω²/(4a²)}",
+    "√(a/π)e^{-ω²/(4a)}",
+    "√(π/a)e^{-aω²/4}"
+   ],
+   "answer": "√(π/a)e^{-ω²/(4a)}",
+   "rationale": "The Gaussian Fourier-transform identity gives F(ω)=√(π/a)exp[-ω²/(4a)] under the stated convention.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L294",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Using a positively oriented upper semicircular contour, evaluate ∫ from −∞ to ∞ of dx/(x²+1). The integral over the large arc tends to zero.",
+   "choices": [
+    "π/2",
+    "π",
+    "2π",
+    "π/3"
+   ],
+   "answer": "π",
+   "rationale": "The only enclosed pole is z=i, with residue 1/(2i). Thus the real-line integral is 2πi(1/(2i))=π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L294",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Let C_R be the upper semicircle |z|=R, with R>2. Which bound correctly shows that ∫ over C_R of dz/(z²+4) tends to zero?",
+   "choices": [
+    "πR/(R²−4)",
+    "2πR/(R²−4)",
+    "πR²/(R²−4)",
+    "π/(R²−4)"
+   ],
+   "answer": "πR/(R²−4)",
+   "rationale": "On C_R, |z²+4|≥R²−4, and the arc has length πR. Hence the integral's modulus is at most πR/(R²−4), which tends to zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L294",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=z²/(z⁴+1), the large upper semicircle contributes zero in the limit. Which identity then gives the real-line integral?",
+   "choices": [
+    "2πi times the sum of upper-half-plane residues",
+    "−2πi times the sum of upper-half-plane residues",
+    "πi times the sum of upper-half-plane residues",
+    "2πi times the sum of lower-half-plane residues"
+   ],
+   "answer": "2πi times the sum of upper-half-plane residues",
+   "rationale": "The positively oriented contour encloses the upper-half-plane poles. After the arc contribution vanishes, the real-line integral equals 2πi times their residue sum.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L294",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "For a rational function p(z)/q(z), which degree relationship guarantees that its integral over every sufficiently large semicircle tends to zero?",
+   "choices": [
+    "deg q − deg p ≥ 2",
+    "deg q − deg p = 1",
+    "deg q − deg p ≥ 0",
+    "deg q − deg p ≤ 0"
+   ],
+   "answer": "deg q − deg p ≥ 2",
+   "rationale": "If the degree difference is at least 2, then |p(z)/q(z)|=O(R^(−2)) on a large circle. Multiplying by the arc length O(R) shows that the arc integral is O(R^(−1)) and vanishes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L326",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "A contour travels along the real axis from left to right and detours above a simple pole at z = 0 with a small semicircle. For f(z) = 1/z, what is the limiting contribution of that arc?",
+   "choices": [
+    "−iπ",
+    "+iπ",
+    "0",
+    "−2πi"
+   ],
+   "answer": "−iπ",
+   "rationale": "Parametrize the clockwise upper arc by z = εe^(iθ), with θ decreasing from π to 0. Then ∫arc dz/z = ∫π^0 i dθ = −iπ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L326",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "What is the Cauchy principal value of the integral from −∞ to ∞ of 1/[x(x² + 1)] dx, treating the pole at x = 0 symmetrically?",
+   "choices": [
+    "0",
+    "iπ",
+    "−iπ",
+    "2πi"
+   ],
+   "answer": "0",
+   "rationale": "The integrand is odd, so the contributions on opposite sides of x = 0 cancel in the principal-value limit. The tails also converge.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L326",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "For 0 < a < 1, use a keyhole contour with branch cut along the positive real axis and 0 < arg z < 2π to evaluate I = ∫₀^∞ x^(a−1)/(1 + x) dx.",
+   "choices": [
+    "π/sin(πa)",
+    "πsin(πa)",
+    "2π/sin(πa)",
+    "π/[a sin(πa)]"
+   ],
+   "answer": "π/sin(πa)",
+   "rationale": "The contour gives (1 − e^(2πia))I = 2πi e^(iπ(a−1)). Simplifying this identity yields I = π/sin(πa).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L326",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "Using the principal logarithm Log z = ln|z| + i arg z with −π < arg z < π, what is the jump Log₊(−r) − Log₋(−r) across the negative real axis, where r > 0?",
+   "choices": [
+    "2πi",
+    "−2πi",
+    "πi",
+    "0"
+   ],
+   "answer": "2πi",
+   "rationale": "Approaching the negative real axis from above gives argument π, while approaching from below gives argument −π. Thus the jump is (ln r + iπ) − (ln r − iπ) = 2πi.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L378",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "For nonconstant holomorphic f on connected open U, which condition proves f is open?",
+   "choices": [
+    "For each z, some disk about f(z) lies in f(U).",
+    "For each z, some disk about z lies in f(U).",
+    "For each w in f(U), some disk about w lies in U.",
+    "For each z, some disk about f(z) lies in U."
+   ],
+   "answer": "For each z, some disk about f(z) lies in f(U).",
+   "rationale": "An open map sends open sets to open sets. Equivalently, every point f(z) must have a disk neighborhood contained in f(U).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L378",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "At z0, write f(z0+w)-f(z0)=a_mw^m+R(w), where m≥1, a_m≠0, and R(w)=o(w^m). Choose ρ so |R(w)|<|a_m|ρ^m/2 on |w|=ρ. Which theorem proves f(z0+w)-f(z0)=η has a solution |w|<ρ for every |η|<|a_m|ρ^m/2?",
+   "choices": [
+    "The argument principle on a_mw^m+R(w)-η.",
+    "Cauchy’s integral formula for f(z0+w).",
+    "Rouché’s theorem on a_mw^m+R(w)-η.",
+    "The maximum modulus principle for f(z0+w)."
+   ],
+   "answer": "Rouché’s theorem on a_mw^m+R(w)-η.",
+   "rationale": "On |w|=ρ, the inequality gives |R(w)-η|<|a_mw^m|. Rouché’s theorem shows a_mw^m+R(w)-η has a zero inside the circle, so the required value η is attained.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L378",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "If f is holomorphic near z0 and f'(z0)≠0, what does the holomorphic inverse function theorem guarantee?",
+   "choices": [
+    "Neighborhoods V and W make f:V→W bijective with an antilinear inverse.",
+    "Neighborhoods V and W make f:V→W bijective with a holomorphic inverse.",
+    "A global inverse exists on f(U), with a holomorphic inverse.",
+    "Neighborhoods V and W make f(z0+w)-f(z0)=a1w exactly."
+   ],
+   "answer": "Neighborhoods V and W make f:V→W bijective with a holomorphic inverse.",
+   "rationale": "The theorem provides neighborhoods V of z0 and W of f(z0) on which f is bijective, and the inverse from W to V is holomorphic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L378",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "For bijective f:V→W on open sets, with f holomorphic and f'≠0, how does openness show g=f^{-1} is holomorphic?",
+   "choices": [
+    "It makes g continuous, and g'(f(z))=f'(z).",
+    "It makes g continuous, and g'(f(z))=1/conj(f'(z)).",
+    "It makes g continuous, and g'(f(z))=0 at each z.",
+    "It makes g continuous, and g'(f(z))=1/f'(z)."
+   ],
+   "answer": "It makes g continuous, and g'(f(z))=1/f'(z).",
+   "rationale": "Openness makes g continuous because g^{-1}(O)=f(O) is open whenever O is open in V. The inverse difference quotient is the reciprocal of the forward quotient, so g'(f(z))=1/f'(z) at every z.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L105",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "On a square contour of side length 2, suppose |f(z)| ≤ 3 everywhere. Using the estimation lemma, what upper bound is obtained for the contour integral of f(z) dz?",
+   "choices": [
+    "At most 6",
+    "At most 9",
+    "At most 12",
+    "At most 24"
+   ],
+   "answer": "At most 24",
+   "rationale": "The square has perimeter 8, so the estimation lemma gives |∫ f(z) dz| ≤ ML = 3·8 = 24.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Estimation lemma: |∫_C f| ≤ M·length(C).",
+      "url": "https://en.wikipedia.org/wiki/Estimation_lemma",
+      "quote": "where l (Γ) is the arc length of Γ . In particular, we may take the maximum",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L105",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Suppose F is an antiderivative of f on a simply connected domain D. For any contour γ in D from z1 to z2, the integral ∮_γ f(z) dz equals what?",
+   "choices": [
+    "F(z2)-F(z1)",
+    "F(z1)-F(z2)",
+    "zero constant",
+    "path dependent"
+   ],
+   "answer": "F(z2)-F(z1)",
+   "rationale": "By the Fundamental Theorem for Contours, the integral of f over any path from z1 to z2 equals the difference of its antiderivative at the endpoints.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L105",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Let γ be the straight line segment from 0 to 3+4i. If |f(z)| ≤ 2 on γ, the estimation lemma yields the bound M·L = ?",
+   "choices": [
+    "10",
+    "5",
+    "20",
+    "2"
+   ],
+   "answer": "10",
+   "rationale": "Length L = |3+4i| = 5, M = 2, so M·L = 2·5 = 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L105",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Let C be the circle |z|=4. If |f(z)| ≤ 5 for all z on C, the estimation lemma gives an upper bound for |∮_C f(z) dz| of what?",
+   "choices": [
+    "40π",
+    "20π",
+    "80π",
+    "10π"
+   ],
+   "answer": "40π",
+   "rationale": "M = 5, length of C = 2π·4 = 8π, so bound = M·length = 5·8π = 40π.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The circumference of a circle of radius 4 is 2π(4) = 8π.",
+      "url": "https://en.wikipedia.org/wiki/Area_of_a_circle",
+      "quote": "The circumference is 2 πr , and the area of a triangle is half the base times the height, yielding the area πr for the disk.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L398",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "For Schwarz reflection across a real-axis segment I, which set of hypotheses is sufficient?",
+   "choices": [
+    "f is holomorphic above I, continuous on I, and real-valued on I.",
+    "f is holomorphic above I, continuous on I, and purely imaginary on I.",
+    "f is continuous on I but need not be holomorphic above I or real-valued there.",
+    "f is holomorphic on both sides of I and takes identical values on I."
+   ],
+   "answer": "f is holomorphic above I, continuous on I, and real-valued on I.",
+   "rationale": "Schwarz reflection applies when f is holomorphic on one side of the segment, continuous up to it, and real-valued along it.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L398",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Let f be holomorphic above a real-axis segment I, continuous on I, and real-valued there. Which formula gives the reflected extension F?",
+   "choices": [
+    "F(z)=f(z) above I and F(z)=overline{f(overline z)} below I.",
+    "F(z)=overline{f(z)} above I and F(z)=f(overline z) below I.",
+    "F(z)=f(overline z) above I and F(z)=overline{f(z)} below I.",
+    "F(z)=overline{f(overline z)} above I and F(z)=f(z) below I."
+   ],
+   "answer": "F(z)=f(z) above I and F(z)=overline{f(overline z)} below I.",
+   "rationale": "On the lower side, reflection uses the conjugate of f at the conjugate point; the boundary values match because f is real on I.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L398",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Let f(z)=Log z on the upper half-plane, with 0<arg z<π. Which formula continues f holomorphically below a positive real-axis segment?",
+   "choices": [
+    "ln|z|+i arg z, with -π<arg z<0",
+    "ln|z|-i arg z, with -π<arg z<0",
+    "ln|z|+i arg z, with 0<arg z<π",
+    "ln|z|+i(2π+arg z), with -π<arg z<0"
+   ],
+   "answer": "ln|z|+i arg z, with -π<arg z<0",
+   "rationale": "The reflected branch has negative arguments below the positive real axis and approaches ln x on the segment.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L398",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Let f be holomorphic in the upper half-plane, continuous on the real axis, and real-valued there. If f(i)=2+3i, what is F(-i) for its reflected extension F?",
+   "choices": [
+    "2-3i",
+    "2+3i",
+    "-2+3i",
+    "-2-3i"
+   ],
+   "answer": "2-3i",
+   "rationale": "Reflection gives F(-i)=overline{f(i)}, so the value 2+3i becomes 2-3i.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L420",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Let T(z)=(2z+3)/(z+4) be a Möbius transformation. What is T(∞) on the Riemann sphere?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "2",
+   "rationale": "At infinity, the ratio of the leading coefficients of the numerator and denominator gives T(∞)=2/1=2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L420",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "For the Möbius transformation T(z)=(2z+5)/(z+3), which formula gives T⁻¹(z)?",
+   "choices": [
+    "(3z+5)/(2−z)",
+    "(3z−5)/(z−2)",
+    "(2z−5)/(3−z)",
+    "(3z−5)/(2−z)"
+   ],
+   "answer": "(3z−5)/(2−z)",
+   "rationale": "The inverse of (az+b)/(cz+d) is (dz−b)/(−cz+a), so T⁻¹(z)=(3z−5)/(2−z).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L420",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Consider T(z)=2z/(z−1). What is the complete set of fixed points of T on the Riemann sphere?",
+   "choices": [
+    "{0, −3}",
+    "{0, 3}",
+    "{1, 3}",
+    "{0, 1}"
+   ],
+   "answer": "{0, 3}",
+   "rationale": "Fixed points satisfy z=2z/(z−1), which gives z(z−3)=0. Thus they are 0 and 3; neither the pole 1 nor infinity is fixed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L157",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Which of the following statements is Liouville's theorem for entire functions?",
+   "choices": [
+    "Every bounded entire function is constant.",
+    "Every entire function has at least one zero.",
+    "Every polynomial is bounded on C.",
+    "Every holomorphic function on C is a polynomial."
+   ],
+   "answer": "Every bounded entire function is constant.",
+   "rationale": "Liouville's theorem states precisely that any entire function that is bounded on the complex plane must be constant.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Liouville's theorem states that every bounded entire function is constant.",
+      "url": "https://en.wikipedia.org/wiki/Liouville's_theorem_(complex_analysis)",
+      "quote": "More succinctly, Liouville's theorem states that every bounded entire function must be constant.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L157",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "In the standard proof of Liouville's theorem, which estimate is used to show that the derivative of a bounded entire function vanishes everywhere?",
+   "choices": [
+    "Cauchy integral formula for f(z).",
+    "Cauchy's estimate for f'(z).",
+    "Maximum modulus principle for f(z).",
+    "Mean value property for harmonic functions."
+   ],
+   "answer": "Cauchy's estimate for f'(z).",
+   "rationale": "The proof applies Cauchy's estimate to the derivative, showing that for any radius the bound forces f'(z)=0, so f is constant.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Cauchy's estimate bounds |f'(z)| by M_R/R, which tends to zero as R tends to infinity for a bounded entire function.",
+      "url": "https://en.wikipedia.org/wiki/Cauchy's_estimate",
+      "quote": "In mathematics, specifically in complex analysis , Cauchy's estimate gives local bounds for the derivatives of a holomorphic function .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L157",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let p be a nonconstant complex polynomial. If p had no zeros, which construction would produce a bounded entire function contradicting Liouville’s theorem?",
+   "choices": [
+    "Define q(z)=1/p(z); q is entire and q(z) tends to 0 as |z| tends to infinity.",
+    "Define q(z)=p′(z); q is entire and q(z) tends to 0 as |z| tends to infinity.",
+    "Define q(z)=|p(z)|; q is entire and q(z) tends to 0 as |z| tends to infinity.",
+    "Define q(z)=1/|p(z)|; q is entire and q(z) tends to 0 as |z| tends to infinity."
+   ],
+   "answer": "Define q(z)=1/p(z); q is entire and q(z) tends to 0 as |z| tends to infinity.",
+   "rationale": "If p has no zeros, 1/p is entire. Since p(z) tends to infinity in magnitude as |z| tends to infinity, 1/p(z) tends to zero; continuity on a compact disk also makes it bounded there. Liouville’s theorem would force 1/p to be constant, a contradiction.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L157",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "What conclusion follows from Liouville’s theorem if an entire function f has a derivative f′ that is bounded on the complex plane?",
+   "choices": [
+    "f is a polynomial of degree at most one.",
+    "f is a polynomial of degree at most two.",
+    "f must be a nonzero constant function.",
+    "f must take every complex value exactly once."
+   ],
+   "answer": "f is a polynomial of degree at most one.",
+   "rationale": "Because f′ is bounded and entire, Liouville’s theorem makes f′ constant, say f′(z)=a. Integrating gives f(z)=az+b, so f is a polynomial of degree at most one.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L388",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "What characterizes a normal family F of holomorphic functions on D?",
+   "choices": [
+    "Sequences in F have subsequences converging uniformly on compact subsets in the spherical metric.",
+    "Sequences in F converge uniformly on compact subsets without taking subsequences.",
+    "Only sequences in F converging at the center are subsequentially compact.",
+    "Functions in F are uniformly bounded on the entire domain D."
+   ],
+   "answer": "Sequences in F have subsequences converging uniformly on compact subsets in the spherical metric.",
+   "rationale": "A family is normal when every sequence of its functions has a subsequence converging uniformly on compact subsets, measured in the spherical metric, with infinity allowed as a limit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L388",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "Which argument proves Montel's theorem for a locally uniformly bounded holomorphic family?",
+   "choices": [
+    "Cauchy estimates control derivatives; Arzela-Ascoli and diagonalization give a locally uniform subsequence.",
+    "Schwarz reflection extends the functions across the boundary, forcing a constant member.",
+    "Liouville's theorem makes every bounded function constant, so the family is normal.",
+    "Cauchy's formula gives one global value per function, and these values have a convergent subsequence."
+   ],
+   "answer": "Cauchy estimates control derivatives; Arzela-Ascoli and diagonalization give a locally uniform subsequence.",
+   "rationale": "Local uniform boundedness yields Cauchy estimates for derivatives. Equicontinuity and boundedness then allow Arzela-Ascoli compactness, while diagonalization gives convergence uniformly on every compact subset.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L388",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "Let F be a family of holomorphic functions on the unit disk, each omitting both 0 and 1. What does Montel's theorem imply?",
+   "choices": [
+    "F is normal on the unit disk.",
+    "Every member of F is constant.",
+    "F has at most two distinct subsequential limits.",
+    "The range of every member is the whole unit disk."
+   ],
+   "answer": "F is normal on the unit disk.",
+   "rationale": "Montel's theorem states that a family of holomorphic functions omitting two fixed complex values, such as 0 and 1, is normal on the domain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L388",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A transcendental entire f omits a value a. What do Picard's theorems imply?",
+   "choices": [
+    "a is its only omission; near infinity, every other value occurs infinitely often.",
+    "a need not be its only omission; near infinity, every other value occurs infinitely often.",
+    "a is its only omission; near infinity, two values can be missed.",
+    "a need not be its only omission; near infinity, two values can be missed."
+   ],
+   "answer": "a is its only omission; near infinity, every other value occurs infinitely often.",
+   "rationale": "Little Picard says a nonconstant entire function omits at most one value, so a is the only omission. Infinity is an essential singularity of a transcendental entire function, and Great Picard then gives infinitely many occurrences of every other complex value.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L440",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "On the first quadrant Q = {z = x + iy : x > 0, y > 0}, which function is a one-to-one conformal map from Q onto the upper half-plane?",
+   "choices": [
+    "z²",
+    "z",
+    "z³",
+    "eᶻ"
+   ],
+   "answer": "z²",
+   "rationale": "If 0 < arg z < π/2, then 0 < arg(z²) < π. Squaring is injective on Q and maps every upper-half-plane point back to a unique square root in Q.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L440",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "On the vertical strip S = {z : 0 < Im z < π}, which function is a one-to-one conformal map from S onto the upper half-plane?",
+   "choices": [
+    "eᶻ",
+    "z²",
+    "sin z",
+    "z + 1/z"
+   ],
+   "answer": "eᶻ",
+   "rationale": "For z = x + iy in S, eᶻ has argument y, so its image lies in the upper half-plane. Its modulus determines x and its argument determines y, making it injective and onto.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L440",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "On D = ℂ ∖ (−∞, 0], which logarithm branch is a one-to-one conformal map onto the strip {w : −π < Im w < π}?",
+   "choices": [
+    "Log z = ln|z| + i Arg z, with −π < Arg z < π",
+    "Log z = ln|z| + i Arg z, with 0 < Arg z < 2π",
+    "Log z = ln|z| + i Arg z, with −π/2 < Arg z < 3π/2",
+    "Log z = ln|z| + i Arg z, with π/2 < Arg z < 5π/2"
+   ],
+   "answer": "Log z = ln|z| + i Arg z, with −π < Arg z < π",
+   "rationale": "The principal logarithm is analytic on D and sends z to ln|z| + i Arg z. Its imaginary part is the unique argument in (−π, π), and every point in the target strip exponentiates to D.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L463",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "probability",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "Let F(z) = z^2 + 5 be holomorphic on the unit disk, and let u = Re(F). Which pair gives the boundary data and its Poisson extension?",
+   "choices": [
+    "(5 + cos(2θ), 5 + r^2 cos(2θ))",
+    "(5 + cos(2θ), 5 + r^4 cos(2θ))",
+    "(5 + cos(2θ), 5 + r^{-2} cos(2θ))",
+    "(5 + r^2 cos(2θ), 5 + cos(2θ))"
+   ],
+   "answer": "(5 + cos(2θ), 5 + r^2 cos(2θ))",
+   "rationale": "On the boundary, Re(z^2 + 5) = 5 + cos(2θ). Inside the disk, Re(z^2 + 5) = 5 + r^2 cos(2θ), which is its Poisson extension.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L463",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "probability",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "On the unit disk, u(x, y) = x^2 − y^2 is harmonic. Which function is holomorphic and has real part u?",
+   "choices": [
+    "z^2",
+    "overline(z)^2",
+    "i z^2",
+    "z^3"
+   ],
+   "answer": "z^2",
+   "rationale": "Since z^2 = (x^2 − y^2) + 2ixy, the holomorphic function z^2 has real part x^2 − y^2. The function overline(z)^2 is not holomorphic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L463",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "probability",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "Let u be the Poisson solution on the unit disk with boundary data g(θ) = 1 for 0 < θ < π and g(θ) = 0 for π < θ < 2π. What is u(0)?",
+   "choices": [
+    "1/2",
+    "0",
+    "1",
+    "π/2"
+   ],
+   "answer": "1/2",
+   "rationale": "At the origin, the Poisson kernel is the constant 1/(2π), so u(0) is the average boundary value. The nonzero arc has length π, giving u(0) = π/(2π) = 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L473",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Using the convention F(z)=φ+iψ, a uniform ideal flow in the positive x-direction has complex potential F(z)=Uz, where U>0. Which set of curves are its streamlines?",
+   "choices": [
+    "Horizontal lines y=C",
+    "Vertical lines x=C",
+    "Circles x²+y²=C",
+    "Radial lines y=Cx"
+   ],
+   "answer": "Horizontal lines y=C",
+   "rationale": "Here φ=Ux and ψ=Uy. Streamlines satisfy ψ=constant, so they are horizontal lines y=C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L473",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "For the electrostatic complex potential F(z)=z², take V(x,y)=Re F and E=−∇V. Which electric field is correct?",
+   "choices": [
+    "(2x, −2y)",
+    "(−2x, −2y)",
+    "(−2x, 2y)",
+    "(2x, 2y)"
+   ],
+   "answer": "(−2x, 2y)",
+   "rationale": "Since z²=(x²−y²)+2ixy, the potential is V=x²−y². Therefore E=−∇V=(−2x,2y).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L473",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "For a source at the origin, F(z)=m Log(z)/(2π), with m>0. Using ψ=Im F, which curves are the streamlines leaving the source?",
+   "choices": [
+    "Circles r=C",
+    "Radial rays θ=C",
+    "Parabolas xy=C",
+    "Horizontal lines y=C"
+   ],
+   "answer": "Radial rays θ=C",
+   "rationale": "The streamfunction is ψ=mθ/(2π). Holding ψ constant fixes θ, so the streamlines are radial rays from the source.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L473",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Let g(z)=z+a²/z be the Joukowski map and F(z)=Ug(z) the cylinder-flow potential, with U>0. Which statement about the circle |z|=a is correct?",
+   "choices": [
+    "The circle maps to [−2a,2a], but it is not a streamline.",
+    "The circle maps to {|w|=2a}, and it is a streamline.",
+    "The circle maps to [0,∞), and it is not a streamline.",
+    "The circle maps to [−2a,2a], and it is a streamline."
+   ],
+   "answer": "The circle maps to [−2a,2a], and it is a streamline.",
+   "rationale": "For z=ae^(iθ), g(z)=2a cosθ, so the circle maps to [−2a,2a]. Also Im F=0 on the circle, making it a streamline.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L503",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "For complex z with Re(z) > 0, which integral defines the gamma function?",
+   "choices": [
+    "∫₀∞ t^(z−1)e^(−t) dt",
+    "∫₀∞ t^z e^(−t) dt",
+    "∫₀∞ t^(z−1)e^(−1/t) dt",
+    "∫₀∞ t^(−z−1)e^(−t) dt"
+   ],
+   "answer": "∫₀∞ t^(z−1)e^(−t) dt",
+   "rationale": "For Re(z) > 0, the defining integral converges and is Γ(z) = ∫₀∞ t^(z−1)e^(−t) dt.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L503",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "The integral definition applies only when Re(z) > 0. Which formula extends it to −1 < Re(z) < 0?",
+   "choices": [
+    "Γ(z+1)/z",
+    "zΓ(z+1)",
+    "Γ(z+1)/(z+1)",
+    "(z+1)Γ(z+1)"
+   ],
+   "answer": "Γ(z+1)/z",
+   "rationale": "The recurrence Γ(z+1) = zΓ(z) gives Γ(z) = Γ(z+1)/z. Since Re(z+1) > 0 in this strip, the numerator is given by the integral.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L503",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Which calculation is the valid integration-by-parts proof of the gamma functional equation for Re(z) > 0?",
+   "choices": [
+    "∫₀∞ t^z e^(−t)dt = [−t^z e^(−t)]₀∞ + z∫₀∞ t^(z−1)e^(−t)dt",
+    "∫₀∞ t^z e^(−t)dt = [−t^z e^(−t)]₀∞ + (z+1)∫₀∞ t^(z−1)e^(−t)dt",
+    "∫₀∞ t^(z−1)e^(−t)dt = [−t^(z−1)e^(−t)]₀∞ + z∫₀∞ t^(z−2)e^(−t)dt",
+    "∫₀∞ t^(z+1)e^(−t)dt = [−t^(z+1)e^(−t)]₀∞ + z∫₀∞ t^z e^(−t)dt"
+   ],
+   "answer": "∫₀∞ t^z e^(−t)dt = [−t^z e^(−t)]₀∞ + z∫₀∞ t^(z−1)e^(−t)dt",
+   "rationale": "Integrating by parts with u = t^z and dv = e^(−t)dt gives the boundary term plus z∫₀∞ t^(z−1)e^(−t)dt, proving Γ(z+1) = zΓ(z).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L503",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the poles of the meromorphically continued gamma function?",
+   "choices": [
+    "It has simple poles exactly at 0, −1, −2, …, and no others.",
+    "It has double poles exactly at 0, −1, −2, …, and no others.",
+    "It has simple poles exactly at 1, 2, 3, …, and no others.",
+    "It has simple poles at every negative half-integer and no others."
+   ],
+   "answer": "It has simple poles exactly at 0, −1, −2, …, and no others.",
+   "rationale": "The continued gamma function has simple poles precisely at the nonpositive integers 0, −1, −2, … and is holomorphic elsewhere.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L229",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "The function sin(z)/z is holomorphic for z≠0. How should its isolated singularity at z=0 be classified?",
+   "choices": [
+    "a removable singularity",
+    "a pole of order one",
+    "a pole of order two",
+    "an essential singularity"
+   ],
+   "answer": "a removable singularity",
+   "rationale": "Since sin(z)=z-z³/6+⋯, dividing by z gives a power series with constant term 1. Thus the singularity at 0 is removable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L229",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Which Laurent argument proves Riemann’s theorem for bounded holomorphic f on 0<|z|<r?",
+   "choices": [
+    "Boundedness directly gives lim as z approaches 0, so set f(0) equal to that limit.",
+    "On |z|=eps, |a_-n|≤M eps^n; letting eps approach 0 forces all negative coefficients to vanish.",
+    "On |z|=R, |a_-n|≤MR^-n; letting R approach infinity forces all negative coefficients to vanish.",
+    "Holomorphy away from zero implies holomorphy at zero, so define f(0) arbitrarily."
+   ],
+   "answer": "On |z|=eps, |a_-n|≤M eps^n; letting eps approach 0 forces all negative coefficients to vanish.",
+   "rationale": "If |f|≤M near zero, the Laurent coefficient formula on |z|=eps gives |a_-n|≤M eps^n. Letting eps approach 0 shows that every negative coefficient is zero, so f extends holomorphically.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L229",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "For f holomorphic on 0<|z-a|<r, which Laurent condition characterizes a pole of order m?",
+   "choices": [
+    "The principal part has infinitely many negative powers with nonzero coefficients.",
+    "The Laurent series contains no negative powers and is holomorphic at a.",
+    "The finite principal part has lowest exponent -m with nonzero coefficient.",
+    "Only the (z-a)^-1 coefficient is nonzero, so the pole is simple."
+   ],
+   "answer": "The finite principal part has lowest exponent -m with nonzero coefficient.",
+   "rationale": "A pole of order m has a finite principal part whose most negative term is c_-m(z-a)^-m with c_-m≠0. These Laurent-series conditions are equivalent to the pole’s order.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L229",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "For a pole of order m at a, what happens to (z-a)^m f(z)?",
+   "choices": [
+    "It remains a pole of order m, since multiplication cannot cancel principal terms.",
+    "It becomes essential, since an infinite limit changes the series type.",
+    "It becomes a simple pole, since only one negative term remains.",
+    "It extends holomorphically, because multiplying cancels every negative Laurent term."
+   ],
+   "answer": "It extends holomorphically, because multiplying cancels every negative Laurent term.",
+   "rationale": "If the principal part ends with c_-m(z-a)^-m, where c_-m≠0, multiplication by (z-a)^m removes all negative powers and leaves c_-m as a constant term. Hence the product extends holomorphically.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L535",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "For the positively oriented contour C: |z|=2, which residue-theorem calculation gives ∮_C e^z/(z²+1) dz?",
+   "choices": [
+    "Sum the residues at ±i to get sin 1, so the integral is 2πi sin 1.",
+    "Sum the residues at ±i to get sin 1, so the integral is 2π sin 1.",
+    "Sum the residues at ±i to get cos 1, so the integral is 2πi cos 1.",
+    "Sum the residues at ±i to get 2 sin 1, so the integral is 4πi sin 1."
+   ],
+   "answer": "Sum the residues at ±i to get sin 1, so the integral is 2πi sin 1.",
+   "rationale": "The poles inside C are i and −i. Their residues sum to (e^i−e^(−i))/(2i)=sin 1, so the residue theorem gives 2πi sin 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L535",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Which Cauchy-integral-formula argument correctly evaluates ∮_C e^z/(z−i) dz, where C is the positively oriented circle |z|=2?",
+   "choices": [
+    "The integrand has a simple pole at i and yields 2πi e^i.",
+    "The integrand has a simple pole at i and yields 2π e^i.",
+    "The integrand has a simple pole at i and yields 2πi e^(−i).",
+    "The integrand has a simple pole at i and yields 2πi e^0."
+   ],
+   "answer": "The integrand has a simple pole at i and yields 2πi e^i.",
+   "rationale": "Since e^z is entire and i lies inside C, Cauchy’s integral formula gives 2πi times f(i), which equals 2πi e^i.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L535",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "To evaluate I=∫ from −∞ to ∞ of dx/(x²+4), which choice gives a valid residue-theorem argument?",
+   "choices": [
+    "Close with the upper semicircle of radius R>2; Res(f,2i)=1/(4i), so I=π/2.",
+    "Close with the lower semicircle of radius R>2; Res(f,2i)=1/(4i), so I=π/2.",
+    "Close with the upper semicircle of radius R>2; Res(f,2i)=1/(2i), so I=π.",
+    "Close with the upper semicircle of radius R>2; Res(f,2i)=1/(4i), so I=πi."
+   ],
+   "answer": "Close with the upper semicircle of radius R>2; Res(f,2i)=1/(4i), so I=π/2.",
+   "rationale": "The upper semicircle encloses the pole 2i, whose residue is 1/(4i). The arc integral tends to zero, and 2πi(1/(4i))=π/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L515",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "discrete_math",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "For a rational map R of degree at least 2, how can the Fatou set be recognized from the behavior of its iterates?",
+   "choices": [
+    "The iterates are normal on at least one neighborhood of the point.",
+    "The iterates diverge locally to infinity on at least one neighborhood.",
+    "The derivatives of the iterates grow rapidly on at least one neighborhood.",
+    "The map has no periodic points near at least one point of the set."
+   ],
+   "answer": "The iterates are normal on at least one neighborhood of the point.",
+   "rationale": "The Fatou set is precisely the set of points near which the iterates of R form a normal family.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L515",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "discrete_math",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "For a rational map R of degree at least 2, what is the full preimage of its Julia set?",
+   "choices": [
+    "The same Julia set",
+    "The Fatou set",
+    "The set of periodic points",
+    "The entire Riemann sphere"
+   ],
+   "answer": "The same Julia set",
+   "rationale": "The Julia set is completely invariant: R^{-1}(J(R))=J(R), and consequently R(J(R))=J(R).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The Julia set of a rational map is completely invariant under the map.",
+      "url": "https://en.wikipedia.org/wiki/Julia_set",
+      "quote": "is the smallest closed set containing at least three points which is completely invariant under f .",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L515",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "discrete_math",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "For the rational map R(z)=z² on the Riemann sphere, what is the Julia set J(R)?",
+   "choices": [
+    "The unit circle {|z|=1}",
+    "The closed unit disk {|z|≤1}",
+    "The real axis (-∞,∞)",
+    "The entire Riemann sphere"
+   ],
+   "answer": "The unit circle {|z|=1}",
+   "rationale": "For z↦z², the Julia set is the unit circle; its interior and exterior are Fatou components.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The Julia set of z^2 is the unit circle.",
+      "url": "https://en.wikipedia.org/wiki/Julia_set",
+      "quote": "the Julia set is the unit circle and on this the iteration is given by doubling of angles (an operation that is chaotic on the points whose argument is not a rational fraction of",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L515",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "discrete_math",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "Which condition on the critical point for the quadratic family z↦z²+c characterizes membership in the Mandelbrot set?",
+   "choices": [
+    "Its orbit remains bounded in the complex plane.",
+    "Its orbit converges to an attracting fixed point.",
+    "Its orbit becomes unbounded in the complex plane.",
+    "Its orbit returns to the critical point after one iteration."
+   ],
+   "answer": "Its orbit remains bounded in the complex plane.",
+   "rationale": "A parameter c belongs to the Mandelbrot set exactly when the critical orbit of 0 under z↦z²+c remains bounded.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A point c is in the Mandelbrot set if and only if the orbit of the critical point 0 under z^2 + c remains bounded.",
+      "url": "https://en.wiktionary.org/wiki/Mandelbrot_set",
+      "quote": "the orbit of 0 under iteration of the complex quadratic polynomial z n +1 = z n + c remains bounded",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L525",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "For which values of the complex number s does the defining series ζ(s)=∑ₙ₌₁∞ n⁻ˢ converge?",
+   "choices": [
+    "Re(s) > 1",
+    "Re(s) ≥ 1",
+    "Re(s) ≥ 0",
+    "Re(s) > 0"
+   ],
+   "answer": "Re(s) > 1",
+   "rationale": "The zeta defining series converges absolutely for Re(s)>1. It does not converge for any s with Re(s)≤1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L525",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "For Re(s)>1, which Euler product equals the Riemann zeta function?",
+   "choices": [
+    "ζ(s)=∏ₚ(1−p⁻ˢ)⁻¹",
+    "ζ(s)=∏ₚ(1−p⁻ˢ)",
+    "ζ(s)=∏ₚ(1+p⁻ˢ)⁻¹",
+    "ζ(s)=∏ₚ(1+pˢ)⁻¹"
+   ],
+   "answer": "ζ(s)=∏ₚ(1−p⁻ˢ)⁻¹",
+   "rationale": "Unique prime factorization gives ζ(s)=∏ₚ(1−p⁻ˢ)⁻¹ in the region of absolute convergence Re(s)>1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L525",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly connects the nontrivial zeros of ζ(s) to the distribution of primes?",
+   "choices": [
+    "They determine prime-counting oscillations; RH places them on Re(s)=1/2.",
+    "They determine the exact value of every prime; RH places them on Re(s)=1.",
+    "They determine prime-counting oscillations; RH places them on Im(s)=1/2.",
+    "They determine prime-counting oscillations; RH places them on Re(s)=1."
+   ],
+   "answer": "They determine prime-counting oscillations; RH places them on Re(s)=1/2.",
+   "rationale": "Nontrivial zeros control the oscillatory error terms in formulas counting primes. The Riemann Hypothesis asserts that all such zeros have real part 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Nontrivial zeros of ζ(s) determine oscillations in prime counting; RH states they lie on Re(s)=1/2.",
+      "url": "https://en.wikipedia.org/wiki/Riemann_hypothesis",
+      "quote": "Riemann's explicit formula for the number of primes less than a given number states that, in terms of a sum over the zeros of the Riemann zeta function, the magnitude of the oscillations of primes around their expected position is controlled by the real parts of the zeros of the zeta function.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L430",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Find the Möbius transformation T satisfying T(0)=1, T(1)=-1, and T(∞)=0.",
+   "choices": [
+    "T(z)=1/(1-2z)",
+    "T(z)=1/(1+2z)",
+    "T(z)=1/(2z-1)",
+    "T(z)=z/(1-2z)"
+   ],
+   "answer": "T(z)=1/(1-2z)",
+   "rationale": "The conditions force the numerator's coefficient of z to be zero. Solving T(0)=1 and T(1)=-1 then gives T(z)=1/(1-2z), which also has T(∞)=0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L430",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Which Möbius transformation sends the unit disk |z|<1 onto the right half-plane Re(w)>0?",
+   "choices": [
+    "w=(1+z)/(1-z)",
+    "w=(1-z)/(1+z)",
+    "w=(1+iz)/(1-iz)",
+    "w=(z-1)/(z+1)"
+   ],
+   "answer": "w=(1+z)/(1-z)",
+   "rationale": "For w=(1+z)/(1-z), Re(w)=(1-|z|²)/|1-z|². Thus Re(w)>0 exactly when |z|<1, and the unit circle maps to the imaginary axis.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L430",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Which Möbius transformation sends 1 to 0, i to 1, and −1 to ∞?",
+   "choices": [
+    "i(1 − z)/(z + 1)",
+    "i(1 + z)/(1 − z)",
+    "−i(1 − z)/(z + 1)",
+    "−i(1 + z)/(1 − z)"
+   ],
+   "answer": "i(1 − z)/(z + 1)",
+   "rationale": "The cross-ratio construction gives T(z)=i(1−z)/(z+1), which satisfies T(1)=0, T(i)=1, and T(−1)=∞.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L430",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Which Möbius transformation maps the upper half-plane Im(z)>0 onto the unit disk |w|<1?",
+   "choices": [
+    "(z − i)/(z + i)",
+    "(z + i)/(z − i)",
+    "(z − 1)/(z + 1)",
+    "(z + 1)/(z − 1)"
+   ],
+   "answer": "(z − i)/(z + i)",
+   "rationale": "For z=x+iy with y>0, |z−i|²=x²+(y−1)² is less than |z+i|²=x²+(y+1)², so T(z)=(z−i)/(z+i) maps the upper half-plane into the unit disk.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L304",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Assume f is analytic in the upper half-plane, tends to zero there as |z|→∞, and is bounded on the real axis. For a>0, why does the upper semicircular arc contribution vanish in Jordan's lemma?",
+   "choices": [
+    "|e^{iaz}|=e^{-a Im z}, and this decay together with f(z)→0 controls the arc.",
+    "|e^{iaz}|=e^{a Im z}, and this growth together with f(z)→0 controls the arc.",
+    "|e^{iaz}|=1, so f(z)→0 alone controls the arc without any extra estimate.",
+    "|e^{iaz}|=e^{-a Re z}, and this decay together with f(z)→0 controls the arc."
+   ],
+   "answer": "|e^{iaz}|=e^{-a Im z}, and this decay together with f(z)→0 controls the arc.",
+   "rationale": "On the upper arc, |e^{iaz}|=e^{-a Im z}≤1. Combining this with R∫₀^π e^{-aR sin θ}dθ=O(1/R) and the decay of f shows that the arc integral tends to zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L304",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "For a>0, the integrand is e^{iaz}f(z), where f has no real-axis poles and satisfies Jordan’s decay conditions. Which contour choice is appropriate for evaluating its real-line integral?",
+   "choices": [
+    "Close with an upper-half-plane semicircle, oriented counterclockwise.",
+    "Close with a lower-half-plane semicircle, oriented counterclockwise.",
+    "Close with an upper-half-plane semicircle, oriented clockwise.",
+    "Close with a lower-half-plane semicircle, oriented clockwise."
+   ],
+   "answer": "Close with an upper-half-plane semicircle, oriented counterclockwise.",
+   "rationale": "Because e^{iaz}=e^{iax-a Im z}, the exponential decays in the upper half-plane. Closing there with positive, counterclockwise orientation allows Jordan’s lemma and the residue theorem.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L304",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "On the upper semicircle C_R, let z = Re^(iθ), 0 ≤ θ ≤ π, and assume |f(z)| ≤ M_R with M_R tending to zero. For a > 0, which estimate correctly shows that the arc integral tends to zero?",
+   "choices": [
+    "The bound is (π/a)M_R.",
+    "The bound is (2π/a)M_R.",
+    "The bound is (πR/a)M_R.",
+    "The bound is (2πR/a)M_R."
+   ],
+   "answer": "The bound is (π/a)M_R.",
+   "rationale": "Since |e^(iaz)| = e^(-aR sin θ), the arc length is R dθ, and sin θ ≥ 2θ/π on [0, π/2], symmetry gives the bound (π/a)M_R, which tends to zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L408",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "Let f(z)=e^z. At z0=0, two curves intersect with angle π/3. What is the angle between their images under f?",
+   "choices": [
+    "The angle stays π/3",
+    "The angle becomes π/6",
+    "The angle becomes 2π/3",
+    "The angle becomes π/2"
+   ],
+   "answer": "The angle stays π/3",
+   "rationale": "Since f is holomorphic with f'(0)=1\neq0, it is conformal at 0 and preserves both magnitude and orientation of angles; thus the angle remains π/3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L408",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly characterizes angle preservation for a holomorphic function f with f'(z0) ≠ 0?",
+   "choices": [
+    "Angles keep magnitude but reverse orientation",
+    "Angles keep both magnitude and orientation",
+    "Angles keep magnitude only if derivative real",
+    "Angles reverse orientation for all curves"
+   ],
+   "answer": "Angles keep both magnitude and orientation",
+   "rationale": "A holomorphic function with non-zero derivative is conformal: it preserves the size of angles and their orientation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L408",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "Let f(z)=z^3. At z0=2e^{iπ/6}, what are the local scaling factor and rotation angle induced by f?",
+   "choices": [
+    "Scaling 12, rotation π/3",
+    "Scaling 12, rotation π/6",
+    "Scaling 6, rotation π/3",
+    "Scaling 6, rotation π/6"
+   ],
+   "answer": "Scaling 12, rotation π/3",
+   "rationale": "The derivative f'(z)=3z^2. At z0=2e^{iπ/6}, f'(z0)=3·4e^{iπ/3}=12e^{iπ/3}. Its magnitude 12 gives the scaling factor, and its argument π/3 gives the rotation angle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L450",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "What does the Riemann mapping theorem guarantee?",
+   "choices": [
+    "Every nonempty simply connected proper open Ω ⊂ C is biholomorphic to the unit disk.",
+    "Every nonempty connected proper open Ω ⊂ C is biholomorphic to the unit disk.",
+    "Every simply connected proper open Ω ⊂ C is biholomorphic to the whole complex plane.",
+    "Every nonempty proper open Ω ⊂ C is biholomorphic to the unit disk."
+   ],
+   "answer": "Every nonempty simply connected proper open Ω ⊂ C is biholomorphic to the unit disk.",
+   "rationale": "The theorem states that every nonempty proper simply connected open subset of the complex plane is conformally equivalent to the unit disk.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Riemann mapping theorem states that every nonempty simply connected proper open subset of the complex plane is conformally equivalent to the unit disk.",
+      "url": "https://en.wikipedia.org/wiki/Planar_Riemann_surface",
+      "quote": "Any connected and simply connected open domain in the complex plane with at least two boundary points is conformally equivalent to the unit disk.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L450",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "In a normal-family proof of the Riemann mapping theorem, each function maps a fixed domain holomorphically into the unit disk. What justifies extracting a subsequence that converges locally uniformly?",
+   "choices": [
+    "Montel’s theorem for locally bounded holomorphic families.",
+    "Liouville’s theorem for bounded entire functions.",
+    "Schwarz’s lemma for functions fixing the origin.",
+    "Rouché’s theorem for zeros inside a contour."
+   ],
+   "answer": "Montel’s theorem for locally bounded holomorphic families.",
+   "rationale": "The functions are uniformly bounded because their values lie in the unit disk. Montel’s theorem therefore makes the family normal, so a subsequence converges locally uniformly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L450",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "In the normal-family proof, injective holomorphic self-maps of the unit disk converge locally uniformly to a nonconstant function f. What does Hurwitz’s theorem show about f?",
+   "choices": [
+    "It shows that f remains injective on the whole domain.",
+    "It shows that f maps the domain onto the unit disk.",
+    "It shows that f has exactly one zero in the domain.",
+    "It shows that f stays a positive distance from the boundary."
+   ],
+   "answer": "It shows that f remains injective on the whole domain.",
+   "rationale": "Hurwitz’s univalence theorem states that a locally uniform limit of injective holomorphic functions is either injective or constant. Since f is assumed nonconstant, it is injective.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L450",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "What does the Riemann mapping theorem imply about any two nonempty proper simply connected domains in the complex plane?",
+   "choices": [
+    "They are conformally equivalent through a composition of disk maps.",
+    "They are conformally equivalent only when both domains are bounded.",
+    "They cannot be conformally equivalent if their boundaries differ.",
+    "They are conformally equivalent only when both domains are convex."
+   ],
+   "answer": "They are conformally equivalent through a composition of disk maps.",
+   "rationale": "Each domain has a conformal bijection to the unit disk. Composing one such bijection with the inverse of the other gives a conformal equivalence between the two domains.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L545",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A Python program evaluates a complex function on a grid with mpmath, maps arg(f(z)) to hue, and maps log|f(z)| to brightness. What does the resulting domain coloring convey?",
+   "choices": [
+    "Argument is shown by hue; magnitude is shown by brightness.",
+    "Argument is shown by brightness; magnitude is shown by hue.",
+    "Only the argument is shown; magnitude and zeros are omitted.",
+    "Real and imaginary parts are shown separately; magnitude is omitted."
+   ],
+   "answer": "Argument is shown by hue; magnitude is shown by brightness.",
+   "rationale": "Domain coloring represents the function’s argument by hue and its logarithmic magnitude by brightness, revealing phase changes, zeros, and poles.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L545",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "With hue = arg(f(z)) mod 2π and brightness = log|f(z)|, what happens near a simple zero as z travels once counterclockwise around it?",
+   "choices": [
+    "Hue makes one full cycle while brightness decreases without bound.",
+    "Hue makes one full cycle while brightness increases without bound.",
+    "Hue stays fixed while brightness decreases without bound.",
+    "Hue makes two full cycles while brightness decreases without bound."
+   ],
+   "answer": "Hue makes one full cycle while brightness decreases without bound.",
+   "rationale": "Near a simple zero, |f(z)| approaches zero, so log|f(z)| approaches negative infinity. The argument changes by 2π during one counterclockwise circuit, producing one full hue cycle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L545",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A numerical mpmath quadrature uses z = 2e^(it) on 0 ≤ t ≤ 2π and integrates f(z) dz/dt for f(z) = 1/z². What result should it return?",
+   "choices": [
+    "Approximately 0",
+    "Approximately 2πi",
+    "Approximately 4πi",
+    "Approximately −2πi"
+   ],
+   "answer": "Approximately 0",
+   "rationale": "The integrand along the circle is (i/2)e^(−it), whose integral over one full period is zero. Equivalently, the residue of 1/z² at zero is zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L545",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "For f(z) = e^z/[z(z−1)], which mpmath call correctly checks the residue at z = 1, and what value should it return?",
+   "choices": [
+    "mpmath.residue(f, 1), which returns e",
+    "mpmath.residue(f, 0), which returns e",
+    "mpmath.diff(f, 1), which returns e",
+    "mpmath.residue(f, 1), which returns 1/e"
+   ],
+   "answer": "mpmath.residue(f, 1), which returns e",
+   "rationale": "The residue at z = 1 is lim(z→1) (z−1)f(z) = e/1 = e, and mpmath.residue(f, 1) computes this residue.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L493",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "To construct the Riemann surface of w²=z, two copies of the z-plane are slit along the same ray from 0 to infinity. How should their banks be joined so that √z is continuous across the cut?",
+   "choices": [
+    "Join upper banks to lower banks across the copies.",
+    "Join upper banks to upper banks across the copies.",
+    "Join each upper bank to its own lower bank.",
+    "Join all four banks to one separate edge."
+   ],
+   "answer": "Join upper banks to lower banks across the copies.",
+   "rationale": "Crosswise gluing matches branches having the same limiting value on the cut, while a full circuit around 0 changes the sign of √z.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L493",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "After compactifying the square-root surface at its two branch points, what is its topological type?",
+   "choices": [
+    "A closed sphere, of genus zero",
+    "A closed torus, of genus one",
+    "A pair of pants, of genus zero",
+    "A closed Klein bottle, of genus two"
+   ],
+   "answer": "A closed sphere, of genus zero",
+   "rationale": "The compactification of the curve w²=z is the Riemann sphere, so the surface has genus zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L493",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "On the logarithm Riemann surface, points are represented by w∈ℂ and projected to z=eʷ. Which transformation is a deck transformation of this covering map?",
+   "choices": [
+    "w ↦ w + 2πik, for k ∈ ℤ",
+    "w ↦ w + πik, for k ∈ ℤ",
+    "w ↦ −w + 2πik, for k ∈ ℤ",
+    "w ↦ 2w + 2πik, for k ∈ ℤ"
+   ],
+   "answer": "w ↦ w + 2πik, for k ∈ ℤ",
+   "rationale": "Adding any integer multiple of 2πi leaves eʷ unchanged, and these translations generate the deck group.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L493",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "topology",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "For π(w)=w² from the compact square-root surface to the z-sphere, which points are ramification points, and what is their local degree?",
+   "choices": [
+    "z=0 and z=∞, each with local degree 2",
+    "z=1 and z=−1, each with local degree 2",
+    "z=0 and z=∞, each with local degree 1",
+    "z=±1 and z=∞, each with local degree 2"
+   ],
+   "answer": "z=0 and z=∞, each with local degree 2",
+   "rationale": "The map w↦w² is ramified over 0 and ∞; in a local coordinate at either point, it has the form t↦t².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L356",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Suppose f is meromorphic on and inside a positively oriented simple closed curve C, with no zeros or poles on C. Which calculation gives the argument principle?",
+   "choices": [
+    "∮C f′(z)/f(z) dz = 2πi(N−P)",
+    "∮C f(z) dz = 2πi(N−P)",
+    "∮C f′(z)/f(z) dz = 2πi(N+P)",
+    "∮C f(z)/f′(z) dz = 2πi(N−P)"
+   ],
+   "answer": "∮C f′(z)/f(z) dz = 2πi(N−P)",
+   "rationale": "The logarithmic derivative f′/f has residue m at a zero of order m and residue −m at a pole of order m. Its contour integral therefore equals 2πi(N−P).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L356",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Let f be meromorphic inside and on a positively oriented simple closed curve C, with no zeros or poles on C. If N and P are the total numbers of zeros and poles inside C, counted with multiplicity, what is the contour integral?",
+   "choices": [
+    "(1/2πi)∮C f′(z)/f(z) dz = N − P",
+    "(1/2πi)∮C f′(z)/f(z) dz = N + P",
+    "(1/2πi)∮C f′(z)/f(z) dz = P − N",
+    "(1/2πi)∮C f′(z)/f(z) dz = N − P + 1"
+   ],
+   "answer": "(1/2πi)∮C f′(z)/f(z) dz = N − P",
+   "rationale": "The argument principle states that the integral of f′/f around C equals the number of zeros minus the number of poles, with both counted according to multiplicity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L356",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "In a proof using the logarithmic derivative, what residues does f′/f have at a zero of order m and at a pole of order p?",
+   "choices": [
+    "Residue m at the zero; residue −p at the pole",
+    "Residue −m at the zero; residue p at the pole",
+    "Residue m at the zero; residue p at the pole",
+    "Residue −m at the zero; residue −p at the pole"
+   ],
+   "answer": "Residue m at the zero; residue −p at the pole",
+   "rationale": "Near a zero of order m, f′/f has residue m; near a pole of order p, it has residue −p. The residue theorem then gives the argument principle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L483",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "Let f and g be analytic on a connected open set Ω. If they agree on a nonempty open subset of Ω, what must be true?",
+   "choices": [
+    "They agree throughout all of Ω.",
+    "They agree only on that subset.",
+    "One of them must be constant.",
+    "They may differ elsewhere in Ω."
+   ],
+   "answer": "They agree throughout all of Ω.",
+   "rationale": "By the identity theorem, f−g is analytic and vanishes on a set with an accumulation point in connected Ω, so f−g is identically zero throughout Ω.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L483",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "Consider f(z) = Σ from n = 0 to ∞ of z^(2^n). What does the Hadamard gap theorem imply about analytic continuation across the unit circle?",
+   "choices": [
+    "No continuation exists across any unit-circle point.",
+    "Continuation exists across exactly one unit-circle point.",
+    "Continuation fails only at the points z = ±1.",
+    "Continuation exists across every unit-circle point."
+   ],
+   "answer": "No continuation exists across any unit-circle point.",
+   "rationale": "The exponents satisfy 2^(n+1)/2^n = 2 > 1, so the Hadamard gap theorem makes the unit circle a natural boundary for f.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Hadamard gap theorem: a lacunary power series like Σ z^(2^n) has the unit circle as a natural boundary.",
+      "url": "https://en.wikipedia.org/wiki/Ostrowski%E2%80%93Hadamard_gap_theorem",
+      "quote": "Such a power series is 'badly behaved' in the sense that it cannot be extended to be an analytic function anywhere on the boundary of its disc of convergence.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "complex_analysis:L483",
+   "track_id": "math",
+   "grade_id": "complex_analysis",
+   "skill_id": "analysis",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "Let f(z) = Log z initially satisfy f(r) = ln r for r > 0. Continue f analytically counterclockwise once around 0 along a circle of radius r. What is the continued value at r?",
+   "choices": [
+    "ln r",
+    "ln r + 2πi",
+    "ln r − 2πi",
+    "ln r + 2π"
+   ],
+   "answer": "ln r + 2πi",
+   "rationale": "Analytic continuation of the logarithm around 0 counterclockwise increases its argument by 2π, so the continued value is ln r + 2πi. This change demonstrates nontrivial monodromy.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The value of the logarithm increases by 2πi after a counterclockwise loop around the origin.",
+      "url": "https://en.wikipedia.org/wiki/Branch_point",
+      "quote": "Going once counterclockwise around a simple closed curve encircling the origin, the complex logarithm is incremented by 2 π i.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Analytic continuation of the principal logarithm once around 0 adds 2πi.",
+      "url": "https://en.wikipedia.org/wiki/Branch_point",
+      "quote": "Going once counterclockwise around a simple closed curve encircling the origin, the complex logarithm is incremented by 2 π i .",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,549 @@
+diff --git a/services/mastery.js b/services/mastery.js
+index 9b23ac1..6d1e9c8 100644
+--- a/services/mastery.js
++++ b/services/mastery.js
+@@ -307,6 +307,22 @@ function clearCheckpoint(enrollment, grade, kind) {
+       db.update('enrollments', enrollment.id, { checkpoint_retry_at: null, coverage_held_at: new Date().toISOString() });
+       return { graduated: false, coverage_held: true, coverage: cover.summary, level: enrollment.current_level };
+     }
++    // The skill stage gate (staged skills round 3, services/skill-gate.js;
++    // SKILL_STAGE_GATE): leaving a chess, piano or basketball stage needs every
++    // machine-provable exit metric proven on two cold days. Shadow, the default,
++    // only records what it would say; `on` holds the graduation. Absent or
++    // failing, it never stops a pass.
++    let skillGate = null;
++    try {
++      // eslint-disable-next-line global-require
++      skillGate = require('./skill-gate').atGraduation(enrollment);
++    } catch (err) {
++      skillGate = null;
++    }
++    if (skillGate && skillGate.block) {
++      db.update('enrollments', enrollment.id, { checkpoint_retry_at: null, skill_held_at: new Date().toISOString() });
++      return { graduated: false, skill_held: true, skill: skillGate.summary, level: enrollment.current_level };
++    }
+     db.update('enrollments', enrollment.id, {
+       status: 'graduated',
+       checkpoint_retry_at: null,
+diff --git a/services/skill-gate.js b/services/skill-gate.js
+new file mode 100644
+index 0000000..887770a
+--- /dev/null
++++ b/services/skill-gate.js
+@@ -0,0 +1,159 @@
++/**
++ * The skill stage gate (staged patch skills-round3/03-stage-gate;
++ * SKILL_STAGE_GATE, needs SKILL_RECORD=on and patch 01).
++ *
++ * Leaving a chess, piano or basketball stage (graduating its last grade) needs
++ * every machine-provable exit metric proven: cold passes on two different
++ * days, re-derived from the sittings, and kept where the stage names a
++ * retention test; and a proof older than 7 days passed again cold, so the
++ * battery stands when the stage is left (services/skill-coverage.js stageGate).
++ *
++ *   off      nothing.
++ *   shadow   (the default) the Final graduates as before; what the gate would
++ *            have said is written on the enrollment (skill_gate_shadow).
++ *   on       a passed Final does not graduate while a provable metric is
++ *            left; the path says so and the "what's left" page lists it.
++ *
++ * Only the performance side is decided here. The stage's knowledge (its
++ * grades' lesson objectives) is the coverage gate's (COVERAGE_GATE), shown on
++ * the page for the whole picture. Attested-only metrics (recitals, film
++ * reviews, capstones) are listed and never hold a stage: whether a person's
++ * sign-off should is the owner's decision (skills-round3 README, 10b), and so
++ * is any margin above the bar at exit (10c).
++ */
++'use strict';
++
++const db = require('../config/db');
++const record = require('./skill-record');
++
++function mode() {
++  const m = String(process.env.SKILL_STAGE_GATE || 'shadow').toLowerCase();
++  return ['on', 'shadow', 'off'].includes(m) ? m : 'shadow';
++}
++
++function active() {
++  return record.enabled() && mode() !== 'off';
++}
++
++/** The stage's checks as patch 02 describes them, when it is applied. */
++function checksPart() {
++  try {
++    // eslint-disable-next-line global-require
++    return require('./skill-checks');
++  } catch (err) {
++    if (err && err.code === 'MODULE_NOT_FOUND') return null;
++    throw err;
++  }
++}
++
++/**
++ * What is left before this stage can be left: each provable metric not yet
++ * proven, waiting on its retention test, or needing a fresh cold pass, with
++ * when it can next be sat cold; the attested-only metrics; the knowledge side.
++ */
++function left(userId, enrollment, now = Date.now()) {
++  const view = record.stageView(userId, enrollment, now);
++  if (!view) return null;
++  let wiredOf = () => null;
++  let titleOf = (name) => String(name || '').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
++  const checks = checksPart();
++  if (checks) {
++    // eslint-disable-next-line global-require
++    const content = require('../content/skill-stage-checks');
++    wiredOf = (id) => content.checkFor(id).how !== 'not_wired';
++    titleOf = content.titleOf;
++  }
++  const by = (ids) => view.metrics.filter((m) => ids.includes(m.id)).map((m) => ({
++    id: m.id,
++    metric: m.metric,
++    title: titleOf(m.metric),
++    test: m.test,
++    threshold: m.threshold,
++    status: m.status,
++    proof_days: m.proof_days,
++    retention_due_at: m.retention_due_at,
++    cold_now: m.cold_now,
++    cold_at: m.cold_at,
++    last: m.last,
++    wired: wiredOf(m.id),
++  }));
++  const g = view.gate;
++  const performance = !g.missing.length && !g.unkept.length && !(g.stale || []).length;
++  const last = view.stage.grades[view.stage.grades.length - 1];
++  return {
++    mode: mode(),
++    stage: view.stage,
++    complete: performance,
++    proven: g.proven,
++    provable: g.provable,
++    missing: by(g.missing),
++    unkept: by(g.unkept),
++    stale: by(g.stale || []),
++    attest: view.metrics.filter((m) => !m.provable).map((m) => ({ id: m.id, metric: m.metric, title: titleOf(m.metric), test: m.test, threshold: m.threshold, source: m.source })),
++    // eslint-disable-next-line global-require
++    knowledge: view.knowledge.map((k) => ({ ...k, name: (require('../config/curriculum').getGrade(enrollment.track_id, k.id) || {}).name || k.id })),
++    leaves_stage: enrollment.grade_id === last,
++    held_at: enrollment.skill_held_at || null,
++    checks_applied: !!checks,
++  };
++}
++
++/**
++ * Called by mastery.clearCheckpoint when a Final is passed. Never throws:
++ * {block: true, summary} holds the graduation (mode on); otherwise null or
++ * {block: false}. A grade that is not its stage's last does not leave the stage.
++ */
++function atGraduation(enrollment, now = Date.now()) {
++  try {
++    if (!active() || !record.isSkillTrack(enrollment.track_id)) return null;
++    const out = left(enrollment.user_id, enrollment, now);
++    if (!out || !out.leaves_stage) return null;
++    const summary = { stage: out.stage.id, complete: out.complete, proven: out.proven, provable: out.provable, missing: out.missing.map((m) => m.id), unkept: out.unkept.map((m) => m.id), stale: out.stale.map((m) => m.id), at: new Date(now).toISOString() };
++    if (mode() === 'shadow') {
++      db.update('enrollments', enrollment.id, { skill_gate_shadow: summary });
++      return { block: false, summary };
++    }
++    return { block: !out.complete, summary };
++  } catch (err) {
++    console.error(`[skill-gate] ${err.message}`);
++    return null;
++  }
++}
++
++/** Every proof on the stage re-derived from its sittings (for the page and the tests). */
++function proofs(userId, enrollment) {
++  const stage = record.stageFor(enrollment.track_id, enrollment.grade_id);
++  return stage ? record.auditStage(userId, enrollment.track_id, stage.id) : null;
++}
++
++/** Has the learner reached the grade's Final? */
++function atFinal(enrollment) {
++  // eslint-disable-next-line global-require
++  const grade = require('../config/curriculum').getGrade(enrollment.track_id, enrollment.grade_id);
++  const final = grade && (grade.levels.find((l) => l.kind === 'graduation') || {}).level;
++  return !!final && enrollment.current_level >= final;
++}
++
++/** The path's row: only when the gate is on and holds, or the learner is at the Final with something left. */
++function pathNode(userId, enrollment) {
++  if (!active() || mode() !== 'on' || enrollment.status === 'graduated') return null;
++  const out = left(userId, enrollment);
++  if (!out || !out.leaves_stage) return null;
++  if (!enrollment.skill_held_at && !atFinal(enrollment)) return null;
++  const n = out.missing.length + out.unkept.length + out.stale.length;
++  const href = `/stage-left?enrollment=${enrollment.id}`;
++  if (!n) return { kind: 'stage_left', badge: 'Leave', title: 'Ready to leave this stage', kind_label: 'Complete', detail: `All ${out.provable} measured skills proven.${enrollment.skill_held_at ? ' Graduate from the page.' : ''}`, href, action: enrollment.skill_held_at ? 'Graduate' : 'See the record', next: !!enrollment.skill_held_at, done: !enrollment.skill_held_at };
++  return {
++    kind: 'stage_left',
++    badge: enrollment.skill_held_at ? 'Held' : 'Gate',
++    title: enrollment.skill_held_at ? 'Graduation waits on this stage\'s skills' : 'Before you leave this stage',
++    kind_label: `${n} left`,
++    detail: `${out.proven} of ${out.provable} measured skills proven. ${n} still to prove on two cold days${out.unkept.length ? ', or to keep' : ''}.`,
++    href,
++    action: 'See what is left',
++    next: true,
++    held: !!enrollment.skill_held_at,
++  };
++}
++
++module.exports = { mode, active, left, atGraduation, proofs, pathNode };
+diff --git a/routes/skill-gate.js b/routes/skill-gate.js
+new file mode 100644
+index 0000000..bcb367c
+--- /dev/null
++++ b/routes/skill-gate.js
+@@ -0,0 +1,61 @@
++/**
++ * The skill stage gate's page (services/skill-gate.js; staged patch
++ * skills-round3/03-stage-gate). Mounted by routes/skills.js (patch 01) when this
++ * file is present; answers 404 unless SKILL_RECORD=on and SKILL_STAGE_GATE is
++ * not off.
++ *
++ *   GET  /api/skills/left/:enrollmentId            what is left before this stage can be left
++ *   POST /api/skills/left/:enrollmentId/graduate   a held graduation, asked again: the same gates, never a lower bar
++ */
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const record = require('../services/skill-record');
++const gate = require('../services/skill-gate');
++const mastery = require('../services/mastery');
++const { requireAuth } = require('../middleware/auth');
++
++const router = express.Router();
++
++router.use('/skills/left', (req, res, next) => {
++  if (!gate.active()) return res.status(404).json({ error: 'No such endpoint.' });
++  next();
++});
++
++function own(req) {
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return null;
++  if (!record.stageFor(enrollment.track_id, enrollment.grade_id)) return null;
++  return enrollment;
++}
++
++router.get('/skills/left/:enrollmentId', requireAuth, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const track = curriculum.getTrack(enrollment.track_id);
++  res.json({
++    enrollment: { id: enrollment.id, status: enrollment.status, current_level: enrollment.current_level, held_at: enrollment.skill_held_at || null },
++    track: { id: track.id, name: track.name },
++    grade: { id: grade.id, name: grade.name },
++    left: gate.left(req.user.id, enrollment),
++    proofs: gate.proofs(req.user.id, enrollment),
++  });
++});
++
++router.post('/skills/left/:enrollmentId/graduate', requireAuth, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  if (!enrollment.skill_held_at || enrollment.status === 'graduated') return res.status(409).json({ error: 'There is no held graduation here.' });
++  const out = gate.left(req.user.id, enrollment);
++  if (!out.complete) return res.status(409).json({ error: 'Not every measured skill is proven yet.', left: out });
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  // The same call a passed Final makes: the coverage gate and this gate are asked again.
++  const result = mastery.clearCheckpoint(db.byId('enrollments', enrollment.id), grade, 'graduation');
++  if (result.graduated) db.update('enrollments', enrollment.id, { skill_held_at: null, skill_released_at: new Date().toISOString() });
++  res.json(result);
++});
++
++router.pathNode = (userId, enrollment) => gate.pathNode(userId, enrollment);
++
++module.exports = router;
+diff --git a/public/stage-left.html b/public/stage-left.html
+new file mode 100644
+index 0000000..496b23e
+--- /dev/null
++++ b/public/stage-left.html
+@@ -0,0 +1,27 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>What is left in this stage | Savant</title>
++  <meta name="color-scheme" content="light dark">
++  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
++  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
++  <link rel="stylesheet" href="/fonts/fonts.css">
++  <link rel="stylesheet" href="/css/style.css">
++  <link rel="stylesheet" href="/css/skills.css">
++</head>
++<body>
++  <header class="site-header" id="header"></header>
++  <main class="page">
++    <div class="wrap">
++      <div id="stage-left">
++        <div class="loading"><span class="spinner"></span>Reading your record</div>
++      </div>
++    </div>
++  </main>
++  <script src="/js/icons.js"></script>
++  <script src="/js/app.js"></script>
++  <script src="/js/stage-left.js"></script>
++</body>
++</html>
+diff --git a/public/js/stage-left.js b/public/js/stage-left.js
+new file mode 100644
+index 0000000..18c4265
+--- /dev/null
++++ b/public/js/stage-left.js
+@@ -0,0 +1,117 @@
++/* What is left in this stage (staged skills round 3, patch 03;
++ * SKILL_STAGE_GATE): before a chess, piano or basketball stage can be left,
++ * every machine-checkable skill it asks for must be proven on cold passes on
++ * two different days, and a proof older than a week passed again. The page
++ * lists what is still missing, what waits on its retention check, and what
++ * only a person or the learner can record (never a gate).
++ */
++App.mount(async () => {
++  const user = await App.currentUser({ require: true });
++  if (!user) return;
++  App.header(user, 'dashboard');
++  const host = document.getElementById('stage-left');
++  const enrollmentId = Number(App.query('enrollment'));
++  const esc = App.escapeHtml;
++  if (!enrollmentId) {
++    host.innerHTML = '<div class="notice notice-error">No subject selected. <a href="/dashboard">Back to dashboard</a>.</div>';
++    return;
++  }
++  const pathHref = `/path?enrollment=${enrollmentId}`;
++  const checkHref = `/stage-check?enrollment=${enrollmentId}`;
++  const title = (m) => m.title || String(m.metric || '').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
++  const when = (iso) => {
++    const d = new Date(iso);
++    return d.toDateString() === new Date().toDateString() ? `today at ${d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}` : d.toLocaleDateString([], { weekday: 'long', hour: 'numeric', minute: '2-digit' });
++  };
++
++  let data;
++  async function load() {
++    try { data = await App.api.get(`/api/skills/left/${enrollmentId}`); } catch (err) {
++      host.innerHTML = `<div class="notice notice-error">${esc(err.status === 404 ? 'There is no stage gate on this subject.' : err.message)}
++        <div style="margin-top:10px"><a class="btn btn-sm" href="${pathHref}">Back to your path</a></div></div>`;
++      return;
++    }
++    draw();
++  }
++
++  function list(id, heading, note, rows, line) {
++    if (!rows.length) return '';
++    return `
++      <section class="skill-section" aria-labelledby="${id}">
++        <h2 class="section-title" id="${id}">${esc(heading)}</h2>
++        ${note ? `<p class="small muted skill-note">${note}</p>` : ''}
++        <ol class="skill-list">${rows.map((m) => `
++          <li class="skill-row">
++            <span class="skill-mark"></span>
++            <span class="skill-main">
++              <span class="skill-title">${esc(title(m))}</span>
++              <span class="skill-why">${esc(m.test)}. Bar: ${esc(m.threshold)}.</span>
++              <span class="skill-meta">${line(m)}</span>
++            </span>
++            <span class="skill-act">${m.wired === false ? '<span class="skill-kind">Not checkable here yet</span>' : m.cold_now ? '<span class="skill-kind">Ready now, cold</span>' : m.cold_at ? `<span class="skill-kind">Cold ${esc(when(m.cold_at))}</span>` : ''}</span>
++          </li>`).join('')}</ol>
++      </section>`;
++  }
++
++  function draw() {
++    const l = data.left;
++    const [gradeMain] = App.gradeParts(data.grade.name);
++    const n = l.missing.length + l.unkept.length + l.stale.length;
++    const held = !!data.enrollment.held_at && data.enrollment.status !== 'graduated';
++    const lede = l.complete
++      ? `Every measured skill of this stage is proven${held ? '. Graduation can go ahead.' : '.'}`
++      : `<span class="num">${n}</span> measured skill${n === 1 ? '' : 's'} still to prove before you leave stage ${esc(l.stage.id)}.${held ? ' You passed the Final; graduation waits on these. You will not sit the Final again.' : ''}`;
++    host.innerHTML = `
++      <div class="path-top skill-top" data-subject="${esc(data.track.id)}">
++        <div>
++          <a class="back-link" href="${pathHref}">${window.icon('arrow-left')}Your path</a>
++          <div class="track-heading">
++            ${App.symbol(data.track, { size: 'lg' })}
++            <div>
++              <h1>What is left in this stage</h1>
++              <span class="tiny">${esc(data.track.name)}, ${esc(gradeMain)}. Stage ${esc(l.stage.id)}: ${esc(l.stage.name)}.</span>
++            </div>
++          </div>
++        </div>
++      </div>
++      <div class="skill-now">
++        <div>
++          <p class="skill-lede">${lede}</p>
++          <p class="small muted skill-note">A skill is proven by cold passes on two different days, re-checked from every sitting you have done. A proof more than a week old needs one more cold pass, so the stage is left with every skill standing.${l.mode === 'shadow' ? ' (The gate is in shadow: it is shown here and does not hold you yet.)' : ''}</p>
++          <div class="path-actions">
++            ${held && l.complete ? '<button class="btn btn-primary btn-lg" type="button" id="graduate">Graduate</button>' : l.checks_applied ? `<a class="btn btn-primary btn-lg" href="${checkHref}">Go to the stage check</a>` : ''}
++          </div>
++        </div>
++        <div class="tmeters">
++          ${App.tmeter({ label: 'Measured skills proven', value: l.proven, target: l.provable, max: l.provable || 1, unit: 'count' })}
++        </div>
++      </div>
++      ${list('missing-h', 'Not proven yet', 'Each needs cold passes on two different days.', l.missing, (m) => `Cold passes so far: <span class="num">${m.proof_days}</span> of <span class="num">2</span> days.${m.last ? ` Last sitting ${esc(when(m.last.at))}: ${m.last.pass ? 'passed' : 'below the bar'}${m.last.counts ? '' : ', did not count'}.` : ''}`)}
++      ${list('unkept-h', 'Proven, waiting on the retention check', 'Proven, and asked once more after the stage\'s retention gap.', l.unkept, (m) => (m.retention_due_at ? `Retention check ready ${esc(when(m.retention_due_at))}.` : ''))}
++      ${list('stale-h', 'Proven over a week ago', 'One more cold pass keeps it standing.', l.stale, () => '')}
++      ${l.attest.length ? `
++        <section class="skill-section" aria-labelledby="attest-h">
++          <h2 class="section-title" id="attest-h">Recorded, not machine-checked</h2>
++          <p class="small muted skill-note">These never hold the stage. Whether a person's sign-off should is the owner's decision.</p>
++          <ol class="skill-list">${l.attest.map((m) => `<li class="skill-row"><span class="skill-mark"></span><span class="skill-main"><span class="skill-title">${esc(title(m))}</span><span class="skill-why">${esc(m.test)}</span></span><span class="skill-act"><span class="skill-kind">Attested</span></span></li>`).join('')}</ol>
++        </section>` : ''}
++      ${(l.knowledge || []).length ? `
++        <section class="skill-section" aria-labelledby="know-h">
++          <h2 class="section-title" id="know-h">The stage's lessons</h2>
++          <p class="small muted skill-note">The lessons' objectives are held by the graduation coverage gate, not by this one.</p>
++          <ol class="skill-list">${l.knowledge.map((k) => `<li class="skill-row"><span class="skill-mark">${k.complete ? window.mark('tick', 'mark-plain') : ''}</span><span class="skill-main"><span class="skill-title">${esc(k.name || k.id)}</span><span class="skill-why">${esc(k.why || '')}</span></span><span class="skill-act"></span></li>`).join('')}</ol>
++        </section>` : ''}`;
++    const g = document.getElementById('graduate');
++    if (g) g.addEventListener('click', async () => {
++      g.disabled = true;
++      try {
++        const r = await App.api.post(`/api/skills/left/${enrollmentId}/graduate`, {});
++        if (r.graduated) { App.toast('Graduated.', 'success'); window.location.href = pathHref; return; }
++        App.toast(r.coverage_held ? 'Graduation still waits on lesson objectives.' : 'Not yet.', 'error');
++        load();
++      } catch (err) { App.toast(err.message, 'error'); g.disabled = false; }
++    });
++  }
++
++  load();
++});
+diff --git a/scripts/skills-r3-gate-test.js b/scripts/skills-r3-gate-test.js
+new file mode 100644
+index 0000000..aa51fea
+--- /dev/null
++++ b/scripts/skills-r3-gate-test.js
+@@ -0,0 +1,128 @@
++/**
++ * Tests for the skill stage gate (staged skills round 3, patch 03-stage-gate):
++ * services/skill-gate.js, routes/skill-gate.js and its hook in
++ * services/mastery.js clearCheckpoint. Needs patch 01.
++ *
++ *   node scripts/skills-r3-gate-test.js
++ *
++ * Throwaway data file, keys blanked, no model call, no network.
++ */
++const F = require('./lib/skills-r3-fixture');
++
++const { db, check, learner, serve, fresh, DAY, at, now } = F;
++const record = require('../services/skill-record');
++const mastery = require('../services/mastery');
++const sc = require('../services/skill-coverage');
++
++/** Prove every provable metric of a stage: cold passes on two days (and the retention sitting where the stage asks for one). */
++function proveStage(uid, subject, stage, day0) {
++  const word = (mt) => {
++    const w = record.listedWords(mt);
++    return ['board', 'midi', 'count', 'tap', 'screen', 'items', 'games'].find((x) => w.includes(x));
++  };
++  const days = [0, 1].concat(stage.retention_days ? [1 + stage.retention_days] : []);
++  for (const d of days) {
++    at(day0 + d * DAY);
++    for (const mt of stage.metrics) if (mt.source.provable) record.sit(uid, { subject, metricId: mt.id, pass: true, source: word(mt) });
++  }
++}
++
++(async () => {
++  console.log('skills round 3, patch 03: the stage gate');
++  process.env.SKILL_RECORD = 'on';
++  const routes = fresh('routes/skills');
++  const app = await serve([routes]);
++  const pianoStage = record.stageFor('piano', 'piano_keyboard_explorer');
++
++  // ── shadow (the default): graduates as before, writes what it would have said ──
++  at(Date.UTC(2026, 9, 1, 9));
++  const a = learner('piano', 'piano_keyboard_explorer', 'final');
++  let res = mastery.clearCheckpoint(db.byId('enrollments', a.enrollment.id), a.grade, 'graduation');
++  let e = db.byId('enrollments', a.enrollment.id);
++  check('shadow: a passed Final graduates as before', res.graduated === true && e.status === 'graduated', res);
++  check('...and records what the gate would have said', e.skill_gate_shadow && e.skill_gate_shadow.complete === false && e.skill_gate_shadow.missing.length === 4, e.skill_gate_shadow);
++
++  // ── off ──
++  process.env.SKILL_STAGE_GATE = 'off';
++  const b = learner('piano', 'piano_keyboard_explorer', 'final');
++  res = mastery.clearCheckpoint(db.byId('enrollments', b.enrollment.id), b.grade, 'graduation');
++  e = db.byId('enrollments', b.enrollment.id);
++  check('off: graduates and writes nothing', res.graduated === true && !e.skill_gate_shadow);
++  let r = await app.get(`/api/skills/left/${b.enrollment.id}`, b.user.id);
++  check('off: the page answers 404', r.status === 404);
++
++  // ── on: held until every provable metric is proven ──
++  process.env.SKILL_STAGE_GATE = 'on';
++  const c = learner('piano', 'piano_keyboard_explorer', 'final');
++  r = await app.get(`/api/skills/path/${c.enrollment.id}`, c.user.id);
++  check('on: at the Final with skills left, the path says what is left before the stage', r.json.nodes.some((n) => n.kind === 'stage_left' && /4 left/.test(n.kind_label)), r.json.nodes);
++  res = mastery.clearCheckpoint(db.byId('enrollments', c.enrollment.id), c.grade, 'graduation');
++  e = db.byId('enrollments', c.enrollment.id);
++  check('on: a passed Final with unproven skills does not graduate', res.graduated === false && res.skill_held === true && e.status === 'active' && e.skill_held_at, res);
++  r = await app.get(`/api/skills/left/${c.enrollment.id}`, c.user.id);
++  check('the page lists what is left: four piano skills not proven', r.status === 200 && r.json.left.missing.length === 4 && !r.json.left.complete && r.json.left.mode === 'on', r.json.left);
++  check('...each with when it can next be sat cold', r.json.left.missing.every((m) => m.cold_at));
++  r = await app.get(`/api/skills/path/${c.enrollment.id}`, c.user.id);
++  check('the path row says graduation waits on the stage\'s skills', r.json.nodes.some((n) => n.kind === 'stage_left' && n.held && n.next), r.json.nodes);
++  r = await app.post(`/api/skills/left/${c.enrollment.id}/graduate`, {}, c.user.id);
++  check('graduating is refused while skills are left', r.status === 409);
++  // One cold day is not enough.
++  at(Date.UTC(2026, 9, 2, 9));
++  for (const mt of pianoStage.metrics) record.sit(c.user.id, { subject: 'piano', metricId: mt.id, pass: true, source: 'midi' });
++  r = await app.get(`/api/skills/left/${c.enrollment.id}`, c.user.id);
++  check('one cold day of passes leaves all four unproven', r.json.left.missing.length === 4 && r.json.left.missing.every((m) => m.proof_days === 1), r.json.left.missing.map((m) => m.proof_days));
++  at(Date.UTC(2026, 9, 3, 9));
++  for (const mt of pianoStage.metrics) record.sit(c.user.id, { subject: 'piano', metricId: mt.id, pass: true, source: 'midi' });
++  r = await app.get(`/api/skills/left/${c.enrollment.id}`, c.user.id);
++  check('cold passes on a second day prove them (PI0 asks no retention test)', r.json.left.complete && r.json.left.proven === 4, r.json.left);
++  check('every proof re-derives from its sittings', r.json.proofs.every((p) => p.holds && p.holds.ok), r.json.proofs);
++  r = await app.post(`/api/skills/left/${c.enrollment.id}/graduate`, {}, c.user.id);
++  e = db.byId('enrollments', c.enrollment.id);
++  check('then graduating goes through the same gates and graduates', r.status === 200 && r.json.graduated === true && e.status === 'graduated' && !e.skill_held_at && e.skill_released_at, r.json);
++
++  // Stale proofs hold: the battery must stand when the stage is left.
++  const d = learner('piano', 'piano_keyboard_explorer', 'final');
++  proveStage(d.user.id, 'piano', pianoStage, Date.UTC(2026, 9, 1, 9));
++  at(Date.UTC(2026, 9, 12, 9));
++  res = mastery.clearCheckpoint(db.byId('enrollments', d.enrollment.id), d.grade, 'graduation');
++  check('proven, but over 7 days ago: held until a fresh cold pass', res.graduated === false && res.skill.stale.length === 4, res.skill);
++  for (const mt of pianoStage.metrics) record.sit(d.user.id, { subject: 'piano', metricId: mt.id, pass: true, source: 'midi' });
++  res = mastery.clearCheckpoint(db.byId('enrollments', d.enrollment.id), d.grade, 'graduation');
++  check('...one fresh cold pass each and it graduates', res.graduated === true, res);
++
++  // Retention: chess CH1 asks again after 7 days.
++  const ch = learner('chess', 'chess_rules_learner', 'final');
++  const chStage = record.stageFor('chess', 'chess_rules_learner');
++  at(Date.UTC(2026, 10, 1, 9));
++  for (const day of [0, 1]) { at(Date.UTC(2026, 10, 1 + day, 9)); for (const mt of chStage.metrics) record.sit(ch.user.id, { subject: 'chess', metricId: mt.id, pass: true, source: mt.id.endsWith('legal_game') ? 'games' : 'board' }); }
++  res = mastery.clearCheckpoint(db.byId('enrollments', ch.enrollment.id), ch.grade, 'graduation');
++  check('chess: proven but its retention test not yet sat, held', res.graduated === false && res.skill.unkept.length === 4, res.skill);
++  r = await app.get(`/api/skills/left/${ch.enrollment.id}`, ch.user.id);
++  check('...the page lists them under the retention check with the day it is ready', r.json.left.unkept.length === 4 && r.json.left.unkept.every((m) => m.retention_due_at));
++
++  // Attested-only metrics never hold a stage.
++  const p3 = learner('piano', 'piano_elementary_1', 'final');
++  const p3Stage = record.stageFor('piano', 'piano_elementary_1');
++  proveStage(p3.user.id, 'piano', p3Stage, Date.UTC(2026, 11, 1, 9));
++  r = await app.get(`/api/skills/left/${p3.enrollment.id}`, p3.user.id);
++  check('the recital (self-assessed) is listed as attested and does not hold Elementary 1', r.json.left.attest.some((m) => m.id === 'PI3:recital') && r.json.left.complete, r.json.left);
++
++  // Not a skill subject, and not the last grade of its stage.
++  const m = learner('math', 'numbers_to_10', 'final');
++  res = mastery.clearCheckpoint(db.byId('enrollments', m.enrollment.id), m.grade, 'graduation');
++  check('another subject graduates untouched by the skill gate', res.graduated === true && !db.byId('enrollments', m.enrollment.id).skill_held_at);
++  const multi = sc.stagesFor('piano').find((s) => s.grades.length > 1);
++  const g0 = multi.grades[0];
++  const early = learner('piano', g0, 'final');
++  res = mastery.clearCheckpoint(db.byId('enrollments', early.enrollment.id), early.grade, 'graduation');
++  check(`a grade that is not its stage's last (${g0} in ${multi.id}) does not leave the stage, so it is not held`, res.graduated === true, res);
++
++  // SKILL_RECORD off: inert whatever SKILL_STAGE_GATE says.
++  process.env.SKILL_RECORD = 'off';
++  const z = learner('piano', 'piano_keyboard_explorer', 'final');
++  res = mastery.clearCheckpoint(db.byId('enrollments', z.enrollment.id), z.grade, 'graduation');
++  check('with the record off the gate is inert', res.graduated === true);
++
++  app.close();
++  F.done();
++})().catch((err) => { console.error(err); process.exit(1); });

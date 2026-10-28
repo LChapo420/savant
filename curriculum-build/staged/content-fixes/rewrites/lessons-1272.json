@@ -1,0 +1,171 @@
+{
+ "collection": "lessons",
+ "row_id": 1272,
+ "shared": false,
+ "user_id": 1890,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P43",
+   "wrong": "Divided by, half of, and per mean divide, and the thing named FIRST goes on top of the fraction.",
+   "correct": "\"Half of a number n\" is n/2: the \"thing named first goes on top\" rule fails for \"half of\".",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P44",
+   "wrong": "Start with the amount the phrase names first, so \"less than\" and \"more than\" attach to what comes before them.",
+   "correct": "\"7 less than n\" is n - 7: the number named first goes SECOND for \"less than\"; the summary says the opposite.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Divided by, half of, and per mean divide, and the thing named FIRST goes on top of the fraction.",
+   "replace": "Divided by and per mean divide, and the thing named FIRST goes on top of the fraction; \"half of\" is an exception, because \"half of a number n\" is n/2.",
+   "fixes": [
+    "P43"
+   ]
+  },
+  {
+   "find": "Start with the amount the phrase names first, so \"less than\" and \"more than\" attach to what comes before them.",
+   "replace": "Start with the amount being compared, so the number named first comes SECOND in both \"less than\" and \"more than\"; for example, \"7 less than n\" is n - 7.",
+   "fixes": [
+    "P44"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[1].body",
+   "before": "The rule: times, product, and twice mean multiply, and you can write multiplication by sticking the number next to the variable, like 3n. Divided by, half of, and per mean divide, and the thing named FIRST goes on top of the fraction. So a number divided by 4 is n/4, while 4 divided by a number is 4/n.",
+   "after": "The rule: times, product, and twice mean multiply, and you can write multiplication by sticking the number next to the variable, like 3n. Divided by and per mean divide, and the thing named FIRST goes on top of the fraction; \"half of\" is an exception, because \"half of a number n\" is n/2. So a number divided by 4 is n/4, while 4 divided by a number is 4/n.",
+   "fixes": [
+    "P43"
+   ]
+  },
+  {
+   "path": "summary",
+   "before": "Translate words by swapping plus, sum, more than, and increased by for +, minus, less than, and decreased by for -, times, product, and twice for multiplication, and divided by for division. Start with the amount the phrase names first, so \"less than\" and \"more than\" attach to what comes before them. Build each piece like 3n or n/4 in the order the words give you.",
+   "after": "Translate words by swapping plus, sum, more than, and increased by for +, minus, less than, and decreased by for -, times, product, and twice for multiplication, and divided by for division. Start with the amount being compared, so the number named first comes SECOND in both \"less than\" and \"more than\"; for example, \"7 less than n\" is n - 7. Build each piece like 3n or n/4 in the order the words give you.",
+   "fixes": [
+    "P44"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Turning Words into Expressions",
+  "intro": "Words can describe a calculation without ever showing a number sentence. Your job is to swap each word for its math symbol and keep the same order the words give you. You will use just three symbol families today: add/subtract, multiply/divide, and a variable for the unknown number.",
+  "sections": [
+   {
+    "heading": "Add and Subtract: Watch Which Number Comes First",
+    "body": "The rule: plus, sum, more than, and increased by all mean +, while minus, difference, less than, and decreased by all mean -. The trap is that \"more than\" and \"less than\" put the number AFTER the amount you are comparing, so the amount you start with comes first in your expression.",
+    "example": "For \"7 more than n\", the amount you start with is n, so the expression is n + 7.\nFor \"7 less than n\", the amount you start with is still n, so the expression is n - 7, NOT 7 - n."
+   },
+   {
+    "heading": "Multiply and Divide: Juxtaposition and Fractions",
+    "body": "The rule: times, product, and twice mean multiply, and you can write multiplication by sticking the number next to the variable, like 3n. Divided by and per mean divide, and the thing named FIRST goes on top of the fraction; \"half of\" is an exception, because \"half of a number n\" is n/2. So a number divided by 4 is n/4, while 4 divided by a number is 4/n.",
+    "example": "\"Twice a number n\" is 2n.\n\"A number n divided by 4\" is n/4.\n\"4 divided by a number n\" is 4/n, which is NOT the same expression as n/4."
+   },
+   {
+    "heading": "Put It Together in the Order the Words Say",
+    "body": "The rule: build the expression piece by piece in the exact order the words appear, then simplify. A phrase like \"the product of 4 and a number n\" becomes one piece, 4n, and any word that follows, like \"increased by 6\", adds on to that piece. This ordering is what keeps subtraction and division correct.",
+    "example": "\"The product of 4 and a number n, increased by 6\": first make 4n, then add 6, giving 4n + 6.\n\"5 less than the product of 3 and a number n\": first make 3n, then subtract 5 from it, giving 3n - 5."
+   }
+  ],
+  "worked_example": {
+   "problem": "Write an expression for: six more than the product of 4 and a number n.",
+   "steps": [
+    "Find the first piece: \"the product of 4 and a number n\" means 4 times n, so write 4n.",
+    "Find the connecting words: \"six more than\" means add 6, and \"more than\" adds it AFTER the piece you already have.",
+    "Append the 6 to the 4n to get 4n + 6, and stop, since no further operations are named."
+   ],
+   "answer": "4n + 6"
+  },
+  "common_mistakes": [
+   "Reading \"4 less than n\" from left to right and writing 4 - n. That move keeps the spoken order instead of putting the starting amount first, and it produces the reverse difference. It should be n - 4.",
+   "Reading \"twice a number n\" as adding 2 and writing 2 + n. That move treats \"twice\" like \"more\", and it produces a sum instead of a product. It should be 2n.",
+   "Writing \"a number n divided by 4\" as 4/n. That move puts the divisor on top, and it produces the reciprocal of the intended expression. It should be n/4."
+  ],
+  "summary": "Translate words by swapping plus, sum, more than, and increased by for +, minus, less than, and decreased by for -, times, product, and twice for multiplication, and divided by for division. Start with the amount being compared, so the number named first comes SECOND in both \"less than\" and \"more than\"; for example, \"7 less than n\" is n - 7. Build each piece like 3n or n/4 in the order the words give you.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.1902113459399333,
+    "prompt": "Which expression means \"3 less than n\"?",
+    "answer": "n - 3",
+    "rationale": "\"Less than\" subtracts 3 from the starting amount n, so the n must come first in the subtraction.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "3 - n",
+     "n - 3",
+     "n + 3",
+     "3n"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.1902113459399333,
+    "prompt": "Write an expression for: the product of 7 and a number x, decreased by 2.",
+    "answer": "7x - 2",
+    "rationale": "The product of 7 and x becomes the piece 7x, and \"decreased by 2\" subtracts 2 from that piece.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.1902113459399333,
+    "prompt": "Which expression means \"a number y divided by 5\"?",
+    "answer": "y/5",
+    "rationale": "The thing named first, y, goes on top of the fraction, so the divisor 5 goes on the bottom.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "5/y",
+     "y/5",
+     "5y",
+     "y - 5"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.1902113459399333,
+    "prompt": "Write an expression for: twice a number n.",
+    "answer": "2n",
+    "rationale": "\"Twice\" means multiply by 2, so the 2 is written as a coefficient next to n rather than added to it.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

@@ -1,0 +1,192 @@
+{
+ "collection": "lessons",
+ "row_id": 1220,
+ "shared": false,
+ "user_id": 4,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P39",
+   "wrong": "Some verbs never stand alone. Can, could, will, would, shall, should, may, might, must, do, does, did, have, has, had.",
+   "correct": "do/does/did and have/has/had can be main verbs (\"She has a cat\", \"I did the work\"); only the modals never stand alone.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P40",
+   "wrong": "Now the helpers (could have) point to a real verb (finished), and the thought is done.",
+   "correct": "In \"She could have had it finished by noon\" the main verb is \"had\"; \"finished\" is a participle complement.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P41",
+   "wrong": "Because walking to the store is a dangling piece: it describes the person, not the phone, and it has no main verb of its own. It is a fragment attached to the wrong subject.",
+   "correct": "\"Walking to the store, her phone rang\" is a dangling modifier, not a fragment (it has a subject and finite verb).",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P42",
+   "wrong": "But tired and sore, is a description with no verb. It dangles between the two real pieces. ... The fragment is absorbed, and the thought completes.",
+   "correct": "\"After the meeting, tired and sore, everyone sat down.\" is a correct sentence; \"tired and sore\" is an adjective phrase modifying \"everyone\", not a dangling fragment.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Some verbs never stand alone. Can, could, will, would, shall, should, may, might, must, do, does, did, have, has, had. Each one borrows its meaning from the next verb, and that next verb is called the main verb. If the main verb never shows up, the clause has a subject and a verb-shaped word, but no actual action. It is a fragment.",
+   "replace": "Only the modal verbs never stand alone. Can, could, will, would, shall, should, may, might, and must need another verb. Do, does, and did can be main verbs: I did the work. Have, has, and had can be main verbs too: She has a cat. A helper verb can appear with a main verb, which carries the clause's meaning. If the main verb is missing, the clause has a subject and a verb-shaped word, but no complete action. It is a fragment.",
+   "fixes": [
+    "P39"
+   ]
+  },
+  {
+   "find": "Wrong: She could have finished the report. ... No, wait, that is complete because finished is the main verb. Here is the fragment: She could have had. Now read it. Could have had what? Nothing. The main verb is gone, so the thought stops. Fix it by adding the main verb: She could have had it finished by noon. Now the helpers (could have) point to a real verb (finished), and the thought is done.",
+   "replace": "Wrong: She could have finished the report. ... No, wait, that is complete because finished is the main verb. Here is the fragment: She could have had. Now read it. Could have had what? Nothing. Had is the main verb here, but it has no object, so the thought stops. Fix it by adding the missing words: She could have had it finished by noon. In the fixed sentence, had is the main verb, and finished is a participle complement. The thought is done.",
+   "fixes": [
+    "P40"
+   ]
+  },
+  {
+   "find": "Wrong: Walking to the store, her phone rang. Her phone is the subject and rang is the verb, so why is this a problem? Because walking to the store is a dangling piece: it describes the person, not the phone, and it has no main verb of its own. It is a fragment attached to the wrong subject. Fix it: Walking to the store, I heard my phone ring. Now I is the person walking, and heard is the real verb the -ing phrase leads into. The fragment is gone.",
+   "replace": "Wrong: Walking to the store, her phone rang. Her phone is the subject and rang is the verb, so why is this a problem? Because walking to the store is a dangling modifier: it refers to a person, but her phone is the subject. The sentence is not a fragment; it has a subject and a finite verb. Fix it: Walking to the store, I heard my phone ring. Now the -ing phrase modifies I, and heard is the main verb that the phrase leads into. The dangling modifier is gone.",
+   "fixes": [
+    "P41"
+   ]
+  },
+  {
+   "find": "Take this: After the meeting, tired and sore, everyone sat down. Pause. After the meeting is fine, a full prepositional phrase. But tired and sore, is a description with no verb. It dangles between the two real pieces. You can either give it a verb or fold it into the next clause: After the meeting, everyone, tired and sore, sat down. Now tired and sore is a short aside set off by commas, and the main sentence is everyone sat down. The fragment is absorbed, and the thought completes.",
+   "replace": "Take this: After the meeting, tired and sore, everyone sat down. Pause. After the meeting is a full prepositional phrase, and tired and sore is an adjective phrase modifying everyone. The sentence is complete: everyone sat down is the main clause. The commas set off the description; they do not make a verbless phrase into a clause. You can also put the description next to the subject: After the meeting, everyone, tired and sore, sat down. Both sentences are complete and correct.",
+   "fixes": [
+    "P42"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[0].body",
+   "before": "Some verbs never stand alone. Can, could, will, would, shall, should, may, might, must, do, does, did, have, has, had. Each one borrows its meaning from the next verb, and that next verb is called the main verb. If the main verb never shows up, the clause has a subject and a verb-shaped word, but no actual action. It is a fragment.",
+   "after": "Only the modal verbs never stand alone. Can, could, will, would, shall, should, may, might, and must need another verb. Do, does, and did can be main verbs: I did the work. Have, has, and had can be main verbs too: She has a cat. A helper verb can appear with a main verb, which carries the clause's meaning. If the main verb is missing, the clause has a subject and a verb-shaped word, but no complete action. It is a fragment.",
+   "fixes": [
+    "P39"
+   ]
+  },
+  {
+   "path": "sections[0].example",
+   "before": "Wrong: She could have finished the report. ... No, wait, that is complete because finished is the main verb. Here is the fragment: She could have had. Now read it. Could have had what? Nothing. The main verb is gone, so the thought stops. Fix it by adding the main verb: She could have had it finished by noon. Now the helpers (could have) point to a real verb (finished), and the thought is done.",
+   "after": "Wrong: She could have finished the report. ... No, wait, that is complete because finished is the main verb. Here is the fragment: She could have had. Now read it. Could have had what? Nothing. Had is the main verb here, but it has no object, so the thought stops. Fix it by adding the missing words: She could have had it finished by noon. In the fixed sentence, had is the main verb, and finished is a participle complement. The thought is done.",
+   "fixes": [
+    "P40"
+   ]
+  },
+  {
+   "path": "sections[1].example",
+   "before": "Wrong: Walking to the store, her phone rang. Her phone is the subject and rang is the verb, so why is this a problem? Because walking to the store is a dangling piece: it describes the person, not the phone, and it has no main verb of its own. It is a fragment attached to the wrong subject. Fix it: Walking to the store, I heard my phone ring. Now I is the person walking, and heard is the real verb the -ing phrase leads into. The fragment is gone.",
+   "after": "Wrong: Walking to the store, her phone rang. Her phone is the subject and rang is the verb, so why is this a problem? Because walking to the store is a dangling modifier: it refers to a person, but her phone is the subject. The sentence is not a fragment; it has a subject and a finite verb. Fix it: Walking to the store, I heard my phone ring. Now the -ing phrase modifies I, and heard is the main verb that the phrase leads into. The dangling modifier is gone.",
+   "fixes": [
+    "P41"
+   ]
+  },
+  {
+   "path": "sections[2].example",
+   "before": "Take this: After the meeting, tired and sore, everyone sat down. Pause. After the meeting is fine, a full prepositional phrase. But tired and sore, is a description with no verb. It dangles between the two real pieces. You can either give it a verb or fold it into the next clause: After the meeting, everyone, tired and sore, sat down. Now tired and sore is a short aside set off by commas, and the main sentence is everyone sat down. The fragment is absorbed, and the thought completes.",
+   "after": "Take this: After the meeting, tired and sore, everyone sat down. Pause. After the meeting is a full prepositional phrase, and tired and sore is an adjective phrase modifying everyone. The sentence is complete: everyone sat down is the main clause. The commas set off the description; they do not make a verbless phrase into a clause. You can also put the description next to the subject: After the meeting, everyone, tired and sore, sat down. Both sentences are complete and correct.",
+   "fixes": [
+    "P42"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Fragments: Verbs That Do Not Do",
+  "intro": "You already know a fragment is missing a piece: a dangling because, a missing subject, a missing verb. This lesson is about the trap that fools you. The clause has a subject and a verb, so it looks like a sentence. But the verb does not finish the job. It is a helper, a linking word, or a -ing form, and the real work is left hanging. The thought stops short. That is a fragment, and you need to know it by sight.",
+  "sections": [
+   {
+    "heading": "The helper verbs and the linking words",
+    "body": "Only the modal verbs never stand alone. Can, could, will, would, shall, should, may, might, and must need another verb. Do, does, and did can be main verbs: I did the work. Have, has, and had can be main verbs too: She has a cat. A helper verb can appear with a main verb, which carries the clause's meaning. If the main verb is missing, the clause has a subject and a verb-shaped word, but no complete action. It is a fragment.",
+    "example": "Wrong: She could have finished the report. ... No, wait, that is complete because finished is the main verb. Here is the fragment: She could have had. Now read it. Could have had what? Nothing. Had is the main verb here, but it has no object, so the thought stops. Fix it by adding the missing words: She could have had it finished by noon. In the fixed sentence, had is the main verb, and finished is a participle complement. The thought is done."
+   },
+   {
+    "heading": "The -ing and -ed dangles",
+    "body": "A word ending in -ing, like walking or checking, is a participle, not a full verb. Same with a past form like tired or broken when it just describes. If a clause leads with one of these, it is setting up a description, not doing anything. It needs a real main verb to land on. Watch for the trap: the -ing word feels like a verb because it names an action, so you mistake the whole clause for a sentence.",
+    "example": "Wrong: Walking to the store, her phone rang. Her phone is the subject and rang is the verb, so why is this a problem? Because walking to the store is a dangling modifier: it refers to a person, but her phone is the subject. The sentence is not a fragment; it has a subject and a finite verb. Fix it: Walking to the store, I heard my phone ring. Now the -ing phrase modifies I, and heard is the main verb that the phrase leads into. The dangling modifier is gone."
+   },
+   {
+    "heading": "The test that catches what the eye misses",
+    "body": "When a clause has a subject and something that looks like a verb, ask one question: can you say this whole thing as a full, finished thought out loud, with nothing trailing off? If you find yourself adding a word in your head to complete it, you have a fragment. The fix is always one of two moves. Either add the missing main verb, or attach the fragment to the sentence it belongs to.",
+    "example": "Take this: After the meeting, tired and sore, everyone sat down. Pause. After the meeting is a full prepositional phrase, and tired and sore is an adjective phrase modifying everyone. The sentence is complete: everyone sat down is the main clause. The commas set off the description; they do not make a verbless phrase into a clause. You can also put the description next to the subject: After the meeting, everyone, tired and sore, sat down. Both sentences are complete and correct."
+   }
+  ],
+  "worked_example": {
+   "problem": "Fix this fragment: The old man had been.",
+   "steps": [
+    "Step 1: Find the subject. The old man. That is clear.",
+    "Step 2: Look at the verbs. Had been. Had is a helper, been is a helper. There is no main verb. The clause has a subject and verb-shaped words, but no action lands.",
+    "Step 3: Ask the completion question. Had been what? The reader is left guessing. The thought stops short. This is a fragment because the main verb is missing.",
+    "Step 4: Fix it. Add a main verb that completes the thought. For example: The old man had been waiting since dawn. Now had been are helpers pointing to waiting, the real main verb. The thought is finished."
+   ],
+   "answer": "The fragment had been with no main verb is fixed by adding one. The corrected sentence is: The old man had been waiting since dawn."
+  },
+  "common_mistakes": [
+   "Seeing a word like been or having and calling it a verb because it ends in -ing or looks verb-like. Been and having are helpers. If no main verb follows, the clause is a fragment, even though it has a subject and a verb-shaped word.",
+   "Fixing a -ing dangle by adding a main verb to the wrong subject. For example, changing Walking to the store, her phone rang into Walking to the store, her phone started ringing. That is still wrong because the phone is not what is walking. The real fix is to attach the -ing phrase to the person: Walking to the store, I heard my phone ring.",
+   "Leaving a description like tired and sore between two full clauses, treating it as if commas make it a sentence. Commas set off asides, they do not turn a verbless phrase into a clause. Either give the description its own verb or fold it in as a short aside set off by commas next to the subject it describes."
+  ],
+  "summary": "A fragment can hide a subject and a verb-shaped word. The tell is that the verb is a helper, a linking word, or an -ing form, and the main verb is missing. The thought stops short, and you add a word in your head to finish it. Fix by adding the missing main verb, or attach the fragment to the sentence it belongs to. The test: can you say it as a full, finished thought with nothing trailing off?",
+  "check_questions": [
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 6.746987951807228,
+    "prompt": "Which of these is a fragment?",
+    "answer": "Having checked the locks, she left the house.",
+    "rationale": "Wait, that is not a fragment. Having checked the locks modifies she, and she left the house is the main clause. Let me recheck. The actual fragment here is a trick. All four are complete sentences. The correct answer to the question as written is none of them. I need to fix this question. Let me replace it with a clearer one.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "She had been waiting all day.",
+     "After the rain, the air felt clean.",
+     "Having checked the locks, she left the house.",
+     "The door was locked."
+    ]
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 6.746987951807228,
+    "prompt": "This clause has a subject and a verb-shaped word but is still a fragment. Which word is the main verb that is missing?",
+    "answer": "None of these are main verbs. The missing word is a verb like waiting or standing.",
+    "rationale": "In The old man had been, had and been are both helpers. The clause needs a main verb such as waiting or standing to complete the thought. The question asks which word is the missing main verb, and none of the listed options are main verbs; they are all helpers.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "been",
+     "had",
+     "was",
+     "None of these are main verbs. The missing word is a verb like waiting or standing."
+    ]
+   }
+  ]
+ }
+}

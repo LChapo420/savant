@@ -1,0 +1,2989 @@
+{
+ "row_id": 50,
+ "engine_id": "tic-tac-toe",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 68,
+ "generated_at": "2026-10-25T01:46:04.654Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 63,
+  "code_rejected": 0,
+  "sent_to_judges": 63,
+  "kept": 50,
+  "keep_rate_of_written": 0.794,
+  "judges": {
+   "both_answered": 63,
+   "picked_same_option": 58,
+   "a_picked_key": 57,
+   "b_picked_key": 62,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "minimax/minimax-m3.1-flash"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "tic-tac-toe",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 68,
+   "topic": "Activity 6 of 9 (quiz/game): Revise a Weak Sentence - Punctuation for Effect",
+   "title": "Revise the Weak Sentence: Punctuation for Effect",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 7,
+    "end": 9,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q30",
+    "prompt": "Choose the revision that keeps two independent clauses in one sentence, gives them equal weight, and avoids implying that the second explains the first.",
+    "choices": [
+     "The archive closed at noon: the final boxes were already sealed.",
+     "The archive closed at noon; the final boxes were already sealed.",
+     "The archive closed at noon, the final boxes were already sealed.",
+     "The archive closed at noon—the final boxes were already sealed."
+    ],
+    "answerIndex": 1,
+    "explanation": "A semicolon joins the two independent clauses in one sentence without implying that the second explains the first.",
+    "difficulty": 8,
+    "skill": "Revising with semicolons",
+    "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q3",
+    "prompt": "Before entering the cave, Maya packed three essentials: a lantern, a rope, and two flares. The revision should announce the supplies as a complete set that the reader can take in at once. Which version creates that effect?",
+    "choices": [
+     "Before entering the cave, Maya packed three essentials—a lantern, a rope, and two flares.",
+     "Before entering the cave, Maya packed three essentials; a lantern, a rope, and two flares.",
+     "Before entering the cave, Maya packed three essentials: a lantern, a rope, and two flares.",
+     "Before entering the cave, Maya packed three essentials, a lantern, a rope, and two flares."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon announces the three items as a set, while the plural noun essentials makes the list feel complete.",
+    "difficulty": 8,
+    "skill": "Announcing a list with a colon",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q11",
+    "prompt": "Revise the sentence so the two independent clauses stay equally strong and the contrast remains sharp: \"The storm intensified the lights flickered and went out.\"",
+    "choices": [
+     "The storm intensified—the lights flickered and went out.",
+     "The storm intensified: the lights flickered and went out.",
+     "The storm intensified; the lights flickered and went out.",
+     "The storm intensified, the lights flickered and went out."
+    ],
+    "answerIndex": 2,
+    "explanation": "A semicolon links two independent clauses of equal importance while preserving their contrasting tension.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q29",
+    "prompt": "The ferry left without us the captain had received an urgent radio call. Which revision uses matching dashes to set off the reason for the sudden departure?",
+    "choices": [
+     "The ferry left without us—the captain had received an urgent radio call.",
+     "The ferry left without us: the captain had received an urgent radio call.",
+     "The ferry left without us, the captain had received an urgent radio call.",
+     "The ferry left without us; the captain had received an urgent radio call."
+    ],
+    "answerIndex": 0,
+    "explanation": "The matching dashes isolate the captain's explanation as a parenthetical interruption and create a dramatic pause before it.",
+    "difficulty": 7,
+    "skill": "Revising with paired dashes",
+    "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q46",
+    "prompt": "Revise the weak sentence with a colon that makes the cause of the unexpected stop explicit: The train stopped unexpectedly a fallen tree blocked the tracks.",
+    "choices": [
+     "The train stopped unexpectedly; a fallen tree blocked the tracks.",
+     "The train stopped unexpectedly: a fallen tree blocked the tracks.",
+     "The train stopped unexpectedly, a fallen tree blocked the tracks.",
+     "The train stopped unexpectedly—a fallen tree blocked the tracks."
+    ],
+    "answerIndex": 1,
+    "explanation": "The colon presents the fallen tree as the reason the train stopped, making the causal relationship clear.",
+    "difficulty": 8,
+    "skill": "Using a colon to introduce a cause",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q5",
+    "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"She opened the letter her hands trembling with anticipation.\"",
+    "choices": [
+     "She opened the letter—her hands trembling with anticipation—.",
+     "She opened the letter, her hands trembling with anticipation.",
+     "She opened the letter; her hands trembling with anticipation.",
+     "She opened the letter: her hands trembling with anticipation."
+    ],
+    "answerIndex": 0,
+    "explanation": "The pair of dashes isolates the absolute phrase on both sides, giving it a spotlight effect.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q23",
+    "prompt": "Revise the sentence so the descriptive detail receives a sudden pause for dramatic effect: \"The old bridge groaned under the weight its cables snapped one by one.\"",
+    "choices": [
+     "The old bridge groaned under the weight; its cables snapped one by one.",
+     "The old bridge groaned under the weight: its cables snapped one by one.",
+     "The old bridge groaned under the weight—its cables snapped one by one.",
+     "The old bridge groaned under the weight, its cables snapped one by one."
+    ],
+    "answerIndex": 2,
+    "explanation": "A dash before the descriptive clause creates a sharp, dramatic pause that emphasizes the snapping cables.",
+    "difficulty": 9,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q33",
+    "prompt": "The runners crossed the finish line and dropped onto the grass exhausted and exhilarated. Which revision uses a closing dash to spotlight the runners' final physical and emotional state?",
+    "choices": [
+     "The runners crossed the finish line and dropped onto the grass—exhausted and exhilarated.",
+     "The runners crossed the finish line and dropped onto the grass: exhausted and exhilarated.",
+     "The runners crossed the finish line and dropped onto the grass; exhausted and exhilarated.",
+     "The runners crossed the finish line and dropped onto the grass, exhausted and exhilarated."
+    ],
+    "answerIndex": 0,
+    "explanation": "The closing dash highlights the runners' final state by placing it after a sharp, deliberate pause.",
+    "difficulty": 8,
+    "skill": "Revising with a closing dash",
+    "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q8",
+    "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: \"She whispered a secret the room fell silent.\"",
+    "choices": [
+     "She whispered a secret, the room fell silent.",
+     "She whispered a secret; the room fell silent.",
+     "She whispered a secret: the room fell silent.",
+     "She whispered a secret—the room fell silent."
+    ],
+    "answerIndex": 3,
+    "explanation": "An em dash creates a sudden, emphatic break that signals an unexpected interruption.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q1",
+    "prompt": "The old theater was packed. Every seat held someone eager to see the play. The second sentence must clarify the first, and the punctuation should make that explanation feel deliberate and emphatic. Select the best version.",
+    "choices": [
+     "The old theater was packed: every seat held someone eager to see the play.",
+     "The old theater was packed; every seat held someone eager to see the play.",
+     "The old theater was packed—every seat held someone eager to see the play.",
+     "The old theater was packed, every seat held someone eager to see the play."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon introduces an explanatory statement and makes the second sentence clarify why the theater was packed.",
+    "difficulty": 8,
+    "skill": "Introducing an explanation with a colon",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q6",
+    "prompt": "Revise the sentence so the descriptive phrase is set off for a dramatic pause: \"The mountain loomed above us its peak hidden in clouds.\"",
+    "choices": [
+     "The mountain loomed above us, its peak hidden in clouds.",
+     "The mountain loomed above us—its peak hidden in clouds.",
+     "The mountain loomed above us; its peak hidden in clouds.",
+     "The mountain loomed above us: its peak hidden in clouds."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash creates a dramatic pause that isolates the descriptive phrase for effect.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q31",
+    "prompt": "In which revision are two independent clauses joined in the standard way, with the conjunctive adverb placed after the required punctuation?",
+    "choices": [
+     "Rain drummed on the roof: however, the hikers continued upward.",
+     "Rain drummed on the roof, however, the hikers continued upward.",
+     "Rain drummed on the roof; however, the hikers continued upward.",
+     "Rain drummed on the roof however, the hikers continued upward."
+    ],
+    "answerIndex": 2,
+    "explanation": "A semicolon before the conjunctive adverb however correctly joins the two independent clauses.",
+    "difficulty": 8,
+    "skill": "Punctuating before conjunctive adverbs",
+    "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q19",
+    "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: \"The jury deliberated for hours the verdict was unanimous.\"",
+    "choices": [
+     "The jury deliberated for hours—the verdict was unanimous.",
+     "The jury deliberated for hours: the verdict was unanimous.",
+     "The jury deliberated for hours; the verdict was unanimous.",
+     "The jury deliberated for hours, the verdict was unanimous."
+    ],
+    "answerIndex": 2,
+    "explanation": "The semicolon joins two independent clauses of equal weight while preserving their contrast.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which option joins the two complete thoughts with the requested semicolon and explains their equal weight accurately? 'The referee checked the clock the final seconds had already vanished.'",
+    "choices": [
+     "The referee checked the clock. The final seconds had already vanished. The period separates the thoughts instead of joining them.",
+     "The referee checked the clock, the final seconds had already vanished. The comma improperly joins two independent clauses.",
+     "The referee checked the clock: the final seconds had already vanished. The colon introduces an explanation of what the referee found.",
+     "The referee checked the clock; the final seconds had already vanished. The semicolon joins two independent clauses and gives each one equal weight."
+    ],
+    "answerIndex": 3,
+    "explanation": "The semicolon joins two independent clauses and gives the referee's action and the time pressure equal emphasis.",
+    "difficulty": 7,
+    "skill": "Using a semicolon to join independent clauses",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q26",
+    "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: 'The child reached for the cookie jar his fingers sticky with jam.'",
+    "choices": [
+     "The child reached for the cookie jar; his fingers sticky with jam;.",
+     "The child reached for the cookie jar—his fingers sticky with jam—.",
+     "The child reached for the cookie jar: his fingers sticky with jam:.",
+     "The child reached for the cookie jar, his fingers sticky with jam,."
+    ],
+    "answerIndex": 1,
+    "explanation": "Paired dashes enclose the absolute phrase, giving it a spotlight on both sides.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q9",
+    "prompt": "Revise the sentence so the list of rules is announced as a complete set: \"The teacher listed three rules be on time bring your materials and listen.\"",
+    "choices": [
+     "The teacher listed three rules: be on time, bring your materials, and listen.",
+     "The teacher listed three rules; be on time, bring your materials, and listen.",
+     "The teacher listed three rules—be on time, bring your materials, and listen.",
+     "The teacher listed three rules, be on time, bring your materials, and listen."
+    ],
+    "answerIndex": 0,
+    "explanation": "A colon introduces a list that follows a complete independent clause, signaling that the items constitute the full set.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q34",
+    "prompt": "In this revision, the colon after explanation introduces the reason for the delay. Which statement accurately teaches that punctuation choice?",
+    "choices": [
+     "The colon joins two equally important independent clauses without creating a comma splice.",
+     "The colon introduces the specific reason for the delay and signals a strong pause before the reason is stated.",
+     "The colon marks an inserted aside that briefly interrupts the main statement.",
+     "The colon announces a complete list of items connected by and."
+    ],
+    "answerIndex": 1,
+    "explanation": "The colon introduces the reason for the delay, signaling a stronger pause and directing attention to the explanation.",
+    "difficulty": 9,
+    "skill": "Explaining punctuation for effect",
+    "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q21",
+    "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: \"He entered the room the lights flickered on.\"",
+    "choices": [
+     "He entered the room—the lights flickered on.",
+     "He entered the room: the lights flickered on.",
+     "He entered the room; the lights flickered on.",
+     "He entered the room, the lights flickered on."
+    ],
+    "answerIndex": 0,
+    "explanation": "A dash creates a sudden, emphatic break that marks the unexpected shift.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q47",
+    "prompt": "Choose the revision, together with the explanation that correctly identifies the colon's effect: 'The storm left one unmistakable lesson the coast needed stronger defenses.'",
+    "choices": [
+     "The storm left one unmistakable lesson; the coast needed stronger defenses. The semicolon joins two independent clauses and gives them equal weight.",
+     "The storm left one unmistakable lesson—the coast needed stronger defenses. The dash creates an abrupt interruption before the revealing statement.",
+     "The storm left one unmistakable lesson: the coast needed stronger defenses. The colon announces the lesson and creates a pointed pause before the revealing statement.",
+     "The storm left one unmistakable lesson, the coast needed stronger defenses. The comma incorrectly joins two independent clauses."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon after 'lesson' announces the coast's need and creates a pointed pause before the revealing statement.",
+    "difficulty": 8,
+    "skill": "Using a colon to reveal information",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q27",
+    "prompt": "Revise the sentence so the second clause explains the result of the first with a clear pause: 'He studied all night the test felt easy.'",
+    "choices": [
+     "He studied all night—the test felt easy.",
+     "He studied all night; the test felt easy.",
+     "He studied all night: the test felt easy.",
+     "He studied all night, the test felt easy."
+    ],
+    "answerIndex": 2,
+    "explanation": "A colon introduces a clause that states the outcome or explanation of the preceding action.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q32",
+    "prompt": "Only one uncertainty remained would the rescue team arrive before nightfall. Which revision uses a colon to introduce the direct question that remains?",
+    "choices": [
+     "One uncertainty remained—would the rescue team arrive before nightfall?",
+     "One uncertainty remained; would the rescue team arrive before nightfall?",
+     "One uncertainty remained, would the rescue team arrive before nightfall?",
+     "One uncertainty remained: would the rescue team arrive before nightfall?"
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon announces the direct question and creates a strong pause before the unknown is stated.",
+    "difficulty": 8,
+    "skill": "Using colons before questions",
+    "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q42",
+    "prompt": "Revise the weak sentence so a pair of dashes creates an abrupt interruption before the final action: 'The climber tightened her grip the ice shifted beneath her boot the rope trembled.'",
+    "choices": [
+     "The climber tightened her grip; the ice shifted beneath her boot, and the rope trembled.",
+     "The climber tightened her grip—the ice shifted beneath her boot—and the rope trembled.",
+     "The climber tightened her grip: the ice shifted beneath her boot, and the rope trembled.",
+     "The climber tightened her grip, the ice shifted beneath her boot, and the rope trembled."
+    ],
+    "answerIndex": 1,
+    "explanation": "The paired dashes insert the sudden danger between two actions and create a deliberate pause before the rope trembles.",
+    "difficulty": 8,
+    "skill": "Using paired dashes for dramatic interruption",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q18",
+    "prompt": "Insert a dash before the descriptive detail to give it a sudden pause: \"The ancient library stood silent its shelves crammed with forgotten tomes.\"",
+    "choices": [
+     "The ancient library stood silent: its shelves crammed with forgotten tomes.",
+     "The ancient library stood silent—its shelves crammed with forgotten tomes.",
+     "The ancient library stood silent; its shelves crammed with forgotten tomes.",
+     "The ancient library stood silent, its shelves crammed with forgotten tomes."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash isolates the descriptive phrase to create a dramatic pause before the detail.",
+    "difficulty": 8,
+    "skill": "Setting off a descriptive phrase with a dash for dramatic pause",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q22",
+    "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"The dancer leapt across the stage her arms outstretched like wings.\"",
+    "choices": [
+     "The dancer leapt across the stage—her arms outstretched like wings.",
+     "The dancer leapt across the stage—her arms outstretched like wings—.",
+     "The dancer leapt across the stage: her arms outstretched like wings.",
+     "The dancer leapt across the stage; her arms outstretched like wings."
+    ],
+    "answerIndex": 1,
+    "explanation": "Dashes on both sides of the absolute phrase highlight it as a vivid, parenthetical image.",
+    "difficulty": 9,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q15",
+    "prompt": "Add a dash to make the second clause interrupt the first sharply: \"She reached for the handle the door slammed shut.\"",
+    "choices": [
+     "She reached for the handle: the door slammed shut.",
+     "She reached for the handle; the door slammed shut.",
+     "She reached for the handle—the door slammed shut.",
+     "She reached for the handle, the door slammed shut."
+    ],
+    "answerIndex": 2,
+    "explanation": "The dash creates a sudden, dramatic break that shows the second clause interrupting the first.",
+    "difficulty": 8,
+    "skill": "Using a dash for abrupt clause interruption",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q7",
+    "prompt": "Revise the sentence so the two independent clauses remain equally important and the contrast is clear: \"The hikers reached the summit the view stretched for miles.\"",
+    "choices": [
+     "The hikers reached the summit—the view stretched for miles.",
+     "The hikers reached the summit: the view stretched for miles.",
+     "The hikers reached the summit; the view stretched for miles.",
+     "The hikers reached the summit, the view stretched for miles."
+    ],
+    "answerIndex": 2,
+    "explanation": "A semicolon joins two independent clauses of equal weight while preserving their contrast.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q20",
+    "prompt": "Revise the sentence so the list of items is announced as a complete set: \"She packed three items a water bottle a snack and a map.\"",
+    "choices": [
+     "She packed three items, a water bottle, a snack, and a map.",
+     "She packed three items; a water bottle, a snack, and a map.",
+     "She packed three items— a water bottle, a snack, and a map.",
+     "She packed three items: a water bottle, a snack, and a map."
+    ],
+    "answerIndex": 3,
+    "explanation": "A colon after the introductory phrase signals that a full list follows.",
+    "difficulty": 7,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q36",
+    "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: \"She reached for the handle the door swung open unexpectedly.\"",
+    "choices": [
+     "She reached for the handle, the door swung open unexpectedly.",
+     "She reached for the handle; the door swung open unexpectedly.",
+     "She reached for the handle: the door swung open unexpectedly.",
+     "She reached for the handle—the door swung open unexpectedly."
+    ],
+    "answerIndex": 3,
+    "explanation": "A dash creates a sudden break that makes the second clause feel like an unexpected interruption.",
+    "difficulty": 8,
+    "skill": "Revise a Weak Sentence - Punctuation for Effect",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q14",
+    "prompt": "Mark the complete list of three items with a colon after the introductory clause: \"The backpack contained three essentials a map a compass and a flashlight.\"",
+    "choices": [
+     "The backpack contained three essentials; a map, a compass, and a flashlight.",
+     "The backpack contained three essentials: a map, a compass, and a flashlight.",
+     "The backpack contained three essentials, a map, a compass, and a flashlight.",
+     "The backpack contained three essentials— a map, a compass, and a flashlight."
+    ],
+    "answerIndex": 1,
+    "explanation": "The colon introduces a complete list of items after an independent clause.",
+    "difficulty": 8,
+    "skill": "Introducing a complete list with a colon",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q24",
+    "prompt": "Revise the sentence so the list of tools is announced as a complete set: 'The kit includes three tools a hammer a screwdriver and a wrench.'",
+    "choices": [
+     "The kit includes three tools, a hammer, a screwdriver, and a wrench.",
+     "The kit includes three tools; a hammer, a screwdriver, and a wrench.",
+     "The kit includes three tools— a hammer, a screwdriver, and a wrench.",
+     "The kit includes three tools: a hammer, a screwdriver, and a wrench."
+    ],
+    "answerIndex": 3,
+    "explanation": "A colon after an introductory clause signals that a complete list follows.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q13",
+    "prompt": "Connect the two independent clauses using a semicolon so they stay equally prominent: \"The orchestra played a soft melody the audience leaned forward in anticipation.\"",
+    "choices": [
+     "The orchestra played a soft melody; the audience leaned forward in anticipation.",
+     "The orchestra played a soft melody: the audience leaned forward in anticipation.",
+     "The orchestra played a soft melody, the audience leaned forward in anticipation.",
+     "The orchestra played a soft melody—the audience leaned forward in anticipation."
+    ],
+    "answerIndex": 0,
+    "explanation": "The semicolon joins two independent clauses of equal importance while preserving their contrast.",
+    "difficulty": 8,
+    "skill": "Linking independent clauses with semicolons for equal weight",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q44",
+    "prompt": "Revise the weak sentence so one dash briefly suspends the thought and spotlights the final image: The skater turned at the center the crowd erupted in applause.",
+    "choices": [
+     "The skater turned at the center; the crowd erupted in applause.",
+     "The skater turned at the center, the crowd erupted in applause.",
+     "The skater turned at the center: the crowd erupted in applause.",
+     "The skater turned at the center—the crowd erupted in applause."
+    ],
+    "answerIndex": 3,
+    "explanation": "The dash creates a brief interruption that spotlights the crowd’s reaction without presenting it as an explanation.",
+    "difficulty": 8,
+    "skill": "Using a dash to spotlight an interrupted clause",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q17",
+    "prompt": "Place a colon before the clause that states the outcome of the action: \"He turned the key the engine roared to life.\"",
+    "choices": [
+     "He turned the key: the engine roared to life.",
+     "He turned the key; the engine roared to life.",
+     "He turned the key—the engine roared to life.",
+     "He turned the key, the engine roared to life."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon signals that the second clause explains the result of the action in the first.",
+    "difficulty": 8,
+    "skill": "Using a colon to introduce a result clause",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q2",
+    "prompt": "We reached the ridge, the wind hit us like a wall. The second clause should interrupt the first as an unexpected jolt rather than explain it or continue it in a smooth sequence. Which wording creates the interruption?",
+    "choices": [
+     "We reached the ridge; the wind hit us like a wall.",
+     "We reached the ridge—the wind hit us like a wall.",
+     "We reached the ridge: the wind hit us like a wall.",
+     "We reached the ridge, the wind hit us like a wall."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash creates a sudden interruption after the first action, allowing the consequence to strike with greater force.",
+    "difficulty": 7,
+    "skill": "Creating interruption with a dash",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q25",
+    "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: 'She turned the corner the dog barked loudly.'",
+    "choices": [
+     "She turned the corner—the dog barked loudly.",
+     "She turned the corner; the dog barked loudly.",
+     "She turned the corner: the dog barked loudly.",
+     "She turned the corner, the dog barked loudly."
+    ],
+    "answerIndex": 0,
+    "explanation": "An em dash creates a sudden break that makes the second clause feel like an unexpected interruption.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q38",
+    "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: \"The fire spread quickly the firefighters arrived within minutes.\"",
+    "choices": [
+     "The fire spread quickly: the firefighters arrived within minutes.",
+     "The fire spread quickly; the firefighters arrived within minutes.",
+     "The fire spread quickly—the firefighters arrived within minutes.",
+     "The fire spread quickly, the firefighters arrived within minutes."
+    ],
+    "answerIndex": 1,
+    "explanation": "A semicolon links two independent clauses of equal importance while preserving their contrast.",
+    "difficulty": 8,
+    "skill": "Revise a Weak Sentence - Punctuation for Effect",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q37",
+    "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"The actor delivered his line his voice trembling with emotion.\"",
+    "choices": [
+     "The actor delivered his line—his voice trembling with emotion—.",
+     "The actor delivered his line—his voice trembling with emotion.",
+     "The actor delivered his line (his voice trembling with emotion).",
+     "The actor delivered his line, his voice trembling with emotion,"
+    ],
+    "answerIndex": 0,
+    "explanation": "Enclosing the absolute phrase in dashes on both sides highlights it as a dramatic aside.",
+    "difficulty": 9,
+    "skill": "Revise a Weak Sentence - Punctuation for Effect",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q40",
+    "prompt": "Choose the revision in which a semicolon separates two independent clauses and the conjunctive adverb follows it correctly.",
+    "choices": [
+     "The rehearsal ended early, however, the dancers continued rehearsing.",
+     "The rehearsal ended early; however the dancers continued rehearsing.",
+     "The rehearsal ended early: however, the dancers continued rehearsing.",
+     "The rehearsal ended early; however, the dancers continued rehearsing."
+    ],
+    "answerIndex": 3,
+    "explanation": "The semicolon separates the independent clauses, and the conjunctive adverb however begins the second clause with the required comma.",
+    "difficulty": 8,
+    "skill": "Placing a conjunctive adverb after a semicolon",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q43",
+    "prompt": "Revise the weak sentence so a colon introduces the reason for the decision: 'The mayor canceled the festival because flooding had made the grounds unsafe.'",
+    "choices": [
+     "The mayor canceled the festival; flooding had made the grounds unsafe.",
+     "The mayor canceled the festival, flooding had made the grounds unsafe.",
+     "The mayor canceled the festival: flooding had made the grounds unsafe.",
+     "The mayor canceled the festival—flooding had made the grounds unsafe."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon presents the flooding as the reason for canceling the festival and clearly separates the decision from its explanation.",
+    "difficulty": 8,
+    "skill": "Using a colon to introduce an explanation",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q45",
+    "prompt": "Revise the weak sentence as one sentence so both independent clauses remain equally prominent and however marks the contrast: The gates opened early the visitors waited in the rain.",
+    "choices": [
+     "The gates opened early; however, the visitors waited in the rain.",
+     "The gates opened early, however, the visitors waited in the rain.",
+     "The gates opened early: however, the visitors waited in the rain.",
+     "The gates opened early; however the visitors waited in the rain."
+    ],
+    "answerIndex": 0,
+    "explanation": "The semicolon joins two independent clauses with equal emphasis, and the comma after however marks the contrast between them.",
+    "difficulty": 8,
+    "skill": "Using a semicolon before a conjunctive adverb",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q10",
+    "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"He opened the drawer his hands shaking with anticipation.\"",
+    "choices": [
+     "He opened the drawer—his hands shaking with anticipation.",
+     "He opened the drawer—his hands shaking with anticipation—.",
+     "He opened the drawer; his hands shaking with anticipation;",
+     "He opened the drawer, his hands shaking with anticipation,"
+    ],
+    "answerIndex": 1,
+    "explanation": "Paired em dashes isolate the absolute phrase, giving it a spotlighted, dramatic pause on both sides.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q49",
+    "prompt": "Select the revision that uses matching dashes to isolate the interruption, and choose the accurate explanation: 'The robot paused its red eye blinking steadily and waited for a command.'",
+    "choices": [
+     "The robot paused—its red eye blinking steadily—and waited for a command. The matching dashes isolate the interruption while preserving the main action.",
+     "The robot paused: its red eye blinking steadily and waited for a command. The colon introduces the robot's blinking detail.",
+     "The robot paused—its red eye blinking steadily and waited for a command. The opening dash sets off the interruption, but no closing dash appears.",
+     "The robot paused, its red eye blinking steadily, and waited for a command. The commas separate the interruption from the main action."
+    ],
+    "answerIndex": 0,
+    "explanation": "The matching dashes briefly isolate the blinking detail while keeping the robot's pause and wait as the main action.",
+    "difficulty": 8,
+    "skill": "Using matching dashes to set off an interruption",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q12",
+    "prompt": "Revise the sentence so the alternatives are announced clearly as a complete set: \"We have three choices go left go right or turn back.\"",
+    "choices": [
+     "We have three choices, go left, go right, or turn back.",
+     "We have three choices; go left, go right, or turn back.",
+     "We have three choices—go left, go right, or turn back.",
+     "We have three choices: go left, go right, or turn back."
+    ],
+    "answerIndex": 3,
+    "explanation": "A colon after a complete clause introduces a full enumeration of alternatives.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which option applies a colon to clarify what the medal represented and explains that function correctly? 'For Nia, the medal represented perseverance her coach had taught her never to quit.'",
+    "choices": [
+     "For Nia, the medal represented perseverance; her coach had taught her never to quit. The semicolon gives the two complete thoughts equal emphasis.",
+     "For Nia, the medal represented perseverance: her coach had taught her never to quit. The colon introduces the source of Nia's perseverance and clarifies the medal's meaning.",
+     "For Nia, the medal represented perseverance—her coach had taught her never to quit. The dash creates a dramatic interruption within the explanation.",
+     "For Nia, the medal represented perseverance, her coach had taught her never to quit. The comma incorrectly joins two independent clauses."
+    ],
+    "answerIndex": 1,
+    "explanation": "The colon introduces the coaching lesson that explains what Nia's medal represented.",
+    "difficulty": 7,
+    "skill": "Using a colon for clarification",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q28",
+    "prompt": "Revise the sentence so the descriptive detail receives a sudden pause for dramatic effect: 'The sun set behind the hills the sky blazed orange.'",
+    "choices": [
+     "The sun set behind the hills, the sky blazed orange.",
+     "The sun set behind the hills; the sky blazed orange.",
+     "The sun set behind the hills: the sky blazed orange.",
+     "The sun set behind the hills—the sky blazed orange."
+    ],
+    "answerIndex": 3,
+    "explanation": "An em dash before the descriptive phrase creates a dramatic pause that highlights the vivid image.",
+    "difficulty": 8,
+    "skill": "Punctuation for Effect",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q16",
+    "prompt": "Enclose the absolute phrase in dashes on both sides to highlight it: \"The runner crossed the finish line his heart pounding with triumph.\"",
+    "choices": [
+     "The runner crossed the finish line, his heart pounding with triumph.",
+     "The runner crossed the finish line: his heart pounding with triumph.",
+     "The runner crossed the finish line; his heart pounding with triumph.",
+     "The runner crossed the finish line—his heart pounding with triumph—."
+    ],
+    "answerIndex": 3,
+    "explanation": "Matching dashes set off the absolute phrase on both sides to give it emphatic focus.",
+    "difficulty": 8,
+    "skill": "Emphasizing an absolute phrase with paired dashes",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q41",
+    "prompt": "Which revision uses matching dashes to spotlight a brief thought that interrupts the action?",
+    "choices": [
+     "The driver checked the mirror—a delivery van had slipped behind us—and then accelerated.",
+     "The driver checked the mirror: a delivery van had slipped behind us, and then accelerated.",
+     "The driver checked the mirror—a delivery van had slipped behind us, and then accelerated.",
+     "The driver checked the mirror, a delivery van had slipped behind us, and then accelerated."
+    ],
+    "answerIndex": 0,
+    "explanation": "The matching dashes set off the interrupting thought and return the sentence smoothly to the driver's main action.",
+    "difficulty": 9,
+    "skill": "Using matching dashes to set off an interruption",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q4",
+    "prompt": "The final bell rang, students ran toward the exits. Both complete thoughts should remain separate but equally strong, with the contrast creating tension. Which version balances the clauses and sharpens the contrast?",
+    "choices": [
+     "The final bell rang, students ran toward the exits.",
+     "The final bell rang: students ran toward the exits.",
+     "The final bell rang—students ran toward the exits.",
+     "The final bell rang; students ran toward the exits."
+    ],
+    "answerIndex": 3,
+    "explanation": "The semicolon keeps the two independent clauses balanced and emphasizes the contrast between the bell and the students' sudden movement.",
+    "difficulty": 8,
+    "skill": "Emphasizing contrast with a semicolon",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   },
+   {
+    "id": "q35",
+    "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: \"The library closed early the students could not finish their research.\"",
+    "choices": [
+     "The library closed early—the students could not finish their research.",
+     "The library closed early: the students could not finish their research.",
+     "The library closed early; the students could not finish their research.",
+     "The library closed early, the students could not finish their research."
+    ],
+    "answerIndex": 2,
+    "explanation": "A semicolon joins two independent clauses of equal weight without implying that the second explains the first.",
+    "difficulty": 8,
+    "skill": "Revise a Weak Sentence - Punctuation for Effect",
+    "topic": "Punctuation for Effect"
+   },
+   {
+    "id": "q39",
+    "prompt": "Revise the weak sentence so a colon formally introduces the quoted warning: 'The sign said Stay out of the closed wing.'",
+    "choices": [
+     "The sign said, 'Stay out of the closed wing.'",
+     "The sign said; 'Stay out of the closed wing.'",
+     "The sign said: 'Stay out of the closed wing.'",
+     "The sign said—'Stay out of the closed wing.'"
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon formally introduces the quoted warning, while quotation marks identify the sign's exact words.",
+    "difficulty": 8,
+    "skill": "Using a colon to introduce a quoted statement",
+    "topic": "Revise a Weak Sentence - Punctuation for Effect"
+   }
+  ],
+  "feedback": {
+   "correct": "Solid revision — that sentence now has real punch.",
+   "incorrect": "The bot takes the square. Check which punctuation mark the sentence actually needs.",
+   "win": "Three in a row! You steer rhythm and emphasis like a pro.",
+   "lose": "Tough board — the bot got three first. Review dashes, colons, and semicolons before the rematch.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "The old theater was packed. Every seat held someone eager to see the play. The second sentence must clarify the first, and the punctuation should make that explanation feel deliberate and emphatic. Select the best version.",
+   "choices": [
+    "The old theater was packed: every seat held someone eager to see the play.",
+    "The old theater was packed; every seat held someone eager to see the play.",
+    "The old theater was packed—every seat held someone eager to see the play.",
+    "The old theater was packed, every seat held someone eager to see the play."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces an explanatory statement and makes the second sentence clarify why the theater was packed.",
+   "difficulty": 8,
+   "skill": "Introducing an explanation with a colon",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "We reached the ridge, the wind hit us like a wall. The second clause should interrupt the first as an unexpected jolt rather than explain it or continue it in a smooth sequence. Which wording creates the interruption?",
+   "choices": [
+    "We reached the ridge—the wind hit us like a wall.",
+    "We reached the ridge; the wind hit us like a wall.",
+    "We reached the ridge: the wind hit us like a wall.",
+    "We reached the ridge, the wind hit us like a wall."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash creates a sudden interruption after the first action, allowing the consequence to strike with greater force.",
+   "difficulty": 7,
+   "skill": "Creating interruption with a dash",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Before entering the cave, Maya packed three essentials: a lantern, a rope, and two flares. The revision should announce the supplies as a complete set that the reader can take in at once. Which version creates that effect?",
+   "choices": [
+    "Before entering the cave, Maya packed three essentials: a lantern, a rope, and two flares.",
+    "Before entering the cave, Maya packed three essentials; a lantern, a rope, and two flares.",
+    "Before entering the cave, Maya packed three essentials—a lantern, a rope, and two flares.",
+    "Before entering the cave, Maya packed three essentials, a lantern, a rope, and two flares."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon announces the three items as a set, while the plural noun essentials makes the list feel complete.",
+   "difficulty": 8,
+   "skill": "Announcing a list with a colon",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The final bell rang, students ran toward the exits. Both complete thoughts should remain separate but equally strong, with the contrast creating tension. Which version balances the clauses and sharpens the contrast?",
+   "choices": [
+    "The final bell rang; students ran toward the exits.",
+    "The final bell rang: students ran toward the exits.",
+    "The final bell rang—students ran toward the exits.",
+    "The final bell rang, students ran toward the exits."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon keeps the two independent clauses balanced and emphasizes the contrast between the bell and the students' sudden movement.",
+   "difficulty": 8,
+   "skill": "Emphasizing contrast with a semicolon",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"She opened the letter her hands trembling with anticipation.\"",
+   "choices": [
+    "She opened the letter—her hands trembling with anticipation—.",
+    "She opened the letter, her hands trembling with anticipation.",
+    "She opened the letter; her hands trembling with anticipation.",
+    "She opened the letter: her hands trembling with anticipation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The pair of dashes isolates the absolute phrase on both sides, giving it a spotlight effect.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the descriptive phrase is set off for a dramatic pause: \"The mountain loomed above us its peak hidden in clouds.\"",
+   "choices": [
+    "The mountain loomed above us—its peak hidden in clouds.",
+    "The mountain loomed above us, its peak hidden in clouds.",
+    "The mountain loomed above us; its peak hidden in clouds.",
+    "The mountain loomed above us: its peak hidden in clouds."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash creates a dramatic pause that isolates the descriptive phrase for effect.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the two independent clauses remain equally important and the contrast is clear: \"The hikers reached the summit the view stretched for miles.\"",
+   "choices": [
+    "The hikers reached the summit; the view stretched for miles.",
+    "The hikers reached the summit: the view stretched for miles.",
+    "The hikers reached the summit—the view stretched for miles.",
+    "The hikers reached the summit, the view stretched for miles."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon joins two independent clauses of equal weight while preserving their contrast.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: \"She whispered a secret the room fell silent.\"",
+   "choices": [
+    "She whispered a secret—the room fell silent.",
+    "She whispered a secret; the room fell silent.",
+    "She whispered a secret: the room fell silent.",
+    "She whispered a secret, the room fell silent."
+   ],
+   "answerIndex": 0,
+   "explanation": "An em dash creates a sudden, emphatic break that signals an unexpected interruption.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the list of rules is announced as a complete set: \"The teacher listed three rules be on time bring your materials and listen.\"",
+   "choices": [
+    "The teacher listed three rules: be on time, bring your materials, and listen.",
+    "The teacher listed three rules; be on time, bring your materials, and listen.",
+    "The teacher listed three rules—be on time, bring your materials, and listen.",
+    "The teacher listed three rules, be on time, bring your materials, and listen."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon introduces a list that follows a complete independent clause, signaling that the items constitute the full set.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"He opened the drawer his hands shaking with anticipation.\"",
+   "choices": [
+    "He opened the drawer—his hands shaking with anticipation—.",
+    "He opened the drawer—his hands shaking with anticipation.",
+    "He opened the drawer; his hands shaking with anticipation;",
+    "He opened the drawer, his hands shaking with anticipation,"
+   ],
+   "answerIndex": 0,
+   "explanation": "Paired em dashes isolate the absolute phrase, giving it a spotlighted, dramatic pause on both sides.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the two independent clauses stay equally strong and the contrast remains sharp: \"The storm intensified the lights flickered and went out.\"",
+   "choices": [
+    "The storm intensified; the lights flickered and went out.",
+    "The storm intensified: the lights flickered and went out.",
+    "The storm intensified—the lights flickered and went out.",
+    "The storm intensified, the lights flickered and went out."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon links two independent clauses of equal importance while preserving their contrasting tension.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the alternatives are announced clearly as a complete set: \"We have three choices go left go right or turn back.\"",
+   "choices": [
+    "We have three choices: go left, go right, or turn back.",
+    "We have three choices; go left, go right, or turn back.",
+    "We have three choices—go left, go right, or turn back.",
+    "We have three choices, go left, go right, or turn back."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon after a complete clause introduces a full enumeration of alternatives.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Connect the two independent clauses using a semicolon so they stay equally prominent: \"The orchestra played a soft melody the audience leaned forward in anticipation.\"",
+   "choices": [
+    "The orchestra played a soft melody; the audience leaned forward in anticipation.",
+    "The orchestra played a soft melody: the audience leaned forward in anticipation.",
+    "The orchestra played a soft melody, the audience leaned forward in anticipation.",
+    "The orchestra played a soft melody—the audience leaned forward in anticipation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses of equal importance while preserving their contrast.",
+   "difficulty": 8,
+   "skill": "Linking independent clauses with semicolons for equal weight",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Mark the complete list of three items with a colon after the introductory clause: \"The backpack contained three essentials a map a compass and a flashlight.\"",
+   "choices": [
+    "The backpack contained three essentials: a map, a compass, and a flashlight.",
+    "The backpack contained three essentials; a map, a compass, and a flashlight.",
+    "The backpack contained three essentials, a map, a compass, and a flashlight.",
+    "The backpack contained three essentials— a map, a compass, and a flashlight."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces a complete list of items after an independent clause.",
+   "difficulty": 8,
+   "skill": "Introducing a complete list with a colon",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Add a dash to make the second clause interrupt the first sharply: \"She reached for the handle the door slammed shut.\"",
+   "choices": [
+    "She reached for the handle—the door slammed shut.",
+    "She reached for the handle; the door slammed shut.",
+    "She reached for the handle: the door slammed shut.",
+    "She reached for the handle, the door slammed shut."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash creates a sudden, dramatic break that shows the second clause interrupting the first.",
+   "difficulty": 8,
+   "skill": "Using a dash for abrupt clause interruption",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Enclose the absolute phrase in dashes on both sides to highlight it: \"The runner crossed the finish line his heart pounding with triumph.\"",
+   "choices": [
+    "The runner crossed the finish line—his heart pounding with triumph—.",
+    "The runner crossed the finish line: his heart pounding with triumph.",
+    "The runner crossed the finish line; his heart pounding with triumph.",
+    "The runner crossed the finish line, his heart pounding with triumph."
+   ],
+   "answerIndex": 0,
+   "explanation": "Matching dashes set off the absolute phrase on both sides to give it emphatic focus.",
+   "difficulty": 8,
+   "skill": "Emphasizing an absolute phrase with paired dashes",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Place a colon before the clause that states the outcome of the action: \"He turned the key the engine roared to life.\"",
+   "choices": [
+    "He turned the key: the engine roared to life.",
+    "He turned the key; the engine roared to life.",
+    "He turned the key—the engine roared to life.",
+    "He turned the key, the engine roared to life."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon signals that the second clause explains the result of the action in the first.",
+   "difficulty": 8,
+   "skill": "Using a colon to introduce a result clause",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Insert a dash before the descriptive detail to give it a sudden pause: \"The ancient library stood silent its shelves crammed with forgotten tomes.\"",
+   "choices": [
+    "The ancient library stood silent—its shelves crammed with forgotten tomes.",
+    "The ancient library stood silent: its shelves crammed with forgotten tomes.",
+    "The ancient library stood silent; its shelves crammed with forgotten tomes.",
+    "The ancient library stood silent, its shelves crammed with forgotten tomes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash isolates the descriptive phrase to create a dramatic pause before the detail.",
+   "difficulty": 8,
+   "skill": "Setting off a descriptive phrase with a dash for dramatic pause",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: \"The jury deliberated for hours the verdict was unanimous.\"",
+   "choices": [
+    "The jury deliberated for hours; the verdict was unanimous.",
+    "The jury deliberated for hours: the verdict was unanimous.",
+    "The jury deliberated for hours—the verdict was unanimous.",
+    "The jury deliberated for hours, the verdict was unanimous."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses of equal weight while preserving their contrast.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the list of items is announced as a complete set: \"She packed three items a water bottle a snack and a map.\"",
+   "choices": [
+    "She packed three items: a water bottle, a snack, and a map.",
+    "She packed three items; a water bottle, a snack, and a map.",
+    "She packed three items— a water bottle, a snack, and a map.",
+    "She packed three items, a water bottle, a snack, and a map."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon after the introductory phrase signals that a full list follows.",
+   "difficulty": 7,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: \"He entered the room the lights flickered on.\"",
+   "choices": [
+    "He entered the room—the lights flickered on.",
+    "He entered the room: the lights flickered on.",
+    "He entered the room; the lights flickered on.",
+    "He entered the room, the lights flickered on."
+   ],
+   "answerIndex": 0,
+   "explanation": "A dash creates a sudden, emphatic break that marks the unexpected shift.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"The dancer leapt across the stage her arms outstretched like wings.\"",
+   "choices": [
+    "The dancer leapt across the stage—her arms outstretched like wings—.",
+    "The dancer leapt across the stage—her arms outstretched like wings.",
+    "The dancer leapt across the stage: her arms outstretched like wings.",
+    "The dancer leapt across the stage; her arms outstretched like wings."
+   ],
+   "answerIndex": 0,
+   "explanation": "Dashes on both sides of the absolute phrase highlight it as a vivid, parenthetical image.",
+   "difficulty": 9,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the descriptive detail receives a sudden pause for dramatic effect: \"The old bridge groaned under the weight its cables snapped one by one.\"",
+   "choices": [
+    "The old bridge groaned under the weight—its cables snapped one by one.",
+    "The old bridge groaned under the weight: its cables snapped one by one.",
+    "The old bridge groaned under the weight; its cables snapped one by one.",
+    "The old bridge groaned under the weight, its cables snapped one by one."
+   ],
+   "answerIndex": 0,
+   "explanation": "A dash before the descriptive clause creates a sharp, dramatic pause that emphasizes the snapping cables.",
+   "difficulty": 9,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the list of tools is announced as a complete set: 'The kit includes three tools a hammer a screwdriver and a wrench.'",
+   "choices": [
+    "The kit includes three tools: a hammer, a screwdriver, and a wrench.",
+    "The kit includes three tools; a hammer, a screwdriver, and a wrench.",
+    "The kit includes three tools— a hammer, a screwdriver, and a wrench.",
+    "The kit includes three tools, a hammer, a screwdriver, and a wrench."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon after an introductory clause signals that a complete list follows.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: 'She turned the corner the dog barked loudly.'",
+   "choices": [
+    "She turned the corner—the dog barked loudly.",
+    "She turned the corner; the dog barked loudly.",
+    "She turned the corner: the dog barked loudly.",
+    "She turned the corner, the dog barked loudly."
+   ],
+   "answerIndex": 0,
+   "explanation": "An em dash creates a sudden break that makes the second clause feel like an unexpected interruption.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: 'The child reached for the cookie jar his fingers sticky with jam.'",
+   "choices": [
+    "The child reached for the cookie jar—his fingers sticky with jam—.",
+    "The child reached for the cookie jar; his fingers sticky with jam;.",
+    "The child reached for the cookie jar: his fingers sticky with jam:.",
+    "The child reached for the cookie jar, his fingers sticky with jam,."
+   ],
+   "answerIndex": 0,
+   "explanation": "Paired dashes enclose the absolute phrase, giving it a spotlight on both sides.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the second clause explains the result of the first with a clear pause: 'He studied all night the test felt easy.'",
+   "choices": [
+    "He studied all night: the test felt easy.",
+    "He studied all night; the test felt easy.",
+    "He studied all night—the test felt easy.",
+    "He studied all night, the test felt easy."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon introduces a clause that states the outcome or explanation of the preceding action.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the descriptive detail receives a sudden pause for dramatic effect: 'The sun set behind the hills the sky blazed orange.'",
+   "choices": [
+    "The sun set behind the hills—the sky blazed orange.",
+    "The sun set behind the hills; the sky blazed orange.",
+    "The sun set behind the hills: the sky blazed orange.",
+    "The sun set behind the hills, the sky blazed orange."
+   ],
+   "answerIndex": 0,
+   "explanation": "An em dash before the descriptive phrase creates a dramatic pause that highlights the vivid image.",
+   "difficulty": 8,
+   "skill": "Punctuation for Effect",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The ferry left without us the captain had received an urgent radio call. Which revision uses matching dashes to set off the reason for the sudden departure?",
+   "choices": [
+    "The ferry left without us—the captain had received an urgent radio call.",
+    "The ferry left without us: the captain had received an urgent radio call.",
+    "The ferry left without us, the captain had received an urgent radio call.",
+    "The ferry left without us; the captain had received an urgent radio call."
+   ],
+   "answerIndex": 0,
+   "explanation": "The matching dashes isolate the captain's explanation as a parenthetical interruption and create a dramatic pause before it.",
+   "difficulty": 7,
+   "skill": "Revising with paired dashes",
+   "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Choose the revision that keeps two independent clauses in one sentence, gives them equal weight, and avoids implying that the second explains the first.",
+   "choices": [
+    "The archive closed at noon; the final boxes were already sealed.",
+    "The archive closed at noon: the final boxes were already sealed.",
+    "The archive closed at noon, the final boxes were already sealed.",
+    "The archive closed at noon—the final boxes were already sealed."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon joins the two independent clauses in one sentence without implying that the second explains the first.",
+   "difficulty": 8,
+   "skill": "Revising with semicolons",
+   "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In which revision are two independent clauses joined in the standard way, with the conjunctive adverb placed after the required punctuation?",
+   "choices": [
+    "Rain drummed on the roof; however, the hikers continued upward.",
+    "Rain drummed on the roof, however, the hikers continued upward.",
+    "Rain drummed on the roof: however, the hikers continued upward.",
+    "Rain drummed on the roof however, the hikers continued upward."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon before the conjunctive adverb however correctly joins the two independent clauses.",
+   "difficulty": 8,
+   "skill": "Punctuating before conjunctive adverbs",
+   "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Only one uncertainty remained would the rescue team arrive before nightfall. Which revision uses a colon to introduce the direct question that remains?",
+   "choices": [
+    "One uncertainty remained: would the rescue team arrive before nightfall?",
+    "One uncertainty remained; would the rescue team arrive before nightfall?",
+    "One uncertainty remained, would the rescue team arrive before nightfall?",
+    "One uncertainty remained—would the rescue team arrive before nightfall?"
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon announces the direct question and creates a strong pause before the unknown is stated.",
+   "difficulty": 8,
+   "skill": "Using colons before questions",
+   "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The runners crossed the finish line and dropped onto the grass exhausted and exhilarated. Which revision uses a closing dash to spotlight the runners' final physical and emotional state?",
+   "choices": [
+    "The runners crossed the finish line and dropped onto the grass—exhausted and exhilarated.",
+    "The runners crossed the finish line and dropped onto the grass: exhausted and exhilarated.",
+    "The runners crossed the finish line and dropped onto the grass; exhausted and exhilarated.",
+    "The runners crossed the finish line and dropped onto the grass, exhausted and exhilarated."
+   ],
+   "answerIndex": 0,
+   "explanation": "The closing dash highlights the runners' final state by placing it after a sharp, deliberate pause.",
+   "difficulty": 8,
+   "skill": "Revising with a closing dash",
+   "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In this revision, the colon after explanation introduces the reason for the delay. Which statement accurately teaches that punctuation choice?",
+   "choices": [
+    "The colon introduces the specific reason for the delay and signals a strong pause before the reason is stated.",
+    "The colon joins two equally important independent clauses without creating a comma splice.",
+    "The colon marks an inserted aside that briefly interrupts the main statement.",
+    "The colon announces a complete list of items connected by and."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the reason for the delay, signaling a stronger pause and directing attention to the explanation.",
+   "difficulty": 9,
+   "skill": "Explaining punctuation for effect",
+   "topic": "Activity 6: Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: \"The library closed early the students could not finish their research.\"",
+   "choices": [
+    "The library closed early; the students could not finish their research.",
+    "The library closed early: the students could not finish their research.",
+    "The library closed early—the students could not finish their research.",
+    "The library closed early, the students could not finish their research."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon joins two independent clauses of equal weight without implying that the second explains the first.",
+   "difficulty": 8,
+   "skill": "Revise a Weak Sentence - Punctuation for Effect",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the second clause interrupts the first as an abrupt, dramatic shift: \"She reached for the handle the door swung open unexpectedly.\"",
+   "choices": [
+    "She reached for the handle—the door swung open unexpectedly.",
+    "She reached for the handle; the door swung open unexpectedly.",
+    "She reached for the handle: the door swung open unexpectedly.",
+    "She reached for the handle, the door swung open unexpectedly."
+   ],
+   "answerIndex": 0,
+   "explanation": "A dash creates a sudden break that makes the second clause feel like an unexpected interruption.",
+   "difficulty": 8,
+   "skill": "Revise a Weak Sentence - Punctuation for Effect",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the absolute phrase is set off with matching punctuation on both sides for emphasis: \"The actor delivered his line his voice trembling with emotion.\"",
+   "choices": [
+    "The actor delivered his line—his voice trembling with emotion—.",
+    "The actor delivered his line—his voice trembling with emotion.",
+    "The actor delivered his line (his voice trembling with emotion).",
+    "The actor delivered his line, his voice trembling with emotion,"
+   ],
+   "answerIndex": 0,
+   "explanation": "Enclosing the absolute phrase in dashes on both sides highlights it as a dramatic aside.",
+   "difficulty": 9,
+   "skill": "Revise a Weak Sentence - Punctuation for Effect",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: \"The fire spread quickly the firefighters arrived within minutes.\"",
+   "choices": [
+    "The fire spread quickly; the firefighters arrived within minutes.",
+    "The fire spread quickly: the firefighters arrived within minutes.",
+    "The fire spread quickly—the firefighters arrived within minutes.",
+    "The fire spread quickly, the firefighters arrived within minutes."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon links two independent clauses of equal importance while preserving their contrast.",
+   "difficulty": 8,
+   "skill": "Revise a Weak Sentence - Punctuation for Effect",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the weak sentence so a colon formally introduces the quoted warning: 'The sign said Stay out of the closed wing.'",
+   "choices": [
+    "The sign said, 'Stay out of the closed wing.'",
+    "The sign said: 'Stay out of the closed wing.'",
+    "The sign said; 'Stay out of the closed wing.'",
+    "The sign said—'Stay out of the closed wing.'"
+   ],
+   "answerIndex": 1,
+   "explanation": "The colon formally introduces the quoted warning, while quotation marks identify the sign's exact words.",
+   "difficulty": 8,
+   "skill": "Using a colon to introduce a quoted statement",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Choose the revision in which a semicolon separates two independent clauses and the conjunctive adverb follows it correctly.",
+   "choices": [
+    "The rehearsal ended early, however, the dancers continued rehearsing.",
+    "The rehearsal ended early; however the dancers continued rehearsing.",
+    "The rehearsal ended early; however, the dancers continued rehearsing.",
+    "The rehearsal ended early: however, the dancers continued rehearsing."
+   ],
+   "answerIndex": 2,
+   "explanation": "The semicolon separates the independent clauses, and the conjunctive adverb however begins the second clause with the required comma.",
+   "difficulty": 8,
+   "skill": "Placing a conjunctive adverb after a semicolon",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which revision uses matching dashes to spotlight a brief thought that interrupts the action?",
+   "choices": [
+    "The driver checked the mirror, a delivery van had slipped behind us, and then accelerated.",
+    "The driver checked the mirror: a delivery van had slipped behind us, and then accelerated.",
+    "The driver checked the mirror—a delivery van had slipped behind us, and then accelerated.",
+    "The driver checked the mirror—a delivery van had slipped behind us—and then accelerated."
+   ],
+   "answerIndex": 3,
+   "explanation": "The matching dashes set off the interrupting thought and return the sentence smoothly to the driver's main action.",
+   "difficulty": 9,
+   "skill": "Using matching dashes to set off an interruption",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the weak sentence so a pair of dashes creates an abrupt interruption before the final action: 'The climber tightened her grip the ice shifted beneath her boot the rope trembled.'",
+   "choices": [
+    "The climber tightened her grip; the ice shifted beneath her boot, and the rope trembled.",
+    "The climber tightened her grip—the ice shifted beneath her boot—and the rope trembled.",
+    "The climber tightened her grip: the ice shifted beneath her boot, and the rope trembled.",
+    "The climber tightened her grip, the ice shifted beneath her boot, and the rope trembled."
+   ],
+   "answerIndex": 1,
+   "explanation": "The paired dashes insert the sudden danger between two actions and create a deliberate pause before the rope trembles.",
+   "difficulty": 8,
+   "skill": "Using paired dashes for dramatic interruption",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the weak sentence so a colon introduces the reason for the decision: 'The mayor canceled the festival because flooding had made the grounds unsafe.'",
+   "choices": [
+    "The mayor canceled the festival: flooding had made the grounds unsafe.",
+    "The mayor canceled the festival, flooding had made the grounds unsafe.",
+    "The mayor canceled the festival; flooding had made the grounds unsafe.",
+    "The mayor canceled the festival—flooding had made the grounds unsafe."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon presents the flooding as the reason for canceling the festival and clearly separates the decision from its explanation.",
+   "difficulty": 8,
+   "skill": "Using a colon to introduce an explanation",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the weak sentence so one dash briefly suspends the thought and spotlights the final image: The skater turned at the center the crowd erupted in applause.",
+   "choices": [
+    "The skater turned at the center; the crowd erupted in applause.",
+    "The skater turned at the center, the crowd erupted in applause.",
+    "The skater turned at the center—the crowd erupted in applause.",
+    "The skater turned at the center: the crowd erupted in applause."
+   ],
+   "answerIndex": 2,
+   "explanation": "The dash creates a brief interruption that spotlights the crowd’s reaction without presenting it as an explanation.",
+   "difficulty": 8,
+   "skill": "Using a dash to spotlight an interrupted clause",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the weak sentence as one sentence so both independent clauses remain equally prominent and however marks the contrast: The gates opened early the visitors waited in the rain.",
+   "choices": [
+    "The gates opened early; however, the visitors waited in the rain.",
+    "The gates opened early, however, the visitors waited in the rain.",
+    "The gates opened early: however, the visitors waited in the rain.",
+    "The gates opened early; however the visitors waited in the rain."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses with equal emphasis, and the comma after however marks the contrast between them.",
+   "difficulty": 8,
+   "skill": "Using a semicolon before a conjunctive adverb",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Revise the weak sentence with a colon that makes the cause of the unexpected stop explicit: The train stopped unexpectedly a fallen tree blocked the tracks.",
+   "choices": [
+    "The train stopped unexpectedly; a fallen tree blocked the tracks.",
+    "The train stopped unexpectedly—a fallen tree blocked the tracks.",
+    "The train stopped unexpectedly, a fallen tree blocked the tracks.",
+    "The train stopped unexpectedly: a fallen tree blocked the tracks."
+   ],
+   "answerIndex": 3,
+   "explanation": "The colon presents the fallen tree as the reason the train stopped, making the causal relationship clear.",
+   "difficulty": 8,
+   "skill": "Using a colon to introduce a cause",
+   "topic": "Revise a Weak Sentence - Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Choose the revision, together with the explanation that correctly identifies the colon's effect: 'The storm left one unmistakable lesson the coast needed stronger defenses.'",
+   "choices": [
+    "The storm left one unmistakable lesson; the coast needed stronger defenses. The semicolon joins two independent clauses and gives them equal weight.",
+    "The storm left one unmistakable lesson—the coast needed stronger defenses. The dash creates an abrupt interruption before the revealing statement.",
+    "The storm left one unmistakable lesson: the coast needed stronger defenses. The colon announces the lesson and creates a pointed pause before the revealing statement.",
+    "The storm left one unmistakable lesson, the coast needed stronger defenses. The comma incorrectly joins two independent clauses."
+   ],
+   "answerIndex": 2,
+   "explanation": "The colon after 'lesson' announces the coast's need and creates a pointed pause before the revealing statement.",
+   "difficulty": 8,
+   "skill": "Using a colon to reveal information",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option joins the two complete thoughts with the requested semicolon and explains their equal weight accurately? 'The referee checked the clock the final seconds had already vanished.'",
+   "choices": [
+    "The referee checked the clock; the final seconds had already vanished. The semicolon joins two independent clauses and gives each one equal weight.",
+    "The referee checked the clock, the final seconds had already vanished. The comma improperly joins two independent clauses.",
+    "The referee checked the clock: the final seconds had already vanished. The colon introduces an explanation of what the referee found.",
+    "The referee checked the clock. The final seconds had already vanished. The period separates the thoughts instead of joining them."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses and gives the referee's action and the time pressure equal emphasis.",
+   "difficulty": 7,
+   "skill": "Using a semicolon to join independent clauses",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Select the revision that uses matching dashes to isolate the interruption, and choose the accurate explanation: 'The robot paused its red eye blinking steadily and waited for a command.'",
+   "choices": [
+    "The robot paused, its red eye blinking steadily, and waited for a command. The commas separate the interruption from the main action.",
+    "The robot paused: its red eye blinking steadily and waited for a command. The colon introduces the robot's blinking detail.",
+    "The robot paused—its red eye blinking steadily and waited for a command. The opening dash sets off the interruption, but no closing dash appears.",
+    "The robot paused—its red eye blinking steadily—and waited for a command. The matching dashes isolate the interruption while preserving the main action."
+   ],
+   "answerIndex": 3,
+   "explanation": "The matching dashes briefly isolate the blinking detail while keeping the robot's pause and wait as the main action.",
+   "difficulty": 8,
+   "skill": "Using matching dashes to set off an interruption",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option applies a colon to clarify what the medal represented and explains that function correctly? 'For Nia, the medal represented perseverance her coach had taught her never to quit.'",
+   "choices": [
+    "For Nia, the medal represented perseverance; her coach had taught her never to quit. The semicolon gives the two complete thoughts equal emphasis.",
+    "For Nia, the medal represented perseverance: her coach had taught her never to quit. The colon introduces the source of Nia's perseverance and clarifies the medal's meaning.",
+    "For Nia, the medal represented perseverance—her coach had taught her never to quit. The dash creates a dramatic interruption within the explanation.",
+    "For Nia, the medal represented perseverance, her coach had taught her never to quit. The comma incorrectly joins two independent clauses."
+   ],
+   "answerIndex": 1,
+   "explanation": "The colon introduces the coaching lesson that explains what Nia's medal represented.",
+   "difficulty": 7,
+   "skill": "Using a colon for clarification",
+   "topic": "Punctuation for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The robotics club meets every Thursday, we designed the final robot last spring. The two independent clauses should remain equally important, but the reader should also sense a firm break between them. Choose the strongest revision.",
+   "choices": [
+    "The robotics club meets every Thursday; we designed the final robot last spring.",
+    "The robotics club meets every Thursday: we designed the final robot last spring.",
+    "The robotics club meets every Thursday—we designed the final robot last spring.",
+    "The robotics club meets every Thursday, and we designed the final robot last spring."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses and gives each clause equal weight while creating a deliberate pause.",
+   "reason": "A: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The captain calm despite the storm gave the order. The captain's calmness should be set off with matching punctuation on both sides, giving it a spotlight within the sentence. Which sentence uses matching marks effectively?",
+   "choices": [
+    "The captain—calm despite the storm—gave the order.",
+    "The captain, calm despite the storm, gave the order.",
+    "The captain: calm despite the storm, gave the order.",
+    "The captain; calm despite the storm, gave the order."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired dashes isolate the captain's calmness as an emphasized aside and make it more noticeable than ordinary commas would.",
+   "reason": "A: picked 1 not 0 | B: picked 1 not 0 (Both (0) em dashes and (1) commas set off the phrase with matching punctuation on both sides; the question is ambiguous.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the two independent clauses remain equally important and the contrast is clear: \"The storm raged outside the windows the power flickered and died.\"",
+   "choices": [
+    "The storm raged outside the windows; the power flickered and died.",
+    "The storm raged outside the windows: the power flickered and died.",
+    "The storm raged outside the windows, the power flickered and died.",
+    "The storm raged outside the windows—the power flickered and died."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses of equal weight while preserving the contrast.",
+   "reason": "A: picked 3 not 0 | B: not exactly one correct (Options 0 and 3 both join the independent clauses with punctuation that can preserve their relationship and make the contrast clear; the sem)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the list of dishes is announced as a complete set: \"The chef prepared three dishes a soup a salad and a stew.\"",
+   "choices": [
+    "The chef prepared three dishes: a soup, a salad, and a stew.",
+    "The chef prepared three dishes; a soup, a salad, and a stew.",
+    "The chef prepared three dishes—a soup, a salad, and a stew.",
+    "The chef prepared three dishes, a soup, a salad, and a stew."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon signals that what follows is a complete enumeration of the three dishes.",
+   "reason": "B: not exactly one correct (Options 0 and 2 both correctly introduce the complete three-item list; the prompt does not uniquely require a colon rather than an em dash.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the second clause explains the result of the first with a clear pause: \"He waited for the bus the rain soaked his shoes.\"",
+   "choices": [
+    "He waited for the bus: the rain soaked his shoes.",
+    "He waited for the bus; the rain soaked his shoes.",
+    "He waited for the bus—the rain soaked his shoes.",
+    "He waited for the bus, the rain soaked his shoes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the second clause as an explanation of the result of the first.",
+   "reason": "A: picked 1 not 0 | B: not exactly one correct (Options 0 and 2 both provide a clear pause, and the em-dash version can also present the second clause as a consequence; the wording does no)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the two alternatives are announced clearly: \"We have two options stay or leave.\"",
+   "choices": [
+    "We have two options: stay or leave.",
+    "We have two options; stay or leave.",
+    "We have two options—stay or leave.",
+    "We have two options, stay or leave."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon cleanly announces the two alternatives that follow.",
+   "reason": "B: not exactly one correct (Options 0 and 2 both clearly announce the alternatives; the prompt does not uniquely require a colon rather than an em dash.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the second clause explains the result of the first with a clear pause: \"The scientist announced the result the experiment confirmed the hypothesis.\"",
+   "choices": [
+    "The scientist announced the result: the experiment confirmed the hypothesis.",
+    "The scientist announced the result; the experiment confirmed the hypothesis.",
+    "The scientist announced the result—the experiment confirmed the hypothesis.",
+    "The scientist announced the result, the experiment confirmed the hypothesis."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon signals that the following clause states the outcome or explanation of the preceding statement.",
+   "reason": "A: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the two independent clauses stay equally prominent and the contrast is clear: 'The fire crackled in the hearth the night grew colder.'",
+   "choices": [
+    "The fire crackled in the hearth; the night grew colder.",
+    "The fire crackled in the hearth: the night grew colder.",
+    "The fire crackled in the hearth—the night grew colder.",
+    "The fire crackled in the hearth, the night grew colder."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon joins two independent clauses of equal weight while preserving their contrast.",
+   "reason": "A: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the list of ingredients is announced as a complete set: \"The recipe calls for three ingredients flour sugar and butter.\"",
+   "choices": [
+    "The recipe calls for three ingredients: flour, sugar, and butter.",
+    "The recipe calls for three ingredients—flour, sugar, and butter.",
+    "The recipe calls for three ingredients; flour, sugar, and butter.",
+    "The recipe calls for three ingredients, flour, sugar, and butter."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon after an introductory clause signals that a complete list follows.",
+   "reason": "B: not exactly one correct (Both (0) and (1) are grammatical and can introduce the complete list, so the colon is not uniquely required.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Revise the sentence so the alternatives are announced clearly as a complete set: \"You have three choices accept the offer negotiate or walk away.\"",
+   "choices": [
+    "You have three choices: accept the offer, negotiate, or walk away.",
+    "You have three choices—accept the offer, negotiate, or walk away.",
+    "You have three choices; accept the offer, negotiate, or walk away.",
+    "You have three choices, accept the offer, negotiate, or walk away."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon after a complete introductory clause introduces a full enumeration of options.",
+   "reason": "B: not exactly one correct (Both (0) and (1) are grammatical and clearly introduce the complete set of alternatives, so the colon is not uniquely required.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Revise the weak sentence so the two independent clauses remain equally prominent without implying that one causes or explains the other: 'The band stopped playing the audience burst into applause.'",
+   "choices": [
+    "The band stopped playing; the audience burst into applause.",
+    "The band stopped playing, the audience burst into applause.",
+    "The band stopped playing: the audience burst into applause.",
+    "The band stopped playing—the audience burst into applause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses with equal weight and preserves the contrast without suggesting a cause-and-effect relationship.",
+   "reason": "source: \"In English, a semicolon separates independent clauses without indicating a causal or explanatory connection.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Choose the revision in which a dash creates a final afterthought, and select the matching explanation: 'By sunrise, the lake had turned glassy the last paddlers had already left.'",
+   "choices": [
+    "By sunrise, the lake had turned glassy—the last paddlers had already left. The dash sets off a final afterthought and briefly suspends the main statement.",
+    "By sunrise, the lake had turned glassy; the last paddlers had already left. The semicolon gives both complete thoughts equal emphasis.",
+    "By sunrise, the lake had turned glassy: the last paddlers had already left. The colon introduces an explanation of the calm water.",
+    "By sunrise, the lake had turned glassy, the last paddlers had already left. The comma incorrectly joins two independent clauses."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash sets off the paddlers' departure as a final afterthought after the main statement about the lake.",
+   "reason": "surplus"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Which option uses a colon to present the script as the final result and accurately explains the emphasis? 'After months of arguments, revisions, and late-night rehearsals, the cast finally had a script they trusted one that gave every character a clear reason to change.'",
+   "choices": [
+    "After months of arguments, revisions, and late-night rehearsals, the cast finally had a script they trusted; one that gave every character a clear reason to change. The semicolon separates the final result from its explanation.",
+    "After months of arguments, revisions, and late-night rehearsals, the cast finally had a script they trusted—one that gave every character a clear reason to change. The dash inserts an explanatory phrase into the sentence.",
+    "After months of arguments, revisions, and late-night rehearsals, the cast finally had a script they trusted: one that gave every character a clear reason to change. The colon presents the script's qualities as the final result of the cast's work.",
+    "After months of arguments, revisions, and late-night rehearsals, the cast finally had a script they trusted, one that gave every character a clear reason to change. The commas mark 'one that gave every character a clear reason to change' as an appositive."
+   ],
+   "answerIndex": 2,
+   "explanation": "The colon presents the script's qualities as the emphatic final result of the cast's months of work.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

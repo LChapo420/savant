@@ -1,0 +1,226 @@
+{
+ "subject": "basketball",
+ "version": 1,
+ "status": "STAGED",
+ "generated_by": "basketball/build-drills.js",
+ "doc": "Combine gates with computed statistics (Beta(1+makes, 1+misses) posterior; a gate passes when P(true rate >= threshold) >= the gate confidence (0.9 for gates of 20 attempts, 0.8 for longer ones) at n_min attempts or more, checked after every cold set), the 95% margin of a make rate at 50/100/200 attempts (why one short test day is never enough), a miss-pattern fix map, decision-clip set specs and equipment/access swaps. Counts are learner-confirmed; camera counts are estimates the learner can correct.",
+ "combine_gates": [
+  {
+   "id": "bb-layup-low-ring-R",
+   "stage": "BB1",
+   "test": "lay-ups at a low ring, right hand, over 2 sessions",
+   "threshold": 0.5,
+   "n_min": 20,
+   "confidence": 0.9,
+   "makes_needed_at_n_min": 13,
+   "p_pass_if_true_rate_10_below": 0.021,
+   "p_pass_if_true_rate_at_threshold": 0.132,
+   "p_fail_if_true_rate_10_above": 0.584
+  },
+  {
+   "id": "bb-layup-low-ring-L",
+   "stage": "BB1",
+   "test": "lay-ups at a low ring, left hand, over 2 sessions",
+   "threshold": 0.5,
+   "n_min": 20,
+   "confidence": 0.9,
+   "makes_needed_at_n_min": 13,
+   "p_pass_if_true_rate_10_below": 0.021,
+   "p_pass_if_true_rate_at_threshold": 0.132,
+   "p_fail_if_true_rate_10_above": 0.584
+  },
+  {
+   "id": "bb-form-1m",
+   "stage": "BB2",
+   "test": "one-hand form shots from 1 m, age ring, 2 sessions",
+   "threshold": 0.6,
+   "n_min": 40,
+   "confidence": 0.8,
+   "makes_needed_at_n_min": 27,
+   "p_pass_if_true_rate_10_below": 0.019,
+   "p_pass_if_true_rate_at_threshold": 0.211,
+   "p_fail_if_true_rate_10_above": 0.297
+  },
+  {
+   "id": "bb-layup-dribble-R",
+   "stage": "BB2",
+   "test": "lay-ups off a dribble, right hand",
+   "threshold": 0.6,
+   "n_min": 20,
+   "confidence": 0.9,
+   "makes_needed_at_n_min": 15,
+   "p_pass_if_true_rate_10_below": 0.021,
+   "p_pass_if_true_rate_at_threshold": 0.126,
+   "p_fail_if_true_rate_10_above": 0.584
+  },
+  {
+   "id": "bb-layup-dribble-L",
+   "stage": "BB2",
+   "test": "lay-ups off a dribble, left hand",
+   "threshold": 0.6,
+   "n_min": 20,
+   "confidence": 0.9,
+   "makes_needed_at_n_min": 15,
+   "p_pass_if_true_rate_10_below": 0.021,
+   "p_pass_if_true_rate_at_threshold": 0.126,
+   "p_fail_if_true_rate_10_above": 0.584
+  },
+  {
+   "id": "bb-ft-junior",
+   "stage": "BB3",
+   "test": "free throws at the age line and ring, routine every shot, 3 sessions",
+   "threshold": 0.5,
+   "n_min": 60,
+   "confidence": 0.8,
+   "makes_needed_at_n_min": 34,
+   "p_pass_if_true_rate_10_below": 0.007,
+   "p_pass_if_true_rate_at_threshold": 0.183,
+   "p_fail_if_true_rate_10_above": 0.254
+  },
+  {
+   "id": "bb-ft-youth",
+   "stage": "BB4-5",
+   "test": "free throws, FIBA line, 3 sessions",
+   "threshold": 0.65,
+   "n_min": 100,
+   "confidence": 0.8,
+   "makes_needed_at_n_min": 70,
+   "p_pass_if_true_rate_10_below": 0.002,
+   "p_pass_if_true_rate_at_threshold": 0.173,
+   "p_fail_if_true_rate_10_above": 0.104
+  },
+  {
+   "id": "bb-spot-midrange",
+   "stage": "BB4-5",
+   "test": "catch-and-shoot mid-range per zone (5 spots), 3 sessions",
+   "threshold": 0.45,
+   "n_min": 50,
+   "confidence": 0.8,
+   "makes_needed_at_n_min": 26,
+   "p_pass_if_true_rate_10_below": 0.01,
+   "p_pass_if_true_rate_at_threshold": 0.197,
+   "p_fail_if_true_rate_10_above": 0.284,
+   "note": "threshold normed by age band after 200 learners [R]"
+  }
+ ],
+ "sample_size_note": [
+  {
+   "true_rate": 0.5,
+   "half_width_95_at_50": 0.139,
+   "half_width_95_at_100": 0.098,
+   "half_width_95_at_200": 0.069
+  },
+  {
+   "true_rate": 0.6,
+   "half_width_95_at_50": 0.136,
+   "half_width_95_at_100": 0.096,
+   "half_width_95_at_200": 0.068
+  },
+  {
+   "true_rate": 0.7,
+   "half_width_95_at_50": 0.127,
+   "half_width_95_at_100": 0.09,
+   "half_width_95_at_200": 0.064
+  },
+  {
+   "true_rate": 0.8,
+   "half_width_95_at_50": 0.111,
+   "half_width_95_at_100": 0.078,
+   "half_width_95_at_200": 0.055
+  }
+ ],
+ "baselines": [
+  {
+   "id": "bb-base-form",
+   "test": "10 form shots from the lesson spot",
+   "use": "personal 'before' number; never ranked"
+  },
+  {
+   "id": "bb-base-dribble",
+   "test": "30 s stationary dribble count, each hand",
+   "use": "weak/strong ratio for the weak_hand lever"
+  },
+  {
+   "id": "bb-base-layup",
+   "test": "10 lay-ups each hand",
+   "use": "starting point for BB1-BB2 gates"
+  }
+ ],
+ "miss_pattern_map": [
+  {
+   "miss": "short",
+   "fix_drill": "legs-to-arc: dip and push the floor away, then a higher arc toward the back half of the rim",
+   "cue": "push the floor away; send it up and over the front of the rim"
+  },
+  {
+   "miss": "long",
+   "fix_drill": "soft-touch form shots close in, higher arc, hold the follow-through",
+   "cue": "high arc, soft drop through the middle"
+  },
+  {
+   "miss": "left or right",
+   "fix_drill": "line shooting: shoot along a floor line toward the rim, one hand",
+   "cue": "send the ball straight up the line to the middle of the rim"
+  },
+  {
+   "miss": "flat (low arc)",
+   "fix_drill": "shoot over a raised target (a held pad or a partner hand) at short range",
+   "cue": "over the hand, down into the rim"
+  }
+ ],
+ "decision_clip_sets": [
+  {
+   "id": "dc-2v1",
+   "stage": "BB1",
+   "format": "top-down SVG court, pause at decision, 3 options (pass, shoot, dribble)",
+   "items": 10,
+   "pass": 0.8
+  },
+  {
+   "id": "dc-3v3",
+   "stage": "BB2",
+   "format": "top-down SVG, 3-4 options (open teammate, cut, fill, hold)",
+   "items": 15,
+   "pass": 0.8
+  },
+  {
+   "id": "dc-4v4-first-person",
+   "stage": "BB3",
+   "format": "first-person scenes as in Rosch, Schultz & Honer 2021: 4 passing options (right/left, inside/outside), each scene twice in random blocks, accuracy primary, response time secondary",
+   "items": 18,
+   "pass": 0.8
+  },
+  {
+   "id": "dc-ball-screen",
+   "stage": "BB4-5",
+   "format": "first-person or broadcast-angle SVG; options include reject/use the screen, pass to roller/popper, pull-up",
+   "items": 24,
+   "pass": 0.8
+  },
+  {
+   "id": "dc-varsity",
+   "stage": "BB6-7",
+   "format": "mixed: transition, zone recognition, late-clock choices",
+   "items": 30,
+   "pass": 0.8
+  }
+ ],
+ "access_swaps": [
+  {
+   "missing": "hoop",
+   "swap": "form shooting up a wall line or into a laundry basket; finishing footwork without the ball; objectives needing a hoop wait in the queue and are flagged"
+  },
+  {
+   "missing": "partner",
+   "swap": "wall passes, rebound-return net or self-toss catch-and-shoot; ghost defence for reads"
+  },
+  {
+   "missing": "indoor space only",
+   "swap": "stationary handling with a soft ball, tape targets, imagery scripts"
+  },
+  {
+   "missing": "time",
+   "swap": "the session card keeps warm-up + the one cold set + one game-like drill; no objective is removed"
+  }
+ ]
+}

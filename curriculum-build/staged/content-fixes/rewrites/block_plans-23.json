@@ -1,0 +1,359 @@
+{
+ "collection": "block_plans",
+ "row_id": 23,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P109",
+   "wrong": "\"Her reasoning was simple ____ no homework, no phone.\" keyed semicolon: \"a semicolon (not a colon) fits before the list\".",
+   "correct": "A complete clause introducing a list takes a colon; a semicolon cannot introduce a list."
+  },
+  {
+   "ref": "P110",
+   "wrong": "Rebuild solution \"The dash was the only mark that / match the mood of the sentence: / sudden, loud, and impossible to ignore.\" has no dash, \"match\" should be \"matched\", and the feedback says a dash is required.",
+   "correct": "Solution \"The dash was the only mark that / matched the mood of the sentence — / sudden, loud, and impossible to ignore.\""
+  },
+  {
+   "ref": "P111",
+   "wrong": "Rebuild solution \"My brother / the one who never opens a book / somehow knew every answer\" omits the two dashes its feedback requires.",
+   "correct": "Solution \"My brother — / the one who never opens a book — / somehow knew every answer\"."
+  },
+  {
+   "ref": "P112",
+   "wrong": "Rebuild solution puts the colon after \"cinnamon\" (\"...one unusual thing a pinch of cinnamon: for the soup.\").",
+   "correct": "The colon goes after \"thing\": \"The recipe needed one unusual thing: a pinch of cinnamon for the soup.\""
+  },
+  {
+   "ref": "P113",
+   "wrong": "Matrix cell dash / \"Complete sentence needed before it?\" keyed \"Yes\" (and accepts \"yes it does\"), while its feedback says a dash can follow an incomplete clause.",
+   "correct": "Answer \"No\"."
+  },
+  {
+   "ref": "P114",
+   "wrong": "Matrix row \"What follows when a transition word like however comes next?\" keys the dash cell \"Comma\" while its feedback says no comma is required after a dash; the row label does not fit the three cells.",
+   "correct": "Ask what goes right after the mark itself: nothing, for all three marks (with a semicolon the comma comes after the transition word, not after the semicolon)."
+  },
+  {
+   "ref": "P115",
+   "wrong": "Its/it's row (\"The team held ___ nickname with pride.\") keys the dash cell \"isn't\" (neither option), and the colon cell \"it's\" (wrong for this sentence; found while fixing).",
+   "correct": "Every cell of the row is \"its\" (possession)."
+  }
+ ],
+ "edits": [
+  {
+   "path": "blocks[0].data.cards[4].correctBucket",
+   "before": "semicolon",
+   "after": "colon"
+  },
+  {
+   "path": "blocks[0].data.cards[4].explanation",
+   "before": "The first half is a complete sentence, so a semicolon (not a colon) fits before the list.",
+   "after": "The first half is a complete sentence that introduces a list, so a colon fits; a semicolon cannot introduce a list."
+  },
+  {
+   "path": "blocks[1].data.items[0].chunks[3].text",
+   "before": "match the mood of the sentence:",
+   "after": "matched the mood of the sentence —"
+  },
+  {
+   "path": "blocks[1].data.items[0].chunks[4].text",
+   "before": "match the mood of the sentence",
+   "after": "matched the mood of the sentence;"
+  },
+  {
+   "path": "blocks[1].data.items[0].solution[1]",
+   "before": "match the mood of the sentence:",
+   "after": "matched the mood of the sentence —"
+  },
+  {
+   "path": "blocks[1].data.items[1].chunks[0].text",
+   "before": "My brother",
+   "after": "My brother —"
+  },
+  {
+   "path": "blocks[1].data.items[1].chunks[2].text",
+   "before": "the one who never opens a book",
+   "after": "the one who never opens a book —"
+  },
+  {
+   "path": "blocks[1].data.items[1].solution[0]",
+   "before": "My brother",
+   "after": "My brother —"
+  },
+  {
+   "path": "blocks[1].data.items[1].solution[1]",
+   "before": "the one who never opens a book",
+   "after": "the one who never opens a book —"
+  },
+  {
+   "path": "blocks[1].data.items[3].chunks[0].text",
+   "before": "The recipe needed one unusual thing",
+   "after": "The recipe needed one unusual thing:"
+  },
+  {
+   "path": "blocks[1].data.items[3].solution[0]",
+   "before": "The recipe needed one unusual thing",
+   "after": "The recipe needed one unusual thing:"
+  },
+  {
+   "path": "blocks[1].data.items[3].solution[1]",
+   "before": "a pinch of cinnamon:",
+   "after": "a pinch of cinnamon"
+  },
+  {
+   "path": "blocks[2].data.cells[3].answer",
+   "before": "Yes",
+   "after": "No"
+  },
+  {
+   "path": "blocks[2].data.cells[3].acceptedAnswers[0]",
+   "before": "yes it does",
+   "after": "no"
+  },
+  {
+   "path": "blocks[2].data.cells[3].acceptedAnswers[1]",
+   "before": "no",
+   "after": "no, not required"
+  },
+  {
+   "path": "blocks[2].data.cells[3].acceptedAnswers[2]",
+   "before": "n/a - not required",
+   "after": "not required"
+  },
+  {
+   "path": "blocks[2].data.rows[2].label",
+   "before": "What follows when a transition word like however comes next?",
+   "after": "What punctuation goes right after the mark itself?"
+  },
+  {
+   "path": "blocks[2].data.cells[6].answer",
+   "before": "Comma",
+   "after": "Nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[6].acceptedAnswers[0]",
+   "before": "a comma",
+   "after": "no comma"
+  },
+  {
+   "path": "blocks[2].data.cells[6].acceptedAnswers[1]",
+   "before": "comma after it",
+   "after": "nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[8].answer",
+   "before": "Comma",
+   "after": "Nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[8].acceptedAnswers[0]",
+   "before": "a comma",
+   "after": "no comma"
+  },
+  {
+   "path": "blocks[2].data.cells[8].acceptedAnswers[1]",
+   "before": "comma after it",
+   "after": "nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[8].feedback",
+   "before": "Semicolon, then the transition word, then a comma.",
+   "after": "Nothing goes right after the semicolon itself; with a transition word like however, the comma comes after however."
+  },
+  {
+   "path": "blocks[2].data.cells[9].answer",
+   "before": "isn't",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[9].acceptedAnswers[0]",
+   "before": "is not",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[10].answer",
+   "before": "it's",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[10].acceptedAnswers[0]",
+   "before": "it is",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[10].feedback",
+   "before": "Expand it to it is to check: the idea it is about.",
+   "after": "Expand it's to it is to check: 'held it is nickname' makes no sense, so the answer is its."
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[0].data.cards[4].correctBucket",
+   "before": "semicolon",
+   "after": "colon"
+  },
+  {
+   "path": "blocks[0].data.cards[4].explanation",
+   "before": "The first half is a complete sentence, so a semicolon (not a colon) fits before the list.",
+   "after": "The first half is a complete sentence that introduces a list, so a colon fits; a semicolon cannot introduce a list."
+  },
+  {
+   "path": "blocks[1].data.items[0].chunks[3].text",
+   "before": "match the mood of the sentence:",
+   "after": "matched the mood of the sentence —"
+  },
+  {
+   "path": "blocks[1].data.items[0].chunks[4].text",
+   "before": "match the mood of the sentence",
+   "after": "matched the mood of the sentence;"
+  },
+  {
+   "path": "blocks[1].data.items[0].solution[1]",
+   "before": "match the mood of the sentence:",
+   "after": "matched the mood of the sentence —"
+  },
+  {
+   "path": "blocks[1].data.items[1].chunks[0].text",
+   "before": "My brother",
+   "after": "My brother —"
+  },
+  {
+   "path": "blocks[1].data.items[1].chunks[2].text",
+   "before": "the one who never opens a book",
+   "after": "the one who never opens a book —"
+  },
+  {
+   "path": "blocks[1].data.items[1].solution[0]",
+   "before": "My brother",
+   "after": "My brother —"
+  },
+  {
+   "path": "blocks[1].data.items[1].solution[1]",
+   "before": "the one who never opens a book",
+   "after": "the one who never opens a book —"
+  },
+  {
+   "path": "blocks[1].data.items[3].chunks[0].text",
+   "before": "The recipe needed one unusual thing",
+   "after": "The recipe needed one unusual thing:"
+  },
+  {
+   "path": "blocks[1].data.items[3].solution[0]",
+   "before": "The recipe needed one unusual thing",
+   "after": "The recipe needed one unusual thing:"
+  },
+  {
+   "path": "blocks[1].data.items[3].solution[1]",
+   "before": "a pinch of cinnamon:",
+   "after": "a pinch of cinnamon"
+  },
+  {
+   "path": "blocks[2].data.cells[3].answer",
+   "before": "Yes",
+   "after": "No"
+  },
+  {
+   "path": "blocks[2].data.cells[3].acceptedAnswers[0]",
+   "before": "yes it does",
+   "after": "no"
+  },
+  {
+   "path": "blocks[2].data.cells[3].acceptedAnswers[1]",
+   "before": "no",
+   "after": "no, not required"
+  },
+  {
+   "path": "blocks[2].data.cells[3].acceptedAnswers[2]",
+   "before": "n/a - not required",
+   "after": "not required"
+  },
+  {
+   "path": "blocks[2].data.rows[2].label",
+   "before": "What follows when a transition word like however comes next?",
+   "after": "What punctuation goes right after the mark itself?"
+  },
+  {
+   "path": "blocks[2].data.cells[6].answer",
+   "before": "Comma",
+   "after": "Nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[6].acceptedAnswers[0]",
+   "before": "a comma",
+   "after": "no comma"
+  },
+  {
+   "path": "blocks[2].data.cells[6].acceptedAnswers[1]",
+   "before": "comma after it",
+   "after": "nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[8].answer",
+   "before": "Comma",
+   "after": "Nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[8].acceptedAnswers[0]",
+   "before": "a comma",
+   "after": "no comma"
+  },
+  {
+   "path": "blocks[2].data.cells[8].acceptedAnswers[1]",
+   "before": "comma after it",
+   "after": "nothing"
+  },
+  {
+   "path": "blocks[2].data.cells[8].feedback",
+   "before": "Semicolon, then the transition word, then a comma.",
+   "after": "Nothing goes right after the semicolon itself; with a transition word like however, the comma comes after however."
+  },
+  {
+   "path": "blocks[2].data.cells[9].answer",
+   "before": "isn't",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[9].acceptedAnswers[0]",
+   "before": "is not",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[10].answer",
+   "before": "it's",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[10].acceptedAnswers[0]",
+   "before": "it is",
+   "after": "its"
+  },
+  {
+   "path": "blocks[2].data.cells[10].feedback",
+   "before": "Expand it to it is to check: the idea it is about.",
+   "after": "Expand it's to it is to check: 'held it is nickname' makes no sense, so the answer is its."
+  }
+ ],
+ "judge_a": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "all 12 edits used JSON syntax and matched 0 places",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

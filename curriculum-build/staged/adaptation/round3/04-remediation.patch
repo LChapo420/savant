@@ -1,0 +1,579 @@
+diff --git a/public/css/style.css b/public/css/style.css
+index a428d0a..86aa5c7 100644
+--- a/public/css/style.css
++++ b/public/css/style.css
+@@ -1471,6 +1471,19 @@ table.data td .meter { min-width: 60px; }
+ .rubric-focus svg { display: none; }
+ 
+ /* ── 22 help me learn ──────────────────────────────────────────────────── */
++/* After a missed Final: what the record says to do first (staged round 3,
++   ADAPT_REMEDIATION). Two lists side by side, one column on a phone. */
++.help-record { margin: var(--s-6) 0 var(--s-8); }
++.help-record .section-title { margin-top: 0; }
++.record-lede { max-width: 64ch; margin: 0 0 var(--s-4); }
++.record-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--s-6) var(--s-10); }
++.record-h { font-size: 1rem; margin: 0 0 4px; display: flex; gap: 8px; align-items: baseline; }
++.record-h .num { color: var(--ink-3); font-weight: 500; }
++.record-list { list-style: none; margin: var(--s-3) 0 0; padding: 0; }
++.record-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s-2) var(--s-4); padding: 10px 0; border-top: 1px solid var(--line); }
++.record-row > span:first-child { flex: 1; min-width: 0; }
++.record-title { display: block; font-weight: 600; }
++.record-why { display: block; font-size: var(--t-meta); color: var(--ink-3); }
+ .help-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: var(--s-5); }
+ .help-title { font-size: var(--t-h1); margin-bottom: 4px; }
+ .help-sub { color: var(--ink-2); font-size: 1rem; max-width: 60ch; margin: 0; }
+diff --git a/public/js/help.js b/public/js/help.js
+index bb06ac0..771b10a 100644
+--- a/public/js/help.js
++++ b/public/js/help.js
+@@ -74,10 +74,141 @@ App.mount(async () => {
+         </div>
+       </div>
+ 
++      <div id="record">${recordHtml()}</div>
+       <nav class="help-areas" id="areas" aria-label="Weak areas"></nav>
+       <div id="panel"></div>`;
+     renderAreas();
+     renderPanel();
++    mountRecord();
++  }
++
++  // ── after a missed Final: what the record says to do first (round 3) ─────
++  const STATUS_WORDS = {
++    unproven: 'Not proven yet',
++    lapsed: 'Proven once, and slipped since',
++    proven: 'Proven, not yet checked a day later',
++    retained: 'Kept, but fading',
++  };
++
++  function recordHtml() {
++    const rec = r.record;
++    if (!rec || (!rec.reteach.length && !rec.retrieve.length)) return '';
++    const esc = App.escapeHtml;
++    const last = rec.rounds.length ? rec.rounds[rec.rounds.length - 1] : null;
++    return `
++      <section class="help-record" aria-labelledby="record-h">
++        <h2 class="section-title" id="record-h">What your record says to do first</h2>
++        <p class="small muted record-lede">Read from every answer you have given in this grade, not only this attempt.</p>
++        <div class="record-grid">
++          ${rec.reteach.length ? `
++          <div>
++            <h3 class="record-h">Learn again <span class="num">${rec.reteach_total}</span></h3>
++            <p class="tiny muted">The lesson, then its questions; that is what proves it.</p>
++            <ol class="record-list">
++              ${rec.reteach.map((o) => `
++                <li class="record-row">
++                  <span>
++                    <span class="record-title">${esc(App.cleanTitle(o.title))}</span>
++                    <span class="record-why">${esc(STATUS_WORDS[o.status] || '')}${o.missed ? '; its skill was missed on the Final' : ''}</span>
++                  </span>
++                  <a class="btn btn-sm" href="/session?enrollment=${enrollmentId}&level=${o.lesson_level}">Open the lesson<span class="visually-hidden">: ${esc(App.cleanTitle(o.title))}</span></a>
++                </li>`).join('')}
++            </ol>
++            ${rec.reteach_total > rec.reteach.length ? `<p class="tiny muted">And ${rec.reteach_total - rec.reteach.length} more after these.</p>` : ''}
++          </div>` : ''}
++          ${rec.retrieve.length ? `
++          <div>
++            <h3 class="record-h">Recall <span class="num">${rec.retrieve_total}</span></h3>
++            <p class="tiny muted">Things you had that are fading. One question each, with the answer straight after.</p>
++            <ol class="record-list">
++              ${rec.retrieve.map((o) => `
++                <li class="record-row"><span>
++                  <span class="record-title">${esc(App.cleanTitle(o.title))}</span>
++                  <span class="record-why">${esc(STATUS_WORDS[o.status] || '')}${o.missed ? '; its skill was missed on the Final' : ''}</span>
++                </span></li>`).join('')}
++            </ol>
++            <div class="row-wrap" style="margin-top:10px">
++              <button class="btn" type="button" id="recall-start">Start ${rec.retrieve.length} recall question${rec.retrieve.length === 1 ? '' : 's'}</button>
++              ${last ? `<span class="small muted">Last round: <span class="num">${last.correct} / ${last.asked}</span> right.</span>` : ''}
++            </div>
++            <div id="recall"></div>
++          </div>` : ''}
++        </div>
++      </section>`;
++  }
++
++  function mountRecord() {
++    const button = document.getElementById('recall-start');
++    if (button) button.addEventListener('click', () => startRecall(button));
++  }
++
++  async function startRecall(button) {
++    button.disabled = true;
++    button.innerHTML = '<span class="spinner"></span>Setting up';
++    let round;
++    try {
++      round = await App.api.post(`/api/remediation/${r.id}/recall`, {});
++    } catch (err) {
++      App.toast(err.message, 'error');
++      button.disabled = false;
++      button.textContent = 'Start the recall questions';
++      return;
++    }
++    button.remove();
++    const slot = document.getElementById('recall');
++    const items = round.items;
++    let at = 0;
++    const step = () => {
++      if (at >= items.length) { finishRecall(round); return; }
++      const item = items[at];
++      const box = App.el('div', { class: 'card card-tight', style: 'margin-top:10px' });
++      slot.innerHTML = '';
++      slot.appendChild(App.el('div', { class: 'small muted', style: 'margin-bottom:6px' }, `Recall ${at + 1} of ${items.length}`));
++      slot.appendChild(box);
++      const askedAt = Date.now();
++      Player.render(box, item, {
++        label: 'Recall',
++        // Recall is answered unaided; the coach would make it a lesson.
++        coach: false,
++        onSubmit: async (answer) => {
++          let result;
++          try {
++            result = await App.api.post(`/api/sessions/${round.session_id}/answer`, { item_id: item.id, answer, ms: Date.now() - askedAt });
++          } catch (err) {
++            App.toast(err.message, 'error');
++            return;
++          }
++          item.answered = true;
++          Player.reveal(box, item, result, {
++            nextLabel: at + 1 >= items.length ? 'See how that went' : 'Next question',
++            onNext: () => { at += 1; step(); },
++          });
++        },
++      });
++    };
++    step();
++  }
++
++  async function finishRecall(round) {
++    const slot = document.getElementById('recall');
++    slot.innerHTML = '<div class="loading"><span class="spinner"></span>Scoring the round</div>';
++    let result;
++    try {
++      result = await App.api.post(`/api/remediation/${r.id}/recall/finish`, { session_id: round.session_id });
++    } catch (err) {
++      slot.innerHTML = `<div class="notice notice-error">${App.escapeHtml(err.message)}</div>`;
++      return;
++    }
++    r = { ...r, record: result.remediation.record };
++    document.getElementById('record').innerHTML = recordHtml();
++    mountRecord();
++    const again = document.getElementById('recall');
++    if (again) {
++      again.innerHTML = `<div class="notice ${result.accuracy >= 0.9 ? 'notice-success' : ''}" style="margin-top:10px">
++        <strong>${result.correct} of ${result.asked} right.</strong> ${result.accuracy >= 0.9
++    ? 'That is the level the Final asks for.'
++    : 'What you missed is worth one more look before the retry.'}${result.xp ? ` +${result.xp} XP.` : ''}</div>`;
++    }
+   }
+ 
+   function renderAreas() {
+diff --git a/routes/remediation.js b/routes/remediation.js
+index 45166e7..0f3067f 100644
+--- a/routes/remediation.js
++++ b/routes/remediation.js
+@@ -17,6 +17,7 @@ const sessions = require('../services/sessions');
+ const remediation = require('../services/remediation');
+ const mastery = require('../services/mastery');
+ const ai = require('../services/ai');
++const bank = require('../content/bank');
+ const { requireAuth } = require('../middleware/auth');
+ const { limit } = require('../utils/rate-limit');
+ 
+@@ -127,6 +128,93 @@ router.post('/remediation/:id/drill', requireAuth, limit('remediation-drill', 60
+   });
+ });
+ 
++/**
++ * After a missed Final (round 3, ADAPT_REMEDIATION=on): one recall question on
++ * each objective the record says is kept but fading, with the answer straight
++ * after. Tagged with the objective, so each answer is evidence on it alone.
++ */
++router.post('/remediation/:id/recall', requireAuth, limit('remediation-drill', 60, 60 * 60 * 1000), async (req, res) => {
++  const row = load(req);
++  if (!row || !row.record || !remediation.recordPlanOn(row.kind)) return res.status(404).json({ error: 'Nothing to recall here.' });
++  const list = row.record.retrieve || [];
++  if (!list.length) return res.status(409).json({ error: 'Nothing is fading; there is nothing to recall.' });
++  const enrollment = db.byId('enrollments', row.enrollment_id);
++  const grade = enrollment && curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  if (!enrollment || !grade) return res.status(400).json({ error: 'That subject is no longer available.' });
++
++  for (const stale of db.find('sessions', (s) => s.user_id === req.user.id
++    && s.kind === 'remediate' && !s.ended_at)) {
++    db.update('sessions', stale.id, { ended_at: new Date().toISOString(), abandoned: true });
++  }
++  const session = db.insert('sessions', {
++    user_id: req.user.id,
++    enrollment_id: enrollment.id,
++    track_id: enrollment.track_id,
++    grade_id: enrollment.grade_id,
++    level: enrollment.current_level,
++    start_level: enrollment.current_level,
++    end_level: enrollment.current_level,
++    levels: [enrollment.current_level],
++    blocks: [{ index: 0, level: enrollment.current_level, kind: 'drill', resolved: false }],
++    kind: 'remediate',
++    recall: true,
++    params: { itemCount: list.length },
++    started_at: new Date().toISOString(),
++    ended_at: null,
++    score: null,
++    analysis: null,
++    xp_awarded: 0,
++  });
++  const avoid = new Set(db.find('items', (i) => i.user_id === req.user.id).slice(-600).map((i) => bank.itemKey(i)));
++  const items = list.map((o, index) => {
++    const plan = curriculum.levelPlan(grade, o.lesson_level);
++    const q = sessions.generateWithPreference({ skillId: o.skill, difficulty: Math.max(1, Math.min(10, Math.round(plan.difficulty * 10) / 10)), role: 'drill' }, false, avoid);
++    avoid.add(bank.itemKey(q));
++    return db.insert('items', {
++      ...q,
++      session_id: session.id,
++      user_id: req.user.id,
++      role: 'drill',
++      level: o.lesson_level,
++      block: 0,
++      index,
++      objective_id: o.objective,
++      objective_test: true,
++      user_answer: null,
++      correct: null,
++      ms: null,
++      coach_used: false,
++    });
++  });
++  res.status(201).json({
++    session_id: session.id,
++    required: row.required,
++    items: items.map((it) => sessions.sanitize(it)),
++  });
++});
++
++router.post('/remediation/:id/recall/finish', requireAuth, (req, res) => {
++  const row = load(req);
++  if (!row || !row.record) return res.status(404).json({ error: 'Nothing to recall here.' });
++  const session = db.byId('sessions', req.body.session_id);
++  if (!session || session.user_id !== req.user.id || session.kind !== 'remediate' || !session.recall) {
++    return res.status(404).json({ error: 'Session not found.' });
++  }
++  const score = sessions.scoreDrill(session.id);
++  if (!score.answered) return res.status(409).json({ error: 'Answer at least one question first.' });
++  const items = db.find('items', (i) => i.session_id === session.id && i.correct !== null);
++  const xp = mastery.xpForItems(items);
++  const accuracy = score.correct / score.answered;
++  let updated = row;
++  if (!session.ended_at) {
++    db.update('sessions', session.id, { ended_at: new Date().toISOString(), score: accuracy, xp_awarded: xp });
++    const user = db.byId('users', req.user.id);
++    db.update('users', req.user.id, { xp: (user.xp || 0) + xp });
++    updated = remediation.recordRecall(row.id, { correct: score.correct, asked: score.answered, sessionId: session.id });
++  }
++  res.json({ accuracy, correct: score.correct, asked: score.answered, xp, ...payload(updated) });
++});
++
+ /** Score a finished round and say whether that area now holds. */
+ router.post('/remediation/:id/drill/finish', requireAuth, (req, res) => {
+   const row = load(req);
+diff --git a/scripts/round3-remediation-test.js b/scripts/round3-remediation-test.js
+new file mode 100644
+index 0000000..4545f66
+--- /dev/null
++++ b/scripts/round3-remediation-test.js
+@@ -0,0 +1,220 @@
++/**
++ * Tests for record-based remediation after a missed Final (staged round 3,
++ * patch 04-remediation): services/remediation.js open() with
++ * ADAPT_REMEDIATION=on, adaptation.remediationPlanFor, and the recall routes.
++ *
++ *   node scripts/round3-remediation-test.js
++ *
++ * Runs on its own throwaway data file with every model key blanked: no model
++ * call, no network, nothing real touched.
++ */
++const os = require('os');
++const path = require('path');
++const fs = require('fs');
++const http = require('http');
++
++process.env.NODE_ENV = 'test';
++for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
++const tmp = path.join(os.tmpdir(), `${path.basename(__filename, '.js')}-${process.pid}.json`);
++process.env.DB_FILE = tmp;
++for (const k of ['COVERAGE_GATE', 'COVERAGE_RULE', 'ADAPTIVE_TEACHING', 'ADAPT_REVIEW_SESSION', 'ADAPT_CONSOLIDATE', 'ADAPT_EFFORT', 'ADAPT_REMEDIATION', 'ADAPT_OWNER', 'ADMIN_EMAILS', 'OWNER_EMAIL']) delete process.env[k];
++
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const coverage = require('../services/coverage');
++
++let failures = 0;
++function check(label, ok, detail) {
++  if (ok) { console.log(`  ok   ${label}`); return; }
++  failures++;
++  console.log(`  FAIL ${label}${detail === undefined ? '' : ` — ${JSON.stringify(detail).slice(0, 400)}`}`);
++}
++
++const DAY = coverage.DAY;
++const TRACK = 'math';
++const GRADE = 'numbers_to_10';
++const grade = curriculum.getGrade(TRACK, GRADE);
++const model = coverage.modelFor(TRACK, GRADE);
++const FINAL = grade.levels.find((l) => l.kind === 'graduation').level;
++
++/** A learner enrolled in numbers_to_10, standing on `level`. */
++function learner(email, level, extra = {}) {
++  const user = db.insert('users', { email, name: email.split('@')[0], password_hash: 'x', streak: 0, xp: 0, onboarded: true });
++  const enrollment = db.insert('enrollments', {
++    user_id: user.id, track_id: TRACK, grade_id: GRADE, target_level: grade.pathLength, current_level: level,
++    level_items: 0, levels_completed: 0, xp: 0, status: 'active', pending_checkpoint: null, placed_at: new Date().toISOString(), ...extra,
++  });
++  const session = db.insert('sessions', {
++    user_id: user.id, enrollment_id: enrollment.id, track_id: TRACK, grade_id: GRADE, level: 1, kind: 'lesson',
++    blocks: [{ index: 0, level: 1, kind: 'practice', resolved: true }], started_at: new Date(Date.now() - 30 * DAY).toISOString(), ended_at: new Date().toISOString(),
++  });
++  return { user, enrollment, session };
++}
++
++/** One answered question on objective i, `daysAgo` days back: its lesson's check question, typed unless choices given. */
++function answer(who, i, daysAgo, correct = true, { choices = null, ms = 9000, role = 'check', level = null } = {}) {
++  const o = model.objectives[i];
++  const at = new Date(Date.now() - daysAgo * DAY).toISOString();
++  return db.insert('items', {
++    user_id: who.user.id, session_id: who.session.id, skill_id: o.skill, difficulty: 3, format: choices ? 'multiple_choice' : 'short_answer',
++    prompt: `q ${i} ${daysAgo} ${Math.random()}`, answer: '1', choices, role, level: level || o.lesson_level, block: 0, index: 0,
++    user_answer: correct ? '1' : '2', correct, ms, coach_used: false, answered_at: at,
++  });
++}
++
++/** Proven `daysAgo` days back (five typed right answers to its lesson's questions, minutes apart). */
++function prove(who, i, daysAgo) {
++  for (let k = 0; k < 5; k++) answer(who, i, daysAgo - k * 0.002);
++}
++
++/** Proven, then kept: a right typed memory check `checkDaysAgo` days back. */
++function keep(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo);
++}
++
++/** Proven, then forgotten: a wrong memory check. */
++function lapse(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo, false, { choices: ['1', '2', '3', '4'] });
++}
++
++function stateOf(who, i) {
++  return coverage.forEnrollment(who.user.id, db.byId('enrollments', who.enrollment.id)).states[i];
++}
++
++/** An app with the given routers mounted under /api, signed in as the x-user header's account. */
++function serve(routers) {
++  const app = express();
++  app.use(express.json());
++  app.use((req, res, next) => { req.user = db.byId('users', Number(req.headers['x-user'])) || null; next(); });
++  for (const r of routers) app.use('/api', r);
++  app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' }));
++  return new Promise((resolve) => {
++    const server = app.listen(0, '127.0.0.1', () => {
++      const port = server.address().port;
++      const call = (method, url, body, uid) => new Promise((done, fail) => {
++        const data = body ? JSON.stringify(body) : null;
++        const req = http.request({ host: '127.0.0.1', port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
++          let text = '';
++          res.on('data', (c) => { text += c; });
++          res.on('end', () => { let json = null; try { json = JSON.parse(text); } catch { json = null; } done({ status: res.statusCode, body: json }); });
++        });
++        req.on('error', fail);
++        if (data) req.write(data);
++        req.end();
++      });
++      resolve({ call, close: () => server.close() });
++    });
++  });
++}
++
++function done() {
++  try { fs.unlinkSync(tmp); } catch { /* already gone */ }
++  console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
++  process.exit(failures ? 1 : 0);
++}
++
++
++(async () => {
++  const bank = require('../content/bank');
++  const sessions = require('../services/sessions');
++  const remediation = require('../services/remediation');
++  const app = await serve([require('../routes/remediation'), require('../routes/learn')]);
++
++  /** A sat Final with `missed` of its questions wrong, on the grade's first skill. */
++  function satFinal(who, n = 10, missed = 3) {
++    const s = db.insert('sessions', {
++      user_id: who.user.id, enrollment_id: who.enrollment.id, track_id: TRACK, grade_id: GRADE, level: FINAL, kind: 'graduation',
++      blocks: [{ index: 0, level: FINAL, kind: 'graduation', resolved: false }], started_at: new Date().toISOString(), ended_at: new Date().toISOString(),
++    });
++    const avoid = new Set();
++    for (let i = 0; i < n; i++) {
++      const q = bank.generate({ skillId: model.objectives[0].skill, difficulty: 3, seed: `f${i}`, avoid });
++      avoid.add(bank.itemKey(q));
++      db.insert('items', { ...q, session_id: s.id, user_id: who.user.id, role: 'exam', level: FINAL, block: 0, index: i, user_answer: i < missed ? 'x' : q.answer, correct: i >= missed, ms: 6000, coach_used: false, answered_at: new Date().toISOString() });
++    }
++    return s;
++  }
++  // A learner on the Final: most of the grade kept long ago (now faded), one
++  // objective forgotten, one never proven, one proven yesterday.
++  function onFinal(email) {
++    const who = learner(email, FINAL);
++    for (let i = 0; i < model.objectives.length; i++) {
++      if (i === 1) lapse(who, i, 30, 20);
++      else if (i === 2) continue;
++      else if (i === 3) prove(who, i, 1.5);
++      else keep(who, i, 90, 85);
++    }
++    return who;
++  }
++  const open = (who, s) => remediation.open({ userId: who.user.id, session: s, enrollment: db.byId('enrollments', who.enrollment.id), kind: 'graduation', accuracy: 0.7, required: 0.9 });
++
++  console.log('off by default');
++  {
++    const a = onFinal('remed-a@example.test');
++    const row = open(a, satFinal(a));
++    check('a missed Final opens the skill areas as before while ADAPT_REMEDIATION is unset', row.areas.length >= 1 && !db.byId('remediations', row.id).record);
++    check('the page payload carries no record plan', remediation.sanitize(db.byId('remediations', row.id)).record === null);
++    const r = await app.call('POST', `/api/remediation/${row.id}/recall`, {}, a.user.id);
++    check('the recall route answers 404', r.status === 404, r.status);
++  }
++
++  process.env.ADAPT_REMEDIATION = 'on';
++  console.log('the record plan');
++  let a;
++  let row;
++  {
++    a = onFinal('remed-b@example.test');
++    row = db.byId('remediations', open(a, satFinal(a)).id);
++    const rec = row.record;
++    check('a missed Final gets a plan from the record', !!rec && Array.isArray(rec.reteach) && Array.isArray(rec.retrieve), rec);
++    const ids = (list) => list.map((x) => x.objective);
++    check('the forgotten objective is to learn again', ids(rec.reteach).includes(model.objectives[1].id));
++    check('the never-proven objective is to learn again', ids(rec.reteach).includes(model.objectives[2].id));
++    check('faded kept objectives are to retrieve, not re-teach', rec.retrieve.length > 0 && rec.retrieve.every((x) => x.status === 'retained' || x.status === 'proven'));
++    check('each row says whether a missed question spoke for it', rec.retrieve.every((x) => typeof x.missed === 'boolean'));
++    check('re-teach rows carry the lesson to open', rec.reteach.every((x) => Number.isInteger(x.lesson_level)));
++    check('the lists are capped to one sitting (12 recall, 6 re-teach)', rec.retrieve.length <= 12 && rec.reteach.length <= 6);
++    check('the totals say how many there are in all', rec.retrieve_total >= rec.retrieve.length && rec.reteach_total >= rec.reteach.length);
++    check('the skill areas are still there too', row.areas.length >= 1);
++    const page = await app.call('GET', `/api/remediation/${a.enrollment.id}`, null, a.user.id);
++    check('the help page payload carries the plan', page.status === 200 && page.body.remediation.record && page.body.remediation.record.reteach.length === rec.reteach.length);
++  }
++
++  console.log('a recall round');
++  {
++    const r = await app.call('POST', `/api/remediation/${row.id}/recall`, {}, a.user.id);
++    check('recall opens a round of one question per objective to retrieve', r.status === 201 && r.body.items.length === row.record.retrieve.length, { status: r.status, body: r.body && r.body.error });
++    const items = sessions.itemsFor(r.body.session_id);
++    check('every question is tagged with its objective', items.every((it, k) => it.objective_id === row.record.retrieve[k].objective && it.role === 'drill'));
++    check('the round is a drill sitting, which never moves a level', db.byId('sessions', r.body.session_id).kind === 'remediate');
++    const idx = (it) => model.objectives.findIndex((o) => o.id === it.objective_id);
++    const before = items.map((it) => stateOf(a, idx(it)).answers);
++    for (const it of items) {
++      const res = await app.call('POST', `/api/sessions/${r.body.session_id}/answer`, { item_id: it.id, answer: it.answer, ms: 5000 }, a.user.id);
++      if (!(res.body && res.body.reveal === true)) check(`recall answer ${it.id} revealed`, false, res.body);
++    }
++    const fin = await app.call('POST', `/api/remediation/${row.id}/recall/finish`, { session_id: r.body.session_id }, a.user.id);
++    check('finishing scores the round', fin.status === 200 && fin.body.correct === items.length, fin.body);
++    check('the round is kept on the plan', fin.body.remediation.record.rounds.length === 1);
++    const counted = items.filter((it, k) => stateOf(a, idx(it)).answers === before[k] + 1).length;
++    check('each recall answer is evidence on its own objective, and only that one', counted === items.length, { counted, n: items.length });
++    const e = db.byId('enrollments', a.enrollment.id);
++    check('the learner is still on the Final', e.current_level === FINAL && e.status === 'active');
++  }
++
++  console.log('below the Final, and other people');
++  {
++    const b = onFinal('remed-c@example.test');
++    const s = satFinal(b);
++    const r = remediation.open({ userId: b.user.id, session: s, enrollment: b.enrollment, kind: 'master', accuracy: 0.5, required: 0.75 });
++    check('a missed Master quiz keeps the skill areas only', !db.byId('remediations', r.id).record);
++    const other = await app.call('POST', `/api/remediation/${row.id}/recall`, {}, b.user.id);
++    check('another learner cannot open this plan\'s recall', other.status === 404, other.status);
++  }
++
++  app.close();
++  done();
++})().catch((err) => { console.error(err); process.exit(1); });
+diff --git a/services/remediation.js b/services/remediation.js
+index ec2d97c..bd6a077 100644
+--- a/services/remediation.js
++++ b/services/remediation.js
+@@ -24,6 +24,18 @@ const learner = require('./learner');
+ /** How many drill questions per area, and the share of them that must be right. */
+ const DRILL_COUNT = 5;
+ 
++/**
++ * After a missed Final, plan from the learner's record as well as from the
++ * missed questions (staged round 3, ADAPT_REMEDIATION=on; off by default):
++ * which objectives to learn again (unproven, or proven and since forgotten) and
++ * which to retrieve (kept, but fading), from every answer in the grade
++ * (services/adaptation.js remediationPlanFor). Checkpoints below the Final keep
++ * the skill areas alone.
++ */
++function recordPlanOn(kind) {
++  return kind === 'graduation' && String(process.env.ADAPT_REMEDIATION || 'off').toLowerCase() === 'on';
++}
++
+ /**
+  * Group a failed attempt by skill, worst first, keeping the actual wrong answers.
+  *
+@@ -192,6 +204,13 @@ function open({ userId, session, enrollment, kind, accuracy, required, areas: gi
+     cleared_at: null,
+   });
+ 
++  if (recordPlanOn(kind)) {
++    // eslint-disable-next-line global-require
++    const adaptation = require('./adaptation');
++    const record = adaptation.remediationPlanFor({ userId, enrollment, missedSkills: areas.map((a) => a.skill_id) });
++    if (record) db.update('remediations', row.id, { record: { ...record, rounds: [] } });
++  }
++
+   // If the diagnosis was started mid-quiz, attach to it rather than asking again.
+   const early = earlyFor(session.id);
+   if (early) {
+@@ -295,6 +314,15 @@ function recordDrill(remediationId, index, { correct, asked, sessionId }) {
+   return db.byId('remediations', remediationId);
+ }
+ 
++/** Record a round of recall questions from the record's plan (round 3). */
++function recordRecall(remediationId, { correct, asked, sessionId }) {
++  const row = db.byId('remediations', remediationId);
++  if (!row || !row.record) return row || null;
++  const rounds = [...(row.record.rounds || []), { correct, asked, accuracy: asked ? correct / asked : 0, session_id: sessionId, at: new Date().toISOString() }];
++  db.update('remediations', remediationId, { record: { ...row.record, rounds } });
++  return db.byId('remediations', remediationId);
++}
++
+ /** Save a teaching conversation so it is still there after a reload. */
+ function recordTalk(remediationId, index, messages) {
+   const row = db.byId('remediations', remediationId);
+@@ -318,6 +346,14 @@ function sanitize(row) {
+     required: row.required,
+     attempt: row.attempt,
+     diagnosis_source: row.diagnosis_source,
++    // The record's plan after a missed Final (round 3), or null.
++    record: row.record ? {
++      reteach: row.record.reteach || [],
++      retrieve: row.record.retrieve || [],
++      reteach_total: row.record.reteach_total || 0,
++      retrieve_total: row.record.retrieve_total || 0,
++      rounds: (row.record.rounds || []).map((x) => ({ correct: x.correct, asked: x.asked, accuracy: x.accuracy, at: x.at })),
++    } : null,
+     areas: (row.areas || []).map((area, index) => ({
+       index,
+       skill_id: area.skill_id,
+@@ -353,6 +389,8 @@ module.exports = {
+   clearFor,
+   areaAt,
+   recordDrill,
++  recordRecall,
++  recordPlanOn,
+   recordTalk,
+   sanitize,
+   fallbackTeaching,

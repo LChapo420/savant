@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basketball Blocks Testbed</title>
+  <!-- A testbed for the basketball blocks, like ../showcase.html for the lesson blocks.
+       The check here is graded by a stand-in in this page, not by the server. -->
+  <style>
+    body { margin: 0; background: #090d16; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 560px; margin: 0 auto; padding: 20px 16px 60px; display: flex; flex-direction: column; gap: 22px; }
+    h1 { font-size: 1.2rem; margin: 0; }
+    p.lead, pre.lead { margin: 0; color: #94a3b8; font-size: .9rem; }
+    pre.lead { white-space: pre-wrap; font-size: .75rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Basketball blocks testbed</h1>
+    <p class="lead">Basketball_Play, Check_Play, Basketball_ShotLog, Basketball_Session, Basketball_Film, Basketball_ShotTracker and Basketball_HandleDrill with sample data. The check here is graded in the page for testing only. On this page the camera tools also offer a simulated camera (demo-sim.js), so they can be tried without one.</p>
+    <section data-block="Basketball_Play" id="play"></section>
+    <section data-block="Check_Play" id="check"></section>
+    <section data-block="Basketball_ShotLog" id="shots"></section>
+    <section data-block="Basketball_Session" id="session"></section>
+    <section data-block="Basketball_Film" id="film"></section>
+    <section data-block="Basketball_ShotTracker" id="tracker"></section>
+    <pre id="sim-truth" class="lead" aria-label="What the simulator really did"></pre>
+    <section data-block="Basketball_HandleDrill" id="drill"></section>
+  </main>
+  <script src="court.js"></script>
+  <script src="tracking.js"></script>
+  <script src="../checks/checks-common.js"></script>
+  <script src="basketball-blocks.js"></script>
+  <script src="pose.js"></script>
+  <script src="camera-blocks.js"></script>
+  <script src="demo-sim.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>

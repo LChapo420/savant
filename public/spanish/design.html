@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Spanish design system</title>
+  <link rel="stylesheet" href="/spanish/css/tokens.css">
+  <link rel="stylesheet" href="/spanish/css/components.css">
+  <link rel="stylesheet" href="/spanish/css/design.css">
+</head>
+<body class="es">
+  <header class="ds-head">
+    <div>
+      <div class="es-label es-muted">Savant Spanish</div>
+      <h1 class="es-h2">Design system</h1>
+    </div>
+    <div class="ds-row" role="group" aria-label="Theme">
+      <button class="es-btn es-btn--sm es-btn--ghost" data-theme-set="system">System</button>
+      <button class="es-btn es-btn--sm es-btn--ghost" data-theme-set="light" id="theme-light">Light</button>
+      <button class="es-btn es-btn--sm es-btn--ghost" data-theme-set="dark" id="theme-dark">Dark</button>
+    </div>
+  </header>
+
+  <main class="ds-main">
+    <section class="ds-sec" aria-labelledby="s-buttons">
+      <h2 class="es-h3" id="s-buttons">Buttons</h2>
+      <div class="ds-row">
+        <button class="es-btn es-btn--primary">Continue</button>
+        <button class="es-btn es-btn--secondary">Sign in</button>
+        <button class="es-btn es-btn--success">Check</button>
+        <button class="es-btn es-btn--danger">Got it</button>
+        <button class="es-btn es-btn--gold">Claim</button>
+        <button class="es-btn es-btn--ghost">Skip</button>
+        <button class="es-btn es-btn--plain">Report</button>
+      </div>
+      <div class="ds-row">
+        <button class="es-btn es-btn--primary es-btn--sm">Small</button>
+        <button class="es-btn es-btn--primary es-btn--lg">Large</button>
+        <button class="es-btn es-btn--success" disabled>Check</button>
+        <button class="es-btn es-btn--primary" aria-busy="true">Saving</button>
+      </div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-stats">
+      <h2 class="es-h3" id="s-stats">Stat bar</h2>
+      <div class="es-stats ds-card">
+        <button class="es-stat" aria-label="Course: Spanish, score 3"><span id="flag"></span>3</button>
+        <button class="es-stat es-stat--streak" data-active="true" id="stat-streak" aria-label="12 day streak"></button>
+        <button class="es-stat es-stat--gems" id="stat-gems" aria-label="480 gems"></button>
+        <button class="es-stat es-stat--hearts" id="stat-hearts" aria-label="5 hearts"></button>
+      </div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-path">
+      <h2 class="es-h3" id="s-path">Path</h2>
+      <div class="ds-pathbox">
+        <div class="es-unit">
+          <div>
+            <div class="es-unit__kicker">Grade 1 · Unit 1</div>
+            <div class="es-unit__title">Hello, vowels, and first words</div>
+          </div>
+          <button class="es-btn es-btn--sm" id="guide-btn" aria-label="Open the unit guide"></button>
+        </div>
+        <div class="es-path" id="path"></div>
+      </div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-lesson">
+      <h2 class="es-h3" id="s-lesson">Lesson pieces</h2>
+      <div class="ds-card ds-lesson">
+        <div class="es-lesson__top">
+          <button class="es-iconbtn" aria-label="Quit lesson" id="quit"></button>
+          <div class="es-progress" id="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45">
+            <div class="es-progress__fill" style="--p:45%"></div>
+          </div>
+          <span class="es-stat es-stat--hearts" id="lesson-hearts"></span>
+        </div>
+        <div class="ds-row"><button class="es-btn es-btn--sm es-btn--ghost" id="combo-toggle">Toggle combo</button></div>
+
+        <div class="ds-split">
+          <div>
+            <div class="es-tag" id="tag-new"></div>
+            <h3 class="es-h1 ds-prompt">Which one is “water”?</h3>
+            <div class="es-grid-3" id="img-choices"></div>
+          </div>
+          <div>
+            <div class="es-tag es-tag--mistake" id="tag-mistake"></div>
+            <h3 class="es-h1 ds-prompt">Write this in English</h3>
+            <div class="es-speaker">
+              <div class="es-speaker__char" id="speaker-char"></div>
+              <div class="es-bubble">
+                <button class="es-iconbtn ds-inline-audio" id="say" aria-label="Play the sentence"></button>
+                <span class="es-word" tabindex="0" data-gloss="I want">Quiero</span>
+                <span class="es-word" tabindex="0" data-gloss="a">un</span>
+                <span class="es-word" tabindex="0" data-gloss="coffee">café</span>
+                <span class="es-word" tabindex="0" data-gloss="please">por favor</span>.
+              </div>
+            </div>
+            <div class="es-answer" id="answer" aria-label="Your answer" role="list"></div>
+            <div class="es-bank" id="bank" aria-label="Word bank" role="list"></div>
+          </div>
+        </div>
+
+        <div class="ds-split">
+          <div>
+            <h3 class="es-h3">Match pairs</h3>
+            <div class="es-pairs" id="pairs"></div>
+          </div>
+          <div>
+            <h3 class="es-h3">Listen</h3>
+            <div class="ds-row">
+              <button class="es-audio" id="audio-normal" aria-label="Play"></button>
+              <button class="es-audio es-audio--slow" id="audio-slow" aria-label="Play slowly"></button>
+            </div>
+            <label class="es-label es-muted" for="typed">Type what you hear</label>
+            <input class="es-input" id="typed" autocomplete="off" spellcheck="false" lang="es" placeholder="Escribe en español">
+            <div class="es-accents" id="accents"></div>
+            <h3 class="es-h3 ds-gap">Speak</h3>
+            <button class="es-mic" id="mic" data-state="idle">
+              <span id="mic-icon"></span><span id="mic-label">Tap to speak</span>
+              <span class="es-mic__level" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+            </button>
+            <p class="es-muted ds-small" id="mic-note"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-row">
+        <button class="es-btn es-btn--sm es-btn--ghost" data-footer="">Footer: idle</button>
+        <button class="es-btn es-btn--sm es-btn--ghost" data-footer="correct">Footer: correct</button>
+        <button class="es-btn es-btn--sm es-btn--ghost" data-footer="wrong">Footer: wrong</button>
+      </div>
+      <div class="es-footer ds-card-flat" id="footer" aria-live="polite"></div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-celebrate">
+      <h2 class="es-h3" id="s-celebrate">Celebrations</h2>
+      <div class="ds-card ds-center">
+        <div class="ds-hero-char" id="hero-char"></div>
+        <div class="es-h2" style="color: var(--es-gold-text)">Lesson complete!</div>
+        <div class="es-tiles ds-gap" id="tiles"></div>
+        <div class="ds-gap"><button class="es-btn es-btn--ghost es-btn--sm" id="replay-tiles">Replay</button></div>
+      </div>
+      <div class="ds-card ds-center">
+        <div class="es-display" style="color: var(--es-gold-text)">12</div>
+        <div class="es-h3" style="color: var(--es-gold-text)">day streak</div>
+        <div class="es-week ds-gap" id="week"></div>
+      </div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-cards">
+      <h2 class="es-h3" id="s-cards">Cards, quests, league</h2>
+      <div class="ds-split">
+        <div class="es-card">
+          <div class="es-card__title"><span class="es-h3">Daily quests</span><a class="es-label" style="color: var(--es-secondary-text)" href="#s-cards">View all</a></div>
+          <div id="quests"></div>
+        </div>
+        <div class="es-card">
+          <div class="es-card__title"><span class="es-h3">Ruby league</span><span class="es-muted ds-small">3 days left</span></div>
+          <div id="league"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-forms">
+      <h2 class="es-h3" id="s-forms">Settings, modal, toast, loading</h2>
+      <div class="ds-split">
+        <div class="es-card" id="toggles"></div>
+        <div class="es-card">
+          <div class="ds-row">
+            <button class="es-btn es-btn--danger" id="open-modal">Quit lesson…</button>
+            <button class="es-btn es-btn--secondary" id="open-toast">Show toast</button>
+          </div>
+          <div class="ds-gap es-stack">
+            <div class="es-skel" style="height: 20px; width: 60%"></div>
+            <div class="es-skel" style="height: 20px; width: 85%"></div>
+            <div class="es-skel" style="height: 20px; width: 40%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-cast">
+      <h2 class="es-h3" id="s-cast">Cast (placeholders) · tap to make them talk</h2>
+      <div class="ds-cast" id="cast"></div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-sound">
+      <h2 class="es-h3" id="s-sound">Sounds (synthesised, no files)</h2>
+      <div class="ds-row" id="sounds"></div>
+    </section>
+
+    <section class="ds-sec" aria-labelledby="s-icons">
+      <h2 class="es-h3" id="s-icons">Icons</h2>
+      <div class="ds-icons" id="icons"></div>
+    </section>
+  </main>
+
+  <script src="/spanish/js/ui/icons.js"></script>
+  <script src="/spanish/js/ui/sfx.js"></script>
+  <script src="/spanish/js/ui/characters.js"></script>
+  <script src="/spanish/js/design.js"></script>
+</body>
+</html>

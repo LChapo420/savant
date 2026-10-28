@@ -1,0 +1,4837 @@
+{
+ "track_id": "math",
+ "grade_id": "graduate_core_i",
+ "generated_at": "2026-10-26T03:38:11.826Z",
+ "items": [
+  {
+   "objective_id": "graduate_core_i:L10",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "When actively reading a new theorem, what should you do before reading its proof?",
+   "choices": [
+    "Restate the hypotheses in your own words",
+    "Memorize the author's exact notation",
+    "Skip directly to the corollaries",
+    "Read the next section for context"
+   ],
+   "answer": "Restate the hypotheses in your own words",
+   "rationale": "Restating hypotheses in your own words ensures you understand the precise assumptions before attempting to reconstruct or read the proof.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L10",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "What is the primary purpose of trying to reconstruct a proof before reading it?",
+   "choices": [
+    "To identify the key idea needed",
+    "To avoid reading the text entirely",
+    "To check if the theorem is false",
+    "To memorize the final conclusion"
+   ],
+   "answer": "To identify the key idea needed",
+   "rationale": "Attempting reconstruction forces you to search for the key idea, making the actual proof easier to follow and understand when read.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L10",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "In a theorem-proof text, what best describes the 'key idea' of a proof?",
+   "choices": [
+    "The central insight driving the argument",
+    "The first line of the formal proof",
+    "The restatement of the theorem itself",
+    "The specific notation used throughout"
+   ],
+   "answer": "The central insight driving the argument",
+   "rationale": "The key idea is the central conceptual insight that makes the argument work, distinct from notation, formatting, or merely restating the claim.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L10",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "When restating a theorem's hypotheses, which detail must you always preserve?",
+   "choices": [
+    "The exact quantifier structure",
+    "The original variable names",
+    "The author's preferred font style",
+    "The numbering of the equations"
+   ],
+   "answer": "The exact quantifier structure",
+   "rationale": "Quantifier structure (e.g., 'for all' versus 'there exists') determines the logical meaning. Changing it alters the hypothesis, while variable names are arbitrary.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L92",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "On [0,1] with Lebesgue measure, let fₙ(x)=1−e^(−nx), and let f=limₙ fₙ. Which equality follows from the Monotone Convergence Theorem?",
+   "choices": [
+    "limₙ ∫₀¹ fₙ(x) dx = ∫₀¹ f(x) dx.",
+    "limₙ ∫₀¹ fₙ(x) dx = ∫₀¹ f₁(x) dx.",
+    "limₙ ∫₀¹ fₙ(x) dx = limₙ ∫₀¹ f₁(x) dx.",
+    "limₙ ∫₀¹ fₙ(x) dx = ∫₀¹ |limₙ fₙ(x)−f(x)| dx."
+   ],
+   "answer": "limₙ ∫₀¹ fₙ(x) dx = ∫₀¹ f(x) dx.",
+   "rationale": "Since 0≤fₙ increases pointwise to f, Monotone Convergence gives limₙ∫fₙ=∫f. Here both sides equal 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L92",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "On [0,1], let fₙ(x)=nxe^(−nx). Then fₙ→0 pointwise and 0≤fₙ≤1/e. What value does the Dominated Convergence Theorem give for limₙ∫₀¹fₙ(x)dx?",
+   "choices": [
+    "limₙ ∫₀¹ fₙ(x)dx = ∫₀¹0dx = 0.",
+    "limₙ ∫₀¹ fₙ(x)dx = ∫₀¹(1/e)dx = 1/e.",
+    "limₙ ∫₀¹ fₙ(x)dx = ∫₀¹1dx = 1.",
+    "limₙ ∫₀¹ fₙ(x)dx diverges to +∞."
+   ],
+   "answer": "limₙ ∫₀¹ fₙ(x)dx = ∫₀¹0dx = 0.",
+   "rationale": "The constant 1/e is integrable on [0,1], so dominated convergence permits swapping the limit and integral. The limiting function is zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L92",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "On [0,1], let fₙ(x)=n·1_(0,1/n)(x). Then fₙ→0 pointwise, but ∫₀¹fₙ=1 for every n. What does this example show about interchanging limits and integrals?",
+   "choices": [
+    "Pointwise convergence alone is insufficient; a common integrable bound can justify interchange.",
+    "Pointwise convergence alone always justifies interchange, even without such a bound.",
+    "Nonnegativity alone always justifies interchange by the monotone convergence theorem.",
+    "Finiteness of each fₙ alone always justifies interchange by dominated convergence."
+   ],
+   "answer": "Pointwise convergence alone is insufficient; a common integrable bound can justify interchange.",
+   "rationale": "The pointwise limit is zero while the integrals remain one, so pointwise convergence alone cannot justify interchanging limit and integral.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L105",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Let f_n(x)=n·1_{(0,1/n]}(x) on [0,1]. Why does dominated convergence fail here?",
+   "choices": [
+    "f_n does not converge pointwise.",
+    "No integrable dominating function exists.",
+    "The domain has infinite measure.",
+    "f_n is not measurable."
+   ],
+   "answer": "No integrable dominating function exists.",
+   "rationale": "f_n→0 pointwise a.e. and ∫f_n=1 for all n, so the limit of integrals differs from the integral of the limit. The hypothesis that fails is the existence of an integrable dominating function g with |f_n|≤g.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L105",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "On (0,∞), let f_n(x)=(1/n)·1_{(0,n)}(x). Which DCT hypothesis fails?",
+   "choices": [
+    "Pointwise convergence to zero fails.",
+    "Measurability of each f_n fails.",
+    "No integrable dominating function exists.",
+    "Each f_n is not Lebesgue integrable."
+   ],
+   "answer": "No integrable dominating function exists.",
+   "rationale": "f_n→0 pointwise and each f_n is integrable with ∫f_n=1. However, sup_n f_n(x)=1/x for x>0, which is not integrable on (0,∞). Thus no integrable dominating function exists.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L105",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A student applies DCT to f_n=n²x·e^{-nx} on [0,1], claiming ∫lim f_n=lim∫f_n. What is the error?",
+   "choices": [
+    "The pointwise limit is computed incorrectly.",
+    "The functions are not Lebesgue measurable.",
+    "No integrable dominating function exists.",
+    "The interval [0,1] is not σ-finite."
+   ],
+   "answer": "No integrable dominating function exists.",
+   "rationale": "f_n→0 pointwise on [0,1], but ∫₀¹ f_n dx = 1 for all n. The maximum of f_n grows with n, so no single integrable function dominates all f_n simultaneously.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L105",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "If f_n→f pointwise on a finite measure space and ∫f_n↛∫f, what must be true about DCT hypotheses?",
+   "choices": [
+    "f is not measurable on the space.",
+    "The sequence f_n is not uniformly bounded.",
+    "No integrable dominating function exists.",
+    "f_n fails to converge almost everywhere."
+   ],
+   "answer": "No integrable dominating function exists.",
+   "rationale": "On a finite measure space with pointwise convergence, if the integrals do not converge to the integral of the limit, the only DCT hypothesis that can fail is the existence of an integrable dominating function.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L62",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Let f:ℝ→ℝ, f(x)=x, and use the Borel σ-algebra. Which statement proves f is measurable?",
+   "choices": [
+    "For every a, f⁻¹((a,∞))=(a,∞) is Borel.",
+    "Every subset of f(ℝ) is Borel, so f is measurable.",
+    "Every preimage of a nonempty open set contains an open interval.",
+    "The preimage of every open subset of ℝ is countable."
+   ],
+   "answer": "For every a, f⁻¹((a,∞))=(a,∞) is Borel.",
+   "rationale": "For the identity function, the inverse image of each open ray (a,∞) is the same Borel set. Because {f>a} is Borel for every real a, f is measurable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L62",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Let A∈Σ and f=1_A on (X,Σ,μ). Which statement proves f is measurable?",
+   "choices": [
+    "Every Borel preimage is ∅, A, Aᶜ, or X, all measurable.",
+    "Because A is measurable, f is continuous on X.",
+    "Because f is bounded, f is automatically measurable.",
+    "The identity ∫f dμ=μ(A) establishes measurability."
+   ],
+   "answer": "Every Borel preimage is ∅, A, Aᶜ, or X, all measurable.",
+   "rationale": "The range of f is {0,1}. Any inverse image of a Borel set is therefore ∅, A, Aᶜ, or X, each of which belongs to Σ. The other options use invalid implications or circular reasoning.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L62",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Let f:X→[0,∞) be measurable and possibly unbounded. Which sequence is increasing, simple at each n, and converges pointwise to f?",
+   "choices": [
+    "sₙ=min{2⁻ⁿ⌊2ⁿf⌋,n}",
+    "sₙ=2⁻ⁿ⌊2ⁿf⌋",
+    "sₙ=⌊nf⌋/n",
+    "sₙ=min{2⁻ⁿ⌈2ⁿf⌉,n}"
+   ],
+   "answer": "sₙ=min{2⁻ⁿ⌊2ⁿf⌋,n}",
+   "rationale": "Truncation at n gives each sₙ a finite range, while the dyadic floor construction is nondecreasing in n and converges to f. Without truncation, the range may be infinite; the floor-n and ceiling constructions also need not be increasing.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L82",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "If f and g are nonnegative measurable functions and c > 0, which linearity property holds for the Lebesgue integral?",
+   "choices": [
+    "∫(cf + g) = c∫f + ∫g",
+    "∫(cf + g) = ∫f + c∫g",
+    "∫(cf + g) = c(∫f + ∫g)",
+    "∫(cf + g) = (c+1)(∫f + ∫g)"
+   ],
+   "answer": "∫(cf + g) = c∫f + ∫g",
+   "rationale": "Linearity of the Lebesgue integral for nonnegative measurable functions states that ∫(cf + g) = c∫f + ∫g for any constant c > 0.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L82",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "If f and g are nonnegative measurable functions with f ≤ g almost everywhere, what does monotonicity imply?",
+   "choices": [
+    "∫f ≤ ∫g",
+    "∫f ≥ ∫g",
+    "∫f = ∫g always",
+    "∫f < ∫g strictly"
+   ],
+   "answer": "∫f ≤ ∫g",
+   "rationale": "Monotonicity of the Lebesgue integral states that if f ≤ g almost everywhere for nonnegative measurable functions, then ∫f ≤ ∫g. Equality can occur, so strict inequality is not guaranteed.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L82",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "For a nonnegative measurable function f, how is the Lebesgue integral defined?",
+   "choices": [
+    "As the supremum of integrals of simple functions s with 0 ≤ s ≤ f",
+    "As the infimum of integrals of simple functions s with s ≥ f",
+    "As the limit of Riemann sums over measurable partitions",
+    "As the sum of f evaluated at countably many points"
+   ],
+   "answer": "As the supremum of integrals of simple functions s with 0 ≤ s ≤ f",
+   "rationale": "The Lebesgue integral of a nonnegative measurable function f is defined as the supremum of the integrals of all nonnegative simple functions s satisfying 0 ≤ s ≤ f.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The Lebesgue integral of a nonnegative measurable function is defined as the supremum of integrals of simple functions dominated by it.",
+      "url": "https://en.wikipedia.org/wiki/Lebesgue_integral",
+      "quote": "The integral of a non-negative general measurable function is then defined as an appropriate supremum of approximations by simple functions, and the integral of a (not necessarily positive) measurable function is the difference of two integrals of non-negative measurable functions.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L20",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "If ℱ is a σ‑algebra on a set X and (E_n)_{n≥1} ⊂ ℱ, which statement is always true?",
+   "choices": [
+    "The countable union ⋃_{n=1}^∞ E_n belongs to ℱ.",
+    "The uncountable union ⋃_{i∈I} E_i belongs to ℱ for any index set I.",
+    "For every A ∈ ℱ, the complement A^c is not in ℱ.",
+    "ℱ must be a finite collection of subsets."
+   ],
+   "answer": "The countable union ⋃_{n=1}^∞ E_n belongs to ℱ.",
+   "rationale": "Closure under countable unions is a defining axiom of a σ‑algebra; the other options contradict the axioms (uncountable unions need not be in ℱ, complements are always in ℱ, and σ‑algebras can be infinite).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "A σ-algebra is closed under countable unions.",
+      "url": "https://en.wiktionary.org/wiki/%CF%83-algebra",
+      "quote": "( mathematical analysis ) A collection of subsets of a given set, such that the empty set is part of this collection, the collection is closed under complements (with respect to the given set) and the collection is closed under countable unions .",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L20",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Let 𝒜 be a collection of subsets of a set X. The σ‑algebra generated by 𝒜 is the smallest σ‑algebra containing 𝒜. Which description is correct?",
+   "choices": [
+    "The intersection of all σ‑algebras on X that contain 𝒜.",
+    "The union of all σ‑algebras on X that contain 𝒜.",
+    "The set of all finite unions of members of 𝒜.",
+    "The set of all countable intersections of members of 𝒜."
+   ],
+   "answer": "The intersection of all σ‑algebras on X that contain 𝒜.",
+   "rationale": "By definition, the generated σ‑algebra is the intersection of every σ‑algebra that contains the generating family; this intersection is itself a σ‑algebra and is the smallest such one.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "The σ-algebra generated by a family is the intersection of all σ-algebras containing that family.",
+      "url": "https://en.wikipedia.org/wiki/%CE%A3-algebra",
+      "quote": "may or may not itself be a σ-algebra). It is, in fact, the intersection of all σ-algebras containing",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L20",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Let X = {1,2,3,4} and 𝒞 = {{1,2}, {3}}. The σ‑algebra σ(𝒞) generated by 𝒞 consists of which family of subsets?",
+   "choices": [
+    "∅, X, {1,2}, {3}, {3,4}, {1,2,4}, {1,2,3}, {4}.",
+    "∅, X, {1,2}, {3}, {1,3}, {2,4}, {1,2,3}, {4}.",
+    "∅, X, {1,2}, {3}, {1,3}, {2,3}, {1,2,3}, {4}.",
+    "∅, X, {1,2}, {3}, {1,2,3}, {2,3,4}, {1,4}, {4}."
+   ],
+   "answer": "∅, X, {1,2}, {3}, {3,4}, {1,2,4}, {1,2,3}, {4}.",
+   "rationale": "Starting from 𝒞, take complements and countable unions; this yields exactly the eight sets listed in the first choice. The other families either miss required sets or contain sets not forced by the generation process.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "The generated σ-algebra consists of all unions of the atoms {1,2}, {3}, and {4}.",
+      "url": "https://en.wikipedia.org/wiki/%CE%A3-algebra",
+      "quote": "then the collection of all unions of sets in the partition (including the empty set) is a σ-algebra.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L20",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "discrete_math",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which of the following sets is NOT necessarily a Borel subset of ℝ?",
+   "choices": [
+    "An open interval (a,b).",
+    "A countable union of closed intervals.",
+    "A Vitali set constructed using the axiom of choice.",
+    "A countable set of rational numbers."
+   ],
+   "answer": "A Vitali set constructed using the axiom of choice.",
+   "rationale": "Open intervals, countable unions of closed intervals, and countable sets are all Borel. A Vitali set is a classic example of a non‑Borel (indeed non‑Lebesgue‑measurable) set.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "A Vitali set is not Lebesgue measurable, so it cannot be a Borel subset of ℝ.",
+      "url": "https://en.wikipedia.org/wiki/A_subset_of_R_which_is_not_Lebesgue_measurable",
+      "quote": "In mathematics , a Vitali set is an elementary example of a set of real numbers that is not Lebesgue measurable , found by Giuseppe Vitali in 1905.",
+      "reader": "qwen/qwen3.8-max:free"
+     },
+     {
+      "claim": "A Vitali set is not Lebesgue measurable, and therefore it cannot be a Borel set.",
+      "url": "https://en.wikipedia.org/wiki/Lebesgue_measurable_set",
+      "quote": "Vitali sets are examples of sets that are not measurable with respect to the Lebesgue measure.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L40",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Which construction is the first step in defining Lebesgue measure on the real line?",
+   "choices": [
+    "Use the infimum of interval-cover length sums.",
+    "Use the supremum of interval-cover length sums.",
+    "Use the infimum of finite-partition length sums.",
+    "Use the supremum of compact-subset lengths."
+   ],
+   "answer": "Use the infimum of interval-cover length sums.",
+   "rationale": "Lebesgue outer measure is defined by this infimum; measurable sets are then selected via the Carathéodory criterion.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L40",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "For measurable E, what does Lebesgue regularity assert for every ε > 0?",
+   "choices": [
+    "Open G and closed F satisfy F ⊆ E ⊆ G, with both differences having measure below ε.",
+    "Open G and closed F satisfy G ⊆ E ⊆ F, with both differences having measure below ε.",
+    "Open G and closed F satisfy F ⊆ E ⊆ G, with both differences having measure zero.",
+    "Open G and closed F satisfy F ⊆ E ⊆ G, and all three measures are equal."
+   ],
+   "answer": "Open G and closed F satisfy F ⊆ E ⊆ G, with both differences having measure below ε.",
+   "rationale": "Regularity means measurable sets can be approximated from outside by open sets and from inside by closed sets in measure.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L40",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "On [0,1], let x ∼ y when x − y is rational, and choose one representative from each class. What follows, assuming the axiom of choice?",
+   "choices": [
+    "The resulting Vitali set is non-Lebesgue-measurable.",
+    "The resulting Vitali set is measurable and has measure zero.",
+    "The resulting Vitali set is measurable and has positive measure.",
+    "The resulting Vitali set is measurable, but its measure is undetermined."
+   ],
+   "answer": "The resulting Vitali set is non-Lebesgue-measurable.",
+   "rationale": "Countable rational translates of a measurable representative set lead to a measure contradiction, proving nonmeasurability.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "A Vitali set constructed by choosing one representative from each equivalence class of [0,1] modulo the rationals is not Lebesgue measurable.",
+      "url": "https://en.wikipedia.org/wiki/Vitali_set",
+      "quote": "a Vitali set is an elementary example of a set of real numbers that is not Lebesgue measurable",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L147",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let G act by conjugation on the set Syl_p(G) of Sylow p-subgroups. For P ∈ Syl_p(G), which statement follows from orbit–stabilizer?",
+   "choices": [
+    "n_p = [G:N_G(P)], so n_p divides |G|.",
+    "n_p = |N_G(P)|, so n_p divides |G|.",
+    "n_p = [G:C_G(P)], so n_p divides |G|.",
+    "n_p = |G|/|N_G(P)|, so n_p is a power of p."
+   ],
+   "answer": "n_p = [G:N_G(P)], so n_p divides |G|.",
+   "rationale": "The stabilizer of P is its normalizer N_G(P). The orbit is all Sylow p-subgroups, so n_p = |G|/|N_G(P)| and therefore divides |G|.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L147",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let P be a Sylow p-subgroup of G and let P act by conjugation on Syl_p(G). Which explanation correctly gives n_p ≡ 1 (mod p)?",
+   "choices": [
+    "P has one fixed Sylow subgroup; every other orbit has size divisible by p.",
+    "P has p fixed Sylow subgroups; every other orbit has size two.",
+    "P has one fixed Sylow subgroup; every other orbit has size one.",
+    "All Sylow subgroups are fixed; every orbit has size divisible by p."
+   ],
+   "answer": "P has one fixed Sylow subgroup; every other orbit has size divisible by p.",
+   "rationale": "Only P is fixed: if P normalizes another Sylow subgroup Q, then PQ would be a larger p-subgroup. All remaining P-orbits have size divisible by p, giving n_p ≡ 1 (mod p).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L147",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let G have order 30, with n_3 = 10 and n_5 = 6. How many elements of orders 3 and 5 occur, and what follows?",
+   "choices": [
+    "20 of order 3 and 24 of order 5, contradicting |G| = 30.",
+    "20 of order 3 and 24 of order 5, fitting within |G| = 30.",
+    "10 of order 3 and 6 of order 5, contradicting |G| = 30.",
+    "20 of order 3 and 6 of order 5, fitting within |G| = 30."
+   ],
+   "answer": "20 of order 3 and 24 of order 5, contradicting |G| = 30.",
+   "rationale": "Distinct subgroups of prime order intersect only in the identity. Thus the ten Sylow 3-subgroups contribute 20 elements, while the six Sylow 5-subgroups contribute 24, giving 44 nonidentity elements in a group of order 30.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L167",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "For A = ⟨a | a² = 1⟩ and B = ⟨b | b³ = 1⟩, choose the free-product presentation.",
+   "choices": [
+    "⟨a, b | a² = b³ = 1⟩",
+    "⟨a, b | a² = b² = 1⟩",
+    "⟨a, b | a² = 1, b³ = 1, ab = ba⟩",
+    "⟨a, b | a² = 1, b³ = 1, a = b⟩"
+   ],
+   "answer": "⟨a, b | a² = b³ = 1⟩",
+   "rationale": "A free product retains the relations of each factor and imposes no new relation between generators from different factors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L167",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "In G = ⟨a, b | a⁴ = 1, b⁶ = 1, a² = b³⟩, reduce b³a⁻¹ to a reduced normal form.",
+   "choices": [
+    "a",
+    "a⁻¹",
+    "b²",
+    "b⁵"
+   ],
+   "answer": "a",
+   "rationale": "The amalgamated relation gives b³ = a², so b³a⁻¹ = a²a⁻¹ = a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L167",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which argument proves the Nielsen–Schreier theorem for a subgroup H of a free group F(a,b)?",
+   "choices": [
+    "Schreier transversal elements t x overline(tx)⁻¹ form a free basis.",
+    "Coset conjugates t x t⁻¹ form a free basis.",
+    "Schreier elements generate H but may satisfy relations.",
+    "The finite-index formula 1 + n(r − 1) applies to every H."
+   ],
+   "answer": "Schreier transversal elements t x overline(tx)⁻¹ form a free basis.",
+   "rationale": "Choosing a Schreier transversal produces the generators t x overline(tx)⁻¹, which form a free basis of the arbitrary subgroup H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L209",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "In the standard proof of Hölder’s inequality for conjugate exponents p and q, which pointwise inequality supplies the key estimate?",
+   "choices": [
+    "(|a||b|) ≤ (|a|^p/p) + (|b|^q/q)",
+    "(|a||b|) ≤ |a|^p + |b|^q",
+    "(|a||b|) ≤ p|a| + q|b|",
+    "(|a||b|) ≤ (|a|^p/p) − (|b|^q/q)"
+   ],
+   "answer": "(|a||b|) ≤ (|a|^p/p) + (|b|^q/q)",
+   "rationale": "Young’s inequality gives |a||b|≤|a|^p/p+|b|^q/q. Applying it to normalized functions and integrating yields Hölder’s inequality.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L209",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "In the standard proof of Minkowski’s inequality for 1<p<∞, which estimate follows after applying Hölder to the two terms involving f and g?",
+   "choices": [
+    "∫|f+g|^p ≤ ||f+g||_p^(p−1)(||f||_p+||g||_p)",
+    "∫|f+g|^p ≤ ||f||_p^(p−1)(||f||_p+||g||_p)",
+    "∫|f+g|^p ≤ ||f+g||_p^(p−1)||f||_p||g||_p",
+    "∫|f+g|^p ≥ ||f+g||_p^(p−1)(||f||_p+||g||_p)"
+   ],
+   "answer": "∫|f+g|^p ≤ ||f+g||_p^(p−1)(||f||_p+||g||_p)",
+   "rationale": "Expanding |f+g|^p and applying Hölder gives an upper bound involving ||f+g||_p^(p−1)(||f||_p+||g||_p). Division and rearrangement yield Minkowski’s inequality.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L209",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly compares L^p norms for p>q on finite- and infinite-measure spaces?",
+   "choices": [
+    "Finite spaces give ||f||_p ≤ μ(X)^(1/p−1/q)||f||_q; infinite spaces give no unconditional norm ordering.",
+    "Finite spaces give ||f||_p ≥ μ(X)^(1/p−1/q)||f||_q; infinite spaces give the same unconditional ordering.",
+    "Finite spaces give no unconditional norm ordering; infinite spaces always give ||f||_p ≤ ||f||_q.",
+    "Both finite and infinite spaces always give ||f||_p ≤ ||f||_q for every common L^p function."
+   ],
+   "answer": "Finite spaces give ||f||_p ≤ μ(X)^(1/p−1/q)||f||_q; infinite spaces give no unconditional norm ordering.",
+   "rationale": "On finite spaces, ||f||_p≤μ(X)^(1/p−1/q)||f||_q. On infinite spaces, examples can have either ordering, so no unconditional comparison of the two norms holds.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L52",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which property makes the Cantor function a counterexample to the converse of the fundamental theorem of calculus?",
+   "choices": [
+    "It is continuous, non-decreasing, yet constant almost everywhere.",
+    "It is differentiable everywhere with a discontinuous derivative.",
+    "It maps sets of measure zero to sets of full measure.",
+    "It is absolutely continuous but not Lipschitz anywhere."
+   ],
+   "answer": "It is continuous, non-decreasing, yet constant almost everywhere.",
+   "rationale": "The Cantor function is continuous and non-decreasing on [0,1], rising from 0 to 1, yet its derivative is zero almost everywhere. Thus it cannot be recovered by integrating its derivative, violating the converse of the FTC.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Cantor function is continuous and non-decreasing, is constant on the complement of the Cantor set, and hence is constant almost everywhere while still varying overall.",
+      "url": "https://en.wikipedia.org/wiki/Cantor_function",
+      "quote": "Although it is continuous everywhere, and has zero derivative almost everywhere, its value still goes from 0 to 1 as its argument goes from 0 to 1.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Cantor function is constant on each removed interval, so it is constant almost everywhere.",
+      "url": "https://en.wikipedia.org/wiki/Cantor_function",
+      "quote": "It is constant on intervals of the form (0. x 1 x 2 x 3 ... , 0. x 1 x 2 x 3 ... ), and every point not in the Cantor set is in one of these intervals, so its derivative is 0 outside of the Cantor set.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L52",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "What is the Lebesgue measure of a fat Cantor set constructed by removing middle intervals of length 1/4^n at step n from [0,1]?",
+   "choices": [
+    "0",
+    "1/3",
+    "1/2",
+    "1"
+   ],
+   "answer": "1/2",
+   "rationale": "The total removed length is sum_{n=1}^{∞} 2^{n-1}/4^n = (1/2)·sum (1/2)^{n-1}·(1/2) = 1/2, so the remaining set has measure 1 - 1/2 = 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L52",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In constructing a Vitali set on [0,1], which equivalence relation partitions the interval?",
+   "choices": [
+    "x ~ y iff x - y ∈ Q",
+    "x ~ y iff x/y ∈ Q",
+    "x ~ y iff |x - y| < 1",
+    "x ~ y iff x + y ∈ Q"
+   ],
+   "answer": "x ~ y iff x - y ∈ Q",
+   "rationale": "The Vitali set uses the relation x ~ y iff x - y is rational. Choosing one representative per equivalence class via the Axiom of Choice yields a non-measurable set.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L52",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "For a finite Borel measure on R, outer regularity means the measure of any Borel set equals the infimum of measures of what?",
+   "choices": [
+    "Closed subsets inside it",
+    "Open sets containing it",
+    "Compact subsets inside it",
+    "Measurable supersets of it"
+   ],
+   "answer": "Open sets containing it",
+   "rationale": "Outer regularity states that for every Borel set E, μ(E) = inf{μ(U) : U ⊇ E, U open}. Inner regularity uses compact or closed subsets from within.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L346",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "To prove a sequence of functions converges uniformly using an epsilon/3 argument, what is the standard strategy?",
+   "choices": [
+    "Split the error into three parts, bounding each by epsilon/3",
+    "Bound the total error directly by epsilon without splitting",
+    "Use only two terms each bounded by epsilon/2",
+    "Apply the triangle inequality once with no splitting"
+   ],
+   "answer": "Split the error into three parts, bounding each by epsilon/3",
+   "rationale": "The epsilon/3 argument splits the difference into three intermediate terms via the triangle inequality, then bounds each term by epsilon/3 so their sum is strictly less than epsilon.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L346",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "In a density argument to extend a linear functional from a dense subspace D to a Banach space X, which property of the functional is essential?",
+   "choices": [
+    "Boundedness on the dense subspace",
+    "Pointwise convergence on the whole space",
+    "Injectivity on the dense subspace",
+    "Compactness of the unit ball in D"
+   ],
+   "answer": "Boundedness on the dense subspace",
+   "rationale": "A bounded (continuous) linear functional on a dense subspace extends uniquely to the whole space. Boundedness ensures the extension is well-defined and continuous.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L346",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "When proving integrability by truncation, why do we approximate f by f_n = f · 1_{|f|≤n}?",
+   "choices": [
+    "Each f_n is bounded and measurable, hence easier to integrate",
+    "Each f_n has compact support in every topological space",
+    "Truncation makes f_n differentiable almost everywhere",
+    "It guarantees f_n converges uniformly to f on all sets"
+   ],
+   "answer": "Each f_n is bounded and measurable, hence easier to integrate",
+   "rationale": "Truncation produces bounded measurable functions f_n that converge pointwise to f. Boundedness allows application of dominated or monotone convergence theorems to handle the integral.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L346",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "To construct a counterexample showing L¹ convergence does not imply pointwise a.e. convergence, which strategy is standard?",
+   "choices": [
+    "Use sliding indicator functions of shrinking intervals",
+    "Use constant functions with increasing values",
+    "Use polynomials of increasing degree on [0,1]",
+    "Use exponential functions with growing exponents"
+   ],
+   "answer": "Use sliding indicator functions of shrinking intervals",
+   "rationale": "Sliding indicators (typewriter sequence) have L¹ norms equal to the interval lengths, which shrink to zero, yet every point is visited infinitely often, preventing pointwise convergence.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L219",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "In the Riesz-Fischer proof that L^p is complete, given a Cauchy sequence, one extracts a subsequence. What key property must this subsequence satisfy?",
+   "choices": [
+    "It converges uniformly on the whole space.",
+    "The sum of norms of consecutive differences is finite.",
+    "Each term is bounded by an integrable function.",
+    "It converges pointwise everywhere on the domain."
+   ],
+   "answer": "The sum of norms of consecutive differences is finite.",
+   "rationale": "The Riesz-Fischer proof selects a subsequence whose consecutive differences have summable L^p norms, enabling application of the monotone convergence theorem to show almost everywhere convergence of the telescoping series.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L219",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "A sequence f_n converges to f in measure on a finite measure space. Which statement is necessarily true?",
+   "choices": [
+    "f_n converges to f almost everywhere.",
+    "Every subsequence has a further subsequence converging a.e.",
+    "f_n converges to f in L^1 norm.",
+    "f_n converges to f almost uniformly on the space."
+   ],
+   "answer": "Every subsequence has a further subsequence converging a.e.",
+   "rationale": "Convergence in measure does not imply almost everywhere or L^1 convergence, but every subsequence admits a further subsequence that converges almost everywhere to the same limit.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L219",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "What role does Fatou's lemma play in proving L^p completeness via Riesz-Fischer?",
+   "choices": [
+    "It shows the candidate limit belongs to L^p.",
+    "It proves the subsequence converges uniformly.",
+    "It establishes pointwise convergence of the sequence.",
+    "It guarantees the original sequence is Cauchy."
+   ],
+   "answer": "It shows the candidate limit belongs to L^p.",
+   "rationale": "After constructing a pointwise limit from a rapidly Cauchy subsequence, Fatou's lemma applied to the partial sums of absolute differences confirms the limit function has finite L^p norm, hence lies in L^p.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L219",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "On a finite measure space, if f_n converges to f almost everywhere, what else must hold?",
+   "choices": [
+    "f_n converges to f in L^p for all p.",
+    "f_n converges to f uniformly on the space.",
+    "f_n converges to f almost uniformly.",
+    "f_n converges to f in measure only if dominated."
+   ],
+   "answer": "f_n converges to f almost uniformly.",
+   "rationale": "By Egorov's theorem, almost everywhere convergence on a finite measure space implies almost uniform convergence, meaning uniform convergence outside sets of arbitrarily small measure.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Egorov's theorem: on a finite measure space, a.e. convergence implies almost uniform convergence.",
+      "url": "https://en.wikipedia.org/wiki/Egorov's_theorem",
+      "quote": "Under the same hypothesis of the abstract Severini–Egorov theorem suppose that A is the union of a sequence of measurable sets of finite μ-measure, and ( f n ) is a given sequence of M -valued measurable functions on some measure space ( X ,Σ,μ), such that ( f n ) converges μ- almost everywhere on A to a limit function f , then A can be expressed as the union of a sequence of measurable sets H , A 1 , A 2 ,... such that μ( H ) = 0 and ( f n ) converges to f uniformly on each set A k .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L72",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Which condition is necessary for Egorov's theorem to hold on a measure space?",
+   "choices": [
+    "The domain must have finite measure",
+    "The functions must be continuous",
+    "The limit function must be integrable",
+    "The measure space must be complete"
+   ],
+   "answer": "The domain must have finite measure",
+   "rationale": "Egorov's theorem requires the underlying measurable set to have finite measure; it can fail on sets of infinite measure even if pointwise convergence holds.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The standard Egorov theorem assumes that the underlying measure space has finite measure.",
+      "url": "https://en.wikipedia.org/wiki/Egorov's_theorem",
+      "quote": "It is sufficient to consider the case in which the set A is itself of finite μ-measure: using this hypothesis and the standard Severini–Egorov theorem, it is possible to define by mathematical induction a sequence of sets { A k } k=1,2,... such that",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Egorov's theorem requires the domain to have finite measure.",
+      "url": "https://en.wikipedia.org/wiki/Egorov's_theorem",
+      "quote": "an earlier generalization is due to Nikolai Luzin , who succeeded in slightly relaxing the requirement of finiteness of measure of the domain of convergence of the pointwise converging functions in the long (242 pages) paper ( Luzin 1916 ).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L72",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Lusin's theorem guarantees that for every measurable function on [a,b] with finite measure and every epsilon > 0, there exists:",
+   "choices": [
+    "A continuous function equal to f outside a set of measure < epsilon",
+    "A step function converging uniformly to f everywhere",
+    "A polynomial approximating f in L^1 norm exactly",
+    "A simple function dominating f on the entire interval"
+   ],
+   "answer": "A continuous function equal to f outside a set of measure < epsilon",
+   "rationale": "Lusin's theorem states that a measurable function is nearly continuous: it equals a continuous function except on a set of arbitrarily small measure.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Lusin's theorem states that a measurable function on a finite-measure interval agrees with a continuous function outside a set of arbitrarily small measure.",
+      "url": "https://en.wikipedia.org/wiki/Lusin's_theorem",
+      "quote": "In the mathematical field of mathematical analysis , Lusin's theorem (or Luzin's theorem , named for Nikolai Luzin ) or Lusin's criterion states that an almost-everywhere finite function is measurable if and only if it is a continuous function on nearly all its domain.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Lusin's theorem: for a measurable function on a finite-measure interval, one can find a continuous function equal to it outside a set of arbitrarily small measure.",
+      "url": "https://en.wikipedia.org/wiki/Lusin's_theorem",
+      "quote": "Also for any function f , defined on the interval [ a , b ] and almost-everywhere finite, if for any ε > 0 there is a function ϕ , continuous on [ a , b ], such that the measure of the set",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L72",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Let X have finite measure. In a proof of Egorov’s theorem, exceptional sets for successive approximation stages satisfy μ(E_k)<δ/2^k. Which set has measure below δ and contains every stage’s exceptional set?",
+   "choices": [
+    "E = ⋃_{k=1}^∞ E_k",
+    "E = ⋂_{k=1}^∞ E_k",
+    "E = X∖⋃_{k=1}^∞ E_k",
+    "E = ⋃_{k=1}^∞ (X∖E_k)"
+   ],
+   "answer": "E = ⋃_{k=1}^∞ E_k",
+   "rationale": "By countable subadditivity, μ(⋃E_k)≤∑μ(E_k)<∑δ/2^k=δ. The union also contains every exceptional set from each approximation stage.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L440",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Let A and B be 2×2 matrices over Q. Which single condition is necessary and sufficient for A and B to be similar over Q?",
+   "choices": [
+    "They have the same characteristic polynomial.",
+    "They have the same determinant.",
+    "They have the same invariant factors in Q[x].",
+    "They have the same trace and determinant."
+   ],
+   "answer": "They have the same invariant factors in Q[x].",
+   "rationale": "Two matrices over a field are similar exactly when their lists of invariant factors agree; the other conditions are insufficient.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L440",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Let A over Q have characteristic polynomial (x−1)²(x+2) and minimal polynomial (x−1)(x+2). Here C(p) denotes the companion matrix of p. Which rational canonical form is similar to A?",
+   "choices": [
+    "diag(1,1,−2)",
+    "C(x−1) ⊕ C(x−1) ⊕ C(x+2)",
+    "C(x−1) ⊕ C((x−1)(x+2))",
+    "C((x−1)(x+2)) ⊕ C(1)"
+   ],
+   "answer": "C(x−1) ⊕ C((x−1)(x+2))",
+   "rationale": "The invariant factors are 1, x−1, and (x−1)(x+2), so the rational form has companion blocks of degrees 1 and 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L440",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Let A be a 4×4 matrix over C with characteristic and minimal polynomials both equal to (x−2)²(x−3)². Which Jordan canonical form is similar to A?",
+   "choices": [
+    "J₁(2) ⊕ J₁(2) ⊕ J₁(3) ⊕ J₁(3)",
+    "J₂(2) ⊕ J₂(3)",
+    "J₂(2) ⊕ J₁(3) ⊕ J₁(3)",
+    "J₁(2) ⊕ J₁(2) ⊕ J₂(3)"
+   ],
+   "answer": "J₂(2) ⊕ J₂(3)",
+   "rationale": "The minimal polynomial has exponent 2 for each eigenvalue, so the Jordan form contains one size-2 block for 2 and one for 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L261",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Let ρ_ε(y)=ε⁻ⁿρ(y/ε), where ρ≥0, has support in the unit ball, integrates to 1, and ∫_{|y|>δ}|ρ(y)|dy→0. If f∈L¹(ℝⁿ), where is (ρ_ε*f)(x) guaranteed to converge to f(x) as ε→0?",
+   "choices": [
+    "At every Lebesgue point of f",
+    "At every point where f is finite",
+    "At every point of ℝⁿ",
+    "Only at points where f is continuous"
+   ],
+   "answer": "At every Lebesgue point of f",
+   "rationale": "An approximate identity converges to f at every Lebesgue point. The proof splits the convolution into a near part, controlled by the Lebesgue-point condition, and a far part, controlled by the kernel’s vanishing tails.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L261",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "For a locally integrable function f on ℝⁿ, what does the Lebesgue differentiation theorem state about averages over balls centered at x as their radii shrink?",
+   "choices": [
+    "lim_{r→0}(1/|B(x,r)|)∫_{B(x,r)}f=f(x) for almost every x",
+    "lim_{r→0}(1/|B(x,r)|)∫_{B(x,r)}f=0 for almost every x",
+    "lim_{r→0}(1/|B(x,r)|)∫_{B(x,r)}f=f(x) at every point",
+    "lim_{r→0}(1/|B(x,r)|)∫_{B(x,r)}f=ess inf f for almost every x"
+   ],
+   "answer": "lim_{r→0}(1/|B(x,r)|)∫_{B(x,r)}f=f(x) for almost every x",
+   "rationale": "The Lebesgue differentiation theorem says that the mean of a locally integrable function over balls tends to its value at almost every point.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L261",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Define Mf(x)=sup_{B∋x}|B|⁻¹∫_B|f|, and let E_λ={x:Mf(x)>λ}. For f∈L¹(ℝⁿ), which estimate is the weak-type Hardy–Littlewood maximal inequality?",
+   "choices": [
+    "|E_λ| ≤ Cₙ‖f‖₁",
+    "λ|E_λ| ≥ Cₙ‖f‖₁",
+    "λ|E_λ| ≤ Cₙ‖f‖₁",
+    "|E_λ| ≤ Cₙ‖f‖₁/λ²"
+   ],
+   "answer": "λ|E_λ| ≤ Cₙ‖f‖₁",
+   "rationale": "The covering lemma bounds λ|E_λ| by a constant times the sum of the ball averages of |f|. Disjointness makes this sum at most Cₙ‖f‖₁.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The constant C_n in the weak-type bound λ|E_λ| ≤ C_n‖f‖₁ depends only on the dimension n.",
+      "url": "https://en.wikipedia.org/wiki/Hardy%E2%80%93Littlewood_maximal_function",
+      "quote": "Theorem (Weak Type Estimate). For d ≥ 1, there is a constant C d > 0 such that for all λ > 0 and f ∈ L ( R ), we have:",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L515",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "What is the Weierstrass elementary factor E_0(z)?",
+   "choices": [
+    "1 - z",
+    "e^{-z}",
+    "(1-z)e^{z}",
+    "e^{z}-1"
+   ],
+   "answer": "1 - z",
+   "rationale": "By definition, E_0(z) = 1 - z. For p ≥ 1, E_p(z) = (1-z)exp(z + z^2/2 + ... + z^p/p).",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L515",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "For zeros a_n with |a_n| → ∞, which condition on integers p_n ensures ∏E_{p_n}(z/a_n) converges uniformly on compact sets?",
+   "choices": [
+    "∑|z/a_n|^{p_n+1} converges",
+    "∑(|R/a_n|)^{p_n+1} < ∞ for all R > 0",
+    "∑1/|a_n|^{p_n} converges",
+    "p_n ≥ n for every n"
+   ],
+   "answer": "∑(|R/a_n|)^{p_n+1} < ∞ for all R > 0",
+   "rationale": "Uniform convergence on compact sets requires that for each radius R, the series ∑(R/|a_n|)^{p_n+1} converges, which guarantees absolute and uniform convergence of the infinite product.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L515",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "If an entire function has zeros exactly at the positive integers, what is the minimal genus p such that ∑(1/n)^{p+1} converges?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "1",
+   "rationale": "We need ∑(1/n)^{p+1} to converge. For p=0 the harmonic series diverges; for p=1 we get ∑1/n^2 which converges. Thus the minimal genus is p=1.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L515",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "In the Weierstrass factorization f(z)=z^m e^{g(z)}∏E_p(z/a_n), what does g(z) represent?",
+   "choices": [
+    "A polynomial of degree p",
+    "An entire function",
+    "The principal part at infinity",
+    "A rational function with poles at a_n"
+   ],
+   "answer": "An entire function",
+   "rationale": "The factor e^{g(z)} accounts for the non-vanishing part of f. By the factorization theorem, g(z) is an arbitrary entire function, not necessarily a polynomial unless f has finite order.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L199",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "If N ⊲ G is a normal Hall subgroup (|N| coprime to [G:N]), the Schur–Zassenhaus theorem states:",
+   "choices": [
+    "N has a complement in G and all complements are conjugate.",
+    "N has a complement, but complements need not be conjugate.",
+    "A complement exists only when N is central in G.",
+    "N is always a direct factor of G."
+   ],
+   "answer": "N has a complement in G and all complements are conjugate.",
+   "rationale": "Schur–Zassenhaus guarantees a complement for a normal Hall subgroup and that any two complements are conjugate; the other statements are false.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Schur–Zassenhaus guarantees that a normal Hall subgroup has a complement and that all such complements are conjugate.",
+      "url": "https://en.wikipedia.org/wiki/Schur%E2%80%93Zassenhaus_theorem",
+      "quote": "Theorem 25, which he credits to Issai Schur , proves the existence of a complement, and theorem 27 proves that all complements are conjugate under the assumption that",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L199",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "For a finite group G with Sylow p‑subgroup P, Burnside’s normal p‑complement theorem guarantees a normal p‑complement precisely when:",
+   "choices": [
+    "P lies in the center of its normalizer.",
+    "P is a cyclic Sylow p‑subgroup.",
+    "P is an abelian Sylow p‑subgroup.",
+    "The normalizer of P equals P."
+   ],
+   "answer": "P lies in the center of its normalizer.",
+   "rationale": "Burnside’s theorem states that if P ≤ Z(N_G(P)) then G has a normal p‑complement; the other conditions are not sufficient.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Burnside’s normal p-complement theorem states that G has a normal p-complement if and only if its Sylow p-subgroup P lies in the center of N_G(P).",
+      "url": "https://en.wikipedia.org/wiki/Normal_p-complement",
+      "quote": "Burnside ( 1911 , Theorem II, section 243) showed that if a Sylow p -subgroup of a group G is in the center of its normalizer then G has a normal p -complement .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L199",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "In a finite solvable group G of order 60, what does Hall's theorem guarantee about subgroups of order 15?",
+   "choices": [
+    "A normal subgroup of order 15",
+    "A subgroup of order 15 exists",
+    "Exactly one subgroup of order 15",
+    "No subgroup of order 15 exists"
+   ],
+   "answer": "A subgroup of order 15 exists",
+   "rationale": "Hall's theorem guarantees that in a finite solvable group, a Hall π-subgroup exists for every set of primes π. Since {3,5} divides 60 and gcd(15,4)=1, a subgroup of order 15 must exist.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L115",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "If f is Riemann integrable on [a,b], which statement must be true?",
+   "choices": [
+    "f is Lebesgue integrable on [a,b]",
+    "f is continuous on [a,b]",
+    "f is monotone on [a,b]",
+    "f is differentiable almost everywhere"
+   ],
+   "answer": "f is Lebesgue integrable on [a,b]",
+   "rationale": "Every Riemann integrable function on a bounded interval is bounded and continuous almost everywhere, hence measurable and bounded, which guarantees Lebesgue integrability with equal integral values.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "nemotron",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Every bounded Riemann-integrable function on a closed interval is also Lebesgue integrable.",
+      "url": "https://en.wikipedia.org/wiki/Lebesgue",
+      "quote": "Lebesgue integration has the property that every function defined over a bounded interval with a Riemann integral also has a Lebesgue integral, and for those functions the two integrals agree.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L115",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let f equal 1 on the rational numbers in [0,1] and 0 on the irrational numbers. What is true about its integrability?",
+   "choices": [
+    "Not Riemann integrable; Lebesgue integrable, integral 0.",
+    "Riemann integrable; not Lebesgue integrable.",
+    "Not Riemann integrable; not Lebesgue integrable.",
+    "Riemann integrable; Lebesgue integral 0."
+   ],
+   "answer": "Not Riemann integrable; Lebesgue integrable, integral 0.",
+   "rationale": "The function is discontinuous everywhere, so it is not Riemann integrable. The rationals have measure zero, however, so its Lebesgue integral is 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The set of rational numbers in [0,1] is countable and has Lebesgue measure zero.",
+      "url": "https://en.wikipedia.org/wiki/Set_of_rational_numbers",
+      "quote": "As the set of all rational numbers is countable, and the set of all real numbers (as well as the set of irrational numbers) is uncountable, the set of rational numbers is a null set , that is, almost all real numbers are irrational, in the sense of Lebesgue measure .",
+      "reader": "qwen/qwen3.8-max:free"
+     },
+     {
+      "claim": "The Dirichlet function (1 on rationals, 0 on irrationals) is not Riemann integrable but is Lebesgue integrable with integral 0 because the rationals have measure zero.",
+      "url": "https://en.wikipedia.org/wiki/Riemann_Integral",
+      "quote": "Since we started from an arbitrary partition and ended up as close as we wanted to either zero or one, it is false to say that we are eventually trapped near some number s , so this function is not Riemann integrable. However, it is Lebesgue integrable . In the Lebesgue sense its integral is zero, since the function is zero almost everywhere .",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L125",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Let f(x,y)=1/(xy) on (0,1]² with Lebesgue measure. What does Tonelli’s theorem imply about its two iterated integrals?",
+   "choices": [
+    "Both iterated integrals equal +∞.",
+    "Both iterated integrals equal 1.",
+    "One equals 1, while the other equals +∞.",
+    "One is finite, while the other is undefined."
+   ],
+   "answer": "Both iterated integrals equal +∞.",
+   "rationale": "Since f is nonnegative, Tonelli allows equality even at infinity; here each inner integral is already +∞.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "∫_0^1 1/x dx diverges to infinity.",
+      "url": "https://en.wiktionary.org/wiki/integral",
+      "quote": "The integral of 1 x on [ 1 2 , 1 ] is ln ⁡ ( 2 ) , but the integral of the same function on ( 0 , 1 ] diverges. In notation, ∫ 1 2 1 1 x d x = ln ⁡ ( 2 ) , but ∫ 0 1 1 x d x = ∞ .",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L284",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Which property of Schwartz functions is essential for proving the Fourier inversion theorem?",
+   "choices": [
+    "Rapid decay ensures all integrals converge absolutely",
+    "Compact support allows direct application of Fubini",
+    "Periodicity permits expansion into Fourier series",
+    "Boundedness guarantees uniform convergence of partial sums"
+   ],
+   "answer": "Rapid decay ensures all integrals converge absolutely",
+   "rationale": "Schwartz functions and their Fourier transforms decay rapidly, ensuring absolute convergence of all integrals needed to apply Fubini's theorem in the inversion proof.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A Schwartz function and each of its derivatives decay faster than every inverse power of \\(|x|\\), supporting the absolute convergence needed in inversion arguments.",
+      "url": "https://en.wikipedia.org/wiki/Schwartz_function",
+      "quote": "is the function space of all functions whose derivatives of all orders are rapidly decreasing .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L430",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "When converting from elementary divisor form to invariant factor form for a finite abelian group, how are the invariant factors constructed?",
+   "choices": [
+    "Arrange prime powers by prime, then multiply across rows to form each successive invariant factor.",
+    "Multiply all elementary divisors together to get one invariant factor.",
+    "Sum the exponents of each prime to determine the invariant factors.",
+    "Sort elementary divisors by size and pair them consecutively."
+   ],
+   "answer": "Arrange prime powers by prime, then multiply across rows to form each successive invariant factor.",
+   "rationale": "One lists prime power elementary divisors in columns by prime, pads with 1s, and multiplies across each row. This yields invariant factors where each divides the next.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L430",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "A presentation matrix for a finitely generated abelian group reduces to Smith normal form diag(2, 6, 0). What is the group's structure?",
+   "choices": [
+    "Z/2Z ⊕ Z/6Z ⊕ Z",
+    "Z/2Z ⊕ Z/6Z",
+    "Z/12Z ⊕ Z",
+    "Z/2Z ⊕ Z ⊕ Z"
+   ],
+   "answer": "Z/2Z ⊕ Z/6Z ⊕ Z",
+   "rationale": "Nonzero diagonal entries give torsion invariant factors (2 and 6, with 2|6), and each zero diagonal entry contributes a free Z summand. Thus the group is Z/2Z ⊕ Z/6Z ⊕ Z.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L430",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Why does Smith normal form determine the isomorphism type of a presented finitely generated abelian group?",
+   "choices": [
+    "Allowed basis changes preserve the cokernel up to isomorphism, and diagonal entries give cyclic summands.",
+    "Column changes preserve the cokernel exactly, and every zero entry gives a finite cyclic summand.",
+    "Row changes preserve the cokernel exactly, and every diagonal entry gives a free cyclic summand.",
+    "Diagonal entries give elementary divisors, but basis changes may change the cokernel’s isomorphism type."
+   ],
+   "answer": "Allowed basis changes preserve the cokernel up to isomorphism, and diagonal entries give cyclic summands.",
+   "rationale": "Smith operations alter the domain and codomain bases, which preserves the cokernel up to isomorphism. The resulting diagonal matrix directly decomposes the cokernel into cyclic summands.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L229",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Let (X,μ) have finite measure, and let f_n→f in measure. If {f_n} is uniformly integrable, which conclusion follows from Vitali’s convergence theorem?",
+   "choices": [
+    "||f_n−f||_2^2→0",
+    "f_n(x)→f(x) for every x∈X",
+    "||f_n−f||_1→0",
+    "||f_n||_∞≤M for all n"
+   ],
+   "answer": "||f_n−f||_1→0",
+   "rationale": "Vitali’s theorem states that uniform integrability together with convergence in measure on a finite measure space implies convergence in L¹. It does not guarantee L² convergence, pointwise convergence everywhere, or an L∞ bound.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L229",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "In proving Vitali's convergence theorem, which property ensures that integrals over sets of small measure contribute negligibly?",
+   "choices": [
+    "Pointwise almost everywhere convergence",
+    "Uniform integrability of the sequence",
+    "Dominated convergence bound",
+    "Completeness of the L^1 space"
+   ],
+   "answer": "Uniform integrability of the sequence",
+   "rationale": "Uniform integrability guarantees that for any ε > 0 there exists δ > 0 such that the integral of |f_n| over any measurable set with measure less than δ is smaller than ε, uniformly in n.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Uniform integrability requires integrals over sets of sufficiently small measure to become uniformly negligible.",
+      "url": "https://en.wikipedia.org/wiki/Vitali_convergence_theorem",
+      "quote": "is atomless, then the uniform integrability is equivalent to the uniform absolute continuity of integrals.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L241",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "For a closed subspace M of Hilbert space H, what holds for the projection p of x∈H?",
+   "choices": [
+    "p is unique but need not minimize distance to x.",
+    "p exists but need not be unique because M is closed.",
+    "p is unique, minimizes distance to x, and has x−p⊥M.",
+    "p is unique, maximizes distance to x, and has x−p⊥M."
+   ],
+   "answer": "p is unique, minimizes distance to x, and has x−p⊥M.",
+   "rationale": "The orthogonal decomposition is unique. Pythagoras gives ||x−m||²=||x−p||²+||m−p||², so p uniquely minimizes the distance.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L241",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Let f be a linear functional on a Hilbert space H. Which added hypothesis ensures a representing vector y with f(x)=⟨x,y⟩ for every x?",
+   "choices": [
+    "f is bounded, equivalently continuous on H.",
+    "f is linear and defined on every point of H.",
+    "f has finite-dimensional range and is linear.",
+    "f is defined only on a finite-dimensional subspace."
+   ],
+   "answer": "f is bounded, equivalently continuous on H.",
+   "rationale": "Boundedness is equivalent to continuity and permits the Cauchy–Schwarz argument used in the proof. An unrestricted linear functional need not be representable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L241",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Given a linearly independent list in a finite-dimensional inner-product space, what does Gram–Schmidt produce?",
+   "choices": [
+    "An orthogonal list preserving all original vector lengths.",
+    "An orthonormal list spanning the original list’s subspace.",
+    "An orthonormal list spanning the original list’s orthogonal complement.",
+    "An orthonormal basis of the entire space, even if the span grows."
+   ],
+   "answer": "An orthonormal list spanning the original list’s subspace.",
+   "rationale": "Gram–Schmidt subtracts successive projections and normalizes each vector, producing an orthonormal list without changing the original span.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L241",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "For an orthonormal basis (eⱼ) of L²([a,b]) and f∈L²([a,b]), which equation is Parseval’s identity?",
+   "choices": [
+    "∫ₐᵇ |f(x)|² dx = (Σⱼ₌₁^∞ |⟨f,eⱼ⟩|)².",
+    "∫ₐᵇ |f(x)|² dx = |Σⱼ₌₁^∞ ⟨f,eⱼ⟩|².",
+    "∫ₐᵇ |f(x)|² dx = Σⱼ₌₁^∞ |⟨f,eⱼ⟩|.",
+    "∫ₐᵇ |f(x)|² dx = Σⱼ₌₁^∞ |⟨f,eⱼ⟩|²."
+   ],
+   "answer": "∫ₐᵇ |f(x)|² dx = Σⱼ₌₁^∞ |⟨f,eⱼ⟩|².",
+   "rationale": "Parseval states that the squared L² norm equals the sum of the squared absolute inner-product coefficients in an orthonormal basis.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L177",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "For a group G, the lower central series terminates at the trivial subgroup if and only if:",
+   "choices": [
+    "The upper central series terminates at G.",
+    "The derived series terminates at G.",
+    "Every maximal subgroup of G is normal.",
+    "G has a cyclic center."
+   ],
+   "answer": "The upper central series terminates at G.",
+   "rationale": "A group is nilpotent precisely when its lower central series reaches the trivial subgroup, which is equivalent to its upper central series reaching the whole group G.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "For any group, the lower central series reaches the identity if and only if the upper central series reaches the whole group.",
+      "url": "https://en.wikipedia.org/wiki/Nilpotent_group",
+      "quote": "Equivalently, it has a central series of finite length or its lower central series terminates with {1}.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L177",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "A finite group is nilpotent if and only if it is:",
+   "choices": [
+    "a direct product of its Sylow subgroups",
+    "a semidirect product of cyclic groups",
+    "an extension of an abelian group",
+    "generated by elements of prime order"
+   ],
+   "answer": "a direct product of its Sylow subgroups",
+   "rationale": "A fundamental characterization states that a finite group is nilpotent precisely when it is the direct product of its Sylow p-subgroups.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A finite group is nilpotent if and only if it is the internal direct product of its Sylow subgroups.",
+      "url": "https://en.wikipedia.org/wiki/Nilpotent_group",
+      "quote": "G is the direct product of its Sylow subgroups.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "A finite nilpotent group is the direct product of its Sylow subgroups.",
+      "url": "https://en.wikipedia.org/wiki/Nilpotent_group",
+      "quote": "Furthermore, every finite nilpotent group is the direct product of p -groups.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L408",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "Which Z-module is NOT projective?",
+   "choices": [
+    "Z ⊕ Z",
+    "Z",
+    "The zero module",
+    "Z/2Z"
+   ],
+   "answer": "Z/2Z",
+   "rationale": "Over Z, projective modules are exactly the free modules (since Z is a PID). Z⊕Z, Z, and 0 are free. Z/2Z is not free because it has torsion, hence it is not projective.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Projective Z-modules are torsion-free, whereas Z/2Z has nonzero 2-torsion and is therefore not projective.",
+      "url": "https://en.wikipedia.org/wiki/Pr%C3%BCfer_domain",
+      "quote": "A finitely generated module M over a Prüfer domain is projective if and only if it is torsion-free.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L271",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "In proving the Lebesgue differentiation theorem, which tool controls the measure of the set where the Hardy-Littlewood maximal function exceeds a given threshold?",
+   "choices": [
+    "Vitali covering lemma",
+    "Dominated convergence theorem",
+    "Egorov's theorem",
+    "Lusin's theorem"
+   ],
+   "answer": "Vitali covering lemma",
+   "rationale": "The Vitali covering lemma yields the weak-type (1,1) bound for the Hardy-Littlewood maximal function, which is the key step in proving the Lebesgue differentiation theorem.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Vitali covering lemma yields the weak-type estimate that controls the measure of the level sets of the Hardy-Littlewood maximal function.",
+      "url": "https://en.wikipedia.org/wiki/Hardy%E2%80%93Littlewood_maximal_function",
+      "quote": "that uses the following version of the Vitali covering lemma to prove the weak-type estimate.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L271",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "Why does the Cantor function fail to satisfy the fundamental theorem of calculus despite being continuous with bounded variation?",
+   "choices": [
+    "Its derivative is zero almost everywhere yet it is not constant",
+    "It is not differentiable at any point in its domain",
+    "Its derivative is unbounded on a set of positive measure",
+    "It maps a set of positive measure to a single point"
+   ],
+   "answer": "Its derivative is zero almost everywhere yet it is not constant",
+   "rationale": "The Cantor function has derivative zero almost everywhere, so the integral of its derivative is zero, yet the function increases from 0 to 1, violating the FTC.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Cantor function has derivative zero almost everywhere but is nonconstant, so integrating its derivative does not recover its increments.",
+      "url": "https://en.wikipedia.org/wiki/Cantor_function",
+      "quote": "Although it is continuous everywhere, and has zero derivative almost everywhere , its value still goes from 0 to 1 as its argument goes from 0 to 1.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L189",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "To apply Iwasawa's criterion to PSL_n(F), one uses the natural action on which set?",
+   "choices": [
+    "The nonzero vectors of F^n.",
+    "The points of projective space PG(n−1,F).",
+    "The set of all hyperplanes only.",
+    "The cosets of a Borel subgroup."
+   ],
+   "answer": "The points of projective space PG(n−1,F).",
+   "rationale": "PSL_n(F) acts faithfully and 2-transitively (hence primitively) on the points of the projective space PG(n−1,F), which is the action used with Iwasawa's criterion.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The natural projective action of PSL_n(F) is on the points of PG(n−1,F).",
+      "url": "https://en.wikipedia.org/wiki/Projective_linear_group",
+      "quote": "PGL( n , q ) acts on the projective space P( q ), which has ( q − 1)/( q − 1) points",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L189",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "For n ≥ 5, let A_n act naturally on n points. After establishing primitivity, which additional fact is required by Iwasawa's criterion?",
+   "choices": [
+    "Its point-stabilizer conjugates generate the whole group.",
+    "Each point stabilizer is itself a simple group.",
+    "Every nontrivial normal subgroup fixes one point.",
+    "The group contains a normal cyclic subgroup."
+   ],
+   "answer": "Its point-stabilizer conjugates generate the whole group.",
+   "rationale": "The point stabilizers are conjugate copies of A_{n-1}. Their conjugates contain every 3-cycle, and A_n is generated by 3-cycles, so their normal closure is A_n.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L545",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "For p: C → C*, p(z)=e^z, what happens to a branch of log z after one counterclockwise continuation around a loop in C*?",
+   "choices": [
+    "It increases by 2πi after one counterclockwise turn.",
+    "It increases by πi after one counterclockwise turn.",
+    "It returns unchanged because the exponential is one-to-one.",
+    "It increases by 2π after one counterclockwise turn."
+   ],
+   "answer": "It increases by 2πi after one counterclockwise turn.",
+   "rationale": "A counterclockwise loop in C* lifts to a path in C whose endpoint is z+2πi, so analytic continuation of the logarithm increases its value by 2πi.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "nemotron",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L545",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A branch of f(z)=√z near a positive point is continued counterclockwise around a loop enclosing 0. What is the resulting germ?",
+   "choices": [
+    "It is the negative of the original branch.",
+    "It is the original branch because the loop is closed.",
+    "It is i times the original branch.",
+    "It cannot be continued along the entire loop."
+   ],
+   "answer": "It is the negative of the original branch.",
+   "rationale": "Continuing a square-root branch once around 0 exchanges the two square roots, so the resulting germ is the negative of the original germ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "nemotron",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L545",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "Which statement is the uniformization theorem?",
+   "choices": [
+    "Its universal cover is conformally equivalent to C, D, or CP¹.",
+    "It is conformally equivalent to C, D, or CP¹.",
+    "Its universal cover is conformally equivalent to C, D, or C².",
+    "Its universal cover is conformally equivalent to C, D, or the punctured plane."
+   ],
+   "answer": "Its universal cover is conformally equivalent to C, D, or CP¹.",
+   "rationale": "The universal cover of every connected Riemann surface is conformally equivalent to the complex plane, the unit disk, or the Riemann sphere CP¹.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "nemotron",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "The uniformization theorem states that the universal cover of any simply connected Riemann surface is conformally equivalent to the Riemann sphere, the complex plane, or the open unit disk.",
+      "url": "https://en.wikipedia.org/wiki/Uniformization_theorem",
+      "quote": "Since every Riemann surface has a universal cover which is a simply connected Riemann surface, the uniformization theorem leads to a classification of Riemann surfaces into three types: those that have the Riemann sphere as universal cover (\"elliptic\"), those with the plane as universal cover (\"parabolic\") and those with the unit disk as universal cover (\"hyperbolic\").",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L545",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "Which list gives conformally equivalent universal-cover models for these surfaces?",
+   "choices": [
+    "S²: CP¹; C/(Z+iZ): C; a genus-two surface: D.",
+    "S²: C; C/(Z+iZ): D; a genus-two surface: CP¹.",
+    "S²: D; C/(Z+iZ): CP¹; a genus-two surface: C.",
+    "S²: CP¹; C/(Z+iZ): CP¹; a genus-two surface: C."
+   ],
+   "answer": "S²: CP¹; C/(Z+iZ): C; a genus-two surface: D.",
+   "rationale": "The sphere is conformally CP¹, the flat torus has universal cover C, and a compact genus-two Riemann surface has universal cover D.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "nemotron",
+     "qwen"
+    ],
+    "source": [
+     {
+      "claim": "The universal cover of the Riemann sphere is itself, the universal cover of a flat torus is the complex plane, and the universal cover of a compact Riemann surface of genus at least two is the unit disk.",
+      "url": "https://en.wikipedia.org/wiki/Uniformization_theorem",
+      "quote": "For compact Riemann surfaces, those with universal cover the unit disk are precisely the hyperbolic surfaces of genus greater than 1, all with non-abelian fundamental group; those with universal cover the complex plane are the Riemann surfaces of genus 1, namely the complex tori or elliptic curves with fundamental group Z ; and those with universal cover the Riemann sphere are those of genus zero, namely the Riemann sphere itself, with trivial fundamental group.",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L30",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "If μ is the complete measure obtained from a premeasure μ0 via Carathéodory, which statement holds?",
+   "choices": [
+    "Every μ0‑measurable set is μ‑measurable and μ agrees with μ0 on them.",
+    "μ is defined only on the original algebra A.",
+    "μ may assign infinite measure to sets of μ0‑measure zero.",
+    "μ need not be complete on the σ‑algebra σ(A)."
+   ],
+   "answer": "Every μ0‑measurable set is μ‑measurable and μ agrees with μ0 on them.",
+   "rationale": "The Carathéodory extension produces a complete measure on σ(A) that extends μ0; thus all μ0‑measurable sets remain measurable and keep their measure, while the other statements contradict completeness or the extension property.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Carathéodory extension agrees with the premeasure on the original algebra and is defined on a σ-algebra containing it.",
+      "url": "https://en.wikipedia.org/wiki/Caratheodory_extension_theorem",
+      "quote": "Carathéodory's extension theorem (named after the mathematician Constantin Carathéodory ) states that any pre-measure defined on a given ring of subsets R of a given set Ω can be extended to a measure on the σ-ring generated by R , and this extension is unique if the pre-measure is σ-finite .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L30",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Let μ₀ be a premeasure on an algebra A. How is the induced outer measure μ* defined on an arbitrary set E ⊆ X?",
+   "choices": [
+    "inf{Σₙ₌₁^∞ μ₀(Aₙ): E ⊆ ⋃ₙ Aₙ, Aₙ ∈ A}",
+    "sup{Σₙ₌₁^∞ μ₀(Aₙ): E ⊆ ⋃ₙ Aₙ, Aₙ ∈ A}",
+    "inf{μ₀(A): E ⊆ A, A ∈ A}",
+    "inf{Σₙ₌₁^∞ μ₀(Aₙ): E ⊆ ⋃ₙ Aₙ, Aₙ ∈ A, n is finite}"
+   ],
+   "answer": "inf{Σₙ₌₁^∞ μ₀(Aₙ): E ⊆ ⋃ₙ Aₙ, Aₙ ∈ A}",
+   "rationale": "The induced outer measure is the infimum of the sums of premeasure values over all countable covers of E by sets in the algebra.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L30",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "A set N is measurable and μ(N) = 0 in the completed extension. What does completeness guarantee about subsets B ⊆ N?",
+   "choices": [
+    "Every B ⊆ N is measurable and μ(B) = 0.",
+    "Some subsets of N may remain nonmeasurable.",
+    "Every B ⊆ N is measurable but may have positive measure.",
+    "Only subsets of N in the original algebra are measurable."
+   ],
+   "answer": "Every B ⊆ N is measurable and μ(B) = 0.",
+   "rationale": "Completeness means every subset of a measurable null set is measurable. Monotonicity then gives μ(B) ≤ μ(N) = 0, so μ(B) = 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L324",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "By the Baire Category Theorem, which statement about a complete metric space X is true?",
+   "choices": [
+    "X cannot be written as a countable union of nowhere dense sets",
+    "Every subset of X is either open or closed",
+    "X must contain an uncountable number of isolated points",
+    "Every dense subset of X is necessarily open"
+   ],
+   "answer": "X cannot be written as a countable union of nowhere dense sets",
+   "rationale": "The Baire Category Theorem states that a complete metric space is of second category in itself, meaning it cannot be expressed as a countable union of nowhere dense sets.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Baire category theorem says that a nonempty complete metric space is not meager in itself.",
+      "url": "https://en.wikipedia.org/wiki/Baire_category",
+      "quote": "Every nonempty Baire space is nonmeagre. By the Baire category theorem, this applies to nonempty complete (pseudo) metric spaces.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L324",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "A property holds generically in a complete metric space if the set of points satisfying it is:",
+   "choices": [
+    "A countable union of closed sets",
+    "Dense in some open ball only",
+    "A residual set containing a dense G-delta",
+    "Nowhere dense but uncountable"
+   ],
+   "answer": "A residual set containing a dense G-delta",
+   "rationale": "A generic property in a complete metric space holds on a residual set, which contains a countable intersection of open dense sets (a dense G-delta), by the Baire Category Theorem.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A generic set is residual and therefore contains a dense G-delta subset.",
+      "url": "https://en.wikipedia.org/wiki/Pompeiu_derivative",
+      "quote": "By definition, for any Pompeiu function, this set is a dense G δ set; therefore it is a residual set.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L324",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "In proving the existence of a continuous nowhere differentiable function on [0,1], how is the Baire Category Theorem applied?",
+   "choices": [
+    "It shows C[0,1] is not complete.",
+    "It proves the set of somewhere differentiable functions is meager.",
+    "It shows every closed subset of C[0,1] is compact.",
+    "It proves pointwise limits of continuous functions are continuous."
+   ],
+   "answer": "It proves the set of somewhere differentiable functions is meager.",
+   "rationale": "The standard proof defines sets of functions with bounded difference quotients, shows each is closed and nowhere dense in the complete space C[0,1], and applies the Baire Category Theorem to conclude their countable union (the somewhere differentiable functions) is meager, so its complement is nonempty.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The set of continuous functions differentiable at at least one point is meager in C[0,1], so the nowhere-differentiable functions form a comeager set.",
+      "url": "https://en.wikipedia.org/wiki/Weierstrass_function",
+      "quote": "the set of nowhere-differentiable real-valued functions on [0, 1] is comeager in the vector space C ([0, 1]; ℝ) of all continuous real-valued functions on [0, 1] with the topology of uniform convergence",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L473",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Which inequality characterizes a subharmonic function u on a domain Ω?",
+   "choices": [
+    "u(z₀) equals the average of u over any circle centered at z₀",
+    "u(z₀) is at most the average of u over any circle centered at z₀",
+    "u(z₀) is at least the average of u over any circle centered at z₀",
+    "u(z₀) equals the average of u over any disk centered at z₀"
+   ],
+   "answer": "u(z₀) is at most the average of u over any circle centered at z₀",
+   "rationale": "A subharmonic function satisfies the sub-mean-value property: its value at any point is less than or equal to its circular mean around that point.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The subharmonic mean-value inequality states that the value at the center is at most the average over a circle centered there.",
+      "url": "https://en.wikipedia.org/wiki/Subharmonic_function",
+      "quote": "Intuitively, this means that a subharmonic function is at any point no greater than the average of the values in a circle around that point, a fact which can be used to derive the maximum principle .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L473",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "In Perron's method, what defines the Perron family for boundary data f on ∂Ω?",
+   "choices": [
+    "Harmonic functions in Ω whose boundary values equal f everywhere",
+    "Subharmonic functions in Ω bounded above by f on ∂Ω",
+    "Superharmonic functions in Ω bounded below by f on ∂Ω",
+    "Continuous functions on Ω̄ that are harmonic in Ω"
+   ],
+   "answer": "Subharmonic functions in Ω bounded above by f on ∂Ω",
+   "rationale": "The Perron family consists of all subharmonic functions v on Ω such that lim sup v(z) ≤ f(ζ) as z → ζ for every boundary point ζ.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Perron family consists of subharmonic upper functions satisfying the prescribed boundary upper bound.",
+      "url": "https://en.wikipedia.org/wiki/Perron_method",
+      "quote": "The Perron method works by finding the largest subharmonic function with boundary values below the desired values;",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L336",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Using countable covers, which pair correctly defines s-dimensional Hausdorff measure and Hausdorff dimension for a set E⊂R^m?",
+   "choices": [
+    "H^s(E)=lim_{δ↓0} inf_{E⊂∪ᵢUᵢ, diam Uᵢ≤δ} Σᵢ(diam Uᵢ)^s; dim_H E=inf{s≥0:H^s(E)=0}",
+    "H^s(E)=lim_{δ↓0} inf_{E⊂∪ᵢUᵢ, diam Uᵢ≤δ} Σᵢ(diam Uᵢ)^s; dim_H E=sup{s≥0:H^s(E)=0}",
+    "H^s(E)=lim_{δ↓0} inf_{E⊂∪ᵢUᵢ, diam Uᵢ≤δ} Σᵢdiam Uᵢ; dim_H E=inf{s≥0:H^s(E)=0}",
+    "H^s(E)=lim_{δ↓0} sup_{E⊂∪ᵢUᵢ, diam Uᵢ≤δ} Σᵢ(diam Uᵢ)^s; dim_H E=inf{s≥0:H^s(E)=0}"
+   ],
+   "answer": "H^s(E)=lim_{δ↓0} inf_{E⊂∪ᵢUᵢ, diam Uᵢ≤δ} Σᵢ(diam Uᵢ)^s; dim_H E=inf{s≥0:H^s(E)=0}",
+   "rationale": "Hausdorff measure is the limit of the infimum of the sums of s-th powers of covering diameters. Hausdorff dimension is the infimum of exponents for which this measure is zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The s-dimensional Hausdorff measure is defined by H^s(E)=lim_{δ→0} inf Σ(diam U_i)^s over covers with diam≤δ, and dim_H E=inf{s≥0: H^s(E)=0}.",
+      "url": "https://en.wikipedia.org/wiki/Hausdorff_measure",
+      "quote": "{\\displaystyle \\dim _{\\mathrm {Haus} }(S)=\\inf\\{d\\geq 0:H^{d}(S)=0\\}=\\sup\\{d\\geq 0:H^{d}(S)=\\infty \\},}",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L304",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Why does the Marcinkiewicz interpolation theorem require weak-type endpoint bounds rather than strong-type bounds?",
+   "choices": [
+    "To handle sublinear operators like maximal functions",
+    "To guarantee analyticity in a complex strip",
+    "To ensure compactness of the unit ball",
+    "To apply the three-lines lemma directly"
+   ],
+   "answer": "To handle sublinear operators like maximal functions",
+   "rationale": "Marcinkiewicz interpolation uses distribution function estimates and works for sublinear operators (e.g., the Hardy-Littlewood maximal function), which generally fail to be linear or analytic, unlike Riesz-Thorin.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Marcinkiewicz interpolation requires weak‑type bounds at endpoints for sublinear operators such as the Hardy–Littlewood maximal function.",
+      "url": "https://en.wikipedia.org/wiki/Marcinkiewicz_interpolation_theorem",
+      "quote": "In other words, even if one only requires weak boundedness on the extremes p and q , regular boundedness still holds.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Marcinkiewicz interpolation uses weak-type endpoint bounds to accommodate sublinear operators such as maximal functions.",
+      "url": "https://en.wikipedia.org/wiki/Riesz%E2%80%93Thorin_theorem",
+      "quote": "Since many such operators satisfy the weak-type estimates",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L304",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "What structural assumption distinguishes the Marcinkiewicz interpolation theorem from the Riesz-Thorin theorem?",
+   "choices": [
+    "The operator may be sublinear rather than linear",
+    "The domain must have finite total measure",
+    "The target space must be a Hilbert space",
+    "The operator must map into L^∞ at both endpoints"
+   ],
+   "answer": "The operator may be sublinear rather than linear",
+   "rationale": "Marcinkiewicz interpolation requires only subadditivity and positive homogeneity (sublinearity), unlike Riesz-Thorin which relies on linearity to build analytic families. This allows its application to operators like the Hardy-Littlewood maximal function.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Marcinkiewicz interpolation permits sublinear operators, whereas Riesz–Thorin interpolation requires linear operators.",
+      "url": "https://en.wikipedia.org/wiki/Marcinkiewicz_interpolation",
+      "quote": "Marcinkiewicz' theorem is similar to the Riesz–Thorin theorem about linear operators , but also applies to non-linear operators.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L577",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 577,
+   "format": "multiple_choice",
+   "prompt": "If f, g ∈ H^p on the disc, 1 ≤ p < ∞, have equal boundary values a.e., what follows?",
+   "choices": [
+    "They agree identically at every interior point.",
+    "They agree only at points on the boundary circle.",
+    "They differ inside by a nonzero constant.",
+    "Their norms agree, but they may differ inside."
+   ],
+   "answer": "They agree identically at every interior point.",
+   "rationale": "Boundary values determine an H^p function uniquely. Therefore f − g has zero boundary values almost everywhere and must vanish identically throughout the disc.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L483",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A family F of holomorphic functions on a domain D is locally bounded. What does Montel's theorem conclude about F?",
+   "choices": [
+    "F is uniformly bounded on D",
+    "F is a normal family",
+    "F consists of constant functions",
+    "F converges pointwise on D"
+   ],
+   "answer": "F is a normal family",
+   "rationale": "Montel's theorem states that every locally bounded family of holomorphic functions on a domain forms a normal family, meaning every sequence has a subsequence converging uniformly on compact subsets.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Montel's theorem says that a locally bounded family of holomorphic functions on a domain is a normal family.",
+      "url": "https://en.wikipedia.org/wiki/Normal_family",
+      "quote": "Montel's theorem states that a family of locally bounded holomorphic functions is normal.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L483",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "In applying Arzelà-Ascoli to show a locally bounded family of holomorphic functions is normal, what property must also be established?",
+   "choices": [
+    "Equicontinuity on compact sets",
+    "Uniform convergence on the boundary",
+    "Analytic continuation to the plane",
+    "Vanishing at a common point"
+   ],
+   "answer": "Equicontinuity on compact sets",
+   "rationale": "Arzelà-Ascoli requires equicontinuity. For holomorphic functions, local boundedness implies equicontinuity on compact subsets via Cauchy estimates, enabling the application of the theorem.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "For holomorphic functions, Cauchy's estimates yield equicontinuity on compact sets from local boundedness, enabling the Arzelà-Ascoli argument.",
+      "url": "https://en.wikipedia.org/wiki/Equicontinuity",
+      "quote": "One can use, for instance, Cauchy's estimate to show the equicontinuity (on a compact subset) and conclude that the limit is holomorphic.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L483",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "Which condition on a family of holomorphic functions on a domain guarantees normality via Montel's theorem?",
+   "choices": [
+    "Uniform boundedness on compact subsets",
+    "Pointwise convergence everywhere",
+    "Equicontinuity at one point",
+    "Bounded derivatives at the origin"
+   ],
+   "answer": "Uniform boundedness on compact subsets",
+   "rationale": "Montel's theorem states that local boundedness, meaning uniform boundedness on every compact subset of the domain, is sufficient for a family of holomorphic functions to be normal.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Montel's theorem states that every locally bounded family of holomorphic functions is normal.",
+      "url": "https://en.wikipedia.org/wiki/Montel's_theorem",
+      "quote": "The first, and simpler, version of the theorem states that a family of holomorphic functions defined on an open subset of the complex numbers is normal if and only if it is locally uniformly bounded.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L378",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "What does the Hilbert Basis Theorem state about a Noetherian ring R?",
+   "choices": [
+    "Every prime ideal in R[x] is maximal.",
+    "R[x] is also a Noetherian ring.",
+    "Every polynomial in R[x] factors into irreducibles.",
+    "R[x] has finite Krull dimension equal to dim(R)."
+   ],
+   "answer": "R[x] is also a Noetherian ring.",
+   "rationale": "The Hilbert Basis Theorem states that if R is a Noetherian ring, then the polynomial ring R[x] is also Noetherian, meaning every ideal in R[x] is finitely generated.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Hilbert’s Basis Theorem: if R is Noetherian then R[x] is also Noetherian.",
+      "url": "https://en.wikipedia.org/wiki/Hilbert_Basis_Theorem",
+      "quote": "So, the theorem can be generalized and restated as: every polynomial ring over a Noetherian ring is also Noetherian .",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The Hilbert Basis Theorem states that if R is Noetherian, then R[x] is Noetherian.",
+      "url": "https://en.wikipedia.org/wiki/Hilbert_Basis_Theorem",
+      "quote": "every polynomial ring over a Noetherian ring is also Noetherian",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L378",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "If R is a UFD, why is R[x] also a UFD?",
+   "choices": [
+    "Because every ideal in R[x] is principal.",
+    "Because Gauss's lemma ensures primitive polynomials factor uniquely over the fraction field.",
+    "Because R[x] is always a Euclidean domain when R is a UFD.",
+    "Because every polynomial in R[x] has a unique root in its fraction field."
+   ],
+   "answer": "Because Gauss's lemma ensures primitive polynomials factor uniquely over the fraction field.",
+   "rationale": "Gauss's lemma states that the product of primitive polynomials is primitive. This allows lifting unique factorization from the fraction field to R[x], proving R[x] is a UFD.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "In a UFD R, primitive polynomials over R factor uniquely over the fraction field; this property ensures R[x] is also a UFD.",
+      "url": "https://en.wikipedia.org/wiki/Gauss's_lemma_(polynomials)",
+      "quote": "More generally, a primitive polynomial has the same complete factorization over the integers and over the rational numbers. In the case of coefficients in a unique factorization domain R , \"rational numbers\" must be replaced by \"field of fractions of R \".",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Gauss's lemma ensures that factorizations in the fraction field of a UFD transfer to factorizations in its polynomial ring.",
+      "url": "https://en.wikipedia.org/wiki/Gauss's_lemma_(polynomials)",
+      "quote": "More generally, a primitive polynomial has the same complete factorization over the integers and over the rational numbers . In the case of coefficients in a unique factorization domain R , \"rational numbers\" must be replaced by \" field of fractions of R \". This implies that, if R is either a field , the ring of integers, or a unique factorization domain, then every polynomial ring (in one or several indeterminates) over R is a unique factorization domain.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L503",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A Mittag-Leffler expansion represents a meromorphic function as a sum of what components plus an entire function?",
+   "choices": [
+    "Principal parts at each pole",
+    "Taylor series at each pole",
+    "Laurent tails converging everywhere",
+    "Residues multiplied by exponentials"
+   ],
+   "answer": "Principal parts at each pole",
+   "rationale": "The Mittag-Leffler theorem constructs a meromorphic function by summing the principal parts at each prescribed pole, adjusted for convergence, plus an arbitrary entire function.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A Mittag-Leffler expansion is a locally uniformly convergent sum of principal parts at the prescribed poles plus an entire function.",
+      "url": "https://en.wikipedia.org/wiki/Mittag-Leffler's_theorem",
+      "quote": "it can be used to express any meromorphic function as a sum of partial fractions.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "A Mittag‑Leffler expansion writes a meromorphic function as the sum of its principal parts at its poles plus an entire function.",
+      "url": "https://en.wikipedia.org/wiki/Function_of_several_complex_variables",
+      "quote": "Mittag-Leffler's theorem was able to create a global meromorphic function from a given and principal parts",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L503",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "At a pole a of order m in a Mittag-Leffler expansion, which expression gives the principal part?",
+   "choices": [
+    "Σ_{j=1}^{m} c_j/(z-a)^j",
+    "Σ_{j=0}^{m-1} c_j/(z-a)^j",
+    "Σ_{j=1}^{m} c_j(z-a)^j",
+    "Σ_{j=0}^{m-1} c_j/(z-a)^{m-j}"
+   ],
+   "answer": "Σ_{j=1}^{m} c_j/(z-a)^j",
+   "rationale": "The principal part consists of all negative-power terms in the Laurent expansion, from (z-a)^(-1) through (z-a)^(-m), with the appropriate coefficients.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L503",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Why are Taylor-polynomial corrections subtracted from Mittag-Leffler terms at distant poles?",
+   "choices": [
+    "to ensure local uniform convergence of the series",
+    "to change the prescribed principal parts",
+    "to eliminate all poles from the result",
+    "to make the resulting function entire"
+   ],
+   "answer": "to ensure local uniform convergence of the series",
+   "rationale": "Subtracting suitable Taylor polynomials preserves each principal part while making the distant-pole terms small enough for the Mittag-Leffler series to converge locally uniformly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "openai",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L388",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "What does Gauss's Lemma state about polynomials in Z[x]?",
+   "choices": [
+    "The product of two primitive polynomials is primitive.",
+    "Every polynomial in Z[x] factors over Q[x].",
+    "A primitive polynomial is always irreducible over Z.",
+    "Irreducibility over Z implies reducibility over Q."
+   ],
+   "answer": "The product of two primitive polynomials is primitive.",
+   "rationale": "Gauss's Lemma states that the product of two primitive polynomials in Z[x] is itself primitive, which is foundational for relating irreducibility over Z and Q.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Gauss’s Lemma: the product of two primitive polynomials in ℤ[x] is primitive, and a primitive polynomial that is irreducible over ℚ[x] is also irreducible over ℤ[x].",
+      "url": "https://en.wikipedia.org/wiki/Gauss_lemma_(polynomial)",
+      "quote": "In modern form, Gauss's lemma asserts that the product of two primitive polynomials is primitive.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     },
+     {
+      "claim": "Gauss's Lemma states that the product of two primitive polynomials in Z[x] is primitive.",
+      "url": "https://en.wikipedia.org/wiki/Gauss's_lemma_(polynomial)",
+      "quote": "In modern form, Gauss's lemma asserts that the product of two primitive polynomials is primitive.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L388",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "For Eisenstein's criterion applied to f(x) = a_n x^n + ... + a_0 in Z[x], which condition must hold for prime p?",
+   "choices": [
+    "p divides all a_i except a_n, p^2 does not divide a_0.",
+    "p divides a_n but no other coefficient of f(x).",
+    "p^2 divides every coefficient including the leading term.",
+    "p does not divide any coefficient of the polynomial f(x)."
+   ],
+   "answer": "p divides all a_i except a_n, p^2 does not divide a_0.",
+   "rationale": "Eisenstein's criterion requires a prime p dividing all coefficients except the leading one, with p not dividing a_n and p^2 not dividing a_0, ensuring irreducibility over Q.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Eisenstein’s criterion: a prime p divides all coefficients except the leading one, and p² does not divide the constant term.",
+      "url": "https://en.wikipedia.org/wiki/Eisenstein_Criterion",
+      "quote": "In order for Eisenstein's criterion to apply for a prime number p it must divide both non-leading coefficients 15 and 10 , which means only p = 5 could work, and indeed it does since 5 does not divide the leading coefficient 3 , and its square 25 does not divide the constant coefficient 10 .",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     },
+     {
+      "claim": "Eisenstein's criterion requires p not to divide a_n, p to divide every a_i for i<n, and p^2 not to divide a_0.",
+      "url": "https://en.wikipedia.org/wiki/Eisenstein's_criterion",
+      "quote": "In order for Eisenstein's criterion to apply for a prime number p it must divide both non-leading coefficients 15 and 10, which means only p = 5 could work, and indeed it does since 5 does not divide the leading coefficient 3, and its square 25 does not divide the constant coefficient 10.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L525",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "Which consequence follows directly from Picard's little theorem?",
+   "choices": [
+    "Every bounded entire function is constant",
+    "Every non-constant entire function is surjective onto ℂ or ℂ\\{a}",
+    "Every entire function has infinitely many zeros",
+    "Every entire function of order < 1/2 has no zeros"
+   ],
+   "answer": "Every non-constant entire function is surjective onto ℂ or ℂ\\{a}",
+   "rationale": "Picard's little theorem implies a non-constant entire function maps onto all of ℂ or all of ℂ except one point, since it can omit at most one value.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Little Picard implies a non-constant entire function takes every complex value except possibly one.",
+      "url": "https://en.wikipedia.org/wiki/Entire_Function",
+      "quote": "Any non-constant entire function takes on every complex number as value, possibly with a single exception.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L525",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "By Picard's little theorem, which value can a non-constant entire function omit at most?",
+   "choices": [
+    "None",
+    "Exactly one",
+    "Exactly two",
+    "Infinitely many"
+   ],
+   "answer": "Exactly one",
+   "rationale": "Picard's little theorem states that every non-constant entire function attains every complex value with at most one exception. For example, e^z omits only 0.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Picard's little theorem: a non-constant entire function omits at most one complex value.",
+      "url": "https://en.wikipedia.org/wiki/Entire_function",
+      "quote": "Any non-constant entire function takes on every complex number as value, possibly with a single exception.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L460",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "For an n-dimensional vector space V, what is dim(Λ^n(V))?",
+   "choices": [
+    "n",
+    "n!",
+    "1",
+    "n^n"
+   ],
+   "answer": "1",
+   "rationale": "Λ^n(V) for an n-dimensional space is one-dimensional, spanned by e_1 ∧ ... ∧ e_n. This one-dimensionality underlies the determinant as a scalar multiple.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The top exterior power Λ^n(V) of an n-dimensional vector space is one-dimensional.",
+      "url": "https://en.wikipedia.org/wiki/Exterior_power",
+      "quote": "is the basis vector for the one-dimensional space",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L420",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "If 0 → A → B → C → 0 is exact and M is flat, what can be said about 0 → A⊗M → B⊗M → C⊗M → 0?",
+   "choices": [
+    "It is always exact",
+    "It is exact only if M is projective",
+    "It splits automatically",
+    "It is exact only if M is free"
+   ],
+   "answer": "It is always exact",
+   "rationale": "Tensoring with a flat module preserves exact sequences. Since M is flat, the functor −⊗M is exact, so the sequence remains short exact after tensoring.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Tensoring an exact sequence with a flat module preserves exactness.",
+      "url": "https://en.wikipedia.org/wiki/Flat_module",
+      "quote": "Formally, a module M over a ring R is flat if taking the tensor product over R with M preserves exact sequences .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L420",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Over a principal ideal domain, which condition is equivalent to a module being flat?",
+   "choices": [
+    "It is torsion-free",
+    "It is finitely generated",
+    "It is projective of rank one",
+    "It has no proper submodules"
+   ],
+   "answer": "It is torsion-free",
+   "rationale": "Over a PID, a module is flat if and only if it is torsion-free. Finitely generated torsion-free modules over PIDs are free (hence flat), but flatness itself requires only torsion-freeness.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Over a PID, a module is flat iff it is torsion-free.",
+      "url": "https://en.wikipedia.org/wiki/B%C3%A9zout_domain",
+      "quote": "Let R be a Bézout domain and M finitely generated module over R . Then M is flat if and only if it is torsion-free.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Over a PID, a module is flat if and only if it is torsion-free.",
+      "url": "https://en.wikipedia.org/wiki/B%C3%A9zout_domain",
+      "quote": "Then M is flat if and only if it is torsion-free.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L493",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "In proving the Riemann Mapping Theorem via an extremal family, how is Montel's theorem applied?",
+   "choices": [
+    "To extract a convergent subsequence from the normal family",
+    "To prove the limit function is injective directly",
+    "To show the domain is simply connected",
+    "To extend the map continuously to the boundary"
+   ],
+   "answer": "To extract a convergent subsequence from the normal family",
+   "rationale": "Montel's theorem ensures that a uniformly bounded family of holomorphic functions is normal, so one can extract a subsequence converging locally uniformly to the extremal map.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Montel’s theorem implies that a sequence in a normal family of holomorphic functions has a locally uniformly convergent subsequence.",
+      "url": "https://en.wikipedia.org/wiki/Normal_family",
+      "quote": "if every sequence of functions in F contains a subsequence which converges uniformly on compact subsets of X to a continuous function from X to Y .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L493",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "By Carathéodory's theorem, a conformal map from a simply connected domain onto the unit disk extends to a homeomorphism on the closures if and only if the domain has which property?",
+   "choices": [
+    "Its boundary is a Jordan curve",
+    "Its boundary is smooth everywhere",
+    "It is star-shaped",
+    "It is convex"
+   ],
+   "answer": "Its boundary is a Jordan curve",
+   "rationale": "Carathéodory's theorem states that the conformal map extends continuously to a homeomorphism of the closures precisely when the domain is bounded by a Jordan curve.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A conformal map between the unit disk and a simply connected planar domain extends homeomorphically to the closures exactly when the domain’s boundary is a Jordan curve.",
+      "url": "https://en.wikipedia.org/wiki/Caratheodory_theorem_(conformal_mapping)",
+      "quote": "any conformal mapping sending the unit disk to some region in the complex plane bounded by a Jordan curve extends continuously to a homeomorphism from the unit circle onto the Jordan curve.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L366",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "What distinguishes a Dedekind domain from a general Noetherian domain regarding ideal factorization?",
+   "choices": [
+    "All ideals are principal in Dedekind domains",
+    "Nonzero ideals factor uniquely into prime ideals",
+    "Only maximal ideals can be factored further",
+    "Factorization requires adjoining new elements"
+   ],
+   "answer": "Nonzero ideals factor uniquely into prime ideals",
+   "rationale": "In a Dedekind domain, every nonzero proper ideal has a unique factorization into prime ideals. General Noetherian domains lack this property; they only guarantee ascending chain conditions on ideals.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In a Dedekind domain, every nonzero ideal has a unique factorization into prime ideals.",
+      "url": "https://en.wikipedia.org/wiki/Dedekind_Domain",
+      "quote": "In mathematics , a Dedekind domain or Dedekind ring , named after Richard Dedekind , is an integral domain in which every nonzero proper ideal factors into a product of prime ideals . It can be shown that such a factorization is then necessarily unique up to the order of the factors.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L366",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "In Z[√−5], 6 = 2·3 = (1+√−5)(1−√−5). How does the Dedekind domain property resolve this failure of unique factorization?",
+   "choices": [
+    "Elements factor uniquely into primes",
+    "Ideals factor uniquely into prime ideals",
+    "The ring becomes a UFD after localization",
+    "Units absorb all non-unique factors"
+   ],
+   "answer": "Ideals factor uniquely into prime ideals",
+   "rationale": "Dedekind domains restore unique factorization at the ideal level: every nonzero proper ideal factors uniquely into a product of prime ideals, even when element-level factorization fails.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In a Dedekind domain, every nonzero proper ideal factors uniquely into nonzero prime ideals.",
+      "url": "https://en.wikipedia.org/wiki/Dedekind_domain",
+      "quote": "In mathematics, a Dedekind domain or Dedekind ring, named after Richard Dedekind, is an integral domain in which every nonzero proper ideal factors into a product of prime ideals. It can be shown that such a factorization is then necessarily unique up to the order of the factors.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L366",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "In the ring of integers of a number field, what does unique factorization of ideals replace when element factorization fails?",
+   "choices": [
+    "Unique factorization into prime ideals",
+    "Unique factorization into maximal elements",
+    "Unique factorization into principal ideals",
+    "Unique factorization into irreducible ideals"
+   ],
+   "answer": "Unique factorization into prime ideals",
+   "rationale": "Dedekind domains repair the failure of unique element factorization by guaranteeing that every nonzero proper ideal factors uniquely into a product of prime ideals.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Every nonzero ideal in the ring of integers of a number field factors uniquely into prime ideals.",
+      "url": "https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic",
+      "quote": "In a ring of algebraic integers , the factorization into prime elements may be non unique, but one can recover a unique factorization if one factors into ideals .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L609",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 609,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes an algebraic closure of a field F?",
+   "choices": [
+    "It is the smallest subfield of F containing all roots.",
+    "It is an algebraically closed algebraic extension of F.",
+    "It is a transcendental extension where every polynomial splits.",
+    "It is the unique maximal ideal in the polynomial ring F[x]."
+   ],
+   "answer": "It is an algebraically closed algebraic extension of F.",
+   "rationale": "An algebraic closure of F is an extension that is both algebraic over F and algebraically closed, meaning every non-constant polynomial with coefficients in it has a root in it.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "An algebraic closure of F is an algebraically closed algebraic extension of F.",
+      "url": "https://en.wikipedia.org/wiki/Algebraic_closure",
+      "quote": "an algebraic closure of a field K is an algebraic extension of K that is algebraically closed .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L609",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "topology",
+   "level": 609,
+   "format": "multiple_choice",
+   "prompt": "A subset S of an extension E/F is a transcendence basis if:",
+   "choices": [
+    "S is algebraically dependent and E is algebraic over F(S).",
+    "S is algebraically independent and E is algebraic over F(S).",
+    "S spans E as a vector space over F minimally.",
+    "S contains all elements of E transcendental over F."
+   ],
+   "answer": "S is algebraically independent and E is algebraic over F(S).",
+   "rationale": "By definition, a transcendence basis must be algebraically independent over F, and adjoining it to F must make the entire extension E algebraic over F(S).",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A transcendence basis S of E/F is algebraically independent over F and E is algebraic over F(S).",
+      "url": "https://en.wikipedia.org/wiki/Transcendental_extension",
+      "quote": "It is then called a transcendence basis . By maximality, an algebraically independent subset S of L over K is a transcendence basis if and only if L is an algebraic extension of K ( S ), the field obtained by adjoining the elements of S to K .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L682",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 682,
+   "format": "multiple_choice",
+   "prompt": "Which conditions characterize F as real closed?",
+   "choices": [
+    "Every positive element has a square root; every odd-degree polynomial has a root.",
+    "Every positive element is a fourth power; every odd-degree polynomial has a root.",
+    "Every nonzero element has a square root; every even-degree polynomial has a root.",
+    "Every positive element has a square root; every even-degree polynomial has a root."
+   ],
+   "answer": "Every positive element has a square root; every odd-degree polynomial has a root.",
+   "rationale": "These two conditions are the standard real-closed-field criterion; together they imply that F(i) is algebraically closed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "qwen",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L682",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 682,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x³−3x+1, how many distinct real roots lie in (0,2)?",
+   "choices": [
+    "0 roots",
+    "1 root",
+    "2 roots",
+    "3 roots"
+   ],
+   "answer": "2 roots",
+   "rationale": "A Sturm sequence has variations V(0)=3 and V(2)=1, so the interval contains 3−1=2 distinct roots.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "qwen",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L682",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 682,
+   "format": "multiple_choice",
+   "prompt": "By the Artin-Schreier theorem, which property is equivalent to an ordered field F being real closed?",
+   "choices": [
+    "F has no proper algebraic extension that admits an ordering",
+    "Every polynomial over F factors into linear terms",
+    "F contains all roots of unity of odd order",
+    "The absolute Galois group of F is trivial"
+   ],
+   "answer": "F has no proper algebraic extension that admits an ordering",
+   "rationale": "Artin-Schreier characterizes a real closed field as one admitting an ordering but having no proper algebraic extension that also admits an ordering.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "An ordered field is real closed exactly when it has no proper algebraic extension that is orderable.",
+      "url": "https://en.wikipedia.org/wiki/Real_closed_field",
+      "quote": "F is a formally real field such that no proper algebraic extension of F is formally real.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L682",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 682,
+   "format": "multiple_choice",
+   "prompt": "In Sturm's theorem, how are the polynomials in the Sturm sequence constructed from f and its derivative f'?",
+   "choices": [
+    "By repeated polynomial division, negating each remainder",
+    "By repeatedly differentiating the previous polynomial",
+    "By factoring out common roots at each step",
+    "By evaluating f at successive integer points"
+   ],
+   "answer": "By repeated polynomial division, negating each remainder",
+   "rationale": "The Sturm sequence is built by applying the Euclidean algorithm to f and f', taking the negative of each remainder at every step.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A Sturm sequence is constructed using the polynomial Euclidean algorithm, taking the negative of each successive remainder.",
+      "url": "https://en.wikipedia.org/wiki/Sturm's_theorem",
+      "quote": "Sturm used the negative of the remainder of the Euclidean division of the two preceding ones.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L652",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 652,
+   "format": "multiple_choice",
+   "prompt": "Which statement is the Kronecker–Weber theorem?",
+   "choices": [
+    "Every finite abelian extension of Q is contained in Q(ζ_n) for some positive integer n.",
+    "Every finite extension of Q is contained in Q(ζ_n) for some positive integer n.",
+    "Every finite abelian extension of Q contains Q(ζ_n) for some positive integer n.",
+    "Every cyclotomic field Q(ζ_n) contains only one finite abelian extension of Q."
+   ],
+   "answer": "Every finite abelian extension of Q is contained in Q(ζ_n) for some positive integer n.",
+   "rationale": "The theorem states that every finite abelian extension of Q is contained in some cyclotomic field. It does not make the same claim for arbitrary finite extensions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Kronecker–Weber theorem states that every finite abelian extension of the rationals is contained in a cyclotomic field.",
+      "url": "https://en.wikipedia.org/wiki/Kronecker%E2%80%93Weber_theorem",
+      "quote": "Precisely, the Kronecker–Weber theorem states: every finite abelian extension of the rational numbers Q is a subfield of a cyclotomic field.",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L652",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 652,
+   "format": "multiple_choice",
+   "prompt": "What is the Galois group Gal(Q(ζ_n)/Q) isomorphic to?",
+   "choices": [
+    "(Z/nZ)*",
+    "Z/nZ",
+    "S_n",
+    "Z/(n-1)Z"
+   ],
+   "answer": "(Z/nZ)*",
+   "rationale": "The automorphisms of Q(ζ_n) over Q are determined by σ_a(ζ_n)=ζ_n^a for each a coprime to n, giving an isomorphism with the unit group (Z/nZ)*.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The automorphisms of Q(ζ_n) send ζ_n to ζ_n^a for exactly the invertible residue classes a modulo n.",
+      "url": "https://en.wikipedia.org/wiki/Cyclotomic",
+      "quote": "which consists of the invertible residues modulo",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L557",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 557,
+   "format": "multiple_choice",
+   "prompt": "Let Ω be simply connected, and suppose a germ at z₀ can be continued along every path in Ω. Which argument proves that its continuation is path-independent?",
+   "choices": [
+    "Any two paths with equal endpoints are homotopic, and continuation is invariant under that homotopy.",
+    "Any two paths with equal endpoints are identical, so their continuations must coincide directly.",
+    "Every closed path winds around each point, so continuation is necessarily single-valued.",
+    "Continuation changes only with path length, while the original germ stays fixed."
+   ],
+   "answer": "Any two paths with equal endpoints are homotopic, and continuation is invariant under that homotopy.",
+   "rationale": "In a simply connected domain, paths with the same endpoints are homotopic relative to their endpoints. Homotopy invariance of analytic continuation therefore makes the result path-independent.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L557",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 557,
+   "format": "multiple_choice",
+   "prompt": "When analytically continuing the germ of log z at z=1 along a simple closed curve winding once counterclockwise around the origin, what is the resulting germ?",
+   "choices": [
+    "log z + 2πi",
+    "log z − 2πi",
+    "−log z",
+    "log z + πi"
+   ],
+   "answer": "log z + 2πi",
+   "rationale": "Each counterclockwise loop around the branch point z=0 adds 2πi to the logarithm, so continuation along one such loop yields the germ log z + 2πi.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Analytic continuation of the principal branch of log around the origin once counterclockwise adds 2πi.",
+      "url": "https://en.wikipedia.org/wiki/Branch_point",
+      "quote": "Going once counterclockwise around a simple closed curve encircling the origin, the complex logarithm is incremented by 2 π i .",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Going once counterclockwise around the origin increases log z by 2πi.",
+      "url": "https://en.wikipedia.org/wiki/Branch_point",
+      "quote": "Going once counterclockwise around a simple closed curve encircling the origin, the complex logarithm is incremented by 2 π i .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L557",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 557,
+   "format": "multiple_choice",
+   "prompt": "A germ at z₀ can be continued along every path in a domain Ω. What topological condition on Ω guarantees that all continuations yield the same single-valued function?",
+   "choices": [
+    "Ω is simply connected",
+    "Ω is compact",
+    "Ω is connected",
+    "Ω is bounded"
+   ],
+   "answer": "Ω is simply connected",
+   "rationale": "The monodromy theorem states that if Ω is simply connected and a germ admits analytic continuation along every path in Ω, then the continuation is independent of path, yielding a single-valued function.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The monodromy theorem states that analytic continuation is path‑independent on a simply connected domain.",
+      "url": "https://en.wikipedia.org/wiki/Analytic_continuation",
+      "quote": "If G is a simply connected domain containing D , such that f has an analytic continuation along every path in G , starting from some fixed point a in D , then f has a direct analytic continuation to G.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "In a simply connected domain analytic continuation along any path is path-independent, yielding a single-valued function.",
+      "url": "https://en.wikipedia.org/wiki/Analytic_continuation_into_a_domain_of_a_function_given_on_part_of_the_boundary",
+      "quote": "\"If G is a simply connected domain containing D, such that f has an analytic continuation along every path in G, starting from some fixed point a in D, then f has a direct analytic continuation to G.\"",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L692",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 692,
+   "format": "multiple_choice",
+   "prompt": "To test whether two ideals I and J are equal using Gröbner bases in a computer algebra system, one should:",
+   "choices": [
+    "Check if their reduced Gröbner bases with respect to the same monomial order are identical",
+    "Verify that both ideals have the same number of minimal generators",
+    "Compare the degrees of their respective Hilbert polynomials only",
+    "Confirm that their varieties contain the same number of points"
+   ],
+   "answer": "Check if their reduced Gröbner bases with respect to the same monomial order are identical",
+   "rationale": "Two ideals are equal if and only if their reduced Gröbner bases with respect to the same monomial ordering are identical. This is the standard algorithmic equality test.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "nemotron",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Over a field, two ideals are equal if and only if their reduced Gröbner bases for the same monomial order are identical.",
+      "url": "https://en.wikipedia.org/wiki/Gr%C3%B6bner_basis",
+      "quote": "All reduced Gröbner bases of an ideal (for a fixed monomial ordering) are equal. It follows that two ideals are equal if and only if they have the same reduced Gröbner basis.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L724",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 724,
+   "format": "multiple_choice",
+   "prompt": "Which explanation correctly interprets “p_n approaches 0.4” as convergence in probability?",
+   "choices": [
+    "For each allowed error, the probability that p_n lies outside it tends to zero.",
+    "The probability of exact equality tends to one, so error vanishes.",
+    "Mean squared error tends to zero, which guarantees the same claim.",
+    "Variance decreases, so the estimates eventually equal 0.4 surely."
+   ],
+   "answer": "For each allowed error, the probability that p_n lies outside it tends to zero.",
+   "rationale": "Convergence in probability means that for every ε > 0, the probability that |p_n − 0.4| exceeds ε approaches zero. It does not require exact equality.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L724",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 724,
+   "format": "multiple_choice",
+   "prompt": "Which summary of the fundamental theorem of Galois theory is accurate about its assumptions?",
+   "choices": [
+    "It links root symmetries to intermediate fields for every finite extension.",
+    "It shows every extension has the full symmetry group required for the correspondence.",
+    "It realizes every abstract group over any chosen coefficient field.",
+    "It links root symmetries to intermediate fields for a finite Galois extension."
+   ],
+   "answer": "It links root symmetries to intermediate fields for a finite Galois extension.",
+   "rationale": "For a finite Galois extension, the theorem gives an inclusion-reversing correspondence between intermediate fields and subgroups of its Galois group. It does not apply unchanged to every finite extension.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The fundamental theorem of Galois theory establishes a bijection between subgroups of the Galois group and intermediate fields only for finite Galois extensions.",
+      "url": "https://en.wikipedia.org/wiki/Fundamental_theorem_of_Galois_theory",
+      "quote": "that is finite and Galois , there is a one-to-one correspondence between its intermediate fields and subgroups of its Galois group .",
+      "reader": "qwen/qwen3.8-max:free"
+     },
+     {
+      "claim": "Finite Galois extension means finite, normal, and separable.",
+      "url": "https://en.wikipedia.org/wiki/Field_(mathematics)",
+      "quote": "An important notion in this area is that of finite Galois extensions F / E , which are, by definition, those that are separable and normal .",
+      "reader": "qwen/qwen3.8-max:free"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L724",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 724,
+   "format": "multiple_choice",
+   "prompt": "When explaining a measure-zero set to undergraduates, which analogy is most accurate?",
+   "choices": [
+    "A dart hitting an exact point on a board",
+    "A very small interval like [0, 0.001]",
+    "A finite collection of scattered points only",
+    "A set that contains no elements at all"
+   ],
+   "answer": "A dart hitting an exact point on a board",
+   "rationale": "A single point has Lebesgue measure zero yet exists; the dart analogy conveys this. The other options confuse measure zero with small positive measure, finiteness, or emptiness.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A singleton has measure zero, just as landing on one exact point has probability zero.",
+      "url": "https://en.wikipedia.org/wiki/Measure_zero",
+      "quote": "all singleton sets are null, and therefore all countable sets are null.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L724",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 724,
+   "format": "multiple_choice",
+   "prompt": "When introducing Galois groups to undergraduates using x²−2=0 over the rationals, what key simplification should be stated honestly?",
+   "choices": [
+    "We omit verifying the extension is separable",
+    "We assume roots are always rational numbers",
+    "We ignore that the group must be infinite",
+    "We pretend the base field is the reals"
+   ],
+   "answer": "We omit verifying the extension is separable",
+   "rationale": "Over characteristic-zero fields like the rationals every extension is separable, so graduate courses rarely stress it. Telling undergraduates this assumption is omitted keeps the explanation honest.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The extension ℚ(√2)/ℚ is separable because every extension of a characteristic-zero field is separable.",
+      "url": "https://en.wikipedia.org/wiki/Separable_extension",
+      "quote": "Every algebraic extension of a field of characteristic zero is separable, and every algebraic extension of a finite field is separable.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L587",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "linear_algebra",
+   "level": 587,
+   "format": "multiple_choice",
+   "prompt": "For the Nevanlinna-Pick problem f(zᵢ) = wᵢ on the disc, a solution exists if and only if the Pick matrix P is:",
+   "choices": [
+    "Positive definite",
+    "Positive semidefinite",
+    "Unitary",
+    "Diagonal dominant"
+   ],
+   "answer": "Positive semidefinite",
+   "rationale": "Pick's theorem states that an interpolating function exists in the Schur class if and only if the Pick matrix with entries (1 - wᵢw̄ⱼ)/(1 - zᵢz̄ⱼ) is positive semidefinite.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The finite Nevanlinna–Pick theorem states that the data admit an analytic self-map of the disc interpolant if and only if the Pick matrix is positive semidefinite.",
+      "url": "https://en.wikipedia.org/wiki/Nevanlinna-Pick_interpolation",
+      "quote": "that is the Pick matrix is positive semidefinite.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The Nevanlinna-Pick theorem says a solution exists if and only if the Pick matrix is positive semi-definite.",
+      "url": "https://en.wikipedia.org/wiki/Nevanlinna-Pick_interpolation",
+      "quote": "Georg Pick and Rolf Nevanlinna solved the problem independently in 1916 and 1919 respectively, showing that an interpolating function exists if and only if a matrix defined in terms of the initial and target data is positive semi-definite .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L587",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "linear_algebra",
+   "level": 587,
+   "format": "multiple_choice",
+   "prompt": "The Schwarz-Pick lemma states that for a holomorphic f: D → D, the pseudo-hyperbolic distance ρ(f(z₁), f(z₂)) compared to ρ(z₁, z₂) is always:",
+   "choices": [
+    "Less than or equal to it",
+    "Strictly greater than it",
+    "Exactly equal to it",
+    "Unrelated in general"
+   ],
+   "answer": "Less than or equal to it",
+   "rationale": "The Schwarz-Pick lemma asserts that holomorphic self-maps of the disc are contractions in the pseudo-hyperbolic metric, so ρ(f(z₁), f(z₂)) ≤ ρ(z₁, z₂). Equality holds if and only if f is an automorphism.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Schwarz–Pick lemma states that the pseudo-hyperbolic distance between two image points is at most the pseudo-hyperbolic distance between the original points.",
+      "url": "https://en.wikipedia.org/wiki/Schwarz_lemma",
+      "quote": "The Schwarz–Pick theorem then essentially states that a holomorphic map of the unit disk into itself decreases the distance of points in the Poincaré metric.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Schwarz-Pick lemma asserts that the pseudo-hyperbolic distance between f(z1) and f(z2) does not exceed that between z1 and z2.",
+      "url": "https://en.wikipedia.org/wiki/Schwarz-Pick_lemma",
+      "quote": "The Schwarz–Pick theorem then essentially states that a holomorphic map of the unit disk into itself decreases the distance of points in the Poincaré metric.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L734",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 734,
+   "format": "multiple_choice",
+   "prompt": "Why must the scalar field of a Hilbert space be complete when linking measure-theoretic L² spaces to algebraic modules?",
+   "choices": [
+    "To ensure every submodule is closed",
+    "To guarantee limits of Cauchy sequences exist",
+    "To make all measures absolutely continuous",
+    "To force finite-dimensionality of modules"
+   ],
+   "answer": "To guarantee limits of Cauchy sequences exist",
+   "rationale": "Completeness of the scalar field (ℝ or ℂ) ensures that Cauchy sequences converge, which is essential for L² spaces to be Hilbert spaces and well-defined modules.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "nemotron",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The real and complex fields are complete, so Cauchy sequences in those scalar fields converge.",
+      "url": "https://en.wiktionary.org/wiki/Banach_space",
+      "quote": "( functional analysis ) A normed vector space which is complete with respect to the norm, meaning that Cauchy sequences have well-defined limits that are points in the space.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L619",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 619,
+   "format": "multiple_choice",
+   "prompt": "A finite extension K/F is normal if and only if K is:",
+   "choices": [
+    "a separable extension of F.",
+    "generated by a single element over F.",
+    "the splitting field of some polynomial over F.",
+    "a purely inseparable extension of F."
+   ],
+   "answer": "the splitting field of some polynomial over F.",
+   "rationale": "By definition, a finite extension is normal precisely when it is the splitting field of some polynomial with coefficients in the base field.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A finite extension K/F is normal exactly when K is the splitting field over F of a suitable polynomial.",
+      "url": "https://en.wikipedia.org/wiki/Normal_extension",
+      "quote": "For finite extensions, a normal extension is identical to a splitting field.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "A finite extension is normal iff it is the splitting field of some polynomial over the base field.",
+      "url": "https://en.wikipedia.org/wiki/Normal_extension",
+      "quote": "For finite extensions , a normal extension is identical to a splitting field .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L597",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 597,
+   "format": "multiple_choice",
+   "prompt": "Which Tauberian theorem converts the analytic behavior of ζ(s) near Re(s)=1 into the asymptotic ψ(x)∼x?",
+   "choices": [
+    "Abel's limit theorem",
+    "Wiener-Ikehara theorem",
+    "Hardy-Littlewood tauberian theorem",
+    "Mertens' theorem"
+   ],
+   "answer": "Wiener-Ikehara theorem",
+   "rationale": "The Wiener-Ikehara theorem states that if a Dirichlet series with non-negative coefficients extends analytically past Re(s)=1 except for a simple pole at s=1, then the partial sums grow like the residue times x.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Wiener–Ikehara theorem converts the required boundary behavior of ζ(s) into the asymptotic ψ(x)∼x.",
+      "url": "https://en.wikipedia.org/wiki/Ikehara_theorem",
+      "quote": "It can be used to prove the prime number theorem (Chandrasekharan, 1969), under the assumption that the Riemann zeta function has no zeros on the line of real part one.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L597",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "analysis",
+   "level": 597,
+   "format": "multiple_choice",
+   "prompt": "In the analytic continuation of ζ(s), what is the residue at its only pole s=1?",
+   "choices": [
+    "0",
+    "1",
+    "1/2",
+    "-1"
+   ],
+   "answer": "1",
+   "rationale": "The Riemann zeta function has a simple pole at s=1 with residue 1, which follows from comparing the Dirichlet series to the integral of x^{-s}.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The residue of ζ(s) at s=1 is 1.",
+      "url": "https://en.wiktionary.org/wiki/meromorphically",
+      "quote": "The Riemann Zeta function ζ ( s ) […] can indeed be continued meromorphically to the whole complex s -plane with a simple pole at s = 1 (with residue 1).",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The meromorphic continuation of ζ(s) has Laurent expansion 1/(s−1)+O(1) near s=1, so its residue is 1.",
+      "url": "https://en.wikipedia.org/wiki/1_%2B_1_%2B_1_%2B_1_%2B_%E2%8B%AF",
+      "quote": "ζ ( s ) has a simple pole of residue one there.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "graduate_core_i:L662",
+   "track_id": "math",
+   "grade_id": "graduate_core_i",
+   "skill_id": "abstract_algebra",
+   "level": 662,
+   "format": "multiple_choice",
+   "prompt": "Under the Krull topology, an infinite Galois group Gal(L/K) is always:",
+   "choices": [
+    "Compact, Hausdorff, and totally disconnected",
+    "Discrete and countably infinite",
+    "Connected and locally compact",
+    "Metrizable but not necessarily complete"
+   ],
+   "answer": "Compact, Hausdorff, and totally disconnected",
+   "rationale": "By definition, Gal(L/K) with the Krull topology is a profinite group, hence it is compact, Hausdorff, and totally disconnected as an inverse limit of finite discrete groups.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Infinite Galois groups in Krull topology are profinite, i.e., compact, Hausdorff, totally disconnected.",
+      "url": "https://en.wikipedia.org/wiki/Galois_groups",
+      "quote": "can be given a topology , called the Krull topology, that makes it into a profinite group .",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "An infinite Galois group with the Krull topology is profinite, hence compact, Hausdorff, and totally disconnected.",
+      "url": "https://en.wikipedia.org/wiki/Galois_group",
+      "quote": "can be given a topology , called the Krull topology, that makes it into a profinite group .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  }
+ ]
+}

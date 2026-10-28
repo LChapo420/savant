@@ -1,0 +1,28 @@
+{
+  "engineId": "tug-of-war",
+  "displayName": "Tug of War",
+  "difficulty": "medium",
+  "mechanic": "Question-gated heaves on a rope. Correct: the learner pulls the flag one heave toward their own line. Incorrect: the turn is skipped and the bot pulls the flag back. Ends when one side pulls the flag over their line.",
+  "questionType": "multiple_choice",
+  "questionCount": 50,
+  "questionCountNote": "50 unique questions per level. A round only ever moves forward through them: losing, answering wrong, or pressing Play again continues at the next unseen question, so the pool must outlast many rounds.",
+  "choicesPerQuestion": 4,
+  "answerIndexRange": [0, 3],
+  "difficultyScale": { "start": 4, "end": 7, "curve": "flat", "label": "medium" },
+  "requiresExplanation": true,
+  "requiresTopicTag": true,
+  "plainTextOnly": true,
+  "distractorRules": "Wrong options must be the same kind of thing as the right one — same units, same part of speech, same level of detail, similar length. For number work the distractors must be plausible miscalculations at this level, never oddballs identifiable at a glance.",
+  "payloadShape": {
+    "schemaVersion": 1,
+    "meta": ["subject", "grade", "level", "topic", "title", "ageRange"],
+    "settings": {
+      "questionCount": 50,
+      "choicesPerTurn": 4,
+      "difficulty": { "start": 4, "end": 7, "curve": "flat" },
+      "timeLimitSec": null
+    },
+    "questions": ["id", "prompt", "choices[4]", "answerIndex", "explanation", "difficulty", "skill", "topic"],
+    "feedback": ["correct", "incorrect", "win", "lose", "draw", "outOfQuestions"]
+  }
+}

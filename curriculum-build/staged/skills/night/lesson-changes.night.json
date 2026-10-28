@@ -1,0 +1,431 @@
+{
+ "generated": "2026-10-24T04:16:18.971Z",
+ "note": "Staged; nothing applied. verify-skill-curricula.js result is for the staged lesson-changes.json.",
+ "verify": {
+  "ok": true,
+  "output_tail": "chess: building tables...\n84 checks, 0 failed. Wrote VERIFICATION.md\n"
+ },
+ "changes": [
+  {
+   "id": "bb-aim-B03",
+   "subject": "basketball",
+   "draft": "B03",
+   "action": "edit_description",
+   "why": "The aim cue said 'over the front rim'. Simulation of optimal free throws recommends aiming toward the back of the ring (Tran and Silverberg 2008, J Sports Sci 26(11)); a ball skimming the front rim is the commonest short miss. The cue stays external, as the external-focus evidence requires.",
+   "evidence": [
+    "tran2008",
+    "chua2021"
+   ],
+   "staged_line": "Make one-hand shots from one metre, dropping them past the front rim into the middle of the ring, as each session's first five minutes.",
+   "line": "Make one-hand shots from one metre, dropping them past the front rim into the middle of the ring, as each session's first five minutes.",
+   "judged": [
+    {
+     "id": "bb-aim-B03",
+     "which": "staged",
+     "line": "Make one-hand shots from one metre, dropping them past the front rim into the middle of the ring, as each session's first five minutes.",
+     "judge_a": {
+      "index": 0,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 0,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "J Sports Sci",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": {
+    "which": "staged",
+    "line": "Make one-hand shots from one metre, dropping them past the front rim into the middle of the ring, as each session's first five minutes."
+   },
+   "status": "verified: code + MiniMax review + nvidia/nemotron-3-ultra-550b-a55b (no offline source settles it; evidence is the cited paper)"
+  },
+  {
+   "id": "bb-aim-B07",
+   "subject": "basketball",
+   "draft": "B07",
+   "action": "edit_description",
+   "why": "Same aim correction as bb-aim-B03 (tran2008); the external-focus point of the lesson is unchanged.",
+   "evidence": [
+    "tran2008",
+    "chua2021"
+   ],
+   "staged_line": "Use a cue outside your body, such as drop it past the middle, instead of thinking about your elbow, and compare makes over fifty shots.",
+   "line": "Use a cue outside your body, such as drop it past the middle, instead of thinking about your elbow, and compare makes over fifty shots.",
+   "judged": [
+    {
+     "id": "bb-aim-B07",
+     "which": "staged",
+     "line": "Use a cue outside your body, such as drop it past the middle, instead of thinking about your elbow, and compare makes over fifty shots.",
+     "judge_a": {
+      "index": 1,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 1,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "Basketball",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": {
+    "which": "staged",
+    "line": "Use a cue outside your body, such as drop it past the middle, instead of thinking about your elbow, and compare makes over fifty shots."
+   },
+   "status": "verified: code + MiniMax review + nvidia/nemotron-3-ultra-550b-a55b (no offline source settles it; evidence is the cited paper)"
+  },
+  {
+   "id": "bb-semicircle-B06",
+   "subject": "basketball",
+   "draft": "B06",
+   "action": "edit_description",
+   "why": "FIBA Official Basketball Rules 2026 v1.0, 2.5.7: radius 1.30 m measured to the OUTER edge (the older '1.25 m' was to the inner edge of the 5 cm line). Checked by code against the rulebook text (fact fiba-no-charge).",
+   "evidence": [
+    "fiba2026"
+   ],
+   "staged_line": "Compare FIBA's 1.30-metre no-charge semicircle with the NBA's 4-foot arc, balls passing over the backboard, and NBA defensive three seconds as of 2026.",
+   "line": "Compare FIBA's 1.30-metre no-charge semicircle with the NBA's 4-foot arc, balls passing over the backboard, and NBA defensive three seconds as of 2026.",
+   "judged": [
+    {
+     "id": "bb-semicircle-B06",
+     "which": "staged",
+     "line": "Compare FIBA's 1.30-metre no-charge semicircle with the NBA's 4-foot arc, balls passing over the backboard, and NBA defensive three seconds as of 2026.",
+     "judge_a": {
+      "index": 2,
+      "verdict": "wrong",
+      "issue": "The cited evidence supports only FIBA's 1.30-metre semicircle and how its radius is measured. It does not support the NBA 4-foot, over-the-backboard, or 2026 defensive-three-seconds claims, and those unrelated rules should not be bundled into one comparison.",
+      "better": "Check FIBA's 1.30-metre no-charge semicircle: its radius is measured to the outer edge of the 5-centimetre line, unlike the older 1.25-metre measurement to the inner edge."
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 2,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "Basketball rules",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": null,
+   "status": "needs owner: a judge called every version wrong (see judged)"
+  },
+  {
+   "id": "bb-sample-B04",
+   "subject": "basketball",
+   "draft": "B04",
+   "action": "insert_after",
+   "anchor": "Box Score and Shooting Percentages From Your Games",
+   "why": "Learners (and the app's own gates) must not read meaning into ten shots. Computed: Wilson 95% intervals 7/10 = 0.40-0.89 and 5/10 = 0.24-0.76 overlap; a 60% shooter makes 7 of 10 about 21% of the time and 5 of 10 about 20%. Supports the honest combine gates and the 'own baseline' rule.",
+   "evidence": [
+    "binomial (L)"
+   ],
+   "staged_line": "[Analytics] Log Fifty Shots Before Judging a Change | Log fifty attempts over several days before deciding a change worked, because 7 of 10 and 5 of 10 can come from one shooter.",
+   "line": "[Analytics] Log Fifty Shots Before Judging a Change | Log fifty attempts over several days before deciding a change worked, because 7 of 10 and 5 of 10 can come from one shooter.",
+   "minimax_draft": "[Analytics] Log Fifty Shots Before Judging a Change | Log at least 50 attempts over several days before deciding whether a shot change worked, because 10-shot ranges overlap while 50 attempts narrow the uncertainty.",
+   "claims": [
+    "With 10 attempts, the 95% ranges around 7 of 10 and 5 of 10 overlap.",
+    "At 50 attempts, the 95% margin for a 70% shooter is about 13 percentage points either way."
+   ],
+   "format_ok": {
+    "staged": true,
+    "minimax": true
+   },
+   "judged": [
+    {
+     "id": "bb-sample-B04",
+     "which": "staged",
+     "line": "[Analytics] Log Fifty Shots Before Judging a Change | Log fifty attempts over several days before deciding a change worked, because 7 of 10 and 5 of 10 can come from one shooter.",
+     "judge_a": {
+      "index": 3,
+      "verdict": "wrong",
+      "issue": "The evidence shows that ten-shot results are too uncertain, but it does not establish that exactly fifty shots are sufficient to decide that a change worked. The example also provides no baseline or decision criterion beyond collecting more shots.",
+      "better": "[Analytics] Log Fifty Shots Before Judging a Change | Log at least 50 attempts over several days before deciding whether a shot change worked, because 10-shot ranges overlap while 50 attempts narrow the uncertainty."
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 3,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "1983 NCAA Division I men's basketball championship game",
+      "verbatim": false,
+      "url": null
+     }
+    },
+    {
+     "id": "bb-sample-B04",
+     "which": "minimax",
+     "line": "[Analytics] Log Fifty Shots Before Judging a Change | Log at least 50 attempts over several days before deciding whether a shot change worked, because 10-shot ranges overlap while 50 attempts narrow the uncertainty.",
+     "judge_a": {
+      "index": 4,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 4,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "1983 NCAA Division I men's basketball championship game",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": {
+    "which": "minimax",
+    "line": "[Analytics] Log Fifty Shots Before Judging a Change | Log at least 50 attempts over several days before deciding whether a shot change worked, because 10-shot ranges overlap while 50 attempts narrow the uncertainty."
+   },
+   "status": "verified: code + MiniMax review + nvidia/nemotron-3-ultra-550b-a55b (no offline source settles it; evidence is the cited paper)"
+  },
+  {
+   "id": "bb-cold-B05",
+   "subject": "basketball",
+   "draft": "B05",
+   "action": "insert_after",
+   "anchor": "Short Daily Sessions Beat One Long Cram",
+   "why": "Contextual interference: blocked practice scores best during practice, varied practice retains and transfers better (Shamshiri et al. 2025 in novices' jump shots; increasing-schedule RCT). The app's gates already use the day-2 cold set; this lesson tells the learner why.",
+   "evidence": [
+    "shamshiri2025",
+    "increasing_ci"
+   ],
+   "staged_line": "[Practice] Judge Shooting by the Next-Day Cold Set | Take ten elbow jump shots the next day before shooting from the elbow again, because a block of the same shot inflates today's percentage.",
+   "line": "[Practice] Judge Shooting by the Next-Day Cold Set | Take ten elbow jump shots the next day before shooting from the elbow again, because a block of the same shot inflates today's percentage.",
+   "minimax_draft": "[Practice] Judge Shooting by the Next-Day Cold Set | After the general warm-up, log your first ten elbow jump shots before taking any other elbow shots, because same-shot repetition can make today’s percentage look better than next-day retention.",
+   "claims": [
+    "Blocked same-shot practice gives the best scores during practice, while varied or random practice gives better retention and transfer (Shamshiri et al. 2025).",
+    "Log the first ten shots from the spot the next day as the cold score."
+   ],
+   "format_ok": {
+    "staged": true,
+    "minimax": true
+   },
+   "judged": [
+    {
+     "id": "bb-cold-B05",
+     "which": "staged",
+     "line": "[Practice] Judge Shooting by the Next-Day Cold Set | Take ten elbow jump shots the next day before shooting from the elbow again, because a block of the same shot inflates today's percentage.",
+     "judge_a": {
+      "index": 5,
+      "verdict": "wrong",
+      "issue": "The instruction is internally ambiguous because it tells the learner to take elbow jump shots before shooting from the elbow again. It also mischaracterizes blocked practice as inherently inflating a percentage; it produces higher immediate, task-specific scores that need not represent retention or transfer.",
+      "better": "[Practice] Judge Shooting by the Next-Day Cold Set | After the general warm-up, log your first ten elbow jump shots before taking any other elbow shots, because same-shot repetition can make today's percentage look better than next-day retention."
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 5,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "practice",
+      "verbatim": false,
+      "url": null
+     }
+    },
+    {
+     "id": "bb-cold-B05",
+     "which": "minimax",
+     "line": "[Practice] Judge Shooting by the Next-Day Cold Set | After the general warm-up, log your first ten elbow jump shots before taking any other elbow shots, because same-shot repetition can make today’s percentage look better than next-day retention.",
+     "judge_a": {
+      "index": 6,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 6,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "practice",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": {
+    "which": "minimax",
+    "line": "[Practice] Judge Shooting by the Next-Day Cold Set | After the general warm-up, log your first ten elbow jump shots before taking any other elbow shots, because same-shot repetition can make today’s percentage look better than next-day retention."
+   },
+   "status": "verified: code + MiniMax review + nvidia/nemotron-3-ultra-550b-a55b (no offline source settles it; evidence is the cited paper)"
+  },
+  {
+   "id": "pi-interleave-P05",
+   "subject": "piano",
+   "draft": "P05",
+   "action": "insert_after",
+   "anchor": "Shape One Practice Session From Warm-Up to Review",
+   "why": "Learners' own judgement of learning points the wrong way: random-order melody practice retained better at two days while learners predicted the reverse (Abushanab and Bishara 2013); benefit holds for short units once learned (Verwey et al. 2021). The live path only teaches interleaving explicitly at P09 ('Interleaving and Spacing Pieces Across the Week'), though [Mixed] rounds already interleave from P04.",
+   "evidence": [
+    "abushanab2013",
+    "verwey2021"
+   ],
+   "staged_line": "[Practice] Shuffle Short Units Once Each Plays Correctly | Shuffle your G, D, F and A major scales once each plays correctly, because mixed practice feels harder but your next-day cold take improves.",
+   "line": "[Practice] Shuffle Short Units Once Each Plays Correctly | Shuffle your G, D, F and A major scales once each plays correctly, because mixed practice feels harder but your next-day cold take improves.",
+   "minimax_draft": "[Practice] Shuffle Scales After One Correct Run | Play G, D, F and A major scales correctly once each, then shuffle their order, because random-order practice is retained better two days later even though it feels harder.",
+   "claims": [
+    "Shuffle only after each short unit has had one correct run.",
+    "Random-order practice of short melodies was retained better two days later than fixed-order practice, while learners judged the opposite (Abushanab and Bishara 2013)."
+   ],
+   "format_ok": {
+    "staged": true,
+    "minimax": true
+   },
+   "judged": [
+    {
+     "id": "pi-interleave-P05",
+     "which": "staged",
+     "line": "[Practice] Shuffle Short Units Once Each Plays Correctly | Shuffle your G, D, F and A major scales once each plays correctly, because mixed practice feels harder but your next-day cold take improves.",
+     "judge_a": {
+      "index": 7,
+      "verdict": "wrong",
+      "issue": "The cited retention finding concerns two days, not a guaranteed improvement on a next-day cold test. The wording also does not clearly say to shuffle the order of the scales, which is the mixed-practice manipulation supported by the evidence.",
+      "better": "[Practice] Shuffle Scales After One Correct Run | Play G, D, F and A major scales correctly once each, then shuffle their order, because random-order practice is retained better two days later even though it feels harder."
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 0,
+      "verdict": "wrong",
+      "issue": "The line claims “next‑day cold take improves,” but the cited evidence (Abushanab & Bishara 2013; Verwey et al. 2021) only shows better retention at two days, not the next day.",
+      "better": "[Practice] Shuffle Short Units Once Each Plays Correctly | Shuffle your G, D, F and A major scales once each, because mixed practice feels harder but retention improves after two days."
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "Violin technique",
+      "verbatim": false,
+      "url": null
+     }
+    },
+    {
+     "id": "pi-interleave-P05",
+     "which": "minimax",
+     "line": "[Practice] Shuffle Scales After One Correct Run | Play G, D, F and A major scales correctly once each, then shuffle their order, because random-order practice is retained better two days later even though it feels harder.",
+     "judge_a": {
+      "index": 8,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 1,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "Shuffle",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": {
+    "which": "minimax",
+    "line": "[Practice] Shuffle Scales After One Correct Run | Play G, D, F and A major scales correctly once each, then shuffle their order, because random-order practice is retained better two days later even though it feels harder."
+   },
+   "status": "verified: code + MiniMax review + nvidia/nemotron-3-ultra-550b-a55b (no offline source settles it; evidence is the cited paper)"
+  },
+  {
+   "id": "pi-minor-order-P04",
+   "subject": "piano",
+   "draft": "P04",
+   "action": "swap",
+   "why": "Skill-graph check: the relative-minor key-signature lesson (concept) comes one line after the A and D natural minor scales (procedure); D natural minor's B-flat is explained by sharing F major's signature. Ordering rule 1 (concept, then procedure). Low impact either way.",
+   "evidence": [
+    "ordering rule 1, INSTRUCTIONS.md"
+   ],
+   "staged_line": null,
+   "line": "A and D Natural Minor Scales <-> Minor Keys Sharing Major Signatures",
+   "judged": [
+    {
+     "id": "pi-minor-order-P04",
+     "which": "staged",
+     "line": "A and D Natural Minor Scales <-> Minor Keys Sharing Major Signatures",
+     "judge_a": {
+      "index": 9,
+      "verdict": "wrong",
+      "issue": "The line places the procedure, A and D natural minor scales, before the concept, minor keys sharing major signatures, contrary to the stated concept-before-procedure ordering rule.",
+      "better": "Minor Keys Sharing Major Signatures <-> A and D Natural Minor Scales"
+     },
+     "model_a": "minimax/minimax-m3.1-flash",
+     "judge_b": {
+      "index": 2,
+      "verdict": "correct",
+      "issue": "",
+      "better": ""
+     },
+     "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+     "source": {
+      "verdict": "not_addressed",
+      "quote": "",
+      "article": "key",
+      "verbatim": false,
+      "url": null
+     }
+    }
+   ],
+   "chosen": null,
+   "status": "needs owner: a judge called every version wrong (see judged)"
+  }
+ ]
+}

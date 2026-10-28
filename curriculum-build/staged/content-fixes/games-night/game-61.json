@@ -1,0 +1,2948 @@
+{
+ "row_id": 61,
+ "engine_id": "free-throw",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 85,
+ "generated_at": "2026-10-25T05:22:20.086Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 63,
+  "code_rejected": 3,
+  "sent_to_judges": 60,
+  "kept": 50,
+  "keep_rate_of_written": 0.794,
+  "judges": {
+   "both_answered": 60,
+   "picked_same_option": 57,
+   "a_picked_key": 56,
+   "b_picked_key": 59,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "free-throw",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 85,
+   "topic": "Activity 3 of 9 (quiz/game): Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "title": "Mark the Phrase Breaks: Usage Debates and Style Guides",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q46",
+    "prompt": "A style guide states that a comma should not be placed before the coordinating conjunction when it joins only two short independent clauses. Which sentence follows that rule?",
+    "choices": [
+     "The sun set, and the lights came on.",
+     "The sun set and the lights came on.",
+     "The sun set; and the lights came on.",
+     "The sun set: and the lights came on."
+    ],
+    "answerIndex": 1,
+    "explanation": "When two brief independent clauses are joined by a coordinating conjunction, the guide omits the comma, so 'The sun set and the lights came on.' is correct.",
+    "difficulty": 5,
+    "skill": "phrase breaks",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q30",
+    "prompt": "A style guide requires commas around a conjunctive adverb that interrupts a sentence. Which sentence follows the rule?",
+    "choices": [
+     "The device works normally however, only after a restart.",
+     "The device works normally, however, only after a restart.",
+     "The device works, normally however, only after a restart.",
+     "The device works normally, however only, after a restart."
+    ],
+    "answerIndex": 1,
+    "explanation": "The conjunctive adverb however is enclosed by commas because it interrupts the main sentence.",
+    "difficulty": 6,
+    "skill": "Setting off an interrupting conjunctive adverb",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q47",
+    "prompt": "A style guide sets off a vocative that interrupts a sentence with commas. Which sentence follows the rule?",
+    "choices": [
+     "Take your seats everyone before the curtain rises.",
+     "Take your seats, everyone before the curtain rises.",
+     "Take your seats, everyone, before the curtain rises.",
+     "Take your seats, everyone, before, the curtain rises."
+    ],
+    "answerIndex": 2,
+    "explanation": "The interrupting vocative everyone is enclosed by commas on both sides.",
+    "difficulty": 4,
+    "skill": "Setting off an interrupting vocative",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q45",
+    "prompt": "A style guide requires a colon after \"as follows\" when it introduces a list. Which sentence follows the rule?",
+    "choices": [
+     "The steps are as follows: gather data, analyze results, write report.",
+     "The steps are as follows; gather data, analyze results, write report.",
+     "The steps are as follows, gather data, analyze results, write report.",
+     "The steps are as follows gather data, analyze results, write report."
+    ],
+    "answerIndex": 0,
+    "explanation": "The guide uses a colon after \"as follows\" to introduce the list.",
+    "difficulty": 5,
+    "skill": "phrase break punctuation",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q15",
+    "prompt": "A style guide spells website as one word and forms its plural by adding s. Which sentence follows the rule?",
+    "choices": [
+     "The archive contains thousands of old website.",
+     "The archive contains thousands of old web sites.",
+     "The archive contains thousands of old websites.",
+     "The archive contains thousands of old website's."
+    ],
+    "answerIndex": 2,
+    "explanation": "The plural form websites follows the style guide's one-word spelling and regular plural rule.",
+    "difficulty": 5,
+    "skill": "Applying a style guide to spelling and pluralization",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which sentence correctly follows the style-guide rule for a restrictive relative clause?",
+    "choices": [
+     "The hikers, who carried maps, followed the marked trail.",
+     "The hikers who carried maps followed the marked trail.",
+     "The hikers who, carried maps followed the marked trail.",
+     "The hikers who carried maps, followed the marked trail."
+    ],
+    "answerIndex": 1,
+    "explanation": "A restrictive relative clause identifies the hikers and is not set off by commas in the first sentence.",
+    "difficulty": 6,
+    "skill": "Distinguishing restrictive and nonrestrictive clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q41",
+    "prompt": "A style guide prohibits a comma between a professional title and the name that follows it. Which sentence follows the rule?",
+    "choices": [
+     "Professor Chen explained the results.",
+     "Professor, Chen explained the results.",
+     "Professor Chen, explained the results.",
+     "Professor, Chen, explained the results."
+    ],
+    "answerIndex": 0,
+    "explanation": "A professional title is not separated from the following name by a comma.",
+    "difficulty": 4,
+    "skill": "Applying Title and Name Punctuation",
+    "topic": "Usage Debates and Style Guides — Marking Phrase Breaks"
+   },
+   {
+    "id": "q31",
+    "prompt": "A style guide requires a hyphen in the compound modifier well-known when it appears before a noun. Which sentence follows the rule?",
+    "choices": [
+     "The article cited, a well-known example of adaptation.",
+     "The article cited a well known example of adaptation.",
+     "The article cited a well-known example of adaptation.",
+     "The article cited a well-known example, of adaptation."
+    ],
+    "answerIndex": 2,
+    "explanation": "The hyphen joins the elements of the compound modifier well-known in the phrase well-known example.",
+    "difficulty": 5,
+    "skill": "Applying a hyphenation rule for compound modifiers",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q1",
+    "prompt": "Which sentence correctly marks the phrase break before the coordinating conjunction joining two independent clauses?",
+    "choices": [
+     "The novel was difficult, but the ending was satisfying.",
+     "The novel was difficult but, the ending was satisfying.",
+     "The novel was difficult but the ending, was satisfying.",
+     "The novel, was difficult but the ending was satisfying."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence places a comma before the coordinating conjunction joining two independent clauses.",
+    "difficulty": 5,
+    "skill": "Marking phrase breaks before coordinating conjunctions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q32",
+    "prompt": "A style guide follows legal citation style: v. is preceded by a space, and no comma appears around it. Which case name follows the rule?",
+    "choices": [
+     "Brown v. Board, of Education",
+     "Brown, v. Board of Education",
+     "Brown v, Board of Education",
+     "Brown v. Board of Education"
+    ],
+    "answerIndex": 3,
+    "explanation": "The abbreviation v. correctly follows Brown with a space and is not separated by commas.",
+    "difficulty": 6,
+    "skill": "Applying legal citation style",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q48",
+    "prompt": "A style guide sets off an appositive at the end of a sentence with a comma before it and a period after it. Which sentence follows the rule?",
+    "choices": [
+     "The winning design, was created by a first-year student, Elena Ortiz.",
+     "The winning design was created, by a first-year student, Elena Ortiz.",
+     "The winning design was created by, a first-year student, Elena Ortiz.",
+     "The winning design was created by a first-year student, Elena Ortiz."
+    ],
+    "answerIndex": 3,
+    "explanation": "The appositive Elena Ortiz renames the noun phrase a first-year student and is set off at the end of the sentence.",
+    "difficulty": 5,
+    "skill": "Marking a final appositive",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which sentence correctly marks the phrase break after the introductory dependent clause?",
+    "choices": [
+     "Because the trail was flooded, the group took a longer route.",
+     "Because the trail was flooded the group, took a longer route.",
+     "Because the trail, was flooded the group took a longer route.",
+     "Because the trail was flooded the group took a longer, route."
+    ],
+    "answerIndex": 0,
+    "explanation": "A comma separates the introductory dependent clause from the main clause in the first sentence.",
+    "difficulty": 4,
+    "skill": "Marking phrase breaks after introductory dependent clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q20",
+    "prompt": "A style guide requires a colon to introduce a list of required materials. Which sentence follows the rule?",
+    "choices": [
+     "The required materials were paper, pens and ink.",
+     "The required materials were, paper, pens and ink.",
+     "The required materials were; paper, pens and ink.",
+     "The required materials were: paper, pens and ink."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon signals that the words after it form a list of required materials.",
+    "difficulty": 5,
+    "skill": "Use colons before lists",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q50",
+    "prompt": "A style guide requires a comma before respectively when it links two results in the same order. Which sentence follows the rule?",
+    "choices": [
+     "The runners placed first and second respectively.",
+     "The runners placed first and second, respectively.",
+     "The runners placed, first and second, respectively.",
+     "The runners placed first, and second respectively."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma before respectively marks its connection to the two results in the stated order.",
+    "difficulty": 6,
+    "skill": "Marking the phrase before respectively",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which sentence follows the style guide that requires spaced em dashes around a parenthetical phrase?",
+    "choices": [
+     "The results — unexpected and surprising — were published yesterday.",
+     "The results—unexpected and surprising—were published yesterday.",
+     "The results, unexpected and surprising, were published yesterday.",
+     "The results (unexpected and surprising) were published yesterday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence follows the style guide that requires spaced em dashes around a parenthetical insertion.",
+    "difficulty": 5,
+    "skill": "Em dash usage for parentheticals",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q9",
+    "prompt": "A sentence begins with the conjunctive adverb However. Where should the phrase break appear?",
+    "choices": [
+     "However, the scoreboard showed the visitors had one point left.",
+     "However the scoreboard showed the visitors had one point left.",
+     "However; the scoreboard showed the visitors had one point left.",
+     "However: the scoreboard showed the visitors had one point left."
+    ],
+    "answerIndex": 0,
+    "explanation": "A comma should follow the introductory conjunctive adverb However before the main clause begins.",
+    "difficulty": 4,
+    "skill": "Marking a break after an introductory conjunctive adverb",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q38",
+    "prompt": "A style guide requires commas around a nonrestrictive participial phrase that adds information. Which sentence follows the rule?",
+    "choices": [
+     "The finalists smiling at the crowd waved to their families.",
+     "The finalists, smiling at the crowd, waved to their families.",
+     "The finalists, smiling at the crowd waved to their families.",
+     "The finalists smiling at the crowd, waved to their families."
+    ],
+    "answerIndex": 1,
+    "explanation": "The commas correctly set off the nonrestrictive participial phrase smiling at the crowd.",
+    "difficulty": 5,
+    "skill": "Marking Nonrestrictive Phrase Breaks",
+    "topic": "Usage Debates and Style Guides — Marking Phrase Breaks"
+   },
+   {
+    "id": "q26",
+    "prompt": "A style guide does not place a comma before a quotation that functions as a complete sentence. Which sentence follows the rule?",
+    "choices": [
+     "The poster read, 'The gate opens at eight.'",
+     "The poster read 'The gate opens at eight.'",
+     "The poster read 'The gate opens at eight,'",
+     "The poster read, 'The gate opens at eight'"
+    ],
+    "answerIndex": 1,
+    "explanation": "Because the quotation forms a complete sentence, the style guide does not require a comma before it.",
+    "difficulty": 6,
+    "skill": "Marking boundaries before complete-sentence quotations",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q22",
+    "prompt": "A style guide requires commas around a dependent clause inserted in the middle of a sentence. Which sentence follows the rule?",
+    "choices": [
+     "The report although it was delayed, was released on time.",
+     "The report, although it was delayed, was released on time.",
+     "The report, although it was delayed was released on time.",
+     "The report although it was delayed was released on time."
+    ],
+    "answerIndex": 1,
+    "explanation": "The paired commas set off although it was delayed as an inserted dependent clause.",
+    "difficulty": 5,
+    "skill": "Set off inserted dependent clauses",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q11",
+    "prompt": "A style guide specifies an em dash without surrounding spaces to set off an unexpected clarification. Which sentence follows the rule?",
+    "choices": [
+     "The formula was incomplete — we needed one more measurement.",
+     "The formula was incomplete - we needed one more measurement.",
+     "The formula was incomplete—we needed one more measurement.",
+     "The formula was incomplete--we needed one more measurement."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence uses a closed em dash to set off the clarification without spaces on either side.",
+    "difficulty": 7,
+    "skill": "Using an em dash for an unexpected clarification",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q7",
+    "prompt": "A style guide requires a colon to introduce an explanation. Which sentence follows that rule?",
+    "choices": [
+     "The coach offered one strategy, defend the center early.",
+     "The coach offered one strategy; defend the center early.",
+     "The coach offered one strategy: defend the center early.",
+     "The coach offered one strategy: and defend the center early."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon correctly introduces the explanation of the strategy the coach offered.",
+    "difficulty": 4,
+    "skill": "Using a colon before an explanation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which sentence correctly uses an en dash to indicate a numeric range?",
+    "choices": [
+     "The study covered the years 2010-2020.",
+     "The study covered the years 2010–2020.",
+     "The study covered the years 2010 to 2020.",
+     "The study covered the years 2010—2020."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence uses an en dash without spaces to indicate a numeric range.",
+    "difficulty": 5,
+    "skill": "En dash for ranges",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q49",
+    "prompt": "A style guide uses a semicolon to separate two parallel series when each series contains an internal comma. Which sentence follows the rule?",
+    "choices": [
+     "The workshop covers planning, editing; peer review, publication.",
+     "The workshop covers planning and editing; peer review and publication.",
+     "The workshop covers planning, editing, peer review, publication.",
+     "The workshop covers planning, editing: peer review, publication."
+    ],
+    "answerIndex": 0,
+    "explanation": "The semicolon divides the two parallel series, and each series contains an internal comma.",
+    "difficulty": 6,
+    "skill": "Separating grouped series with a semicolon",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which sentence follows American convention for placing a period inside closing quotation marks?",
+    "choices": [
+     "The notice said, \"Do not enter.\"",
+     "The notice said, \"Do not enter\".",
+     "The notice said, \"Do not enter\"?",
+     "The notice said, \"Do not enter\""
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence follows American style by placing the period inside the closing quotation marks.",
+    "difficulty": 5,
+    "skill": "Quotation mark punctuation",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q27",
+    "prompt": "A style guide requires a comma after an introductory interjection. Which sentence follows the rule?",
+    "choices": [
+     "The robot completed the obstacle course, amazing.",
+     "Amazing; the robot completed the obstacle course.",
+     "Amazing, the robot completed the obstacle course.",
+     "Amazing the robot completed the obstacle course."
+    ],
+    "answerIndex": 2,
+    "explanation": "The introductory interjection Amazing is set off from the main clause by a comma.",
+    "difficulty": 4,
+    "skill": "Applying an introductory-interjection comma rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q28",
+    "prompt": "A style guide says a compound predicate should not be separated by a comma. Which sentence follows the rule?",
+    "choices": [
+     "The club reviewed, the proposal and approved it.",
+     "The club reviewed the proposal, and approved it.",
+     "The club, reviewed the proposal and approved it.",
+     "The club reviewed the proposal and approved it."
+    ],
+    "answerIndex": 3,
+    "explanation": "Reviewed the proposal and approved it is a compound predicate, so no comma belongs between the two verbs.",
+    "difficulty": 5,
+    "skill": "Avoiding breaks within compound predicates",
+    "topic": "Usage Debades and Style Guides"
+   },
+   {
+    "id": "q10",
+    "prompt": "A style guide places the comma before a quotation and the question mark inside it. Which sentence follows the rule?",
+    "choices": [
+     "The librarian asked: 'May I borrow another book?'",
+     "The librarian asked, 'May I borrow another book?'",
+     "The librarian asked 'May I borrow another book?'",
+     "The librarian asked, 'May I borrow another book'."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence places a comma before the quotation and a question mark inside it as the stated style guide requires.",
+    "difficulty": 6,
+    "skill": "Punctuating a direct question within a quotation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q40",
+    "prompt": "A style guide prohibits a comma between a linking verb and its predicate adjective. Which sentence follows the rule?",
+    "choices": [
+     "The final result was, surprising indeed.",
+     "The final result was, surprising.",
+     "The final result, was surprising.",
+     "The final result was surprising."
+    ],
+    "answerIndex": 3,
+    "explanation": "A linking verb joins directly to its predicate adjective without a comma.",
+    "difficulty": 5,
+    "skill": "Separating Linking Verbs from Predicates",
+    "topic": "Usage Debates and Style Guides — Marking Phrase Breaks"
+   },
+   {
+    "id": "q14",
+    "prompt": "A style guide requires a comma after an introductory absolute phrase. Which sentence follows the rule?",
+    "choices": [
+     "With the lights dimmed the audience settled into silence.",
+     "With the lights dimmed, the audience settled into silence.",
+     "With the lights, dimmed the audience settled into silence.",
+     "With the lights dimmed; the audience settled into silence."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma marks the phrase break after the introductory absolute phrase With the lights dimmed.",
+    "difficulty": 6,
+    "skill": "Marking the break after an introductory absolute phrase",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q6",
+    "prompt": "Two independent clauses are joined to show a close relationship. Which sentence is punctuated correctly with a semicolon?",
+    "choices": [
+     "Because rain flooded the court; the game was moved indoors.",
+     "Rain flooded the court; the game was moved indoors.",
+     "Rain flooded the court, the game was moved indoors; spectators left early.",
+     "Rain flooded the court; and the game was moved indoors."
+    ],
+    "answerIndex": 1,
+    "explanation": "The semicolon correctly joins two independent clauses without a coordinating conjunction.",
+    "difficulty": 5,
+    "skill": "Joining independent clauses with a semicolon",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q17",
+    "prompt": "A style guide requires commas around a parenthetical phrase that interrupts the main sentence. Which sentence follows the rule?",
+    "choices": [
+     "The pianist, unable to stop coughing, continued the performance.",
+     "The pianist unable to stop coughing continued the performance.",
+     "The pianist, unable to stop coughing continued the performance.",
+     "The pianist unable to stop coughing, continued the performance."
+    ],
+    "answerIndex": 0,
+    "explanation": "The paired commas set the phrase unable to stop coughing apart from the surrounding main clause.",
+    "difficulty": 4,
+    "skill": "Set off parenthetical phrases",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q44",
+    "prompt": "A style guide requires a comma before \"etc.\" when it follows a list of three or more items. Which sentence follows the rule?",
+    "choices": [
+     "The kit includes ropes, hooks, carabiners etc.",
+     "The kit includes ropes, hooks, carabiners. etc.",
+     "The kit includes ropes, hooks, carabiners; etc.",
+     "The kit includes ropes, hooks, carabiners, etc."
+    ],
+    "answerIndex": 3,
+    "explanation": "The guide places a comma before \"etc.\" after a list of three or more items.",
+    "difficulty": 5,
+    "skill": "phrase break punctuation",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q16",
+    "prompt": "A style guide requires a hyphen in decision-making when it modifies a noun. Which sentence follows the rule?",
+    "choices": [
+     "The decision making team approved the proposal.",
+     "The decisionmaking team approved the proposal.",
+     "The decision making-team approved the proposal.",
+     "The decision-making team approved the proposal."
+    ],
+    "answerIndex": 3,
+    "explanation": "The hyphen joins decision and making in the compound adjective decision-making.",
+    "difficulty": 6,
+    "skill": "Using a style guide to hyphenate compound modifiers",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q43",
+    "prompt": "A style guide says no comma is needed before \"but also\" in a \"not only … but also\" construction. Which sentence follows the rule?",
+    "choices": [
+     "Not only did she finish the race, but also she set a record.",
+     "Not only did she finish the race, but also, she set a record.",
+     "Not only did she finish the race but also she set a record.",
+     "Not only did she finish the race but also, she set a record."
+    ],
+    "answerIndex": 2,
+    "explanation": "The guide omits the comma before \"but also\" in the correlative pair.",
+    "difficulty": 5,
+    "skill": "phrase break punctuation",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q12",
+    "prompt": "A style guide requires a comma after the salutation of a personal letter. Which punctuation mark should follow Dear Maya?",
+    "choices": [
+     "Dear Maya.",
+     "Dear Maya;",
+     "Dear Maya:",
+     "Dear Maya,"
+    ],
+    "answerIndex": 3,
+    "explanation": "A comma follows the salutation and separates it from the body of the letter.",
+    "difficulty": 4,
+    "skill": "Applying a style-guide rule for letter salutations",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which sentence correctly avoids placing a phrase break between a complete subject and its verb?",
+    "choices": [
+     "The results of the survey were surprising.",
+     "The results of the survey; were surprising.",
+     "The results of the survey: were surprising.",
+     "The results of the survey, were surprising."
+    ],
+    "answerIndex": 0,
+    "explanation": "The subject The results of the survey should not be separated from the verb were by punctuation.",
+    "difficulty": 5,
+    "skill": "Identifying the subject-verb boundary",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q23",
+    "prompt": "A style guide prohibits a comma before because when it joins two independent clauses. Which sentence follows the rule?",
+    "choices": [
+     "The meeting ended early because, the speaker lost track of time.",
+     "The meeting ended early, because the speaker lost track of time.",
+     "The meeting ended early because the speaker lost track of time.",
+     "The meeting ended early because the speaker, lost track of time."
+    ],
+    "answerIndex": 2,
+    "explanation": "Because introduces a dependent clause that belongs directly after the independent clause without a separating comma.",
+    "difficulty": 6,
+    "skill": "Applying style-guide rules for dependent clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q24",
+    "prompt": "A style guide requires commas around the title of a book when the title stands alone within a sentence. Which sentence follows the rule?",
+    "choices": [
+     "The novel The Silent Orchard won an award.",
+     "The novel The Silent Orchard, won an award.",
+     "The novel, The Silent Orchard won an award.",
+     "The novel, The Silent Orchard, won an award."
+    ],
+    "answerIndex": 3,
+    "explanation": "The paired commas show that The Silent Orchard is a stand-alone title interrupting the main sentence.",
+    "difficulty": 5,
+    "skill": "Marking phrase breaks around book titles",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q21",
+    "prompt": "A style guide requires a comma after an introductory infinitive phrase. Which sentence follows the rule?",
+    "choices": [
+     "To finish the race, Lina sprinted toward the finish line.",
+     "To finish the race: Lina sprinted toward the finish line.",
+     "To finish the race Lina sprinted toward the finish line.",
+     "To finish the race; Lina sprinted toward the finish line."
+    ],
+    "answerIndex": 0,
+    "explanation": "The comma after To finish the race closes the introductory infinitive phrase.",
+    "difficulty": 4,
+    "skill": "Mark introductory infinitive phrases",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q35",
+    "prompt": "Which sentence correctly sets off the transitional phrase 'for example' with commas?",
+    "choices": [
+     "Many birds migrate south for the winter; for example; the swallow and the warbler.",
+     "Many birds migrate south for the winter for example the swallow and the warbler.",
+     "Many birds migrate south for the winter, for example, the swallow and the warbler.",
+     "Many birds migrate south for the winter — for example — the swallow and the warbler."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence places commas before and after the transitional phrase 'for example'.",
+    "difficulty": 5,
+    "skill": "Commas with transitional phrases",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q19",
+    "prompt": "A style guide says not to place a comma before and when it joins two short independent clauses. Which sentence follows the rule?",
+    "choices": [
+     "The bell rang, and we left.",
+     "The bell rang, we left.",
+     "The bell rang and we left.",
+     "The bell rang and, we left."
+    ],
+    "answerIndex": 2,
+    "explanation": "The guide omits the comma before and because the two short independent clauses are joined directly.",
+    "difficulty": 6,
+    "skill": "Apply optional comma rules",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q39",
+    "prompt": "A style guide requires a prepositional phrase to remain unbroken, with no comma inside it. Which sentence follows the rule?",
+    "choices": [
+     "The hikers followed, the marked trail to the summit.",
+     "The hikers followed the marked, trail to the summit.",
+     "The hikers followed the marked trail to the summit.",
+     "The hikers followed the marked trail, to the summit."
+    ],
+    "answerIndex": 2,
+    "explanation": "The prepositional phrases following followed remain complete and unbroken in the correctly punctuated sentence.",
+    "difficulty": 5,
+    "skill": "Keeping Prepositional Phrases Joined",
+    "topic": "Usage Debates and Style Guides — Marking Phrase Breaks"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which sentence correctly marks the phrase breaks around an appositive that renames the subject?",
+    "choices": [
+     "The captain a senior guard called, the final timeout.",
+     "The captain a senior guard, called the final timeout.",
+     "The captain, a senior guard called the final timeout.",
+     "The captain, a senior guard, called the final timeout."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence uses a pair of commas to set off the appositive that renames the captain.",
+    "difficulty": 5,
+    "skill": "Marking phrase breaks around appositives",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q36",
+    "prompt": "Which sentence correctly places a comma before the final 'too' meaning 'also'?",
+    "choices": [
+     "She wants to join the team — too.",
+     "She wants to join the team too.",
+     "She wants to join the team; too.",
+     "She wants to join the team, too."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence includes a comma before the final 'too' to indicate addition.",
+    "difficulty": 4,
+    "skill": "Comma before sentence‑final too",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which sentence correctly marks the phrase breaks around a nonrestrictive relative clause?",
+    "choices": [
+     "Priya's camera, which she bought in June has a cracked lens.",
+     "Priya's camera which she bought in June, has a cracked lens.",
+     "Priya's camera, which she bought in June, has a cracked lens.",
+     "Priya's camera which, she bought in June, has a cracked lens."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence sets off a nonrestrictive relative clause with a comma before and after the clause.",
+    "difficulty": 6,
+    "skill": "Marking phrase breaks around nonrestrictive clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q25",
+    "prompt": "A style guide requires a colon before a quotation that presents the speaker’s complete message. Which sentence follows the rule?",
+    "choices": [
+     "The director said: 'The meeting begins now.'",
+     "The director said, 'The meeting begins now.'",
+     "The director said 'The meeting begins now.'",
+     "The director said: 'The meeting begins now,'"
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon introduces the quoted statement, and the period completes the sentence inside the quotation.",
+    "difficulty": 5,
+    "skill": "Using colons to introduce quotations",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q29",
+    "prompt": "A style guide requires a comma before a parenthetical phrase that comes at the end of a sentence. Which sentence follows the rule?",
+    "choices": [
+     "The museum reopened on Friday, after months of repairs.",
+     "The museum reopened on Friday after months, of repairs.",
+     "The museum, reopened on Friday after months of repairs.",
+     "The museum reopened on Friday; after months of repairs."
+    ],
+    "answerIndex": 0,
+    "explanation": "The comma sets off the final parenthetical phrase after months of repairs from the main sentence.",
+    "difficulty": 5,
+    "skill": "Setting off a final parenthetical phrase",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q18",
+    "prompt": "A style guide requires a comma after an introductory participial phrase. Which sentence follows the rule?",
+    "choices": [
+     "Running late the team hurried to the field.",
+     "Running late, the team hurried to the field.",
+     "Running late; the team hurried to the field.",
+     "Running late: the team hurried to the field."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma after Running late closes the introductory participial phrase before the main clause begins.",
+    "difficulty": 4,
+    "skill": "Mark introductory participial phrases",
+    "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q42",
+    "prompt": "A style guide uses square brackets to set off a brief nonessential phrase. Which sentence follows the rule?",
+    "choices": [
+     "The hikers (who arrived early) started the first ascent.",
+     "The hikers [who arrived early] started the first ascent.",
+     "The hikers, who arrived early, started the first ascent.",
+     "The hikers [who arrived early started the first ascent."
+    ],
+    "answerIndex": 1,
+    "explanation": "The square brackets correctly enclose and set off the nonessential phrase who arrived early.",
+    "difficulty": 6,
+    "skill": "Using Brackets for Nonessential Phrases",
+    "topic": "Usage Debates and Style Guides — Marking Phrase Breaks"
+   },
+   {
+    "id": "q8",
+    "prompt": "A style guide requires a serial comma in every list of three or more items. Which sentence follows the rule?",
+    "choices": [
+     "The assignment required research, citations and a bibliography.",
+     "The assignment required research and citations, plus a bibliography.",
+     "The assignment required research, citations, and, a bibliography.",
+     "The assignment required research, citations, and a bibliography."
+    ],
+    "answerIndex": 3,
+    "explanation": "This list uses a serial comma before and to separate all three items correctly.",
+    "difficulty": 5,
+    "skill": "Applying the serial comma rule",
+    "topic": "Usage Debates and Style Guides"
+   }
+  ],
+  "feedback": {
+   "correct": "Clean break! Your punctuation instincts are matching the style guides.",
+   "incorrect": "No shot this time — that break slipped past you. Reread the sentence and try again.",
+   "win": "Game over — you marked every break like a seasoned editor with a style guide at your elbow.",
+   "lose": "The streak ran dry, but every disputed rule you just faced is one you now know how to settle.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Which sentence correctly marks the phrase break before the coordinating conjunction joining two independent clauses?",
+   "choices": [
+    "The novel was difficult, but the ending was satisfying.",
+    "The novel was difficult but, the ending was satisfying.",
+    "The novel was difficult but the ending, was satisfying.",
+    "The novel, was difficult but the ending was satisfying."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence places a comma before the coordinating conjunction joining two independent clauses.",
+   "difficulty": 5,
+   "skill": "Marking phrase breaks before coordinating conjunctions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly follows the style-guide rule for a restrictive relative clause?",
+   "choices": [
+    "The hikers who carried maps followed the marked trail.",
+    "The hikers, who carried maps, followed the marked trail.",
+    "The hikers who, carried maps followed the marked trail.",
+    "The hikers who carried maps, followed the marked trail."
+   ],
+   "answerIndex": 0,
+   "explanation": "A restrictive relative clause identifies the hikers and is not set off by commas in the first sentence.",
+   "difficulty": 6,
+   "skill": "Distinguishing restrictive and nonrestrictive clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly marks the phrase breaks around a nonrestrictive relative clause?",
+   "choices": [
+    "Priya's camera, which she bought in June, has a cracked lens.",
+    "Priya's camera which she bought in June, has a cracked lens.",
+    "Priya's camera, which she bought in June has a cracked lens.",
+    "Priya's camera which, she bought in June, has a cracked lens."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence sets off a nonrestrictive relative clause with a comma before and after the clause.",
+   "difficulty": 6,
+   "skill": "Marking phrase breaks around nonrestrictive clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly marks the phrase breaks around an appositive that renames the subject?",
+   "choices": [
+    "The captain, a senior guard, called the final timeout.",
+    "The captain a senior guard, called the final timeout.",
+    "The captain, a senior guard called the final timeout.",
+    "The captain a senior guard called, the final timeout."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses a pair of commas to set off the appositive that renames the captain.",
+   "difficulty": 5,
+   "skill": "Marking phrase breaks around appositives",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly marks the phrase break after the introductory dependent clause?",
+   "choices": [
+    "Because the trail was flooded, the group took a longer route.",
+    "Because the trail was flooded the group, took a longer route.",
+    "Because the trail, was flooded the group took a longer route.",
+    "Because the trail was flooded the group took a longer, route."
+   ],
+   "answerIndex": 0,
+   "explanation": "A comma separates the introductory dependent clause from the main clause in the first sentence.",
+   "difficulty": 4,
+   "skill": "Marking phrase breaks after introductory dependent clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Two independent clauses are joined to show a close relationship. Which sentence is punctuated correctly with a semicolon?",
+   "choices": [
+    "Because rain flooded the court; the game was moved indoors.",
+    "Rain flooded the court, the game was moved indoors; spectators left early.",
+    "Rain flooded the court; the game was moved indoors.",
+    "Rain flooded the court; and the game was moved indoors."
+   ],
+   "answerIndex": 2,
+   "explanation": "The semicolon correctly joins two independent clauses without a coordinating conjunction.",
+   "difficulty": 5,
+   "skill": "Joining independent clauses with a semicolon",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a colon to introduce an explanation. Which sentence follows that rule?",
+   "choices": [
+    "The coach offered one strategy, defend the center early.",
+    "The coach offered one strategy; defend the center early.",
+    "The coach offered one strategy: and defend the center early.",
+    "The coach offered one strategy: defend the center early."
+   ],
+   "answerIndex": 3,
+   "explanation": "The colon correctly introduces the explanation of the strategy the coach offered.",
+   "difficulty": 4,
+   "skill": "Using a colon before an explanation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a serial comma in every list of three or more items. Which sentence follows the rule?",
+   "choices": [
+    "The assignment required research, citations and a bibliography.",
+    "The assignment required research and citations, plus a bibliography.",
+    "The assignment required research, citations, and, a bibliography.",
+    "The assignment required research, citations, and a bibliography."
+   ],
+   "answerIndex": 3,
+   "explanation": "This list uses a serial comma before and to separate all three items correctly.",
+   "difficulty": 5,
+   "skill": "Applying the serial comma rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A sentence begins with the conjunctive adverb However. Where should the phrase break appear?",
+   "choices": [
+    "However, the scoreboard showed the visitors had one point left.",
+    "However the scoreboard showed the visitors had one point left.",
+    "However; the scoreboard showed the visitors had one point left.",
+    "However: the scoreboard showed the visitors had one point left."
+   ],
+   "answerIndex": 0,
+   "explanation": "A comma should follow the introductory conjunctive adverb However before the main clause begins.",
+   "difficulty": 4,
+   "skill": "Marking a break after an introductory conjunctive adverb",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide places the comma before a quotation and the question mark inside it. Which sentence follows the rule?",
+   "choices": [
+    "The librarian asked: 'May I borrow another book?'",
+    "The librarian asked 'May I borrow another book?'",
+    "The librarian asked, 'May I borrow another book?'",
+    "The librarian asked, 'May I borrow another book'."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence places a comma before the quotation and a question mark inside it as the stated style guide requires.",
+   "difficulty": 6,
+   "skill": "Punctuating a direct question within a quotation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide specifies an em dash without surrounding spaces to set off an unexpected clarification. Which sentence follows the rule?",
+   "choices": [
+    "The formula was incomplete — we needed one more measurement.",
+    "The formula was incomplete—we needed one more measurement.",
+    "The formula was incomplete - we needed one more measurement.",
+    "The formula was incomplete--we needed one more measurement."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence uses a closed em dash to set off the clarification without spaces on either side.",
+   "difficulty": 7,
+   "skill": "Using an em dash for an unexpected clarification",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma after the salutation of a personal letter. Which punctuation mark should follow Dear Maya?",
+   "choices": [
+    "Dear Maya,",
+    "Dear Maya;",
+    "Dear Maya:",
+    "Dear Maya."
+   ],
+   "answerIndex": 0,
+   "explanation": "A comma follows the salutation and separates it from the body of the letter.",
+   "difficulty": 4,
+   "skill": "Applying a style-guide rule for letter salutations",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly avoids placing a phrase break between a complete subject and its verb?",
+   "choices": [
+    "The results of the survey, were surprising.",
+    "The results of the survey; were surprising.",
+    "The results of the survey: were surprising.",
+    "The results of the survey were surprising."
+   ],
+   "answerIndex": 3,
+   "explanation": "The subject The results of the survey should not be separated from the verb were by punctuation.",
+   "difficulty": 5,
+   "skill": "Identifying the subject-verb boundary",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma after an introductory absolute phrase. Which sentence follows the rule?",
+   "choices": [
+    "With the lights dimmed the audience settled into silence.",
+    "With the lights dimmed, the audience settled into silence.",
+    "With the lights, dimmed the audience settled into silence.",
+    "With the lights dimmed; the audience settled into silence."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma marks the phrase break after the introductory absolute phrase With the lights dimmed.",
+   "difficulty": 6,
+   "skill": "Marking the break after an introductory absolute phrase",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide spells website as one word and forms its plural by adding s. Which sentence follows the rule?",
+   "choices": [
+    "The archive contains thousands of old website.",
+    "The archive contains thousands of old web sites.",
+    "The archive contains thousands of old websites.",
+    "The archive contains thousands of old website's."
+   ],
+   "answerIndex": 2,
+   "explanation": "The plural form websites follows the style guide's one-word spelling and regular plural rule.",
+   "difficulty": 5,
+   "skill": "Applying a style guide to spelling and pluralization",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a hyphen in decision-making when it modifies a noun. Which sentence follows the rule?",
+   "choices": [
+    "The decision making team approved the proposal.",
+    "The decisionmaking team approved the proposal.",
+    "The decision making-team approved the proposal.",
+    "The decision-making team approved the proposal."
+   ],
+   "answerIndex": 3,
+   "explanation": "The hyphen joins decision and making in the compound adjective decision-making.",
+   "difficulty": 6,
+   "skill": "Using a style guide to hyphenate compound modifiers",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires commas around a parenthetical phrase that interrupts the main sentence. Which sentence follows the rule?",
+   "choices": [
+    "The pianist unable to stop coughing continued the performance.",
+    "The pianist, unable to stop coughing, continued the performance.",
+    "The pianist, unable to stop coughing continued the performance.",
+    "The pianist unable to stop coughing, continued the performance."
+   ],
+   "answerIndex": 1,
+   "explanation": "The paired commas set the phrase unable to stop coughing apart from the surrounding main clause.",
+   "difficulty": 4,
+   "skill": "Set off parenthetical phrases",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma after an introductory participial phrase. Which sentence follows the rule?",
+   "choices": [
+    "Running late the team hurried to the field.",
+    "Running late; the team hurried to the field.",
+    "Running late, the team hurried to the field.",
+    "Running late: the team hurried to the field."
+   ],
+   "answerIndex": 2,
+   "explanation": "The comma after Running late closes the introductory participial phrase before the main clause begins.",
+   "difficulty": 4,
+   "skill": "Mark introductory participial phrases",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says not to place a comma before and when it joins two short independent clauses. Which sentence follows the rule?",
+   "choices": [
+    "The bell rang, and we left.",
+    "The bell rang and we left.",
+    "The bell rang, we left.",
+    "The bell rang and, we left."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide omits the comma before and because the two short independent clauses are joined directly.",
+   "difficulty": 6,
+   "skill": "Apply optional comma rules",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a colon to introduce a list of required materials. Which sentence follows the rule?",
+   "choices": [
+    "The required materials were: paper, pens and ink.",
+    "The required materials were, paper, pens and ink.",
+    "The required materials were; paper, pens and ink.",
+    "The required materials were paper, pens and ink."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon signals that the words after it form a list of required materials.",
+   "difficulty": 5,
+   "skill": "Use colons before lists",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma after an introductory infinitive phrase. Which sentence follows the rule?",
+   "choices": [
+    "To finish the race; Lina sprinted toward the finish line.",
+    "To finish the race: Lina sprinted toward the finish line.",
+    "To finish the race Lina sprinted toward the finish line.",
+    "To finish the race, Lina sprinted toward the finish line."
+   ],
+   "answerIndex": 3,
+   "explanation": "The comma after To finish the race closes the introductory infinitive phrase.",
+   "difficulty": 4,
+   "skill": "Mark introductory infinitive phrases",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires commas around a dependent clause inserted in the middle of a sentence. Which sentence follows the rule?",
+   "choices": [
+    "The report, although it was delayed, was released on time.",
+    "The report although it was delayed, was released on time.",
+    "The report, although it was delayed was released on time.",
+    "The report although it was delayed was released on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired commas set off although it was delayed as an inserted dependent clause.",
+   "difficulty": 5,
+   "skill": "Set off inserted dependent clauses",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide prohibits a comma before because when it joins two independent clauses. Which sentence follows the rule?",
+   "choices": [
+    "The meeting ended early because the speaker lost track of time.",
+    "The meeting ended early, because the speaker lost track of time.",
+    "The meeting ended early because, the speaker lost track of time.",
+    "The meeting ended early because the speaker, lost track of time."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because introduces a dependent clause that belongs directly after the independent clause without a separating comma.",
+   "difficulty": 6,
+   "skill": "Applying style-guide rules for dependent clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires commas around the title of a book when the title stands alone within a sentence. Which sentence follows the rule?",
+   "choices": [
+    "The novel, The Silent Orchard, won an award.",
+    "The novel The Silent Orchard, won an award.",
+    "The novel, The Silent Orchard won an award.",
+    "The novel The Silent Orchard won an award."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired commas show that The Silent Orchard is a stand-alone title interrupting the main sentence.",
+   "difficulty": 5,
+   "skill": "Marking phrase breaks around book titles",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a colon before a quotation that presents the speaker’s complete message. Which sentence follows the rule?",
+   "choices": [
+    "The director said: 'The meeting begins now.'",
+    "The director said, 'The meeting begins now.'",
+    "The director said 'The meeting begins now.'",
+    "The director said: 'The meeting begins now,'"
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the quoted statement, and the period completes the sentence inside the quotation.",
+   "difficulty": 5,
+   "skill": "Using colons to introduce quotations",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide does not place a comma before a quotation that functions as a complete sentence. Which sentence follows the rule?",
+   "choices": [
+    "The poster read 'The gate opens at eight.'",
+    "The poster read, 'The gate opens at eight.'",
+    "The poster read 'The gate opens at eight,'",
+    "The poster read, 'The gate opens at eight'"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the quotation forms a complete sentence, the style guide does not require a comma before it.",
+   "difficulty": 6,
+   "skill": "Marking boundaries before complete-sentence quotations",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma after an introductory interjection. Which sentence follows the rule?",
+   "choices": [
+    "Amazing, the robot completed the obstacle course.",
+    "Amazing; the robot completed the obstacle course.",
+    "The robot completed the obstacle course, amazing.",
+    "Amazing the robot completed the obstacle course."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory interjection Amazing is set off from the main clause by a comma.",
+   "difficulty": 4,
+   "skill": "Applying an introductory-interjection comma rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says a compound predicate should not be separated by a comma. Which sentence follows the rule?",
+   "choices": [
+    "The club reviewed the proposal and approved it.",
+    "The club reviewed the proposal, and approved it.",
+    "The club, reviewed the proposal and approved it.",
+    "The club reviewed, the proposal and approved it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Reviewed the proposal and approved it is a compound predicate, so no comma belongs between the two verbs.",
+   "difficulty": 5,
+   "skill": "Avoiding breaks within compound predicates",
+   "topic": "Usage Debades and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma before a parenthetical phrase that comes at the end of a sentence. Which sentence follows the rule?",
+   "choices": [
+    "The museum reopened on Friday, after months of repairs.",
+    "The museum reopened on Friday after months, of repairs.",
+    "The museum, reopened on Friday after months of repairs.",
+    "The museum reopened on Friday; after months of repairs."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma sets off the final parenthetical phrase after months of repairs from the main sentence.",
+   "difficulty": 5,
+   "skill": "Setting off a final parenthetical phrase",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires commas around a conjunctive adverb that interrupts a sentence. Which sentence follows the rule?",
+   "choices": [
+    "The device works normally, however, only after a restart.",
+    "The device works normally however, only after a restart.",
+    "The device works, normally however, only after a restart.",
+    "The device works normally, however only, after a restart."
+   ],
+   "answerIndex": 0,
+   "explanation": "The conjunctive adverb however is enclosed by commas because it interrupts the main sentence.",
+   "difficulty": 6,
+   "skill": "Setting off an interrupting conjunctive adverb",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a hyphen in the compound modifier well-known when it appears before a noun. Which sentence follows the rule?",
+   "choices": [
+    "The article cited a well-known example of adaptation.",
+    "The article cited a well known example of adaptation.",
+    "The article cited, a well-known example of adaptation.",
+    "The article cited a well-known example, of adaptation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The hyphen joins the elements of the compound modifier well-known in the phrase well-known example.",
+   "difficulty": 5,
+   "skill": "Applying a hyphenation rule for compound modifiers",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide follows legal citation style: v. is preceded by a space, and no comma appears around it. Which case name follows the rule?",
+   "choices": [
+    "Brown v. Board of Education",
+    "Brown, v. Board of Education",
+    "Brown v, Board of Education",
+    "Brown v. Board, of Education"
+   ],
+   "answerIndex": 0,
+   "explanation": "The abbreviation v. correctly follows Brown with a space and is not separated by commas.",
+   "difficulty": 6,
+   "skill": "Applying legal citation style",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence follows the style guide that requires spaced em dashes around a parenthetical phrase?",
+   "choices": [
+    "The results — unexpected and surprising — were published yesterday.",
+    "The results—unexpected and surprising—were published yesterday.",
+    "The results, unexpected and surprising, were published yesterday.",
+    "The results (unexpected and surprising) were published yesterday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence follows the style guide that requires spaced em dashes around a parenthetical insertion.",
+   "difficulty": 5,
+   "skill": "Em dash usage for parentheticals",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses an en dash to indicate a numeric range?",
+   "choices": [
+    "The study covered the years 2010–2020.",
+    "The study covered the years 2010-2020.",
+    "The study covered the years 2010 to 2020.",
+    "The study covered the years 2010—2020."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses an en dash without spaces to indicate a numeric range.",
+   "difficulty": 5,
+   "skill": "En dash for ranges",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly sets off the transitional phrase 'for example' with commas?",
+   "choices": [
+    "Many birds migrate south for the winter, for example, the swallow and the warbler.",
+    "Many birds migrate south for the winter for example the swallow and the warbler.",
+    "Many birds migrate south for the winter; for example; the swallow and the warbler.",
+    "Many birds migrate south for the winter — for example — the swallow and the warbler."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence places commas before and after the transitional phrase 'for example'.",
+   "difficulty": 5,
+   "skill": "Commas with transitional phrases",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly places a comma before the final 'too' meaning 'also'?",
+   "choices": [
+    "She wants to join the team, too.",
+    "She wants to join the team too.",
+    "She wants to join the team; too.",
+    "She wants to join the team — too."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence includes a comma before the final 'too' to indicate addition.",
+   "difficulty": 4,
+   "skill": "Comma before sentence‑final too",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence follows American convention for placing a period inside closing quotation marks?",
+   "choices": [
+    "The notice said, \"Do not enter.\"",
+    "The notice said, \"Do not enter\".",
+    "The notice said, \"Do not enter\"?",
+    "The notice said, \"Do not enter\""
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence follows American style by placing the period inside the closing quotation marks.",
+   "difficulty": 5,
+   "skill": "Quotation mark punctuation",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires commas around a nonrestrictive participial phrase that adds information. Which sentence follows the rule?",
+   "choices": [
+    "The finalists smiling at the crowd waved to their families.",
+    "The finalists, smiling at the crowd, waved to their families.",
+    "The finalists, smiling at the crowd waved to their families.",
+    "The finalists smiling at the crowd, waved to their families."
+   ],
+   "answerIndex": 1,
+   "explanation": "The commas correctly set off the nonrestrictive participial phrase smiling at the crowd.",
+   "difficulty": 5,
+   "skill": "Marking Nonrestrictive Phrase Breaks",
+   "topic": "Usage Debates and Style Guides — Marking Phrase Breaks",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a prepositional phrase to remain unbroken, with no comma inside it. Which sentence follows the rule?",
+   "choices": [
+    "The hikers followed, the marked trail to the summit.",
+    "The hikers followed the marked, trail to the summit.",
+    "The hikers followed the marked trail, to the summit.",
+    "The hikers followed the marked trail to the summit."
+   ],
+   "answerIndex": 3,
+   "explanation": "The prepositional phrases following followed remain complete and unbroken in the correctly punctuated sentence.",
+   "difficulty": 5,
+   "skill": "Keeping Prepositional Phrases Joined",
+   "topic": "Usage Debates and Style Guides — Marking Phrase Breaks",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide prohibits a comma between a linking verb and its predicate adjective. Which sentence follows the rule?",
+   "choices": [
+    "The final result was surprising.",
+    "The final result was, surprising.",
+    "The final result, was surprising.",
+    "The final result was, surprising indeed."
+   ],
+   "answerIndex": 0,
+   "explanation": "A linking verb joins directly to its predicate adjective without a comma.",
+   "difficulty": 5,
+   "skill": "Separating Linking Verbs from Predicates",
+   "topic": "Usage Debates and Style Guides — Marking Phrase Breaks",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide prohibits a comma between a professional title and the name that follows it. Which sentence follows the rule?",
+   "choices": [
+    "Professor, Chen explained the results.",
+    "Professor Chen explained the results.",
+    "Professor Chen, explained the results.",
+    "Professor, Chen, explained the results."
+   ],
+   "answerIndex": 1,
+   "explanation": "A professional title is not separated from the following name by a comma.",
+   "difficulty": 4,
+   "skill": "Applying Title and Name Punctuation",
+   "topic": "Usage Debates and Style Guides — Marking Phrase Breaks",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide uses square brackets to set off a brief nonessential phrase. Which sentence follows the rule?",
+   "choices": [
+    "The hikers (who arrived early) started the first ascent.",
+    "The hikers, who arrived early, started the first ascent.",
+    "The hikers [who arrived early] started the first ascent.",
+    "The hikers [who arrived early started the first ascent."
+   ],
+   "answerIndex": 2,
+   "explanation": "The square brackets correctly enclose and set off the nonessential phrase who arrived early.",
+   "difficulty": 6,
+   "skill": "Using Brackets for Nonessential Phrases",
+   "topic": "Usage Debates and Style Guides — Marking Phrase Breaks",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says no comma is needed before \"but also\" in a \"not only … but also\" construction. Which sentence follows the rule?",
+   "choices": [
+    "Not only did she finish the race, but also she set a record.",
+    "Not only did she finish the race but also she set a record.",
+    "Not only did she finish the race, but also, she set a record.",
+    "Not only did she finish the race but also, she set a record."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide omits the comma before \"but also\" in the correlative pair.",
+   "difficulty": 5,
+   "skill": "phrase break punctuation",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma before \"etc.\" when it follows a list of three or more items. Which sentence follows the rule?",
+   "choices": [
+    "The kit includes ropes, hooks, carabiners etc.",
+    "The kit includes ropes, hooks, carabiners, etc.",
+    "The kit includes ropes, hooks, carabiners; etc.",
+    "The kit includes ropes, hooks, carabiners. etc."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide places a comma before \"etc.\" after a list of three or more items.",
+   "difficulty": 5,
+   "skill": "phrase break punctuation",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a colon after \"as follows\" when it introduces a list. Which sentence follows the rule?",
+   "choices": [
+    "The steps are as follows: gather data, analyze results, write report.",
+    "The steps are as follows; gather data, analyze results, write report.",
+    "The steps are as follows, gather data, analyze results, write report.",
+    "The steps are as follows gather data, analyze results, write report."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide uses a colon after \"as follows\" to introduce the list.",
+   "difficulty": 5,
+   "skill": "phrase break punctuation",
+   "topic": "Mark the Phrase Breaks - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide states that a comma should not be placed before the coordinating conjunction when it joins only two short independent clauses. Which sentence follows that rule?",
+   "choices": [
+    "The sun set and the lights came on.",
+    "The sun set, and the lights came on.",
+    "The sun set; and the lights came on.",
+    "The sun set: and the lights came on."
+   ],
+   "answerIndex": 0,
+   "explanation": "When two brief independent clauses are joined by a coordinating conjunction, the guide omits the comma, so 'The sun set and the lights came on.' is correct.",
+   "difficulty": 5,
+   "skill": "phrase breaks",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide sets off a vocative that interrupts a sentence with commas. Which sentence follows the rule?",
+   "choices": [
+    "Take your seats everyone before the curtain rises.",
+    "Take your seats, everyone, before the curtain rises.",
+    "Take your seats, everyone before the curtain rises.",
+    "Take your seats, everyone, before, the curtain rises."
+   ],
+   "answerIndex": 1,
+   "explanation": "The interrupting vocative everyone is enclosed by commas on both sides.",
+   "difficulty": 4,
+   "skill": "Setting off an interrupting vocative",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide sets off an appositive at the end of a sentence with a comma before it and a period after it. Which sentence follows the rule?",
+   "choices": [
+    "The winning design, was created by a first-year student, Elena Ortiz.",
+    "The winning design was created, by a first-year student, Elena Ortiz.",
+    "The winning design was created by a first-year student, Elena Ortiz.",
+    "The winning design was created by, a first-year student, Elena Ortiz."
+   ],
+   "answerIndex": 2,
+   "explanation": "The appositive Elena Ortiz renames the noun phrase a first-year student and is set off at the end of the sentence.",
+   "difficulty": 5,
+   "skill": "Marking a final appositive",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide uses a semicolon to separate two parallel series when each series contains an internal comma. Which sentence follows the rule?",
+   "choices": [
+    "The workshop covers planning, editing: peer review, publication.",
+    "The workshop covers planning and editing; peer review and publication.",
+    "The workshop covers planning, editing, peer review, publication.",
+    "The workshop covers planning, editing; peer review, publication."
+   ],
+   "answerIndex": 3,
+   "explanation": "The semicolon divides the two parallel series, and each series contains an internal comma.",
+   "difficulty": 6,
+   "skill": "Separating grouped series with a semicolon",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires a comma before respectively when it links two results in the same order. Which sentence follows the rule?",
+   "choices": [
+    "The runners placed first and second respectively.",
+    "The runners placed first and second, respectively.",
+    "The runners placed, first and second, respectively.",
+    "The runners placed first, and second respectively."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma before respectively marks its connection to the two results in the stated order.",
+   "difficulty": 6,
+   "skill": "Marking the phrase before respectively",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A style guide requires a semicolon before a conjunctive adverb that begins the second independent clause. Which sentence follows the rule?",
+   "choices": [
+    "The experiment failed; therefore, the team revised the hypothesis.",
+    "The experiment failed, therefore the team revised the hypothesis.",
+    "The experiment failed; therefore the team revised the hypothesis.",
+    "The experiment failed, therefore, the team revised the hypothesis."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide calls for a semicolon before the conjunctive adverb and a comma after it, making 'The experiment failed; therefore, the team revised the hypothesis.' the only compliant option.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A style guide specifies that a comma must not precede the abbreviation 'etc.' when it appears at the end of a sentence. Which sentence follows the rule?",
+   "choices": [
+    "Bring paper, pens, and notebooks etc.",
+    "Bring paper, pens, and notebooks, etc.",
+    "Bring paper, pens, and notebooks etc.",
+    "Bring paper, pens, and notebooks; etc."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide omits the comma before 'etc.', so the correct rendering is 'Bring paper, pens, and notebooks etc.'",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly marks the phrase break after the introductory prepositional phrase?",
+   "choices": [
+    "After the storm passed, the players returned to the field.",
+    "After the storm passed the players, returned to the field.",
+    "After the storm passed the players returned, to the field.",
+    "After the storm, passed the players returned to the field."
+   ],
+   "answerIndex": 0,
+   "explanation": "A comma separates the introductory prepositional phrase from the main clause in the first sentence.",
+   "reason": "A: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide requires a comma before a direct addressee's name when the name interrupts a sentence. Which sentence follows the rule?",
+   "choices": [
+    "The coach told Jordan; practice starts at four.",
+    "The coach told Jordan practice starts at four.",
+    "The coach told Jordan practice, starts at four.",
+    "The coach told Jordan, practice starts at four."
+   ],
+   "answerIndex": 3,
+   "explanation": "The comma marks the break before and after the interrupting name Jordan.",
+   "reason": "B: not exactly one correct (no correct option)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A style guide requires a semicolon before a conjunctive adverb that begins the second independent clause. Which sentence follows the rule?",
+   "choices": [
+    "The battery died; however, we finished the hike.",
+    "The battery died, however; we finished the hike.",
+    "The battery died however, we finished the hike.",
+    "The battery died, however we finished the hike."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon separates the independent clauses, while the comma follows however within the second clause.",
+   "reason": "source: \"Style guide rule: use a semicolon before a conjunctive adverb that begins a second independent clause.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide requires a comma between the month and day and between the day and year in a full date. Which sentence follows the rule?",
+   "choices": [
+    "The release date is March 14, 2025.",
+    "The release date is March 14 2025.",
+    "The release date is March, 14 2025.",
+    "The release date is March 14, 2025"
+   ],
+   "answerIndex": 0,
+   "explanation": "The date includes one comma after the day and a second comma after the year.",
+   "reason": "B: not exactly one correct (No option satisfies the rule requiring commas both between the month and day and between the day and year in a full date.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly uses semicolons to separate items in a complex list that contain internal commas?",
+   "choices": [
+    "The menu offered pasta, salad, and bread; soup, stew, and chili; and cake, pie, and ice cream.",
+    "The menu offered pasta, salad, and bread, soup, stew, and chili, and cake, pie, and ice cream.",
+    "The menu offered pasta, salad, and bread; soup, stew, and chili, and cake, pie, and ice cream.",
+    "The menu offered pasta, salad, and bread; soup, stew, and chili; cake, pie, and ice cream."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses semicolons to separate the three comma‑containing items and includes the final conjunction 'and'.",
+   "reason": "A: not exactly one correct (Option (3) is also defensible because semicolons clearly separate the three list items, so the question does not have exactly one correct op)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide prohibits a comma between a possessive noun and the noun it modifies. Which sentence follows the rule?",
+   "choices": [
+    "The team's, captain explained the new rule.",
+    "The team's captain, explained the new rule.",
+    "The team's captain explained the new rule.",
+    "The team's, captain, explained the new rule."
+   ],
+   "answerIndex": 2,
+   "explanation": "The phrase the team's captain is a single noun phrase and therefore has no internal comma.",
+   "reason": "A: not exactly one correct (Both option (1) and option (2) avoid a comma between the possessive noun 'team's' and the noun it modifies 'captain', so the question does n)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide states that a comma should not precede the coordinating conjunction when it joins only two items. Which sentence follows the rule?",
+   "choices": [
+    "She bought apples, and oranges.",
+    "She bought apples and oranges.",
+    "She bought apples, oranges, and bananas.",
+    "She bought apples, oranges and bananas."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide omits the comma before \"and\" in a two‑item list, so \"She bought apples and oranges\" is correct.",
+   "reason": "A: picked -1 not 1 (More than one answer (options 1, 2, & 3) satisfy the rule.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide requires a comma after the abbreviation e.g. when it introduces examples within a sentence. Which sentence follows the rule?",
+   "choices": [
+    "The menu includes vegetarian options e.g. tofu stir‑fry and lentil soup.",
+    "The menu includes vegetarian options, e.g., tofu stir‑fry and lentil soup.",
+    "The menu includes vegetarian options e.g., tofu stir‑fry and lentil soup.",
+    "The menu includes vegetarian options, e.g. tofu stir‑fry and lentil soup."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide places commas both before and after \"e.g.\" when it appears mid‑sentence.",
+   "reason": "A: picked -1 not 1 (Options 1 and 2 duplicate the same correct punctuation, creating ambiguity.) | B: not exactly one correct (Options 1 and 2 both place a comma after \"e.g.,\" so both follow the stated rule. Option 1 is the conventionally punctuated full sentence, bu)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide says a compound modifier is hyphenated only when it precedes the noun it modifies. Which sentence follows the rule?",
+   "choices": [
+    "The well‑known scientist presented her findings.",
+    "The scientist is well‑known for her research.",
+    "The well known scientist presented her findings.",
+    "The scientist is well known for her research."
+   ],
+   "answerIndex": 3,
+   "explanation": "The guide requires a hyphen only before the noun, so \"well known\" after the linking verb is unhyphenated.",
+   "reason": "A: picked 0 not 3 | B: picked 0 not 3 (Options 0 and 3 are both standard under the stated rule: a compound adjective is hyphenated before the noun it modifies, while \"well known\" )"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A style guide requires a complete sentence after a colon to begin with a capital letter. Which sentence follows the rule?",
+   "choices": [
+    "The editor's final note read: Submit the revision by Friday.",
+    "The editor's final note read: submit the revision by Friday.",
+    "The editor's final note read; Submit the revision by Friday.",
+    "The editor's final note read, Submit the revision by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces a complete sentence, and the style guide requires the first word after the colon to be capitalized.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A style guide requires commas between the parts of a one-line mailing address, but no comma between the state and postal code. Which address follows the rule?",
+   "choices": [
+    "Jordan Lee, 18 Cedar Lane, Franklin, Ohio 43205",
+    "Jordan Lee 18 Cedar Lane, Franklin, Ohio 43205",
+    "Jordan Lee, 18 Cedar Lane Franklin, Ohio 43205",
+    "Jordan Lee, 18 Cedar Lane, Franklin Ohio 43205"
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas separate the name, street, and city, while the state and postal code remain together as required.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

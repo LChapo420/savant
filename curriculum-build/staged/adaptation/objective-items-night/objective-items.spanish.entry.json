@@ -1,0 +1,440 @@
+{
+ "track_id": "spanish",
+ "grade_id": "entry",
+ "generated_at": "2026-10-26T03:38:11.846Z",
+ "items": [
+  {
+   "objective_id": "entry:L16",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_present_ar",
+   "level": 16,
+   "format": "multiple_choice",
+   "prompt": "You are heading to the bathroom. Which sentence expresses that plan?",
+   "choices": [
+    "Quiero al baño.",
+    "Voy al baño.",
+    "Tengo al baño.",
+    "Puedo al baño."
+   ],
+   "answer": "Voy al baño.",
+   "rationale": "“Voy al baño” uses voy to say that you are going to the bathroom.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L16",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_present_ar",
+   "level": 16,
+   "format": "multiple_choice",
+   "prompt": "You need assistance. Which sentence should you say?",
+   "choices": [
+    "Necesito ayuda.",
+    "Tengo ayuda.",
+    "Quiero ayuda.",
+    "Puedo ayuda."
+   ],
+   "answer": "Necesito ayuda.",
+   "rationale": "“Necesito ayuda” uses the chunk necesito to say that you need help.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L16",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_present_ar",
+   "level": 16,
+   "format": "multiple_choice",
+   "prompt": "Which reply uses both the chunk for “I have a question” and the polite question for asking to pass?",
+   "choices": [
+    "Tengo una pregunta; ¿puedo pasar?",
+    "Quiero una pregunta; ¿puedo pasar?",
+    "Tengo una pregunta; ¿tengo pasar?",
+    "Quiero una pregunta; ¿tengo pasar?"
+   ],
+   "answer": "Tengo una pregunta; ¿puedo pasar?",
+   "rationale": "“Tengo una pregunta” means “I have a question,” and “¿puedo pasar?” politely asks permission to pass.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L4",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 4,
+   "format": "multiple_choice",
+   "prompt": "A Spanish word is most likely a cognate when it…",
+   "choices": [
+    "has a similar spelling and meaning",
+    "has a completely opposite meaning",
+    "contains no English sounds at all",
+    "always begins with the same letter"
+   ],
+   "answer": "has a similar spelling and meaning",
+   "rationale": "Cognates are words in different languages that have similar spellings and meanings.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L4",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 4,
+   "format": "multiple_choice",
+   "prompt": "Which Spanish word is the cognate of the English word “family”?",
+   "choices": [
+    "familia",
+    "ventana",
+    "ciudad",
+    "trabajo"
+   ],
+   "answer": "familia",
+   "rationale": "Familia means “family” in Spanish and closely resembles the English word.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "familia means family in Spanish.",
+      "url": "https://en.wiktionary.org/wiki/familia",
+      "quote": "From familio ( “ family ” ) + -a ( suffix indicating an adjective ).",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L52",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which Spanish word means \"doctor\"?",
+   "choices": [
+    "médico",
+    "policía",
+    "fuego",
+    "hospital"
+   ],
+   "answer": "médico",
+   "rationale": "Médico is the Spanish word for doctor; the other options mean police, fire, and hospital respectively.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "“Médico” means “doctor.”",
+      "url": "https://en.wiktionary.org/wiki/m%C3%A9dico",
+      "quote": "Médico may also be used in the feminine to refer to a female doctor, but this usage is nonstandard.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "médico means doctor in Spanish.",
+      "url": "https://en.wiktionary.org/wiki/m%C3%A9dico",
+      "quote": "Médico may also be used in the feminine to refer to a female doctor, but this usage is nonstandard.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L26",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_numbers",
+   "level": 26,
+   "format": "multiple_choice",
+   "prompt": "A phone number includes the spoken digit “nueve.” Which numeral is that?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "9",
+   "rationale": "“Nueve” is the Spanish word for 9, the digit heard in the phone number.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In Spanish, “nueve” means 9.",
+      "url": "https://en.wiktionary.org/wiki/nueve",
+      "quote": "Inherited from Spanish nueve ( 'nine' ).",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "\"nueve\" means nine.",
+      "url": "https://en.wikipedia.org/wiki/Nueve_(Spanish_TV_channel)",
+      "quote": "With the expansion of the number of channels in 2010, before the merger of Telecinco and Cuatro , Telecinco was considering launching a free channel dedicated to women. The channel would have been launched on September 1, 2010, as \"LaNueve\" (The Nine) corresponding to its logical channel number on digital terrestrial television .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L84",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 84,
+   "format": "multiple_choice",
+   "prompt": "Which U.S. television network regularly broadcasts programming in Spanish for a national audience?",
+   "choices": [
+    "PBS",
+    "Univision",
+    "CNN",
+    "HBO"
+   ],
+   "answer": "Univision",
+   "rationale": "Univision is a major Spanish‑language broadcast network widely available across the United States.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Univision is a U.S. television network that broadcasts Spanish programming nationally.",
+      "url": "https://en.wikipedia.org/wiki/Univision",
+      "quote": "Univision ( Spanish pronunciation: [uniβiˈsjon] ) is an American Spanish-language free-to-air television network owned by TelevisaUnivision .",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Univision regularly broadcasts Spanish-language programming to a national U.S. audience.",
+      "url": "https://en.wikipedia.org/wiki/Univision",
+      "quote": "Univision ( Spanish pronunciation: [uniβiˈsjon] ) is an American Spanish-language free-to-air television network owned by TelevisaUnivision .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L84",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 84,
+   "format": "multiple_choice",
+   "prompt": "A sign at a store says “Prohibido fumar.” What does it mean?",
+   "choices": [
+    "Smoking is not allowed",
+    "This is the smoking area",
+    "Buy one pack of cigarettes",
+    "Please close this door"
+   ],
+   "answer": "Smoking is not allowed",
+   "rationale": "“Prohibido fumar” means “Smoking is prohibited,” so the sign does not allow smoking.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "entry:L81",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 81,
+   "format": "multiple_choice",
+   "prompt": "Which title is appropriate when addressing an older man named Manuel in a casual, respectful greeting?",
+   "choices": [
+    "Don Manuel",
+    "Señor Manuel",
+    "Licenciado Manuel",
+    "Ingeniero Manuel"
+   ],
+   "answer": "Don Manuel",
+   "rationale": "Don is used for an older or respected man in familiar, courteous situations, whereas Señor, Licenciado, and Ingeniero are more formal or professional.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Don is a respectful title used for older men in Spanish.",
+      "url": "https://en.wikipedia.org/wiki/Don_(honorific)",
+      "quote": "In present-day Hispanic America, the title Don or Doña is sometimes used in honorific form when addressing a senior citizen.",
+      "reader": "z-ai/glm-5.3"
+     },
+     {
+      "claim": "Don is a respectful, familiar courtesy title commonly used for an older man.",
+      "url": "https://en.wiktionary.org/wiki/don",
+      "quote": "a title of respect to a man, especially older, prefixed to first names",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "entry:L81",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 81,
+   "format": "multiple_choice",
+   "prompt": "Which form uses the traditional respectful title for an older woman whose first name is Carmen?",
+   "choices": [
+    "Doña Carmen.",
+    "Don Carmen.",
+    "Señor Carmen.",
+    "Licenciada Carmen."
+   ],
+   "answer": "Doña Carmen.",
+   "rationale": "“Doña” is the traditional respectful title used for an older woman, and it is followed by her first name.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Doña is the traditional respectful title for an older woman in Spanish.",
+      "url": "https://en.wikipedia.org/wiki/Don_(honorific)",
+      "quote": "Doña is used to respectfully refer to a mature woman.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "entry:L81",
+   "track_id": "spanish",
+   "grade_id": "entry",
+   "skill_id": "es_vocab_core",
+   "level": 81,
+   "format": "multiple_choice",
+   "prompt": "Using the traditional title for an older man, which expression politely asks permission to speak to Ricardo?",
+   "choices": [
+    "Don Ricardo, con permiso.",
+    "Señora Ricardo, con permiso.",
+    "Licenciado Ricardo, con permiso.",
+    "Ingeniero Ricardo, con permiso."
+   ],
+   "answer": "Don Ricardo, con permiso.",
+   "rationale": "“Don” is the traditional respectful title for an older man. “Con permiso” politely requests permission to speak.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Don is the traditional respectful title for an older man in Spanish.",
+      "url": "https://en.wikipedia.org/wiki/Don_(honorific)",
+      "quote": "Today in the Spanish language, Doña is used to respectfully refer to a mature woman. In present-day Hispanic America, the title Don or Doña is sometimes used in honorific form when addressing a senior citizen.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

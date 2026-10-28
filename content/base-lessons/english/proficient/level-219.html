@@ -1,0 +1,1879 @@
+<style>
+  #base-lesson-body {
+    --bg: #030712;
+    --surface: #06171b;
+    --surface-2: #082126;
+    --surface-3: #0b2c32;
+    --surface-4: #0e353c;
+    --line: #12454a;
+    --line-soft: #0d3238;
+    --accent: #0D9488;
+    --accent-dark: #06564f;
+    --accent-glow: rgba(13, 148, 136, 0.5);
+    --lime: #84CC16;
+    --lime-dark: #4a7508;
+    --lime-glow: rgba(132, 204, 22, 0.45);
+    --amber: #F97316;
+    --amber-dark: #9a420a;
+    --amber-glow: rgba(249, 115, 22, 0.45);
+    --danger: #F43F5E;
+    --danger-dark: #8f1128;
+    --danger-glow: rgba(244, 63, 94, 0.45);
+    --text: #d6f2ef;
+    --text-dim: #a9cfcb;
+    --muted: #79a8a4;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    display: block;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(13,148,136,0.14), transparent 60%),
+      radial-gradient(900px 500px at 90% 0%, rgba(132,204,22,0.07), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    font-family: inherit;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 64px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  #base-lesson-body *,
+  #base-lesson-body *::before,
+  #base-lesson-body *::after { box-sizing: border-box; }
+
+  #base-lesson-body p { margin: 0 0 12px; }
+  #base-lesson-body h2, #base-lesson-body h3, #base-lesson-body h4 { margin: 0 0 10px; line-height: 1.25; }
+  #base-lesson-body ul, #base-lesson-body ol { margin: 0 0 12px; padding-left: 22px; }
+  #base-lesson-body li { margin-bottom: 6px; }
+  #base-lesson-body strong { color: #eafffb; }
+  #base-lesson-body em { color: var(--text-dim); }
+
+  /* ============ HUD ============ */
+  #base-lesson-body .hud {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: linear-gradient(180deg, rgba(6,23,27,0.98), rgba(3,7,18,0.94));
+    border-bottom: 2px solid var(--accent-dark);
+    box-shadow: 0 8px 26px rgba(0,0,0,0.7), inset 0 -1px 0 rgba(13,148,136,0.35);
+    backdrop-filter: blur(6px);
+    padding: 10px 16px 12px;
+  }
+  #base-lesson-body .hud-inner { max-width: 1180px; margin: 0 auto; }
+  #base-lesson-body .hud-row {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  }
+  #base-lesson-body .badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 5px 9px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: linear-gradient(180deg, var(--surface-3), var(--surface));
+    color: var(--text-dim);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.55);
+    white-space: nowrap;
+  }
+  #base-lesson-body .badge.level {
+    border-color: var(--accent);
+    color: #bffdf5;
+    box-shadow: 0 3px 0 var(--accent-dark), 0 0 14px var(--accent-glow);
+    font-weight: 700;
+  }
+  #base-lesson-body .badge.subject { flex: 1 1 260px; white-space: normal; color: var(--text); }
+  #base-lesson-body .badge.xp {
+    border-color: var(--lime); color: #e6ffbd;
+    box-shadow: 0 3px 0 var(--lime-dark);
+    font-weight: 700;
+  }
+  #base-lesson-body .badge.grade { border-color: var(--line); }
+  #base-lesson-body .callsign-input {
+    background: #030f12;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    color: var(--lime);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    padding: 3px 6px;
+    width: 120px;
+    text-transform: uppercase;
+  }
+  #base-lesson-body .callsign-input:focus { outline: none; border-color: var(--lime); box-shadow: 0 0 10px var(--lime-glow); }
+
+  #base-lesson-body .gauge-row {
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  #base-lesson-body .gauge-label {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted); white-space: nowrap;
+  }
+  #base-lesson-body .gauge-label b { color: var(--lime); }
+  #base-lesson-body .gauge {
+    flex: 1 1 220px;
+    height: 14px;
+    border-radius: 8px;
+    border: 2px solid var(--line);
+    background: repeating-linear-gradient(90deg, #041417 0 10px, #061c20 10px 20px);
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+    position: relative;
+  }
+  #base-lesson-body .gauge-fill {
+    height: 100%;
+    width: 25%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent) 55%, var(--lime));
+    box-shadow: 0 0 16px var(--accent-glow);
+    transition: width 0.9s cubic-bezier(.2,.8,.2,1), box-shadow .6s;
+  }
+  #base-lesson-body .mission {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+    max-width: 980px;
+  }
+
+  /* ============ LAYOUT ============ */
+  #base-lesson-body .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  #base-lesson-body .section { margin-top: 34px; }
+  #base-lesson-body .section-head {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 8px; margin-bottom: 18px;
+  }
+  #base-lesson-body .section-tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+    border: 1.5px solid var(--accent-dark); border-radius: 6px;
+    padding: 3px 8px; background: rgba(13,148,136,0.1);
+    box-shadow: 0 2px 0 var(--accent-dark);
+    white-space: nowrap;
+  }
+  #base-lesson-body .section-head h2 {
+    font-size: clamp(17px, 2.6vw, 23px);
+    letter-spacing: 0.02em; margin: 0;
+  }
+
+  #base-lesson-body .panel {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.5), inset 0 1px 0 rgba(13,148,136,0.14);
+    margin-bottom: 16px;
+  }
+  #base-lesson-body .panel h3 { font-size: 16px; color: #c9fff6; }
+  #base-lesson-body .panel h4 {
+    font-size: 12px; font-family: var(--mono); letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--amber); margin: 14px 0 6px;
+  }
+
+  #base-lesson-body .grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  #base-lesson-body .grid2 > * { margin-bottom: 0; }
+
+  /* ============ BUTTONS ============ */
+  #base-lesson-body .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #eafffb;
+    background: linear-gradient(180deg, var(--surface-4), var(--surface-2));
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--accent-dark);
+    transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease;
+    text-align: center;
+  }
+  #base-lesson-body .btn:hover {
+    box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark);
+    border-color: #2bd6c4;
+  }
+  #base-lesson-body .btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn:disabled {
+    opacity: 0.42; cursor: not-allowed; transform: none;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+    border-color: var(--line);
+  }
+  #base-lesson-body .btn-amber {
+    border-color: var(--amber); box-shadow: 0 4px 0 var(--amber-dark);
+  }
+  #base-lesson-body .btn-amber:hover { box-shadow: 0 4px 14px var(--amber-glow), 0 4px 0 var(--amber-dark); border-color: #ffa257; }
+  #base-lesson-body .btn-amber:active { box-shadow: 0 2px 0 var(--amber-dark); }
+  #base-lesson-body .btn-lime {
+    border-color: var(--lime); box-shadow: 0 4px 0 var(--lime-dark);
+  }
+  #base-lesson-body .btn-lime:hover { box-shadow: 0 4px 14px var(--lime-glow), 0 4px 0 var(--lime-dark); border-color: #a6ea3c; }
+  #base-lesson-body .btn-lime:active { box-shadow: 0 2px 0 var(--lime-dark); }
+  #base-lesson-body .btn-danger {
+    border-color: var(--danger); color: #ffe3e8; box-shadow: 0 4px 0 var(--danger-dark);
+  }
+  #base-lesson-body .btn-danger:hover { box-shadow: 0 4px 16px var(--danger-glow), 0 4px 0 var(--danger-dark); border-color: #ff7089; }
+  #base-lesson-body .btn-danger:active { box-shadow: 0 2px 0 var(--danger-dark); }
+
+  /* ============ TAGS & TABLES ============ */
+  #base-lesson-body .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 5px;
+    border: 1px solid;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  #base-lesson-body .t-claim { color: #8ff0e4; border-color: var(--accent); background: rgba(13,148,136,0.16); }
+  #base-lesson-body .t-ground { color: #dcff9e; border-color: var(--lime); background: rgba(132,204,22,0.14); }
+  #base-lesson-body .t-warrant { color: #ffc08a; border-color: var(--amber); background: rgba(249,115,22,0.14); }
+  #base-lesson-body .t-qual { color: #cfbcff; border-color: #A855F7; background: rgba(168,85,247,0.14); }
+  #base-lesson-body .t-bound { color: #ffb3c1; border-color: var(--danger); background: rgba(244,63,94,0.14); }
+
+  #base-lesson-body .spec-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+  }
+  #base-lesson-body .spec-table th {
+    background: linear-gradient(180deg, var(--surface-4), var(--surface-3));
+    color: #bffdf5;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 9px 11px;
+    border-bottom: 2px solid var(--line);
+  }
+  #base-lesson-body .spec-table td {
+    padding: 10px 11px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+    background: rgba(6,23,27,0.6);
+  }
+  #base-lesson-body .spec-table tr:last-child td { border-bottom: none; }
+  #base-lesson-body .spec-table td:first-child { color: #c9fff6; font-weight: 700; white-space: nowrap; }
+
+  #base-lesson-body .scroll-x { overflow-x: auto; }
+
+  /* ============ WORKED EXAMPLES ============ */
+  #base-lesson-body .worked {
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(11,44,50,0.75), rgba(6,23,27,0.9));
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  #base-lesson-body .worked-head {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    background: linear-gradient(180deg, var(--surface-4), var(--surface-3));
+    border-bottom: 2px solid var(--line);
+    color: var(--amber);
+  }
+  #base-lesson-body .worked-body { padding: 14px 16px; }
+  #base-lesson-body .ex-text {
+    font-size: 14.5px;
+    line-height: 1.85;
+    background: #030f12;
+    border: 1.5px solid var(--line-soft);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #e6fffb;
+  }
+  #base-lesson-body .decoder { display: grid; gap: 8px; margin-top: 12px; }
+  #base-lesson-body .decoder-row {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(3,15,18,0.7);
+    border: 1px solid var(--line-soft);
+    font-size: 13px;
+  }
+  #base-lesson-body .decoder-row .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; }
+  #base-lesson-body .audit {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  #base-lesson-body .audit-cell {
+    border: 1.5px solid var(--line);
+    border-radius: 9px;
+    padding: 8px 10px;
+    background: rgba(3,15,18,0.75);
+    font-size: 12.5px;
+  }
+  #base-lesson-body .audit-cell b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  #base-lesson-body .ok-mark { color: var(--lime); }
+  #base-lesson-body .bad-mark { color: var(--danger); }
+  #base-lesson-body .warn-mark { color: var(--amber); }
+
+  /* ============ PODS ============ */
+  #base-lesson-body .pod {
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    padding: 15px 16px;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+  }
+  #base-lesson-body .pod-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+  #base-lesson-body .pod h3 { font-size: 16px; color: #c9fff6; }
+  #base-lesson-body .pod h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 12px 0 5px;
+  }
+  #base-lesson-body .pod ul { padding-left: 18px; font-size: 13px; }
+  #base-lesson-body .pod p { font-size: 13px; }
+  #base-lesson-body .pod blockquote {
+    margin: 6px 0 8px;
+    padding: 9px 11px;
+    border-left: 3px solid var(--amber);
+    background: rgba(249,115,22,0.07);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: #ffe8d3;
+  }
+  #base-lesson-body .diag {
+    font-size: 12.5px;
+    border-left: 3px solid var(--danger);
+    background: rgba(244,63,94,0.08);
+    padding: 8px 11px;
+    border-radius: 0 8px 8px 0;
+    color: #ffd6dd;
+  }
+
+  /* ============ SIM ============ */
+  #base-lesson-body .sim-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+  }
+  #base-lesson-body .rig-wrap {
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: #02100f;
+    overflow: hidden;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 6px 0 rgba(0,0,0,0.5);
+    position: relative;
+  }
+  #base-lesson-body .rig-svg { display: block; width: 100%; height: auto; }
+  #base-lesson-body .rig-caption {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 7px 12px;
+    border-top: 1.5px solid var(--line-soft);
+    background: var(--surface);
+  }
+  #base-lesson-body #drillGroup {
+    transform: translateY(0px);
+    will-change: transform;
+  }
+  #base-lesson-body #reqMarker { transition: transform .4s ease; }
+  #base-lesson-body #cracks { opacity: 0; transition: opacity .35s ease; }
+  #base-lesson-body #rigWrap.shake { animation: l219shake .62s ease-in-out 2; }
+  #base-lesson-body #rigWrap.secured #building { stroke: var(--lime); filter: drop-shadow(0 0 7px rgba(132,204,22,0.85)); }
+  #base-lesson-body #rigWrap.secured .win { fill: var(--lime); }
+  #base-lesson-body #rigWrap.secured #glowRing { opacity: 1; }
+  #base-lesson-body #glowRing { opacity: 0; transition: opacity .5s ease; }
+
+  @keyframes l219shake {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-6px, 2px); }
+    30% { transform: translate(6px, -2px); }
+    45% { transform: translate(-5px, 1px); }
+    60% { transform: translate(5px, -1px); }
+    80% { transform: translate(-3px, 0); }
+  }
+
+  #base-lesson-body .readout {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 10px 12px;
+    border-radius: 9px;
+    border: 1.5px solid var(--line);
+    background: rgba(3,15,18,0.85);
+    color: var(--text-dim);
+    min-height: 62px;
+    margin-top: 12px;
+  }
+  #base-lesson-body .readout.ok {
+    border-color: var(--lime);
+    color: #e6ffbd;
+    box-shadow: 0 0 16px var(--lime-glow);
+    background: rgba(132,204,22,0.08);
+  }
+  #base-lesson-body .readout.fail {
+    border-color: var(--danger);
+    color: #ffd6dd;
+    box-shadow: 0 0 16px var(--danger-glow);
+    background: rgba(244,63,94,0.08);
+  }
+  #base-lesson-body .readout b { letter-spacing: 0.08em; }
+
+  #base-lesson-body .claim-card {
+    border: 2px solid var(--accent-dark);
+    border-radius: 11px;
+    background: linear-gradient(180deg, rgba(13,148,136,0.14), rgba(3,15,18,0.85));
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  #base-lesson-body .claim-card .lbl {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 5px;
+  }
+  #base-lesson-body .claim-card p { font-size: 14px; color: #e9fffc; margin: 0; }
+
+  #base-lesson-body .req-strip {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber);
+    border: 1.5px dashed var(--amber-dark);
+    border-radius: 8px;
+    padding: 7px 10px;
+    background: rgba(249,115,22,0.06);
+    margin-bottom: 12px;
+  }
+
+  #base-lesson-body .cores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  #base-lesson-body .core-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface));
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 11px;
+    color: var(--text);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.55);
+    transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease;
+    font-family: inherit;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  #base-lesson-body .core-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  }
+  #base-lesson-body .core-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--accent-dark); }
+  #base-lesson-body .core-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  #base-lesson-body .core-btn.sel {
+    border-color: var(--amber);
+    box-shadow: 0 4px 14px var(--amber-glow), 0 4px 0 var(--amber-dark);
+  }
+  #base-lesson-body .core-meta {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.13em;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+  #base-lesson-body .core-title { display: block; color: #dcf7f3; }
+
+  #base-lesson-body .sim-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  #base-lesson-body .sim-actions .btn { flex: 1 1 180px; }
+
+  /* ============ DETONATOR ============ */
+  #base-lesson-body .det-arena {
+    position: relative;
+    border: 2px solid var(--danger-dark);
+    border-radius: 14px;
+    padding: 18px;
+    background:
+      repeating-linear-gradient(45deg, rgba(244,63,94,0.05) 0 12px, transparent 12px 24px),
+      linear-gradient(180deg, rgba(30,8,14,0.9), rgba(6,23,27,0.95));
+    overflow: hidden;
+    transition: box-shadow .3s ease, border-color .3s ease;
+  }
+  #base-lesson-body .det-arena.flash { animation: l219detflash .9s ease-in-out 1; }
+  @keyframes l219detflash {
+    0%, 100% { box-shadow: none; background-color: transparent; }
+    20% { box-shadow: 0 0 40px var(--danger-glow) inset; }
+    40% { box-shadow: 0 0 70px rgba(249,115,22,0.6) inset; }
+    60% { box-shadow: 0 0 40px var(--danger-glow) inset; }
+    80% { box-shadow: 0 0 90px rgba(255,255,255,0.25) inset; }
+  }
+  #base-lesson-body .warrant-plate {
+    border: 2px solid var(--amber);
+    border-radius: 11px;
+    background: linear-gradient(180deg, rgba(249,115,22,0.18), rgba(3,15,18,0.9));
+    padding: 13px 15px;
+    box-shadow: 0 0 22px rgba(249,115,22,0.28), 0 4px 0 var(--amber-dark);
+    transition: transform .5s ease, opacity .5s ease;
+    position: relative;
+    z-index: 2;
+  }
+  #base-lesson-body .det-arena.cracked .warrant-plate {
+    transform: rotate(-2.5deg) scale(0.95);
+    opacity: 0.42;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    border-color: var(--danger);
+  }
+  #base-lesson-body .plate-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  #base-lesson-body .warrant-plate p { margin: 0; font-size: 14.5px; color: #ffe6d2; }
+  #base-lesson-body .det-scenario {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    border-left: 3px solid var(--line);
+    padding-left: 12px;
+  }
+  #base-lesson-body .det-cracks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .4s ease;
+    z-index: 1;
+  }
+  #base-lesson-body .det-arena.cracked .det-cracks { opacity: 1; }
+  #base-lesson-body .det-status {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--danger);
+    margin-top: 12px;
+    min-height: 18px;
+  }
+  #base-lesson-body .det-debrief {
+    display: none;
+    margin-top: 14px;
+    border: 2px solid var(--danger);
+    border-radius: 11px;
+    padding: 14px 16px;
+    background: rgba(244,63,94,0.09);
+    box-shadow: 0 0 24px var(--danger-glow);
+    position: relative;
+    z-index: 3;
+  }
+  #base-lesson-body .det-debrief.show { display: block; animation: l219rise .5s ease both; }
+  @keyframes l219rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  #base-lesson-body .det-debrief h4 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: #ff8ba0;
+    margin: 0 0 8px;
+  }
+  #base-lesson-body .debris {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #base-lesson-body .debris span {
+    position: absolute;
+    width: 9px; height: 9px;
+    background: var(--amber);
+    border-radius: 2px;
+    opacity: 0;
+    top: 40%;
+    left: 50%;
+  }
+  #base-lesson-body .det-arena.cracked .debris span { animation: l219debris 1.1s ease-out forwards; }
+  @keyframes l219debris {
+    0% { opacity: 1; transform: translate(0,0) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(320deg); }
+  }
+
+  /* ============ FORENSICS ============ */
+  #base-lesson-body .modes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  #base-lesson-body .mode-btn { flex: 1 1 190px; font-size: 11px; padding: 10px 12px; }
+  #base-lesson-body .mode-btn.on {
+    border-color: var(--lime);
+    box-shadow: 0 4px 14px var(--lime-glow), 0 4px 0 var(--lime-dark);
+    color: #f0ffd6;
+  }
+  #base-lesson-body .forensic-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  #base-lesson-body .console {
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: #030f12;
+    padding: 16px;
+    font-size: 14.5px;
+    line-height: 1.95;
+    color: #dff7f4;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.75);
+    position: relative;
+  }
+  #base-lesson-body .console::before {
+    content: "FORENSIC CONSOLE · PASSAGE 25-A";
+    display: block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    border-bottom: 1px dashed var(--line-soft);
+    padding-bottom: 6px;
+  }
+  #base-lesson-body .ph {
+    border-radius: 4px;
+    padding: 1px 3px;
+    transition: background .3s ease, box-shadow .3s ease, color .3s ease;
+  }
+  #base-lesson-body .ph.active.g { background: rgba(132,204,22,0.24); box-shadow: inset 0 -2px 0 var(--lime), 0 0 12px var(--lime-glow); color: #f0ffd6; }
+  #base-lesson-body .ph.active.c { background: rgba(13,148,136,0.28); box-shadow: inset 0 -2px 0 var(--accent), 0 0 12px var(--accent-glow); color: #d9fffa; }
+  #base-lesson-body .ph.active.w { background: rgba(249,115,22,0.24); box-shadow: inset 0 -2px 0 var(--amber), 0 0 12px var(--amber-glow); color: #ffe9d5; }
+
+  #base-lesson-body .inspector {
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    padding: 13px 14px;
+    min-height: 180px;
+  }
+  #base-lesson-body .inspector h4 {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 6px;
+  }
+  #base-lesson-body .note {
+    border-left: 3px solid var(--line);
+    padding: 7px 10px;
+    margin-bottom: 9px;
+    background: rgba(3,15,18,0.7);
+    border-radius: 0 8px 8px 0;
+    font-size: 12.5px;
+    animation: l219rise .35s ease both;
+  }
+  #base-lesson-body .note .q {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--amber);
+    margin-bottom: 3px;
+  }
+  #base-lesson-body .note.g { border-left-color: var(--lime); }
+  #base-lesson-body .note.c { border-left-color: var(--accent); }
+  #base-lesson-body .note.w { border-left-color: var(--amber); }
+  #base-lesson-body .insp-empty { color: var(--muted); font-size: 12.5px; font-family: var(--mono); }
+
+  #base-lesson-body .hyps { display: grid; gap: 10px; margin-top: 14px; }
+  #base-lesson-body .hyp {
+    text-align: left;
+    cursor: pointer;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface));
+    color: var(--text);
+    padding: 11px 13px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.55);
+    transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  #base-lesson-body .hyp:hover:not(:disabled) { border-color: var(--amber); box-shadow: 0 4px 14px var(--amber-glow), 0 4px 0 var(--amber-dark); }
+  #base-lesson-body .hyp:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 var(--amber-dark); }
+  #base-lesson-body .hyp .hid {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber);
+    border: 1.5px solid var(--amber-dark);
+    border-radius: 5px;
+    padding: 0 5px;
+    flex: 0 0 auto;
+  }
+  #base-lesson-body .hyp.good { border-color: var(--lime); box-shadow: 0 0 20px var(--lime-glow), 0 4px 0 var(--lime-dark); background: rgba(132,204,22,0.1); }
+  #base-lesson-body .hyp.bad { border-color: var(--danger); background: rgba(244,63,94,0.09); opacity: 0.85; }
+  #base-lesson-body .clearance {
+    display: none;
+    margin-top: 12px;
+    border: 2px solid var(--lime);
+    border-radius: 11px;
+    padding: 13px 15px;
+    background: rgba(132,204,22,0.09);
+    box-shadow: 0 0 22px var(--lime-glow);
+    font-size: 13.5px;
+    color: #eaffc9;
+  }
+  #base-lesson-body .clearance.show { display: block; animation: l219rise .45s ease both; }
+
+  /* ============ PROTOCOL ============ */
+  #base-lesson-body .proto {
+    border: 2px solid var(--accent-dark);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(13,148,136,0.1), rgba(3,15,18,0.9));
+    padding: 16px 18px;
+  }
+  #base-lesson-body .proto ol { counter-reset: step; padding-left: 0; list-style: none; }
+  #base-lesson-body .proto ol li {
+    counter-increment: step;
+    position: relative;
+    padding: 9px 12px 9px 44px;
+    margin-bottom: 8px;
+    border: 1.5px solid var(--line-soft);
+    border-radius: 9px;
+    background: rgba(3,15,18,0.7);
+    font-size: 13.5px;
+  }
+  #base-lesson-body .proto ol li::before {
+    content: counter(step);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: #03110f;
+    background: linear-gradient(180deg, var(--lime), var(--lime-dark));
+    border-radius: 6px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.6);
+  }
+  #base-lesson-body .proto ol li strong { color: #eafffb; }
+
+  /* ============ TERMINATE ============ */
+  #base-lesson-body .terminate {
+    display: flex;
+    justify-content: center;
+    margin: 46px auto 0;
+  }
+  #base-lesson-body .finish-btn {
+    font-size: 15px;
+    padding: 18px 44px;
+    border-radius: 14px;
+    border-color: var(--lime);
+    color: #f4ffdb;
+    box-shadow: 0 6px 0 var(--lime-dark), 0 0 28px rgba(132,204,22,0.28);
+    letter-spacing: 0.14em;
+  }
+  #base-lesson-body .finish-btn:hover {
+    box-shadow: 0 6px 22px var(--lime-glow), 0 6px 0 var(--lime-dark);
+  }
+  #base-lesson-body .finish-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--lime-dark); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    #base-lesson-body .sim-grid,
+    #base-lesson-body .forensic-grid { grid-template-columns: minmax(0, 1fr); }
+    #base-lesson-body .audit { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    #base-lesson-body .grid2 { grid-template-columns: minmax(0, 1fr); }
+    #base-lesson-body .decoder-row { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 560px) {
+    #base-lesson-body .cores { grid-template-columns: minmax(0, 1fr); }
+    #base-lesson-body .audit { grid-template-columns: minmax(0, 1fr); }
+    #base-lesson-body .hud { padding: 9px 12px 11px; }
+    #base-lesson-body .panel, #base-lesson-body .det-arena { padding: 13px; }
+    #base-lesson-body .callsign-input { width: 96px; }
+  }
+</style>
+
+<div id="base-lesson-body" class="l219-root">
+
+  <!-- ================= HUD ================= -->
+  <header class="hud">
+    <div class="hud-inner">
+      <div class="hud-row">
+        <span class="badge level">Level 219</span>
+        <span class="badge subject">English · Summary: Rhetorical Analysis — Concepts through Media Motives &amp; Bias: Social, Commercial, Political</span>
+        <span class="badge grade">9th–10th Grade | Ages 12–16</span>
+        <span class="badge">Callsign <input id="callsign" class="callsign-input" type="text" value="ANALYST-219" aria-label="Player callsign" maxlength="16"></span>
+        <span class="badge xp">XP <b id="xpVal">0</b></span>
+      </div>
+      <div class="gauge-row">
+        <span class="gauge-label">Structural Integrity: <b id="integrityPct">25%</b> · <span id="integrityState">CALIBRATION</span></span>
+        <div class="gauge" role="progressbar" aria-label="Structural integrity gauge" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25">
+          <div class="gauge-fill" id="gaugeFill"></div>
+        </div>
+      </div>
+      <p class="mission">Mission: You are the rhetorical forensics engineer on a deep-core survey rig. Your job is to test whether the evidence supporting media arguments actually reaches load-bearing bedrock — or whether it stops in loose sand that will crack the structure under pressure.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- ================= SECTION 01 ================= -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Section 01</span>
+        <h2>Comprehensive Textbook Foundation: The Architecture of Rhetorical Analysis</h2>
+      </div>
+
+      <div class="panel">
+        <p><strong>Why this lesson exists.</strong> This is a recall-first review. Before you see any model summary, you should try to reconstruct from memory what you know about four connected domains: <em>Rhetorical Analysis: Concepts</em>, <em>Rhetorical Analysis: Writing the Essay</em>, <em>Advertising and Persuasive Media</em>, and <em>Media Motives and Bias: Social, Commercial, Political</em>. The pages below are the model summary — the corrected, gap-filled version you compare your own recall against.</p>
+        <p>The central skill in all four domains is the same: <strong>every persuasive text is a structure under load.</strong> A text makes a claim. It props that claim up with evidence. And between the evidence and the claim there is always a bridge — sometimes stated, usually not. Rhetorical analysis is the engineering inspection of that structure: <em>does the load actually reach bedrock, or does it rest on a hidden void?</em></p>
+      </div>
+
+      <div class="panel">
+        <h3>1.1 The Five Load-Bearing Components of an Argument</h3>
+        <p>Any argument you analyze — a commercial, a campaign ad, a viral post, a student essay — can be decomposed into five parts. Miss one and your analysis will be superficial; the missing part is usually the interesting one.</p>
+        <div class="scroll-x">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>What it does</th>
+                <th>Where to find it in a media text</th>
+                <th>Failure signature</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Core Assertion (Outcome)</td>
+                <td>The single proposition the text wants you to accept or act on.</td>
+                <td>Headlines, slogans, closing lines, the "so what" of a voiceover.</td>
+                <td>Claim is vague enough to be unfalsifiable ("supports wellness").</td>
+              </tr>
+              <tr>
+                <td>Empirical Grounds (Inputs)</td>
+                <td>The data, testimony, images, statistics or examples offered as support.</td>
+                <td>Numbers on screen, "studies show," expert quotes, before/after footage.</td>
+                <td>Grounds are accurate but irrelevant to the claim.</td>
+              </tr>
+              <tr>
+                <td>Connecting Bridge (Warrant / Mechanism)</td>
+                <td>The unstated principle that licenses the jump from grounds to claim.</td>
+                <td>Almost never written down. It lives in the causal verbs and the sequencing.</td>
+                <td>Bridge is missing entirely — the reader supplies it unconsciously.</td>
+              </tr>
+              <tr>
+                <td>Scope Qualifiers</td>
+                <td>Hedges that limit breadth, certainty, population or time frame.</td>
+                <td>"some," "in our sample," "may," "under these conditions," "for adults aged 18–24."</td>
+                <td>Qualifiers present in the evidence but silently dropped in the claim.</td>
+              </tr>
+              <tr>
+                <td>Boundary Conditions</td>
+                <td>The circumstances under which the claim would be withdrawn or defeated.</td>
+                <td>Rebuttal paragraphs, disclaimers, footnotes, "results may vary."</td>
+                <td>No stated conditions at all — the claim is presented as unconditional.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>1.2 The Four Core Verification Criteria</h3>
+        <p>Once you have isolated the components, you audit the grounds against four criteria. All four must pass; failing any one of them is enough to break the bridge.</p>
+        <div class="grid2">
+          <div class="panel" style="margin:0;">
+            <h4>Criterion 01</h4>
+            <h3>Relevance</h3>
+            <p>Does the evidence actually bear on <em>this</em> claim, or merely on a neighbouring claim? A statistic can be perfectly true and still be irrelevant — a rising sales figure does not measure product quality, and a rising engagement figure does not measure political polarization.</p>
+            <p><strong>Diagnostic question:</strong> If this evidence were removed, would the claim lose support — or would it lose nothing at all?</p>
+          </div>
+          <div class="panel" style="margin:0;">
+            <h4>Criterion 02</h4>
+            <h3>Sufficiency</h3>
+            <p>Is there enough evidence, of the right <em>kind</em>, to carry a claim of this breadth? A sweeping claim ("nationwide," "always," "every") demands far more bearing capacity than a narrow, hedged one ("in this single ad," "in our sample of 40").</p>
+            <p><strong>Diagnostic question:</strong> Does the size of the claim match the size of the evidence — in kind, not just in number?</p>
+          </div>
+          <div class="panel" style="margin:0;">
+            <h4>Criterion 03</h4>
+            <h3>Accuracy</h3>
+            <p>Are the stated facts true, and are they stated without distortion? Watch for truncated axes, percentages with no base rate, cherry-picked windows, and paraphrase that quietly hardens a hedge into a certainty.</p>
+            <p><strong>Diagnostic question:</strong> What was the original wording, and what happened to it on the way here?</p>
+          </div>
+          <div class="panel" style="margin:0;">
+            <h4>Criterion 04</h4>
+            <h3>Independence</h3>
+            <p>Are the sources genuinely separate, or do they all trace back to one origin? Three articles citing the same industry-funded study are one piece of evidence wearing three coats. Funding, sponsorship and self-interest are structural facts, not ad hominem attacks.</p>
+            <p><strong>Diagnostic question:</strong> Who paid for this, and who benefits if I believe it?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>1.3 Structural Validity vs. Soundness</h3>
+          <p><strong>Structural validity</strong> is internal: if the premises were true, would the conclusion follow? An argument can be structurally flawless and still be worthless, because validity says nothing about whether the premises are true.</p>
+          <p><strong>Soundness</strong> = validity + verified factual truth of every premise. A sound argument is the only kind that actually compels assent.</p>
+          <p><em>Media application:</em> Advertisers and political operatives rarely produce invalid arguments — they produce valid arguments built on false or unverifiable premises, because that is far harder for an audience to notice. Your job in analysis is to separate the two questions: <strong>Does it follow?</strong> and <strong>Is it true?</strong></p>
+        </div>
+        <div class="panel">
+          <h3>1.4 Deductive vs. Inductive Systems</h3>
+          <p><strong>Deductive</strong> reasoning is truth-preserving: if the premises hold, the conclusion is <em>certain</em>. It moves from general rule to specific case ("All ads funded by a single sponsor are non-independent; this ad is funded by a single sponsor; therefore this ad is non-independent").</p>
+          <p><strong>Inductive</strong> reasoning is probabilistic: the conclusion is <em>likely</em>, and its strength depends on sample size, sample representativeness, mechanism, and replication. It moves from specific cases to a general pattern ("42 matched stores showed the same drop; therefore the campaign likely caused it").</p>
+          <p><em>Media application:</em> Almost every claim in advertising and political media is inductive and dressed as deductive. The tell is the confident verb: "proves," "shows," "is," "always" — where the evidence can only ever support "suggests," "is consistent with," "in this sample."</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>1.5 Presumption Traps: The Five Recurring Failure Modes</h3>
+        <p>Across commercial, social and political media, the same five structural failures recur. Section 02 examines four of them in depth; the fifth is worth naming here.</p>
+        <ul>
+          <li><strong>The Value Trap</strong> — an unstated moral priority smuggled in as if it were a fact. <em>("Real families don't need handouts.")</em></li>
+          <li><strong>The Causal Leap</strong> — sequence or correlation converted into causation with no mechanism and no controls.</li>
+          <li><strong>The Definitional Shift</strong> — a key term sliding between meanings mid-argument (usually from a technical sense to a flattering one).</li>
+          <li><strong>The Micro-Sample Mirage</strong> — generalizing from a non-representative, self-selected, or survivor-biased sample.</li>
+          <li><strong>The False Dichotomy</strong> — collapsing a spectrum of options into two, one of which is obviously unacceptable. <em>("Either you back this bill, or you don't care about your family.")</em></li>
+        </ul>
+      </div>
+
+      <!-- WORKED EXAMPLE 1 -->
+      <div class="worked">
+        <div class="worked-head">Worked Example 1 · Commercial Motive — Skincare Advertisement</div>
+        <div class="worked-body">
+          <p class="ex-text">
+            "<span class="t-ground">Nine out of ten dermatologists <span class="t-qual">on our panel</span></span> <span class="t-claim">recommend Luméa.</span> In a world of harsh chemicals, <span class="t-warrant">your skin deserves certainty.</span> <span class="t-claim">Choose Luméa.</span>"
+          </p>
+          <div class="decoder">
+            <div class="decoder-row">
+              <span class="k t-claim">Core Assertion</span>
+              <span>You should buy Luméa, because it is the most reliable choice available for your skin.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-ground">Empirical Grounds</span>
+              <span>A claimed 9-in-10 preference among a panel of dermatologists selected by the brand. This is <em>testimonial evidence</em>, not experimental evidence.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-warrant">Unstated Bridge</span>
+              <span>"A brand-assembled expert panel's stated preference tracks real-world product efficacy, and this panel is representative of dermatology as a whole." Neither half of that bridge is stated, and both are contestable.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-qual">Scope Qualifier</span>
+              <span>"on our panel" — a genuine, load-bearing limiter. Note that it appears in the evidence sentence and vanishes from the conclusion sentence.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-bound">Boundary Condition</span>
+              <span>The claim would be defeated if the panel were compensated, smaller than ten, asked a leading question ("Would you recommend a gentle daily moisturizer?"), or selected after the fact.</span>
+            </div>
+          </div>
+          <div class="audit">
+            <div class="audit-cell"><b class="ok-mark">Relevance ✓</b>Dermatological opinion is topically relevant to skin products.</div>
+            <div class="audit-cell"><b class="bad-mark">Sufficiency ✗</b>A ten-person panel cannot carry a universal "choose this" instruction.</div>
+            <div class="audit-cell"><b class="warn-mark">Accuracy ?</b>The 9-in-10 figure may be literally true while the inference is not.</div>
+            <div class="audit-cell"><b class="bad-mark">Independence ✗</b>The brand convened and funded the panel; the sources are not independent.</div>
+          </div>
+          <p style="margin-top:12px; font-size:13px;"><strong>Negation test:</strong> Assume the opposite of the bridge — "a brand-funded panel's preference tells us nothing about efficacy." Under that assumption, "Nine out of ten dermatologists" becomes decoration, and the conclusion "Choose Luméa" loses <em>all</em> support. Because the argument collapses when the bridge is negated, the bridge was load-bearing. That is the definition of an unstated warrant doing the real work.</p>
+        </div>
+      </div>
+
+      <!-- WORKED EXAMPLE 2 -->
+      <div class="worked">
+        <div class="worked-head">Worked Example 2 · Social &amp; Political Motive — Community Post</div>
+        <div class="worked-body">
+          <p class="ex-text">
+            "<span class="t-ground">Since the city painted new bike lanes downtown, downtown shop revenue dropped 12%.</span> <span class="t-claim">Bike lanes are killing small business.</span> <span class="t-warrant">Share if you care about Main Street.</span>"
+          </p>
+          <div class="decoder">
+            <div class="decoder-row">
+              <span class="k t-claim">Core Assertion</span>
+              <span>Bike lanes are actively destroying small businesses downtown.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-ground">Empirical Grounds</span>
+              <span>Two time-series facts placed side by side: (1) lanes were installed; (2) revenue fell 12% in the same window. Both may be accurate.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-warrant">Unstated Bridge</span>
+              <span>"Because these two events occurred in the same window, the first caused the second — and no other factor contributed." This is the <strong>Causal Leap</strong>.</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-qual">Scope Qualifier</span>
+              <span>None. The present-progressive "are killing" asserts an ongoing, unbounded action. Compare the far weaker claim the evidence could actually support: "downtown revenue fell during a period of street redesign."</span>
+            </div>
+            <div class="decoder-row">
+              <span class="k t-bound">Boundary Condition</span>
+              <span>The claim fails if comparable cities <em>without</em> bike lanes also saw roughly 12% declines, or if the drop coincides with a regional retail slump, a major employer leaving, or two years of construction disruption.</span>
+            </div>
+          </div>
+          <div class="audit">
+            <div class="audit-cell"><b class="ok-mark">Relevance ✓</b>Revenue data is relevant to a claim about business health.</div>
+            <div class="audit-cell"><b class="bad-mark">Sufficiency ✗</b>Co-movement alone cannot isolate a single cause from dozens of rivals.</div>
+            <div class="audit-cell"><b class="warn-mark">Accuracy ?</b>No base rate, no comparison group, no definition of "downtown."</div>
+            <div class="audit-cell"><b class="bad-mark">Independence ✗</b>One poster, one chart, no primary source — and a share request that rewards emotional transmission over verification.</div>
+          </div>
+          <p style="margin-top:12px; font-size:13px;"><strong>Negation test:</strong> Negate the bridge — "co-occurrence in the same window does not establish causation." Under that assumption, the 12% figure becomes an isolated observation with no explanatory force, and "Bike lanes are killing small business" collapses entirely. The bridge was load-bearing. Note also the secondary trap in "Share if you care about Main Street": it converts a factual dispute into a loyalty test, which is the <strong>Value Trap</strong> operating as a distribution mechanism.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 02 ================= -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Section 02</span>
+        <h2>The Four Hazard Pods: Unstated Assumptions &amp; Structural Failure Modes</h2>
+      </div>
+      <p style="max-width:900px; color:var(--text-dim); font-size:13.5px;">Each pod below describes one archetypal hidden assumption. Learn the identification rule, the failure risk, and the diagnostic move — you will be tested on all four in the simulation that follows.</p>
+
+      <div class="grid2">
+
+        <article class="pod">
+          <div class="pod-num">POD 01</div>
+          <h3>The Value Trap</h3>
+          <p><em>Presupposing unstated priorities, moral hierarchies, or preferences as though they were established facts.</em></p>
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>Hunt for evaluative adjectives doing factual work: <em>real, true, honest, serious, genuine, extreme, radical, natural, common-sense.</em></li>
+            <li>Look for an "ought" smuggled into an "is" — a description that quietly ranks one outcome above another.</li>
+            <li>Check whether the argument would survive if you substituted a different but equally legitimate value priority.</li>
+            <li>Watch for loyalty tests: "if you care about X," "anyone who loves Y," "real Americans/Zelda fans/parents know."</li>
+          </ul>
+          <h4>Catastrophic Failure Risk</h4>
+          <p>Value traps are the hardest failure to spot because they feel like common sense. When an audience accepts the hidden value hierarchy, every subsequent factual dispute is decided in advance — the argument becomes unfalsifiable. In political media this is the primary engine of polarization; in commercial media it converts a product preference into an identity.</p>
+          <h4>Domain Excerpt</h4>
+          <blockquote>"Real families don't need handouts — they need the dignity of a paycheck."</blockquote>
+          <p class="diag"><strong>Diagnostic breakdown:</strong> "Real families" presupposes that some families are counterfeit, and that the counterfeit ones are those receiving support. "The dignity of a paycheck" presupposes that wage labour is the only dignified form of material provision — a moral hierarchy presented as a definition. The sentence contains no verifiable claim at all; it contains a ranking of values wearing the grammar of description. <em>Counter-move:</em> restate it as the value claim it actually is — "I prioritize wage income over direct transfers" — and the disagreement becomes arguable rather than automatic.</p>
+        </article>
+
+        <article class="pod">
+          <div class="pod-num">POD 02</div>
+          <h3>The Causal Leap</h3>
+          <p><em>Conflating correlation or sequence with direct causation; omitting confounding variables and mechanisms.</em></p>
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>Circle every causal verb: <em>causes, drives, fuels, kills, creates, is why, leads to, produces, is what keeps.</em></li>
+            <li>Ask the three causal questions: <strong>Is there a mechanism? Is there a control group? Is there a plausible third variable?</strong></li>
+            <li>Test for <strong>reverse causation</strong> — could the supposed effect be producing the supposed cause?</li>
+            <li>Check the window: "in the same two years," "since we launched," "at the same time" are temporal juxtapositions, not evidence.</li>
+            <li>Beware selection effects: people who choose an intervention often differ from those who don't, before the intervention begins.</li>
+          </ul>
+          <h4>Catastrophic Failure Risk</h4>
+          <p>A causal leap lets a text inherit the credibility of real data while making a claim the data cannot support. This is the most common structural flaw in advertising ("confidence starts here"), in journalism covering single studies, and in political messaging that pairs a policy with an economic trend. It is dangerous because the underlying numbers are often accurate, so fact-checking alone will never catch it.</p>
+          <h4>Domain Excerpt</h4>
+          <blockquote>"Teens who use FocusLoop report 30% higher confidence. Confidence starts here."</blockquote>
+          <p class="diag"><strong>Diagnostic breakdown:</strong> The grounds are a cross-sectional correlation between app use and self-reported confidence. The slogan asserts causation. Two rival explanations are left unaddressed: <em>reverse causation</em> (already-confident teens are more likely to seek out and keep using a self-improvement app) and <em>confounding</em> (parental involvement, socioeconomic stability, or baseline mental health could drive both). <em>Counter-move:</em> state the strongest defensible version — "teens who use FocusLoop report higher confidence in this sample" — and note what a real causal test would require: random assignment and measurement before and after.</p>
+        </article>
+
+        <article class="pod">
+          <div class="pod-num">POD 03</div>
+          <h3>The Definitional Shift</h3>
+          <p><em>Equivocation — sliding between a colloquial and a technical sense of a key term in the middle of an argument.</em></p>
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>List every abstract or emotionally loaded noun: <em>natural, freedom, choice, health, clean, safe, fairness, censorship, reform, security.</em></li>
+            <li>Ask: what does this word mean in the evidence sentence, and does it mean the same thing in the conclusion?</li>
+            <li>Look for a legal or scientific definition being swapped for an everyday one — or the reverse, when the everyday one is more flattering.</li>
+            <li>Check whether the term is ever defined at all. Undefined key terms are where shifts hide.</li>
+            <li>Watch for terms defined by the speaker's own category: "our 'clean' formula," "true 'leadership.'"</li>
+          </ul>
+          <h4>Catastrophic Failure Risk</h4>
+          <p>An equivocation can make an argument appear valid while its conclusion is about something entirely different from its premises. Because the word stays the same, the argument <em>feels</em> continuous. Regulators, advertisers, and political campaigns all exploit this: it is why "natural" has no legal meaning on a shampoo bottle, and why "reform" can describe two opposite policies.</p>
+          <h4>Domain Excerpt</h4>
+          <blockquote>"Our formula is 100% natural — because natural means safe, it's the safest choice for your family."</blockquote>
+          <p class="diag"><strong>Diagnostic breakdown:</strong> In the premise, "natural" means <em>derived from biological sources</em>. In the conclusion, "natural" silently means <em>safe for human use</em>. Those are different properties: arsenic, hemlock and radon are entirely natural. The argument is only persuasive if the reader fails to notice that the word changed jobs mid-sentence. <em>Counter-move:</em> insert the definition explicitly into both halves and re-read — "derived from biological sources, therefore safe" — and the bridge visibly snaps.</p>
+        </article>
+
+        <article class="pod">
+          <div class="pod-num">POD 04</div>
+          <h3>The Micro-Sample Mirage</h3>
+          <p><em>Generalizing from non-representative, self-selected, or survivor-biased samples — especially when the sample size looks impressive.</em></p>
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>Find the sample and ask: <strong>who was invited, who actually responded, and who is missing?</strong></li>
+            <li>Flag voluntary and self-selected cohorts: newsletter readers, loyalty-card holders, app users, social-media respondents, call-in polls.</li>
+            <li>Check for <strong>survivor bias</strong>: the businesses still open are not a random sample of the businesses that started.</li>
+            <li>Distinguish sample <em>size</em> from sampling <em>frame</em>. A million self-selected respondents is still one biased group.</li>
+            <li>Ask whether the sample population matches the population named in the claim.</li>
+          </ul>
+          <h4>Catastrophic Failure Risk</h4>
+          <p>Large numbers create an illusion of rigour that survives casual scrutiny. A claim built on a self-selected cohort can be repeated, cited and re-cited until it acquires the texture of established fact — while the underlying sample was never capable of supporting the generalization in the first place. This is the failure mode most likely to propagate through a media ecosystem, because it is expensive to detect and cheap to repeat.</p>
+          <h4>Domain Excerpt</h4>
+          <blockquote>"We surveyed our loyalty-card members and 96% said they'd recommend us to a friend. America's most trusted brand."</blockquote>
+          <p class="diag"><strong>Diagnostic breakdown:</strong> The sample is drawn entirely from people who already chose the brand, enrolled in a loyalty programme, and then opted into a survey. Every group capable of disagreeing has been filtered out before measurement begins. The 96% is not a finding about customers in general — it is a near-tautology about committed customers. The conclusion then inflates further: "America's most trusted brand" names a national population that the sample never touched. <em>Counter-move:</em> ask what the response rate was, and how many non-loyalty customers were even eligible to answer.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 03 ================= -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Section 03</span>
+        <h2>Signature Simulator: The Foundation Piling Core Drill</h2>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <p style="margin:0; font-size:13.5px;">A piling can only bear the load it actually reaches. Each claim below carries a <strong>required bearing depth</strong>. Select the evidence core you believe is structurally sound, then drive the piling. If the drill tip stops above the required marker, the structure will crack under load — and the readout will tell you which failure mode you hit.</p>
+      </div>
+
+      <div class="sim-grid">
+
+        <div class="panel" style="margin:0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+            <span class="section-tag" id="drillRound">CLAIM 1 / 4</span>
+            <span class="badge" style="border-color:var(--amber); color:#ffd9b3;">DRILL DEPTH: EVIDENTIAL STRENGTH</span>
+          </div>
+
+          <div class="claim-card">
+            <div class="lbl">Claim Under Test</div>
+            <p id="drillClaim"></p>
+          </div>
+
+          <div class="req-strip" id="reqLabel"></div>
+
+          <div class="cores" id="drillCores"></div>
+
+          <div class="sim-actions">
+            <button class="btn btn-amber" id="driveBtn" type="button" disabled>⚙️ DRIVE PILING</button>
+            <button class="btn btn-lime" id="nextClaimBtn" type="button" style="display:none;">➡️ ADVANCE TO NEXT CLAIM</button>
+          </div>
+
+          <div class="readout" id="drillReadout">Select an evidence core, then drive the piling.</div>
+        </div>
+
+        <div>
+          <div class="rig-wrap" id="rigWrap">
+            <svg class="rig-svg" viewBox="0 0 420 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Geological cross-section with a foundation piling being driven into rock layers">
+              <!-- strata -->
+              <rect x="0" y="60" width="420" height="90" fill="#2c2413"></rect>
+              <rect x="0" y="150" width="420" height="90" fill="#1e2b22"></rect>
+              <rect x="0" y="240" width="420" height="90" fill="#143036"></rect>
+              <rect x="0" y="330" width="420" height="90" fill="#0e3d46"></rect>
+
+              <!-- strata separators -->
+              <line x1="0" y1="60" x2="420" y2="60" stroke="#0D9488" stroke-width="2.5"></line>
+              <line x1="0" y1="150" x2="420" y2="150" stroke="#12454a" stroke-width="1.6" stroke-dasharray="7 6"></line>
+              <line x1="0" y1="240" x2="420" y2="240" stroke="#12454a" stroke-width="1.6" stroke-dasharray="7 6"></line>
+              <line x1="0" y1="330" x2="420" y2="330" stroke="#12454a" stroke-width="1.6" stroke-dasharray="7 6"></line>
+
+              <!-- layer labels -->
+              <g font-family="monospace" font-size="10.5" letter-spacing="0.5">
+                <text x="10" y="80" fill="#F97316">SURFACE SAND · ANECDOTE</text>
+                <text x="10" y="170" fill="#84CC16">CLAY · ISOLATED STATISTIC</text>
+                <text x="10" y="260" fill="#5eead4">GRAVEL · CORRELATION ONLY</text>
+                <text x="10" y="350" fill="#e9fffb">GRANITE · VERIFIED BEDROCK</text>
+              </g>
+
+              <!-- required bearing marker -->
+              <g id="reqMarker">
+                <line x1="0" y1="60" x2="420" y2="60" stroke="#F97316" stroke-width="2" stroke-dasharray="12 7" opacity="0.9"></line>
+                <polygon points="398,54 412,60 398,66" fill="#F97316"></polygon>
+                <text x="394" y="50" text-anchor="end" fill="#F97316" font-family="monospace" font-size="9.5">REQUIRED BEARING</text>
+              </g>
+
+              <!-- secure glow ring -->
+              <circle id="glowRing" cx="220" cy="42" r="66" fill="none" stroke="#84CC16" stroke-width="2" stroke-dasharray="6 8"></circle>
+
+              <!-- building / structure -->
+              <g id="buildingGroup">
+                <rect id="building" x="170" y="20" width="100" height="40" fill="#0e2a30" stroke="#1c4a52" stroke-width="2" rx="3"></rect>
+                <rect class="win" x="178" y="28" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="196" y="28" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="232" y="28" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="250" y="28" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="178" y="44" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="196" y="44" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="232" y="44" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+                <rect class="win" x="250" y="44" width="12" height="9" fill="#1f5c63" rx="1.5"></rect>
+              </g>
+
+              <!-- cracks -->
+              <g id="cracks" stroke="#F43F5E" stroke-width="2.2" fill="none" stroke-linecap="round">
+                <path d="M186 21 L192 33 L184 45 L193 60"></path>
+                <path d="M254 20 L249 34 L258 46 L250 60"></path>
+                <path d="M204 26 L212 36 L206 48"></path>
+                <path d="M238 24 L232 38 L240 50"></path>
+              </g>
+
+              <!-- drill string -->
+              <g id="drillGroup">
+                <rect x="213" y="-16" width="14" height="66" fill="#9fb8b6" stroke="#0D9488" stroke-width="1.6" rx="2"></rect>
+                <rect x="208" y="-22" width="24" height="9" fill="#0D9488" rx="2.5"></rect>
+                <polygon points="211,50 229,50 220,60" fill="#F97316" stroke="#9a420a" stroke-width="1.2"></polygon>
+              </g>
+            </svg>
+            <div class="rig-caption">DEEP-CORE SURVEY RIG · SECTOR 25-A · DEPTH SCALE: EVIDENTIAL LOAD-BEARING CAPACITY</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 04 ================= -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Section 04</span>
+        <h2>The Negation Detonator</h2>
+      </div>
+
+      <div class="panel" style="margin-bottom:16px;">
+        <p style="margin:0; font-size:13.5px;">A warrant is <strong>load-bearing</strong> if negating it destroys the argument. The plate below holds the implicit assumption supporting a streaming-service claim. Detonate it and watch what happens to the structure.</p>
+      </div>
+
+      <div class="det-arena" id="detArena">
+        <svg class="det-cracks" viewBox="0 0 800 400" preserveAspectRatio="none" aria-hidden="true">
+          <g stroke="#F43F5E" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.75">
+            <path d="M0 40 L120 70 L80 140 L190 190 L150 300 L240 400"></path>
+            <path d="M800 30 L690 80 L740 150 L620 210 L670 320 L590 400"></path>
+            <path d="M400 0 L380 90 L440 150 L370 240 L430 330 L400 400"></path>
+          </g>
+        </svg>
+        <div class="debris" aria-hidden="true">
+          <span style="--dx:-120px; --dy:-70px;"></span>
+          <span style="--dx:130px; --dy:-90px; animation-delay:.05s;"></span>
+          <span style="--dx:-160px; --dy:40px; animation-delay:.1s;"></span>
+          <span style="--dx:150px; --dy:60px; animation-delay:.08s;"></span>
+          <span style="--dx:-40px; --dy:-130px; animation-delay:.12s;"></span>
+          <span style="--dx:60px; --dy:-120px; animation-delay:.03s;"></span>
+        </div>
+
+        <div class="warrant-plate">
+          <div class="plate-label">Target Implicit Warrant · Load-Bearing Assumption</div>
+          <p>"Nothing besides our family-plan campaign — not a price cut, not a new hit series, not a competitor's outage — could have produced the 14% retention rise in that same quarter."</p>
+        </div>
+
+        <p class="det-scenario"><strong>Scenario under load:</strong> A streaming service runs a launch spot: <em>"Since we launched our family-plan campaign, subscriber retention rose 14%. That campaign is what keeps families subscribed."</em> The retention figure is real. The campaign is real. The bridge between them is entirely unstated.</p>
+
+        <div style="margin-top:16px;">
+          <button class="btn btn-danger" id="detonateBtn" type="button">💣 DETONATE NEGATION TEST</button>
+        </div>
+
+        <div class="det-status" id="detStatus"></div>
+
+        <div class="det-debrief" id="detDebrief">
+          <h4>Detonation Successful</h4>
+          <p>Negating the warrant is almost trivial: suppose a major competitor raised its prices in the same quarter, and a surprise hit series premiered on this platform in the same month. That combination fully explains a 14% retention rise — with the campaign playing no causal role at all. Because the argument offers nothing else, the entire claim collapses the moment the warrant is denied.</p>
+          <p style="margin-bottom:0;"><strong>Structural conclusion:</strong> the warrant was load-bearing. The 14% figure is accurate, relevant and even independent — it fails on <em>sufficiency</em> alone, because a single co-movement cannot isolate one cause from the dozens of other things that changed in the same quarter.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 05 ================= -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Section 05</span>
+        <h2>Live Fire Forensics: Interactive Text X-Ray</h2>
+      </div>
+
+      <div class="modes">
+        <button class="btn btn-lime mode-btn" type="button" data-mode="g">🟢 SCAN FOUNDATION / GROUNDS</button>
+        <button class="btn mode-btn" type="button" data-mode="c">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+        <button class="btn btn-amber mode-btn" type="button" data-mode="w">🟠 DETECT UNSTATED MECHANISMS / WARRANTS</button>
+      </div>
+
+      <div class="forensic-grid">
+        <div class="console">
+          <p id="passage" style="margin:0;">
+            "In the last two years, our state added <span class="ph g">40,000 new electric vehicles</span> — and <span class="ph w">in those same two years</span>, <span class="ph g">our grid's emergency alerts rose 62%</span>. <span class="ph c">Every EV you see on the road is another strain on the system that keeps your lights on.</span> Meanwhile, <span class="ph g">Washington politicians took $2.4 million from EV manufacturers</span> and then <span class="ph c">voted to spend your tax dollars on charging stations</span>. Our opponent <span class="ph c">says the grid is "fine."</span> <span class="ph w">Ask yourself: whose family is she protecting — yours, or theirs?</span>"
+          </p>
+        </div>
+
+        <div class="inspector" id="inspector">
+          <h4 id="inspectorTitle">Inspector · Standby</h4>
+          <p class="insp-empty">Select a scan mode to illuminate a layer of the passage.</p>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px;">
+        <h3 style="font-size:15px;">Interactive Challenge: Find the Fatal Flaw</h3>
+        <p style="font-size:13.5px;">Three hypotheses are on the board. One identifies the flaw that actually breaks the argument's spine. Choose it.</p>
+        <div class="hyps" id="hyps">
+          <button class="hyp" type="button" data-correct="0">
+            <span class="hid">H1</span>
+            <span>The ad's evidence sample is too small — 40,000 vehicles and a 62% rise are simply not enough data points to support a conclusion.</span>
+          </button>
+          <button class="hyp" type="button" data-correct="1">
+            <span class="hid">H2</span>
+            <span>The ad fuses two co-occurring trends into a causal claim — "Every EV… is another strain" — with no mechanism and no control for heat waves, data-centre demand, or deferred grid maintenance.</span>
+          </button>
+          <button class="hyp" type="button" data-correct="0">
+            <span class="hid">H3</span>
+            <span>The ad uses the word "grid" in two different senses and equivocates between them.</span>
+          </button>
+        </div>
+        <div class="clearance" id="clearance"></div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 06 ================= -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-tag">Section 06</span>
+        <h2>Quick-Reference Procedural Protocol</h2>
+      </div>
+
+      <div class="panel">
+        <h3 style="font-size:15px;">Failure-Mode Triage Matrix</h3>
+        <div class="scroll-x">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Characteristic Failure Mode</th>
+                <th>First Elimination Move</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Core Assertion</td>
+                <td>Unfalsifiable vagueness; scope qualifiers dropped between evidence and conclusion.</td>
+                <td>Rewrite the claim so it could be proven false. If you cannot, the claim is doing no work.</td>
+              </tr>
+              <tr>
+                <td>Empirical Grounds</td>
+                <td>Micro-Sample Mirage; voluntary cohorts; survivor bias; irrelevant-but-accurate statistics.</td>
+                <td>Ask who was invited, who responded, and who is missing from the sample.</td>
+              </tr>
+              <tr>
+                <td>Connecting Bridge</td>
+                <td>Causal Leap; Definitional Shift; Value Trap smuggled in as description.</td>
+                <td>State the bridge out loud, then negate it. If the claim collapses, the bridge was load-bearing.</td>
+              </tr>
+              <tr>
+                <td>Scope Qualifiers</td>
+                <td>Hedge inflation — "some" becomes "most," "in this sample" becomes "in America."</td>
+                <td>Compare the hedge in the source sentence against the hedge in the headline.</td>
+              </tr>
+              <tr>
+                <td>Boundary Conditions</td>
+                <td>No stated defeat conditions; the claim is presented as unconditional and universal.</td>
+                <td>Name one observation that would change the author's mind. If none exists, the claim is not empirical.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="proto">
+        <h3 style="font-size:15px; color:#c9fff6;">The Universal 5-Step Deconstruction Protocol</h3>
+        <ol>
+          <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark every certainty limiter ("some," "may," "in our sample," "under these conditions").</li>
+          <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check for sample representation, bias, base rates, and source independence — relevance and accuracy alone are never enough.</li>
+          <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle that links the grounds to the claim, in one sentence, as a claim the author never wrote.</li>
+          <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge and construct a rival explanation. If the outcome collapses under negation, the component is load-bearing and the argument depends on it.</li>
+          <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, omitted variables, and definitional shifts in key terms.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= TERMINATION ================= -->
+    <div class="terminate">
+      <button class="btn btn-lime finish-btn" id="finishBtn" type="button">Finish Lesson</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ---------------------------------------------------------
+     HUD / TELEMETRY
+  --------------------------------------------------------- */
+  const TOTAL_TASKS = 6;
+  const state = { xp: 0, solved: new Set() };
+
+  const xpEl = root.querySelector('#xpVal');
+  const gaugeFill = root.querySelector('#gaugeFill');
+  const integrityPct = root.querySelector('#integrityPct');
+  const integrityState = root.querySelector('#integrityState');
+  const gaugeEl = root.querySelector('.gauge');
+
+  function refreshHUD() {
+    const n = state.solved.size;
+    const pct = Math.min(100, 25 + (n / TOTAL_TASKS) * 75);
+    xpEl.textContent = state.xp;
+    gaugeFill.style.width = pct + '%';
+    integrityPct.textContent = Math.round(pct) + '%';
+    if (gaugeEl) gaugeEl.setAttribute('aria-valuenow', String(Math.round(pct)));
+    if (pct >= 100) {
+      integrityState.textContent = 'STRUCTURE SECURED & VERIFIED';
+      gaugeFill.style.boxShadow = '0 0 22px rgba(132,204,22,0.75)';
+    } else if (pct >= 62) {
+      integrityState.textContent = 'ANCHORING';
+    } else if (pct >= 45) {
+      integrityState.textContent = 'SURVEYING';
+    } else {
+      integrityState.textContent = 'CALIBRATION';
+    }
+  }
+
+  function solve(id, xp) {
+    if (state.solved.has(id)) return false;
+    state.solved.add(id);
+    state.xp += xp;
+    refreshHUD();
+    return true;
+  }
+
+  refreshHUD();
+
+  /* ---------------------------------------------------------
+     SECTION 03 — FOUNDATION PILING CORE DRILL
+  --------------------------------------------------------- */
+  const ROUNDS = [
+    {
+      claim: '“After our city\u2019s soda-tax ad campaign launched, sugary-drink purchases at the two supermarkets we surveyed fell 8% over three months. The campaign reduced soda buying in our city.”',
+      required: 2,
+      requiredLabel: 'REQUIRED BEARING: DENSE GRAVEL — the claim is city-wide ("reduced soda buying in our city"), so it needs a controlled comparison across sites, not a single anecdote.',
+      success: 'The matched-city comparison controls for seasonality, price shocks and regional trends, so the 8% drop is attributable to the campaign with reasonable confidence.',
+      cores: [
+        {
+          meta: 'SINGLE TESTIMONY',
+          title: 'One shopper told our reporter she switched to water “because of those ads.”',
+          layer: 0,
+          note: 'One shopper is surface sand: a single impression, and one she may be reconstructing after the fact to explain a decision made for price or health reasons. It cannot carry a city-wide claim.'
+        },
+        {
+          meta: 'CONTROLLED COMPARISON',
+          title: 'Before/after sales data from 42 supermarkets across 3 demographically matched cities — one of which ran no ads at all.',
+          layer: 2,
+          correct: true,
+          note: ''
+        },
+        {
+          meta: 'VOLUNTARY COHORT · n = 100,000',
+          title: 'A brand-funded “study” of 100,000 loyalty-card holders who volunteered to answer a survey.',
+          layer: 0,
+          note: 'n = 100,000 looks like bedrock, but a voluntary cohort of loyalty-card holders is a self-selected group. Sample size cannot repair a broken sampling frame — this is the Micro-Sample Mirage.'
+        },
+        {
+          meta: 'SOCIAL PROOF',
+          title: 'A post with 40,000 likes saying the tax “obviously” worked.',
+          layer: 0,
+          note: 'Popularity is not evidence. Likes measure agreement with a conclusion, not the accuracy of the causal link behind it.'
+        }
+      ]
+    },
+    {
+      claim: '“Political attack ads that use fear imagery make voters nationwide less likely to trust elections.”',
+      required: 3,
+      requiredLabel: 'REQUIRED BEARING: GRANITE BEDROCK — a nationwide causal claim about attitude change requires random assignment and broad, representative coverage.',
+      success: 'Random assignment, a pre-registered design and 12-state coverage let this study license a nationwide causal claim. The piling is seated in bedrock.',
+      cores: [
+        {
+          meta: 'PRE-REGISTERED EXPERIMENT · n = 6,400',
+          title: 'A peer-reviewed, pre-registered experiment: 6,400 voters randomly assigned to fear-framed or neutral ads across 12 states, with trust measured before and after.',
+          layer: 3,
+          correct: true,
+          note: ''
+        },
+        {
+          meta: 'NEWSLETTER POLL · n = 1,200',
+          title: 'A poll of 1,200 readers who clicked a link at the bottom of a partisan newsletter.',
+          layer: 1,
+          note: 'Loose clay: 1,200 is a real number, but a newsletter link recruits a partisan, self-selected audience. That sample cannot represent "voters nationwide."'
+        },
+        {
+          meta: 'EXPERT TESTIMONY',
+          title: 'Two veteran campaign consultants agree that fear ads “work.”',
+          layer: 0,
+          note: 'Surface sand: expert agreement is testimony, not measurement — and "work" is undefined. It may mean "win races," not "erode trust."'
+        },
+        {
+          meta: 'PERSONAL IMPRESSION',
+          title: 'Your own gut feeling after watching five attack ads in a row.',
+          layer: 0,
+          note: 'Surface sand: your reaction is a sample of one, and it is contaminated by the very ads you are judging.'
+        }
+      ]
+    },
+    {
+      claim: '“In the single ad we analyzed — Halo Athletic\u2019s ‘Run Your Own Race’ spot — the 1994 archival footage is used to cue nostalgia for viewers aged 35–50.”',
+      required: 1,
+      requiredLabel: 'REQUIRED BEARING: LOOSE CLAY — the claim is narrow (one ad), hedged ("is used to cue"), and text-anchored, so direct textual and authorial evidence is sufficient.',
+      success: 'A narrow, hedged, text-anchored claim is carried by direct textual evidence plus the creator\u2019s stated intent. Demanding a nationwide study for a single-text reading is its own analytical error.',
+      cores: [
+        {
+          meta: 'TEXTUAL + AUTHORIAL EVIDENCE',
+          title: 'A close reading: timestamped shots, the on-screen caption “1994,” the cassette-warp audio filter, plus the creative director\u2019s stated nostalgic intent in a published interview.',
+          layer: 1,
+          correct: true,
+          note: ''
+        },
+        {
+          meta: 'NATIONAL SURVEY · n = 2,000',
+          title: 'A national survey finding that 68% of Americans “like nostalgic advertising.”',
+          layer: 0,
+          note: 'Surface sand — and a relevance failure. A national taste survey says nothing about what this specific ad\u2019s footage is doing. Broad data cannot answer a narrow interpretive question.'
+        },
+        {
+          meta: 'PUBLICIST STATEMENT',
+          title: 'The agency\u2019s CEO says the spot “was made for everyone.”',
+          layer: 0,
+          note: 'Surface sand: a publicist\u2019s summary is not textual evidence, and "for everyone" directly contradicts the claim under test.'
+        },
+        {
+          meta: 'ANALOGY TO ANOTHER AD',
+          title: 'A rival brand used 1990s footage last year, so this ad must mean the same thing.',
+          layer: 0,
+          note: 'Surface sand: another text\u2019s meaning is not this text\u2019s meaning. Analogy generates a hypothesis; it does not establish intent.'
+        }
+      ]
+    },
+    {
+      claim: '“Engagement-optimized social feeds are a major driver of political polarization among U.S. teens.”',
+      required: 3,
+      requiredLabel: 'REQUIRED BEARING: GRANITE BEDROCK — "a major driver" is a population-level causal claim, so it needs isolated variation plus independent replication.',
+      success: 'Random variation in feed ranking isolates the platform\u2019s algorithm from everything else moving at the same time, and independent replication rules out a single lab\u2019s quirk. Bedrock secured.',
+      cores: [
+        {
+          meta: 'LONGITUDINAL · RANDOMIZED · REPLICATED',
+          title: 'A 2023 peer-reviewed longitudinal study of 9,000 teens that exploited random variation in feed ranking, later replicated by an independent team.',
+          layer: 3,
+          correct: true,
+          note: ''
+        },
+        {
+          meta: 'PLATFORM SELF-REPORT',
+          title: 'The platform\u2019s own blog post reporting that “engagement is up 30% year over year.”',
+          layer: 1,
+          note: 'Loose clay, and a relevance break: engagement is not polarization. The metric counts clicks, not attitude change, so the evidence never touches the claim.'
+        },
+        {
+          meta: 'INSIDER INTERVIEWS · n = 6',
+          title: 'A documentary featuring interviews with six former platform employees.',
+          layer: 1,
+          note: 'Loose clay: six insiders are a small, purposively chosen and possibly aggrieved sample. Insider testimony generates hypotheses; it does not establish a population-level driver.'
+        },
+        {
+          meta: 'DECADE-LONG CO-MOVEMENT',
+          title: 'Polarization rose over the same decade that smartphones spread.',
+          layer: 2,
+          note: 'Dense gravel is still not bedrock. A decade-long co-movement has no isolated mechanism and dozens of competing explanations — cable news, economic shocks, demographic change, generational replacement.'
+        }
+      ]
+    }
+  ];
+
+  const drillGroup = root.querySelector('#drillGroup');
+  const reqMarker = root.querySelector('#reqMarker');
+  const cracks = root.querySelector('#cracks');
+  const rigWrap = root.querySelector('#rigWrap');
+  const claimEl = root.querySelector('#drillClaim');
+  const coresEl = root.querySelector('#drillCores');
+  const driveBtn = root.querySelector('#driveBtn');
+  const nextBtn = root.querySelector('#nextClaimBtn');
+  const readout = root.querySelector('#drillReadout');
+  const roundLabel = root.querySelector('#drillRound');
+  const reqLabel = root.querySelector('#reqLabel');
+
+  let roundIdx = 0;
+  let selected = null;
+  let drillBusy = false;
+
+  function renderRound() {
+    const r = ROUNDS[roundIdx];
+    selected = null;
+    drillBusy = false;
+
+    claimEl.textContent = r.claim;
+    reqLabel.textContent = r.requiredLabel;
+    roundLabel.textContent = 'CLAIM ' + (roundIdx + 1) + ' / ' + ROUNDS.length;
+
+    reqMarker.style.transform = 'translateY(' + (90 * r.required) + 'px)';
+
+    drillGroup.style.transition = 'none';
+    drillGroup.style.transform = 'translateY(0px)';
+    /* force reflow so the next transition registers */
+    void drillGroup.getBoundingClientRect();
+
+    rigWrap.classList.remove('shake', 'secured');
+    cracks.style.opacity = '0';
+    readout.className = 'readout';
+    readout.textContent = 'Select an evidence core, then drive the piling.';
+    driveBtn.disabled = true;
+    driveBtn.style.display = '';
+    nextBtn.style.display = 'none';
+
+    coresEl.innerHTML = '';
+    r.cores.forEach((c) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'core-btn';
+      const meta = document.createElement('span');
+      meta.className = 'core-meta';
+      meta.textContent = c.meta;
+      const title = document.createElement('span');
+      title.className = 'core-title';
+      title.textContent = c.title;
+      b.appendChild(meta);
+      b.appendChild(title);
+      b.addEventListener('click', () => {
+        if (drillBusy) return;
+        selected = c;
+        const all = coresEl.querySelectorAll('.core-btn');
+        for (let i = 0; i < all.length; i++) all[i].classList.remove('sel');
+        b.classList.add('sel');
+        driveBtn.disabled = false;
+      });
+      coresEl.appendChild(b);
+    });
+  }
+
+  driveBtn.addEventListener('click', () => {
+    if (!selected || drillBusy) return;
+    const r = ROUNDS[roundIdx];
+    const core = selected;
+
+    drillBusy = true;
+    driveBtn.disabled = true;
+    const allCores = coresEl.querySelectorAll('.core-btn');
+    for (let i = 0; i < allCores.length; i++) allCores[i].disabled = true;
+
+    readout.className = 'readout';
+    readout.textContent = 'DRIVING PILING… telemetry streaming from depth sensor.';
+
+    drillGroup.style.transition = 'transform 1.2s cubic-bezier(.25,.9,.2,1)';
+    drillGroup.style.transform = 'translateY(' + (45 + 90 * core.layer) + 'px)';
+
+    window.setTimeout(() => {
+      if (core.correct) {
+        rigWrap.classList.add('secured');
+        readout.className = 'readout ok';
+        readout.innerHTML = '<b>STRUCTURE SECURED.</b> ' + r.success;
+        solve('drill-' + roundIdx, 100);
+
+        if (roundIdx < ROUNDS.length - 1) {
+          nextBtn.style.display = '';
+          nextBtn.textContent = '➡️ ADVANCE TO CLAIM ' + (roundIdx + 2);
+        } else {
+          nextBtn.style.display = '';
+          nextBtn.textContent = '✅ ALL CLAIMS ANCHORED — RETURN TO SURFACE';
+          nextBtn.disabled = true;
+          readout.innerHTML += '<br><b>ALL FOUR CLAIMS ANCHORED.</b> Survey complete — structural integrity of the evidence base verified.';
+        }
+      } else {
+        rigWrap.classList.add('shake');
+        cracks.style.opacity = '1';
+        readout.className = 'readout fail';
+        readout.innerHTML = '<b>SEISMIC FACADE CRACKING.</b> ' + core.note;
+
+        window.setTimeout(() => {
+          rigWrap.classList.remove('shake');
+          drillBusy = false;
+          driveBtn.disabled = true;
+          const cs = coresEl.querySelectorAll('.core-btn');
+          for (let i = 0; i < cs.length; i++) cs[i].disabled = false;
+          drillGroup.style.transition = 'transform .7s ease';
+          drillGroup.style.transform = 'translateY(0px)';
+          window.setTimeout(() => { cracks.style.opacity = '0'; }, 450);
+        }, 1500);
+      }
+    }, 1350);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (roundIdx < ROUNDS.length - 1) {
+      roundIdx += 1;
+      renderRound();
+    }
+  });
+
+  renderRound();
+
+  /* ---------------------------------------------------------
+     SECTION 04 — NEGATION DETONATOR
+  --------------------------------------------------------- */
+  const detBtn = root.querySelector('#detonateBtn');
+  const detArena = root.querySelector('#detArena');
+  const detStatus = root.querySelector('#detStatus');
+  const detDebrief = root.querySelector('#detDebrief');
+  let detonated = false;
+
+  detBtn.addEventListener('click', () => {
+    if (detonated) return;
+    detonated = true;
+    detBtn.disabled = true;
+    detStatus.textContent = 'ARMING… NEGATING THE IMPLICIT WARRANT…';
+    detArena.classList.add('flash');
+
+    window.setTimeout(() => {
+      detArena.classList.add('cracked');
+      detStatus.textContent = 'WARRANT COLLAPSED — STRUCTURE FAILED.';
+      detDebrief.classList.add('show');
+      solve('detonator', 100);
+    }, 900);
+  });
+
+  /* ---------------------------------------------------------
+     SECTION 05 — LIVE FIRE FORENSICS
+  --------------------------------------------------------- */
+  const MODES = {
+    g: {
+      title: 'Inspector · Foundation / Grounds Layer',
+      notes: [
+        { q: '40,000 new electric vehicles', t: 'Grounds — a verifiable registration count. Relevant to the topic, but on its own it says nothing at all about grid stress.' },
+        { q: 'our grid\u2019s emergency alerts rose 62%', t: 'Grounds — a verifiable statistic, but stated as a percentage rise with no base rate. A 62% rise from 13 alerts to 21 alerts is not the same as a 62% rise from 1,000 to 1,620.' },
+        { q: 'Washington politicians took $2.4 million from EV manufacturers', t: 'Grounds — a campaign-finance figure. Accurate, and irrelevant to whether EVs strain the grid. This is a relevance failure dressed as evidence of corruption.' }
+      ]
+    },
+    c: {
+      title: 'Inspector · Core Claims / Outcomes Layer',
+      notes: [
+        { q: 'Every EV you see on the road is another strain on the system', t: 'Core claim, stated as a universal. The absolute "every" is a qualifier failure: the claim admits no boundary conditions and no exceptions.' },
+        { q: 'voted to spend your tax dollars on charging stations', t: 'Core claim. "Your tax dollars" is framing — the spending fact may be entirely accurate while the possessive does the persuasive work.' },
+        { q: 'says the grid is “fine.”', t: 'Core claim attributed to the opponent — a straw position. The ad never quotes her actual words, her context, or her proposed policy.' }
+      ]
+    },
+    w: {
+      title: 'Inspector · Unstated Mechanisms / Warrants Layer',
+      notes: [
+        { q: 'in those same two years', t: 'Unstated warrant (Causal Leap): that co-occurrence in the same window means the EV increase caused the alert increase. No mechanism is offered, and nothing controls for heat waves, data-centre demand, wildfire seasons, or deferred maintenance.' },
+        { q: 'Ask yourself: whose family is she protecting — yours, or theirs?', t: 'Unstated warrant (Value Trap): presupposes that the opponent\u2019s motive is disloyalty, so that any policy disagreement becomes a betrayal of family. It converts a factual dispute into a loyalty test.' }
+      ]
+    }
+  };
+
+  const modeBtns = root.querySelectorAll('.mode-btn');
+  const inspector = root.querySelector('#inspector');
+  const inspectorTitle = root.querySelector('#inspectorTitle');
+  const allPh = root.querySelectorAll('.ph');
+
+  function setMode(mode) {
+    for (let i = 0; i < allPh.length; i++) allPh[i].classList.remove('active');
+    const targets = root.querySelectorAll('.ph.' + mode);
+    for (let i = 0; i < targets.length; i++) targets[i].classList.add('active');
+
+    for (let i = 0; i < modeBtns.length; i++) {
+      modeBtns[i].classList.toggle('on', modeBtns[i].dataset.mode === mode);
+    }
+
+    const data = MODES[mode];
+    inspectorTitle.textContent = data.title;
+    let html = '';
+    for (let i = 0; i < data.notes.length; i++) {
+      const n = data.notes[i];
+      html += '<div class="note ' + mode + '"><span class="q">' + n.q + '</span>' + n.t + '</div>';
+    }
+    inspector.innerHTML = '<h4>' + data.title + '</h4>' + html;
+  }
+
+  for (let i = 0; i < modeBtns.length; i++) {
+    modeBtns[i].addEventListener('click', function () {
+      setMode(this.dataset.mode);
+    });
+  }
+
+  /* Find the Fatal Flaw */
+  const hypBtns = root.querySelectorAll('.hyp');
+  const clearance = root.querySelector('#clearance');
+  let flawSolved = false;
+
+  for (let i = 0; i < hypBtns.length; i++) {
+    hypBtns[i].addEventListener('click', function () {
+      if (flawSolved) return;
+      const isCorrect = this.dataset.correct === '1';
+
+      if (isCorrect) {
+        flawSolved = true;
+        this.classList.add('good');
+        for (let j = 0; j < hypBtns.length; j++) hypBtns[j].disabled = true;
+        clearance.classList.add('show');
+        clearance.innerHTML = '<strong>FATAL FLAW IDENTIFIED — STRUCTURAL CLEARANCE GRANTED.</strong><br>' +
+          'H2 is correct. The ad\u2019s numbers may be perfectly accurate — 40,000 vehicles and a 62% rise are not in dispute. The failure is in the bridge, not the data. Two co-occurring trends are fused into a causal claim ("Every EV… is another strain") with no mechanism and no controls, so the entire argument rests on an unstated warrant that a heat wave, a data-centre boom, or fifteen years of deferred maintenance would instantly negate. Note the secondary flaw: the closing question is a Value Trap that reframes a policy dispute as a loyalty test.';
+        solve('forensics', 100);
+      } else {
+        this.classList.add('bad');
+        this.disabled = true;
+        clearance.classList.add('show');
+        clearance.style.borderColor = 'var(--danger)';
+        clearance.style.background = 'rgba(244,63,94,0.09)';
+        clearance.style.boxShadow = '0 0 22px var(--danger-glow)';
+        clearance.style.color = '#ffd6dd';
+        clearance.innerHTML = '<strong>NOT THE LOAD-BEARING FLAW.</strong> Sample size and word choice are not what breaks this argument — the figures may be accurate and "grid" is used consistently. Look again at the connection between the two trends and the causal verb doing the work.';
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     CALLSIGN (cosmetic, local only)
+  --------------------------------------------------------- */
+  const callsign = root.querySelector('#callsign');
+  if (callsign) {
+    callsign.addEventListener('change', () => {
+      const v = (callsign.value || 'ANALYST-219').toUpperCase().slice(0, 16);
+      callsign.value = v;
+    });
+  }
+
+  /* ---------------------------------------------------------
+     TERMINATION
+  --------------------------------------------------------- */
+  const finishBtn = root.querySelector('#finishBtn');
+  if (finishBtn) {
+    finishBtn.addEventListener('click', () => {
+      if (typeof window.polymathFinishLesson === 'function') {
+        window.polymathFinishLesson();
+      }
+    });
+  }
+});
+</script>

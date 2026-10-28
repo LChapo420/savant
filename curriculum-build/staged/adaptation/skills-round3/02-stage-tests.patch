@@ -1,0 +1,2695 @@
+diff --git a/content/skill-stage-checks.js b/content/skill-stage-checks.js
+new file mode 100644
+index 0000000..67b80f8
+--- /dev/null
++++ b/content/skill-stage-checks.js
+@@ -0,0 +1,152 @@
++/**
++ * How each exit-battery metric of chess, piano and basketball is sat as a stage
++ * check (staged patch skills-round3/02-stage-tests; services/skill-checks.js).
++ * The metrics, their tests and pass rules are content/skill-progressions/*.json;
++ * this file says which machine sitting measures each one and with what numbers.
++ *
++ *   items     a fixed-form set served and graded on the server, answers never
++ *             sent to the page before the sitting is over. Chess positions are
++ *             computed with content/chess-board (legal moves, check, mate,
++ *             stalemate), taken from the Stockfish-verified tactics pool
++ *             (content/chess-tactics-pool.js) or from the staged drills whose
++ *             answers the KPK table proved (content/skill-stage-checks.data.json).
++ *   puzzles   the chess puzzle trainer's Glicko-2 rating (content/chess-trainer.js):
++ *             at least `min` rated puzzles after the sitting opens, then the
++ *             rating against the stage cut with its deviation.
++ *   take      piano: notes played on MIDI, the on-screen keys or the microphone,
++ *             scored on the server by piano-core's scorePerformance against the
++ *             target (score-informed). A microphone take is an estimate: it is
++ *             confirmed only by a second passing take of the same target.
++ *   count     basketball: makes and attempts (or a count) the learner logs, or
++ *             the camera tracker's count, which is an estimate and counts only
++ *             when the learner confirms it. The make-rate rule is the Beta
++ *             posterior P(rate >= bar) >= confidence (SKILL-CURRICULA.md 5).
++ *   not_wired a metric a machine can prove whose sitting is not built yet
++ *             (play-outs against perfect defence, recorded games, mazes,
++ *             set-up, sight-reading, decision clips). Listed with what it needs;
++ *             it stays unproven, so with the stage gate on (patch 03) its stage
++ *             cannot be left until it is wired.
++ *
++ * Numbers marked [R] are provisional, as in the progressions.
++ */
++'use strict';
++
++const MOVE_PROMPT = 'Play the move on the board, or type it.';
++
++const CHECKS = {
++  // ── chess ──────────────────────────────────────────────────────────────
++  'CH0:legal_move_accuracy': { how: 'items', build: 'chess_reach', count: 18, rule: { squares_share: 0.95 }, source: 'board', minutes: 8,
++    says: '18 positions (6 pieces, 3 positions each): type every square the named piece can move to. 95% of squares right.' },
++  'CH0:star_maze_par': { how: 'not_wired', needs: 'a star-maze board sitting that counts moves against the par on the server' },
++  'CH0:setup_from_memory': { how: 'not_wired', needs: 'a set-up board that reports where each of the 32 pieces was placed' },
++  'CH1:check_mate_stalemate_id': { how: 'items', build: 'chess_status', count: 20, rule: { right: 18 }, source: 'board', minutes: 8,
++    says: '20 positions: is the side to move in check, checkmated, stalemated, or none of these? 18 of 20.' },
++  'CH1:mate_in_1_unannounced': { how: 'items', build: 'chess_mate_or_not', count: 15, mates: 10, rule: { right: 13 }, source: 'board', minutes: 10,
++    says: '15 positions; 10 have a mate in one and 5 do not. Play the mate, or answer "no mate". 13 of 15.' },
++  'CH1:kqk_playout': { how: 'not_wired', needs: 'play-outs against perfect defence from the KQK table (staged skills/lib/endgame-tables.js), graded on the server' },
++  'CH1:legal_game': { how: 'not_wired', needs: 'a game against the lowest bot recorded and checked on the server (the sparring page keeps no record yet)' },
++  'CH2:tactics_unannounced': { how: 'items', build: 'chess_tactics_pool', count: 30, difficulties: [2, 3, 4], rule: { share: 0.8 }, source: 'board', minutes: 20,
++    says: '30 positions from the Stockfish-checked pool, motifs not named: find the move that wins. 80%.',
++    gap: 'The 5 positions with nothing to find are not in the set yet: they need Stockfish-checked quiet positions, a build job.' },
++  'CH2:krk_playout': { how: 'not_wired', needs: 'play-outs against perfect defence from the KRK table, graded on the server' },
++  'CH2:hung_pieces_per_game': { how: 'not_wired', needs: '12 recorded rapid games against the 600-800 bot band, each checked for pieces left en prise' },
++  'CH3:tactics_unannounced': { how: 'items', build: 'chess_tactics_pool', count: 30, difficulties: [4, 5, 6], rule: { share: 0.8 }, source: 'board', minutes: 25,
++    says: '30 positions from the Stockfish-checked pool, motifs not named: find the move that wins. 80%.',
++    gap: 'The 6 positions with nothing to find are not in the set yet (Stockfish-checked quiet positions, a build job).' },
++  'CH3:kpk_judgement': { how: 'items', build: 'chess_kpk', count: 20, rule: { right: 18 }, source: 'board', minutes: 10,
++    says: '20 king-and-pawn positions: with best play, a win or a draw? Answers proved by the KPK table. 18 of 20.' },
++  'CH3:kpk_playout': { how: 'not_wired', needs: 'play-outs against perfect defence from the KPK table, graded on the server' },
++  'CH3:games': { how: 'not_wired', needs: '12 recorded rapid games against the 900-1100 bot band with blunder counts' },
++  'CH4:tactics_rating': { how: 'puzzles', cut: 1590, rd: 80, min: 10, source: 'board', minutes: 20,
++    says: 'At least 10 rated puzzles in the puzzle trainer, then your puzzle rating: 1590 or more [R] (80% expected on a 1200-1500 set), with a deviation of 80 or less.' },
++  'CH4:calculation': { how: 'not_wired', needs: 'positions where the whole line is entered and every reply checked on the server' },
++  'CH4:games': { how: 'not_wired', needs: '12 recorded games against the 1200-1400 band with a performance rating' },
++  'CH5:tactics_rating': { how: 'puzzles', cut: 1790, rd: 80, min: 10, source: 'board', minutes: 20,
++    says: 'At least 10 rated puzzles, then your puzzle rating: 1790 or more [R] (80% expected on a 1400-1700 set), deviation 80 or less.' },
++  'CH5:rook_endgame_playouts': { how: 'not_wired', needs: 'Lucena and Philidor play-outs against a tablebase, graded on the server' },
++  'CH5:games': { how: 'not_wired', needs: '12 recorded games against the 1400-1600 band with a performance rating' },
++
++  // ── piano ──────────────────────────────────────────────────────────────
++  'PI0:find_keys': { how: 'items', build: 'piano_find', count: 10, rule: { right: 9 }, minutes: 4,
++    says: 'Find 10 named keys on your piano or the on-screen keys. 9 of 10.' },
++  'PI0:steady_beat': { how: 'take', build: 'beat', tempo: 80, beats: 16, rule: { on_beat: 0.75 }, minutes: 2,
++    says: 'Tap or play along with the click for 16 beats. Three in four taps on the beat.' },
++  'PI0:echo': { how: 'items', build: 'piano_echo', count: 5, length: [2, 3], tries: 1, rule: { right: 4 }, minutes: 4,
++    says: 'Listen to 5 short patterns and play each one back. 4 of 5.' },
++  'PI0:rote_song': { how: 'take', build: 'song', grade: 'piano_keyboard_explorer', pieces: 1, hands: 'right', rule: { notes: 0.85, completes: true }, minutes: 3,
++    says: 'Play a black-key song from memory. 85% of the notes, to the end.' },
++  'PI1:five_finger': { how: 'take', build: 'pattern', tempo: 70, hands: ['right', 'left'], tonic: 'C', rule: { notes: 1, on_beat: 0.8 }, minutes: 3,
++    says: 'The C five-finger pattern up and down, right hand then left, at 70 a minute. Every note, 80% on the beat.' },
++  'PI1:piece': { how: 'take', build: 'song', grade: 'piano_pre_reader', pieces: 2, hands: 'right', rule: { notes: 0.9, no_stops: true }, minutes: 6,
++    says: 'Two pieces from this grade, cold. 90% of the notes and no stops.' },
++  'PI1:ear_by_ear': { how: 'items', build: 'piano_echo', count: 1, length: [5, 5], tries: 3, rule: { right: 1 }, minutes: 3,
++    says: 'Hear a 5-note tune and find it on the keys, within 3 tries.' },
++  'PI2:c_scale': { how: 'take', build: 'scale', battery: 'PI2', item: 'C major', hands: ['right', 'left'], tempo: 80, rule: { notes: 0.95, notes_mic: 0.93, on_beat: 0.85 }, minutes: 3,
++    says: 'C major, one octave, each hand. 95% of the notes (93% on a microphone) and 85% on the beat [R].' },
++  'PI2:pieces': { how: 'take', build: 'song', grade: 'piano_first_reader', pieces: 3, hands: 'right', rule: { notes: 0.95, notes_mic: 0.93, on_beat: 0.85, no_stops: true }, minutes: 9,
++    says: 'Three pieces from this grade, cold. 95% of the notes (93% on a microphone), 85% on the beat, no stops.' },
++  'PI2:sight_reading_level': { how: 'not_wired', needs: 'the sight-reading staircase (SR1-SR10) with notation drawn on the page' },
++  'PI2:aural': { how: 'items', build: 'piano_chord_ear', count: 10, rule: { right: 9 }, source: 'tap', minutes: 4,
++    says: 'Hear 10 chords: major or minor? 9 of 10.' },
++  'PI3:scales': { how: 'take', build: 'scale', battery: 'PI3', pick: 2, hands: ['both'], tempo: 80, rule: { notes: 0.97, notes_mic: 0.95, on_beat: 0.9, cv: 0.12 }, minutes: 5,
++    says: "Two of this grade's scales, chosen at random, hands together (one hand at a time on a microphone). 97% of the notes, 90% on the beat, evenness CV 0.12 or less." },
++  'PI3:pieces': { how: 'take', build: 'song', grade: 'piano_elementary_1', pieces: 3, hands: 'both', rule: { notes: 0.97, notes_mic: 0.95, on_beat: 0.9, no_stops: true }, minutes: 10,
++    says: 'Three pieces from this grade, cold. 97% of the notes (95% on a microphone), 90% on the beat, no stops.' },
++  'PI3:sight_reading_level': { how: 'not_wired', needs: 'the sight-reading staircase with notation drawn on the page' },
++  'PI4:scales_arps': { how: 'take', build: 'scale', battery: 'PI4', pick: 2, hands: ['both'], tempo: 90, rule: { notes: 0.97, notes_mic: 0.95, on_beat: 0.9, cv: 0.12 }, minutes: 5,
++    says: "Two of this grade's scales or arpeggios at random, hands together. As Elementary 1, at 90 a minute." },
++  'PI4:cadence': { how: 'take', build: 'cadence', keys: ['C', 'G', 'F'], rule: { chords: 1 }, minutes: 3,
++    says: 'I-IV-V7-I in C, G or F, chosen at random: every chord right. A microphone needs a second take to confirm.' },
++  'PI4:pieces': { how: 'take', build: 'song', grade: 'piano_elementary_2', pieces: 3, hands: 'both', rule: { notes: 0.97, notes_mic: 0.95, on_beat: 0.9, no_stops: true }, minutes: 10,
++    says: 'Three pieces from this grade (as many as the song library has), cold. As Elementary 1.' },
++  'PI4:sight_reading_level': { how: 'not_wired', needs: 'the sight-reading staircase with notation drawn on the page' },
++
++  // ── basketball ─────────────────────────────────────────────────────────
++  'BB0:catch_and_bounce': { how: 'count', fields: [['done', 'Catches and bounces done', 0, 60]], out_of: 30, rule: { baseline: 0 }, minutes: 5,
++    says: '10 catches and 10 bounces each hand: how many went right. Your first time sets your own baseline; after that, matching or beating it passes (shown, not a gate in the curriculum).' },
++  'BB0:low_target': { how: 'count', fields: [['makes', 'Throws in', 0, 50], ['attempts', 'Throws', 1, 50]], rule: { logged: 10 }, minutes: 5,
++    says: 'Throws into a low ring or bucket from one step. Logging 10 or more passes: the curriculum logs this, it never gates it.' },
++  'BB0:safety_rule': { how: 'items', build: 'bb_safety', count: 4, rule: { right: 4 }, source: 'tap', minutes: 2,
++    says: 'What to do when something hurts: 4 questions, all right.' },
++  'BB1:layup_both_hands': { how: 'count', hands: true, fields: [['makes', 'Made', 0, 40], ['attempts', 'Tried', 1, 40]], min_n: 10, rule: { rate: 0.5, conf: 0.9 }, minutes: 10,
++    says: 'Lay-ups at a low ring, at least 10 each hand. Each hand: the chance your true rate is 50% or better must be 90%.' },
++  'BB1:dribble_look_up': { how: 'count', fields: [['strong', 'Strong hand, dribbles in 30 s', 0, 120], ['weak', 'Weak hand, dribbles in 30 s', 0, 120]], rule: { ratio: 0.7 }, minutes: 3,
++    says: '30 seconds each hand while calling out a held-up number: the weak hand 70% of the strong hand or more.' },
++  'BB1:decisions_2v1': { how: 'not_wired', needs: 'the 2v1 decision scenes (SVG until clips are licensed or filmed with consent)' },
++  'BB1:rules_basics': { how: 'items', build: 'bank', skill: 'bb_rules', difficulty: 2, count: 10, rule: { right: 8 }, source: 'items', minutes: 4,
++    says: '10 questions on travelling, double dribble and out of bounds. 8 of 10 [R].' },
++  'BB2:form_shots_1m': { how: 'count', fields: [['makes', 'Made', 0, 60], ['attempts', 'Tried', 1, 60]], min_n: 20, rule: { rate: 0.6, conf: 0.8 }, minutes: 10,
++    says: 'One-hand form shots from 1 m, at least 20: the chance your true rate is 60% or better must be 80%.' },
++  'BB2:layups_both_hands_full_ring_or_age_ring': { how: 'count', hands: true, fields: [['makes', 'Made', 0, 40], ['attempts', 'Tried', 1, 40]], min_n: 20, rule: { rate: 0.6, conf: 0.9 }, minutes: 15,
++    says: 'Lay-ups off a dribble, at least 20 each hand: for each hand, 90% sure your true rate is 60% or better.' },
++  'BB2:decision_clips': { how: 'not_wired', needs: 'the 3v3 read scenes (SVG until clips are licensed or filmed with consent)' },
++  'BB3:free_throws': { how: 'count', fields: [['makes', 'Made', 0, 100], ['attempts', 'Tried', 1, 100]], min_n: 20, rule: { rate: 0.5, conf: 0.8 }, minutes: 15,
++    says: 'Free throws at your line and ring with your routine, at least 20: 80% sure your true rate is 50% or better.' },
++  'BB3:mikan_30s': { how: 'count', fields: [['makes', 'Mikan makes in 30 s', 0, 60]], rule: { growth: 0.2 }, minutes: 3,
++    says: 'Mikan drill, makes in 30 seconds. Your first time sets your baseline; 20% more than it passes.' },
++  'BB3:decision_clips': { how: 'not_wired', needs: 'the 4v4 first-person read scenes (Rösch-style) with response times' },
++};
++
++/** What each metric is called on the pages. */
++const TITLES = {
++  legal_move_accuracy: 'Where each piece can go', star_maze_par: 'Star mazes at par', setup_from_memory: 'Setting up the board from memory',
++  check_mate_stalemate_id: 'Check, mate or stalemate', mate_in_1_unannounced: 'Mate in one, unannounced', kqk_playout: 'Queen and king mate against perfect defence',
++  legal_game: 'Two legal games', tactics_unannounced: 'Tactics, unannounced', krk_playout: 'Rook and king mate against perfect defence',
++  hung_pieces_per_game: 'Pieces left hanging per game', kpk_judgement: 'King and pawn: win or draw', kpk_playout: 'King and pawn play-outs',
++  games: 'Rated games', tactics_rating: 'Puzzle rating', calculation: 'Calculating whole lines', rook_endgame_playouts: 'Lucena and Philidor',
++  find_keys: 'Finding named keys', steady_beat: 'A steady beat', echo: 'Echo it back', rote_song: 'A song from memory', five_finger: 'C five-finger pattern',
++  piece: 'Two pieces, cold', ear_by_ear: 'A tune by ear', c_scale: 'C major scale', pieces: 'Three pieces, cold', sight_reading_level: 'Sight-reading level',
++  aural: 'Major or minor by ear', scales: 'Scales, at random', recital: 'Recital and self-assessment', scales_arps: 'Scales and arpeggios', cadence: 'I-IV-V7-I',
++  catch_and_bounce: 'Catch and bounce', low_target: 'Throws at a low target', safety_rule: 'What to do when it hurts', layup_both_hands: 'Lay-ups, each hand',
++  dribble_look_up: 'Dribbling, eyes up', decisions_2v1: '2v1 decisions', rules_basics: 'The basic rules', form_shots_1m: 'Form shots from 1 m',
++  layups_both_hands_full_ring_or_age_ring: 'Lay-ups off the dribble, each hand', decision_clips: 'Reading the play', warmup_habit: 'Warm-up habit',
++  free_throws: 'Free throws', mikan_30s: 'Mikan drill, 30 seconds', film_it: 'Filmed set',
++};
++const titleOf = (metric) => TITLES[metric] || String(metric || '').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
++
++/** The sitting for a metric; a metric not listed is not wired. */
++function checkFor(metricId) {
++  return CHECKS[metricId] || { how: 'not_wired', needs: 'a stage check for this stage (later stages are not wired in round 3)' };
++}
++
++module.exports = { CHECKS, checkFor, titleOf, MOVE_PROMPT };
+diff --git a/content/skill-stage-checks.data.json b/content/skill-stage-checks.data.json
+new file mode 100644
+index 0000000..941d11d
+--- /dev/null
++++ b/content/skill-stage-checks.data.json
+@@ -0,0 +1,1047 @@
++{
++ "doc": "Staged drills served by the skill stage checks (services/skill-checks.js). Built from curriculum-build/staged/skills/*/drills.json by skills-round3/tools/build-check-data.js; every mate-or-not answer re-checked with content/chess-board on build. Do not edit by hand.",
++ "built_at": "2026-10-23",
++ "chess": {
++  "kpk_judgement": [
++   {
++    "id": "ch-kpk-judge-1",
++    "fen": "8/8/5k2/3P4/8/1K6/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-2",
++    "fen": "8/8/3k4/8/7K/5P2/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-3",
++    "fen": "8/5PK1/8/8/6k1/8/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-4",
++    "fen": "8/8/8/8/3k4/1P6/3K4/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-5",
++    "fen": "8/8/k7/2P5/K7/8/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-6",
++    "fen": "8/4P1K1/8/8/3k4/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-7",
++    "fen": "8/8/2k5/8/2K1P3/8/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-8",
++    "fen": "8/8/1k6/3K4/8/3P4/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-9",
++    "fen": "8/8/8/5K1k/4P3/8/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-10",
++    "fen": "2k5/5P2/8/4K3/8/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-11",
++    "fen": "1k6/3KP3/8/8/8/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-12",
++    "fen": "5K2/5P2/2k5/8/8/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-13",
++    "fen": "8/8/8/5P2/8/4K3/2k5/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-14",
++    "fen": "8/8/2k5/K7/P7/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-15",
++    "fen": "8/8/8/8/1k6/3P4/8/1K6 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-16",
++    "fen": "8/8/8/8/8/4k1KP/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "win"
++   },
++   {
++    "id": "ch-kpk-judge-17",
++    "fen": "8/8/8/1P2k3/8/1K6/8/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-18",
++    "fen": "8/8/6k1/8/8/4P3/5K2/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-19",
++    "fen": "2k5/2P5/3K4/8/8/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   },
++   {
++    "id": "ch-kpk-judge-20",
++    "fen": "8/8/8/7k/8/7P/7K/8 b - - 0 1",
++    "side": "b",
++    "question": "With best play, does White win or is it a draw?",
++    "answer": "draw"
++   }
++  ],
++  "mate_or_not": [
++   {
++    "id": "ch-mate-or-not-1",
++    "fen": "2K5/3p1p2/1k6/8/8/6p1/Q7/3R4 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "no mate",
++    "mates": []
++   },
++   {
++    "id": "ch-mate-or-not-2",
++    "fen": "8/5K1p/7k/8/5P2/R4p2/R7/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Rh2#",
++    "mates": [
++     "Rh2#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-3",
++    "fen": "8/3R4/8/4pk2/5p2/3K3p/8/1Q6 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "no mate",
++    "mates": []
++   },
++   {
++    "id": "ch-mate-or-not-4",
++    "fen": "5K2/7R/3p4/8/8/4k3/2P5/7Q w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "no mate",
++    "mates": []
++   },
++   {
++    "id": "ch-mate-or-not-5",
++    "fen": "1K6/8/1P3k2/6p1/4R3/4p3/8/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "no mate",
++    "mates": []
++   },
++   {
++    "id": "ch-mate-or-not-6",
++    "fen": "8/3p3k/8/1R6/p7/4K3/8/4R3 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "no mate",
++    "mates": []
++   },
++   {
++    "id": "ch-mate-or-not-7",
++    "fen": "7k/4p3/7K/5p1Q/4P3/8/8/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Qe8#",
++    "mates": [
++     "Qe8#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-8",
++    "fen": "6k1/R7/3p4/8/8/4R3/5K2/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Re8#",
++    "mates": [
++     "Re8#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-9",
++    "fen": "4K3/1p2Q2p/8/8/8/3p2R1/7k/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Qh4#",
++    "mates": [
++     "Qh4#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-10",
++    "fen": "1k6/5Q2/6K1/3PR3/8/8/3pp3/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Re8#",
++    "mates": [
++     "Re8#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-11",
++    "fen": "8/5K2/8/6p1/3R4/8/6R1/1k6 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Rd1#",
++    "mates": [
++     "Rd1#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-12",
++    "fen": "8/8/8/6R1/5K2/1R4p1/6p1/k7 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Ra5#",
++    "mates": [
++     "Ra5#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-13",
++    "fen": "8/7p/2K5/k7/1p2p3/4R3/2R5/8 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Ra2#",
++    "mates": [
++     "Ra2#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-14",
++    "fen": "3k4/Q7/6R1/8/p7/1p6/8/4K3 w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "Rg8#",
++    "mates": [
++     "Rg8#"
++    ]
++   },
++   {
++    "id": "ch-mate-or-not-15",
++    "fen": "7k/p7/K7/6Q1/6p1/7P/8/7R w - - 0 1",
++    "side": "w",
++    "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
++    "answer": "hxg4#",
++    "mates": [
++     "hxg4#"
++    ]
++   }
++  ]
++ },
++ "piano": {
++  "technique": [
++   {
++    "stage": "PI2",
++    "grade": "piano_first_reader",
++    "items": [
++     {
++      "item": "C major five-finger pattern",
++      "kind": "pentascale_major",
++      "tonic": "C",
++      "notes": [
++       "C",
++       "D",
++       "E",
++       "F",
++       "G"
++      ],
++      "hands": "HS",
++      "octaves": 0
++     },
++     {
++      "item": "G major five-finger pattern",
++      "kind": "pentascale_major",
++      "tonic": "G",
++      "notes": [
++       "G",
++       "A",
++       "B",
++       "C",
++       "D"
++      ],
++      "hands": "HS",
++      "octaves": 0
++     },
++     {
++      "item": "D major five-finger pattern",
++      "kind": "pentascale_major",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "E",
++       "F#",
++       "G",
++       "A"
++      ],
++      "hands": "HS",
++      "octaves": 0
++     },
++     {
++      "item": "F major five-finger pattern",
++      "kind": "pentascale_major",
++      "tonic": "F",
++      "notes": [
++       "F",
++       "G",
++       "A",
++       "Bb",
++       "C"
++      ],
++      "hands": "HS",
++      "octaves": 0
++     },
++     {
++      "item": "D minor five-finger pattern",
++      "kind": "pentascale_minor",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "E",
++       "F",
++       "G",
++       "A"
++      ],
++      "hands": "HS",
++      "octaves": 0
++     },
++     {
++      "item": "E minor five-finger pattern",
++      "kind": "pentascale_minor",
++      "tonic": "E",
++      "notes": [
++       "E",
++       "F#",
++       "G",
++       "A",
++       "B"
++      ],
++      "hands": "HS",
++      "octaves": 0
++     },
++     {
++      "item": "C major",
++      "kind": "major",
++      "tonic": "C",
++      "notes": [
++       "C",
++       "D",
++       "E",
++       "F",
++       "G",
++       "A",
++       "B"
++      ],
++      "hands": "HS",
++      "octaves": 1,
++      "midi_ascending": [
++       60,
++       62,
++       64,
++       65,
++       67,
++       69,
++       71,
++       72
++      ]
++     }
++    ]
++   },
++   {
++    "stage": "PI3",
++    "grade": "piano_elementary_1",
++    "items": [
++     {
++      "item": "C major",
++      "kind": "major",
++      "tonic": "C",
++      "notes": [
++       "C",
++       "D",
++       "E",
++       "F",
++       "G",
++       "A",
++       "B"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       60,
++       62,
++       64,
++       65,
++       67,
++       69,
++       71,
++       72,
++       74,
++       76,
++       77,
++       79,
++       81,
++       83,
++       84
++      ]
++     },
++     {
++      "item": "C major",
++      "kind": "major",
++      "tonic": "C",
++      "notes": [
++       "C",
++       "D",
++       "E",
++       "F",
++       "G",
++       "A",
++       "B"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       60,
++       62,
++       64,
++       65,
++       67,
++       69,
++       71,
++       72,
++       74,
++       76,
++       77,
++       79,
++       81,
++       83,
++       84
++      ]
++     },
++     {
++      "item": "G major",
++      "kind": "major",
++      "tonic": "G",
++      "notes": [
++       "G",
++       "A",
++       "B",
++       "C",
++       "D",
++       "E",
++       "F#"
++      ],
++      "hands": "HS",
++      "octaves": 2,
++      "midi_ascending": [
++       67,
++       69,
++       71,
++       72,
++       74,
++       76,
++       78,
++       79,
++       81,
++       83,
++       84,
++       86,
++       88,
++       90,
++       91
++      ]
++     },
++     {
++      "item": "F major",
++      "kind": "major",
++      "tonic": "F",
++      "notes": [
++       "F",
++       "G",
++       "A",
++       "Bb",
++       "C",
++       "D",
++       "E"
++      ],
++      "hands": "HS",
++      "octaves": 2,
++      "midi_ascending": [
++       65,
++       67,
++       69,
++       70,
++       72,
++       74,
++       76,
++       77,
++       79,
++       81,
++       82,
++       84,
++       86,
++       88,
++       89
++      ]
++     },
++     {
++      "item": "A natural minor",
++      "kind": "natural_minor",
++      "tonic": "A",
++      "notes": [
++       "A",
++       "B",
++       "C",
++       "D",
++       "E",
++       "F",
++       "G"
++      ],
++      "hands": "HS",
++      "octaves": 2,
++      "midi_ascending": [
++       57,
++       59,
++       60,
++       62,
++       64,
++       65,
++       67,
++       69,
++       71,
++       72,
++       74,
++       76,
++       77,
++       79,
++       81
++      ]
++     },
++     {
++      "item": "D natural minor",
++      "kind": "natural_minor",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "E",
++       "F",
++       "G",
++       "A",
++       "Bb",
++       "C"
++      ],
++      "hands": "HS",
++      "octaves": 2,
++      "midi_ascending": [
++       62,
++       64,
++       65,
++       67,
++       69,
++       70,
++       72,
++       74,
++       76,
++       77,
++       79,
++       81,
++       82,
++       84,
++       86
++      ]
++     },
++     {
++      "item": "A harmonic minor",
++      "kind": "harmonic_minor",
++      "tonic": "A",
++      "notes": [
++       "A",
++       "B",
++       "C",
++       "D",
++       "E",
++       "F",
++       "G#"
++      ],
++      "hands": "HS",
++      "octaves": 2,
++      "midi_ascending": [
++       57,
++       59,
++       60,
++       62,
++       64,
++       65,
++       68,
++       69,
++       71,
++       72,
++       74,
++       76,
++       77,
++       80,
++       81
++      ]
++     },
++     {
++      "item": "D harmonic minor",
++      "kind": "harmonic_minor",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "E",
++       "F",
++       "G",
++       "A",
++       "Bb",
++       "C#"
++      ],
++      "hands": "HS",
++      "octaves": 2,
++      "midi_ascending": [
++       62,
++       64,
++       65,
++       67,
++       69,
++       70,
++       73,
++       74,
++       76,
++       77,
++       79,
++       81,
++       82,
++       85,
++       86
++      ]
++     },
++     {
++      "item": "G major arpeggio",
++      "kind": "arpeggio_major",
++      "tonic": "G",
++      "notes": [
++       "G",
++       "B",
++       "D"
++      ],
++      "hands": "HS",
++      "octaves": 2
++     },
++     {
++      "item": "A minor arpeggio",
++      "kind": "arpeggio_minor",
++      "tonic": "A",
++      "notes": [
++       "A",
++       "C",
++       "E"
++      ],
++      "hands": "HS",
++      "octaves": 2
++     }
++    ]
++   },
++   {
++    "stage": "PI4",
++    "grade": "piano_elementary_2",
++    "items": [
++     {
++      "item": "G major",
++      "kind": "major",
++      "tonic": "G",
++      "notes": [
++       "G",
++       "A",
++       "B",
++       "C",
++       "D",
++       "E",
++       "F#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       67,
++       69,
++       71,
++       72,
++       74,
++       76,
++       78,
++       79,
++       81,
++       83,
++       84,
++       86,
++       88,
++       90,
++       91
++      ]
++     },
++     {
++      "item": "F major",
++      "kind": "major",
++      "tonic": "F",
++      "notes": [
++       "F",
++       "G",
++       "A",
++       "Bb",
++       "C",
++       "D",
++       "E"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       65,
++       67,
++       69,
++       70,
++       72,
++       74,
++       76,
++       77,
++       79,
++       81,
++       82,
++       84,
++       86,
++       88,
++       89
++      ]
++     },
++     {
++      "item": "D major",
++      "kind": "major",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "E",
++       "F#",
++       "G",
++       "A",
++       "B",
++       "C#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       62,
++       64,
++       66,
++       67,
++       69,
++       71,
++       73,
++       74,
++       76,
++       78,
++       79,
++       81,
++       83,
++       85,
++       86
++      ]
++     },
++     {
++      "item": "A major",
++      "kind": "major",
++      "tonic": "A",
++      "notes": [
++       "A",
++       "B",
++       "C#",
++       "D",
++       "E",
++       "F#",
++       "G#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       57,
++       59,
++       61,
++       62,
++       64,
++       66,
++       68,
++       69,
++       71,
++       73,
++       74,
++       76,
++       78,
++       80,
++       81
++      ]
++     },
++     {
++      "item": "A harmonic minor",
++      "kind": "harmonic_minor",
++      "tonic": "A",
++      "notes": [
++       "A",
++       "B",
++       "C",
++       "D",
++       "E",
++       "F",
++       "G#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       57,
++       59,
++       60,
++       62,
++       64,
++       65,
++       68,
++       69,
++       71,
++       72,
++       74,
++       76,
++       77,
++       80,
++       81
++      ]
++     },
++     {
++      "item": "D harmonic minor",
++      "kind": "harmonic_minor",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "E",
++       "F",
++       "G",
++       "A",
++       "Bb",
++       "C#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       62,
++       64,
++       65,
++       67,
++       69,
++       70,
++       73,
++       74,
++       76,
++       77,
++       79,
++       81,
++       82,
++       85,
++       86
++      ]
++     },
++     {
++      "item": "E harmonic minor",
++      "kind": "harmonic_minor",
++      "tonic": "E",
++      "notes": [
++       "E",
++       "F#",
++       "G",
++       "A",
++       "B",
++       "C",
++       "D#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       64,
++       66,
++       67,
++       69,
++       71,
++       72,
++       75,
++       76,
++       78,
++       79,
++       81,
++       83,
++       84,
++       87,
++       88
++      ]
++     },
++     {
++      "item": "G harmonic minor",
++      "kind": "harmonic_minor",
++      "tonic": "G",
++      "notes": [
++       "G",
++       "A",
++       "Bb",
++       "C",
++       "D",
++       "Eb",
++       "F#"
++      ],
++      "hands": "HT",
++      "octaves": 2,
++      "midi_ascending": [
++       67,
++       69,
++       70,
++       72,
++       74,
++       75,
++       78,
++       79,
++       81,
++       82,
++       84,
++       86,
++       87,
++       90,
++       91
++      ]
++     },
++     {
++      "item": "chromatic from C",
++      "kind": "chromatic",
++      "tonic": "C",
++      "hands": "HS",
++      "octaves": 1
++     },
++     {
++      "item": "D major arpeggio",
++      "kind": "arpeggio_major",
++      "tonic": "D",
++      "notes": [
++       "D",
++       "F#",
++       "A"
++      ],
++      "hands": "HT",
++      "octaves": 2
++     },
++     {
++      "item": "A major arpeggio",
++      "kind": "arpeggio_major",
++      "tonic": "A",
++      "notes": [
++       "A",
++       "C#",
++       "E"
++      ],
++      "hands": "HT",
++      "octaves": 2
++     },
++     {
++      "item": "E minor arpeggio",
++      "kind": "arpeggio_minor",
++      "tonic": "E",
++      "notes": [
++       "E",
++       "G",
++       "B"
++      ],
++      "hands": "HT",
++      "octaves": 2
++     },
++     {
++      "item": "G minor arpeggio",
++      "kind": "arpeggio_minor",
++      "tonic": "G",
++      "notes": [
++       "G",
++       "Bb",
++       "D"
++      ],
++      "hands": "HT",
++      "octaves": 2
++     }
++    ]
++   }
++  ],
++  "tempo_ladder": {
++   "start_percent": [
++    60,
++    70
++   ],
++   "step_percent": 10,
++   "small_step_percent": 5,
++   "steps_from_60": [
++    60,
++    70,
++    80,
++    90,
++    100
++   ],
++   "up_after": "2 clean takes in a row (noteAccuracy 1.0, on_beat_share >= 0.9)",
++   "down_after": "2 failed takes",
++   "gate_at": 100
++  }
++ }
++}
+diff --git a/services/skill-checks.js b/services/skill-checks.js
+new file mode 100644
+index 0000000..d71ef7d
+--- /dev/null
++++ b/services/skill-checks.js
+@@ -0,0 +1,823 @@
++/**
++ * Stage checks for chess, piano and basketball (staged patch
++ * skills-round3/02-stage-tests; SKILL_STAGE_TESTS=on, needs SKILL_RECORD=on and
++ * patch 01). When a stage's exit battery is due, the path shows a "Stage
++ * check" row; the check page sits each machine-provable metric the way
++ * content/skill-stage-checks.js says, grades it here, and records the sitting
++ * in the skill record (services/skill-record.js), which applies the rules:
++ * cold only, two different days, the belief against lucky passes, confirmed
++ * estimates only.
++ *
++ * When is a stage's battery due? Once the learner has reached the grade's
++ * Final (its lessons are done), every metric that needs a sitting (unproven,
++ * lapsed, its retention test due, or its last pass over 7 days old) and can be
++ * sat cold today. With the practice plan on (patch 04) the plan can call a
++ * metric's test earlier, when its warm sets say it is ready. A learner may sit
++ * any check from the page at any time: a warm sitting is recorded and never
++ * counts, and the belief keeps retakes from proving anything by luck.
++ *
++ * Honesty about sources: chess answers come from the board, piano notes from
++ * MIDI, the on-screen keys or the microphone (an estimate, confirmed only by a
++ * second passing take), basketball counts from the learner or the camera
++ * tracker (an estimate, counted only when the learner confirms it). The camera
++ * and microphone never leave the device: the page sends note events and
++ * counts, never sound or pictures.
++ */
++'use strict';
++
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const record = require('./skill-record');
++const sc = require('./skill-coverage');
++const { checkFor, titleOf } = require('../content/skill-stage-checks');
++const DATA = require('../content/skill-stage-checks.data.json');
++const C = require('../content/chess-board');
++const P = require('../public/engine/piano/piano-core');
++
++const OPEN_HOURS = 3; // an open sitting older than this is closed as failed
++const DAY = sc.DAY;
++
++function enabled() {
++  return record.enabled() && String(process.env.SKILL_STAGE_TESTS || 'off').toLowerCase() === 'on';
++}
++
++// ── small helpers ───────────────────────────────────────────────────────────
++
++function rngFrom(seed) {
++  let a = seed >>> 0;
++  return () => {
++    a = (a + 0x6D2B79F5) >>> 0;
++    let t = a;
++    t = Math.imul(t ^ (t >>> 15), t | 1);
++    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
++    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
++  };
++}
++function shuffle(xs, rnd) {
++  const a = xs.slice();
++  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
++  return a;
++}
++const cleanSan = (s) => String(s || '').replace(/[+#!?]/g, '').trim();
++
++/** P(true rate >= bar) under a uniform prior after `makes` of `n` (Beta(1+makes, 1+n-makes)). */
++function rateAtLeast(makes, n, bar) {
++  // For integer a, b: P(p >= t) = P(Binomial(a+b-1, t) <= a-1) with a = makes+1, b = n-makes+1.
++  const N = n + 1;
++  let logC = 0;
++  let sum = 0;
++  for (let k = 0; k <= makes; k++) {
++    if (k > 0) logC += Math.log(N - k + 1) - Math.log(k);
++    sum += Math.exp(logC + k * Math.log(bar) + (N - k) * Math.log(1 - bar));
++  }
++  return Math.min(1, Math.max(0, sum));
++}
++
++// ── chess item builders (answers computed with content/chess-board) ─────────
++
++const PIECES = ['N', 'B', 'R', 'Q', 'K', 'P'];
++const SQ = (i) => C.sqName(i);
++
++/** A random legal-ish position: the named white piece, both kings, a few others. */
++function reachItem(rnd, piece) {
++  for (let tries = 0; tries < 500; tries++) {
++    const board = Array(64).fill(null);
++    const free = () => { let s; do { s = Math.floor(rnd() * 64); } while (board[s]); return s; };
++    let from = free();
++    if (piece === 'P') { const r = 1 + Math.floor(rnd() * 5); from = r * 8 + Math.floor(rnd() * 8); if (board[from]) continue; }
++    board[from] = piece;
++    if (piece !== 'K') board[free()] = 'K';
++    board[free()] = 'k';
++    const extras = 2 + Math.floor(rnd() * 3);
++    for (let e = 0; e < extras; e++) {
++      const s = free();
++      const r = s >> 3;
++      const p = ['p', 'n', 'b', 'r', 'P', 'N'][Math.floor(rnd() * 6)];
++      if ((p === 'p' || p === 'P') && (r === 0 || r === 7)) continue;
++      board[s] = p;
++    }
++    const pos = { board, side: 'w', castling: '', ep: -1 };
++    if (C.inCheck(pos, 'b') || C.inCheck(pos, 'w')) continue;
++    const targets = C.legalMoves(pos).filter((m) => m.from === from).map((m) => SQ(m.to));
++    const set = [...new Set(targets)].sort();
++    if (!set.length) continue;
++    const name = C.NAMES[piece.toLowerCase()];
++    return {
++      kind: 'squares',
++      fen: C.toFen(pos),
++      prompt: `${C.describe(pos)}\nType every square the white ${name} on ${SQ(from)} can move to, separated by spaces.`,
++      key: { type: 'squares', set },
++    };
++  }
++  throw new Error('no reach position');
++}
++
++function buildChessReach(def, rnd) {
++  const items = [];
++  const pieces = ['N', 'B', 'R', 'Q', 'K', 'P'];
++  for (let i = 0; i < def.count; i++) items.push(reachItem(rnd, pieces[i % pieces.length]));
++  return shuffle(items, rnd);
++}
++
++/** Positions sorted into check, checkmate, stalemate and none, five of each, by rejection sampling. */
++function buildChessStatus(def, rnd) {
++  const want = { check: Math.ceil(def.count / 4), checkmate: Math.ceil(def.count / 4), stalemate: Math.floor(def.count / 4), none: def.count - 2 * Math.ceil(def.count / 4) - Math.floor(def.count / 4) };
++  const got = { check: [], checkmate: [], stalemate: [], none: [] };
++  const sets = [['Q'], ['R'], ['Q', 'P'], ['R', 'R'], ['Q', 'B']];
++  for (let tries = 0; tries < 200000 && Object.keys(want).some((k) => got[k].length < want[k]); tries++) {
++    const board = Array(64).fill(null);
++    const free = () => { let s; do { s = Math.floor(rnd() * 64); } while (board[s]); return s; };
++    // Black king near an edge makes mates and stalemates common enough to sample.
++    const edge = [0, 7, 56, 63, 1, 6, 8, 15, 48, 55, 57, 62][Math.floor(rnd() * 12)];
++    board[edge] = 'k';
++    board[free()] = 'K';
++    for (const p of sets[Math.floor(rnd() * sets.length)]) {
++      const s = free();
++      if (p === 'P' && ((s >> 3) === 0 || (s >> 3) === 7)) continue;
++      board[s] = p;
++    }
++    const pos = { board, side: 'b', castling: '', ep: -1 };
++    if (C.inCheck(pos, 'w')) continue; // white to have just moved: white not in check
++    const ksW = board.indexOf('K'); const ksB = edge;
++    if (Math.abs((ksW & 7) - (ksB & 7)) <= 1 && Math.abs((ksW >> 3) - (ksB >> 3)) <= 1) continue;
++    const legal = C.legalMoves(pos).length;
++    const check = C.inCheck(pos, 'b');
++    const cls = check ? (legal ? 'check' : 'checkmate') : (legal ? 'none' : 'stalemate');
++    if (got[cls].length >= want[cls]) continue;
++    got[cls].push({
++      kind: 'choice',
++      fen: C.toFen(pos),
++      prompt: `${C.describe(pos)}\nWhich is it for Black, the side to move?`,
++      choices: ['Check', 'Checkmate', 'Stalemate', 'None of these'],
++      key: { type: 'choice', answer: { check: 'Check', checkmate: 'Checkmate', stalemate: 'Stalemate', none: 'None of these' }[cls] },
++    });
++  }
++  return shuffle([].concat(got.check, got.checkmate, got.stalemate, got.none), rnd);
++}
++
++/** Mate in one, unannounced: bank mates (any mating move is right) plus the staged "no mate" positions. */
++function buildChessMateOrNot(def, rnd, seed) {
++  // eslint-disable-next-line global-require
++  const bank = require('../content/bank');
++  const items = [];
++  const avoid = new Set();
++  for (let i = 0; items.length < def.mates && i < 60; i++) {
++    const q = bank.generate({ skillId: 'chess_mate', difficulty: 1 + (i % 5), seed: `${seed}:mate:${i}`, avoid });
++    avoid.add(bank.itemKey ? bank.itemKey(q) : q.prompt);
++    if (!q.fen) continue;
++    const pos = C.parseFen(q.fen);
++    const mates = C.legalMoves(pos).filter((m) => C.isCheckmate(C.makeMove(pos, m)));
++    if (!mates.length) continue;
++    items.push({ kind: 'move', fen: q.fen, prompt: `${C.describe(pos)}\nIs there a checkmate in one move? Play it, or answer "no mate".`, allow_no_mate: true, key: { type: 'mate_or_none', mate: true } });
++  }
++  const none = DATA.chess.mate_or_not.filter((d) => d.answer === 'no mate');
++  for (const d of shuffle(none, rnd).slice(0, def.count - items.length)) {
++    const pos = C.parseFen(d.fen);
++    items.push({ kind: 'move', fen: d.fen, prompt: `${C.describe(pos)}\nIs there a checkmate in one move? Play it, or answer "no mate".`, allow_no_mate: true, key: { type: 'mate_or_none', mate: false } });
++  }
++  return shuffle(items, rnd);
++}
++
++/** Tactics from the Stockfish-verified pool, the motif hint left off. */
++function buildChessTactics(def, rnd) {
++  // eslint-disable-next-line global-require
++  const POOL = require('../content/chess-tactics-pool');
++  const items = [];
++  const per = Math.ceil(def.count / def.difficulties.length);
++  for (const d of def.difficulties) {
++    for (const q of shuffle(POOL[d] || [], rnd).slice(0, per)) {
++      const pos = C.parseFen(q.fen);
++      items.push({ kind: 'move', fen: q.fen, prompt: `${C.describe(pos)}\nFind the best move.`, key: { type: 'move', accepts: (q.accepts || [q.answer]).map(cleanSan) } });
++    }
++  }
++  return shuffle(items, rnd).slice(0, def.count);
++}
++
++/** Mirror a position left to right (a <-> h): a king-and-pawn result does not change. */
++function mirrorFen(fen) {
++  const pos = C.parseFen(fen);
++  const board = Array(64).fill(null);
++  pos.board.forEach((p, s) => { if (p) board[(s >> 3) * 8 + (7 - (s & 7))] = p; });
++  return C.toFen({ ...pos, board, castling: '', ep: -1 });
++}
++
++function buildChessKpk(def, rnd) {
++  return shuffle(DATA.chess.kpk_judgement, rnd).slice(0, def.count).map((d) => {
++    const fen = rnd() < 0.5 ? mirrorFen(d.fen) : d.fen;
++    const pos = C.parseFen(fen);
++    return { kind: 'choice', fen, prompt: `${C.describe(pos)}\nWith best play from both sides, does White win or is it a draw?`, choices: ['White wins', 'Draw'], key: { type: 'choice', answer: d.answer === 'win' ? 'White wins' : 'Draw' } };
++  });
++}
++
++// ── piano and basketball item builders ──────────────────────────────────────
++
++const LETTERS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
++const PC = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
++
++function buildPianoFind(def, rnd) {
++  const items = [];
++  for (let i = 0; i < def.count; i++) {
++    const L = LETTERS[Math.floor(rnd() * 7)];
++    const middle = L === 'C' && rnd() < 0.3;
++    items.push({ kind: 'key', prompt: middle ? 'Find middle C.' : `Find a ${L}.`, key: middle ? { type: 'midi', midi: 60 } : { type: 'pc', pc: PC[L] } });
++  }
++  return items;
++}
++
++function buildPianoEcho(def, rnd) {
++  const scale = [60, 62, 64, 65, 67, 69, 71, 72];
++  const items = [];
++  for (let i = 0; i < def.count; i++) {
++    const n = def.length[0] + Math.floor(rnd() * (def.length[1] - def.length[0] + 1));
++    let at = Math.floor(rnd() * 5);
++    const notes = [scale[at]];
++    while (notes.length < n) { at = Math.max(0, Math.min(scale.length - 1, at + [-2, -1, 1, 2][Math.floor(rnd() * 4)])); notes.push(scale[at]); }
++    // The notes go to the page so it can play them: an echo is heard, then played back.
++    items.push({ kind: 'echo', prompt: n >= 5 ? 'Listen to the tune, then find it on the keys.' : 'Listen, then play it back.', notes, tries: def.tries, key: { type: 'echo', notes } });
++  }
++  return items;
++}
++
++function buildChordEar(def, rnd) {
++  const items = [];
++  for (let i = 0; i < def.count; i++) {
++    const root = 55 + Math.floor(rnd() * 12);
++    const major = rnd() < 0.5;
++    items.push({ kind: 'chord_ear', prompt: 'Listen to the chord. Major or minor?', notes: [root, root + (major ? 4 : 3), root + 7], choices: ['Major', 'Minor'], key: { type: 'choice', answer: major ? 'Major' : 'Minor' } });
++  }
++  return items;
++}
++
++const SAFETY = [
++  { prompt: 'Your ankle hurts after a jump. What do you do?', choices: ['Stop and tell an adult', 'Keep playing so the team is not short', 'Run it off', 'Stretch it hard'], answer: 'Stop and tell an adult' },
++  { prompt: 'You bump heads with someone and feel dizzy. What now?', choices: ['Stop playing and tell an adult straight away', 'Sit for a minute, then carry on', 'Drink water and carry on', 'Only stop if it bleeds'], answer: 'Stop playing and tell an adult straight away' },
++  { prompt: 'Something hurts when you dribble. Which is right?', choices: ['Pain means stop', 'Pain means try harder', 'Pain goes away if you ignore it', 'Only grown-ups need to stop'], answer: 'Pain means stop' },
++  { prompt: 'A friend falls and cannot get up. What do you do?', choices: ['Get an adult', 'Pull them up quickly', 'Keep playing around them', 'Tell them to walk it off'], answer: 'Get an adult' },
++];
++function buildSafety(def, rnd) {
++  return shuffle(SAFETY, rnd).slice(0, def.count).map((q) => ({ kind: 'choice', prompt: q.prompt, choices: shuffle(q.choices, rnd), key: { type: 'choice', answer: q.answer } }));
++}
++
++function buildBank(def, rnd, seed) {
++  // eslint-disable-next-line global-require
++  const bank = require('../content/bank');
++  const items = [];
++  const avoid = new Set();
++  for (let i = 0; items.length < def.count && i < def.count * 4; i++) {
++    const q = bank.generate({ skillId: def.skill, difficulty: def.difficulty || 2, seed: `${seed}:${i}`, avoid });
++    const k = bank.itemKey ? bank.itemKey(q) : q.prompt;
++    if (avoid.has(k)) continue;
++    avoid.add(k);
++    if (Array.isArray(q.choices) && q.choices.length) items.push({ kind: 'choice', prompt: q.prompt, choices: q.choices, key: { type: 'choice', answer: q.answer } });
++    else items.push({ kind: 'text', prompt: q.prompt, key: { type: 'text', accepts: [q.answer, ...(q.accepts || [])] } });
++  }
++  return items;
++}
++
++const BUILDERS = {
++  chess_reach: buildChessReach,
++  chess_status: buildChessStatus,
++  chess_mate_or_not: buildChessMateOrNot,
++  chess_tactics_pool: buildChessTactics,
++  chess_kpk: buildChessKpk,
++  piano_find: buildPianoFind,
++  piano_echo: buildPianoEcho,
++  piano_chord_ear: buildChordEar,
++  bb_safety: buildSafety,
++  bank: buildBank,
++};
++
++// ── grading items ───────────────────────────────────────────────────────────
++
++const norm = (s) => String(s == null ? '' : s).trim().toLowerCase().replace(/\s+/g, ' ');
++
++/** Grade one answer against its key. Returns {correct, right?, wrong?} (squares count per square). */
++function gradeItem(item, answer) {
++  const k = item.key;
++  if (k.type === 'choice') return { correct: norm(answer) === norm(k.answer) };
++  if (k.type === 'text') return { correct: k.accepts.some((a) => norm(a) === norm(answer)) };
++  if (k.type === 'squares') {
++    const given = [...new Set(String(answer || '').toLowerCase().match(/[a-h][1-8]/g) || [])];
++    const right = given.filter((s) => k.set.includes(s)).length;
++    const wrong = given.length - right;
++    return { correct: right === k.set.length && !wrong, right, wrong, total: k.set.length };
++  }
++  if (k.type === 'move' || k.type === 'mate_or_none') {
++    const a = String(answer || '').trim();
++    if (k.type === 'mate_or_none' && /^no\s*mate$/i.test(a)) return { correct: !k.mate };
++    const pos = C.parseFen(item.fen);
++    const m = C.moveFromText(pos, a);
++    if (!m) return { correct: false };
++    if (k.type === 'mate_or_none') return { correct: k.mate && C.isCheckmate(C.makeMove(pos, m)) };
++    return { correct: k.accepts.includes(cleanSan(C.san(pos, m))) };
++  }
++  if (k.type === 'pc' || k.type === 'midi') {
++    const midi = Number(answer && answer.midi);
++    if (!Number.isInteger(midi)) return { correct: false };
++    return { correct: k.type === 'midi' ? midi === k.midi : ((midi % 12) + 12) % 12 === k.pc };
++  }
++  if (k.type === 'echo') {
++    const tries = Array.isArray(answer && answer.tries) ? answer.tries.slice(0, item.tries || 1) : [];
++    const same = (played) => Array.isArray(played) && played.length === k.notes.length && played.every((m, i) => ((Number(m) - k.notes[i]) % 12 + 12) % 12 === 0);
++    return { correct: tries.some(same) };
++  }
++  return { correct: false };
++}
++
++/** The sitting's pass from its graded items and the rule. */
++function itemsResult(def, graded) {
++  const n = graded.length;
++  const right = graded.filter((g) => g.correct).length;
++  let pass;
++  let score = n ? right / n : 0;
++  if (def.rule.squares_share !== undefined) {
++    const r = graded.reduce((a, g) => a + (g.right || 0), 0);
++    const total = graded.reduce((a, g) => a + (g.total || 0) + (g.wrong || 0), 0);
++    score = total ? r / total : 0;
++    pass = score >= def.rule.squares_share;
++  } else if (def.rule.right !== undefined) pass = right >= Math.min(def.rule.right, n);
++  else pass = score >= def.rule.share;
++  return { pass, score: Number(score.toFixed(3)), right, n };
++}
++
++// ── piano takes (piano-core, score-informed) ────────────────────────────────
++
++function noteMidi(name, octave) { return P.noteToMidi(`${name}${octave}`); }
++
++/** Ascending then descending, one note per beat, from note names and a start octave. */
++function runFrom(names, octave, octaves = 1) {
++  const up = [];
++  let oct = octave;
++  let prev = -1;
++  for (let o = 0; o < Math.max(1, octaves); o++) {
++    for (const n of names) {
++      let m = noteMidi(n, oct);
++      while (m <= prev) { oct += 1; m = noteMidi(n, oct); }
++      up.push(m);
++      prev = m;
++    }
++  }
++  const top = up[0] + 12 * Math.max(1, octaves);
++  if (names.length >= 7 || /arpeggio/.test(names.kind || '')) up.push(top);
++  const down = up.slice(0, -1).reverse();
++  return up.concat(down);
++}
++
++/** A target as notes with beats; `hands`: right, left (an octave lower) or both. */
++function targetOf(midis, hands) {
++  const out = [];
++  midis.forEach((m, i) => {
++    if (hands === 'left' || hands === 'both') out.push({ midi: m - 12, beat: i });
++    if (hands === 'right' || hands === 'both') out.push({ midi: m, beat: i });
++  });
++  return out;
++}
++
++function scaleMidis(item) {
++  if (Array.isArray(item.midi_ascending) && item.midi_ascending.length) {
++    const up = item.midi_ascending.slice();
++    return up.concat(up.slice(0, -1).reverse());
++  }
++  const arpeggio = /arpeggio/.test(item.kind);
++  const names = arpeggio ? [item.notes[0], item.notes[2], item.notes[4]] : item.notes;
++  const run = runFrom(names, 4, item.octaves || 1);
++  return run;
++}
++
++/** The parts of a take sitting, each a target the learner plays once (twice on a microphone). */
++function takeParts(def, rnd, userId) {
++  if (def.build === 'beat') {
++    return [{ label: `Tap along for ${def.beats} beats`, tempo: def.tempo, any_key: true, count_in: 4, target: Array.from({ length: def.beats }, (_, i) => ({ midi: 60, beat: i })) }];
++  }
++  if (def.build === 'pattern') {
++    const up = [0, 2, 4, 5, 7].map((x) => 60 + x);
++    const run = up.concat(up.slice(0, -1).reverse());
++    return def.hands.map((h) => ({ label: `C five-finger pattern, ${h} hand`, tempo: def.tempo, hands: h, names: run.map((m) => P.midiToName(h === 'left' ? m - 12 : m)), target: targetOf(run, h) }));
++  }
++  if (def.build === 'scale') {
++    const battery = DATA.piano.technique.find((b) => b.stage === def.battery);
++    const pool = def.item ? battery.items.filter((x) => x.item === def.item) : battery.items;
++    const chosen = shuffle(pool, rnd).slice(0, def.pick || 1);
++    const parts = [];
++    for (const item of chosen) {
++      const run = scaleMidis(item);
++      for (const h of def.hands) parts.push({ label: `${item.item}${h === 'both' ? ', hands together' : `, ${h} hand`}`, tempo: def.tempo, hands: h, mic_hands: 'right', names: run.map((m) => P.midiToName(m)), target: targetOf(run, h), evenness: true });
++    }
++    return parts;
++  }
++  if (def.build === 'cadence') {
++    const key = def.keys[Math.floor(rnd() * def.keys.length)];
++    const order = { C: ['C', 'F', 'G7', 'C'], G: ['G', 'C', 'D7', 'G'], F: ['F', 'Bb', 'C7', 'F'] }[key];
++    const chords = order.map((sym) => P.chordMidis(sym).midis);
++    return [{ label: `I-IV-V7-I in ${key} major`, tempo: 60, chords: order, target_chords: chords }];
++  }
++  if (def.build === 'song') {
++    // eslint-disable-next-line global-require
++    const songs = require('../content/piano-songs');
++    const pool = songs.SONGS.filter((s) => s.grade === def.grade);
++    const chosen = shuffle(pool, rnd).slice(0, def.pieces);
++    return chosen.map((song) => {
++      const hands = def.hands === 'both' && song.lh ? 'both' : 'right';
++      const parts = P.songParts(song, hands);
++      return { label: `${song.title}${hands === 'both' ? ', hands together' : ', right hand'}`, song: song.id, tempo: song.tempo, hands, target: parts.target, beats_per_bar: song.beatsPerBar };
++    });
++  }
++  return [];
++}
++
++/** The played notes, cleaned: key numbers, times, sources; near-simultaneous notes in pitch order. */
++function cleanPlayed(list) {
++  if (!Array.isArray(list) || !list.length || list.length > 3000) return { error: 'No notes were sent.' };
++  const notes = [];
++  for (const x of list) {
++    const midi = Number(x && x.midi);
++    const time = Number(x && x.time);
++    if (!Number.isInteger(midi) || midi < 0 || midi > 127 || !Number.isFinite(time)) return { error: 'A note was not a key number with a time.' };
++    const source = ['midi', 'mic', 'screen', 'computer', 'tap'].includes(x.source) ? x.source : 'screen';
++    notes.push({ midi, time, velocity: Number(x.velocity) || undefined, source, confidence: Number(x.confidence) || 0 });
++  }
++  notes.sort((a, b) => a.time - b.time);
++  // A chord or two hands together arrive a few milliseconds apart in any order.
++  for (let i = 0; i < notes.length;) {
++    let j = i + 1;
++    while (j < notes.length && notes[j].time - notes[i].time <= 60) j++;
++    const group = notes.slice(i, j).sort((a, b) => a.midi - b.midi);
++    notes.splice(i, j - i, ...group);
++    i = j;
++  }
++  return { notes };
++}
++
++/** Which source word a take is: midi, mic or on-screen (the worst one in it). */
++function takeSource(notes) {
++  if (notes.some((n) => n.source === 'mic')) return 'mic';
++  if (notes.every((n) => n.source === 'midi')) return 'midi';
++  if (notes.every((n) => n.source === 'tap')) return 'tap';
++  return 'on-screen';
++}
++
++/** Score one take of one part against the rule. */
++function scoreTake(def, part, played, origin = null) {
++  const clean = cleanPlayed(played);
++  if (clean.error) return clean;
++  let notes = clean.notes;
++  const source = takeSource(notes);
++  const mic = source === 'mic';
++  const rule = def.rule;
++  if (part.target_chords) {
++    // Chords: onsets grouped, each group's pitch classes against the chord's.
++    const groups = [];
++    for (const n of notes) {
++      const g = groups[groups.length - 1];
++      if (g && n.time - g.time <= 250) g.midis.push(n.midi); else groups.push({ time: n.time, midis: [n.midi] });
++    }
++    const right = part.target_chords.filter((ch, i) => groups[i] && P.samePitchClasses(groups[i].midis, ch)).length;
++    const share = right / part.target_chords.length;
++    return { source, pass: share >= rule.chords && groups.length === part.target_chords.length, notes: Number(share.toFixed(2)), chords_right: right, chords: part.target_chords.length };
++  }
++  let target = part.target;
++  if (mic && part.mic_hands && part.hands === 'both') target = part.target.filter((t, i, a) => i === a.length - 1 || t.beat !== a[i + 1].beat); // the upper (right-hand) line
++  if (part.any_key) notes = notes.map((n) => ({ ...n, midi: 60 }));
++  // A beat is timed from the click (the page sends when beat 0 sounded); a
++  // piece or a scale from the first note, so a late start is not a wrong one.
++  const timedFrom = part.any_key && Number.isFinite(Number(origin)) && origin !== null ? { origin: Number(origin) } : {};
++  const r = P.scorePerformance(target, notes, { tempo: part.tempo, octaveFree: mic, ...timedFrom });
++  const beatMs = 60000 / part.tempo;
++  // A stop: a gap between consecutive matched notes over two beats more than the score asks.
++  let stops = 0;
++  const pairs = P.align(target, notes, { octaveFree: mic }).filter((x) => x.t !== null && x.p !== null);
++  for (let k = 1; k < pairs.length; k++) {
++    const want = (target[pairs[k].t].beat - target[pairs[k - 1].t].beat) * beatMs;
++    const got = notes[pairs[k].p].time - notes[pairs[k - 1].p].time;
++    if (got - want > 2 * beatMs) stops++;
++  }
++  const notesBar = mic && rule.notes_mic !== undefined ? rule.notes_mic : rule.notes;
++  const onBeat = r.timing ? r.timing.onBeatShare : 0;
++  const checks = [];
++  if (notesBar !== undefined) checks.push(r.noteAccuracy >= notesBar - 1e-9);
++  if (rule.on_beat !== undefined) checks.push(onBeat >= rule.on_beat);
++  if (rule.cv !== undefined && part.evenness) checks.push(!!r.evenness && r.evenness.cv <= rule.cv);
++  if (rule.no_stops) checks.push(stops === 0);
++  if (rule.completes) checks.push(r.missed.length <= Math.floor(target.length * 0.15) && pairs.length && pairs[pairs.length - 1].t >= target.length - 2);
++  return {
++    source,
++    pass: checks.every(Boolean),
++    notes: r.noteAccuracy,
++    on_beat: Number(onBeat.toFixed(2)),
++    cv: r.evenness ? r.evenness.cv : null,
++    stops,
++    estimated: r.estimated,
++  };
++}
++
++// ── the open sitting ────────────────────────────────────────────────────────
++
++function itemsForPage(items) {
++  return items.map((it, index) => {
++    const { key, ...rest } = it;
++    return { index, ...rest };
++  });
++}
++
++/** What the page needs to run a sitting (never an answer key). */
++function sittingForPage(open) {
++  if (!open) return null;
++  const base = { metric: open.metric_id, how: open.how, started_at: new Date(open.started_at).toISOString(), cold: open.cold, cold_at: open.cold_at || null };
++  if (open.how === 'items') return { ...base, items: itemsForPage(open.items), answered: open.answers.map((a) => a !== null) };
++  if (open.how === 'take') return { ...base, parts: open.parts.map((p, i) => ({ index: i, label: p.label, tempo: p.tempo, hands: p.hands || null, names: p.names || null, song: p.song || null, chords: p.chords || null, any_key: !!p.any_key, count_in: p.count_in || 4, target: p.chords ? null : (p.target || []).map((t) => ({ midi: t.midi, beat: t.beat })) })), takes: open.takes };
++  if (open.how === 'puzzles') return { ...base, cut: open.cut, rd: open.rd, min: open.min, done: open.done || 0 };
++  return base;
++}
++
++function closeStale(userId, row, now) {
++  if (!row || !row.open) return null;
++  if (now - row.open.started_at < OPEN_HOURS * 3600 * 1000) return null;
++  // Left open: counted as a sitting that did not pass, at the time it began.
++  const open = row.open;
++  row.open = null;
++  db.update(record.COLLECTION, row.id, { open: null });
++  return record.sit(userId, { subject: row.subject, metricId: row.metric_id, pass: false, source: open.source || 'board', kind: open.kind, at: open.started_at, detail: { left_open: true } });
++}
++
++/** Which kind of test a sitting is, from the metric's state. */
++function sittingKind(row, stage, now) {
++  if (!row || row.status === 'unproven' || row.status === 'lapsed') return 'stage_test';
++  if (row.status === 'proven' && stage.retention_days && now - row.proven_at >= stage.retention_days * DAY) return 'retention_test';
++  return 'stands_test';
++}
++
++/** Open (or resume) a sitting of one metric's stage check. */
++function start(userId, enrollment, metricId, now = Date.now()) {
++  const def0 = record.metricDef(enrollment.track_id, metricId);
++  const stage = record.stageFor(enrollment.track_id, enrollment.grade_id);
++  if (!def0 || !stage || def0.stage.id !== stage.id) return { status: 404, error: 'That check is not part of this stage.' };
++  if (!def0.metric.source.provable) return { status: 409, error: 'This one is attested, not machine-checked.' };
++  const def = checkFor(metricId);
++  if (def.how === 'not_wired') return { status: 409, error: `This check is not built yet: ${def.needs}.` };
++  if (def.how === 'count') return { status: 400, error: 'Counts are logged in one step.' };
++  let row = record.ensureRow(userId, enrollment.track_id, metricId);
++  closeStale(userId, row, now);
++  row = record.rowFor(userId, enrollment.track_id, metricId);
++  if (row.open) return { sitting: sittingForPage(row.open), resumed: true };
++  const seed = (userId * 7919 + now) >>> 0;
++  const rnd = rngFrom(seed);
++  const open = { metric_id: metricId, how: def.how, started_at: now, cold: sc.isCold(row, now), cold_at: new Date(record.coldAt(row, now)).toISOString(), kind: sittingKind(row, stage, now), source: def.source || null };
++  if (def.how === 'items') {
++    open.items = BUILDERS[def.build](def, rnd, `${userId}:${metricId}:${now}`);
++    open.answers = open.items.map(() => null);
++  } else if (def.how === 'take') {
++    open.parts = takeParts(def, rnd, userId);
++    if (!open.parts.length) return { status: 409, error: 'There is nothing to play for this check yet.' };
++    open.takes = open.parts.map(() => []);
++  } else if (def.how === 'puzzles') {
++    Object.assign(open, { cut: def.cut, rd: def.rd, min: def.min });
++  }
++  db.update(record.COLLECTION, row.id, { open });
++  return { sitting: sittingForPage(open), resumed: false };
++}
++
++function openRow(userId, enrollment, metricId) {
++  const row = record.rowFor(userId, enrollment.track_id, metricId);
++  return row && row.open && row.open.metric_id === metricId ? row : null;
++}
++
++/** One answer in an items sitting. No verdict before the end: it is a test. */
++function answer(userId, enrollment, metricId, { index, answer: given, source }) {
++  const row = openRow(userId, enrollment, metricId);
++  if (!row || row.open.how !== 'items') return { status: 404, error: 'No check is open.' };
++  const i = Number(index);
++  if (!Number.isInteger(i) || i < 0 || i >= row.open.items.length) return { status: 400, error: 'No such question.' };
++  if (row.open.answers[i] !== null) return { status: 409, error: 'Already answered.' };
++  const item = row.open.items[i];
++  const graded = gradeItem(item, given);
++  const open = { ...row.open, answers: row.open.answers.map((a, k) => (k === i ? { given: typeof given === 'object' ? given : String(given).slice(0, 200), ...graded, source: source || null } : a)) };
++  db.update(record.COLLECTION, row.id, { open });
++  return { answered: open.answers.filter((a) => a !== null).length, total: open.items.length };
++}
++
++/** One take of one part of a piano sitting. */
++function take(userId, enrollment, metricId, { part, played, origin }) {
++  const row = openRow(userId, enrollment, metricId);
++  if (!row || row.open.how !== 'take') return { status: 404, error: 'No check is open.' };
++  const i = Number(part);
++  const p = row.open.parts[i];
++  if (!p) return { status: 400, error: 'No such part.' };
++  const def = checkFor(metricId);
++  const scored = scoreTake(def, p, played, origin);
++  if (scored.error) return { status: 400, error: scored.error };
++  const takes = row.open.takes.map((t, k) => (k === i ? [...t, scored].slice(0, 4) : t));
++  db.update(record.COLLECTION, row.id, { open: { ...row.open, takes } });
++  return { part: i, ...scored, takes: takes[i].length };
++}
++
++/** The piano sitting's result: first take of every part passes; a microphone needs a second passing take of each. */
++function takeResult(open) {
++  const firsts = open.takes.map((t) => t[0]);
++  const done = firsts.every(Boolean);
++  const pass = done && firsts.every((t) => t.pass);
++  const sources = firsts.filter(Boolean).map((t) => t.source);
++  const worst = sources.includes('mic') ? 'mic' : sources.includes('on-screen') ? 'on-screen' : sources.includes('tap') ? 'tap' : 'midi';
++  const confirmed = worst === 'mic' ? open.takes.every((t) => t.length >= 2 && t[0].pass && t[1].pass) : false;
++  const score = firsts.filter(Boolean).reduce((a, t) => a + (t.notes || 0), 0) / Math.max(1, firsts.filter(Boolean).length);
++  return { done, pass, source: worst, confirmed, score: Number(score.toFixed(3)), n: firsts.length };
++}
++
++/**
++ * The source of an items sitting: the check's own (board, tap, items) or, for
++ * keys found and echoes played, the worst input used: any microphone answer
++ * makes it a microphone sitting (an estimate, not confirmed here), all MIDI is
++ * MIDI, anything else the on-screen keys.
++ */
++function itemSource(open) {
++  if (open.source) return open.source;
++  const used = open.answers.filter(Boolean).map((a) => a.source);
++  if (used.includes('mic')) return 'mic';
++  if (used.length && used.every((x) => x === 'midi')) return 'midi';
++  return 'on-screen';
++}
++
++/** Close a sitting: grade it and record it in the skill record. */
++function finish(userId, enrollment, metricId, now = Date.now()) {
++  const row = openRow(userId, enrollment, metricId);
++  if (!row) return { status: 404, error: 'No check is open.' };
++  const open = row.open;
++  const def = checkFor(metricId);
++  let res;
++  if (open.how === 'items') {
++    const graded = open.answers.map((a) => a || { correct: false });
++    res = { ...itemsResult(def, graded), source: itemSource(open) };
++    res.review = open.items.map((it, i) => ({ prompt: it.prompt, given: open.answers[i] ? open.answers[i].given : null, correct: !!(open.answers[i] && open.answers[i].correct), answer: it.key.answer || (it.key.accepts && it.key.accepts[0]) || (it.key.set && it.key.set.join(' ')) || (it.key.type === 'mate_or_none' && !it.key.mate ? 'no mate' : null) }));
++  } else if (open.how === 'take') {
++    res = takeResult(open);
++    if (!res.done) return { status: 409, error: 'Play every part first.' };
++  } else if (open.how === 'puzzles') {
++    const started = new Date(open.started_at).toISOString();
++    const done = db.find('chess_puzzle_attempts', (a) => a.user_id === userId && a.rated && a.status !== 'open' && String(a.started_at) >= started).length;
++    if (done < open.min) return { status: 409, error: `${open.min - done} more rated puzzle${open.min - done === 1 ? '' : 's'} first.`, done };
++    const r = db.findOne('chess_ratings', (x) => x.user_id === userId) || { rating: 0, rd: 999 };
++    res = { pass: r.rating >= open.cut && r.rd <= open.rd, score: Math.round(r.rating), n: done, source: 'board', detail: { rating: Math.round(r.rating), rd: Math.round(r.rd), cut: open.cut } };
++  }
++  db.update(record.COLLECTION, row.id, { open: null });
++  const out = record.sit(userId, { subject: enrollment.track_id, metricId, pass: res.pass, source: res.source, confirmed: res.confirmed === true, kind: open.kind, score: res.score, n: res.n, at: open.started_at, detail: res.detail || null });
++  return { result: { pass: res.pass, score: res.score, n: res.n, right: res.right, source: res.source, confirmed: !!res.confirmed, counted: out.counted, why: out.why, proved: out.proved, status: out.row.status, review: res.review || null, detail: res.detail || null } };
++}
++
++/**
++ * A count's result against the check's rule, without recording it: {pass,
++ * score, n, note, baseline?} or {error}. `baseline` is the learner's own first
++ * count for the rules that measure growth (null when there is none yet).
++ */
++function countResult(def, body, baseline) {
++  const b = body || {};
++  const num = (v, lo, hi) => { const x = Number(v); return Number.isInteger(x) && x >= lo && x <= hi ? x : null; };
++  const read = (obj) => {
++    const out = {};
++    for (const [name, , lo, hi] of def.fields) { const v = num(obj && obj[name], lo, hi); if (v === null) return null; out[name] = v; }
++    if (out.makes !== undefined && out.attempts !== undefined && out.makes > out.attempts) return null;
++    return out;
++  };
++  const hands = def.hands ? { left: read(b.left), right: read(b.right) } : null;
++  const one = def.hands ? null : read(b);
++  if (def.hands ? !(hands.left && hands.right) : !one) return { error: 'Those numbers do not add up.' };
++  const rule = def.rule;
++  const values = hands || one;
++  if (rule.rate !== undefined) {
++    const sides = def.hands ? ['left', 'right'].map((h) => hands[h]) : [one];
++    const short = sides.some((x) => x.attempts < (def.min_n || 1));
++    const ps = sides.map((x) => rateAtLeast(x.makes, x.attempts, rule.rate));
++    return { pass: !short && ps.every((p) => p >= rule.conf), score: Number(Math.min(...ps).toFixed(3)), n: sides.reduce((a, x) => a + x.attempts, 0), note: short ? `at least ${def.min_n}${def.hands ? ' each hand' : ''} for a sitting to pass` : null, values };
++  }
++  if (rule.ratio !== undefined) {
++    const r = one.strong ? one.weak / one.strong : 0;
++    return { pass: one.strong > 0 && r >= rule.ratio, score: Number(r.toFixed(3)), n: one.strong + one.weak, note: null, values };
++  }
++  if (rule.logged !== undefined) {
++    return { pass: one.attempts >= rule.logged, score: one.attempts ? Number((one.makes / one.attempts).toFixed(3)) : 0, n: one.attempts, note: one.attempts < rule.logged ? `log ${rule.logged} or more` : null, values };
++  }
++  const value = one.done !== undefined ? one.done : one.makes;
++  if (baseline === null || baseline === undefined) return { pass: null, baseline: null, value, n: value, values };
++  const bar = baseline * (1 + (rule.growth || rule.baseline || 0));
++  return { pass: value >= bar && value > 0, score: baseline ? Number((value / baseline).toFixed(3)) : null, n: value, note: `your baseline is ${baseline}${rule.growth ? `; ${Math.ceil(bar)} or more passes` : ''}`, values, baseline };
++}
++
++/** A basketball count, recorded in one step. */
++function count(userId, enrollment, metricId, body, now = Date.now()) {
++  const def0 = record.metricDef(enrollment.track_id, metricId);
++  const stage = record.stageFor(enrollment.track_id, enrollment.grade_id);
++  if (!def0 || !stage || def0.stage.id !== stage.id) return { status: 404, error: 'That check is not part of this stage.' };
++  const def = checkFor(metricId);
++  if (def.how !== 'count') return { status: 400, error: 'This check is not a count.' };
++  const b = body || {};
++  const row = record.ensureRow(userId, enrollment.track_id, metricId);
++  const res = countResult(def, b, row.baseline);
++  if (res.error) return { status: 400, error: res.error };
++  if (res.pass === null) {
++    db.update(record.COLLECTION, row.id, { baseline: res.value, baseline_at: new Date(now).toISOString() });
++    return { result: { baseline: res.value, pass: null, counted: false, why: 'your first count sets your own baseline; it is not a sitting', status: row.status } };
++  }
++  const camera = b.source === 'camera';
++  const source = camera ? 'camera' : 'count';
++  const confirmed = camera && b.confirmed === true;
++  const out = record.sit(userId, { subject: enrollment.track_id, metricId, pass: res.pass, source, confirmed, kind: sittingKind(row, stage, now), score: res.score, n: res.n, at: now, detail: { ...res.values, note: res.note } });
++  return { result: { pass: res.pass, score: res.score, n: res.n, note: res.note, source, confirmed, counted: out.counted, why: out.why, proved: out.proved, status: out.row.status } };
++}
++
++// ── what the page and the path see ──────────────────────────────────────────
++
++/** Has the learner reached the grade's Final, so the stage's lessons are done? */
++function atFinal(enrollment) {
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  if (!grade) return false;
++  const final = (grade.levels.find((l) => l.kind === 'graduation') || {}).level;
++  return enrollment.status === 'graduated' || (final && enrollment.current_level >= final);
++}
++
++/** Metrics the practice plan (patch 04) calls a cold test for today, when it is applied and on. */
++function planned(userId, enrollment, now) {
++  try {
++    // eslint-disable-next-line global-require
++    const dose = require('./skill-dose');
++    return dose.enabled() ? dose.scheduledTests(userId, enrollment, now) : [];
++  } catch (err) {
++    if (err && err.code === 'MODULE_NOT_FOUND') return [];
++    throw err;
++  }
++}
++
++/** The stage's checks: each metric with its sitting, whether it is due, and when it is cold next. */
++function overview(userId, enrollment, now = Date.now()) {
++  const view = record.stageView(userId, enrollment, now);
++  if (!view) return null;
++  const battery = atFinal(enrollment);
++  const plan = new Set(planned(userId, enrollment, now));
++  const rows = view.metrics.map((m) => {
++    const def = checkFor(m.id);
++    const row = record.rowFor(userId, enrollment.track_id, m.id);
++    const needs = m.provable && (m.status === 'unproven' || m.status === 'lapsed' || (m.status === 'proven' && m.retention_due_at && Date.parse(m.retention_due_at) <= now) || m.stale);
++    const wired = m.provable && def.how !== 'not_wired';
++    return {
++      ...m,
++      title: titleOf(m.metric),
++      how: m.provable ? def.how : 'attest',
++      wired,
++      says: def.says || null,
++      needs_build: def.how === 'not_wired' ? def.needs : null,
++      gap: def.gap || null,
++      minutes: def.minutes || null,
++      fields: def.how === 'count' ? def.fields.map(([name, label, lo, hi]) => ({ name, label, min: lo, max: hi })) : null,
++      hands: def.how === 'count' ? !!def.hands : null,
++      camera_ok: def.how === 'count' ? record.listedWords({ source: { raw: m.source } }).includes('camera') : false,
++      baseline: row && row.baseline !== undefined ? row.baseline : null,
++      needs_sitting: !!needs,
++      due: !!(needs && wired && m.cold_now && (battery || plan.has(m.id))),
++      planned: plan.has(m.id),
++      open: row && row.open ? sittingForPage(row.open) : null,
++    };
++  });
++  return { ...view, battery_open: battery, checks: rows, due: rows.filter((r) => r.due).map((r) => r.id) };
++}
++
++/** The path's "Stage check" row. */
++function pathNode(userId, enrollment) {
++  if (!enabled()) return null;
++  const o = overview(userId, enrollment);
++  if (!o) return null;
++  const provable = o.checks.filter((c) => c.provable);
++  const proven = provable.filter((c) => c.status === 'proven' || c.status === 'retained').length;
++  const wired = provable.filter((c) => c.wired).length;
++  const href = `/stage-check?enrollment=${enrollment.id}`;
++  const waiting = o.checks.filter((c) => c.wired && c.needs_sitting && !c.cold_now).map((c) => Date.parse(c.cold_at));
++  const next = waiting.length ? new Date(Math.min(...waiting)) : null;
++  const tally = `${proven} of ${provable.length} measured skills proven${wired < provable.length ? `; ${provable.length - wired} not checkable here yet` : ''}`;
++  if (o.due.length) {
++    return { kind: 'stage_check', badge: 'Check', title: 'Stage check', kind_label: `${o.due.length} ready`, detail: `${o.due.length} check${o.due.length === 1 ? '' : 's'} ready now, cold. ${tally}.`, href, action: 'Sit the checks', next: true };
++  }
++  if (provable.length && proven === provable.length) {
++    return { kind: 'stage_check', badge: 'Check', title: 'Stage check', kind_label: 'Proven', detail: `${tally}.`, href, action: 'See the record', done: true };
++  }
++  const when = next ? `Next check ready ${next.toISOString().slice(0, 16).replace('T', ' ')} UTC.` : o.battery_open ? '' : 'Opens at the Final; any check can be sat early.';
++  return { kind: 'stage_check', badge: 'Check', title: 'Stage check', kind_label: o.battery_open ? 'Due' : 'Later', detail: `${tally}. ${when}`.trim(), href, action: 'See the checks' };
++}
++
++module.exports = {
++  enabled,
++  rateAtLeast,
++  gradeItem,
++  itemsResult,
++  scoreTake,
++  cleanPlayed,
++  takeParts,
++  BUILDERS,
++  mirrorFen,
++  start,
++  answer,
++  take,
++  finish,
++  count,
++  countResult,
++  itemsForPage,
++  overview,
++  pathNode,
++  atFinal,
++  sittingForPage,
++};
+diff --git a/routes/skill-checks.js b/routes/skill-checks.js
+new file mode 100644
+index 0000000..b123f5a
+--- /dev/null
++++ b/routes/skill-checks.js
+@@ -0,0 +1,95 @@
++/**
++ * Stage checks (services/skill-checks.js; staged patch skills-round3/02-stage-tests).
++ * Mounted by routes/skills.js (patch 01) when this file is present; every route
++ * answers 404 unless SKILL_RECORD=on and SKILL_STAGE_TESTS=on.
++ *
++ *   GET  /api/skills/checks/:enrollmentId                   the stage's checks: what each measures, its state, what is due
++ *   POST /api/skills/checks/:enrollmentId/:metric/start     open (or resume) a sitting: items, piano parts or puzzles
++ *   POST /api/skills/checks/:enrollmentId/:metric/answer    one answer in an items sitting {index, answer, source}
++ *   POST /api/skills/checks/:enrollmentId/:metric/take      one piano take {part, played: [{midi, time, velocity, source}]}
++ *   POST /api/skills/checks/:enrollmentId/:metric/finish    close it: graded here, recorded in the skill record
++ *   POST /api/skills/checks/:enrollmentId/:metric/count     a basketball count, recorded in one step
++ *
++ * The page never receives an answer key before a sitting is closed. Piano
++ * takes send note events and basketball counts send numbers: no sound, picture
++ * or clip ever reaches the server.
++ */
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const record = require('../services/skill-record');
++const checks = require('../services/skill-checks');
++const { requireAuth } = require('../middleware/auth');
++const { limit } = require('../utils/rate-limit');
++
++const router = express.Router();
++
++router.use('/skills/checks', (req, res, next) => {
++  if (!checks.enabled()) return res.status(404).json({ error: 'No such endpoint.' });
++  next();
++});
++
++function own(req) {
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return null;
++  if (!record.stageFor(enrollment.track_id, enrollment.grade_id)) return null;
++  return enrollment;
++}
++
++function reply(res, out, ok = 200) {
++  if (out && out.error) return res.status(out.status || 400).json({ error: out.error, ...(out.done !== undefined ? { done: out.done } : {}) });
++  return res.status(ok).json(out);
++}
++
++router.get('/skills/checks/:enrollmentId', requireAuth, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const track = curriculum.getTrack(enrollment.track_id);
++  const final = grade ? (grade.levels.find((l) => l.kind === 'graduation') || {}).level : null;
++  res.json({
++    enrollment: { id: enrollment.id, status: enrollment.status, current_level: enrollment.current_level, final_level: final || null },
++    track: { id: track.id, name: track.name },
++    grade: { id: grade.id, name: grade.name },
++    checks: checks.overview(req.user.id, enrollment),
++  });
++});
++
++const sittingLimit = limit('skill-checks', 240, 60 * 60 * 1000);
++
++router.post('/skills/checks/:enrollmentId/:metric/start', requireAuth, sittingLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const out = checks.start(req.user.id, enrollment, req.params.metric);
++  reply(res, out, out.resumed ? 200 : 201);
++});
++
++router.post('/skills/checks/:enrollmentId/:metric/answer', requireAuth, sittingLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const b = req.body || {};
++  reply(res, checks.answer(req.user.id, enrollment, req.params.metric, { index: b.index, answer: b.answer, source: typeof b.source === 'string' ? b.source.slice(0, 12) : null }));
++});
++
++router.post('/skills/checks/:enrollmentId/:metric/take', requireAuth, sittingLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const b = req.body || {};
++  reply(res, checks.take(req.user.id, enrollment, req.params.metric, { part: b.part, played: b.played, origin: b.origin === undefined ? null : b.origin }));
++});
++
++router.post('/skills/checks/:enrollmentId/:metric/finish', requireAuth, sittingLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  reply(res, checks.finish(req.user.id, enrollment, req.params.metric));
++});
++
++router.post('/skills/checks/:enrollmentId/:metric/count', requireAuth, sittingLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  reply(res, checks.count(req.user.id, enrollment, req.params.metric, req.body));
++});
++
++router.pathNode = (userId, enrollment) => checks.pathNode(userId, enrollment);
++
++module.exports = router;
+diff --git a/public/stage-check.html b/public/stage-check.html
+new file mode 100644
+index 0000000..bbc588b
+--- /dev/null
++++ b/public/stage-check.html
+@@ -0,0 +1,32 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>Stage check | Savant</title>
++  <meta name="color-scheme" content="light dark">
++  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
++  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
++  <link rel="stylesheet" href="/fonts/fonts.css">
++  <link rel="stylesheet" href="/css/style.css">
++  <link rel="stylesheet" href="/css/skills.css">
++</head>
++<body>
++  <header class="site-header" id="header"></header>
++  <main class="page">
++    <div class="wrap">
++      <div id="stage-check">
++        <div class="loading"><span class="spinner"></span>Reading your record</div>
++      </div>
++    </div>
++  </main>
++  <script src="/js/icons.js"></script>
++  <script src="/js/app.js"></script>
++  <script src="/engine/chess/chess-core.js"></script>
++  <script src="/engine/chess/board.js"></script>
++  <script src="/engine/piano/piano-core.js"></script>
++  <script src="/engine/piano/piano-io.js"></script>
++  <script src="/js/skill-kit.js"></script>
++  <script src="/js/stage-check.js"></script>
++</body>
++</html>
+diff --git a/public/js/stage-check.js b/public/js/stage-check.js
+new file mode 100644
+index 0000000..683607d
+--- /dev/null
++++ b/public/js/stage-check.js
+@@ -0,0 +1,241 @@
++/* The stage check (staged skills round 3, patch 02; SKILL_STAGE_TESTS): each
++ * skill a chess, piano or basketball stage asks for, how it is measured, how
++ * far its proof has got, and the way to sit it. A check counts when it is cold
++ * (the first sitting of that skill today, 20+ hours after practising it); a
++ * skill is proven by cold passes on two different days.
++ *
++ * Network: GET and POST to /api/skills/checks only. Piano notes leave as key
++ * numbers and times; basketball as counts. No sound, picture or clip is sent.
++ */
++App.mount(async () => {
++  const user = await App.currentUser({ require: true });
++  if (!user) return;
++  App.header(user, 'dashboard');
++  const host = document.getElementById('stage-check');
++  const enrollmentId = Number(App.query('enrollment'));
++  const esc = App.escapeHtml;
++  if (!enrollmentId) {
++    host.innerHTML = '<div class="notice notice-error">No subject selected. <a href="/dashboard">Back to dashboard</a>.</div>';
++    return;
++  }
++  const pathHref = `/path?enrollment=${enrollmentId}`;
++  const api = `/api/skills/checks/${enrollmentId}`;
++  let data;
++
++  const when = (iso) => {
++    const d = new Date(iso);
++    const today = new Date();
++    const sameDay = d.toDateString() === today.toDateString();
++    const tomorrow = new Date(today.getTime() + 864e5).toDateString() === d.toDateString();
++    const time = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
++    return sameDay ? `today at ${time}` : tomorrow ? `tomorrow at ${time}` : d.toLocaleDateString([], { weekday: 'long', hour: 'numeric', minute: '2-digit' });
++  };
++
++  function head(title, sub) {
++    const [gradeMain] = App.gradeParts(data.grade.name);
++    return `
++      <div class="path-top skill-top" data-subject="${esc(data.track.id)}">
++        <div>
++          <a class="back-link" href="${pathHref}">${window.icon('arrow-left')}Your path</a>
++          <div class="track-heading">
++            ${App.symbol(data.track, { size: 'lg' })}
++            <div>
++              <h1>${esc(title)}</h1>
++              <span class="tiny">${esc(data.track.name)}, ${esc(gradeMain)}. ${esc(sub || '')}</span>
++            </div>
++          </div>
++        </div>
++      </div>`;
++  }
++
++  const STATUS = {
++    unproven: 'Not proven yet',
++    lapsed: 'Slipped: prove it again',
++    proven: 'Proven; waiting on its retention check',
++    retained: 'Proven and kept',
++    attest: 'Recorded, not machine-checked',
++  };
++
++  function progressLine(c) {
++    if (!c.provable) return '';
++    if (c.status === 'retained') return c.stale ? 'The last pass is over a week old: one more cold pass keeps it standing.' : '';
++    if (c.status === 'proven') return c.retention_due_at ? `The retention check is ready ${when(c.retention_due_at)}.` : '';
++    return `Cold passes so far: <span class="num">${c.proof_days}</span> of <span class="num">2</span> days.`;
++  }
++
++  function lastLine(c) {
++    if (!c.last) return '';
++    const res = c.last.pass ? 'passed' : 'below the bar';
++    const counted = c.last.counts ? 'counted' : `did not count${c.last.why_not ? `: ${c.last.why_not}` : ''}`;
++    return `Last sitting ${when(c.last.at)}: ${res}, ${counted}.`;
++  }
++
++  function row(c, primary) {
++    const mark = c.status === 'retained' ? window.mark('tick', 'mark-plain') : c.status === 'proven' ? window.mark('circle') : '';
++    let action = '';
++    if (!c.provable) action = '<span class="skill-kind">Attested</span>';
++    else if (!c.wired) action = '<span class="skill-kind">Not checkable here yet</span>';
++    else if (c.open) action = `<button class="btn btn-sm${primary ? ' btn-primary' : ''}" type="button" data-sit="${esc(c.id)}">Carry on</button>`;
++    else if (c.needs_sitting || c.status === 'retained') {
++      action = c.cold_now
++        ? `<button class="btn btn-sm${primary ? ' btn-primary' : ''}" type="button" data-sit="${esc(c.id)}">${c.how === 'count' ? 'Log it' : 'Sit it'}<span class="visually-hidden">: ${esc(c.title)}</span></button>`
++        : `<span class="skill-kind">Cold ${esc(when(c.cold_at))}</span><button class="btn btn-sm btn-ghost" type="button" data-sit="${esc(c.id)}">Sit warm</button>`;
++    }
++    return `
++      <li class="skill-row${c.due ? ' is-due' : ''}">
++        <span class="skill-mark">${mark}</span>
++        <span class="skill-main">
++          <span class="skill-title">${esc(c.title)}</span>
++          <span class="skill-why">${esc(c.says || c.test)}</span>
++          <span class="skill-meta">${STATUS[c.status] || ''}. ${progressLine(c)} ${esc(lastLine(c))}</span>
++          ${c.needs_build ? `<span class="skill-meta">Needs: ${esc(c.needs_build)}.</span>` : ''}
++          ${c.gap ? `<span class="skill-meta">${esc(c.gap)}</span>` : ''}
++        </span>
++        <span class="skill-act">${action}</span>
++      </li>`;
++  }
++
++  async function load() {
++    try {
++      data = await App.api.get(api);
++    } catch (err) {
++      host.innerHTML = `<div class="notice notice-error">${esc(err.status === 404 ? 'There is no stage check on this subject.' : err.message)}
++        <div style="margin-top:10px"><a class="btn btn-sm" href="${pathHref}">Back to your path</a></div></div>`;
++      return;
++    }
++    overview();
++  }
++
++  function overview() {
++    const o = data.checks;
++    const provable = o.checks.filter((c) => c.provable);
++    const proven = provable.filter((c) => c.status === 'proven' || c.status === 'retained').length;
++    const wired = provable.filter((c) => c.wired).length;
++    const due = o.checks.filter((c) => c.due);
++    const firstDue = due[0] ? due[0].id : null;
++    const knowledge = (o.knowledge || []).find((k) => k.id === data.grade.id);
++    const lede = due.length
++      ? `<span class="num">${due.length}</span> check${due.length === 1 ? ' is' : 's are'} ready now, cold. About <span class="num">${due.reduce((a, c) => a + (c.minutes || 0), 0)}</span> minutes.`
++      : o.battery_open ? 'Nothing is ready cold right now.' : `This stage's checks open at the Final (level <span class="num">${data.enrollment.final_level}</span>). You can sit any of them sooner.`;
++    host.innerHTML = `
++      ${head('Stage check', `Stage ${o.stage.id}: ${o.stage.name}.`)}
++      <div class="skill-now">
++        <div>
++          <p class="skill-lede">${lede}</p>
++          <p class="small muted skill-note">A check counts when it is cold: your first sitting of that skill today, at least 20 hours after you last practised it. A skill is proven by cold passes on two different days, and one lucky pass cannot do it.</p>
++        </div>
++        <div class="tmeters">
++          ${App.tmeter({ label: 'Measured skills proven', value: proven, target: provable.length, max: provable.length || 1, unit: 'count' })}
++          ${knowledge && knowledge.total ? App.tmeter({ label: 'Lesson objectives proven and kept', value: knowledge.total - knowledge.blocking, target: knowledge.total, max: knowledge.total, unit: 'count' }) : ''}
++          ${wired < provable.length ? `<p class="tiny muted">${provable.length - wired} of these ${provable.length} skills cannot be checked in the app yet.</p>` : ''}
++        </div>
++      </div>
++      <section class="skill-section" aria-labelledby="checks-h">
++        <h2 class="section-title" id="checks-h">The checks</h2>
++        <ol class="skill-list">${o.checks.filter((c) => c.provable).map((c) => row(c, c.id === firstDue)).join('')}</ol>
++      </section>
++      ${o.checks.some((c) => !c.provable) ? `
++        <section class="skill-section" aria-labelledby="attest-h">
++          <h2 class="section-title" id="attest-h">Recorded, not machine-checked</h2>
++          <p class="small muted skill-note">A person's review, a film or your own rating never proves a skill here. These are listed and do not hold the stage.</p>
++          <ol class="skill-list">${o.checks.filter((c) => !c.provable).map((c) => row(c, false)).join('')}</ol>
++        </section>` : ''}`;
++    host.querySelectorAll('[data-sit]').forEach((b) => b.addEventListener('click', () => sit(b.getAttribute('data-sit'), b)));
++  }
++
++  function sittingFrame(c, warm) {
++    host.innerHTML = `
++      <div class="player skill-player" data-subject="${esc(data.track.id)}">
++        <div class="player-head">
++          <a class="icon-btn player-close" href="#" data-leave title="Back to the checks" aria-label="Back to the checks">${window.icon('x')}</a>
++          <div class="player-titles">
++            <h1 id="title">${esc(c.title)}</h1>
++            <div id="subtitle">${esc(c.says || c.test)}</div>
++          </div>
++        </div>
++        ${warm ? `<p class="notice notice-warn">This sitting is warm: it is recorded, and it will not count. It counts cold ${esc(when(c.cold_at))}.</p>` : ''}
++        <div class="card" id="runner"></div>
++      </div>`;
++    host.querySelector('[data-leave]').addEventListener('click', (e) => { e.preventDefault(); load(); });
++    return host.querySelector('#runner');
++  }
++
++  async function sit(id, button) {
++    const c = data.checks.checks.find((x) => x.id === id);
++    if (!c) return;
++    if (c.how === 'count') {
++      const runner = sittingFrame(c, !c.cold_now);
++      runner.insertAdjacentHTML('beforebegin', c.baseline != null ? `<p class="small">Your baseline: <b class="num">${c.baseline}</b>.</p>` : '');
++      SkillKit.count(runner, {
++        fields: c.fields, hands: c.hands, cameraOk: c.camera_ok,
++        onSubmit: async (body, form) => {
++          form.querySelector('[type=submit]').disabled = true;
++          try {
++            const out = await App.api.post(`${api}/${encodeURIComponent(id)}/count`, body);
++            result(c, out.result);
++          } catch (err) { App.toast(err.message, 'error'); form.querySelector('[type=submit]').disabled = false; }
++        },
++      });
++      return;
++    }
++    if (button) { button.disabled = true; button.innerHTML = '<span class="spinner"></span>Setting up'; }
++    let out;
++    try { out = await App.api.post(`${api}/${encodeURIComponent(id)}/start`, {}); } catch (err) { App.toast(err.message, 'error'); load(); return; }
++    const s = out.sitting;
++    const runner = sittingFrame(c, !s.cold);
++    const finish = async () => {
++      runner.innerHTML = '<div class="loading"><span class="spinner"></span>Marking</div>';
++      try {
++        const r = await App.api.post(`${api}/${encodeURIComponent(id)}/finish`, {});
++        result(c, r.result);
++      } catch (err) {
++        runner.innerHTML = `<div class="notice notice-warn">${esc(err.message)}</div><div class="path-actions"><button class="btn btn-primary" type="button" data-retry>Check again</button><button class="btn" type="button" data-back>Back to the checks</button></div>`;
++        runner.querySelector('[data-retry]').addEventListener('click', finish);
++        runner.querySelector('[data-back]').addEventListener('click', load);
++      }
++    };
++    if (s.how === 'items') {
++      SkillKit.items(runner, {
++        items: s.items, answered: s.answered, subject: data.track.id, feedback: false,
++        onAnswer: (index, answer, source) => App.api.post(`${api}/${encodeURIComponent(id)}/answer`, { index, answer, source }),
++        onDone: finish,
++      });
++    } else if (s.how === 'take') {
++      SkillKit.takes(runner, {
++        parts: s.parts,
++        onTake: (part, played, origin) => App.api.post(`${api}/${encodeURIComponent(id)}/take`, { part, played, origin }),
++        onDone: finish,
++      });
++    } else if (s.how === 'puzzles') {
++      runner.innerHTML = `
++        <p class="skill-stem">Solve at least <span class="num">${s.min}</span> rated puzzles in the puzzle trainer, then come back.</p>
++        <p class="small muted">Your rating has to reach <span class="num">${s.cut}</span>, with a deviation of <span class="num">${s.rd}</span> or less, so it is a settled rating rather than a lucky run.</p>
++        <div class="path-actions"><a class="btn" href="/engine/chess/puzzles.html" target="_blank" rel="noopener">Open the puzzle trainer</a><button class="btn btn-primary" type="button" data-done>I have done them</button></div>`;
++      runner.querySelector('[data-done]').addEventListener('click', finish);
++    }
++  }
++
++  function result(c, r) {
++    const runner = host.querySelector('#runner') || host;
++    if (r.baseline != null && r.pass === null) {
++      runner.innerHTML = `<p class="skill-verdict">${window.mark('dot')}<span>Baseline recorded: <b class="num">${r.baseline}</b>.</span></p>
++        <p class="small muted">${esc(r.why)}. From your next cold count on, it is measured against this.</p>
++        <div class="path-actions"><button class="btn btn-primary" type="button" data-back>Back to the checks</button></div>`;
++      runner.querySelector('[data-back]').addEventListener('click', load);
++      return;
++    }
++    const status = { unproven: 'Not proven yet.', lapsed: 'Slipped: prove it again.', proven: 'Proven.', retained: 'Proven and kept.' }[r.status] || '';
++    const counted = r.counted ? 'It counted: a cold sitting.' : `It did not count${r.why ? `: ${r.why}` : ''}.`;
++    const review = (r.review || []).filter((x) => !x.correct);
++    runner.innerHTML = `
++      <p class="skill-verdict ${r.pass ? 'is-right' : 'is-wrong'}">${window.mark(r.pass ? 'tick' : 'cross')}<span>${r.pass ? 'At the bar.' : 'Below the bar.'}${r.right != null ? ` <span class="num">${r.right}</span> of <span class="num">${r.n}</span> right.` : c.how === 'count' && r.score != null && r.score <= 1 && /rate/.test(c.says || '') ? ` Chance your true rate is at the bar: <span class="num">${Math.floor(r.score * 100)}%</span>.` : c.how === 'take' && r.score != null ? ` Notes right: <span class="num">${Math.round(r.score * 100)}%</span>.` : c.how === 'puzzles' && r.detail ? ` Rating <span class="num">${r.detail.rating}</span>.` : ''}</span></p>
++      <p class="small">${esc(counted)} ${r.proved ? '<b>This proves it.</b>' : esc(status)}</p>
++      ${r.note ? `<p class="small muted">${esc(r.note)}</p>` : ''}
++      ${review.length ? `<details class="skill-review"><summary>The ones you missed (${review.length})</summary><ol>${review.map((x) => `<li><span class="skill-why">${esc(x.prompt).replace(/\n/g, '<br>')}</span> You: <b>${esc(typeof x.given === 'object' ? JSON.stringify(x.given) : x.given || 'nothing')}</b>. Answer: <b>${esc(x.answer || '')}</b>.</li>`).join('')}</ol></details>` : ''}
++      <div class="path-actions"><button class="btn btn-primary" type="button" data-back>Back to the checks</button></div>`;
++    runner.querySelector('[data-back]').addEventListener('click', load);
++    runner.querySelector('[data-back]').focus();
++  }
++
++  load();
++});
+diff --git a/scripts/skills-r3-checks-test.js b/scripts/skills-r3-checks-test.js
+new file mode 100644
+index 0000000..3ec98a6
+--- /dev/null
++++ b/scripts/skills-r3-checks-test.js
+@@ -0,0 +1,263 @@
++/**
++ * Tests for the stage checks (staged skills round 3, patch 02-stage-tests):
++ * services/skill-checks.js, routes/skill-checks.js, content/skill-stage-checks.js
++ * and the stage check page's network use. Needs patch 01.
++ *
++ *   node scripts/skills-r3-checks-test.js
++ *
++ * Throwaway data file, keys blanked, no model call, no network.
++ */
++const F = require('./lib/skills-r3-fixture');
++const fs = require('fs');
++const path = require('path');
++
++const { db, check, learner, serve, fresh, HOUR, DAY, at, later, now } = F;
++const C = require('../content/chess-board');
++const P = require('../public/engine/piano/piano-core');
++
++/** The open sitting's items with their keys, read from the store (the page never sees them). */
++function openItems(uid, metric) {
++  const row = db.findOne('skill_records', (r) => r.user_id === uid && r.metric_id === metric);
++  return row && row.open ? row.open.items : null;
++}
++/** A right answer for an item, from its key. */
++function rightAnswer(it) {
++  const k = it.key;
++  if (k.type === 'choice') return k.answer;
++  if (k.type === 'text') return k.accepts[0];
++  if (k.type === 'squares') return k.set.join(' ');
++  if (k.type === 'move') return k.accepts[0];
++  if (k.type === 'mate_or_none') {
++    if (!k.mate) return 'no mate';
++    const pos = C.parseFen(it.fen);
++    const m = C.legalMoves(pos).find((x) => C.isCheckmate(C.makeMove(pos, x)));
++    return C.san(pos, m);
++  }
++  if (k.type === 'pc') return { midi: 60 + k.pc };
++  if (k.type === 'midi') return { midi: k.midi };
++  if (k.type === 'echo') return { tries: [k.notes] };
++  return null;
++}
++/** Played notes for a piano part: every target note on its beat, from `source`. */
++function playPart(part, source = 'midi', jitter = 0) {
++  const beat = 60000 / part.tempo;
++  if (part.chords) return part.target_chords ? [] : [];
++  return part.target.map((t, i) => ({ midi: t.midi, time: 1000 + t.beat * beat + (i % 2 ? jitter : -jitter), velocity: 70, source }));
++}
++
++(async () => {
++  console.log('skills round 3, patch 02: stage checks');
++  const routes = fresh('routes/skills');
++  const app = await serve([routes]);
++  const chess = learner('chess', 'chess_rules_learner');
++  const base = `/api/skills/checks/${chess.enrollment.id}`;
++
++  let r = await app.get(base, chess.user.id);
++  check('off: the checks answer 404', r.status === 404);
++  process.env.SKILL_RECORD = 'on';
++  r = await app.get(base, chess.user.id);
++  check('SKILL_RECORD alone: still 404 (SKILL_STAGE_TESTS is off)', r.status === 404);
++  process.env.SKILL_STAGE_TESTS = 'on';
++  r = await app.get(base, chess.user.id);
++  const o = r.json.checks;
++  check('on: the overview lists the stage\'s four checks with how each is sat', r.status === 200 && o.checks.length === 4 && o.checks.map((c) => c.how).join(',') === 'items,items,not_wired,not_wired', o && o.checks.map((c) => c.how));
++  check('...the ones not built yet say what they need', o.checks.filter((c) => !c.wired).every((c) => c.needs_build && c.needs_build.length > 20));
++  check('...nothing is due before the Final (the battery opens there)', !o.battery_open && o.due.length === 0);
++  r = await app.get(`/api/skills/path/${chess.enrollment.id}`, chess.user.id);
++  check('the path shows a Stage check row, not the next step yet', r.json.nodes.length === 1 && r.json.nodes[0].kind === 'stage_check' && !r.json.nodes[0].next, r.json.nodes);
++
++  db.update('enrollments', chess.enrollment.id, { current_level: chess.final });
++  r = await app.get(base, chess.user.id);
++  check('at the Final every wired check that is cold is due', r.json.checks.battery_open && r.json.checks.due.length === 2, r.json.checks.due);
++  r = await app.get(`/api/skills/path/${chess.enrollment.id}`, chess.user.id);
++  check('...and the path row is the next step', r.json.nodes[0].next === true && /2 checks ready/.test(r.json.nodes[0].detail), r.json.nodes[0]);
++
++  // ── an items sitting, start to finish ──
++  const metric = 'CH1:check_mate_stalemate_id';
++  at(Date.UTC(2026, 9, 5, 9));
++  r = await app.post(`${base}/${metric}/start`, {}, chess.user.id);
++  check('a sitting opens with 20 positions', r.status === 201 && r.json.sitting.items.length === 20 && r.json.sitting.cold === true, r.status);
++  check('...and the page gets no answer key', !JSON.stringify(r.json).includes('"key"') && !/"answer"\s*:/.test(JSON.stringify(r.json)));
++  let items = openItems(chess.user.id, metric);
++  const classes = items.map((it) => {
++    const pos = C.parseFen(it.fen);
++    const legal = C.legalMoves(pos).length;
++    const inCheck = C.inCheck(pos);
++    return inCheck ? (legal ? 'Check' : 'Checkmate') : (legal ? 'None of these' : 'Stalemate');
++  });
++  check('every check / mate / stalemate key agrees with the rules engine', items.every((it, i) => it.key.answer === classes[i]), classes);
++  check('...five of each kind', ['Check', 'Checkmate', 'Stalemate', 'None of these'].every((k) => classes.filter((x) => x === k).length === 5), classes);
++  r = await app.post(`${base}/${metric}/start`, {}, chess.user.id);
++  check('starting again resumes the open sitting', r.status === 200 && r.json.resumed === true);
++  for (let i = 0; i < 20; i++) await app.post(`${base}/${metric}/answer`, { index: i, answer: i < 18 ? rightAnswer(items[i]) : 'Check' }, chess.user.id);
++  r = await app.post(`${base}/${metric}/answer`, { index: 0, answer: 'Check' }, chess.user.id);
++  check('an answer cannot be changed', r.status === 409);
++  r = await app.post(`${base}/${metric}/finish`, {}, chess.user.id);
++  const res1 = r.json.result;
++  check('18 of 20 passes, counts (cold), and is not proof on one day', res1 && res1.pass && res1.counted && res1.status === 'unproven' && res1.right >= 18, res1);
++  check('...the review lists what was missed, with the answers', res1.review && res1.review.length === 20);
++  later(3 * HOUR);
++  r = await app.post(`${base}/${metric}/start`, {}, chess.user.id);
++  check('a second sitting the same day opens warm', r.json.sitting.cold === false);
++  items = openItems(chess.user.id, metric);
++  for (let i = 0; i < 20; i++) await app.post(`${base}/${metric}/answer`, { index: i, answer: rightAnswer(items[i]) }, chess.user.id);
++  r = await app.post(`${base}/${metric}/finish`, {}, chess.user.id);
++  check('...passes and does not count', r.json.result.pass && !r.json.result.counted && /warm/.test(r.json.result.why), r.json.result);
++  at(Date.UTC(2026, 9, 6, 10));
++  r = await app.post(`${base}/${metric}/start`, {}, chess.user.id);
++  items = openItems(chess.user.id, metric);
++  for (let i = 0; i < 20; i++) await app.post(`${base}/${metric}/answer`, { index: i, answer: i < 17 ? rightAnswer(items[i]) : 'zz' }, chess.user.id);
++  r = await app.post(`${base}/${metric}/finish`, {}, chess.user.id);
++  check('17 of 20 the next day is below the bar: counted as a miss, not proven', !r.json.result.pass && r.json.result.counted && r.json.result.status === 'unproven', r.json.result);
++  at(Date.UTC(2026, 9, 7, 10));
++  for (const day of [7, 8]) {
++    at(Date.UTC(2026, 9, day, 10));
++    await app.post(`${base}/${metric}/start`, {}, chess.user.id);
++    items = openItems(chess.user.id, metric);
++    for (let i = 0; i < 20; i++) await app.post(`${base}/${metric}/answer`, { index: i, answer: rightAnswer(items[i]) }, chess.user.id);
++    r = await app.post(`${base}/${metric}/finish`, {}, chess.user.id);
++  }
++  check('after the miss, two more cold passes prove it', r.json.result.status === 'proven' && r.json.result.proved, r.json.result);
++
++  // Mate in one, unannounced: 10 mates and 5 without.
++  const m2 = 'CH1:mate_in_1_unannounced';
++  at(Date.UTC(2026, 9, 9, 10));
++  await app.post(`${base}/${m2}/start`, {}, chess.user.id);
++  items = openItems(chess.user.id, m2);
++  const mates = items.filter((it) => it.key.mate);
++  check('mate in one: 15 positions, 10 with a mate', items.length === 15 && mates.length === 10);
++  check('...every mate exists and every "no mate" has none (rules engine)', items.every((it) => { const pos = C.parseFen(it.fen); const any = C.legalMoves(pos).some((x) => C.isCheckmate(C.makeMove(pos, x))); return any === it.key.mate; }));
++  check('...and the prompt does not announce the mate', items.every((it) => /Is there a checkmate in one move/.test(it.prompt) && !/Find checkmate/.test(it.prompt)));
++  for (let i = 0; i < 15; i++) await app.post(`${base}/${m2}/answer`, { index: i, answer: i === 0 && items[0].key.mate ? 'no mate' : rightAnswer(items[i]) }, chess.user.id);
++  r = await app.post(`${base}/${m2}/finish`, {}, chess.user.id);
++  check('14 or 15 of 15 passes', r.json.result.pass && r.json.result.right >= 14, r.json.result);
++  const notWired = await app.post(`${base}/CH1:kqk_playout/start`, {}, chess.user.id);
++  check('a check that is not built yet cannot be sat', notWired.status === 409 && /not built yet/.test(notWired.json.error));
++  const other = await app.post(`${base}/CH3:kpk_judgement/start`, {}, chess.user.id);
++  check("another stage's check is refused", other.status === 404);
++
++  // An open sitting left for hours closes as failed.
++  const c3 = learner('chess', 'chess_novice_club_player', 'final');
++  const b3 = `/api/skills/checks/${c3.enrollment.id}`;
++  at(Date.UTC(2026, 9, 10, 9));
++  r = await app.post(`${b3}/CH3:kpk_judgement/start`, {}, c3.user.id);
++  items = openItems(c3.user.id, 'CH3:kpk_judgement');
++  check('KPK: 20 positions, win or draw, keys from the table-proved drills', items.length === 20 && items.every((it) => ['White wins', 'Draw'].includes(it.key.answer)));
++  const fen0 = '8/8/5k2/3P4/8/1K6/8/8 b - - 0 1';
++  check('the left-right mirror used to vary the set is its own inverse', F.db && require('../services/skill-checks').mirrorFen(require('../services/skill-checks').mirrorFen(fen0)).split(' ')[0] === fen0.split(' ')[0]);
++  later(4 * HOUR);
++  r = await app.post(`${b3}/CH3:kpk_judgement/start`, {}, c3.user.id);
++  const kpkRow = db.findOne('skill_records', (x) => x.user_id === c3.user.id && x.metric_id === 'CH3:kpk_judgement');
++  check('a sitting left open for 3+ hours is closed as a sitting that did not pass', kpkRow.sittings.length === 1 && kpkRow.sittings[0].pass === false && kpkRow.sittings[0].detail.left_open, kpkRow.sittings);
++  // Tactics from the Stockfish-checked pool.
++  await app.post(`${b3}/CH3:tactics_unannounced/start`, {}, c3.user.id);
++  items = openItems(c3.user.id, 'CH3:tactics_unannounced');
++  check('tactics: 30 pool positions, the motif left unnamed, each key a legal move', items.length === 30 && items.every((it) => /Find the best move/.test(it.prompt) && !/capture|fork/i.test(it.prompt.split('\n')[1]) && C.moveFromText(C.parseFen(it.fen), it.key.accepts[0])));
++
++  // ── piano: score-informed takes ──
++  const pi = learner('piano', 'piano_pre_reader', 'final');
++  const pb = `/api/skills/checks/${pi.enrollment.id}`;
++  at(Date.UTC(2026, 9, 11, 9));
++  r = await app.post(`${pb}/PI1:five_finger/start`, {}, pi.user.id);
++  check('five-finger pattern: two parts, right hand then left, with notes to read', r.status === 201 && r.json.sitting.parts.length === 2 && r.json.sitting.parts[1].names[0] === 'C3', r.json.sitting && r.json.sitting.parts);
++  const parts = db.findOne('skill_records', (x) => x.user_id === pi.user.id && x.metric_id === 'PI1:five_finger').open.parts;
++  r = await app.post(`${pb}/PI1:five_finger/take`, { part: 0, played: playPart(parts[0], 'midi', 20) }, pi.user.id);
++  check('a MIDI take on the beat passes (scored on the server by piano-core)', r.json.pass && r.json.notes === 1 && r.json.on_beat === 1 && r.json.source === 'midi', r.json);
++  const wrong = playPart(parts[1], 'midi').map((n, i) => (i === 3 ? { ...n, midi: n.midi + 1 } : n));
++  r = await app.post(`${pb}/PI1:five_finger/take`, { part: 1, played: wrong }, pi.user.id);
++  check('one wrong note fails a check that needs every note', !r.json.pass && r.json.notes < 1, r.json);
++  r = await app.post(`${pb}/PI1:five_finger/finish`, {}, pi.user.id);
++  check('...so the sitting is below the bar, and counted', !r.json.result.pass && r.json.result.counted, r.json.result);
++  at(Date.UTC(2026, 9, 12, 9));
++  await app.post(`${pb}/PI1:five_finger/start`, {}, pi.user.id);
++  const parts2 = db.findOne('skill_records', (x) => x.user_id === pi.user.id && x.metric_id === 'PI1:five_finger').open.parts;
++  for (const k of [0, 1]) await app.post(`${pb}/PI1:five_finger/take`, { part: k, played: playPart(parts2[k], 'mic') }, pi.user.id);
++  r = await app.post(`${pb}/PI1:five_finger/finish`, {}, pi.user.id);
++  check('microphone takes pass but, unconfirmed, do not count', r.json.result.pass && !r.json.result.counted && r.json.result.source === 'mic' && !r.json.result.confirmed, r.json.result);
++  at(Date.UTC(2026, 9, 13, 9));
++  await app.post(`${pb}/PI1:five_finger/start`, {}, pi.user.id);
++  const parts3 = db.findOne('skill_records', (x) => x.user_id === pi.user.id && x.metric_id === 'PI1:five_finger').open.parts;
++  for (const k of [0, 1]) for (let t = 0; t < 2; t++) await app.post(`${pb}/PI1:five_finger/take`, { part: k, played: playPart(parts3[k], 'mic', 10) }, pi.user.id);
++  r = await app.post(`${pb}/PI1:five_finger/finish`, {}, pi.user.id);
++  check('a second passing microphone take of each part confirms it, and it counts', r.json.result.pass && r.json.result.confirmed && r.json.result.counted, r.json.result);
++  // Pieces from the song library.
++  r = await app.post(`${pb}/PI1:piece/start`, {}, pi.user.id);
++  check('pieces: two songs of this grade from the library', r.json.sitting.parts.length === 2 && r.json.sitting.parts.every((p) => p.song));
++  const songParts = db.findOne('skill_records', (x) => x.user_id === pi.user.id && x.metric_id === 'PI1:piece').open.parts;
++  await app.post(`${pb}/PI1:piece/take`, { part: 0, played: playPart(songParts[0], 'midi') }, pi.user.id);
++  const halting = playPart(songParts[1], 'midi').map((n, i) => (i >= 4 ? { ...n, time: n.time + 5000 } : n));
++  r = await app.post(`${pb}/PI1:piece/take`, { part: 1, played: halting }, pi.user.id);
++  check('a long stop in a piece fails it ("no stops")', !r.json.pass && r.json.stops >= 1, r.json);
++  // Beat and cadence.
++  const pk = learner('piano', 'piano_keyboard_explorer', 'final');
++  await app.post(`/api/skills/checks/${pk.enrollment.id}/PI0:steady_beat/start`, {}, pk.user.id);
++  const beatPart = db.findOne('skill_records', (x) => x.user_id === pk.user.id && x.metric_id === 'PI0:steady_beat').open.parts[0];
++  const taps = beatPart.target.map((t, i) => ({ midi: 64, time: 2000 + i * 750 + (i % 4 === 0 ? 300 : 0), source: 'tap' }));
++  r = await app.post(`/api/skills/checks/${pk.enrollment.id}/PI0:steady_beat/take`, { part: 0, played: taps, origin: 2000 }, pk.user.id);
++  check('steady beat: taps on any key, 12 of 16 on the beat passes (0.75)', r.json.pass && r.json.on_beat >= 0.75 && r.json.source === 'tap', r.json);
++  const p4 = learner('piano', 'piano_elementary_2', 'final');
++  await app.post(`/api/skills/checks/${p4.enrollment.id}/PI4:cadence/start`, {}, p4.user.id);
++  const cad = db.findOne('skill_records', (x) => x.user_id === p4.user.id && x.metric_id === 'PI4:cadence').open.parts[0];
++  const chords = cad.target_chords.flatMap((ch, i) => ch.map((m, k) => ({ midi: m, time: 1000 + i * 1000 + k * 8, source: 'midi' })));
++  r = await app.post(`/api/skills/checks/${p4.enrollment.id}/PI4:cadence/take`, { part: 0, played: chords }, p4.user.id);
++  check('cadence: four chords played together, each one right', r.json.pass && r.json.chords_right === 4, r.json);
++
++  // ── chess puzzles rating ──
++  const c4 = learner('chess', 'chess_club_player', 'final');
++  const b4 = `/api/skills/checks/${c4.enrollment.id}`;
++  at(Date.UTC(2026, 9, 14, 9));
++  r = await app.post(`${b4}/CH4:tactics_rating/start`, {}, c4.user.id);
++  check('puzzle rating: a sitting asks for 10 rated puzzles against the cut', r.status === 201 && r.json.sitting.min === 10 && r.json.sitting.cut === 1590);
++  r = await app.post(`${b4}/CH4:tactics_rating/finish`, {}, c4.user.id);
++  check('...finishing before 10 are done is refused, the sitting stays open', r.status === 409 && r.json.done === 0);
++  const startedIso = new Date(now()).toISOString();
++  for (let i = 0; i < 10; i++) db.insert('chess_puzzle_attempts', { user_id: c4.user.id, puzzle_id: `p${i}`, rated: true, status: 'solved', started_at: startedIso });
++  db.insert('chess_ratings', { user_id: c4.user.id, rating: 1650, rd: 70, vol: 0.06, solved: 10, failed: 0, history: [] });
++  r = await app.post(`${b4}/CH4:tactics_rating/finish`, {}, c4.user.id);
++  check('...rating 1650 with deviation 70 passes and counts', r.json.result.pass && r.json.result.counted && r.json.result.detail.rating === 1650, r.json.result);
++
++  // ── basketball counts ──
++  const bb = learner('basketball', 'basketball_mini_starter', 'final');
++  const bbb = `/api/skills/checks/${bb.enrollment.id}`;
++  at(Date.UTC(2026, 9, 15, 9));
++  r = await app.post(`${bbb}/BB1:layup_both_hands/count`, { left: { makes: 9, attempts: 10 }, right: { makes: 10, attempts: 10 } }, bb.user.id);
++  check('lay-ups 9/10 and 10/10: each hand 90% sure of 50%+, passes and counts', r.json.result.pass && r.json.result.counted && r.json.result.score >= 0.9, r.json.result);
++  at(Date.UTC(2026, 9, 16, 9));
++  r = await app.post(`${bbb}/BB1:layup_both_hands/count`, { left: { makes: 6, attempts: 10 }, right: { makes: 10, attempts: 10 } }, bb.user.id);
++  check('6/10 on one hand fails (one strong hand cannot carry the other)', !r.json.result.pass && r.json.result.counted, r.json.result);
++  at(Date.UTC(2026, 9, 17, 9));
++  r = await app.post(`${bbb}/BB1:layup_both_hands/count`, { left: { makes: 9, attempts: 9 }, right: { makes: 10, attempts: 10 } }, bb.user.id);
++  check('fewer than 10 on a hand does not pass, whatever the rate', !r.json.result.pass && /at least 10/.test(r.json.result.note), r.json.result);
++  at(Date.UTC(2026, 9, 18, 9));
++  r = await app.post(`${bbb}/BB1:layup_both_hands/count`, { left: { makes: 10, attempts: 10 }, right: { makes: 10, attempts: 10 }, source: 'camera' }, bb.user.id);
++  check('a camera count not confirmed by the learner does not count', r.json.result.pass && !r.json.result.counted, r.json.result);
++  at(Date.UTC(2026, 9, 19, 9));
++  r = await app.post(`${bbb}/BB1:layup_both_hands/count`, { left: { makes: 10, attempts: 10 }, right: { makes: 10, attempts: 10 }, source: 'camera', confirmed: true }, bb.user.id);
++  check('...confirmed, it does', r.json.result.counted && r.json.result.confirmed, r.json.result);
++  r = await app.post(`${bbb}/BB1:layup_both_hands/count`, { left: { makes: 12, attempts: 10 }, right: { makes: 1, attempts: 1 } }, bb.user.id);
++  check('numbers that do not add up are refused', r.status === 400);
++  r = await app.post(`${bbb}/BB1:dribble_look_up/count`, { strong: 40, weak: 30 }, bb.user.id);
++  check('dribbling: weak 30 of strong 40 (0.75) passes the 0.7 ratio', r.json.result.pass && r.json.result.score === 0.75, r.json.result);
++  const b3l = learner('basketball', 'basketball_junior_club_player', 'final');
++  r = await app.post(`/api/skills/checks/${b3l.enrollment.id}/BB3:mikan_30s/count`, { makes: 10 }, b3l.user.id);
++  check('Mikan: the first count is the learner\'s own baseline, not a sitting', r.json.result.baseline === 10 && r.json.result.pass === null && db.findOne('skill_records', (x) => x.user_id === b3l.user.id && x.metric_id === 'BB3:mikan_30s').sittings.length === 0);
++  at(Date.UTC(2026, 9, 20, 9));
++  r = await app.post(`/api/skills/checks/${b3l.enrollment.id}/BB3:mikan_30s/count`, { makes: 11 }, b3l.user.id);
++  check('...10% more is below the 20% growth bar', !r.json.result.pass, r.json.result);
++  at(Date.UTC(2026, 9, 21, 9));
++  r = await app.post(`/api/skills/checks/${b3l.enrollment.id}/BB3:mikan_30s/count`, { makes: 12 }, b3l.user.id);
++  check('...20% more passes', r.json.result.pass && r.json.result.counted, r.json.result);
++  check('the make-rate rule is the Beta posterior (P(rate >= 0.5) after 13/20 is about 0.905)', Math.abs(require('../services/skill-checks').rateAtLeast(13, 20, 0.5) - 0.9054) < 0.002);
++
++  // ── the pages' network use: results only, never sound or pictures ──
++  const FORBIDDEN = [/\bXMLHttpRequest\b/, /\bsendBeacon\b/, /\bWebSocket\b/, /\bFormData\b/, /\bMediaRecorder\b/, /\bgetUserMedia\b/, /\bRTCPeerConnection\b/, /\/upload\b|\.upload\b/i, /\bhttps?:\/\/(?!www\.w3\.org)/i, /toDataURL|toBlob|captureStream/];
++  for (const f of ['public/js/skill-kit.js', 'public/js/stage-check.js']) {
++    const src = fs.readFileSync(path.join(__dirname, '..', f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"\\])\/\/[^\n]*/g, '$1');
++    const bad = FORBIDDEN.filter((re) => re.test(src)).map(String);
++    const fetches = [...src.matchAll(/App\.api\.(get|post)\(\s*([^,)]*)/g)].map((m) => m[2]).filter((u) => !/api|`\$\{base\}|`\$\{api\}/.test(u));
++    check(`${f}: no upload path, no recorder, no camera or microphone of its own (the microphone only through the piano engine)`, !bad.length && !fetches.length && !/\bfetch\s*\(/.test(src), { bad, fetches });
++  }
++
++  app.close();
++  F.done();
++})().catch((err) => { console.error(err); process.exit(1); });

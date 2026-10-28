@@ -1,0 +1,3007 @@
+{
+ "row_id": 69,
+ "engine_id": "ping-pong",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 99,
+ "generated_at": "2026-10-25T08:41:17.390Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 64,
+  "code_rejected": 4,
+  "sent_to_judges": 60,
+  "kept": 50,
+  "keep_rate_of_written": 0.781,
+  "judges": {
+   "both_answered": 60,
+   "picked_same_option": 57,
+   "a_picked_key": 58,
+   "b_picked_key": 57,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "ping-pong",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 99,
+   "topic": "Activity 4 of 9 (quiz/game): Rebuild a Scrambled Piece - Diction and Precision",
+   "title": "Rally Rebuild: Diction and Precision",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 7,
+    "end": 9,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q46",
+    "prompt": "Which sequence places the sentences in the most logical order?\n1. Because the reagent had been stored above its recommended temperature, the technician repeated the calibration.\n2. The repeated calibration produced readings within 0.1 units of the standard.\n3. Only then did the technician test the twelve samples.\n4. Every sample produced a result within the protocol's accepted range.",
+    "choices": [
+     "2, 1, 3, 4",
+     "1, 2, 3, 4",
+     "1, 3, 2, 4",
+     "1, 2, 4, 3"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sequence moves from the reason for recalibrating through calibration, sample testing, and the final results.",
+    "difficulty": 8,
+    "skill": "Paragraph reconstruction",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q9",
+    "prompt": "Put these sentences in the order that best reconstructs the original paragraph.\n1. When the night guard noticed dampness near the archive wall, he called maintenance.\n2. Maintenance found a cracked pipe behind the shelving.\n3. Workers shut off the water and replaced the cracked pipe.\n4. The archive reopened after the wall and floor had dried.",
+    "choices": [
+     "1, 2, 3, 4",
+     "3, 1, 4, 2",
+     "2, 4, 1, 3",
+     "4, 3, 2, 1"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sequence follows the discovery of the leak through its repair and the archive's reopening after everything dried.",
+    "difficulty": 7,
+    "skill": "Logical reconstruction",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q38",
+    "prompt": "Which sequence arranges these four sentences into a logical paragraph?\n1. The researchers began by defining which visible features the optical model would compare.\n2. They photographed each seedling under standardized lighting before running the same analysis on every image.\n3. The model's confidence fell sharply when a leaf edge was blurred or partly hidden by soil.\n4. Because the decline occurred only in those obscured images, the team recommended photographing plants from additional angles.",
+    "choices": [
+     "1, 3, 2, 4",
+     "1, 2, 3, 4",
+     "2, 1, 3, 4",
+     "1, 2, 4, 3"
+    ],
+    "answerIndex": 1,
+    "explanation": "The order moves from defining the model's task to collecting standardized images, identifying the failure pattern, and recommending a response.",
+    "difficulty": 8,
+    "skill": "Logical sequencing and cohesion",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q21",
+    "prompt": "Which sequence arranges these sentences into a coherent paragraph?\n1. She scanned each page in small batches to limit handling.\n2. This cautious method reduced the risk of tearing the paper.\n3. Before scanning began, she examined the brittle pages under low light.\n4. By the end of the day, the archive had digitized 28 pages.",
+    "choices": [
+     "3, 1, 2, 4",
+     "1, 3, 4, 2",
+     "3, 4, 1, 2",
+     "2, 3, 1, 4"
+    ],
+    "answerIndex": 0,
+    "explanation": "The paragraph moves logically from examining the pages to scanning them, explaining the method, and reporting the result.",
+    "difficulty": 8,
+    "skill": "Reconstructing Procedural Sequence",
+    "topic": "Diction and Precision: Rebuilding a Scrambled Piece"
+   },
+   {
+    "id": "q30",
+    "prompt": "A model estimated a treatment difference of 0.04 percentage points, but the software displayed values rounded to whole percentage points. Which sentence reports this most precisely?",
+    "choices": [
+     "The estimated difference was exactly 0 percentage points.",
+     "The estimated difference was 0.04 percentage points, which the display rounded to 0.",
+     "The treatment and control groups had identical outcomes.",
+     "The study found no difference between the treatments."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence preserves the unrounded estimate and distinguishes it from the rounded display value.",
+    "difficulty": 9,
+    "skill": "Reporting numerical results precisely",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q27",
+    "prompt": "A coastal survey recorded declining ice thickness and rising water temperatures over the same ten-year period. Which sentence reports the findings without claiming that one caused the other?",
+    "choices": [
+     "The rise in water temperature caused the coastal ice to thin.",
+     "The thinning of the ice directly caused the water to warm.",
+     "Both water temperature and ice thickness changed during the same ten-year period.",
+     "The increase in water temperature produced thicker coastal ice."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence reports both changes without presenting either as the cause of the other.",
+    "difficulty": 8,
+    "skill": "Distinguishing correlation from causation",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which sequence places these sentences in the most logical order?\n1. The document's claims were checked against the original records.\n2. The first draft used figures from a different project.\n3. After the discrepancies were identified, the writer replaced those figures.\n4. The corrected version was then approved for publication.",
+    "choices": [
+     "1, 2, 3, 4",
+     "1, 3, 2, 4",
+     "2, 3, 1, 4",
+     "2, 1, 3, 4"
+    ],
+    "answerIndex": 3,
+    "explanation": "The original error comes first, followed by the fact-checking, the correction, and the approval of the corrected version.",
+    "difficulty": 7,
+    "skill": "Reconstructing Logical Sequence",
+    "topic": "Diction and Precision: Rebuilding a Scrambled Piece"
+   },
+   {
+    "id": "q37",
+    "prompt": "A group intentionally publishes false claims to influence public opinion. Which noun most precisely names this activity?",
+    "choices": [
+     "disinformation",
+     "misinformation",
+     "propaganda",
+     "slander"
+    ],
+    "answerIndex": 0,
+    "explanation": "Disinformation means false information deliberately created or spread to deceive, which matches the stated intent.",
+    "difficulty": 8,
+    "skill": "Precise Vocabulary",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which one-sentence explanation best identifies why the revised sentence is more precise?\nOriginal: Jordan told Avery that they had won the award.\nRevised: Jordan told Avery that Jordan had won the award.",
+    "choices": [
+     "It identifies Jordan as the person who won the award.",
+     "It proves that the award had two recipients.",
+     "It makes clear that Jordan and Avery both won the award.",
+     "It shows that Avery was the only person who won the award."
+    ],
+    "answerIndex": 0,
+    "explanation": "Repeating Jordan as the subject of the second clause removes ambiguity about which person won the award.",
+    "difficulty": 8,
+    "skill": "Explaining gains in precision",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q1",
+    "prompt": "In the sentence The treasurer will ___ the club's outstanding dues on Friday, which verb most precisely means send money in payment?",
+    "choices": [
+     "remit",
+     "submit",
+     "commit",
+     "deposit"
+    ],
+    "answerIndex": 0,
+    "explanation": "Remit means to send money in payment, so it precisely describes paying the club's outstanding dues.",
+    "difficulty": 8,
+    "skill": "Selecting precise verbs",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q34",
+    "prompt": "Why is the revised statement more precise than the original?\nOriginal: The library's summer program was busy.\nRevised: The library's summer program served 1,284 participants across 24 scheduled sessions.",
+    "choices": [
+     "It identifies the months in which every scheduled session occurred.",
+     "It replaces a general impression with exact participation and session counts.",
+     "It explains why participants chose to attend the summer program.",
+     "It compares the summer program's popularity with programs at other libraries."
+    ],
+    "answerIndex": 1,
+    "explanation": "The revision replaces the vague judgment that the program was busy with measurable figures for participation and scheduled sessions.",
+    "difficulty": 7,
+    "skill": "Precision in Revisions",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which noun most precisely refers to a formal written statement of facts sworn to be true and submitted to a court?",
+    "choices": [
+     "deposition",
+     "affidavit",
+     "testimony",
+     "affirmation"
+    ],
+    "answerIndex": 1,
+    "explanation": "An affidavit is a written, sworn statement used as evidence in legal proceedings.",
+    "difficulty": 8,
+    "skill": "Precise Word Choice",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which sequence reconstructs the paragraph so that each event follows logically from the one before it?\n1. Once the replacement labels passed inspection, the supervisor released the batch.\n2. A supervisor noticed that the shipping labels on twelve boxes had faded.\n3. The printer reprinted the faded labels with darker ink.\n4. During inspection, one label remained unreadable, so the shipment was briefly held.",
+    "choices": [
+     "2, 3, 4, 1",
+     "1, 2, 3, 4",
+     "2, 4, 3, 1",
+     "3, 2, 1, 4"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sequence moves from discovering the faded labels through reprinting and inspection to the final release of the batch.",
+    "difficulty": 9,
+    "skill": "Rebuilding a logical sequence",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which order correctly rebuilds the paragraph? 1. Because those records came from a single location, the increase cannot establish a regional trend. 2. The team is now collecting measurements from several nearby monitoring sites. 3. The team analyzed water-quality records from one station. 4. Those additional measurements may show whether the pattern appears elsewhere.",
+    "choices": [
+     "2, 4, 3, 1",
+     "1, 3, 4, 2",
+     "3, 1, 2, 4",
+     "4, 2, 1, 3"
+    ],
+    "answerIndex": 2,
+    "explanation": "The logical sequence introduces the one-station data, draws its limited conclusion, and then explains the next research step.",
+    "difficulty": 8,
+    "skill": "Logical sequencing",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which explanation best identifies why the revision is more precise?\nOriginal: The old sign was difficult to read in low light.\nRevised: The old sign's 12-point letters were difficult to read in low light.",
+    "choices": [
+     "It demonstrates that the sign's wording was the main cause of the problem.",
+     "It establishes that better lighting had already solved the problem.",
+     "It identifies a specific feature of the letters that affected readability.",
+     "It proves that all sign users were unable to read the letters."
+    ],
+    "answerIndex": 2,
+    "explanation": "The revision identifies a specific feature of the letters that affected readability.",
+    "difficulty": 7,
+    "skill": "Evaluating Precision in Revision",
+    "topic": "Diction and Precision: Rebuilding a Scrambled Piece"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which order correctly rebuilds the paragraph from these sentences?\n1. The results indicated that plants grew taller under blue light.\n2. Researchers formulated a hypothesis about the effect of light on plant growth.\n3. The team published their findings in a peer-reviewed journal.\n4. They designed an experiment with controlled light exposure.",
+    "choices": [
+     "2, 4, 1, 3",
+     "2, 1, 4, 3",
+     "1, 2, 3, 4",
+     "4, 2, 1, 3"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sequence follows the logical order of hypothesis, experiment, results, and publication.",
+    "difficulty": 8,
+    "skill": "Paragraph Reconstruction",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q35",
+    "prompt": "Researchers surveyed 12 bookstores about a new display, and 9 said the display increased customer interest, but the survey did not use random sampling. Which sentence reports the finding most precisely?",
+    "choices": [
+     "Random sampling showed that the display increased customer interest in most bookstores.",
+     "The display increased customer interest in most surveyed bookstores.",
+     "In a nonrandom survey of 12 bookstores, 9 said the display increased customer interest.",
+     "Nine of 12 bookstores reported increased customer interest, proving the display caused the increase."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence specifies the sample size and survey method, reports what respondents said, and does not turn a nonrandom finding into a causal conclusion.",
+    "difficulty": 8,
+    "skill": "Evidence-Bounded Reporting",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q3",
+    "prompt": "A report records a measured temperature increase but does not test statistical significance. Which sentence is written with the greatest precision for a formal scientific report?",
+    "choices": [
+     "The samples showed a significant rise in temperature.",
+     "The samples heated up considerably, which surprised the researchers.",
+     "The temperature of the samples increased more than expected.",
+     "The samples got much hotter than the researchers had expected."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence states exactly what was measured—the temperature increased more than expected—without using vague language or implying statistical significance.",
+    "difficulty": 8,
+    "skill": "Editing for scientific precision",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q26",
+    "prompt": "Which sequence arranges these sentences into the most logical order?\n1. During the closing check, the registrar noticed that a framed map was missing from its display case.\n2. Reviewing the storage log, she found that the map had been moved to the conservation room.\n3. There, she located the map inside a padded document tray.\n4. After confirming its condition, she returned it to the case and updated the inventory.",
+    "choices": [
+     "2, 4, 1, 3",
+     "1, 2, 3, 4",
+     "3, 1, 4, 2",
+     "4, 3, 2, 1"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sequence moves logically from noticing the missing map to tracing, finding, and documenting its return.",
+    "difficulty": 7,
+    "skill": "Reconstructing a logical sequence",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which sequence restores the paragraph so that each event follows the one that causes or explains it?\n1. After a pilot revealed a large difference among clinics, investigators compared each site's enrollment rate.\n2. During the next month, total enrollment rose from 52 to 96.\n3. Two clinics had required extra staff approval, while one allowed direct consent.\n4. The team then expanded direct consent to all sites.",
+    "choices": [
+     "1, 3, 4, 2",
+     "1, 2, 3, 4",
+     "1, 4, 3, 2",
+     "3, 1, 2, 4"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sequence presents the pilot, the explanation of the difference, the resulting policy change, and the enrollment increase that followed.",
+    "difficulty": 8,
+    "skill": "Logical Sequencing",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which order correctly rebuilds the paragraph from these sentences? 1. The revised report explained that the first finding had overstated how broadly the behavior applied. 2. Although the first survey produced a striking result, its participants came from a narrow section of the city. 3. This time, the results were less dramatic, so the team revised its original claim. 4. To test whether that pattern held more widely, the researchers repeated the survey with a broader sample.",
+    "choices": [
+     "2, 3, 4, 1",
+     "2, 4, 3, 1",
+     "4, 2, 3, 1",
+     "2, 4, 1, 3"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sequence moves from the initial narrow survey to the broader retest and then to the revision, so each sentence follows logically from the one before it.",
+    "difficulty": 9,
+    "skill": "Reconstructing logical order",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q10",
+    "prompt": "A poll found that 8 of 40 students liked the cafeteria's new menu. Which sentence reports this result most precisely?",
+    "choices": [
+     "Most students disliked the new cafeteria menu.",
+     "In the poll, 8 of the 40 students surveyed said they liked the new cafeteria menu.",
+     "Students generally disliked the new cafeteria menu.",
+     "The new cafeteria menu was widely disliked."
+    ],
+    "answerIndex": 1,
+    "explanation": "It states the exact number of respondents, the total surveyed, and what those respondents reported without generalizing beyond the poll.",
+    "difficulty": 8,
+    "skill": "Quantitative precision",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q15",
+    "prompt": "Original: The experiment produced a lot of data.\nRevised: The experiment generated 4.2 terabytes of data.\nWhich one-sentence explanation best describes why the revised sentence is more precise?",
+    "choices": [
+     "It adds the word experiment to the sentence.",
+     "It changes the verb from produced to generated.",
+     "It replaces the vague phrase a lot of with an exact measurement and unit.",
+     "It removes the article the before data."
+    ],
+    "answerIndex": 2,
+    "explanation": "This explanation correctly identifies that the revision replaces a vague quantity with a precise measurement and unit.",
+    "difficulty": 8,
+    "skill": "Precision Revision Analysis",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which verb most precisely means to examine the separate parts of a text and explain how they relate to one another?",
+    "choices": [
+     "imitate",
+     "summarize",
+     "predict",
+     "analyze"
+    ],
+    "answerIndex": 3,
+    "explanation": "Analyze means to examine elements in detail and determine how they relate, which matches the task described.",
+    "difficulty": 7,
+    "skill": "Selecting precise verbs",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which sequence arranges the four numbered sentences into a coherent paragraph?\n1. Researchers designed a field trial with two groups of plots.\n2. One group received the new fertilizer, while the other received none.\n3. After eight weeks, the first trial's treated plots had produced more growth than the untreated plots.\n4. Because a section of the treated group had received twice the intended dose, the researchers repeated the trial.",
+    "choices": [
+     "3, 1, 4, 2",
+     "2, 4, 1, 3",
+     "1, 3, 2, 4",
+     "1, 2, 3, 4"
+    ],
+    "answerIndex": 3,
+    "explanation": "The order moves from the experimental design through the comparison to the result and then explains why the trial was repeated.",
+    "difficulty": 8,
+    "skill": "Paragraph sequencing",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which explanation best describes why the revised sentence is more precise?\nOriginal: The repair reduced the leak.\nRevised: The repair reduced the leak by two liters per minute.",
+    "choices": [
+     "It identifies the specific component that developed the leak.",
+     "It shows that the repair eliminated the leak completely.",
+     "It compares the leak rate with that of a different building.",
+     "It replaces an unspecified reduction with an exact measurement of the leak rate."
+    ],
+    "answerIndex": 3,
+    "explanation": "The revision replaces an unspecified reduction with an exact measurement of the leak rate.",
+    "difficulty": 8,
+    "skill": "Evaluating Precision in Revision",
+    "topic": "Diction and Precision: Rebuilding a Scrambled Piece"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which adjective most precisely describes a claim that can be checked against evidence rather than merely believed?",
+    "choices": [
+     "objective",
+     "factual",
+     "credible",
+     "verifiable"
+    ],
+    "answerIndex": 3,
+    "explanation": "Verifiable specifically means that a claim can be checked against evidence.",
+    "difficulty": 7,
+    "skill": "Selecting precise vocabulary",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which sequence reconstructs the most logical account?\n1. After the sensor was replaced, the filter's readings matched the calibration standard.\n2. A cracked sensor had produced readings that differed from that standard.\n3. The technician then entered the successful retest in the maintenance log.\n4. This result confirmed that the sensor, rather than the filter, had caused the error.",
+    "choices": [
+     "1, 4, 2, 3",
+     "2, 1, 4, 3",
+     "2, 3, 4, 1",
+     "4, 2, 1, 3"
+    ],
+    "answerIndex": 1,
+    "explanation": "The original problem leads to the replacement and successful retest, which establishes the cause before the technician records the result.",
+    "difficulty": 8,
+    "skill": "Reconstructing Causal Sequence",
+    "topic": "Diction and Precision: Rebuilding a Scrambled Piece"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which noun most precisely refers to a temporary suspension of an activity by official order?",
+    "choices": [
+     "hiatus",
+     "moratorium",
+     "pause",
+     "break"
+    ],
+    "answerIndex": 1,
+    "explanation": "A moratorium is an officially authorized temporary halt, whereas hiatus, pause, and break are general terms for any interruption.",
+    "difficulty": 8,
+    "skill": "Precise Noun Selection",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q25",
+    "prompt": "Which explanation best identifies the gain in precision in this revision?\nOriginal: The survey found a lot of support.\nRevised: In the October 2025 survey, 63 of 80 residents said they supported the plan.",
+    "choices": [
+     "It replaces a vague claim with a dated, exact result from a clearly defined group.",
+     "It establishes that the plan was implemented successfully after the vote.",
+     "It demonstrates that every person in the wider community supported the plan.",
+     "It compares support for the plan with opposition to another proposal."
+    ],
+    "answerIndex": 0,
+    "explanation": "The revision replaces a vague claim with a dated, exact result from a clearly defined group.",
+    "difficulty": 9,
+    "skill": "Evaluating Precision in Revision",
+    "topic": "Diction and Precision: Rebuilding a Scrambled Piece"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which noun most precisely means the reason or purpose that leads a person to act?",
+    "choices": [
+     "method",
+     "motive",
+     "result",
+     "obstacle"
+    ],
+    "answerIndex": 1,
+    "explanation": "A motive is the reason or purpose behind an action, matching the definition in the question.",
+    "difficulty": 8,
+    "skill": "Selecting precise nouns",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which order correctly rebuilds the paragraph? 1. To remove the hazard, workers dismantled the frame. 2. Finally, they installed a lower play structure designed for younger children. 3. The old frame was found to have sharp edges. 4. They painted over the anchor bolts and leveled the ground.",
+    "choices": [
+     "1, 3, 2, 4",
+     "4, 2, 1, 3",
+     "2, 4, 3, 1",
+     "3, 1, 4, 2"
+    ],
+    "answerIndex": 3,
+    "explanation": "The sequence moves from discovering the hazard through removal and site preparation to installing the replacement.",
+    "difficulty": 7,
+    "skill": "Paragraph sequencing",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q17",
+    "prompt": "Put the following sentences in the order that best reconstructs the original paragraph.\n1. The researchers then compared the results with earlier studies.\n2. They collected data from three independent labs.\n3. First, they formulated a hypothesis about protein folding.\n4. Finally, they published their findings in a peer‑reviewed journal.",
+    "choices": [
+     "3, 2, 1, 4",
+     "3, 1, 2, 4",
+     "2, 3, 1, 4",
+     "1, 3, 2, 4"
+    ],
+    "answerIndex": 0,
+    "explanation": "The logical flow begins with forming a hypothesis, then gathering data, next comparing results, and ends with publication.",
+    "difficulty": 8,
+    "skill": "Paragraph Reconstruction",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which sequence reconstructs the account in a logical order?\n1. Because the online ticket system showed duplicate seat assignments, the coordinator paused check-in.\n2. She compared the system entries with the printed seating charts.\n3. The comparison showed that the duplicates had resulted from a browser refresh and that all assigned seats remained available.\n4. After the duplicate entries were corrected, check-in resumed.",
+    "choices": [
+     "3, 1, 2, 4",
+     "1, 2, 3, 4",
+     "1, 3, 2, 4",
+     "1, 2, 4, 3"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sequence presents the problem, the comparison used to investigate it, the finding, and the resulting action in cause-and-effect order.",
+    "difficulty": 8,
+    "skill": "Paragraph reconstruction",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which one-sentence explanation best describes why the revised sentence is more precise?\nOriginal: There were many errors.\nRevised: Reviewers found 37 errors in the final draft.",
+    "choices": [
+     "It removes information about the number of errors while adding a claim about document quality.",
+     "It changes the statement from a description of quantity to a description of the reviewers' sequence of work.",
+     "It adds an unsupported opinion about the quality of the final draft rather than reporting evidence.",
+     "It replaces a vague quantity with an exact count and identifies who found the errors and where they occurred."
+    ],
+    "answerIndex": 3,
+    "explanation": "The revision gives an exact count and states who found the errors and which document contained them instead of relying on a vague quantity.",
+    "difficulty": 8,
+    "skill": "Explaining precision",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q41",
+    "prompt": "Which adjective most precisely describes wording that is clear enough to be understood without confusion?",
+    "choices": [
+     "lucid",
+     "ornate",
+     "terse",
+     "hesitant"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lucid means clear and easy to understand, matching the description of wording that leaves no confusion.",
+    "difficulty": 7,
+    "skill": "Selecting precise adjectives",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q49",
+    "prompt": "Which one-sentence explanation best identifies why the revised statement is more precise?\nOriginal: The bridge repair was satisfactory.\nRevised: After the inspection, engineers found that all 18 repaired welds met the required thickness tolerance.",
+    "choices": [
+     "It replaces a general judgment with the number of repaired welds, the inspection result, and a specific standard.",
+     "It attributes the satisfactory result to the original bridge design rather than to the repair work.",
+     "It removes every measurable condition that could support an evaluation of the repairs.",
+     "It expands the scope from the repaired welds to the condition of the entire bridge."
+    ],
+    "answerIndex": 0,
+    "explanation": "The revision gives a measurable inspection result for a specified number of welds instead of expressing a general judgment.",
+    "difficulty": 8,
+    "skill": "Explaining precision",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q39",
+    "prompt": "Which sequence reconstructs the account so that each sentence follows logically from the previous one?\n1. To determine whether tutoring affected progress, the school selected students who had scored below the reading benchmark.\n2. Half of those students received twice-weekly tutoring, while the other half continued with the usual support.\n3. After one term, the tutored group improved by 17 percent on average, compared with 6 percent in the comparison group.\n4. Because students had been assigned to groups before the term began, the school described the result as evidence from a controlled study rather than proof of causation.",
+    "choices": [
+     "2, 1, 3, 4",
+     "1, 3, 2, 4",
+     "1, 2, 3, 4",
+     "1, 2, 4, 3"
+    ],
+    "answerIndex": 2,
+    "explanation": "The sequence presents group selection, assignment, outcome, and the study's justified limit on causal claims in the order required by those details.",
+    "difficulty": 9,
+    "skill": "Cause-and-effect sequencing",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which one‑sentence explanation best describes why the revised sentence is more precise?\nOriginal: The team made a lot of progress.\nRevised: The team completed 87% of the project milestones.",
+    "choices": [
+     "It removes the word “lot”.",
+     "It changes the verb to a more formal one.",
+     "It adds a percentage and specifies what was completed.",
+     "It shortens the sentence."
+    ],
+    "answerIndex": 2,
+    "explanation": "The revision replaces a vague quantity with an exact metric and identifies the specific work measured.",
+    "difficulty": 8,
+    "skill": "Revision Explanation",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which one-sentence explanation best identifies why this revision is more precise: The museum will lend the painting to another gallery soon. The museum will lend the painting to another gallery next spring.",
+    "choices": [
+     "It replaces the vague time word soon with a more specific season.",
+     "It removes the temporary nature of the transfer.",
+     "It adds a claim that the painting will never return to the museum.",
+     "It changes the recipient from another gallery to an unnamed institution."
+    ],
+    "answerIndex": 0,
+    "explanation": "Replacing soon with next spring narrows the time reference while leaving the other details unchanged.",
+    "difficulty": 7,
+    "skill": "Explaining precision",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q31",
+    "prompt": "Which sequence places these sentences in the most logical order?\n1. Because a tool inventory showed the pruning shears missing from the shed, the coordinator checked the checkout log.\n2. The log recorded that the shears had been borrowed for repair.\n3. The coordinator located them in a cabinet at the garden center.\n4. After inspecting the blades, the coordinator returned the shears to the shed and closed the checkout record.",
+    "choices": [
+     "2, 3, 1, 4",
+     "3, 1, 4, 2",
+     "1, 2, 3, 4",
+     "4, 2, 3, 1"
+    ],
+    "answerIndex": 2,
+    "explanation": "The order moves from discovering the missing tool to checking its record, locating it, inspecting it, and completing its return.",
+    "difficulty": 8,
+    "skill": "Reconstructing a logical account",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q44",
+    "prompt": "Original: The project caused a big change in the town's traffic. Which revision is the most precise?",
+    "choices": [
+     "The project caused major changes in traffic throughout the town.",
+     "The project changed traffic in the town by a large amount over the following year.",
+     "The project made a noticeable difference to traffic in several parts of the town.",
+     "After the project opened, average weekday traffic on Market Street rose from 4,200 to 5,100 vehicles."
+    ],
+    "answerIndex": 3,
+    "explanation": "It names the location, the traffic measure, the relevant time frame, and the exact before-and-after counts.",
+    "difficulty": 8,
+    "skill": "Improving sentence precision",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q43",
+    "prompt": "Two records give conflicting versions of when the archive was closed. Which verb most precisely describes bringing those versions into agreement?",
+    "choices": [
+     "combine",
+     "merge",
+     "reconcile",
+     "integrate"
+    ],
+    "answerIndex": 2,
+    "explanation": "Reconcile means to resolve differences by bringing conflicting accounts or descriptions into a consistent version.",
+    "difficulty": 8,
+    "skill": "Precise word choice",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which sequence places these sentences in the most logical order?\n1. When the checkout scanner rejected valid labels, the clerk stopped using it.\n2. A technician found dust blocking the optical sensor.\n3. After the technician cleaned the sensor, the scanner read all 50 test labels.\n4. Once the retest passed, the clerk returned the scanner to service.",
+    "choices": [
+     "2, 1, 3, 4",
+     "1, 3, 2, 4",
+     "1, 2, 4, 3",
+     "1, 2, 3, 4"
+    ],
+    "answerIndex": 3,
+    "explanation": "The sequence moves from the malfunction to diagnosis, testing, and finally the decision to return the scanner to service.",
+    "difficulty": 7,
+    "skill": "Paragraph reconstruction",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q32",
+    "prompt": "Arrange the numbered sentences to reconstruct the account in a logical sequence.\n1. Although the shelf was dry, a conservator noticed a faint tide line on its liner.\n2. Because no pipe, roof, or open window showed signs of moisture, the source remained undetermined and building staff expanded their inspection.\n3. The three lowest folders had begun to warp slightly along their lower edges.\n4. Each affected folder was photographed, measured, and placed in a separate support tray.",
+    "choices": [
+     "1, 3, 2, 4",
+     "1, 4, 3, 2",
+     "3, 1, 4, 2",
+     "1, 3, 4, 2"
+    ],
+    "answerIndex": 3,
+    "explanation": "The sequence moves from noticing the tide line to finding the warped folders, documenting their condition, and then expanding the search for the moisture source.",
+    "difficulty": 8,
+    "skill": "Logical Sequencing",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q36",
+    "prompt": "A survey found that students who took notes by hand scored 6 points higher on average than students who typed notes. Which sentence states this finding most precisely without implying that the note-taking method caused the scores?",
+    "choices": [
+     "Handwritten notes are the best way to improve test scores by an average of 6 points.",
+     "Handwriting caused students to score 6 points higher on average than typing their notes.",
+     "Students who took notes by hand always scored 6 points higher than students who typed notes.",
+     "Students in the survey who took notes by hand scored 6 points higher on average than students who typed notes."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence confines the comparison to surveyed students, gives the average difference, and describes an association rather than a proven cause.",
+    "difficulty": 9,
+    "skill": "Causal Precision",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q47",
+    "prompt": "Which verb most precisely means to state a fact or belief firmly, especially in a formal argument?",
+    "choices": [
+     "allege",
+     "imply",
+     "assert",
+     "deny"
+    ],
+    "answerIndex": 2,
+    "explanation": "Assert is the precise verb for stating a fact or belief firmly, as in a formal argument.",
+    "difficulty": 8,
+    "skill": "Precise diction",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q6",
+    "prompt": "In one hospital trial, patients receiving a new treatment had shorter recovery times than patients receiving usual care. Which sentence reports that finding without extending it beyond the trial?",
+    "choices": [
+     "The new treatment produces shorter recovery times for every patient.",
+     "In the one hospital trial, patients receiving the new treatment had shorter recovery times than those receiving usual care.",
+     "Most patients recover faster with the new treatment than with standard care.",
+     "The new treatment is the most effective recovery option for all hospitals."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence confines the comparison to one trial and identifies both the treatment group and the usual-care group.",
+    "difficulty": 8,
+    "skill": "Scope and qualification",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which word most precisely names a temporary agreement to stop active fighting between two opposing sides?",
+    "choices": [
+     "pact",
+     "treaty",
+     "truce",
+     "accord"
+    ],
+    "answerIndex": 2,
+    "explanation": "A truce specifically denotes a temporary halt to fighting between opposing sides.",
+    "difficulty": 7,
+    "skill": "Precise vocabulary",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which order correctly rebuilds the paragraph from these sentences?\n1. She documented each fracture with photographs and measurements.\n2. Construction crews began the repairs within two weeks.\n3. The engineer inspected the bridge for structural cracks.\n4. The report recommended immediate reinforcement of the weakened spans.",
+    "choices": [
+     "1, 2, 3, 4",
+     "2, 4, 3, 1",
+     "3, 4, 1, 2",
+     "3, 1, 4, 2"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sequence follows the logical order of inspection, documentation, recommendation, and repair.",
+    "difficulty": 8,
+    "skill": "Paragraph Reconstruction",
+    "topic": "Rebuild a Scrambled Piece - Diction and Precision"
+   }
+  ],
+  "feedback": {
+   "correct": "Point won — the rally restarts with precision.",
+   "incorrect": "Not quite — that word choice doesn't hold up. Here's another serve.",
+   "win": "You rebuilt the piece with exactly the right words — a complete win.",
+   "lose": "The rally got away, but every miss sharpens your ear for diction.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "In the sentence The treasurer will ___ the club's outstanding dues on Friday, which verb most precisely means send money in payment?",
+   "choices": [
+    "remit",
+    "submit",
+    "commit",
+    "deposit"
+   ],
+   "answerIndex": 0,
+   "explanation": "Remit means to send money in payment, so it precisely describes paying the club's outstanding dues.",
+   "difficulty": 8,
+   "skill": "Selecting precise verbs",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "Remit means to send money, especially as payment.",
+      "url": "https://en.wiktionary.org/wiki/remittoida",
+      "quote": "to remit ( to transmit or send, especially money in payment )",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which order correctly rebuilds the paragraph from these sentences? 1. The revised report explained that the first finding had overstated how broadly the behavior applied. 2. Although the first survey produced a striking result, its participants came from a narrow section of the city. 3. This time, the results were less dramatic, so the team revised its original claim. 4. To test whether that pattern held more widely, the researchers repeated the survey with a broader sample.",
+   "choices": [
+    "2, 4, 3, 1",
+    "2, 3, 4, 1",
+    "4, 2, 3, 1",
+    "2, 4, 1, 3"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence moves from the initial narrow survey to the broader retest and then to the revision, so each sentence follows logically from the one before it.",
+   "difficulty": 9,
+   "skill": "Reconstructing logical order",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A report records a measured temperature increase but does not test statistical significance. Which sentence is written with the greatest precision for a formal scientific report?",
+   "choices": [
+    "The samples showed a significant rise in temperature.",
+    "The samples heated up considerably, which surprised the researchers.",
+    "The temperature of the samples increased more than expected.",
+    "The samples got much hotter than the researchers had expected."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence states exactly what was measured—the temperature increased more than expected—without using vague language or implying statistical significance.",
+   "difficulty": 8,
+   "skill": "Editing for scientific precision",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which order correctly rebuilds the paragraph? 1. To remove the hazard, workers dismantled the frame. 2. Finally, they installed a lower play structure designed for younger children. 3. The old frame was found to have sharp edges. 4. They painted over the anchor bolts and leveled the ground.",
+   "choices": [
+    "1, 3, 2, 4",
+    "3, 1, 4, 2",
+    "2, 4, 3, 1",
+    "4, 2, 1, 3"
+   ],
+   "answerIndex": 1,
+   "explanation": "The sequence moves from discovering the hazard through removal and site preparation to installing the replacement.",
+   "difficulty": 7,
+   "skill": "Paragraph sequencing",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best identifies why this revision is more precise: The museum will lend the painting to another gallery soon. The museum will lend the painting to another gallery next spring.",
+   "choices": [
+    "It changes the recipient from another gallery to an unnamed institution.",
+    "It removes the temporary nature of the transfer.",
+    "It adds a claim that the painting will never return to the museum.",
+    "It replaces the vague time word soon with a more specific season."
+   ],
+   "answerIndex": 3,
+   "explanation": "Replacing soon with next spring narrows the time reference while leaving the other details unchanged.",
+   "difficulty": 7,
+   "skill": "Explaining precision",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In one hospital trial, patients receiving a new treatment had shorter recovery times than patients receiving usual care. Which sentence reports that finding without extending it beyond the trial?",
+   "choices": [
+    "The new treatment produces shorter recovery times for every patient.",
+    "The new treatment is the most effective recovery option for all hospitals.",
+    "Most patients recover faster with the new treatment than with standard care.",
+    "In the one hospital trial, patients receiving the new treatment had shorter recovery times than those receiving usual care."
+   ],
+   "answerIndex": 3,
+   "explanation": "This sentence confines the comparison to one trial and identifies both the treatment group and the usual-care group.",
+   "difficulty": 8,
+   "skill": "Scope and qualification",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which order correctly rebuilds the paragraph? 1. Because those records came from a single location, the increase cannot establish a regional trend. 2. The team is now collecting measurements from several nearby monitoring sites. 3. The team analyzed water-quality records from one station. 4. Those additional measurements may show whether the pattern appears elsewhere.",
+   "choices": [
+    "2, 4, 3, 1",
+    "1, 3, 4, 2",
+    "3, 1, 2, 4",
+    "4, 2, 1, 3"
+   ],
+   "answerIndex": 2,
+   "explanation": "The logical sequence introduces the one-station data, draws its limited conclusion, and then explains the next research step.",
+   "difficulty": 8,
+   "skill": "Logical sequencing",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence arranges the four numbered sentences into a coherent paragraph?\n1. Researchers designed a field trial with two groups of plots.\n2. One group received the new fertilizer, while the other received none.\n3. After eight weeks, the first trial's treated plots had produced more growth than the untreated plots.\n4. Because a section of the treated group had received twice the intended dose, the researchers repeated the trial.",
+   "choices": [
+    "3, 1, 4, 2",
+    "2, 4, 1, 3",
+    "1, 2, 3, 4",
+    "1, 3, 2, 4"
+   ],
+   "answerIndex": 2,
+   "explanation": "The order moves from the experimental design through the comparison to the result and then explains why the trial was repeated.",
+   "difficulty": 8,
+   "skill": "Paragraph sequencing",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Put these sentences in the order that best reconstructs the original paragraph.\n1. When the night guard noticed dampness near the archive wall, he called maintenance.\n2. Maintenance found a cracked pipe behind the shelving.\n3. Workers shut off the water and replaced the cracked pipe.\n4. The archive reopened after the wall and floor had dried.",
+   "choices": [
+    "1, 2, 3, 4",
+    "3, 1, 4, 2",
+    "2, 4, 1, 3",
+    "4, 3, 2, 1"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence follows the discovery of the leak through its repair and the archive's reopening after everything dried.",
+   "difficulty": 7,
+   "skill": "Logical reconstruction",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A poll found that 8 of 40 students liked the cafeteria's new menu. Which sentence reports this result most precisely?",
+   "choices": [
+    "Most students disliked the new cafeteria menu.",
+    "In the poll, 8 of the 40 students surveyed said they liked the new cafeteria menu.",
+    "Students generally disliked the new cafeteria menu.",
+    "The new cafeteria menu was widely disliked."
+   ],
+   "answerIndex": 1,
+   "explanation": "It states the exact number of respondents, the total surveyed, and what those respondents reported without generalizing beyond the poll.",
+   "difficulty": 8,
+   "skill": "Quantitative precision",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which word most precisely names a temporary agreement to stop active fighting between two opposing sides?",
+   "choices": [
+    "truce",
+    "treaty",
+    "pact",
+    "accord"
+   ],
+   "answerIndex": 0,
+   "explanation": "A truce specifically denotes a temporary halt to fighting between opposing sides.",
+   "difficulty": 7,
+   "skill": "Precise vocabulary",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes why the revised sentence is more precise?\nOriginal: There were many errors.\nRevised: Reviewers found 37 errors in the final draft.",
+   "choices": [
+    "It replaces a vague quantity with an exact count and identifies who found the errors and where they occurred.",
+    "It changes the statement from a description of quantity to a description of the reviewers' sequence of work.",
+    "It adds an unsupported opinion about the quality of the final draft rather than reporting evidence.",
+    "It removes information about the number of errors while adding a claim about document quality."
+   ],
+   "answerIndex": 0,
+   "explanation": "The revision gives an exact count and states who found the errors and which document contained them instead of relying on a vague quantity.",
+   "difficulty": 8,
+   "skill": "Explaining precision",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which order correctly rebuilds the paragraph from these sentences?\n1. The results indicated that plants grew taller under blue light.\n2. Researchers formulated a hypothesis about the effect of light on plant growth.\n3. The team published their findings in a peer-reviewed journal.\n4. They designed an experiment with controlled light exposure.",
+   "choices": [
+    "1, 2, 3, 4",
+    "2, 1, 4, 3",
+    "2, 4, 1, 3",
+    "4, 2, 1, 3"
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct sequence follows the logical order of hypothesis, experiment, results, and publication.",
+   "difficulty": 8,
+   "skill": "Paragraph Reconstruction",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which noun most precisely refers to a temporary suspension of an activity by official order?",
+   "choices": [
+    "moratorium",
+    "hiatus",
+    "pause",
+    "break"
+   ],
+   "answerIndex": 0,
+   "explanation": "A moratorium is an officially authorized temporary halt, whereas hiatus, pause, and break are general terms for any interruption.",
+   "difficulty": 8,
+   "skill": "Precise Noun Selection",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": [
+     {
+      "claim": "A moratorium is a temporary suspension authorized by an official body or authority.",
+      "url": "https://en.wiktionary.org/wiki/moratorium",
+      "quote": "An authorization to a debtor , permitting temporary suspension of payments.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Original: The experiment produced a lot of data.\nRevised: The experiment generated 4.2 terabytes of data.\nWhich one-sentence explanation best describes why the revised sentence is more precise?",
+   "choices": [
+    "It replaces the vague phrase a lot of with an exact measurement and unit.",
+    "It changes the verb from produced to generated.",
+    "It adds the word experiment to the sentence.",
+    "It removes the article the before data."
+   ],
+   "answerIndex": 0,
+   "explanation": "This explanation correctly identifies that the revision replaces a vague quantity with a precise measurement and unit.",
+   "difficulty": 8,
+   "skill": "Precision Revision Analysis",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which order correctly rebuilds the paragraph from these sentences?\n1. She documented each fracture with photographs and measurements.\n2. Construction crews began the repairs within two weeks.\n3. The engineer inspected the bridge for structural cracks.\n4. The report recommended immediate reinforcement of the weakened spans.",
+   "choices": [
+    "1, 2, 3, 4",
+    "3, 1, 4, 2",
+    "3, 4, 1, 2",
+    "2, 4, 3, 1"
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct sequence follows the logical order of inspection, documentation, recommendation, and repair.",
+   "difficulty": 8,
+   "skill": "Paragraph Reconstruction",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Put the following sentences in the order that best reconstructs the original paragraph.\n1. The researchers then compared the results with earlier studies.\n2. They collected data from three independent labs.\n3. First, they formulated a hypothesis about protein folding.\n4. Finally, they published their findings in a peer‑reviewed journal.",
+   "choices": [
+    "3, 2, 1, 4",
+    "3, 1, 2, 4",
+    "2, 3, 1, 4",
+    "1, 3, 2, 4"
+   ],
+   "answerIndex": 0,
+   "explanation": "The logical flow begins with forming a hypothesis, then gathering data, next comparing results, and ends with publication.",
+   "difficulty": 8,
+   "skill": "Paragraph Reconstruction",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which noun most precisely refers to a formal written statement of facts sworn to be true and submitted to a court?",
+   "choices": [
+    "affidavit",
+    "deposition",
+    "testimony",
+    "affirmation"
+   ],
+   "answerIndex": 0,
+   "explanation": "An affidavit is a written, sworn statement used as evidence in legal proceedings.",
+   "difficulty": 8,
+   "skill": "Precise Word Choice",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": [
+     {
+      "claim": "An affidavit is a formal written statement of facts sworn under oath and submitted as evidence in court.",
+      "url": "https://en.wiktionary.org/wiki/affidavit",
+      "quote": "Synonyms: sworn statement , deposition , oath , testimony",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which one‑sentence explanation best describes why the revised sentence is more precise?\nOriginal: The team made a lot of progress.\nRevised: The team completed 87% of the project milestones.",
+   "choices": [
+    "It adds a percentage and specifies what was completed.",
+    "It changes the verb to a more formal one.",
+    "It removes the word “lot”.",
+    "It shortens the sentence."
+   ],
+   "answerIndex": 0,
+   "explanation": "The revision replaces a vague quantity with an exact metric and identifies the specific work measured.",
+   "difficulty": 8,
+   "skill": "Revision Explanation",
+   "topic": "Rebuild a Scrambled Piece - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence places these sentences in the most logical order?\n1. The document's claims were checked against the original records.\n2. The first draft used figures from a different project.\n3. After the discrepancies were identified, the writer replaced those figures.\n4. The corrected version was then approved for publication.",
+   "choices": [
+    "1, 2, 3, 4",
+    "2, 1, 3, 4",
+    "2, 3, 1, 4",
+    "1, 3, 2, 4"
+   ],
+   "answerIndex": 1,
+   "explanation": "The original error comes first, followed by the fact-checking, the correction, and the approval of the corrected version.",
+   "difficulty": 7,
+   "skill": "Reconstructing Logical Sequence",
+   "topic": "Diction and Precision: Rebuilding a Scrambled Piece",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence arranges these sentences into a coherent paragraph?\n1. She scanned each page in small batches to limit handling.\n2. This cautious method reduced the risk of tearing the paper.\n3. Before scanning began, she examined the brittle pages under low light.\n4. By the end of the day, the archive had digitized 28 pages.",
+   "choices": [
+    "3, 1, 2, 4",
+    "1, 3, 4, 2",
+    "3, 4, 1, 2",
+    "2, 3, 1, 4"
+   ],
+   "answerIndex": 0,
+   "explanation": "The paragraph moves logically from examining the pages to scanning them, explaining the method, and reporting the result.",
+   "difficulty": 8,
+   "skill": "Reconstructing Procedural Sequence",
+   "topic": "Diction and Precision: Rebuilding a Scrambled Piece",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence reconstructs the most logical account?\n1. After the sensor was replaced, the filter's readings matched the calibration standard.\n2. A cracked sensor had produced readings that differed from that standard.\n3. The technician then entered the successful retest in the maintenance log.\n4. This result confirmed that the sensor, rather than the filter, had caused the error.",
+   "choices": [
+    "1, 4, 2, 3",
+    "2, 3, 4, 1",
+    "2, 1, 4, 3",
+    "4, 2, 1, 3"
+   ],
+   "answerIndex": 2,
+   "explanation": "The original problem leads to the replacement and successful retest, which establishes the cause before the technician records the result.",
+   "difficulty": 8,
+   "skill": "Reconstructing Causal Sequence",
+   "topic": "Diction and Precision: Rebuilding a Scrambled Piece",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation best identifies why the revision is more precise?\nOriginal: The old sign was difficult to read in low light.\nRevised: The old sign's 12-point letters were difficult to read in low light.",
+   "choices": [
+    "It demonstrates that the sign's wording was the main cause of the problem.",
+    "It identifies a specific feature of the letters that affected readability.",
+    "It establishes that better lighting had already solved the problem.",
+    "It proves that all sign users were unable to read the letters."
+   ],
+   "answerIndex": 1,
+   "explanation": "The revision identifies a specific feature of the letters that affected readability.",
+   "difficulty": 7,
+   "skill": "Evaluating Precision in Revision",
+   "topic": "Diction and Precision: Rebuilding a Scrambled Piece",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation best describes why the revised sentence is more precise?\nOriginal: The repair reduced the leak.\nRevised: The repair reduced the leak by two liters per minute.",
+   "choices": [
+    "It identifies the specific component that developed the leak.",
+    "It shows that the repair eliminated the leak completely.",
+    "It replaces an unspecified reduction with an exact measurement of the leak rate.",
+    "It compares the leak rate with that of a different building."
+   ],
+   "answerIndex": 2,
+   "explanation": "The revision replaces an unspecified reduction with an exact measurement of the leak rate.",
+   "difficulty": 8,
+   "skill": "Evaluating Precision in Revision",
+   "topic": "Diction and Precision: Rebuilding a Scrambled Piece",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation best identifies the gain in precision in this revision?\nOriginal: The survey found a lot of support.\nRevised: In the October 2025 survey, 63 of 80 residents said they supported the plan.",
+   "choices": [
+    "It demonstrates that every person in the wider community supported the plan.",
+    "It establishes that the plan was implemented successfully after the vote.",
+    "It replaces a vague claim with a dated, exact result from a clearly defined group.",
+    "It compares support for the plan with opposition to another proposal."
+   ],
+   "answerIndex": 2,
+   "explanation": "The revision replaces a vague claim with a dated, exact result from a clearly defined group.",
+   "difficulty": 9,
+   "skill": "Evaluating Precision in Revision",
+   "topic": "Diction and Precision: Rebuilding a Scrambled Piece",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence arranges these sentences into the most logical order?\n1. During the closing check, the registrar noticed that a framed map was missing from its display case.\n2. Reviewing the storage log, she found that the map had been moved to the conservation room.\n3. There, she located the map inside a padded document tray.\n4. After confirming its condition, she returned it to the case and updated the inventory.",
+   "choices": [
+    "1, 2, 3, 4",
+    "2, 4, 1, 3",
+    "3, 1, 4, 2",
+    "4, 3, 2, 1"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence moves logically from noticing the missing map to tracing, finding, and documenting its return.",
+   "difficulty": 7,
+   "skill": "Reconstructing a logical sequence",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A coastal survey recorded declining ice thickness and rising water temperatures over the same ten-year period. Which sentence reports the findings without claiming that one caused the other?",
+   "choices": [
+    "The rise in water temperature caused the coastal ice to thin.",
+    "Both water temperature and ice thickness changed during the same ten-year period.",
+    "The thinning of the ice directly caused the water to warm.",
+    "The increase in water temperature produced thicker coastal ice."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence reports both changes without presenting either as the cause of the other.",
+   "difficulty": 8,
+   "skill": "Distinguishing correlation from causation",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which adjective most precisely describes a claim that can be checked against evidence rather than merely believed?",
+   "choices": [
+    "verifiable",
+    "factual",
+    "credible",
+    "objective"
+   ],
+   "answerIndex": 0,
+   "explanation": "Verifiable specifically means that a claim can be checked against evidence.",
+   "difficulty": 7,
+   "skill": "Selecting precise vocabulary",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best identifies why the revised sentence is more precise?\nOriginal: Jordan told Avery that they had won the award.\nRevised: Jordan told Avery that Jordan had won the award.",
+   "choices": [
+    "It shows that Avery was the only person who won the award.",
+    "It proves that the award had two recipients.",
+    "It makes clear that Jordan and Avery both won the award.",
+    "It identifies Jordan as the person who won the award."
+   ],
+   "answerIndex": 3,
+   "explanation": "Repeating Jordan as the subject of the second clause removes ambiguity about which person won the award.",
+   "difficulty": 8,
+   "skill": "Explaining gains in precision",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A model estimated a treatment difference of 0.04 percentage points, but the software displayed values rounded to whole percentage points. Which sentence reports this most precisely?",
+   "choices": [
+    "The estimated difference was 0.04 percentage points, which the display rounded to 0.",
+    "The estimated difference was exactly 0 percentage points.",
+    "The treatment and control groups had identical outcomes.",
+    "The study found no difference between the treatments."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence preserves the unrounded estimate and distinguishes it from the rounded display value.",
+   "difficulty": 9,
+   "skill": "Reporting numerical results precisely",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence places these sentences in the most logical order?\n1. Because a tool inventory showed the pruning shears missing from the shed, the coordinator checked the checkout log.\n2. The log recorded that the shears had been borrowed for repair.\n3. The coordinator located them in a cabinet at the garden center.\n4. After inspecting the blades, the coordinator returned the shears to the shed and closed the checkout record.",
+   "choices": [
+    "2, 3, 1, 4",
+    "3, 1, 4, 2",
+    "4, 2, 3, 1",
+    "1, 2, 3, 4"
+   ],
+   "answerIndex": 3,
+   "explanation": "The order moves from discovering the missing tool to checking its record, locating it, inspecting it, and completing its return.",
+   "difficulty": 8,
+   "skill": "Reconstructing a logical account",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Arrange the numbered sentences to reconstruct the account in a logical sequence.\n1. Although the shelf was dry, a conservator noticed a faint tide line on its liner.\n2. Because no pipe, roof, or open window showed signs of moisture, the source remained undetermined and building staff expanded their inspection.\n3. The three lowest folders had begun to warp slightly along their lower edges.\n4. Each affected folder was photographed, measured, and placed in a separate support tray.",
+   "choices": [
+    "1, 3, 4, 2",
+    "1, 4, 3, 2",
+    "3, 1, 4, 2",
+    "1, 3, 2, 4"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence moves from noticing the tide line to finding the warped folders, documenting their condition, and then expanding the search for the moisture source.",
+   "difficulty": 8,
+   "skill": "Logical Sequencing",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence restores the paragraph so that each event follows the one that causes or explains it?\n1. After a pilot revealed a large difference among clinics, investigators compared each site's enrollment rate.\n2. During the next month, total enrollment rose from 52 to 96.\n3. Two clinics had required extra staff approval, while one allowed direct consent.\n4. The team then expanded direct consent to all sites.",
+   "choices": [
+    "1, 3, 4, 2",
+    "1, 2, 3, 4",
+    "1, 4, 3, 2",
+    "3, 1, 2, 4"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence presents the pilot, the explanation of the difference, the resulting policy change, and the enrollment increase that followed.",
+   "difficulty": 8,
+   "skill": "Logical Sequencing",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Why is the revised statement more precise than the original?\nOriginal: The library's summer program was busy.\nRevised: The library's summer program served 1,284 participants across 24 scheduled sessions.",
+   "choices": [
+    "It replaces a general impression with exact participation and session counts.",
+    "It identifies the months in which every scheduled session occurred.",
+    "It explains why participants chose to attend the summer program.",
+    "It compares the summer program's popularity with programs at other libraries."
+   ],
+   "answerIndex": 0,
+   "explanation": "The revision replaces the vague judgment that the program was busy with measurable figures for participation and scheduled sessions.",
+   "difficulty": 7,
+   "skill": "Precision in Revisions",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Researchers surveyed 12 bookstores about a new display, and 9 said the display increased customer interest, but the survey did not use random sampling. Which sentence reports the finding most precisely?",
+   "choices": [
+    "In a nonrandom survey of 12 bookstores, 9 said the display increased customer interest.",
+    "The display increased customer interest in most surveyed bookstores.",
+    "Random sampling showed that the display increased customer interest in most bookstores.",
+    "Nine of 12 bookstores reported increased customer interest, proving the display caused the increase."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence specifies the sample size and survey method, reports what respondents said, and does not turn a nonrandom finding into a causal conclusion.",
+   "difficulty": 8,
+   "skill": "Evidence-Bounded Reporting",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A survey found that students who took notes by hand scored 6 points higher on average than students who typed notes. Which sentence states this finding most precisely without implying that the note-taking method caused the scores?",
+   "choices": [
+    "Students in the survey who took notes by hand scored 6 points higher on average than students who typed notes.",
+    "Handwriting caused students to score 6 points higher on average than typing their notes.",
+    "Students who took notes by hand always scored 6 points higher than students who typed notes.",
+    "Handwritten notes are the best way to improve test scores by an average of 6 points."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence confines the comparison to surveyed students, gives the average difference, and describes an association rather than a proven cause.",
+   "difficulty": 9,
+   "skill": "Causal Precision",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A group intentionally publishes false claims to influence public opinion. Which noun most precisely names this activity?",
+   "choices": [
+    "disinformation",
+    "misinformation",
+    "propaganda",
+    "slander"
+   ],
+   "answerIndex": 0,
+   "explanation": "Disinformation means false information deliberately created or spread to deceive, which matches the stated intent.",
+   "difficulty": 8,
+   "skill": "Precise Vocabulary",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence arranges these four sentences into a logical paragraph?\n1. The researchers began by defining which visible features the optical model would compare.\n2. They photographed each seedling under standardized lighting before running the same analysis on every image.\n3. The model's confidence fell sharply when a leaf edge was blurred or partly hidden by soil.\n4. Because the decline occurred only in those obscured images, the team recommended photographing plants from additional angles.",
+   "choices": [
+    "1, 2, 3, 4",
+    "1, 3, 2, 4",
+    "2, 1, 3, 4",
+    "1, 2, 4, 3"
+   ],
+   "answerIndex": 0,
+   "explanation": "The order moves from defining the model's task to collecting standardized images, identifying the failure pattern, and recommending a response.",
+   "difficulty": 8,
+   "skill": "Logical sequencing and cohesion",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence reconstructs the account so that each sentence follows logically from the previous one?\n1. To determine whether tutoring affected progress, the school selected students who had scored below the reading benchmark.\n2. Half of those students received twice-weekly tutoring, while the other half continued with the usual support.\n3. After one term, the tutored group improved by 17 percent on average, compared with 6 percent in the comparison group.\n4. Because students had been assigned to groups before the term began, the school described the result as evidence from a controlled study rather than proof of causation.",
+   "choices": [
+    "1, 2, 3, 4",
+    "1, 3, 2, 4",
+    "2, 1, 3, 4",
+    "1, 2, 4, 3"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence presents group selection, assignment, outcome, and the study's justified limit on causal claims in the order required by those details.",
+   "difficulty": 9,
+   "skill": "Cause-and-effect sequencing",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which verb most precisely means to examine the separate parts of a text and explain how they relate to one another?",
+   "choices": [
+    "analyze",
+    "summarize",
+    "predict",
+    "imitate"
+   ],
+   "answerIndex": 0,
+   "explanation": "Analyze means to examine elements in detail and determine how they relate, which matches the task described.",
+   "difficulty": 7,
+   "skill": "Selecting precise verbs",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Analyze means to examine the separate parts of a text and explain how they relate.",
+      "url": "https://en.wiktionary.org/wiki/analyze",
+      "quote": "( transitive ) To separate into the constituent parts, for the purpose of an examination of each separately.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which adjective most precisely describes wording that is clear enough to be understood without confusion?",
+   "choices": [
+    "lucid",
+    "ornate",
+    "terse",
+    "hesitant"
+   ],
+   "answerIndex": 0,
+   "explanation": "Lucid means clear and easy to understand, matching the description of wording that leaves no confusion.",
+   "difficulty": 7,
+   "skill": "Selecting precise adjectives",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Lucid means clear or easily understood.",
+      "url": "https://en.wiktionary.org/wiki/lucid",
+      "quote": "( easily understood ) : clear , perspicuous , straightforward",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which noun most precisely means the reason or purpose that leads a person to act?",
+   "choices": [
+    "motive",
+    "method",
+    "result",
+    "obstacle"
+   ],
+   "answerIndex": 0,
+   "explanation": "A motive is the reason or purpose behind an action, matching the definition in the question.",
+   "difficulty": 8,
+   "skill": "Selecting precise nouns",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Motive means the reason or purpose that prompts a person to act.",
+      "url": "https://en.wiktionary.org/wiki/motive",
+      "quote": "An incentive to act in a particular way; a reason or emotion that makes one want to do something; anything that prompts a choice of action.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Two records give conflicting versions of when the archive was closed. Which verb most precisely describes bringing those versions into agreement?",
+   "choices": [
+    "combine",
+    "merge",
+    "reconcile",
+    "integrate"
+   ],
+   "answerIndex": 2,
+   "explanation": "Reconcile means to resolve differences by bringing conflicting accounts or descriptions into a consistent version.",
+   "difficulty": 8,
+   "skill": "Precise word choice",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Original: The project caused a big change in the town's traffic. Which revision is the most precise?",
+   "choices": [
+    "The project caused major changes in traffic throughout the town.",
+    "After the project opened, average weekday traffic on Market Street rose from 4,200 to 5,100 vehicles.",
+    "The project made a noticeable difference to traffic in several parts of the town.",
+    "The project changed traffic in the town by a large amount over the following year."
+   ],
+   "answerIndex": 1,
+   "explanation": "It names the location, the traffic measure, the relevant time frame, and the exact before-and-after counts.",
+   "difficulty": 8,
+   "skill": "Improving sentence precision",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence reconstructs the paragraph so that each event follows logically from the one before it?\n1. Once the replacement labels passed inspection, the supervisor released the batch.\n2. A supervisor noticed that the shipping labels on twelve boxes had faded.\n3. The printer reprinted the faded labels with darker ink.\n4. During inspection, one label remained unreadable, so the shipment was briefly held.",
+   "choices": [
+    "2, 4, 3, 1",
+    "1, 2, 3, 4",
+    "2, 3, 4, 1",
+    "3, 2, 1, 4"
+   ],
+   "answerIndex": 2,
+   "explanation": "The sequence moves from discovering the faded labels through reprinting and inspection to the final release of the batch.",
+   "difficulty": 9,
+   "skill": "Rebuilding a logical sequence",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence places the sentences in the most logical order?\n1. Because the reagent had been stored above its recommended temperature, the technician repeated the calibration.\n2. The repeated calibration produced readings within 0.1 units of the standard.\n3. Only then did the technician test the twelve samples.\n4. Every sample produced a result within the protocol's accepted range.",
+   "choices": [
+    "2, 1, 3, 4",
+    "1, 3, 2, 4",
+    "1, 2, 3, 4",
+    "1, 2, 4, 3"
+   ],
+   "answerIndex": 2,
+   "explanation": "The sequence moves from the reason for recalibrating through calibration, sample testing, and the final results.",
+   "difficulty": 8,
+   "skill": "Paragraph reconstruction",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which verb most precisely means to state a fact or belief firmly, especially in a formal argument?",
+   "choices": [
+    "allege",
+    "assert",
+    "imply",
+    "deny"
+   ],
+   "answerIndex": 1,
+   "explanation": "Assert is the precise verb for stating a fact or belief firmly, as in a formal argument.",
+   "difficulty": 8,
+   "skill": "Precise diction",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence places these sentences in the most logical order?\n1. When the checkout scanner rejected valid labels, the clerk stopped using it.\n2. A technician found dust blocking the optical sensor.\n3. After the technician cleaned the sensor, the scanner read all 50 test labels.\n4. Once the retest passed, the clerk returned the scanner to service.",
+   "choices": [
+    "2, 1, 3, 4",
+    "1, 3, 2, 4",
+    "1, 2, 4, 3",
+    "1, 2, 3, 4"
+   ],
+   "answerIndex": 3,
+   "explanation": "The sequence moves from the malfunction to diagnosis, testing, and finally the decision to return the scanner to service.",
+   "difficulty": 7,
+   "skill": "Paragraph reconstruction",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best identifies why the revised statement is more precise?\nOriginal: The bridge repair was satisfactory.\nRevised: After the inspection, engineers found that all 18 repaired welds met the required thickness tolerance.",
+   "choices": [
+    "It replaces a general judgment with the number of repaired welds, the inspection result, and a specific standard.",
+    "It attributes the satisfactory result to the original bridge design rather than to the repair work.",
+    "It removes every measurable condition that could support an evaluation of the repairs.",
+    "It expands the scope from the repaired welds to the condition of the entire bridge."
+   ],
+   "answerIndex": 0,
+   "explanation": "The revision gives a measurable inspection result for a specified number of welds instead of expressing a general judgment.",
+   "difficulty": 8,
+   "skill": "Explaining precision",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence reconstructs the account in a logical order?\n1. Because the online ticket system showed duplicate seat assignments, the coordinator paused check-in.\n2. She compared the system entries with the printed seating charts.\n3. The comparison showed that the duplicates had resulted from a browser refresh and that all assigned seats remained available.\n4. After the duplicate entries were corrected, check-in resumed.",
+   "choices": [
+    "1, 2, 3, 4",
+    "3, 1, 2, 4",
+    "1, 3, 2, 4",
+    "1, 2, 4, 3"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sequence presents the problem, the comparison used to investigate it, the finding, and the resulting action in cause-and-effect order.",
+   "difficulty": 8,
+   "skill": "Paragraph reconstruction",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A store says an item is no longer in its online catalog, but it gives no information about the item's availability or future status. Which sentence reports only what is known?",
+   "choices": [
+    "The item is not currently listed on the website.",
+    "The item has been permanently removed from sale.",
+    "The item will be restocked next month.",
+    "The item is being sold by another retailer."
+   ],
+   "answerIndex": 0,
+   "explanation": "This wording reports the catalog's current state without assuming a permanent discontinuation, future restock, or sale elsewhere.",
+   "reason": "explanation-key: the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The weather service forecast heavy rain, and some rain fell, but the storm passed without reaching the area. The forecast turned out to be ___.",
+   "choices": [
+    "completely false",
+    "deliberately deceptive",
+    "inaccurate",
+    "entirely unfounded"
+   ],
+   "answerIndex": 2,
+   "explanation": "Inaccurate is precise because it allows for an imperfect forecast without claiming intent or that no evidence supported it.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which sentence distinguishes a policy taking effect from evidence that people support it?",
+   "choices": [
+    "The policy went into effect on March 1.",
+    "The policy was enthusiastically welcomed on March 1.",
+    "The policy gained public approval on March 1.",
+    "The policy proved popular on March 1."
+   ],
+   "answerIndex": 0,
+   "explanation": "It reports only when the policy began to apply and makes no claim about public support.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which adjective most precisely describes findings that come from a small initial sample and may change after further testing?",
+   "choices": [
+    "preliminary",
+    "conclusive",
+    "definitive",
+    "categorical"
+   ],
+   "answerIndex": 0,
+   "explanation": "Preliminary describes findings that are initial and still subject to revision after more evidence is gathered.",
+   "reason": "source: \"Preliminary means occurring before something else and subject to later modification or improvement.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "The editor rejected the headline City's Plan Is a Total Disaster as too ___ for a report that merely notes concerns about the proposal.",
+   "choices": [
+    "inflammatory",
+    "analytical",
+    "informative",
+    "restrained"
+   ],
+   "answerIndex": 0,
+   "explanation": "Inflammatory means likely to provoke a strong emotional reaction, which makes it inappropriate for a measured report that only raises concerns.",
+   "reason": "source: \"Inflammatory language is likely to provoke strong emotional reactions.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "The newspaper reported that the company ___ misconduct, but the company had denied the claim and no court had ruled on it.",
+   "choices": [
+    "alleged",
+    "proved",
+    "confirmed",
+    "established"
+   ],
+   "answerIndex": 0,
+   "explanation": "Alleged means stated without proof, so it accurately describes an unproven claim in a report.",
+   "reason": "source: \"Alleged means claimed without proof.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The treaty requires each nation to ___ the accord before it takes effect.",
+   "choices": [
+    "sign",
+    "ratify",
+    "approve",
+    "endorse"
+   ],
+   "answerIndex": 1,
+   "explanation": "Ratify precisely means to give formal consent to a treaty or agreement, making it officially binding.",
+   "reason": "B: not exactly one correct (“Ratify” is the most precise legal term, but “approve,” “endorse,” and arguably “sign” can also fit the sentence.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which adjective most precisely describes data collected from a single location that cannot be generalized to a broader population?",
+   "choices": [
+    "unrepresentative",
+    "biased",
+    "skewed",
+    "limited"
+   ],
+   "answerIndex": 0,
+   "explanation": "Unrepresentative directly indicates that the data do not reflect the larger population, while the other terms describe other flaws.",
+   "reason": "B: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which verb most precisely means to formally cancel a previously submitted proposal?",
+   "choices": [
+    "rescind",
+    "retract",
+    "revoke",
+    "withdraw"
+   ],
+   "answerIndex": 0,
+   "explanation": "Rescind specifically means to officially cancel a formal proposal or law.",
+   "reason": "A: picked 3 not 0 (“Withdraw” naturally means taking back a submitted proposal, but “rescind” can also mean formally cancelling it, so the wording does not est) | B: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which adjective most precisely describes data that are based on personal reports and may reflect individual bias?",
+   "choices": [
+    "subjective",
+    "anecdotal",
+    "unreliable",
+    "biased"
+   ],
+   "answerIndex": 0,
+   "explanation": "Subjective directly characterizes data derived from personal perception rather than objective measurement.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "Which verb most precisely means to lessen the severity of a penalty or punishment?",
+   "choices": [
+    "mitigate",
+    "alleviate",
+    "diminish",
+    "lessen"
+   ],
+   "answerIndex": 0,
+   "explanation": "Mitigate is the term used specifically for reducing the harshness of a penalty.",
+   "reason": "source: \"To mitigate a penalty is to make the penalty less severe.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sequence arranges these sentences into the most logical order?\n1. Because the trail map showed a closed section, hikers changed their route before entering the forest.\n2. The detour added 2.3 miles and passed near a creek where the group collected several photographs.\n3. Although the longer route was inconvenient, the revised path avoided the unstable slope.\n4. Because the group reached the summit before dark, the detour was ultimately worthwhile.",
+   "choices": [
+    "1, 2, 3, 4",
+    "1, 3, 2, 4",
+    "2, 1, 3, 4",
+    "3, 1, 4, 2"
+   ],
+   "answerIndex": 0,
+   "explanation": "This sequence moves from the original closure and detour to the inconvenience of the new route and then to the outcome that made the longer path worthwhile.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "Which one-sentence explanation best identifies why the revised statement is more precise than the original?\nOriginal: The trail was difficult to climb.\nRevised: After the wet-afternoon survey, hikers reported that eleven of the trail's fourteen reported slips occurred on its five stone steps.",
+   "choices": [
+    "It replaces a general judgment with a specific event count, survey conditions, and the exact location of the reported slips.",
+    "It attributes the difficult climb to the stone steps without identifying the hikers who experienced the slips.",
+    "It removes the hikers as observers so that the location of the slips has no stated connection to them.",
+    "It replaces precise observations with a general estimate of how difficult the climb felt to hikers."
+   ],
+   "answerIndex": 2,
+   "explanation": "The revision supplies a count, the survey conditions, and the precise part of the trail, so it is more precise than a general impression.",
+   "reason": "explanation-key: the explanation describes option 1 (score 3.50) more than the keyed option 3 (score 0.00)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Which one-sentence explanation best identifies why the revised statement is more precise than the original?\nOriginal: The museum's night program was successful.\nRevised: Attendance at the museum's night program rose from 412 visitors in June to 680 in July.",
+   "choices": [
+    "It changes the program's purpose from general to specific by adding two months of attendance figures.",
+    "It replaces a vague judgment of success with exact attendance figures for two named months.",
+    "It shows that every visitor enjoyed the program, making the original claim more persuasive.",
+    "It establishes that the program caused the attendance increase, although the original sentence did not make a causal claim."
+   ],
+   "answerIndex": 1,
+   "explanation": "It replaces a vague judgment of success with exact attendance figures for June and July.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": false
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  }
+ ],
+ "applied": false
+}

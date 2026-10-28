@@ -1,0 +1,616 @@
+diff --git a/public/css/style.css b/public/css/style.css
+index a428d0a..2f89fa0 100644
+--- a/public/css/style.css
++++ b/public/css/style.css
+@@ -1235,6 +1235,25 @@ body:has(#item > .verdict .verdict-actions [data-act="next"]) main { padding-bot
+ .enroll-card { display: flex; flex-direction: column; gap: var(--s-4); }
+ 
+ /* ── 16 results and placement ──────────────────────────────────────────── */
++/* Graduation held by the coverage gate (staged round 3, COVERAGE_GATE=enforce):
++   what is left, objective by objective. */
++.gate-now { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: var(--s-6) var(--s-10); align-items: start; margin-top: var(--s-6); }
++.gate-lede { font-size: 1.0625rem; line-height: 1.55; max-width: 62ch; margin: 0; }
++.gate-section { margin-top: var(--s-8); max-width: 760px; }
++.gate-count { color: var(--ink-3); font-weight: 500; margin-left: 6px; }
++.gate-note { max-width: 64ch; margin: 0 0 var(--s-3); }
++.gate-list { list-style: none; margin: 0; padding: 0; }
++.gate-row { display: flex; align-items: center; gap: var(--s-2) var(--s-5); padding: 12px 0; border-top: 1px solid var(--line); }
++.gate-row > span:first-child { flex: 1; min-width: 0; }
++.gate-title { display: block; font-weight: 600; }
++.gate-why { display: block; font-size: var(--t-meta); color: var(--ink-3); max-width: 64ch; }
++.gate-when { font-size: var(--t-meta); color: var(--ink-2); white-space: nowrap; }
++.gate-foot { margin-top: var(--s-8); max-width: 70ch; }
++@media (max-width: 760px) {
++  .gate-now { grid-template-columns: 1fr; }
++  .gate-row { flex-wrap: wrap; }
++  .gate-now .path-actions .btn-lg { width: 100%; }
++}
+ /* Result screens open on the page, left-aligned, in the reading width: no
+    centred card and no pill above the heading. */
+ .card[style*="text-align:center"] {
+diff --git a/public/held.html b/public/held.html
+new file mode 100644
+index 0000000..21eaae3
+--- /dev/null
++++ b/public/held.html
+@@ -0,0 +1,26 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>Graduation | Savant</title>
++  <meta name="color-scheme" content="light dark">
++  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
++  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
++  <link rel="stylesheet" href="/fonts/fonts.css">
++  <link rel="stylesheet" href="/css/style.css">
++</head>
++<body>
++  <header class="site-header" id="header"></header>
++  <main class="page">
++    <div class="wrap">
++      <div id="held">
++        <div class="loading"><span class="spinner"></span>Reading your record</div>
++      </div>
++    </div>
++  </main>
++  <script src="/js/icons.js"></script>
++  <script src="/js/app.js"></script>
++  <script src="/js/held.js"></script>
++</body>
++</html>
+diff --git a/public/js/held.js b/public/js/held.js
+new file mode 100644
+index 0000000..552bc67
+--- /dev/null
++++ b/public/js/held.js
+@@ -0,0 +1,166 @@
++/* Graduation held (staged round 3; COVERAGE_GATE=enforce).
++ *
++ * The learner passed the Final, and the app's own record still has objectives
++ * of the grade it has not seen proven and then kept a day later. This page
++ * says which, and what each one needs next: its lesson again, its lesson for
++ * the first time, or one memory check once a day has passed. When the record
++ * is complete the learner graduates from here, through the same gate.
++ */
++App.mount(async () => {
++  const user = await App.currentUser({ require: true });
++  if (!user) return;
++  App.header(user, 'dashboard');
++
++  const host = document.getElementById('held');
++  const enrollmentId = Number(App.query('enrollment'));
++  const esc = App.escapeHtml;
++  if (!enrollmentId) {
++    host.innerHTML = '<div class="notice notice-error">No subject selected. <a href="/dashboard">Back to dashboard</a>.</div>';
++    return;
++  }
++  const pathHref = `/path?enrollment=${enrollmentId}`;
++
++  let data;
++  try {
++    data = await App.api.get(`/api/coverage/${enrollmentId}/held`);
++  } catch (err) {
++    host.innerHTML = `<div class="notice notice-error">${esc(err.message)}</div>`;
++    return;
++  }
++
++  const when = (iso) => {
++    const d = new Date(iso);
++    const sameDay = d.toDateString() === new Date().toDateString();
++    return sameDay
++      ? `later today, ${d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
++      : d.toLocaleString([], { weekday: 'long', hour: 'numeric', minute: '2-digit' });
++  };
++  const lessonHref = (o) => `/session?enrollment=${enrollmentId}&level=${o.lesson_level}`;
++
++  function head(title, sub) {
++    const [gradeMain] = App.gradeParts((data.grade && data.grade.name) || '');
++    return `
++      <div class="path-top" data-subject="${esc(data.track ? data.track.id : '')}">
++        <div>
++          <a class="back-link" href="${pathHref}">${window.icon('arrow-left')}Your path</a>
++          <div class="track-heading">
++            ${data.track ? App.symbol(data.track, { size: 'lg' }) : ''}
++            <div>
++              <h1>${esc(title)}</h1>
++              <span class="tiny">${data.track ? `${esc(data.track.name)}, ${esc(gradeMain)}.` : ''}${sub ? ` ${sub}` : ''}</span>
++            </div>
++          </div>
++        </div>
++      </div>`;
++  }
++
++  function section(id, title, note, rows, action) {
++    if (!rows.length) return '';
++    return `
++      <section class="gate-section" aria-labelledby="${id}">
++        <h2 class="section-title" id="${id}">${esc(title)} <span class="num gate-count">${rows.length}</span></h2>
++        <p class="small muted gate-note">${note}</p>
++        <ol class="gate-list">
++          ${rows.map((o) => `
++            <li class="gate-row">
++              <span>
++                <span class="gate-title">${esc(App.cleanTitle(o.title))}</span>
++                <span class="gate-why">${esc(o.covers)}</span>
++              </span>
++              ${action(o)}
++            </li>`).join('')}
++        </ol>
++      </section>`;
++  }
++
++  function graduatedView() {
++    host.innerHTML = `
++      ${head('You graduated')}
++      <div class="gate-now">
++        <p class="path-done-line">${window.mark('tick')}Every objective of this grade is proven and kept.</p>
++        <div class="path-actions">
++          <a class="btn btn-primary" href="/onboarding">Pick the next one</a>
++          <a class="btn btn-text" href="${pathHref}">Your path</a>
++        </div>
++      </div>`;
++  }
++
++  function render() {
++    if (data.status === 'graduated') { graduatedView(); return; }
++    if (!data.held || !data.plan) {
++      host.innerHTML = `${head('Graduation')}
++        <div class="notice" style="margin-top:20px">Nothing is holding your graduation on this subject.
++          <div style="margin-top:10px"><a class="btn btn-sm" href="${pathHref}">Back to your path</a></div></div>`;
++      return;
++    }
++    const p = data.plan;
++    const left = p.total - p.kept;
++    const relearn = p.objectives.filter((o) => o.needs === 'relearn');
++    const learn = p.objectives.filter((o) => o.needs === 'learn');
++    const checks = p.objectives.filter((o) => o.needs === 'memory_check');
++    const dueNow = checks.filter((o) => o.due_now);
++    const exam = data.exam || {};
++
++    const primary = p.complete
++      ? '<button class="btn btn-primary btn-lg" type="button" id="graduate">Graduate</button>'
++      : dueNow.length && data.review_available
++        ? `<a class="btn btn-primary btn-lg" href="/review?enrollment=${enrollmentId}">Do the memory checks now</a>`
++        : (relearn[0] || learn[0])
++          ? `<a class="btn btn-primary btn-lg" href="${lessonHref(relearn[0] || learn[0])}">Start with ${esc(App.cleanTitle((relearn[0] || learn[0]).title))}</a>`
++          : '';
++    const nextCheck = checks.filter((o) => !o.due_now).map((o) => o.due_at).sort()[0] || null;
++
++    host.innerHTML = `
++      ${head(p.complete ? 'Ready to graduate' : 'You passed the Final')}
++      <div class="gate-now">
++        <div>
++          <p class="gate-lede">${p.complete
++    ? 'Your record now shows every objective of this grade proven and kept. Graduate whenever you are ready.'
++    : `Graduation waits on <span class="num">${left}</span> of <span class="num">${p.total}</span> objectives. The Final showed what you could do on the day; graduating also needs each objective proven by your own answers and then remembered a day later, so it is still yours next month.`}</p>
++          <div class="path-actions">
++            ${primary}
++            <a class="btn btn-text" href="${pathHref}">Your path</a>
++            ${!p.complete && nextCheck && !dueNow.length ? `<span class="small">The next memory check is ready ${esc(when(nextCheck))}.</span>` : ''}
++          </div>
++        </div>
++        <div class="hero-body">
++          <div class="tmeters">
++            ${App.tmeter({ label: 'Proven and kept', value: p.kept, target: p.total, max: p.total, unit: 'count' })}
++          </div>
++          ${exam.at ? `<p class="tiny muted" style="margin:8px 0 0">Final passed ${esc(App.timeAgo(exam.at))}. You will not sit it again.</p>` : ''}
++        </div>
++      </div>
++      ${section('relearn-h', 'Learn again', 'Proven once, and slipped since. The lesson again, then its questions.', relearn,
++    (o) => `<a class="btn btn-sm" href="${lessonHref(o)}">Open the lesson<span class="visually-hidden">: ${esc(App.cleanTitle(o.title))}</span></a>`)}
++      ${section('learn-h', 'Not proven yet', 'Your answers so far do not show this yet. Its lesson and questions are what prove it.', learn,
++    (o) => `<a class="btn btn-sm" href="${lessonHref(o)}">Open the lesson<span class="visually-hidden">: ${esc(App.cleanTitle(o.title))}</span></a>`)}
++      ${section('check-h', 'Memory checks', 'Proven, and waiting for one more right answer a day or more later. That answer is what counts it as kept.', checks,
++    (o) => (o.due_now
++      ? (data.review_available
++        ? `<span class="gate-when">Ready now; in today's review</span>`
++        : `<a class="btn btn-sm" href="${lessonHref(o)}">Check it<span class="visually-hidden">: ${esc(App.cleanTitle(o.title))}</span></a>`)
++      : `<span class="gate-when">Ready ${esc(when(o.due_at))}</span>`))}
++      <p class="tiny muted gate-foot">Proven means enough right answers of your own, two of them on questions written for that objective. Kept means one more right answer at least a day later. Answers reached with the coach count for less.</p>`;
++
++    const graduate = document.getElementById('graduate');
++    if (graduate) {
++      graduate.addEventListener('click', async () => {
++        graduate.disabled = true;
++        graduate.innerHTML = '<span class="spinner"></span>Checking your record';
++        try {
++          const out = await App.api.post(`/api/coverage/${enrollmentId}/graduate`, {});
++          data = out;
++          if (out.graduated) { graduatedView(); App.announce('You graduated.'); return; }
++          App.toast('Not yet: your record changed. Here is what is left.');
++          render();
++        } catch (err) {
++          App.toast(err.message, 'error');
++          graduate.disabled = false;
++          graduate.textContent = 'Graduate';
++        }
++      });
++    }
++  }
++
++  render();
++});
+diff --git a/public/js/path.js b/public/js/path.js
+index 7dc1452..fb43246 100644
+--- a/public/js/path.js
++++ b/public/js/path.js
+@@ -581,7 +581,19 @@ App.mount(async () => {
+   const retakeBtn = placementInfo && placementInfo.retake_available && enrollment.status !== 'graduated'
+     ? `<button class="btn btn-text" type="button" data-retake="${enrollment.id}" data-track="${App.escapeHtml(track.id)}" data-grade-name="${App.escapeHtml(grade.name)}">Retake placement<span class="visually-hidden"> for ${App.escapeHtml(App.gradeLabel(grade.name))}</span></button>`
+     : '';
+-  const action = retakeBtn ? action0.replace('</a>', () => `</a>${retakeBtn}`) : action0;
++  const action1 = retakeBtn ? action0.replace('</a>', () => `</a>${retakeBtn}`) : action0;
++  // A Final passed while the record still has objectives to prove and keep
++  // (COVERAGE_GATE=enforce): graduation is held, and the way on is to prove
++  // them, not to sit the Final again. Asked only on the Final's level.
++  const held = checkpoint === 'graduation' && enrollment.status === 'active'
++    ? await App.api.get(`/api/coverage/${enrollment.id}/held`).then((x) => (x && x.held ? x : null)).catch(() => null)
++    : null;
++  const heldLeft = held && held.plan ? held.plan.total - held.plan.kept : 0;
++  const action = !held ? action1 : held.plan && held.plan.complete
++    ? `<a class="btn btn-primary btn-lg" href="/held?enrollment=${enrollment.id}">Graduate</a>
++       <span class="small">You passed the Final, and your record now shows every objective proven and kept.</span>`
++    : `<a class="btn btn-primary btn-lg" href="/held?enrollment=${enrollment.id}">See what graduation waits on</a>
++       <span class="small">You passed the Final. Graduation waits on <span class="num">${heldLeft}</span> objective${heldLeft === 1 ? '' : 's'} your record has not yet seen proven and kept.</span>`;
+   const bannerHtml = await catchBanner();
+ 
+   // The level the learner stands on, named the way the path names it.
+diff --git a/public/js/session.js b/public/js/session.js
+index 62e46ca..b396795 100644
+--- a/public/js/session.js
++++ b/public/js/session.js
+@@ -1032,6 +1032,10 @@ function renderRubricResult(result) {
+     const span = levels.length > 1 ? `levels ${levels[0]} to ${levels[levels.length - 1]}` : `level ${levels[0]}`;
+ 
+     const failedCheckpoint = !!checkpoint && !checkpoint.passed;
++    // The Final passed, and graduation held by the coverage gate
++    // (COVERAGE_GATE=enforce): objectives the record has not yet seen proven and kept.
++    const heldGraduation = !!checkpoint && !!checkpoint.passed && !!checkpoint.coverage_held;
++    const heldCount = heldGraduation && checkpoint.coverage ? checkpoint.coverage.blocking_count : 0;
+ 
+     let banner = '';
+     // A preview resolves no checkpoint and advances nothing, so its recap says
+@@ -1054,7 +1058,9 @@ function renderRubricResult(result) {
+         ? `<div class="notice notice-success">
+              <strong>${App.escapeHtml(App.levelName(checkpoint.kind))} passed</strong> at ${App.pct(checkpoint.accuracy)}
+              (${App.pct(checkpoint.required)} needed).
+-             ${checkpoint.graduated ? ' You have graduated this track.' : ` You are now at level ${checkpoint.level}.`}
++             ${heldGraduation
++    ? ` Graduation waits on ${heldCount} objective${heldCount === 1 ? '' : 's'} your record has not yet seen proven and kept; you will not sit the Final again.`
++    : checkpoint.graduated ? ' You have graduated this track.' : ` You are now at level ${checkpoint.level}.`}
+            </div>`
+         : `<div class="notice notice-warn">
+              <strong>${App.escapeHtml(App.levelName(checkpoint.kind))} not passed</strong>: ${App.pct(checkpoint.accuracy)} against ${App.pct(checkpoint.required)}.
+@@ -1122,6 +1128,9 @@ function renderRubricResult(result) {
+             ${window.icon('arrow-left')}Back to your path
+           </a>
+           <span class="small muted">Your own level is level ${session.your_level}.</span>
++        ` : heldGraduation ? `
++          <a class="btn btn-primary" href="/held?enrollment=${enrollmentId}">See what graduation waits on</a>
++          <a class="btn" href="/path?enrollment=${enrollmentId}">View your path</a>
+         ` : failedCheckpoint ? `
+           <a class="btn btn-primary" href="/session?enrollment=${enrollmentId}">
+             ${window.icon('refresh')}Retry the ${App.escapeHtml(App.levelName(checkpoint.kind))}
+diff --git a/routes/coverage.js b/routes/coverage.js
+new file mode 100644
+index 0000000..6059031
+--- /dev/null
++++ b/routes/coverage.js
+@@ -0,0 +1,82 @@
++/**
++ * A held graduation (staged patch round3/05-graduation-held).
++ *
++ * With COVERAGE_GATE=enforce (default `shadow`), passing the Final graduates a
++ * learner only when every objective of the grade is proven and kept
++ * (services/coverage.js gate; services/mastery.js clearCheckpoint). When it is
++ * not, the enrollment stays on the Final's level with `coverage_held_at` set.
++ * These routes are the way on from there:
++ *
++ *   GET  /api/coverage/:enrollmentId/held      what graduation is waiting on,
++ *                                              objective by objective
++ *   POST /api/coverage/:enrollmentId/graduate  ask the gate again, and graduate
++ *                                              once it is met
++ *
++ * Nothing here lowers the bar: the Final is not sat again, and graduation
++ * happens only through the same gate that held it.
++ */
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const coverage = require('../services/coverage');
++const adaptation = require('../services/adaptation');
++const mastery = require('../services/mastery');
++const { requireAuth } = require('../middleware/auth');
++const { limit } = require('../utils/rate-limit');
++
++const router = express.Router();
++
++/** Whether the daily review (staged patch round3/01) is installed and on: memory checks can then be done in one sitting. */
++function reviewAvailable() {
++  try {
++    // eslint-disable-next-line global-require
++    return require('../services/review-session').enabled();
++  } catch {
++    return false;
++  }
++}
++
++function ownEnrollment(req) {
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return null;
++  return enrollment;
++}
++
++function heldView(userId, enrollment) {
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const track = curriculum.getTrack(enrollment.track_id);
++  const held = enrollment.status === 'active' && !!enrollment.coverage_held_at;
++  return {
++    held,
++    held_at: enrollment.coverage_held_at || null,
++    status: enrollment.status,
++    gate_mode: coverage.gateMode(),
++    exam: enrollment.coverage_graduation || null,
++    enrollment: { id: enrollment.id, status: enrollment.status, current_level: enrollment.current_level },
++    track: track ? { id: track.id, name: track.name } : null,
++    grade: grade ? { id: grade.id, name: grade.name } : null,
++    plan: held ? adaptation.heldPlanFor({ userId, enrollment }) : null,
++    review_available: reviewAvailable(),
++  };
++}
++
++router.get('/coverage/:enrollmentId/held', requireAuth, (req, res) => {
++  const enrollment = ownEnrollment(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  res.json(heldView(req.user.id, enrollment));
++});
++
++router.post('/coverage/:enrollmentId/graduate', requireAuth, limit('coverage-graduate', 60, 60 * 60 * 1000), (req, res) => {
++  const enrollment = ownEnrollment(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  if (enrollment.status === 'graduated') return res.json({ graduated: true, already: true, ...heldView(req.user.id, enrollment) });
++  if (!enrollment.coverage_held_at) return res.status(409).json({ error: 'Pass the Graduation exam first.' });
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  if (!grade) return res.status(400).json({ error: 'That subject is no longer available.' });
++  // The same gate that held it: clearCheckpoint asks coverage.atGraduation again.
++  const result = mastery.clearCheckpoint(enrollment, grade, 'graduation');
++  if (result.graduated) db.update('enrollments', enrollment.id, { coverage_held_at: null, coverage_released_at: new Date().toISOString() });
++  res.json({ graduated: !!result.graduated, ...heldView(req.user.id, db.byId('enrollments', enrollment.id)) });
++});
++
++module.exports = router;
+diff --git a/scripts/round3-held-test.js b/scripts/round3-held-test.js
+new file mode 100644
+index 0000000..8e8c0a4
+--- /dev/null
++++ b/scripts/round3-held-test.js
+@@ -0,0 +1,214 @@
++/**
++ * Tests for the graduation-held screen's server side (staged round 3, patch
++ * 05-graduation-held): routes/coverage.js and adaptation.heldPlanFor, with
++ * COVERAGE_GATE=enforce and with the default (shadow).
++ *
++ *   node scripts/round3-held-test.js
++ *
++ * Runs on its own throwaway data file with every model key blanked: no model
++ * call, no network, nothing real touched.
++ */
++const os = require('os');
++const path = require('path');
++const fs = require('fs');
++const http = require('http');
++
++process.env.NODE_ENV = 'test';
++for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
++const tmp = path.join(os.tmpdir(), `${path.basename(__filename, '.js')}-${process.pid}.json`);
++process.env.DB_FILE = tmp;
++for (const k of ['COVERAGE_GATE', 'COVERAGE_RULE', 'ADAPTIVE_TEACHING', 'ADAPT_REVIEW_SESSION', 'ADAPT_CONSOLIDATE', 'ADAPT_EFFORT', 'ADAPT_REMEDIATION', 'ADAPT_OWNER', 'ADMIN_EMAILS', 'OWNER_EMAIL']) delete process.env[k];
++
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const coverage = require('../services/coverage');
++
++let failures = 0;
++function check(label, ok, detail) {
++  if (ok) { console.log(`  ok   ${label}`); return; }
++  failures++;
++  console.log(`  FAIL ${label}${detail === undefined ? '' : ` — ${JSON.stringify(detail).slice(0, 400)}`}`);
++}
++
++const DAY = coverage.DAY;
++const TRACK = 'math';
++const GRADE = 'numbers_to_10';
++const grade = curriculum.getGrade(TRACK, GRADE);
++const model = coverage.modelFor(TRACK, GRADE);
++const FINAL = grade.levels.find((l) => l.kind === 'graduation').level;
++
++/** A learner enrolled in numbers_to_10, standing on `level`. */
++function learner(email, level, extra = {}) {
++  const user = db.insert('users', { email, name: email.split('@')[0], password_hash: 'x', streak: 0, xp: 0, onboarded: true });
++  const enrollment = db.insert('enrollments', {
++    user_id: user.id, track_id: TRACK, grade_id: GRADE, target_level: grade.pathLength, current_level: level,
++    level_items: 0, levels_completed: 0, xp: 0, status: 'active', pending_checkpoint: null, placed_at: new Date().toISOString(), ...extra,
++  });
++  const session = db.insert('sessions', {
++    user_id: user.id, enrollment_id: enrollment.id, track_id: TRACK, grade_id: GRADE, level: 1, kind: 'lesson',
++    blocks: [{ index: 0, level: 1, kind: 'practice', resolved: true }], started_at: new Date(Date.now() - 30 * DAY).toISOString(), ended_at: new Date().toISOString(),
++  });
++  return { user, enrollment, session };
++}
++
++/** One answered question on objective i, `daysAgo` days back: its lesson's check question, typed unless choices given. */
++function answer(who, i, daysAgo, correct = true, { choices = null, ms = 9000, role = 'check', level = null } = {}) {
++  const o = model.objectives[i];
++  const at = new Date(Date.now() - daysAgo * DAY).toISOString();
++  return db.insert('items', {
++    user_id: who.user.id, session_id: who.session.id, skill_id: o.skill, difficulty: 3, format: choices ? 'multiple_choice' : 'short_answer',
++    prompt: `q ${i} ${daysAgo} ${Math.random()}`, answer: '1', choices, role, level: level || o.lesson_level, block: 0, index: 0,
++    user_answer: correct ? '1' : '2', correct, ms, coach_used: false, answered_at: at,
++  });
++}
++
++/** Proven `daysAgo` days back (five typed right answers to its lesson's questions, minutes apart). */
++function prove(who, i, daysAgo) {
++  for (let k = 0; k < 5; k++) answer(who, i, daysAgo - k * 0.002);
++}
++
++/** Proven, then kept: a right typed memory check `checkDaysAgo` days back. */
++function keep(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo);
++}
++
++/** Proven, then forgotten: a wrong memory check. */
++function lapse(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo, false, { choices: ['1', '2', '3', '4'] });
++}
++
++function stateOf(who, i) {
++  return coverage.forEnrollment(who.user.id, db.byId('enrollments', who.enrollment.id)).states[i];
++}
++
++/** An app with the given routers mounted under /api, signed in as the x-user header's account. */
++function serve(routers) {
++  const app = express();
++  app.use(express.json());
++  app.use((req, res, next) => { req.user = db.byId('users', Number(req.headers['x-user'])) || null; next(); });
++  for (const r of routers) app.use('/api', r);
++  app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' }));
++  return new Promise((resolve) => {
++    const server = app.listen(0, '127.0.0.1', () => {
++      const port = server.address().port;
++      const call = (method, url, body, uid) => new Promise((done, fail) => {
++        const data = body ? JSON.stringify(body) : null;
++        const req = http.request({ host: '127.0.0.1', port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
++          let text = '';
++          res.on('data', (c) => { text += c; });
++          res.on('end', () => { let json = null; try { json = JSON.parse(text); } catch { json = null; } done({ status: res.statusCode, body: json }); });
++        });
++        req.on('error', fail);
++        if (data) req.write(data);
++        req.end();
++      });
++      resolve({ call, close: () => server.close() });
++    });
++  });
++}
++
++function done() {
++  try { fs.unlinkSync(tmp); } catch { /* already gone */ }
++  console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
++  process.exit(failures ? 1 : 0);
++}
++
++
++(async () => {
++  const mastery = require('../services/mastery');
++  const app = await serve([require('../routes/coverage')]);
++
++  // A learner on the Final with every objective kept except: 1 forgotten,
++  // 2 never proven, 3 proven 1.5 days ago (memory check due), 4 proven an
++  // hour ago (memory check not due yet).
++  function onFinal(email) {
++    const who = learner(email, FINAL);
++    for (let i = 0; i < model.objectives.length; i++) {
++      if (i === 1) lapse(who, i, 30, 20);
++      else if (i === 2) continue;
++      else if (i === 3) prove(who, i, 1.5);
++      else if (i === 4) prove(who, i, 0.05);
++      else keep(who, i, 20, 10);
++    }
++    return who;
++  }
++  const passFinal = (who) => mastery.clearCheckpoint(db.byId('enrollments', who.enrollment.id), grade, 'graduation');
++
++  console.log('shadow (the default): nothing is held');
++  {
++    const a = onFinal('held-a@example.test');
++    const out = passFinal(a);
++    check('the Final graduates as today', out.graduated === true && db.byId('enrollments', a.enrollment.id).status === 'graduated');
++    const r = await app.call('GET', `/api/coverage/${a.enrollment.id}/held`, null, a.user.id);
++    check('the held view says nothing is held', r.status === 200 && r.body.held === false && r.body.status === 'graduated', r.body);
++  }
++
++  process.env.COVERAGE_GATE = 'enforce';
++  console.log('enforce: held, and what it waits on');
++  let b;
++  {
++    b = onFinal('held-b@example.test');
++    const out = passFinal(b);
++    check('passing the Final with objectives unproven holds graduation', out.graduated === false && out.coverage_held === true, out);
++    const e = db.byId('enrollments', b.enrollment.id);
++    check('the learner stays on the Final, marked held', e.status === 'active' && e.current_level === FINAL && !!e.coverage_held_at);
++    const r = await app.call('GET', `/api/coverage/${b.enrollment.id}/held`, null, b.user.id);
++    const p = r.body.plan;
++    check('the held view says so, with a plan', r.status === 200 && r.body.held === true && !!p, r.body);
++    check('it counts what is kept', p.total === model.objectives.length && p.kept === model.objectives.length - 4, { total: p.total, kept: p.kept });
++    const need = (i) => (p.objectives.find((o) => o.objective === model.objectives[i].id) || {}).needs;
++    check('the forgotten objective needs learning again', need(1) === 'relearn');
++    check('the never-proven objective needs learning', need(2) === 'learn');
++    check('the proven ones need a memory check', need(3) === 'memory_check' && need(4) === 'memory_check');
++    const o3 = p.objectives.find((o) => o.objective === model.objectives[3].id);
++    const o4 = p.objectives.find((o) => o.objective === model.objectives[4].id);
++    check('a check due now says so; one not due yet says when', o3.due_now === true && o4.due_now === false && Date.parse(o4.due_at) > Date.now());
++    check('forgotten first, then never proven, then memory checks', p.objectives.map((o) => o.needs).join() === 'relearn,learn,memory_check,memory_check');
++    check('each row carries its lesson level for the way in', p.objectives.every((o) => Number.isInteger(o.lesson_level)));
++    check('the Final\'s own summary is passed on', r.body.exam && r.body.exam.held === true && r.body.exam.blocking_count === 4);
++    const g = await app.call('POST', `/api/coverage/${b.enrollment.id}/graduate`, {}, b.user.id);
++    check('graduating now is refused by the same gate', g.status === 200 && g.body.graduated === false && g.body.held === true);
++  }
++
++  console.log('the record completes, and the learner graduates');
++  {
++    // Prove and keep the four (answers dated in the past, as a learner's would be);
++    // the forgotten one is proven again, then kept.
++    prove(b, 1, 3); answer(b, 1, 1.5);
++    prove(b, 2, 3); answer(b, 2, 1.5);
++    answer(b, 3, 0.2);
++    // Objective 4 was proven an hour ago: its memory check cannot be yet.
++    const mid = await app.call('GET', `/api/coverage/${b.enrollment.id}/held`, null, b.user.id);
++    check('three settled, one memory check still to come', mid.body.plan.kept === model.objectives.length - 1, mid.body.plan.kept);
++    // A day later the check is answered (here: the proof is moved back a day).
++    for (const it of db.find('items', (x) => x.user_id === b.user.id && x.level === model.objectives[4].lesson_level)) {
++      db.update('items', it.id, { answered_at: new Date(Date.parse(it.answered_at) - 2 * DAY).toISOString() });
++    }
++    answer(b, 4, 0.1);
++    const ready = await app.call('GET', `/api/coverage/${b.enrollment.id}/held`, null, b.user.id);
++    check('the plan says the record is complete', ready.body.plan.complete === true && ready.body.plan.kept === model.objectives.length, ready.body.plan.kept);
++    const g = await app.call('POST', `/api/coverage/${b.enrollment.id}/graduate`, {}, b.user.id);
++    check('graduate now graduates', g.status === 200 && g.body.graduated === true, g.body);
++    const e = db.byId('enrollments', b.enrollment.id);
++    check('the enrollment is graduated and no longer held', e.status === 'graduated' && !e.coverage_held_at && !!e.coverage_released_at);
++    const again = await app.call('POST', `/api/coverage/${b.enrollment.id}/graduate`, {}, b.user.id);
++    check('asking again is harmless', again.status === 200 && again.body.graduated === true && again.body.already === true);
++  }
++
++  console.log('guards');
++  {
++    const c = learner('held-c@example.test', FINAL);
++    const g = await app.call('POST', `/api/coverage/${c.enrollment.id}/graduate`, {}, c.user.id);
++    check('graduate before passing the Final is refused', g.status === 409, g.status);
++    const other = await app.call('GET', `/api/coverage/${b.enrollment.id}/held`, null, c.user.id);
++    check('another learner\'s record is not found', other.status === 404);
++    const anon = await app.call('GET', `/api/coverage/${b.enrollment.id}/held`, null, null);
++    check('signed out answers 401', anon.status === 401);
++  }
++
++  app.close();
++  done();
++})().catch((err) => { console.error(err); process.exit(1); });
+diff --git a/server.js b/server.js
+index 0baa2b0..968d9b5 100644
+--- a/server.js
++++ b/server.js
+@@ -116,6 +116,8 @@ app.use('/api', require('./routes/learn'));
+ app.use('/api', require('./routes/essays'));
+ app.use('/api', require('./routes/remediation'));
+ app.use('/api', require('./routes/profile'));
++// A held graduation (COVERAGE_GATE=enforce): what it waits on, and graduating once it is met.
++app.use('/api', require('./routes/coverage'));
+ // Generated base-lesson pages, and the one way a generated page changes anything.
+ app.use('/api', require('./routes/base-lessons'));
+ // The chess puzzle trainer (rated puzzles and rush), graded on the server.

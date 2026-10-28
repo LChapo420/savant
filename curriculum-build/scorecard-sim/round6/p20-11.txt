@@ -1,0 +1,56 @@
+Scorecard recovery simulation: 200 learners x 1 model-read modes, up to 100 levels, seed 11, population 20 (682.3s)
+Stat groups (research split): behavioural 42 (+brevity = 43 with a signals.js rule), experiment 11, questionnaire-only 7, LLM-only 40
+
+OVERALL (all 100 stats)        levels   MAE  (vs 50) mean r  past-edge  dirs/learner  FALSE dir  false/lrn  LLM-only dirs/lrn  unmeasured  tokens/tailored level
+  off                              10  13.2    13.6   0.27    0.6%          0.24    2.0%       0.01                  0   10.2%      1600
+  off                              30    13    13.6   0.38    0.7%          0.57    0.0%          0                  0    3.5%      1675
+  off                             100  12.6    13.6   0.46    1.9%          0.94    1.1%       0.01                  0    0.0%      1721
+
+RECALL (measurable traits truly past an edge)  levels  true dirs/lrn  right-side dirs/lrn  recall  mean learner recall  learners with >=1 true dir  extreme traits/lrn
+  off                                             10          0.21                 0.24    2.3%                 2.4%                       20.5%                8.98
+  off                                             30          0.42                 0.57    4.7%                 4.7%                       39.0%                8.97
+  off                                            100          0.73                 0.93    8.2%                 8.2%                       59.5%                8.96
+
+LEARNING OUTCOMES (true memory; round 4)  levels  recall at +7d  recall at +30d  practice h  review answers  skills recalled at 30d per practice hour  expertise value d/lrn (oracle)  experiment-stat value logits/lrn (oracle)
+  off                                        10         0.548           0.208       1.018            3.93                                      1.07   0.0365 (0.257)        0 (0.5359)
+  off                                        30         0.565            0.24       2.894           31.67                                     1.278   0.0643 (0.2511)   0.0023 (0.5359)
+  off                                       100         0.333           0.147       9.747         170.905                                     0.767     0.13 (0.2443)   0.0072 (0.5359)
+FORGETTING CURVE AS EXPORTED (scorecard.forgettingCurve; round 5): predicted vs true recall of practised skills  levels  +7d MAE / bias / r  +30d MAE / bias / r  share with a fitted curve
+  off                                        10  0.1384 / 0.0872 / 0.786  0.1025 / 0.0148 / 0.817  1   default curve +30d: 0.1 / -0.0645 / 0.841
+  off                                        30  0.1215 / 0.0213 / 0.738  0.1051 / -0.0182 / 0.792  1   default curve +30d: 0.1197 / -0.0855 / 0.811
+  off                                       100  0.1239 / -0.044 / 0.78  0.0825 / -0.0458 / 0.746  1   default curve +30d: 0.0972 / -0.0847 / 0.753
+  off at 100 levels, range over 4 learner batches: false dir 0%–3%, mean r 0.45–0.5, dirs/learner 0.76–1.04
+
+MOST FREQUENT DIRECTIVES at 100 levels (stat fired/learners, false)
+  off         processing_velocity 54/200 (0 false), scaffolding_fade 47/200 (1 false), rush_tendency 21/200 (0 false), prior_knowledge 16/200 (0 false), hint_dependency 10/200 (1 false), perfectionism 10/200 (0 false), frustration_threshold 8/200 (0 false)
+
+BY EVIDENCE SOURCE at 100 levels   MAE  mean r (n, >=.7)   past-edge  dirs/lrn  FALSE dir  confident ever  median lvls to 30%
+  off         behavioural     11.6   0.58 (40, 14)    4.3%      0.91    1.1%   77.5%      30
+  off         experiment      12.9   0.15 (11,  1)    1.2%      0.03    0.0%    9.0%      34
+  off         questionnaire   13.1   0.27 ( 7,  0)    0.0%         0    —      0.0%       —
+  off         llm-only        13.6      — ( 0,  0)    0.0%         0    —      0.0%       —
+
+KEPT CONSTRUCTS (research 2.4), recovery r at 100 levels, by mode
+  construct          stat                               off
+  expertise          prior_knowledge                   0.86
+  forgetting_rate    decay_rate                        0.51
+  reading_speed      processing_velocity               0.97
+  length_budget      brevity_preference                0.89
+  interest_context   interest_transfer                 0.13
+  misconceptions     misconception_persistence         0.66
+  target_difficulty  challenge_appetite                0.81
+  quit_risk          persistence                       0.78
+  rapid_guess_rate   rush_tendency                     0.87
+  calibration        confidence_calibration            0.54
+  coach_reliance     hint_dependency                   0.74
+  language_level     vocabulary_ceiling                0.73
+  (off: r of the standing posterior the gate reads, learners with one, recall) expertise 0.85/200/0.263, forgetting_rate 0.51/200/0, reading_speed 0.99/200/0.872, length_budget 0.89/200/0.111, interest_context —/0/0, misconceptions 0.68/200/0, target_difficulty 0.85/200/0.054, quit_risk —/0/0, rapid_guess_rate 0.88/200/0.577, calibration 0.55/200/0, coach_reliance 0.74/200/0.321, language_level 0.73/200/0.068
+
+WORST FALSE DIRECTIVES, off, at 100 levels (stat: false of fired; truth model)
+  hint_dependency                 1 of 10   (behavioural, truth: generative; r 0.74)
+  scaffolding_fade                1 of 47   (behavioural, truth: generative; r 0.84)
+
+Activity per learner (off): 63 days, 10.41 experiments, 3.61 holdout pages, 170.9 review answers, 5.71 levels left partway (1.58 left early, the rest quit after misses; the sitting was then resumed 2.85 and abandoned 2.87 times); accuracy 0.65 (focus 0.69, review 0.59)
+Holdout comparison (off): spread between pages raw 17.9 points, against expectation 17.1; pages per arm to see 5 points: raw 202, against expectation 183; tailored - holdout: raw 0.6 +/- 1.4 points (5903 tailored, 697 holdout pages), against expectation 0.6 +/- 1.4 points (5903 tailored, 697 holdout pages)
+Insertion contract (round 6): 28711 reads of the card, 0 where contract.read's sides or shape differed from translate.directives
+Tokens at 100 levels (off): brief 204 (x2 calls), coach 24, after-level read stat guide 819 + system/rules 494; per tailored level 1721

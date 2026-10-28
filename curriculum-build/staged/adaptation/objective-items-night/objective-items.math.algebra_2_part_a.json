@@ -1,0 +1,5599 @@
+{
+ "track_id": "math",
+ "grade_id": "algebra_2_part_a",
+ "generated_at": "2026-10-26T03:38:11.763Z",
+ "items": [
+  {
+   "objective_id": "algebra_2_part_a:L40",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = 1/x and g(x) = x² − 1. Which choice gives h(x) = f(x) + g(x) and its domain?",
+   "choices": [
+    "h(x) = x² − 1 + 1/x, with domain x ≠ 0",
+    "h(x) = x² − 1 − 1/x, with domain x ≠ 0",
+    "h(x) = x² + 1/x, with domain x ≠ 0",
+    "h(x) = x² − 1 + 1/x, with domain all real numbers"
+   ],
+   "answer": "h(x) = x² − 1 + 1/x, with domain x ≠ 0",
+   "rationale": "Adding the functions gives x² − 1 + 1/x. Because 1/x is undefined at 0, the domain excludes 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L40",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = √(x − 2) and g(x) = 1/(3 − x). What is the domain of h(x) = f(x)g(x)?",
+   "choices": [
+    "[2, 3) ∪ (3, ∞)",
+    "[2, ∞)",
+    "(−∞, 3)",
+    "[2, 3] ∪ (3, ∞)"
+   ],
+   "answer": "[2, 3) ∪ (3, ∞)",
+   "rationale": "The square root requires x ≥ 2, and the denominator requires x ≠ 3. Combining these conditions gives [2, 3) ∪ (3, ∞).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L40",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = (x + 1)/(x − 2) and g(x) = (x − 1)/(x + 2). Which choice gives h(x) = f(x)/g(x) and its domain?",
+   "choices": [
+    "h(x) = ((x + 1)(x + 2))/((x − 2)(x − 1)); x ∉ {−2, 1, 2}",
+    "h(x) = ((x + 1)(x + 2))/((x − 2)(x − 1)); x ∉ {1, 2}",
+    "h(x) = ((x + 1)(x − 2))/((x − 2)(x − 1)); x ∉ {−2, 1, 2}",
+    "h(x) = ((x + 1)(x + 2))/((x − 2)(x + 1)); x ∉ {−2, 1, 2}"
+   ],
+   "answer": "h(x) = ((x + 1)(x + 2))/((x − 2)(x − 1)); x ∉ {−2, 1, 2}",
+   "rationale": "Dividing by g multiplies by (x + 2)/(x − 1). The original functions and the divisor exclude x = −2, 1, and 2, even if a factor is canceled.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L40",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = x² − 4 and g(x) = 2x + 1. Which choice gives h(x) = f(x) − g(x) and its domain?",
+   "choices": [
+    "h(x) = x² − 2x − 5, with domain all real numbers",
+    "h(x) = x² − 6x − 3, with domain all real numbers",
+    "h(x) = x² − 2x − 5, with domain x ≠ 0",
+    "h(x) = x² + 2x − 5, with domain all real numbers"
+   ],
+   "answer": "h(x) = x² − 2x − 5, with domain all real numbers",
+   "rationale": "Subtracting gives x² − 4 − (2x + 1) = x² − 2x − 5. Since the result is a polynomial, its domain is all real numbers.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L62",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = 2x + 3. Which equation gives the inverse of f?",
+   "choices": [
+    "y = (x - 3)/2",
+    "y = (x + 3)/2",
+    "y = 2x - 3",
+    "y = (x - 2)/3"
+   ],
+   "answer": "y = (x - 3)/2",
+   "rationale": "Starting with y = 2x + 3, isolate x to get x = (y - 3)/2, then interchange x and y.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L62",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = (x - 2)^2, which domain restriction makes the function one-to-one and includes its vertex on an increasing branch?",
+   "choices": [
+    "x ≥ 2",
+    "x ≤ 2",
+    "x > 2",
+    "x < 2"
+   ],
+   "answer": "x ≥ 2",
+   "rationale": "On x ≥ 2, the function is strictly increasing and includes the vertex at x = 2. The other choices either use the decreasing branch or exclude the vertex.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L62",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "The graph of y = 2x + 3 contains the point (1, 5). Which point appears on the graph of its inverse?",
+   "choices": [
+    "(5, 1)",
+    "(1, 5)",
+    "(3, 2)",
+    "(2, 3)"
+   ],
+   "answer": "(5, 1)",
+   "rationale": "Reflecting a graph over y = x interchanges each point’s coordinates, so (1, 5) becomes (5, 1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L52",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A table gives f(1)=2, f(2)=4, and f(3)=6. If g(x)=3x+20, what is (g∘f)(3)?",
+   "choices": [
+    "38",
+    "29",
+    "32",
+    "6"
+   ],
+   "answer": "38",
+   "rationale": "From the table, f(3)=6. Then g(f(3))=g(6)=3(6)+20=38.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L52",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "The graph of f includes (1,2), (2,4), and (3,6). The graph of g includes (2,5), (4,7), and (6,9). What is (g∘f)(3)?",
+   "choices": [
+    "6",
+    "9",
+    "7",
+    "5"
+   ],
+   "answer": "9",
+   "rationale": "The graph shows f(3)=6. Using the graph of g, g(6)=9, so (g∘f)(3)=9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L52",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which pair can be used to decompose h(x)=2(x+3)² into a composition g∘f?",
+   "choices": [
+    "f(x)=2x+3; g(x)=x²",
+    "f(x)=x+3; g(x)=2x",
+    "f(x)=x²+3; g(x)=2x",
+    "f(x)=x+3; g(x)=2x²"
+   ],
+   "answer": "f(x)=x+3; g(x)=2x²",
+   "rationale": "With f(x)=x+3 and g(x)=2x², g(f(x))=2(x+3)²=h(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L72",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A gym charges a one-time $15 fee for up to 5 visits and $12 for each visit after the fifth. Which function models the total cost C(n) for 0 ≤ n ≤ 15 visits?",
+   "choices": [
+    "C(n) = 15 for 0 ≤ n ≤ 5; C(n) = 15 + 12(n − 5) for 5 < n ≤ 15.",
+    "C(n) = 12n for 0 ≤ n ≤ 15; C(n) = 15 + 12(n − 5) for 5 < n ≤ 15.",
+    "C(n) = 15 for 0 ≤ n ≤ 5; C(n) = 15 + 12n for 5 < n ≤ 15.",
+    "C(n) = 15n for 0 ≤ n ≤ 5; C(n) = 15 + 12(n − 5) for 5 < n ≤ 15."
+   ],
+   "answer": "C(n) = 15 for 0 ≤ n ≤ 5; C(n) = 15 + 12(n − 5) for 5 < n ≤ 15.",
+   "rationale": "The first five visits cost a flat $15. Each of the n − 5 additional visits costs $12, giving 15 + 12(n − 5) when n > 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L72",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Suppose f(x) = −2x + 10 when x < 2 and f(x) = x² − 2 when x ≥ 2. Which equation has the correct solution for f(x) = 6?",
+   "choices": [
+    "Only x = 2√2",
+    "Only x = −2√2",
+    "Both x = ±2√2",
+    "No real solutions"
+   ],
+   "answer": "Only x = 2√2",
+   "rationale": "On the first branch, −2x + 10 = 6 gives x = 2, which is excluded because x < 2. On the second branch, x² − 2 = 6 gives x = ±2√2, and only 2√2 satisfies x ≥ 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L72",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Suppose g(x) = −4 when x < 3 and g(x) = 5 when x ≥ 3. Which statement correctly describes the behavior of g at x = 3?",
+   "choices": [
+    "The left-hand limit is −4, the right-hand limit is 5, and g(3) = 5.",
+    "The left-hand limit is 5, the right-hand limit is −4, and g(3) = −4.",
+    "Both one-sided limits are 5, but g(3) = −4.",
+    "Both one-sided limits are −4, but g(3) = 5."
+   ],
+   "answer": "The left-hand limit is −4, the right-hand limit is 5, and g(3) = 5.",
+   "rationale": "Approaching 3 from the left gives values of −4, while approaching from the right gives values of 5. Since the second rule includes x = 3, g(3) = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L115",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Which point on the complex plane represents the complex number z = 3 - 4i?",
+   "choices": [
+    "(3, 4)",
+    "(3, -4)",
+    "(-3, 4)",
+    "(-3, -4)"
+   ],
+   "answer": "(3, -4)",
+   "rationale": "A complex number a + bi is represented by the point (a, b), so 3 - 4i corresponds to (3, -4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L115",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "What is the modulus of the complex number z = -5 + 12i?",
+   "choices": [
+    "7",
+    "13",
+    "17",
+    "169"
+   ],
+   "answer": "13",
+   "rationale": "The modulus is √((-5)² + 12²) = √169 = 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L115",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let z₁ = 2 + 3i and z₂ = -1 + 4i. Which statement correctly interprets their addition geometrically?",
+   "choices": [
+    "The sum is (1, 7), found by adding vectors (2, 3) and (-1, 4)",
+    "The sum is (1, 7), found by multiplying vectors (2, 3) and (-1, 4)",
+    "The sum is (1, -1), found by adding vectors (2, 3) and (-1, 4)",
+    "The sum is (-3, 12), found by adding vectors (2, 3) and (-1, 4)"
+   ],
+   "answer": "The sum is (1, 7), found by adding vectors (2, 3) and (-1, 4)",
+   "rationale": "Adding corresponding coordinates gives (2 + (-1), 3 + 4) = (1, 7), so the vectors add to the vector from the origin to (1, 7).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L115",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "What geometric transformation maps z = 4 - 2i to its complex conjugate?",
+   "choices": [
+    "Reflect across the real axis",
+    "Reflect across the imaginary axis",
+    "Rotate 180 degrees about the origin",
+    "Translate one unit to the right"
+   ],
+   "answer": "Reflect across the real axis",
+   "rationale": "The conjugate of 4 - 2i is 4 + 2i. Changing the sign of the imaginary coordinate reflects the point across the real axis.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L82",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "The graph of f(x)=x^2−4 has zeros at x=−2,2 and a vertex at (0,−4). Which description matches the graph of y=|f(x)|?",
+   "choices": [
+    "Same zeros, vertex moves to (0,4), no asymptotes.",
+    "Zeros shift to x=−4,4, vertex stays (0,−4).",
+    "Graph has vertical asymptotes at x=−2,2.",
+    "Vertex becomes (0,0) and zeros disappear."
+   ],
+   "answer": "Same zeros, vertex moves to (0,4), no asymptotes.",
+   "rationale": "Absolute value reflects the portion of the graph below the x‑axis upward. The zeros where f(x)=0 stay unchanged, the vertex at (0,−4) becomes (0,4), and no asymptotes are introduced.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L82",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x−1, the graph of y=1/f(x) is drawn. Identify its vertical asymptote and invariant points.",
+   "choices": [
+    "Vertical asymptote x=1; invariant points (2,1) and (0,−1).",
+    "Vertical asymptote x=−1; invariant points (0,1) and (−2,−1).",
+    "Horizontal asymptote y=1; invariant points (1,1) and (−1,−1).",
+    "No asymptotes; invariant points (2,−1) and (0,1)."
+   ],
+   "answer": "Vertical asymptote x=1; invariant points (2,1) and (0,−1).",
+   "rationale": "The reciprocal has a vertical asymptote where the denominator is zero (x=1). Points where f(x)=±1 satisfy 1/f(x)=f(x), giving (2,1) and (0,−1).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L82",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "f(x)=−(x−2)^2+3 has vertex (2,3) and zeros at 2±√3. The graph of y=1/f(x) has which vertical asymptotes?",
+   "choices": [
+    "x=2±√3.",
+    "x=2±√2.",
+    "x=2±1.",
+    "x=2±3."
+   ],
+   "answer": "x=2±√3.",
+   "rationale": "Vertical asymptotes of a reciprocal occur at the zeros of the original function. Solving −(x−2)^2+3=0 gives x=2±√3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L147",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "What is the fully factored form of 2x³ + 6x² + 2x + 6?",
+   "choices": [
+    "2(x + 3)(x² + 1)",
+    "(x + 3)(2x² + 1)",
+    "(x² + 1)(2x + 3)",
+    "(x² + 2)(2x + 3)"
+   ],
+   "answer": "2(x + 3)(x² + 1)",
+   "rationale": "Grouping gives 2x²(x + 3) + 2(x + 3), so the expression factors as 2(x² + 1)(x + 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L147",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Which choice is the correct factorization of 8x³ + 27?",
+   "choices": [
+    "(2x + 3)(4x² − 6x + 9)",
+    "(2x − 3)(4x² + 6x + 9)",
+    "(2x + 3)(4x² + 6x + 9)",
+    "(2x − 3)(4x² − 6x + 9)"
+   ],
+   "answer": "(2x + 3)(4x² − 6x + 9)",
+   "rationale": "Using a³ + b³ = (a + b)(a² − ab + b²), the factors are (2x + 3)(4x² − 6x + 9).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L147",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "What is the correct factorization of 27x³ − 8?",
+   "choices": [
+    "(3x + 2)(9x² − 6x + 4)",
+    "(3x − 2)(9x² + 6x + 4)",
+    "(3x + 2)(9x² + 6x + 4)",
+    "(3x − 2)(9x² − 6x + 4)"
+   ],
+   "answer": "(3x − 2)(9x² + 6x + 4)",
+   "rationale": "Using a³ − b³ = (a − b)(a² + ab + b²), the factors are (3x − 2)(9x² + 6x + 4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L147",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the fully factored form of 9x⁴ + 24x³ + 16x²?",
+   "choices": [
+    "x²(3x + 4)²",
+    "x²(3x − 4)²",
+    "x(3x + 4)²",
+    "x²(9x² + 16)"
+   ],
+   "answer": "x²(3x + 4)²",
+   "rationale": "Factoring out x² leaves the perfect-square trinomial 9x² + 24x + 16, so the result is x²(3x + 4)².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L167",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "For P(x) = 2x^3 - x^2 + 4x - 7, what is the value of P(-1)?",
+   "choices": [
+    "-14",
+    "-12",
+    "-10",
+    "-6"
+   ],
+   "answer": "-14",
+   "rationale": "By the remainder theorem, P(-1) = 2(-1)^3 - (-1)^2 + 4(-1) - 7 = -2 - 1 - 4 - 7 = -14.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L167",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "When P(x) = x^3 - 4x^2 + 2x + 3 is divided by x - 2, what is the remainder?",
+   "choices": [
+    "-1",
+    "3",
+    "5",
+    "7"
+   ],
+   "answer": "-1",
+   "rationale": "By the remainder theorem, the remainder is P(2) = 8 - 16 + 4 + 3 = -1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L167",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "A polynomial F(x) satisfies F(3) = 0. According to the factor theorem, which linear factor divides F(x)?",
+   "choices": [
+    "x - 3",
+    "x + 3",
+    "x - 1",
+    "x - 5"
+   ],
+   "answer": "x - 3",
+   "rationale": "The factor theorem states that x - c is a factor of F(x) when F(c) = 0. Since F(3) = 0, x - 3 is a factor.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L167",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which polynomial has x + 2 as a factor?",
+   "choices": [
+    "x^2 + 3x + 2",
+    "x^2 - 3x + 2",
+    "x^2 - x - 2",
+    "x^2 - 2x - 1"
+   ],
+   "answer": "x^2 + 3x + 2",
+   "rationale": "The polynomial x^2 + 3x + 2 factors as (x + 1)(x + 2), so x + 2 is a factor.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L177",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=2x^3-3x^2-2x+3, which choice lists exactly all rational numbers that could be zeros according to the rational root theorem?",
+   "choices": [
+    "-6, -3, -2, -1, 1, 2, 3, 6",
+    "-3, -3/2, -1, -1/2, 1/2, 1, 3/2, 3",
+    "-3, -3/2, -1, -1/2, 1/2, 1, 3/2, 6",
+    "-3/2, -1, -1/2, 1/2, 1, 3/2, 2, 3"
+   ],
+   "answer": "-3, -3/2, -1, -1/2, 1/2, 1, 3/2, 3",
+   "rationale": "The rational root theorem requires p to divide the constant term 3 and q to divide the leading coefficient 2. Thus the candidates are ±1, ±3, ±1/2, and ±3/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L177",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "When finding the zeros of f(x)=3x^5-x^4+2x^3-x^2-x+6, what does Descartes' rule allow for the numbers of positive and negative real zeros, counting multiplicity?",
+   "choices": [
+    "3 or 1 positive zeros; exactly 1 negative zero",
+    "4 or 2 positive zeros; exactly 0 negative zeros",
+    "4, 2, or 0 positive zeros; exactly 1 negative zero",
+    "5, 3, or 1 positive zeros; exactly 0 negative zeros"
+   ],
+   "answer": "4, 2, or 0 positive zeros; exactly 1 negative zero",
+   "rationale": "The coefficient signs of f(x) are +,-,+,-,-,+, giving 4 sign changes, so there are 4, 2, or 0 positive zeros. The signs of f(-x) are -,-,-,-,+,+, giving exactly 1 negative zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L177",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "After x=2 is verified as a rational zero of f(x)=x^3-6x^2+11x-6, which quotient should be obtained by synthetic division to find the remaining zeros?",
+   "choices": [
+    "x^2-5x+6",
+    "x^2-3x+2",
+    "x^2-4x-3",
+    "x^2-4x+3"
+   ],
+   "answer": "x^2-4x+3",
+   "rationale": "Synthetic division by 2 gives coefficients 1, -4, and 3 with remainder 0, so the quotient is x^2-4x+3. Factoring it as (x-1)(x-3) reveals the remaining zeros 1 and 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L177",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "Using the rational root theorem, Descartes' rule of signs, and division, which list gives all rational zeros of f(x)=x^4-4x^3-3x^2+14x-8, counting multiplicity?",
+   "choices": [
+    "-2, 1, 1, 4",
+    "-2, -1, 1, 4",
+    "-4, -2, -1, 1",
+    "-4, -2, 1, 1"
+   ],
+   "answer": "-2, 1, 1, 4",
+   "rationale": "Testing the rational candidates and dividing gives f(x)=(x-1)^2(x+2)(x-4). Therefore, its rational zeros are -2, 1, 1, and 4, with 1 counted twice.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L187",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "The polynomial f(x) = (x-1)^3 (x^2+4) has degree 5. How many distinct zeros does it have?",
+   "choices": [
+    "Two distinct zeros",
+    "Three distinct zeros",
+    "Four distinct zeros",
+    "Five distinct zeros"
+   ],
+   "answer": "Three distinct zeros",
+   "rationale": "Zeros are x=1 (multiplicity 3) and the solutions of x^2+4=0, namely x=2i and x=-2i. The distinct zeros are 1, 2i, -2i — three in total.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L187",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "A cubic polynomial with real coefficients has a zero 1+2i. Which set could be all its zeros?",
+   "choices": [
+    "{1+2i, 1-2i, -3}",
+    "{1+2i, 1+2i, -3}",
+    "{1+2i, 2+3i, -5}",
+    "{1+2i, -1+2i, 3}"
+   ],
+   "answer": "{1+2i, 1-2i, -3}",
+   "rationale": "Real coefficients require nonreal zeros to appear in conjugate pairs, so 1-2i must also be a zero. A cubic has three zeros, so the third must be real. Only the first set satisfies these conditions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A polynomial with real coefficients has conjugate zeros whenever it has a nonreal zero.",
+      "url": "https://en.wikipedia.org/wiki/Zero_of_a_function",
+      "quote": "The non-real roots of polynomials with real coefficients come in conjugate pairs.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L187",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "A real-coefficient polynomial has a zero -2+5i. What is its complex conjugate zero?",
+   "choices": [
+    "-2-5i",
+    "2-5i",
+    "-2+5i",
+    "2+5i"
+   ],
+   "answer": "-2-5i",
+   "rationale": "For polynomials with real coefficients, nonreal zeros occur in conjugate pairs. The conjugate of -2+5i is -2-5i.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The complex conjugate of a+bi is a-bi.",
+      "url": "https://en.wikipedia.org/wiki/Fundamental_theorem_of_algebra",
+      "quote": "These statements can be proved from previous factorizations by remarking that, if r is a non‑real root of a polynomial with real coefficients, its complex conjugate",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L125",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "slope_lines",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "What is the distance between z₁ = 3 + 4i and z₂ = −1 + 2i?",
+   "choices": [
+    "2√5",
+    "2√3",
+    "√13",
+    "4√2"
+   ],
+   "answer": "2√5",
+   "rationale": "The distance is |z₁ − z₂| = |4 + 2i| = √(4² + 2²) = √20 = 2√5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L125",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "slope_lines",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "What is the midpoint of the complex numbers z₁ = 2 + 6i and z₂ = −4 + 2i?",
+   "choices": [
+    "−1 + 4i",
+    "−3 + 4i",
+    "1 + 2i",
+    "−1 + 8i"
+   ],
+   "answer": "−1 + 4i",
+   "rationale": "The midpoint is (z₁ + z₂)/2 = (−2 + 8i)/2 = −1 + 4i.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L125",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "slope_lines",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Which description gives the locus of all complex numbers z satisfying |z − (2 − 3i)| = 5?",
+   "choices": [
+    "A circle centered at 2 − 3i with radius 5",
+    "A circle centered at −2 + 3i with radius 5",
+    "A circle centered at 2 − 3i with radius 25",
+    "A circle centered at 5 − 2i with radius 3"
+   ],
+   "answer": "A circle centered at 2 − 3i with radius 5",
+   "rationale": "For |z − c| = r, the locus is a circle centered at c with radius r, so the center is 2 − 3i and the radius is 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L125",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "slope_lines",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Which line is the locus of all z satisfying |z − (1 + 2i)| = |z − (5 + 2i)|?",
+   "choices": [
+    "The vertical line x = 3",
+    "The horizontal line y = 2",
+    "The vertical line x = 2",
+    "The horizontal line y = 3"
+   ],
+   "answer": "The vertical line x = 3",
+   "rationale": "The condition means z is equally distant from 1 + 2i and 5 + 2i, so the locus is their perpendicular bisector, x = 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L10",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "What are the domain and range of the linear parent function f(x)=x?",
+   "choices": [
+    "Domain: all real numbers; Range: all real numbers",
+    "Domain: x ≥ 0; Range: y ≥ 0",
+    "Domain: all real numbers; Range: y ≥ 0",
+    "Domain: x ≠ 0; Range: y ≠ 0"
+   ],
+   "answer": "Domain: all real numbers; Range: all real numbers",
+   "rationale": "The linear parent function f(x)=x is a straight line through the origin with no restrictions, so its domain and range are both all real numbers.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L10",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "The square root parent function f(x)=√x has what domain and range?",
+   "choices": [
+    "Domain: all real numbers; Range: all real numbers",
+    "Domain: x ≥ 0; Range: y ≥ 0",
+    "Domain: x > 0; Range: y > 0",
+    "Domain: x ≠ 0; Range: y ≠ 0"
+   ],
+   "answer": "Domain: x ≥ 0; Range: y ≥ 0",
+   "rationale": "The square root function is defined only for non‑negative inputs and produces only non‑negative outputs, giving domain x≥0 and range y≥0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The square root function f(x)=√x is defined only for x≥0 and outputs nonnegative values.",
+      "url": "https://en.wikipedia.org/wiki/Square_root_function",
+      "quote": "(usually just referred to as the \"square root function\") is a function that maps the set of nonnegative real numbers onto itself.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L229",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the expansion of (x + 2)^4?",
+   "choices": [
+    "x^4 + 8x^3 + 24x^2 + 32x + 16",
+    "x^4 + 4x^3 + 6x^2 + 4x + 16",
+    "x^4 + 8x^3 + 12x^2 + 16x + 16",
+    "x^4 + 4x^3 + 12x^2 + 16x + 8"
+   ],
+   "answer": "x^4 + 8x^3 + 24x^2 + 32x + 16",
+   "rationale": "The coefficients come from the fourth row of Pascal’s triangle: 1, 4, 6, 4, 1. Multiplying these by powers of 2 gives the stated expansion.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L229",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "What is the coefficient of x^4y^2 in the expansion of (x + y)^6?",
+   "choices": [
+    "15",
+    "20",
+    "30",
+    "6"
+   ],
+   "answer": "15",
+   "rationale": "The required coefficient is the binomial coefficient C(6,2), which equals 6!/(2!4!) = 15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L229",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "The coefficient of t^3 in (1 + t)^7 counts the number of 3-member committees from 7 people. How many committees are possible?",
+   "choices": [
+    "20",
+    "30",
+    "35",
+    "42"
+   ],
+   "answer": "35",
+   "rationale": "Choosing 3 people from 7 corresponds to the binomial coefficient C(7,3) = 7!/(3!4!) = 35.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L229",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Pascal’s triangle begins with row 0 containing only 1. Which row supplies the coefficients for expanding (x + 2)^3?",
+   "choices": [
+    "Row 1",
+    "Row 2",
+    "Row 3",
+    "Row 4"
+   ],
+   "answer": "Row 3",
+   "rationale": "A power with exponent 3 uses the coefficients in row 3 of Pascal’s triangle: 1, 3, 3, 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L241",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Solve the compound inequality −3 ≤ 2x − 5 < 7. Give the solution set in interval notation.",
+   "choices": [
+    "[1, 6]",
+    "[1, 6)",
+    "(−1, 6)",
+    "[1, 5)"
+   ],
+   "answer": "[1, 6)",
+   "rationale": "Adding 5 and then dividing by 2 gives 1 ≤ x < 6, so the interval includes 1 but excludes 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L241",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Solve (x + 2)(x − 1) < 0. Use the signs of the factors to write the solution set in interval notation.",
+   "choices": [
+    "[−2, 1]",
+    "(−∞, −2) ∪ (1, ∞)",
+    "(−2, 1)",
+    "(−∞, −2) ∪ [1, ∞)"
+   ],
+   "answer": "(−2, 1)",
+   "rationale": "The product is negative when the factors have opposite signs, which occurs for −2 < x < 1. The roots are excluded because the inequality is strict.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L241",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "For which x-values is the graph of y = x² − 5x + 6 on or below the x-axis? Write the solution set in interval notation.",
+   "choices": [
+    "[2, 3]",
+    "(2, 3)",
+    "(−∞, 2) ∪ (3, ∞)",
+    "(−∞, 2] ∪ [3, ∞)"
+   ],
+   "answer": "[2, 3]",
+   "rationale": "The parabola has zeros at 2 and 3 and opens upward, so it is on or below the x-axis between the zeros, including both endpoints.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L261",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "The table shows x and y values. x: 0,1,2,3; y: 2,5,8,11. What type of function best models the data?",
+   "choices": [
+    "Linear",
+    "Quadratic",
+    "Exponential",
+    "Cubic"
+   ],
+   "answer": "Linear",
+   "rationale": "First differences are constant (3), indicating a linear model.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L261",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "For the data x: 0,1,2,3; y: 1,4,9,16, the second differences are constant. Which function type does this indicate?",
+   "choices": [
+    "Linear",
+    "Quadratic",
+    "Exponential",
+    "Cubic"
+   ],
+   "answer": "Quadratic",
+   "rationale": "Constant second differences are characteristic of a quadratic function.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L261",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "A table gives x: 0,1,2,3 and y: 3,6,12,24. The ratio y_{n+1}/y_n is constant. Identify the model.",
+   "choices": [
+    "Linear",
+    "Quadratic",
+    "Exponential",
+    "Cubic"
+   ],
+   "answer": "Exponential",
+   "rationale": "A constant ratio between successive y-values signals an exponential relationship.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L261",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "The first differences of a sequence are 3,5,7,9. The second differences are constant. Which quadratic equation fits the data if the first term (x=0) is 1?",
+   "choices": [
+    "y = x^2 + 2x + 1",
+    "y = x^2 + 3x + 2",
+    "y = 2x^2 + 1",
+    "y = x^3 + x^2 + 1"
+   ],
+   "answer": "y = x^2 + 2x + 1",
+   "rationale": "Constant second difference of 2 gives leading coefficient 1; with y(0)=1 the equation is y = x^2 + 2x + 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L314",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Solve √(2x−3)=x−3. Which value of x satisfies the original equation?",
+   "choices": [
+    "2",
+    "6",
+    "−2",
+    "3"
+   ],
+   "answer": "6",
+   "rationale": "Squaring gives 2x−3 = (x−3)² → x²−8x+12=0 → x=2 or 6. Checking: x=2 gives √1 = −1 (false), so 2 is extraneous; x=6 gives √9 = 3 (true).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L314",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Solve √(x+7)=x−5. What is the solution that checks in the original equation?",
+   "choices": [
+    "2",
+    "9",
+    "−2",
+    "7"
+   ],
+   "answer": "9",
+   "rationale": "Squaring yields x+7 = (x−5)² → x²−11x+18=0 → x=2 or 9. Substituting: x=2 gives √9 = −3 (false), extraneous; x=9 gives √16 = 4 (true).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L314",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Solve √(x+1)+√(x−1)=2. Which value of x is the only solution?",
+   "choices": [
+    "5/4",
+    "3/2",
+    "2",
+    "1"
+   ],
+   "answer": "5/4",
+   "rationale": "Isolate one radical, square, simplify to √(x−1)=1/2 → x−1=1/4 → x=5/4. Checking: √(9/4)+√(1/4)=3/2+1/2=2. Other choices do not satisfy the equation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L271",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "Using substitution with u = x² + 2x, solve (x² + 2x)² − 4(x² + 2x) − 5 = 0. Which set contains all real solutions?",
+   "choices": [
+    "{−1, −1 + √2, −1 − √2}",
+    "{1, 1 + √6, 1 − √6}",
+    "{−1, −1 + √6, −1 − √6}",
+    "{−1, −1 + √3, −1 − √3}"
+   ],
+   "answer": "{−1, −1 + √6, −1 − √6}",
+   "rationale": "Letting u = x² + 2x gives u² − 4u − 5 = (u − 5)(u + 1) = 0. The two cases yield x = −1 ± √6 and x = −1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L271",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "The equations x + y = 6 and x² + y² = 20 determine an unordered pair (x, y). Which pair contains both values?",
+   "choices": [
+    "{1, 5}",
+    "{2, 4}",
+    "{3, 3}",
+    "{−2, 8}"
+   ],
+   "answer": "{2, 4}",
+   "rationale": "Symmetry treats x and y interchangeably. Their product is (6² − 20)/2 = 8, so they are the roots of t² − 6t + 8 = 0: 2 and 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L271",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "For P(x) = x³ − 5x² + 6x − 2, which simple input among the choices makes P(a) = 0 and therefore reveals the matching linear factor?",
+   "choices": [
+    "a = 2, so the factor is x − 2",
+    "a = 3, so the factor is x − 3",
+    "a = −1, so the factor is x + 1",
+    "a = 1, so the factor is x − 1"
+   ],
+   "answer": "a = 1, so the factor is x − 1",
+   "rationale": "Testing the special case a = 1 gives P(1) = 1 − 5 + 6 − 2 = 0. By the Factor Theorem, x − 1 is a factor.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L376",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 376,
+   "format": "multiple_choice",
+   "prompt": "Solve the inequality. Write the solution set in interval notation.\n\n(x - 1)/(x + 2) ≥ 0",
+   "choices": [
+    "(-∞, -2) ∪ [1, ∞)",
+    "(-∞, -2] ∪ [1, ∞)",
+    "(-∞, -2) ∪ (1, ∞)",
+    "(-∞, -2) ∪ [1, 2)"
+   ],
+   "answer": "(-∞, -2) ∪ [1, ∞)",
+   "rationale": "The critical values are -2 and 1. The expression is nonnegative outside those points; -2 is excluded because it makes the denominator zero, and 1 is included because it makes the numerator zero.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L376",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 376,
+   "format": "multiple_choice",
+   "prompt": "Solve the inequality. Write the solution set in interval notation.\n\n(x + 3)/(x - 2) < 0",
+   "choices": [
+    "[-3, 2)",
+    "(-3, 2)",
+    "(-3, 2]",
+    "(-∞, -3) ∪ [2, ∞)"
+   ],
+   "answer": "(-3, 2)",
+   "rationale": "The sign is negative between the critical values -3 and 2. Since the inequality is strict, the zero at -3 is excluded, and 2 is excluded because the expression is undefined there.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L376",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 376,
+   "format": "multiple_choice",
+   "prompt": "Solve the inequality. Write the solution set in interval notation.\n\n2/(x - 1) ≥ 3",
+   "choices": [
+    "[1, 5/3)",
+    "(1, 5/3)",
+    "(1, 5/3]",
+    "[1, 5/3]"
+   ],
+   "answer": "(1, 5/3]",
+   "rationale": "Rewriting gives (5 - 3x)/(x - 1) ≥ 0. Its critical values are 1 and 5/3, and the expression is nonnegative between them. Thus 1 is excluded and 5/3 is included.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L366",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Solve (2x - 1)/(x + 3) = 1 for x.",
+   "choices": [
+    "x = -3",
+    "x = 1/3",
+    "x = 4",
+    "x = 7"
+   ],
+   "answer": "x = 4",
+   "rationale": "The denominator requires x ≠ -3. Clearing it gives 2x - 1 = x + 3, so x = 4, which is valid.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L366",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Solve 2/(x + 1) = 3/(x - 1) + 1/(x² - 1) for x.",
+   "choices": [
+    "x = -6",
+    "x = -2",
+    "x = 2",
+    "x = 6"
+   ],
+   "answer": "x = -6",
+   "rationale": "Multiply by x² - 1, with x ≠ ±1: 2(x - 1) = 3(x + 1) + 1. Thus 2x - 2 = 3x + 4, giving x = -6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L366",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Solve (x - 2)/(x - 2) = (x + 3)/(x - 4) for x.",
+   "choices": [
+    "x = 2 only",
+    "x = 4 only",
+    "x = -3 only",
+    "no solution"
+   ],
+   "answer": "no solution",
+   "rationale": "Clearing denominators gives (x - 2)(x - 4) = (x + 3)(x - 2), so x = 2. However, x = 2 makes the original expression undefined, so there is no solution.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L135",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "Find the y‑intercept of p(x) = -x^3 + 4x^2 - 6x + 9.",
+   "choices": [
+    "9",
+    "-9",
+    "4",
+    "-6"
+   ],
+   "answer": "9",
+   "rationale": "The y‑intercept occurs at x = 0. Substituting gives p(0) = 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L135",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = -2x^4 + 3x + 1, which statement correctly describes its degree, leading coefficient, and end behavior?",
+   "choices": [
+    "Degree 4; leading coefficient -2; both ends fall.",
+    "Degree 4; leading coefficient 3; both ends rise.",
+    "Degree 3; leading coefficient -2; both ends fall.",
+    "Degree 4; leading coefficient -2; the left end falls and the right end rises."
+   ],
+   "answer": "Degree 4; leading coefficient -2; both ends fall.",
+   "rationale": "The highest exponent is 4, the leading coefficient is -2, and an even-degree polynomial with a negative leading coefficient falls at both ends.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L135",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "Which set gives all the x-intercept coordinates of h(x) = x^3(x - 2)^2(x + 5)?",
+   "choices": [
+    "(-5, 0), (0, 0), and (2, 0)",
+    "(-5, 0) and (2, 0) only",
+    "(0, 0) and (2, 0) only",
+    "(-5, 0), (0, 0), (2, 0), and (3, 0)"
+   ],
+   "answer": "(-5, 0), (0, 0), and (2, 0)",
+   "rationale": "An x-intercept occurs when any factor equals zero, so x = -5, 0, and 2 are all x-intercepts.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L20",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "The graph of f(x)=x^2 is shifted 3 units right and 2 units up. Which equation represents the transformed function?",
+   "choices": [
+    "(x+3)^2+2",
+    "(x-3)^2-2",
+    "(x-3)^2+2",
+    "(x+3)^2-2"
+   ],
+   "answer": "(x-3)^2+2",
+   "rationale": "A right shift replaces x with (x‑3) and an upward shift adds 2, giving (x‑3)²+2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L20",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Starting with g(x)=√x, apply a vertical stretch by factor 4 and a reflection across the x‑axis. What is the new equation?",
+   "choices": [
+    "4√x",
+    "-√(4x)",
+    "-4√x",
+    "4√(-x)"
+   ],
+   "answer": "-4√x",
+   "rationale": "Multiplying the function by –4 (a = –4) yields –4√x, combining a stretch of 4 and a reflection across the x‑axis.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L20",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Reflect the graph of y = |x+1| across the y‑axis. Which equation gives the reflected graph in simplest form?",
+   "choices": [
+    "y = |x+1|",
+    "y = |-x+1|",
+    "y = |x-1|",
+    "y = |-x-1|"
+   ],
+   "answer": "y = |x-1|",
+   "rationale": "Replacing x with –x gives |‑x+1| = |x‑1|, the simplest form of the reflected equation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L20",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A function’s output values are tripled and then 4 is subtracted from each. Which equation shows this transformation applied to f(x)?",
+   "choices": [
+    "y = 3f(x) - 4",
+    "y = f(3x) - 4",
+    "y = 3f(x-4)",
+    "y = f(3x-4)"
+   ],
+   "answer": "y = 3f(x) - 4",
+   "rationale": "Tripling the outputs multiplies the function by 3, and subtracting 4 shifts it down, giving 3f(x)–4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L209",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Which calculation correctly expands the difference of the squares of a+b and a−b?",
+   "choices": [
+    "(a²+2ab+b²)−(a²−2ab+b²)=4ab",
+    "(a²+2ab+b²)−(a²+2ab−b²)=2b²",
+    "(a²−2ab+b²)−(a²+2ab+b²)=4ab",
+    "(a²+2ab+b²)−(a²−2ab−b²)=4ab+2b²"
+   ],
+   "answer": "(a²+2ab+b²)−(a²−2ab+b²)=4ab",
+   "rationale": "Expanding gives a²+2ab+b² and a²−2ab+b². Subtracting the second expression from the first cancels a² and b², leaving 4ab.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L209",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "A student evaluates 37²−35² without expanding either square. Which result is correct?",
+   "choices": [
+    "120",
+    "144",
+    "148",
+    "284"
+   ],
+   "answer": "144",
+   "rationale": "By the difference-of-squares identity, 37²−35²=(37−35)(37+35)=2·72=144.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L209",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Using m=5 and n=2, which ordered triple is produced by the formulas m²−n², 2mn, and m²+n², in that order?",
+   "choices": [
+    "(9, 40, 41)",
+    "(25, 4, 29)",
+    "(21, 20, 31)",
+    "(21, 20, 29)"
+   ],
+   "answer": "(21, 20, 29)",
+   "rationale": "The formulas give m²−n²=25−4=21, 2mn=2·5·2=20, and m²+n²=25+4=29, producing (21, 20, 29).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L209",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Products are formed from pairs of odd numbers two apart: 3·5, 5·7, 7·9, and so on. Which formula generates a product when the smaller factor is n?",
+   "choices": [
+    "(n+1)²−1²",
+    "(n+2)²−n²",
+    "n²−(n−1)²",
+    "(n−1)²−1²"
+   ],
+   "answer": "(n+1)²−1²",
+   "rationale": "The product with factors n and n+2 is n(n+2). By the difference-of-squares identity, (n+1)²−1²=(n+1−1)(n+1+1)=n(n+2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L398",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "If y varies directly with x, and y = 15 when x = 3, which equation models the relationship?",
+   "choices": [
+    "y = 5x",
+    "y = 45x",
+    "y = x/15",
+    "y = 1/(5x)"
+   ],
+   "answer": "y = 5x",
+   "rationale": "For direct variation, y = kx. Using (3, 15) gives k = 15/3 = 5, so y = 5x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L398",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "If y varies inversely with x, and y = 24 when x = 2, what is y when x = 8?",
+   "choices": [
+    "4",
+    "6",
+    "12",
+    "16"
+   ],
+   "answer": "6",
+   "rationale": "For inverse variation, y = k/x. The constant is k = 24(2) = 48, so y = 48/8 = 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L398",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "The volume V of a rectangular prism varies jointly with length l and width w. If V = 120 when l = 4 cm and w = 3 cm, what is V when l = 6 cm and w = 5 cm?",
+   "choices": [
+    "250 cubic cm",
+    "300 cubic cm",
+    "360 cubic cm",
+    "450 cubic cm"
+   ],
+   "answer": "300 cubic cm",
+   "rationale": "Joint variation gives V = klw. The constant is k = 120/(4·3) = 10, so V = 10(6)(5) = 300 cubic centimeters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L398",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "A quantity y varies jointly with x and inversely with z. If y = 10 when x = 5 and z = 4, which power-function equation models y?",
+   "choices": [
+    "y = 8xz⁻¹",
+    "y = 8x⁻¹z",
+    "y = 8x⁻¹z⁻¹",
+    "y = 8xz"
+   ],
+   "answer": "y = 8xz⁻¹",
+   "rationale": "Combined variation gives y = kx/z = kxz⁻¹. Using the given values gives 10 = 5k/4, so k = 8 and y = 8xz⁻¹.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L199",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "For h(x) = (x+3)(x-2)^2(x-5), what is the sign of h(6)?",
+   "choices": [
+    "Positive",
+    "Negative",
+    "Zero",
+    "Cannot be determined"
+   ],
+   "answer": "Positive",
+   "rationale": "At x = 6 each factor (6+3), (6-2)^2, (6-5) is positive, so the product is positive.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L199",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "For p(x)=(x−2)(x+1)^2, which description of its end behavior is correct?",
+   "choices": [
+    "As x→−∞, p→−∞; as x→∞, p→∞",
+    "As x→−∞, p→∞; as x→∞, p→−∞",
+    "As x→−∞, p→−∞; as x→∞, p→−∞",
+    "As x→−∞, p→∞; as x→∞, p→∞"
+   ],
+   "answer": "As x→−∞, p→−∞; as x→∞, p→∞",
+   "rationale": "The polynomial has degree 3 and a positive leading coefficient, so its left end falls and its right end rises.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L199",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "For r(x)=(x+2)^2(x−1), what is the sign of r(x) throughout −2<x<1?",
+   "choices": [
+    "negative throughout",
+    "positive throughout",
+    "zero throughout",
+    "sign alternates within"
+   ],
+   "answer": "negative throughout",
+   "rationale": "On −2<x<1, (x+2)^2 is positive and (x−1) is negative, so their product is negative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L450",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "Let A, B, and C be 2×2 matrices. Which pair of properties is guaranteed by matrix multiplication?",
+   "choices": [
+    "(AB)C = A(BC), and A(B+C) = AB + AC.",
+    "(AB)C ≠ A(BC), and A(B+C) = AB + AC.",
+    "(AB)C = A(BC), and A(B+C) = AB − AC.",
+    "(AB)C = A(BC), and A(B+C) = AB + BA."
+   ],
+   "answer": "(AB)C = A(BC), and A(B+C) = AB + AC.",
+   "rationale": "Matrix multiplication is associative, so (AB)C = A(BC), and distributive, so A(B+C) = AB + AC.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L450",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "For A = [[1,2],[0,1]] and B = [[1,0],[1,1]], which comparison correctly shows that matrix multiplication is not commutative?",
+   "choices": [
+    "AB = [[3,2],[1,1]] and BA = [[1,2],[1,3]].",
+    "AB = [[1,2],[1,3]] and BA = [[3,2],[1,1]].",
+    "AB = [[2,1],[1,1]] and BA = [[1,1],[1,2]].",
+    "AB = [[3,2],[1,1]] and BA = [[3,2],[1,1]]."
+   ],
+   "answer": "AB = [[3,2],[1,1]] and BA = [[1,2],[1,3]].",
+   "rationale": "Direct multiplication gives AB = [[3,2],[1,1]] and BA = [[1,2],[1,3]]. Since these products differ, matrix multiplication is not commutative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L450",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "For A = [[1,2],[2,4]], what does the determinant test conclude about A?",
+   "choices": [
+    "A is not invertible because det(A) = 0.",
+    "A is invertible because det(A) = 0.",
+    "A is not invertible because det(A) ≠ 0.",
+    "A is invertible because det(A) ≠ 0."
+   ],
+   "answer": "A is not invertible because det(A) = 0.",
+   "rationale": "The determinant is (1)(4) − (2)(2) = 0. A square matrix with determinant zero is singular and therefore not invertible.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L470",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "Compute the determinant of the 2 by 2 matrix [[3, 2], [5, 4]].",
+   "choices": [
+    "2",
+    "−2",
+    "10",
+    "22"
+   ],
+   "answer": "2",
+   "rationale": "For a 2 by 2 matrix, the determinant is ad − bc. Thus, 3(4) − 2(5) = 12 − 10 = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L470",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "Compute the determinant of the 3 by 3 matrix [[1, 2, 3], [0, 1, 4], [5, 6, 0]].",
+   "choices": [
+    "1",
+    "−1",
+    "9",
+    "15"
+   ],
+   "answer": "1",
+   "rationale": "Expanding along the first row gives −24 + 40 − 15 = 1. Therefore, the determinant is 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L470",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "Use Cramer's rule to solve 2x + y = 7 and x − y = 2. What is the ordered pair (x, y)?",
+   "choices": [
+    "(3, 1)",
+    "(1, 3)",
+    "(2, 3)",
+    "(3, −1)"
+   ],
+   "answer": "(3, 1)",
+   "rationale": "The determinants are D = −3, Dₓ = −9, and Dᵧ = −3. Therefore, x = Dₓ/D = 3 and y = Dᵧ/D = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L470",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "A 2 by 2 coefficient matrix for a linear system has determinant 0. Which statement about the system is correct?",
+   "choices": [
+    "It cannot have exactly one solution.",
+    "It must have exactly one solution.",
+    "It must have no solutions.",
+    "It must have infinitely many solutions."
+   ],
+   "answer": "It cannot have exactly one solution.",
+   "rationale": "A zero coefficient determinant means the matrix is not invertible, so the system cannot have a unique solution. It may have no solutions or infinitely many solutions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L460",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "Which matrix equation represents the system 2x + y = 5 and x − 3y = 1?",
+   "choices": [
+    "[[2, 1], [1, −3]][x, y]ᵀ = [5, 1]ᵀ",
+    "[[2, 1], [1, 3]][x, y]ᵀ = [5, 1]ᵀ",
+    "[[2, 1], [1, −3]][x, y]ᵀ = [1, 5]ᵀ",
+    "[[2, −1], [1, −3]][x, y]ᵀ = [5, 1]ᵀ"
+   ],
+   "answer": "[[2, 1], [1, −3]][x, y]ᵀ = [5, 1]ᵀ",
+   "rationale": "The coefficient matrix contains 2, 1 for x and 1, −3 for y; the constant vector is [5, 1]ᵀ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L460",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "For A = [[4, 1], [1, 2]] and b = [9, 7]ᵀ, solve Ax = b using A⁻¹. What ordered pair is obtained?",
+   "choices": [
+    "(11/7, 19/7)",
+    "(19/7, 11/7)",
+    "(2/7, 5/7)",
+    "(9/7, 7/7)"
+   ],
+   "answer": "(11/7, 19/7)",
+   "rationale": "A⁻¹ = (1/7)[[2, −1], [−1, 4]], so A⁻¹b = (1/7)[11, 19]ᵀ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L460",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "A graphing calculator row-reduces an augmented matrix to [[1, 0, 2], [0, 1, −1]]. What ordered pair solves the original system?",
+   "choices": [
+    "(−2, 1)",
+    "(2, 1)",
+    "(2, −1)",
+    "(−1, 2)"
+   ],
+   "answer": "(2, −1)",
+   "rationale": "The last two columns give the equations x = 2 and y = −1, so the solution is (2, −1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L493",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "Solve the system y = x² and y = 2x by substitution. Which ordered pairs satisfy both equations?",
+   "choices": [
+    "(0, 0) only",
+    "(0, 0) and (2, 4)",
+    "(0, 0) and (2, 2)",
+    "(0, 0) and (−2, 4)"
+   ],
+   "answer": "(0, 0) and (2, 4)",
+   "rationale": "Substituting y = 2x into y = x² gives x² = 2x, so x(x − 2) = 0. The solutions are (0, 0) and (2, 4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L493",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "Solve x² + y² = 25 and y = 3. Which ordered pairs are the system’s intersection points?",
+   "choices": [
+    "(−4, 3) and (4, 3)",
+    "(−5, 3) and (5, 3)",
+    "(−3, 4) and (3, 4)",
+    "(−4, −3) and (4, −3)"
+   ],
+   "answer": "(−4, 3) and (4, 3)",
+   "rationale": "Substituting y = 3 gives x² + 9 = 25, so x² = 16 and x = ±4. The intersection points are (−4, 3) and (4, 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L493",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "Solve y = x² and x² + (y − 5)² = 25. Which ordered pairs satisfy both equations?",
+   "choices": [
+    "(0, 0), (3, 9), and (−3, 9)",
+    "(0, 0), (3, 5), and (−3, 5)",
+    "(0, 5), (3, 0), and (−3, 0)",
+    "(0, 0), (5, 9), and (−5, 9)"
+   ],
+   "answer": "(0, 0), (3, 9), and (−3, 9)",
+   "rationale": "Substitution gives x² + (x² − 5)² = 25, which simplifies to x²(x² − 9) = 0. Thus x = 0, ±3, producing y = 0 or 9 as appropriate.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L493",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "The circle (x − 1)² + (y − 2)² = 4 is graphed with the line y = 4. How many intersection points do they have, and what does that indicate?",
+   "choices": [
+    "Zero intersections; the line misses the circle",
+    "One intersection; the line is tangent to the circle",
+    "Two intersections; the line is a secant of the circle",
+    "Three intersections; the line crosses the circle"
+   ],
+   "answer": "One intersection; the line is tangent to the circle",
+   "rationale": "Substituting y = 4 gives (x − 1)² + 4 = 4, so x = 1. The sole intersection point is (1, 4), showing that the line is tangent to the circle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L324",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Simplify (x^2 - 9)/(x^2 - 6x + 9) and state the excluded values.",
+   "choices": [
+    "(x+3)/(x-3), x ≠ 3",
+    "(x-3)/(x+3), x ≠ -3",
+    "(x+3)/(x-3), x ≠ -3",
+    "(x-3)/(x+3), x ≠ 3"
+   ],
+   "answer": "(x+3)/(x-3), x ≠ 3",
+   "rationale": "Factor numerator as (x-3)(x+3) and denominator as (x-3)^2. Cancel the common factor (x-3) to get (x+3)/(x-3). The original denominator is zero when x=3, so x=3 is excluded.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L324",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Simplify (2x^2 - 8)/(4x^2 - 16) and state the excluded values.",
+   "choices": [
+    "1/2, x ≠ 2, -2",
+    "2, x ≠ 2, -2",
+    "1/2, x ≠ 2",
+    "2, x ≠ -2"
+   ],
+   "answer": "1/2, x ≠ 2, -2",
+   "rationale": "Factor numerator 2(x-2)(x+2) and denominator 4(x-2)(x+2). Cancel the common factors to get 2/4 = 1/2. The denominator is zero at x=2 and x=-2, so both are excluded.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L324",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Simplify (x^2 - 4x + 4)/(x^2 - 4) and state the excluded values.",
+   "choices": [
+    "(x-2)/(x+2), x ≠ 2, -2",
+    "(x+2)/(x-2), x ≠ 2, -2",
+    "(x-2)/(x+2), x ≠ 2",
+    "(x+2)/(x-2), x ≠ -2"
+   ],
+   "answer": "(x-2)/(x+2), x ≠ 2, -2",
+   "rationale": "Factor numerator as (x-2)^2 and denominator as (x-2)(x+2). Cancel one (x-2) to obtain (x-2)/(x+2). The original denominator is zero at x=2 and x=-2, so both values are excluded.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L324",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Simplify (3x^2 - 12x)/(6x^2 - 24x) and state the excluded values.",
+   "choices": [
+    "1/2, x ≠ 0, 4",
+    "2, x ≠ 0, 4",
+    "1/2, x ≠ 0",
+    "2, x ≠ 4"
+   ],
+   "answer": "1/2, x ≠ 0, 4",
+   "rationale": "Factor numerator 3x(x-4) and denominator 6x(x-4). Cancel the common factors 3x(x-4) to get 1/2. The denominator is zero when x=0 or x=4, so both are excluded.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L503",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A club sells scarves (x) and hats (y). Scarves use 1 hour and earn $15; hats use 2 hours and earn $25. With 40 labor hours and at least 10 hats, which model maximizes revenue?",
+   "choices": [
+    "Maximize 15x+25y; x+2y≤40; y≥10; x,y≥0.",
+    "Minimize 15x+25y; x+2y≤40; y≥10; x,y≥0.",
+    "Maximize 15x+20y; x+2y≤40; y≥10; x,y≥0.",
+    "Maximize 15x+25y; x+2y≥40; y≤10; x,y≥0."
+   ],
+   "answer": "Maximize 15x+25y; x+2y≤40; y≥10; x,y≥0.",
+   "rationale": "Revenue is 15x+25y. The labor constraint is x+2y≤40, and making at least 10 hats requires y≥10, with nonnegative quantities.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L503",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Which list gives all vertices of the feasible region defined by x≥0, y≥0, x+y≤10, and 2x+y≤12?",
+   "choices": [
+    "(0,0), (6,0), (2,8), (0,10)",
+    "(0,0), (10,0), (2,8), (0,12)",
+    "(0,0), (6,0), (4,2), (0,10)",
+    "(0,0), (6,0), (2,8), (0,8)"
+   ],
+   "answer": "(0,0), (6,0), (2,8), (0,10)",
+   "rationale": "The boundary intersections are the origin, (6,0), (2,8), and (0,10), so these are the four vertices.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L503",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A feasible region has vertices (0,0), (8,0), (2,4), and (0,5). If profit is P=3x+4y, what is the maximum profit?",
+   "choices": [
+    "24",
+    "22",
+    "20",
+    "26"
+   ],
+   "answer": "24",
+   "rationale": "Testing the vertices gives profit values 0, 24, 22, and 20. The greatest value is 24 at (8,0).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L503",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "An outreach center offers individual sessions (x) and group sessions (y). It needs at least 120 participant-hours, where 2x+3y≥120, and 0≤x≤30. Sessions cost $20 and $35, respectively. What is the minimum of C=20x+35y?",
+   "choices": [
+    "1200",
+    "1300",
+    "1400",
+    "1500"
+   ],
+   "answer": "1300",
+   "rationale": "The minimum occurs on 2x+3y=120. Since C=1400-(10/3)x, it is smallest at x=30 and y=20, giving C=1300.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L251",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "A data set of 15 points is fitted with a quadratic (R² = 0.89) and a cubic (R² = 0.96). The cubic’s residuals are randomly scattered, while the quadratic’s residuals show a curve. Which model should be chosen?",
+   "choices": [
+    "Quadratic, because it is simpler and uses fewer parameters overall.",
+    "Cubic, because its higher R² and random residuals show better fit.",
+    "Quadratic, because higher-degree models always overfit the data set.",
+    "Cubic, because it has more parameters and fits every point."
+   ],
+   "answer": "Cubic, because its higher R² and random residuals show better fit.",
+   "rationale": "The cubic model has a higher coefficient of determination and its residuals show no systematic pattern, indicating a superior fit compared with the quadratic.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L251",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "A profit model in thousands of dollars is P(x)=−(x−3)(x−7), where x is the number of products sold. What does the value x=3 represent?",
+   "choices": [
+    "The model predicts zero profit when 3 products are sold.",
+    "The model predicts maximum profit when 3 products are sold.",
+    "The model predicts a 3% profit rate at all sales levels.",
+    "The model predicts that profit is increasing at 3 products."
+   ],
+   "answer": "The model predicts zero profit when 3 products are sold.",
+   "rationale": "A zero of the profit function occurs when P(x)=0, so x=3 represents zero predicted profit at 3 products sold.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L251",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "A ride’s height above the ground is modeled by h(t)=−t²+10t+16, where t is time in seconds and 0≤t≤10. When and at what height does the ride reach its maximum?",
+   "choices": [
+    "At 5 seconds, at a height of 41 meters.",
+    "At 0 seconds, at a height of 16 meters.",
+    "At 5 seconds, at a height of 66 meters.",
+    "At 10 seconds, at a height of 16 meters."
+   ],
+   "answer": "At 5 seconds, at a height of 41 meters.",
+   "rationale": "The parabola opens downward and has its vertex at t=−b/(2a)=5. Evaluating h(5) gives 41 meters, the maximum height.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L251",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "A quadratic model relating advertising spending to sales has an R² value of 0.72. Which statement gives the best interpretation of this value?",
+   "choices": [
+    "The model explains 72% of the variation in observed sales.",
+    "The model predicts 72% of observed sales values exactly.",
+    "Advertising spending causes 72% of the changes in sales.",
+    "The model leaves 72% of observed sales values unexplained."
+   ],
+   "answer": "The model explains 72% of the variation in observed sales.",
+   "rationale": "An R² value of 0.72 means the model accounts for 72% of the variation in the observed sales values.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L545",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "You ask a CAS to expand (2x - 5)(x^2 + 3x - 4). The output is 2x^3 + x^2 - 23x + 20. Which statement correctly interprets this result?",
+   "choices": [
+    "The expansion is correct and the polynomial is degree 3.",
+    "The CAS omitted the constant term.",
+    "The expansion is wrong because the x^2 coefficient should be 6.",
+    "The output shows the original factors multiplied in reverse order."
+   ],
+   "answer": "The expansion is correct and the polynomial is degree 3.",
+   "rationale": "Multiplying (2x-5) by each term of the quadratic yields 2x^3 + 6x^2 -8x -5x^2 -15x +20 = 2x^3 + x^2 -23x +20, matching the CAS output.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L545",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "To solve 3x^2 - 12x + 9 = 0 with a CAS, you enter solve(3x^2 - 12x + 9 = 0, x). The CAS returns {x = 1, x = 3}. What should you do next to verify?",
+   "choices": [
+    "Substitute each solution back into the original equation.",
+    "Trust the CAS because it never makes mistakes.",
+    "Differentiate the equation to check solutions.",
+    "Graph the equation and look for intersections with y = 1."
+   ],
+   "answer": "Substitute each solution back into the original equation.",
+   "rationale": "Verification requires plugging the returned values into the original equation to confirm they satisfy it; CAS can occasionally return extraneous or erroneous solutions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L545",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A CAS simplifies (x^2 - 9)/(x - 3) to x + 3. Which critical interpretation is necessary?",
+   "choices": [
+    "The simplification is valid for all real x.",
+    "The simplification holds except at x = 3 where the original expression is undefined.",
+    "The CAS incorrectly cancelled a factor that is zero.",
+    "The result shows the original rational function is a polynomial."
+   ],
+   "answer": "The simplification holds except at x = 3 where the original expression is undefined.",
+   "rationale": "Cancelling (x-3) is algebraically correct only when x ≠ 3; at x=3 the original rational expression is undefined, so the simplified form does not apply there.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L525",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "A student solves √(x+2)=x−2 by squaring both sides and finds x=3 and x=−2. Which necessary step was omitted?",
+   "choices": [
+    "Checking each solution in the original equation.",
+    "Adding 2 to both sides before squaring.",
+    "Factoring the resulting quadratic incorrectly.",
+    "Dividing by the variable x."
+   ],
+   "answer": "Checking each solution in the original equation.",
+   "rationale": "Squaring can introduce extraneous solutions; each candidate must be substituted back into the original radical equation to verify it satisfies the domain and equality.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L525",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "A student divides both sides of x(x−5)=x^2−5x by x and concludes every real number satisfies the equation. What error was made?",
+   "choices": [
+    "The division by x discards the solution x=0.",
+    "The left side was expanded incorrectly.",
+    "The distributive property was misapplied.",
+    "An extraneous root from squaring was introduced."
+   ],
+   "answer": "The division by x discards the solution x=0.",
+   "rationale": "Dividing by a variable assumes it is non‑zero. Here x=0 makes the original equation true, but division by x removes that solution.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L525",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "A student writes (x^2−4)/(x+2)=x−2 and claims it is true for all real x. Identify the error.",
+   "choices": [
+    "The factor x+2 was cancelled without stating x≠−2.",
+    "The numerator was factored as (x−2)^2.",
+    "The exponent rule for division was misused.",
+    "The student added the denominator instead of cancelling."
+   ],
+   "answer": "The factor x+2 was cancelled without stating x≠−2.",
+   "rationale": "Cancelling (x+2) is valid only when x≠−2 because the original rational expression is undefined at x=−2. The student omitted this domain restriction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L346",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Subtract (2x)/(x^2-5x+6) - (3)/(x-2) and express the result as a single simplified fraction.",
+   "choices": [
+    "(9-x)/((x-2)(x-3))",
+    "(9-x)/((x-2)(x-2))",
+    "(9-x)/((x-3)(x-3))",
+    "(2x-3)/((x-2)(x-3))"
+   ],
+   "answer": "(9-x)/((x-2)(x-3))",
+   "rationale": "Factor x^2-5x+6 as (x-2)(x-3). The common denominator is (x-2)(x-3). Rewrite 3/(x-2) as 3(x-3)/((x-2)(x-3)) = (3x-9)/((x-2)(x-3)). Subtracting gives (2x - (3x-9)) = 9-x over the common denominator.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L346",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Add (x)/(x^2-4) + (2)/(x-2) and write the result as a single simplified fraction.",
+   "choices": [
+    "(3x+4)/((x-2)(x+2))",
+    "(3x+4)/((x-2)(x-2))",
+    "(3x+4)/((x+2)(x+2))",
+    "(x+2)/((x-2)(x+2))"
+   ],
+   "answer": "(3x+4)/((x-2)(x+2))",
+   "rationale": "Factor x^2-4 as (x-2)(x+2). The common denominator is (x-2)(x+2). Rewrite 2/(x-2) as 2(x+2)/((x-2)(x+2)) = (2x+4)/((x-2)(x+2)). Adding numerators gives x+2x+4 = 3x+4 over the common denominator.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L346",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Add 2x/(x² + x − 6) and 3/(x + 3). Express the result as one simplified fraction.",
+   "choices": [
+    "(5x − 6)/(x² + x − 6)",
+    "(5x + 6)/(x² + x − 6)",
+    "(5x − 6)/(x² + 5x + 6)",
+    "(5x + 2)/(x² + x − 6)"
+   ],
+   "answer": "(5x − 6)/(x² + x − 6)",
+   "rationale": "Since x² + x − 6 = (x + 3)(x − 2), the common denominator is (x + 3)(x − 2). The numerator is 2x + 3(x − 2) = 5x − 6, so the simplified result is (5x − 6)/(x² + x − 6).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L346",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Subtract 4/(x − 1) from (x + 1)/(x² − 1). Express the result as one simplified fraction.",
+   "choices": [
+    "−3/(x − 1)",
+    "3/(x − 1)",
+    "−3/(x + 1)",
+    "(x − 3)/(x − 1)"
+   ],
+   "answer": "−3/(x − 1)",
+   "rationale": "Factoring gives x² − 1 = (x − 1)(x + 1). With that common denominator, the numerator is (x + 1) − 4(x + 1) = −3(x + 1). Cancelling x + 1 gives −3/(x − 1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L388",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = (x³ + x)/(x² − 4), which line is the slant asymptote?",
+   "choices": [
+    "y = x",
+    "y = x + 5",
+    "y = 5x",
+    "y = x − 5"
+   ],
+   "answer": "y = x",
+   "rationale": "Polynomial division gives f(x) = x + 5x/(x² − 4). The remainder term approaches 0 as x approaches infinity, so the slant asymptote is y = x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L388",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "For g(x) = x/(x² − 1), which description gives the key features needed to sketch its graph?",
+   "choices": [
+    "Vertical asymptotes x = −1 and x = 1; horizontal asymptote y = 0; intercept (0, 0).",
+    "Vertical asymptotes x = −1 and x = 1; horizontal asymptote y = 1; intercept (0, 0).",
+    "Vertical asymptote x = 0; horizontal asymptotes y = −1 and y = 1; intercept (0, 0).",
+    "Vertical asymptotes x = −1 and x = 1; horizontal asymptote y = 0; no intercepts."
+   ],
+   "answer": "Vertical asymptotes x = −1 and x = 1; horizontal asymptote y = 0; intercept (0, 0).",
+   "rationale": "The denominator is zero at x = ±1, with no canceled factors. Since the numerator has lower degree than the denominator, the horizontal asymptote is y = 0. The numerator is zero at x = 0, giving the intercept (0, 0).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L388",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = [(x + 1)(x − 2)]/[(x + 1)(x − 3)], which statement correctly identifies the hole and vertical asymptote?",
+   "choices": [
+    "The hole is at (−1, 0), and the vertical asymptote is x = 3.",
+    "The hole is at (−1, 3/4), and the vertical asymptote is x = −1.",
+    "The hole is at (−1, 3/4), and the vertical asymptote is x = 3.",
+    "The hole is at (−1, 3), and the vertical asymptote is x = 3."
+   ],
+   "answer": "The hole is at (−1, 3/4), and the vertical asymptote is x = 3.",
+   "rationale": "Canceling x + 1 leaves f(x) = (x − 2)/(x − 3). The removable discontinuity occurs at x = −1, where f(−1) = 3/4. The remaining denominator is zero at x = 3, giving a vertical asymptote.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L418",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "Solve the system by elimination: x + y + z = 6; 2x - y + z = 3; x + 2y - z = 2.",
+   "choices": [
+    "(1, 2, 3)",
+    "(1, 3, 2)",
+    "(2, 1, 3)",
+    "(3, 1, 2)"
+   ],
+   "answer": "(1, 2, 3)",
+   "rationale": "Subtracting the first equation from the second gives x - 2y = -3. Adding the first and third gives 2x + 3y = 8. Solving gives y = 2, x = 1, and z = 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L418",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "Use substitution to solve the system. What is x + y + z? x = 2y + 1; x + z = 7; y + z = 3.",
+   "choices": [
+    "7",
+    "10",
+    "6",
+    "11"
+   ],
+   "answer": "10",
+   "rationale": "From y + z = 3, z = 3 - y. Substituting into x + z = 7 gives (2y + 1) + (3 - y) = 7, so y = 3, z = 0, and x = 7. Thus x + y + z = 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L418",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "Which system is dependent, meaning it has infinitely many solutions?",
+   "choices": [
+    "A) x + y + z = 5; 2x + 2y + 2z = 11; x - y + z = 2",
+    "B) x + y + z = 5; 2x + 2y + 2z = 10; x - y + z = 2",
+    "C) x + y + z = 5; 2x + 2y + 3z = 11; x - y + z = 2",
+    "D) x + y + z = 5; 2x + 2y + 2z = 12; 2x - 2y + 2z = 4"
+   ],
+   "answer": "B) x + y + z = 5; 2x + 2y + 2z = 10; x - y + z = 2",
+   "rationale": "In B, the second equation is twice the first, so it adds no new condition. The third equation is independent and intersects the common plane in a line, producing infinitely many solutions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L356",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Simplify (x + 3)/(x − 2) ÷ (x + 3)/(x + 4), and state all restrictions from the original expression.",
+   "choices": [
+    "(x + 4)/(x − 2), x ≠ −4, −3, 2",
+    "(x + 4)/(x − 2), x ≠ −4, 2",
+    "(x + 3)/(x + 4), x ≠ −4, −3, 2",
+    "(x − 4)/(x + 2), x ≠ −4, −3, 2"
+   ],
+   "answer": "(x + 4)/(x − 2), x ≠ −4, −3, 2",
+   "rationale": "Dividing by a fraction means multiplying by its reciprocal. Canceling x + 3 gives (x + 4)/(x − 2). The original expression requires x ≠ −4, −3, and 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L356",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Rewrite (x² + 6x)/x² by dividing each numerator term by x², then simplify. Include the restriction.",
+   "choices": [
+    "1 + 6x, x ≠ 0",
+    "1 + 6/x, x ≠ 0",
+    "x + 6/x, x ≠ 0",
+    "x + 6x², x ≠ 0"
+   ],
+   "answer": "1 + 6/x, x ≠ 0",
+   "rationale": "Dividing the terms separately gives x²/x² + 6x/x² = 1 + 6/x. The denominator requires x ≠ 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L356",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Simplify the complex fraction and state all restrictions: (x/(x + 1) − 1)/(x/(x + 1) + 1).",
+   "choices": [
+    "−1/(2x + 1), x ≠ −1, −1/2",
+    "1/(2x + 1), x ≠ −1, −1/2",
+    "−1/(x + 1), x ≠ −1, −1/2",
+    "−1/(2x − 1), x ≠ −1, 1/2"
+   ],
+   "answer": "−1/(2x + 1), x ≠ −1, −1/2",
+   "rationale": "The numerator simplifies to −1/(x + 1), and the denominator to (2x + 1)/(x + 1). Dividing gives −1/(2x + 1), with x ≠ −1 and −1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L356",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Simplify ((1/x) + (1/y))/((1/x) − (1/y)), and state all restrictions from the original expression.",
+   "choices": [
+    "(x + y)/(y − x), x ≠ 0, y ≠ 0, x ≠ y",
+    "(x + y)/(x − y), x ≠ 0, y ≠ 0, x ≠ y",
+    "(x + y)/(y − x), x ≠ 0, y ≠ 0",
+    "(y − x)/(x + y), x ≠ 0, y ≠ 0, x ≠ y"
+   ],
+   "answer": "(x + y)/(y − x), x ≠ 0, y ≠ 0, x ≠ y",
+   "rationale": "The numerator becomes (x + y)/(xy), and the denominator becomes (y − x)/(xy). Dividing cancels xy, giving (x + y)/(y − x), with the stated restrictions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L555",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "quadratics",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A quadratic equation with real coefficients has one solution 2 + 3i. What is its other solution?",
+   "choices": [
+    "2 + 3i",
+    "2 - 3i",
+    "4 - 6i",
+    "4 + 6i"
+   ],
+   "answer": "2 - 3i",
+   "rationale": "The roots of a real-coefficient quadratic are complex conjugates when nonreal, so the other root is 2 - 3i.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L555",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "quadratics",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A cubic polynomial is modeled by p(x) = x^3 - 2x^2 + 3x - 6. Which expression factors this polynomial?",
+   "choices": [
+    "(x - 2)(x^2 + 3)",
+    "(x - 2)(x^2 - 3)",
+    "(x - 3)(x^2 + x + 2)",
+    "(x + 2)(x^2 - 4x + 3)"
+   ],
+   "answer": "(x - 2)(x^2 + 3)",
+   "rationale": "Factoring out x - 2 gives (x - 2)(x^2 + 3), which expands to the given polynomial.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L555",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "quadratics",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = 2x - 3 and g(x) = x^2 + 1. What is the value of f(g(3))?",
+   "choices": [
+    "10",
+    "13",
+    "17",
+    "19"
+   ],
+   "answer": "17",
+   "rationale": "First, g(3) = 3^2 + 1 = 10. Then f(10) = 2(10) - 3 = 17.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L555",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "quadratics",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "At a school play, ticket revenue is R(n) = -(n - 80)^2 + 6400, and total cost is C(n) = 25n. For a positive n, which ticket count makes R(n) = C(n)?",
+   "choices": [
+    "25 tickets",
+    "80 tickets",
+    "135 tickets",
+    "160 tickets"
+   ],
+   "answer": "135 tickets",
+   "rationale": "Simplifying gives R(n) = -n^2 + 160n. Equating revenue and cost yields -n^2 + 135n = 0, whose positive solution is n = 135.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L430",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "For the system represented by the augmented matrix [2 1 | 5; 1 -1 | 1], which ordered pair (x, y) is the solution?",
+   "choices": [
+    "(x, y) = (2, 1)",
+    "(x, y) = (1, 2)",
+    "(x, y) = (2, -1)",
+    "(x, y) = (1, -1)"
+   ],
+   "answer": "(x, y) = (2, 1)",
+   "rationale": "Row reduction gives x - y = 1 and 3y = 3, so y = 1 and x = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L430",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Starting with [1 2 | 3; 2 -1 | 8], replace R2 by R2 - 2R1. Which resulting matrix is correct?",
+   "choices": [
+    "[1 2 | 3; 0 -5 | 2]",
+    "[1 2 | 3; 0 5 | -2]",
+    "[1 2 | 3; 0 -3 | 2]",
+    "[1 2 | 3; 0 -5 | -2]"
+   ],
+   "answer": "[1 2 | 3; 0 -5 | 2]",
+   "rationale": "Subtracting twice row 1 from row 2 gives [0, -5 | 2].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L430",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "systems",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the solution set represented by [1 -2 | 3; 2 -4 | 6]?",
+   "choices": [
+    "Dependent; infinitely many solutions (3 + 2t, t)",
+    "Dependent; infinitely many solutions (3 - 2t, t)",
+    "Dependent; infinitely many solutions (3 + 2t, 2t)",
+    "Consistent; exactly one solution (3, 0)"
+   ],
+   "answer": "Dependent; infinitely many solutions (3 + 2t, t)",
+   "rationale": "Row reduction gives [1 -2 | 3; 0 0 | 0]. Letting y = t gives x = 3 + 2t, so there are infinitely many solutions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L408",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "Two pipes fill a tank. Pipe A fills it in 5 hours, and pipe B fills it in 15 hours. If both pipes stay open, how many hours are needed to fill the tank?",
+   "choices": [
+    "3 hours",
+    "2 1/2 hours",
+    "3 3/4 hours",
+    "10 hours"
+   ],
+   "answer": "3 3/4 hours",
+   "rationale": "The combined rate is 1/5 + 1/15 = 4/15 tank per hour, so the filling time is 15/4 = 3 3/4 hours.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L408",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "A tank holds 40 liters of a 20% salt solution. Pure water is added at 0.5 liter per minute. What salt concentration does the tank approach after a long time?",
+   "choices": [
+    "0%",
+    "10%",
+    "20%",
+    "40%"
+   ],
+   "answer": "0%",
+   "rationale": "The salt amount remains 8 liters while the total volume increases without bound, so the concentration approaches 0%. This is the horizontal asymptote of the model.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L408",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "A ladder 10 feet long leans against a wall. If its foot is 6 feet from the wall, how high up the wall does the ladder reach? Use the Pythagorean theorem.",
+   "choices": [
+    "4 feet",
+    "6 feet",
+    "8 feet",
+    "10 feet"
+   ],
+   "answer": "8 feet",
+   "rationale": "If h is the height, then h = √(10² − 6²) = √64 = 8 feet.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L408",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "The amount N(t) of grain remaining after t minutes is modeled by N(t) = 200/(t + 4), where N is measured in kilograms. What is the contextual restriction on t?",
+   "choices": [
+    "t > 0",
+    "t ≥ 0",
+    "t > −4",
+    "t ≤ −4"
+   ],
+   "answer": "t ≥ 0",
+   "rationale": "Because t represents elapsed time, it cannot be negative, so the contextual restriction is t ≥ 0. The formula also excludes t = −4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L440",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "A table gives each student's scores on two assignments: Mia (8, 6), Noah (9, 5), and Ava (7, 8). Using rows for students and columns for assignments, which matrix represents the data?",
+   "choices": [
+    "[[8,6],[6,9],[8,7]]",
+    "[[8,6],[9,5],[7,8]]",
+    "[[8,9,7],[6,5,8]]",
+    "[[8,6,9],[5,7,8]]"
+   ],
+   "answer": "[[8,6],[9,5],[7,8]]",
+   "rationale": "Each student occupies one row, and each assignment occupies one column in the order Mia, Noah, Ava, giving [[8,6],[9,5],[7,8]].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L440",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Let A = [[2,1],[0,3]], B = [[1,-2],[2,1]], and C = [[1,0],[1,2]]. Which matrix equals A + B - C?",
+   "choices": [
+    "[[4,-1],[3,6]]",
+    "[[3,-1],[2,4]]",
+    "[[2,-1],[1,2]]",
+    "[[0,1],[-3,0]]"
+   ],
+   "answer": "[[2,-1],[1,2]]",
+   "rationale": "First, A + B = [[3,-1],[2,4]]. Subtracting C entry by entry gives [[2,-1],[1,2]].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L440",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Let M = [[1,-2],[3,0]]. Which matrix is the scalar product -2M?",
+   "choices": [
+    "[[-2,-2],[3,0]]",
+    "[[-2,4],[6,0]]",
+    "[[1,4],[-6,0]]",
+    "[[-2,4],[-6,0]]"
+   ],
+   "answer": "[[-2,4],[-6,0]]",
+   "rationale": "Multiplying every entry of M by -2 changes 1 to -2, -2 to 4, 3 to -6, and leaves 0 unchanged.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L440",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Let A = [[1,2,0],[3,1,2]] and B = [[2,1],[0,3],[1,0]]. Which statement about the product AB is correct?",
+   "choices": [
+    "AB is defined and equals [[2,7],[8,6]]",
+    "AB is defined and equals [[8,6],[2,7]]",
+    "AB is defined and equals [[7,2],[6,8]]",
+    "AB is undefined because 2 does not equal 3"
+   ],
+   "answer": "AB is defined and equals [[2,7],[8,6]]",
+   "rationale": "A is 2 by 3 and B is 3 by 2, so AB is defined. Row-by-column multiplication gives [[2,7],[8,6]].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L219",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "Which choice is the complete factorization of x^2 + 4 over the complex numbers?",
+   "choices": [
+    "(x - 2i)(x + 2i)",
+    "(x - 2)(x + 2)",
+    "(x - i)(x + i)",
+    "(x - 4i)(x + 4i)"
+   ],
+   "answer": "(x - 2i)(x + 2i)",
+   "rationale": "Since x^2 + 4 = x^2 - (2i)^2, its factors are (x - 2i)(x + 2i).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The square roots of -4 are 2i and -2i.",
+      "url": "https://en.wiktionary.org/wiki/square_root",
+      "quote": "The square roots of 4 are 2 and −2, the square root of 0 is 0, and the square roots of −4 are 2i and −2i.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L219",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "What is the complete factorization of 9x^2 + 16 over the complex numbers?",
+   "choices": [
+    "(3x + 4i)(3x - 4i)",
+    "(3x + 4)(3x - 4)",
+    "(x + 4i)(x - 4i)",
+    "(9x + 4i)(x - 4i)"
+   ],
+   "answer": "(3x + 4i)(3x - 4i)",
+   "rationale": "9x^2+16 = (3x)^2+4^2 = (3x+4i)(3x-4i) using the sum-of-squares factorization a^2+b^2=(a+bi)(a-bi).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L219",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "Which quadratic with real coefficients has roots 1+2i and 1-2i?",
+   "choices": [
+    "x^2 - 2x + 5",
+    "x^2 - 2x - 5",
+    "x^2 + 2x + 5",
+    "x^2 + 2x - 5"
+   ],
+   "answer": "x^2 - 2x + 5",
+   "rationale": "For real coefficients, complex roots occur in conjugate pairs. The quadratic with roots 1+2i and 1-2i is (x-(1+2i))(x-(1-2i)) = x^2-2x+5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L219",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "Factor x^2 + 4x + 8 completely over the complex numbers.",
+   "choices": [
+    "(x + 2 - 2i)(x + 2 + 2i)",
+    "(x + 2 - 2)(x + 2 + 2)",
+    "(x - 2 - 2i)(x - 2 + 2i)",
+    "(x + 4 - 2i)(x + 4 + 2i)"
+   ],
+   "answer": "(x + 2 - 2i)(x + 2 + 2i)",
+   "rationale": "x^2+4x+8 has discriminant 16-32=-16, giving roots -2±2i. The factorization over complex numbers is (x-(-2+2i))(x-(-2-2i)) = (x+2-2i)(x+2+2i).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L513",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "Consider the polynomial p(x)=−2x³+5x+1. Which limiting behavior is correct?",
+   "choices": [
+    "As x→∞, p(x)→−∞; as x→−∞, p(x)→∞.",
+    "As x→∞, p(x)→∞; as x→−∞, p(x)→−∞.",
+    "As x→∞, p(x)→−∞; as x→−∞, p(x)→−∞.",
+    "As x→∞, p(x)→∞; as x→−∞, p(x)→∞."
+   ],
+   "answer": "As x→∞, p(x)→−∞; as x→−∞, p(x)→∞.",
+   "rationale": "The leading term is −2x³. A negative odd-degree polynomial falls to the right and rises to the left.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L513",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "data_stats",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "Let f(x)=x³−3x²+1. A table gives f(−1)=−3, f(0)=1, f(2)=−3, and f(3)=1. Which interval must contain a root of f?",
+   "choices": [
+    "[−2,−1]",
+    "[0,2]",
+    "[1,2]",
+    "[3,4]"
+   ],
+   "answer": "[0,2]",
+   "rationale": "Polynomials are continuous, and f(0) and f(2) have opposite signs. Therefore, the Intermediate Value Theorem guarantees a root in (0,2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L483",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A system stays in state A with probability 0.60 and changes to B with probability 0.40. From B, it changes to A with probability 0.20 and stays in B with probability 0.80. Which matrix correctly models one step, using rows for current states and columns for next states?",
+   "choices": [
+    "[[0.60, 0.40], [0.20, 0.80]]",
+    "[[0.60, 0.20], [0.40, 0.80]]",
+    "[[0.80, 0.40], [0.20, 0.60]]",
+    "[[0.60, 0.40], [0.80, 0.20]]"
+   ],
+   "answer": "[[0.60, 0.40], [0.20, 0.80]]",
+   "rationale": "The row for A contains the probabilities of moving to A and B: 0.60 and 0.40. The row for B contains 0.20 and 0.80.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L483",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "Using T = [[0.60, 0.40], [0.20, 0.80]], with states ordered A, B, the system starts in A. What is the probability distribution (P(A), P(B)) after two steps?",
+   "choices": [
+    "(0.36, 0.64)",
+    "(0.44, 0.56)",
+    "(0.48, 0.52)",
+    "(0.56, 0.44)"
+   ],
+   "answer": "(0.44, 0.56)",
+   "rationale": "After one step, the distribution is (0.60, 0.40). Multiplying once more gives P(A) = 0.60(0.60) + 0.40(0.20) = 0.44, so P(B) = 0.56.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L483",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "For T = [[0.90, 0.10], [0.50, 0.50]], what is the long-run steady-state distribution (P(A), P(B))?",
+   "choices": [
+    "(1/2, 1/2)",
+    "(5/6, 1/6)",
+    "(3/4, 1/4)",
+    "(4/5, 1/5)"
+   ],
+   "answer": "(5/6, 1/6)",
+   "rationale": "The steady state satisfies a = 0.90a + 0.50b and a + b = 1. This gives a = 5b, so the distribution is (5/6, 1/6).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L336",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Simplify the quotient and state all restrictions on x: (x²−4)/(x+1) ÷ (x−2)/(x+1).",
+   "choices": [
+    "x+2, with x≠−1 and x≠2",
+    "x−2, with x≠−1 and x≠2",
+    "x+2, with x≠−2 and x≠2",
+    "x+2, with no restrictions on x"
+   ],
+   "answer": "x+2, with x≠−1 and x≠2",
+   "rationale": "Factor x²−4, multiply by the reciprocal, and cancel matching factors to obtain x+2. The original denominators require x≠−1, and the divisor cannot equal zero, so x≠2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L336",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Which values of x and y must be excluded from the domain of (3x²)/(4y) · (2y)/(9x)?",
+   "choices": [
+    "x≠0 and y≠0",
+    "x≠0, with y unrestricted",
+    "y≠0, with x unrestricted",
+    "x≠0 and y≠2"
+   ],
+   "answer": "x≠0 and y≠0",
+   "rationale": "The original expression contains y and x in denominators, so neither variable may be zero. Cancellation does not remove those domain restrictions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L336",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "rational_expr",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Simplify the expression and identify every excluded value of x: (x²−9)/(x−2) · (x²−2x)/(x+3). Which choice gives both results correctly?",
+   "choices": [
+    "x(x−3); excluded: x=−3, 2",
+    "x(x+3); excluded: x=−3, 2",
+    "(x−3)²; excluded: x=−3, 2",
+    "x(x−3); excluded: x=−3 only"
+   ],
+   "answer": "x(x−3); excluded: x=−3, 2",
+   "rationale": "Factor as (x−3)(x+3)/(x−2) · x(x−2)/(x+3). Cancel x−3's common factors to obtain x(x−3). The original denominators require x≠2 and x≠−3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L30",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Determine algebraically whether f(x) = x^3 - 2x is even, odd, or neither.",
+   "choices": [
+    "The function is even",
+    "The function is odd",
+    "The function is neither",
+    "The function is both"
+   ],
+   "answer": "The function is odd",
+   "rationale": "f(-x) = (-x)^3 - 2(-x) = -x^3 + 2x = -(x^3 - 2x) = -f(x), so the function is odd.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L30",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Determine algebraically whether f(x) = (x^3 - x)/(x^2 + 1) is even, odd, or neither.",
+   "choices": [
+    "The function is even.",
+    "The function is odd.",
+    "The function is neither even nor odd.",
+    "The function is both even and odd."
+   ],
+   "answer": "The function is odd.",
+   "rationale": "Substituting -x gives f(-x) = (-x^3 + x)/(x^2+1) = -(x^3 - x)/(x^2+1) = -f(x), so the function is odd.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L30",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "The graph of a function is symmetric with respect to the y-axis. Which algebraic condition must the function satisfy?",
+   "choices": [
+    "f(-x) = f(x) for all x in the domain.",
+    "f(-x) = -f(x) for all x in the domain.",
+    "f(x) = -f(x) for all x in the domain.",
+    "f(x) = f(-x) only for x ≥ 0."
+   ],
+   "answer": "f(-x) = f(x) for all x in the domain.",
+   "rationale": "Symmetry about the y-axis means the function is even, which is defined by f(-x) = f(x) for all x in the domain.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L30",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "An odd function f satisfies f(2) = 5 and f(-3) = -4. What are f(-2) and f(3)?",
+   "choices": [
+    "f(-2) = -5, f(3) = 4",
+    "f(-2) = 5, f(3) = -4",
+    "f(-2) = -5, f(3) = -4",
+    "f(-2) = 5, f(3) = 4"
+   ],
+   "answer": "f(-2) = -5, f(3) = 4",
+   "rationale": "For an odd function, f(-x) = -f(x). Thus f(-2) = -f(2) = -5 and f(3) = -f(-3) = 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L535",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "To solve the rational equation (x+2)/(x-3) = 4/(x-3), we multiply both sides by (x-3). Why is this step valid?",
+   "choices": [
+    "Multiplying both sides by the same non‑zero expression preserves equality, provided we note the excluded value x=3.",
+    "Clearing denominators always works because denominators cancel out algebraically.",
+    "The denominators are identical, so they can be dropped without changing the equation.",
+    "Multiplication by (x-3) eliminates the variable from the denominator, simplifying the equation."
+   ],
+   "answer": "Multiplying both sides by the same non‑zero expression preserves equality, provided we note the excluded value x=3.",
+   "rationale": "Multiplying an equation by a non‑zero quantity yields an equivalent equation; we must exclude x = 3 where the multiplier is zero.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L535",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Why does factoring (x−3)(x+4)=0 allow us to solve by setting each factor equal to zero?",
+   "choices": [
+    "A product is zero exactly when at least one factor is zero.",
+    "A product is zero exactly when both factors are zero.",
+    "Factoring changes the equation’s solutions, so each factor must be checked.",
+    "Both factors are nonzero whenever their product is zero."
+   ],
+   "answer": "A product is zero exactly when at least one factor is zero.",
+   "rationale": "The zero-product property states that a product equals zero exactly when at least one factor equals zero. Thus, x−3=0 or x+4=0, giving x=3 or x=−4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L535",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Which explanation correctly justifies simplifying (x²−4)/(x−2) as x+2 for x≠2?",
+   "choices": [
+    "Factoring gives (x−2)(x+2); x−2 is nonzero, so cancellation is valid.",
+    "Factoring gives (x−2)(x+2); cancellation is valid for every real x.",
+    "Factoring gives (x−2)(x+2); the equality is valid only when x=2.",
+    "Factoring gives (x−2)(x+2); multiplying by x−2 removes all restrictions."
+   ],
+   "answer": "Factoring gives (x−2)(x+2); x−2 is nonzero, so cancellation is valid.",
+   "rationale": "Since x²−4=(x−2)(x+2), dividing by x−2 gives x+2 only when x−2 is nonzero, or x≠2. The original expression is undefined at x=2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L535",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "linear_eq",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "In solving (2x+1)/3 + (x−1)/2 = 4, why is multiplying both sides by 6 valid?",
+   "choices": [
+    "The same nonzero number is multiplied by both sides, preserving equivalence.",
+    "Each denominator is added to both sides, preserving equivalence.",
+    "Only the left side is multiplied, but the equation remains equivalent.",
+    "The fractions are replaced by their denominators, preserving equivalence."
+   ],
+   "answer": "The same nonzero number is multiplied by both sides, preserving equivalence.",
+   "rationale": "Multiplying both sides of an equation by the same nonzero number produces an equivalent equation. Since 6 is nonzero, this step preserves the solution set while clearing the denominators.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L565",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "When modeling the height h(t) (in meters) of a projectile launched from a platform, a student uses a polynomial for the trajectory, a rational function for air resistance, and a radical function for the diminishing fuel thrust. Which domain restriction is necessary for the radical component √(t‑2) to be defined?",
+   "choices": [
+    "t ≥ 0",
+    "t ≥ 2",
+    "t ≤ 2",
+    "t > 0"
+   ],
+   "answer": "t ≥ 2",
+   "rationale": "The radicand t‑2 must be non‑negative, so t‑2 ≥ 0 → t ≥ 2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L565",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "A biologist models the population N(t) of a species as N(t)=P(t)+R(t)+S(t) where P(t)=0.03t^3-0.5t^2+10t (polynomial growth), R(t)=200/(t+1) (rational carrying‑capacity effect), and S(t)=15√(t+4) (radical seasonal boost). Which statement correctly justifies adding the three functions?",
+   "choices": [
+    "Each function represents an independent factor affecting population, so the total effect is the sum.",
+    "The polynomial already includes the rational and radical effects, so they should be multiplied.",
+    "Only the dominant term (the cubic) matters for large t; the others can be ignored.",
+    "Adding them would double‑count the initial population at t=0."
+   ],
+   "answer": "Each function represents an independent factor affecting population, so the total effect is the sum.",
+   "rationale": "When distinct mechanisms independently contribute to a quantity, the combined model is the sum of the individual models.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L565",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "In a revenue model R(x)=A(x)+B(x)+C(x), A(x)=5x^2-20x+100 (polynomial base sales), B(x)=300/(x+5) (rational discount factor), and C(x)=25√(x+1) (radical loyalty bonus). If the company wants the marginal revenue at x=4, which derivative expression should be evaluated?",
+   "choices": [
+    "R'(x)=10x-20 - 300/(x+5)^2 + 25/(2√(x+1))",
+    "R'(x)=10x-20 + 300/(x+5)^2 - 25/(2√(x+1))",
+    "R'(x)=10x-20 - 300/(x+5)^2 - 25/(2√(x+1))",
+    "R'(x)=10x-20 + 300/(x+5)^2 + 25/(2√(x+1))"
+   ],
+   "answer": "R'(x)=10x-20 - 300/(x+5)^2 + 25/(2√(x+1))",
+   "rationale": "Derivative of 5x^2-20x+100 is 10x-20; derivative of 300/(x+5) is -300/(x+5)^2; derivative of 25√(x+1) is 25/(2√(x+1)).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L157",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Use synthetic division to find the remainder when 2x^3 - 5x^2 + 3x - 7 is divided by x - 2.",
+   "choices": [
+    "-5",
+    "-3",
+    "5",
+    "3"
+   ],
+   "answer": "-5",
+   "rationale": "Synthetic division with root 2 gives coefficients 2, -1, 1 and a final remainder of -5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L157",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Using long division, determine the quotient of (x^3 - 6x^2 + 11x - 6) ÷ (x - 2).",
+   "choices": [
+    "x^2 - 4x + 3",
+    "x^2 - 5x + 6",
+    "x^2 - 3x + 2",
+    "x^2 - 2x + 1"
+   ],
+   "answer": "x^2 - 4x + 3",
+   "rationale": "Dividing yields quotient x^2 - 4x + 3 with remainder 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L157",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "polynomials",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "A student divides 4x^3 - 8x^2 + 5x - 3 by x - 3 and obtains remainder 12. What is the correct remainder?",
+   "choices": [
+    "48",
+    "12",
+    "0",
+    "-12"
+   ],
+   "answer": "48",
+   "rationale": "Synthetic division with root 3 produces a final remainder of 48.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L281",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Write the radical expression ∛(x^5) as a single power of x with a rational exponent.",
+   "choices": [
+    "x^(5/3)",
+    "x^(3/5)",
+    "x^(5/2)",
+    "x^(2/5)"
+   ],
+   "answer": "x^(5/3)",
+   "rationale": "The cube root of x^5 equals x raised to the 5/3 power because the index of the root becomes the denominator and the exponent becomes the numerator.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L281",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Simplify the expression 16^(3/4).",
+   "choices": [
+    "4",
+    "8",
+    "2",
+    "16"
+   ],
+   "answer": "8",
+   "rationale": "16^(3/4) = (16^(1/4))^3 = 2^3 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L281",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Simplify (x^(2/3) * x^(1/6)) / x^(1/2).",
+   "choices": [
+    "x^(1/2)",
+    "x^(2/3)",
+    "x^(1/3)",
+    "x^(5/6)"
+   ],
+   "answer": "x^(1/3)",
+   "rationale": "Using exponent laws, add exponents when multiplying and subtract when dividing: 2/3 + 1/6 - 1/2 = 4/6 + 1/6 - 3/6 = 2/6 = 1/3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L281",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Simplify ∜81 * 81^(1/2).",
+   "choices": [
+    "9",
+    "3",
+    "81",
+    "27"
+   ],
+   "answer": "27",
+   "rationale": "The fourth root of 81 is 3 because 3^4 = 81, and 81^(1/2) = 9; multiplying gives 3 * 9 = 27.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L304",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Which choice gives the endpoint and direction of the graph of y = √(x − 4) + 1?",
+   "choices": [
+    "(4, 1); extends to the right",
+    "(−4, 1); extends to the right",
+    "(4, −1); extends to the right",
+    "(4, 1); extends to the left"
+   ],
+   "answer": "(4, 1); extends to the right",
+   "rationale": "The radicand equals zero at x = 4, giving y = 1. A square-root graph begins there and extends to the right.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L304",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Which point lies on the graph of y = ∛(x + 2) − 3, and how does the graph move as x increases?",
+   "choices": [
+    "(−2, −3); rises from left to right",
+    "(2, −3); rises from left to right",
+    "(−2, 3); falls from left to right",
+    "(−2, −3); falls from left to right"
+   ],
+   "answer": "(−2, −3); rises from left to right",
+   "rationale": "When x = −2, the radicand is zero, so y = −3. A cube-root function rises from left to right.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L304",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "What are the domain and range of y = √(6 − x) − 2?",
+   "choices": [
+    "Domain: x ≤ 6; Range: y ≥ −2",
+    "Domain: x ≥ 6; Range: y ≥ −2",
+    "Domain: x ≤ 6; Range: y ≤ −2",
+    "Domain: all real x; Range: all real y"
+   ],
+   "answer": "Domain: x ≤ 6; Range: y ≥ −2",
+   "rationale": "The radicand must be nonnegative, so 6 − x ≥ 0 and x ≤ 6. Since a square root is at least zero, y ≥ −2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L304",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "How does y = 2∛(x − 1) + 3 change compared with y = ∛x?",
+   "choices": [
+    "Vertically stretched by 2, shifted right 1 and up 3",
+    "Horizontally stretched by 2, shifted right 1 and up 3",
+    "Vertically stretched by 2, shifted left 1 and up 3",
+    "Vertically stretched by 3, shifted right 1 and up 2"
+   ],
+   "answer": "Vertically stretched by 2, shifted right 1 and up 3",
+   "rationale": "The factor 2 vertically stretches the cube-root graph, while x − 1 shifts it right 1 unit and +3 shifts it up 3 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L105",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "What is (3+4i) + (2-5i)?",
+   "choices": [
+    "5 - i",
+    "5 + i",
+    "1 - i",
+    "1 + i"
+   ],
+   "answer": "5 - i",
+   "rationale": "Adding real parts 3+2=5 and imaginary parts 4i+(-5i)=-i gives 5 - i.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L105",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Compute (7-2i) - (4+3i).",
+   "choices": [
+    "3 - 5i",
+    "3 + 5i",
+    "11 - 5i",
+    "11 + 5i"
+   ],
+   "answer": "3 - 5i",
+   "rationale": "Subtract real parts 7-4=3 and imaginary parts -2i-3i=-5i, yielding 3 - 5i.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L105",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Find the product (1+2i)(3-4i).",
+   "choices": [
+    "11 + 2i",
+    "11 - 2i",
+    "5 + 2i",
+    "5 - 2i"
+   ],
+   "answer": "11 + 2i",
+   "rationale": "Using FOIL: 1·3 + 1·(-4i) + 2i·3 + 2i·(-4i) = 3 -4i +6i -8i² = 3+2i+8 = 11+2i.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L105",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Divide (5+6i) by (2-i) and simplify.",
+   "choices": [
+    "(4+17i)/5",
+    "(4-17i)/5",
+    "(14+7i)/5",
+    "(14-7i)/5"
+   ],
+   "answer": "(4+17i)/5",
+   "rationale": "Multiply numerator and denominator by the conjugate (2+i): (5+6i)(2+i) = 4+17i; denominator (2-i)(2+i)=5. Result (4+17i)/5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L294",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Rationalize the denominator and simplify: 1/(√3 + 1).",
+   "choices": [
+    "(√3 − 1)/4",
+    "(√3 − 1)/2",
+    "(√3 + 1)/2",
+    "1/2"
+   ],
+   "answer": "(√3 − 1)/2",
+   "rationale": "Multiply by the conjugate √3 − 1. The denominator becomes 3 − 1 = 2, giving (√3 − 1)/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L294",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "exponents",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Rationalize the denominator and simplify: 1/(√6 + √2).",
+   "choices": [
+    "(√6 + √2)/4",
+    "(√6 − √2)/8",
+    "(√6 − √2)/4",
+    "(√6 − √2)/2"
+   ],
+   "answer": "(√6 − √2)/4",
+   "rationale": "Multiplying by √6 − √2 gives a denominator of 6 − 2 = 4, so the result is (√6 − √2)/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L92",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "What is the value of i^2?",
+   "choices": [
+    "-1",
+    "1",
+    "i",
+    "-i"
+   ],
+   "answer": "-1",
+   "rationale": "i is defined as the square root of -1, so i^2 = -1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "By definition, the imaginary unit i satisfies i^2 = -1.",
+      "url": "https://en.wikipedia.org/wiki/Imaginary_unit",
+      "quote": "The imaginary unit , usually denoted by i , is a mathematical constant that is a solution to the quadratic equation x = −1 , which is not solved by any real number .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_2_part_a:L92",
+   "track_id": "math",
+   "grade_id": "algebra_2_part_a",
+   "skill_id": "complex_nums",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "Simplify i^11.",
+   "choices": [
+    "i",
+    "-i",
+    "1",
+    "-1"
+   ],
+   "answer": "-i",
+   "rationale": "i^11 = i^(8+3) = (i^4)^2 * i^3 = 1 * (-i) = -i.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The imaginary unit satisfies i^2 = -1, so i^11 = i^3 = -i.",
+      "url": "https://en.wikipedia.org/wiki/Imaginary_unit",
+      "quote": "The imaginary unit , usually denoted by i , is a mathematical constant that is a solution to the quadratic equation x = −1 , which is not solved by any real number .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  }
+ ]
+}

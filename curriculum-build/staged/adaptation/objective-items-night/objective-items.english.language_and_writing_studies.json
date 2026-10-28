@@ -1,0 +1,912 @@
+{
+ "track_id": "english",
+ "grade_id": "language_and_writing_studies",
+ "generated_at": "2026-10-26T03:38:11.690Z",
+ "items": [
+  {
+   "objective_id": "language_and_writing_studies:L40",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "sentence_struct",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "In a constituency tree for the sentence 'The student read the book', which non‑terminal label marks the root of the entire structure?",
+   "choices": [
+    "Sentence (S)",
+    "Noun Phrase (NP)",
+    "Verb Phrase (VP)",
+    "Prepositional Phrase (PP)"
+   ],
+   "answer": "Sentence (S)",
+   "rationale": "The root of a full sentence’s constituency tree is always the Sentence node (S), which dominates the top‑level NP and VP.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L40",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "sentence_struct",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "In the phrase‑structure tree for 'She gave him a gift', which constituent directly dominates the indirect object 'him'?",
+   "choices": [
+    "Verb Phrase (VP)",
+    "Noun Phrase (NP)",
+    "Prepositional Phrase (PP)",
+    "Sentence (S)"
+   ],
+   "answer": "Verb Phrase (VP)",
+   "rationale": "The indirect object 'him' is a sister to the direct object inside the Verb Phrase, so the VP node directly dominates it.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L40",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "sentence_struct",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "When drawing a constituency tree for 'Because it rained, the game was cancelled', which node is the sister of the subordinate clause?",
+   "choices": [
+    "Sentence (S)",
+    "Verb Phrase (VP)",
+    "Noun Phrase (NP)",
+    "Prepositional Phrase (PP)"
+   ],
+   "answer": "Sentence (S)",
+   "rationale": "The subordinate clause (SBAR) attaches as an adjunct to the main clause; its sister at the top level is the main Sentence node (S) that contains ‘the game was cancelled’.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L82",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A professor uses academic vocabulary during a seminar but more colloquial expressions with friends. What is this most accurately called?",
+   "choices": [
+    "Style-shifting",
+    "Code-switching",
+    "Language change",
+    "Diglossia"
+   ],
+   "answer": "Style-shifting",
+   "rationale": "Style-shifting is the adaptation of speech to the social situation or audience, even when the speaker continues using the same language.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L82",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A speaker uses a local word to show belonging to a particular community. Which linguistic process gives that word social meaning in context?",
+   "choices": [
+    "Indexicality",
+    "Prescriptivism",
+    "Standardization",
+    "Lexical diffusion"
+   ],
+   "answer": "Indexicality",
+   "rationale": "Indexicality occurs when a linguistic form signals social information, such as identity, status, or solidarity, depending on context.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L82",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly distinguishes a variety’s social status from speakers’ judgments of its value?",
+   "choices": [
+    "Prestige concerns social status; attitudes concern evaluative beliefs.",
+    "Prestige and attitudes are identical because both favor standard forms.",
+    "Prestige measures frequency of use; attitudes concern social status.",
+    "Attitudes change dialect boundaries; prestige concerns grammatical correctness."
+   ],
+   "answer": "Prestige concerns social status; attitudes concern evaluative beliefs.",
+   "rationale": "Prestige describes the social standing assigned to language varieties, whereas attitudes are speakers’ beliefs and evaluations of those varieties.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L82",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A researcher wants to test whether listeners evaluate identical speech differently when the speaker has a regional accent. Which method is most suitable?",
+   "choices": [
+    "A matched guise experiment",
+    "An overt attitude questionnaire",
+    "A lexical diffusion study",
+    "A grammaticality judgment task"
+   ],
+   "answer": "A matched guise experiment",
+   "rationale": "A matched guise experiment holds the utterance constant while changing the perceived speaker identity, revealing accent-based attitudes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L169",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "academic_writing",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "When incorporating a secondary source, which approach best maintains analytical voice?",
+   "choices": [
+    "Introduce the source with a signal phrase, then analyze its relevance to your argument.",
+    "Quote the source extensively, letting the quotation speak for itself.",
+    "Paraphrase the source without citation to keep the flow smooth.",
+    "Summarize the source in a footnote, leaving the main text unchanged."
+   ],
+   "answer": "Introduce the source with a signal phrase, then analyze its relevance to your argument.",
+   "rationale": "Signal phrases attribute ideas and allow the writer to immediately interpret the evidence, preserving analytical control.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L169",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "academic_writing",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Which transition strategy most effectively links a claim to its supporting analysis?",
+   "choices": [
+    "Use a transitional clause that restates the claim before presenting analysis.",
+    "Insert a single conjunctive adverb such as 'however' between sentences.",
+    "Begin the next paragraph with a new, unrelated topic sentence.",
+    "Repeat the claim verbatim at the start of each supporting paragraph."
+   ],
+   "answer": "Use a transitional clause that restates the claim before presenting analysis.",
+   "rationale": "Restating the claim in a transitional clause signals the logical move from assertion to evidence, creating cohesion.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L169",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "academic_writing",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "During final editing, which change most improves sentence-level precision without altering meaning?",
+   "choices": [
+    "Replace nominalizations with active verbs and eliminate redundant modifiers.",
+    "Swap each simple word for a longer synonym to elevate tone.",
+    "Convert all active sentences to passive constructions for objectivity.",
+    "Add introductory clauses to every sentence to increase complexity."
+   ],
+   "answer": "Replace nominalizations with active verbs and eliminate redundant modifiers.",
+   "rationale": "Active verbs and concise phrasing clarify agency and reduce wordiness, sharpening precision while preserving meaning.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L137",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A teacher notices systematic omission of articles in learners’ writing. According to error analysis, what is the most appropriate next step?",
+   "choices": [
+    "classify errors as developmental",
+    "correct each instance immediately",
+    "ignore errors until fluency improves",
+    "assign more grammar drills"
+   ],
+   "answer": "classify errors as developmental",
+   "rationale": "Error analysis treats systematic omissions as developmental interlanguage patterns, informing instructional focus rather than immediate correction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Error analysis distinguishes developmental errors, which reflect a normal stage of acquisition, from errors caused by first-language transfer or other factors.",
+      "url": "https://en.wikipedia.org/wiki/Error_analysis_(linguistics)",
+      "quote": "Developmental errors: are, in a sense, part of the overgeneralizations, and are the results of normal pattern of development, such as (come = comed) and (break = breaked).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L137",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which principle from Krashen’s Input Hypothesis guides a TESOL teacher to provide language slightly beyond learners’ current level?",
+   "choices": [
+    "i+1 comprehensible input",
+    "comprehensible output",
+    "affective filter reduction",
+    "grammar‑translation emphasis"
+   ],
+   "answer": "i+1 comprehensible input",
+   "rationale": "Krashen’s Input Hypothesis states that acquisition occurs when learners receive input at the i+1 level, just above their current competence.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Krashen’s Input Hypothesis proposes that acquisition is facilitated by comprehensible input at level i+1, just above the learner’s current level.",
+      "url": "https://en.wikipedia.org/wiki/Interaction_hypothesis",
+      "quote": "comprehensible input that is just beyond their current level of understanding. This input hypothesis is characterized as i + 1 , in which i represents the learner's current language level and + 1 represents the following level of language acquisition.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L137",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "When designing a lesson on English vowel contrasts for Japanese speakers, which applied linguistics concept should inform the selection of target sounds?",
+   "choices": [
+    "contrastive analysis",
+    "interlanguage fossilization",
+    "communicative competence",
+    "sociolinguistic variation"
+   ],
+   "answer": "contrastive analysis",
+   "rationale": "Contrastive analysis predicts difficulty by comparing the phonological systems of the learners’ L1 and the target language.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Contrastive analysis compares a learner’s first-language system with the target language to identify likely areas of difficulty.",
+      "url": "https://en.wikipedia.org/wiki/Contrastive_analysis",
+      "quote": "Therefore, the difficulty in mastering certain structures in a second language (L2) depended on the difference between the learners' mother language (L1) and the language they were trying to learn.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L199",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "literary_analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "A writer’s workshop says the midpoint feels rushed and the climax lacks motivation. What is the best next step?",
+   "choices": [
+    "Revise the middle and ending by identifying where logic or emotion breaks down.",
+    "Rewrite unrelated sections while leaving both reported problems unchanged.",
+    "Add backstory before the opening to explain the entire plot.",
+    "Ask peers to rewrite the ending instead of discussing how to revise it."
+   ],
+   "answer": "Revise the middle and ending by identifying where logic or emotion breaks down.",
+   "rationale": "The strongest response treats the feedback as revision guidance, examines the affected sections, and revises where narrative logic or emotional development breaks down.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L199",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "literary_analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Which sentence best reveals a character trait through observable action rather than direct description?",
+   "choices": [
+    "Mara was usually brave when facing danger.",
+    "Mara enjoyed telling stories about her dangerous adventures.",
+    "Mara’s hands shook, but she stepped onto the cracked ledge and crossed.",
+    "Everyone agreed that Mara possessed unusual courage."
+   ],
+   "answer": "Mara’s hands shook, but she stepped onto the cracked ledge and crossed.",
+   "rationale": "The trembling hands and continued crossing reveal Mara’s fear and courage through action instead of directly labeling her as brave.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L199",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "literary_analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Which opening combines a character, concrete setting, and immediate complication most effectively?",
+   "choices": [
+    "As the elevator stopped between floors, Leah heard breathing behind the wall panel.",
+    "Many old elevators were unreliable and often frightened their passengers.",
+    "Leah avoided the abandoned office after it closed for the night.",
+    "On a Tuesday, Leah entered the building for another ordinary workday."
+   ],
+   "answer": "As the elevator stopped between floors, Leah heard breathing behind the wall panel.",
+   "rationale": "This opening introduces Leah, establishes a specific threatening situation, and creates immediate tension through the sound behind the panel.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L199",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "literary_analysis",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "A peer says a protagonist’s final choice is unmotivated. Which revision best responds?",
+   "choices": [
+    "Add an explanatory paragraph telling readers why the choice makes sense.",
+    "Replace the choice with a random event that removes the original criticism.",
+    "Plant a relevant memory earlier, then connect it to the final choice.",
+    "Remove all uncertainty by saying the protagonist had always been certain."
+   ],
+   "answer": "Plant a relevant memory earlier, then connect it to the final choice.",
+   "rationale": "Planting the memory earlier and connecting it to the final choice supplies motivation organically rather than explaining it after the fact.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L10",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which branch of language science studies the physical production of speech sounds?",
+   "choices": [
+    "Phonetics",
+    "Morphology",
+    "Pragmatics",
+    "Semantics"
+   ],
+   "answer": "Phonetics",
+   "rationale": "Phonetics examines how speech sounds are physically produced, while phonology studies their patterns and functions in particular languages.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L10",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "A researcher investigates how affixes change a word’s grammatical form and meaning. Which branch of language science primarily examines this?",
+   "choices": [
+    "Phonology",
+    "Pragmatics",
+    "Semantics",
+    "Morphology"
+   ],
+   "answer": "Morphology",
+   "rationale": "Morphology studies the structure of words and how affixes combine with roots to create grammatical forms and meanings.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L10",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which branch of language science studies how speakers arrange words into grammatically acceptable sentences?",
+   "choices": [
+    "Syntax",
+    "Phonetics",
+    "Morphology",
+    "Pragmatics"
+   ],
+   "answer": "Syntax",
+   "rationale": "Syntax examines sentence structure, including word order and the grammatical relationships among words.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L10",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "An utterance has one literal meaning, but its intended meaning changes with the conversational context. Which branch studies this context-dependent use?",
+   "choices": [
+    "Semantics",
+    "Phonology",
+    "Morphology",
+    "Pragmatics"
+   ],
+   "answer": "Pragmatics",
+   "rationale": "Pragmatics studies how meaning is communicated through context, including speakers’ intentions, assumptions, and conversational circumstances.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L125",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "In interactionist accounts, which caregiver behavior most directly supports a child's language development?",
+   "choices": [
+    "Ignoring a child's vocalizations unless they are words.",
+    "Responding sensitively to a child's attempts to communicate.",
+    "Correcting every grammatical error without pausing.",
+    "Speaking only when the child remains silent."
+   ],
+   "answer": "Responding sensitively to a child's attempts to communicate.",
+   "rationale": "Interactionist accounts emphasize that responsive, contingent communication helps children discover how language works in meaningful social interactions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L125",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Which statement best reflects evidence about the critical period for first-language acquisition?",
+   "choices": [
+    "Native-like pronunciation often becomes harder to acquire after puberty.",
+    "First-language learning is completely impossible after childhood.",
+    "Grammar development normally stops before a child is born.",
+    "Critical-period effects occur only in written language."
+   ],
+   "answer": "Native-like pronunciation often becomes harder to acquire after puberty.",
+   "rationale": "Evidence links puberty with a reduced ability to acquire native-like pronunciation, although adults can still learn a first language successfully.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Native-like pronunciation is typically harder to acquire after puberty.",
+      "url": "https://en.wikipedia.org/wiki/Accent_(sociolinguistics)",
+      "quote": "The critical period theory states that if learning takes place after the critical period (usually considered around puberty) for acquiring native-like pronunciation, an individual is unlikely to acquire a native-like accent.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L125",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "linguistics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Which child language behavior best supports the claim that children acquire abstract morphological rules rather than merely memorizing forms?",
+   "choices": [
+    "Overgeneralization errors such as ‘goed’",
+    "Repetition of adult utterances verbatim",
+    "Use of holophrastic single-word utterances",
+    "Preference for high-frequency lexical items"
+   ],
+   "answer": "Overgeneralization errors such as ‘goed’",
+   "rationale": "Overgeneralizations (e.g., ‘goed’) show children applying a productive past‑tense rule to irregular verbs, indicating rule‑based morphological learning.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": [
+     {
+      "claim": "Overgeneralization errors such as 'goed' demonstrate children apply abstract morphological rules rather than memorizing forms.",
+      "url": "https://en.wikipedia.org/wiki/Words_and_Rules",
+      "quote": "overgeneralization in past-tense formation",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L296",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "act_rhetoric",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "When designing a report page, which typographic strategy best establishes a clear visual hierarchy for headings, subheadings, and body text?",
+   "choices": [
+    "Use the same font family for all text, varying only color.",
+    "Apply distinct font sizes, weights, and spacing for each level.",
+    "Use decorative fonts for headings and a serif font for body.",
+    "Set all text in uppercase to differentiate levels."
+   ],
+   "answer": "Apply distinct font sizes, weights, and spacing for each level.",
+   "rationale": "Distinct font sizes, weights, and spacing create a clear hierarchy that guides readers through heading levels.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L296",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "act_rhetoric",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "A report uses medium-gray body text on a white background. Which color change will most improve readability without changing the content or layout?",
+   "choices": [
+    "Use near-black text on the white background.",
+    "Add colored shadows behind every line.",
+    "Use bright red text for every line.",
+    "Place a pale border around the text."
+   ],
+   "answer": "Use near-black text on the white background.",
+   "rationale": "Near-black text on white creates strong contrast, making the body text easier to read. Shadows, red text, and borders do not improve legibility as reliably.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L296",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "act_rhetoric",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "For a screen displaying six related research findings, which layout choice best supports quick scanning and comparison?",
+   "choices": [
+    "Use one grid with consistent alignment and spacing.",
+    "Center each finding with unrelated margins.",
+    "Give every finding a different font and color.",
+    "Fill the screen with text, arrows, and icons."
+   ],
+   "answer": "Use one grid with consistent alignment and spacing.",
+   "rationale": "A consistent grid, alignment, and spacing create predictable relationships among findings, helping readers scan and compare them efficiently.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L254",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "act_rhetoric",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Office staff need notice that online requests will replace paper forms. Which message is clearest?",
+   "choices": [
+    "Paper forms may still be used if they are more convenient for employees.",
+    "Use the online request system instead of paper forms starting Monday.",
+    "To improve workflow, the new system is being introduced and should be utilized.",
+    "Please note that online requests have replaced all paper-based procedures."
+   ],
+   "answer": "Use the online request system instead of paper forms starting Monday.",
+   "rationale": "This directly tells office staff what to do and when in plain workplace language. The alternatives are vague, jargon-heavy, or overbroad.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "language_and_writing_studies:L254",
+   "track_id": "english",
+   "grade_id": "language_and_writing_studies",
+   "skill_id": "act_rhetoric",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Which sentence is most concise for announcing a website help center?",
+   "choices": [
+    "Our team will add a website help center so response times can be improved.",
+    "We will add an online help center because we want faster customer inquiry responses.",
+    "We will add an online help center to answer customer inquiries faster.",
+    "An online help center will be added so customer inquiry responses can be faster."
+   ],
+   "answer": "We will add an online help center to answer customer inquiries faster.",
+   "rationale": "This active, direct version states the action and benefit with fewer words. The alternatives are wordier, passive, or indirect.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+# /etc/systemd/system/savant-backup.service : one backup, then the restore test on it,
+# then the off-box copy. Run daily by savant-backup.timer.
+[Unit]
+Description=Savant daily backup and restore test
+
+[Service]
+Type=oneshot
+User=savant
+WorkingDirectory=/srv/savant/app
+EnvironmentFile=/srv/savant/savant.env
+ExecStart=/usr/bin/node scripts/backup-db.js
+ExecStart=/usr/bin/node scripts/backup-db.js --restore-test
+# Off-box copy, encrypted (deploy/offsite-backup.sh, copied to /srv/savant/bin/). Leave this line out until rclone and age are set up.
+ExecStart=/srv/savant/bin/offsite-backup.sh
+SyslogIdentifier=savant-backup

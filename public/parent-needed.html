@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your parent's answer | Savant</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="header"></header>
+  <main class="page">
+    <div class="wrap wrap-narrow">
+      <h1 id="title">Waiting for your parent</h1>
+      <div id="error" class="notice notice-error hidden" role="alert"></div>
+      <div id="ok" class="notice notice-success hidden" role="status"></div>
+
+      <!-- Waiting for an answer. -->
+      <section id="pending" class="hidden">
+        <p class="lede-sm">We emailed <strong id="sent-to">your parent or guardian</strong>. When they agree, everything in your account opens.</p>
+        <h2>What works now</h2>
+        <ul class="plain-list">
+          <li>Every lesson, quiz and game you answer with taps, buttons or typing.</li>
+          <li>Basketball and piano activities, by tapping and with the on-screen keys.</li>
+        </ul>
+        <h2>What waits for your parent</h2>
+        <ul class="plain-list">
+          <li>The camera and the microphone.</li>
+          <li>AI chat, essay marking and the Spanish speaking activities, which use an outside AI service. Your parent chooses these separately.</li>
+        </ul>
+        <p class="muted">If nobody answers by <strong id="expires">the date in the email</strong>, this account and its progress are deleted.</p>
+        <h2>Did the email not arrive?</h2>
+        <form id="resend-form" class="age-form" novalidate>
+          <label class="field"><span>Parent's or guardian's email</span>
+            <input type="email" id="parent_email" autocomplete="off" required>
+            <span class="tiny muted field-hint">Leave it empty to send to the same address again, or type the right one.</span>
+          </label>
+          <button class="btn" id="resend" type="submit">Send the email again</button>
+        </form>
+        <p><a class="btn btn-primary" href="/dashboard">Keep learning</a></p>
+      </section>
+
+      <!-- A parent withdrew consent. -->
+      <section id="revoked" class="hidden">
+        <p class="lede-sm">A parent or guardian has turned this account off for now. Your progress is kept for a while in case they turn it back on.</p>
+        <p class="muted">Ask them to open the Savant parent page. Nothing new is saved while the account is off.</p>
+      </section>
+
+      <!-- Nothing to wait for. -->
+      <section id="open" class="hidden">
+        <p class="lede-sm">Your account is open.</p>
+        <p><a class="btn btn-primary" href="/dashboard">Go to your dashboard</a></p>
+      </section>
+    </div>
+  </main>
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/parent-needed.js"></script>
+</body>
+</html>

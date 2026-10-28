@@ -1,0 +1,2819 @@
+{
+ "row_id": 27,
+ "engine_id": "hole-io",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 35,
+ "generated_at": "2026-10-24T20:44:10.242Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 57,
+  "code_rejected": 0,
+  "sent_to_judges": 57,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 57,
+   "picked_same_option": 54,
+   "a_picked_key": 55,
+   "b_picked_key": 54,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b"
+   ],
+   "models_b": [
+    "z-ai/glm-5.3",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-max:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "hole-io",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 35,
+   "topic": "Activity 5 of 9 (quiz/game): Expand a Sentence - Rhetorical Grammar",
+   "title": "Expand a Sentence: Rhetorical Grammar",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q27",
+    "prompt": "Which sentence expands 'The birds sang' by adding a fronted prepositional phrase?",
+    "choices": [
+     "The birds, perched on the highest branch, sang.",
+     "The birds sang with great enthusiasm.",
+     "In the early morning, the birds sang.",
+     "Singing sweetly, the birds greeted the dawn."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct answer places the prepositional phrase 'In the early morning' at the front of the sentence.",
+    "difficulty": 5,
+    "skill": "Fronted prepositional phrase",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which sentence expands \"The committee approved the plan\" by using the correlative conjunction \"Not only … but also\" to add a second verb phrase?",
+    "choices": [
+     "If the data supported it, the committee approved the plan.",
+     "The committee approved the plan and funded the project.",
+     "The committee, which reviewed the data, approved the plan.",
+     "Not only did the committee approve the plan, but it also funded the project."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option uses the correlative pair to coordinate two verb phrases.",
+    "difficulty": 6,
+    "skill": "Correlative conjunction adding a second predicate",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which sentence expands 'The runner crossed the finish line' by using asyndeton to list a series of actions without conjunctions?",
+    "choices": [
+     "The runner, exhausted but triumphant, crossed the finish line.",
+     "The runner crossed the finish line and raised her arms and smiled at the crowd and accepted the medal.",
+     "The runner crossed the finish line, raised her arms, smiled at the crowd, accepted the medal.",
+     "After the race, the runner crossed the finish line."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence omits conjunctions between the final three verb phrases, creating an asyndetonic list.",
+    "difficulty": 5,
+    "skill": "Asyndeton expansion",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q49",
+    "prompt": "Which sentence expands the plain sentence \"The project cannot start\" by adding a fronted conditional clause introduced by \"Unless\"?",
+    "choices": [
+     "Unless the budget increases, the project cannot start.",
+     "If the budget increases, the project cannot start.",
+     "Because the budget increases, the project cannot start.",
+     "When the budget increases, the project cannot start."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence places an \"Unless\" clause at the front, creating a fronted conditional clause that expresses a necessary condition for the main clause.",
+    "difficulty": 5,
+    "skill": "Fronted conditional clause (unless)",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q1",
+    "prompt": "Which sentence adds a participial phrase to the plain sentence about a team celebrating, showing how the celebration happened?",
+    "choices": [
+     "The team, shouting with joy, celebrated.",
+     "The team celebrated with joy.",
+     "The team, after the match, celebrated.",
+     "The team, because it won, celebrated."
+    ],
+    "answerIndex": 0,
+    "explanation": "The participial phrase shouting with joy adds vivid detail by showing how the team celebrated.",
+    "difficulty": 4,
+    "skill": "Adding a participial phrase",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which sentence expands 'The engineer designed the bridge' by adding a series of participial phrases that elaborate on the design process?",
+    "choices": [
+     "The engineer designed the bridge and the road and the tunnel.",
+     "The engineer, who had studied structural dynamics, designed the bridge.",
+     "It was the engineer who designed the bridge.",
+     "The engineer designed the bridge, calculating loads, selecting materials, and consulting experts."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence adds three participial phrases after the main clause to create a cumulative structure.",
+    "difficulty": 5,
+    "skill": "Cumulative sentence expansion",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which sentence expands The student opened the notebook by using an absolute phrase introduced by a noun and participle without a preposition?",
+    "choices": [
+     "With her hands trembling, the student opened the notebook.",
+     "The student opened the notebook, and her hands trembled.",
+     "Her hands trembled while the student opened the notebook.",
+     "Her hands trembling, the student opened the notebook."
+    ],
+    "answerIndex": 3,
+    "explanation": "Her hands trembling is an absolute phrase whose participle describes the student's hands and whose subject differs from the main subject.",
+    "difficulty": 6,
+    "skill": "Adding an absolute phrase",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q38",
+    "prompt": "Which sentence expands \"The team will practice\" by adding a fronted conditional clause?",
+    "choices": [
+     "The team will practice if the weather clears.",
+     "If the weather clears, the team will practice.",
+     "To improve, the team will practice.",
+     "Not only will the team practice, but they will also review tape."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option places the conditional clause at the beginning of the sentence.",
+    "difficulty": 5,
+    "skill": "Fronted conditional clause",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which sentence expands 'The committee approved the proposal' by inserting a parenthetical dash-enclosed phrase that adds a concession?",
+    "choices": [
+     "It was the committee that approved the proposal.",
+     "The committee, although facing strong opposition, approved the proposal.",
+     "The committee approved the proposal, which was controversial.",
+     "The committee—despite strong opposition—approved the proposal."
+    ],
+    "answerIndex": 3,
+    "explanation": "The dashes set off the concessive phrase 'despite strong opposition' as a parenthetical interruption.",
+    "difficulty": 5,
+    "skill": "Parenthetical dash expansion",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q25",
+    "prompt": "Which sentence expands 'The teacher explained the concept' by using an it‑cleft that emphasizes the manner adverbial?",
+    "choices": [
+     "It was with great patience that the teacher explained the concept.",
+     "The teacher, who was very patient, explained the concept.",
+     "The teacher explained the concept, and she did so patiently.",
+     "With great patience, the teacher explained the concept."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct answer forms an it‑cleft ('It was … that') to foreground the adverbial phrase 'with great patience'.",
+    "difficulty": 6,
+    "skill": "It‑cleft emphasizing manner",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which sentence expands 'The chef prepared the meal' by using polysyndeton to list multiple actions?",
+    "choices": [
+     "The chef prepared the meal, chopped the vegetables, seared the meat, and plated the dish.",
+     "The chef prepared the meal and chopped the vegetables and seared the meat and plated the dish.",
+     "The chef, who had trained in Paris, prepared the meal.",
+     "It was the chef who prepared the meal."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence repeats the conjunction 'and' between each verb phrase to create a polysyndetonic effect.",
+    "difficulty": 5,
+    "skill": "Polysyndeton expansion",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which sentence uses parataxis, joining three complete independent clauses with semicolons?",
+    "choices": [
+     "We listened carefully and asked questions before revising our notes.",
+     "We listened carefully, we asked questions, and we revised our notes.",
+     "We listened carefully; we asked questions; we revised our notes.",
+     "After listening carefully, we asked questions and revised our notes."
+    ],
+    "answerIndex": 2,
+    "explanation": "The semicolons join three independent clauses without conjunctions, which is the defining pattern of parataxis.",
+    "difficulty": 7,
+    "skill": "Using parataxis for emphasis",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q6",
+    "prompt": "Which sentence expands The scientist explained the results by adding a nonrestrictive relative clause that gives extra information about the scientist?",
+    "choices": [
+     "The scientist who had reviewed the data twice explained the results.",
+     "The scientist, who had reviewed the data twice, explained the results.",
+     "Before the team checked the notes, the scientist explained the results.",
+     "Explaining the results clearly, the scientist surprised the team."
+    ],
+    "answerIndex": 1,
+    "explanation": "The clause who had reviewed the data twice is set off by commas and adds nonrestrictive information about the scientist.",
+    "difficulty": 5,
+    "skill": "Adding a nonrestrictive relative clause",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q35",
+    "prompt": "Which sentence expands the plain sentence 'They found the missing keys' by using an it‑cleft that emphasizes the place?",
+    "choices": [
+     "In the garden they found the missing keys.",
+     "They found the missing keys in the garden.",
+     "It was in the garden that they found the missing keys.",
+     "The missing keys were found by them in the garden."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option 0 uses an it‑cleft construction to foreground the locative adverbial 'in the garden'.",
+    "difficulty": 6,
+    "skill": "It‑cleft emphasizing place",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which sentence expands 'The artist painted the mural' by using a colon to introduce a series of actions?",
+    "choices": [
+     "The artist painted the mural, sketching the outline, mixing the colors, and applying the layers.",
+     "The artist painted the mural: sketched the outline, mixed the colors, and applied the layers.",
+     "The artist painted the mural; she sketched the outline, mixed the colors, and applied the layers.",
+     "The artist painted the mural, and then she sketched the outline, mixed the colors, and applied the layers."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct answer uses a colon after the main clause to introduce a detailed list of sequential actions.",
+    "difficulty": 5,
+    "skill": "Colon introducing a series",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which sentence expands We planted native trees by adding an infinitive phrase that expresses purpose?",
+    "choices": [
+     "We planted native trees while the habitat was restored.",
+     "We planted native trees because we restored the habitat.",
+     "We planted native trees, restoring the habitat.",
+     "We planted native trees to restore the habitat."
+    ],
+    "answerIndex": 3,
+    "explanation": "The infinitive phrase to restore the habitat expresses the purpose of planting the native trees.",
+    "difficulty": 4,
+    "skill": "Using infinitives to express purpose",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which sentence expands the plain sentence 'The scientist publishes the findings' by adding a fronted conditional clause?",
+    "choices": [
+     "Publishing the findings, the scientist celebrated the result.",
+     "The scientist, who completed the study, publishes the findings.",
+     "If the peer review succeeds, the scientist publishes the findings.",
+     "The scientist publishes the findings; consequently, the community responds."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option A adds a fronted conditional clause ('If the peer review succeeds') before the main clause.",
+    "difficulty": 5,
+    "skill": "Sentence Expansion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which sentence expands 'I have never seen such a sight' by using inversion after a negative adverbial?",
+    "choices": [
+     "I have not ever seen such a sight.",
+     "I have never seen such a sight before.",
+     "Such a sight I have never seen.",
+     "Never have I seen such a sight."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer inverts the subject and auxiliary after the negative adverbial 'Never'.",
+    "difficulty": 5,
+    "skill": "Negative adverbial inversion",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which sentence expands the plain sentence \"The author revised the manuscript\" by adding a fronted adverbial clause of reason introduced by \"Since\"?",
+    "choices": [
+     "Because the data were inconclusive, the author revised the manuscript.",
+     "Since the data were inconclusive, the author revised the manuscript.",
+     "Although the data were inconclusive, the author revised the manuscript.",
+     "When the data were inconclusive, the author revised the manuscript."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence opens with a \"Since\" clause, a fronted adverbial clause of reason that explains why the author revised the manuscript.",
+    "difficulty": 6,
+    "skill": "Fronted adverbial clause of reason (since)",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which sentence reverses the subject and object of one clause to create chiasmus?",
+    "choices": [
+     "The coach challenged the players, and the players challenged the coach.",
+     "The coach challenged the players, and the players answered the coach.",
+     "The coach challenged the players, while the players listened carefully.",
+     "The coach challenged the players, and then the coach praised them."
+    ],
+    "answerIndex": 0,
+    "explanation": "The second clause reverses the subject and object of the first, creating the characteristic crosswise arrangement of chiasmus.",
+    "difficulty": 5,
+    "skill": "Constructing chiasmus",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q21",
+    "prompt": "Which sentence expands 'The library opened its doors' by adding a fronted adverbial clause of cause?",
+    "choices": [
+     "Because the funding arrived, the library opened its doors.",
+     "The library, which received new funding, opened its doors.",
+     "The library opened its doors, and the community celebrated.",
+     "Opening its doors, the library welcomed visitors."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct answer adds a fronted adverbial clause of cause ('Because the funding arrived') to the base sentence.",
+    "difficulty": 5,
+    "skill": "Adverbial clause of cause",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which sentence expands 'A solution exists for the problem' by using an expletive there construction?",
+    "choices": [
+     "There is a solution for the problem.",
+     "A solution for the problem exists.",
+     "The problem has a solution.",
+     "A solution, which is effective, exists for the problem."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct answer uses the expletive 'There' followed by a form of 'be' to introduce the subject.",
+    "difficulty": 6,
+    "skill": "Expletive there construction",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which sentence expands 'She read the book' by using an it-cleft that emphasizes the direct object?",
+    "choices": [
+     "She read the book carefully.",
+     "It was the book that she read.",
+     "The book was read by her.",
+     "Reading the book, she learned a lot."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct answer uses an it-cleft structure to focus on the object 'the book'.",
+    "difficulty": 5,
+    "skill": "It-cleft object focus",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which sentence expands the plain sentence 'The athlete broke the record' by using an it‑cleft that emphasizes the time of the action?",
+    "choices": [
+     "It was at the championship that the athlete broke the record.",
+     "The athlete, who trained for years, broke the record.",
+     "Breaking the record, the athlete raised her arms in triumph.",
+     "The athlete broke the record; therefore, she earned a medal."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option A forms an it‑cleft ('It was at the championship that …') placing the time phrase in focus.",
+    "difficulty": 5,
+    "skill": "Sentence Expansion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which sentence turns the idea that delay is unacceptable into a rhetorical question that directly challenges the audience?",
+    "choices": [
+     "We cannot delay our work any longer.",
+     "How quickly we are working!",
+     "Are we willing to delay our work any longer?",
+     "If we delay our work, we will face problems."
+    ],
+    "answerIndex": 2,
+    "explanation": "This rhetorical question presents the audience with a direct challenge and gives the idea greater persuasive force.",
+    "difficulty": 4,
+    "skill": "Forming a rhetorical question",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which sentence expands the plain sentence 'The decision surprised everyone' by using a noun clause as the subject?",
+    "choices": [
+     "The committee's decision surprised everyone.",
+     "What the committee decided surprised everyone.",
+     "Everyone was surprised by the decision the committee made.",
+     "The decision that the committee made surprised everyone."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option 0 replaces the simple noun subject with a noun clause introduced by 'what'.",
+    "difficulty": 6,
+    "skill": "Noun clause as subject",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q46",
+    "prompt": "Which sentence expands the plain sentence 'The city built a new bridge' by adding a fronted perfect participial phrase?",
+    "choices": [
+     "The city, which secured funding, built a new bridge.",
+     "Having completed the design, the city built a new bridge.",
+     "The city built a new bridge, a bridge that spans the river.",
+     "To improve traffic flow, the city built a new bridge."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option A begins with the perfect participial phrase 'Having completed the design,' which modifies the main clause.",
+    "difficulty": 5,
+    "skill": "Sentence Expansion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q39",
+    "prompt": "Which sentence expands \"She studied the material\" by adding a fronted infinitive phrase of purpose?",
+    "choices": [
+     "Because she wanted to master the concepts, she studied the material.",
+     "She studied the material to master the concepts.",
+     "To master the concepts, she studied the material.",
+     "Not only did she study the material, but she also taught it."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option begins the sentence with an infinitive phrase that expresses purpose.",
+    "difficulty": 5,
+    "skill": "Fronted infinitive of purpose",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which sentence is periodic, placing the main clause after a series of introductory dependent clauses?",
+    "choices": [
+     "After the debate, the chair declared the winner after the long delay and the final count.",
+     "After the debate, after the long delay, and after the final count, the chair declared the winner.",
+     "The chair declared the winner after the debate, the long delay, and the final count.",
+     "Although the debate was long, the chair declared the winner after the final count."
+    ],
+    "answerIndex": 1,
+    "explanation": "The series of introductory dependent clauses delays the main clause until the end, making the sentence periodic.",
+    "difficulty": 6,
+    "skill": "Creating periodic sentences",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which sentence expands The researcher repeated the experiment by adding an adverbial clause of concession?",
+    "choices": [
+     "Because the evidence was limited, the researcher repeated the experiment.",
+     "When the evidence was limited, the researcher repeated the experiment.",
+     "Although the evidence was limited, the researcher repeated the experiment.",
+     "If the evidence was limited, the researcher repeated the experiment."
+    ],
+    "answerIndex": 2,
+    "explanation": "The although-clause expresses concession by showing that the experiment was repeated despite limited evidence.",
+    "difficulty": 5,
+    "skill": "Adding an adverbial clause of concession",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q31",
+    "prompt": "Which sentence expands 'The manager will approve the request' by using a correlative conjunction to add an alternative subject?",
+    "choices": [
+     "The manager, along with the assistant, will approve the request.",
+     "The manager will approve the request soon.",
+     "Either the manager or the assistant will approve the request.",
+     "The request will be approved by the manager."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct answer uses the correlative conjunction 'Either ... or' to join two possible subjects.",
+    "difficulty": 5,
+    "skill": "Correlative conjunction either...or",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which sentence expands \"The manager approved the request\" by using inversion after a fronted \"Only after\" phrase?",
+    "choices": [
+     "The manager approved the request only after the review.",
+     "Only after the review did the manager approve the request.",
+     "After the review, the manager approved the request.",
+     "The manager, after the review, approved the request."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option triggers subject‑auxiliary inversion by placing \"Only after the review\" at the front.",
+    "difficulty": 6,
+    "skill": "Inversion after fronted \"Only after\" phrase",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which sentence expands 'The teacher assigned the project' by using a pseudo-cleft to focus on the direct object?",
+    "choices": [
+     "What the teacher assigned was the project.",
+     "The teacher assigned the project, the essay, and the presentation.",
+     "The project was assigned by the teacher.",
+     "The teacher assigned the project because it was due."
+    ],
+    "answerIndex": 0,
+    "explanation": "The pseudo-cleft 'What the teacher assigned was the project' uses a nominal relative clause to highlight the object.",
+    "difficulty": 5,
+    "skill": "Pseudo-cleft expansion",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which sentence expands The climbers stored their ropes by adding a prepositional phrase that tells where they stored them?",
+    "choices": [
+     "The climbers stored their ropes inside the blue shelter.",
+     "The climbers stored their ropes before the storm arrived.",
+     "The climbers stored their ropes with careful teamwork.",
+     "The climbers stored their ropes after reaching the summit."
+    ],
+    "answerIndex": 0,
+    "explanation": "The prepositional phrase inside the blue shelter tells where the climbers stored their ropes.",
+    "difficulty": 4,
+    "skill": "Adding a prepositional phrase",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which sentence expands the plain sentence 'The audience applauded' by adding a fronted adverbial clause of time?",
+    "choices": [
+     "When the final note faded, the audience applauded.",
+     "The audience applauded when the final note faded.",
+     "The audience, after the final note faded, applauded.",
+     "Because the final note faded, the audience applauded."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option 0 opens the sentence with a subordinate clause indicating the time of the applause.",
+    "difficulty": 5,
+    "skill": "Fronted adverbial clause of time",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which sentence adds an appositive to the plain sentence about Ms. Ortiz explaining the strategy, and the appositive renames Ms. Ortiz?",
+    "choices": [
+     "Ms. Ortiz, who is our new coach explained the strategy.",
+     "Our new coach, Ms. Ortiz explained the strategy.",
+     "Ms. Ortiz explained the strategy, our new coach.",
+     "Ms. Ortiz, our new coach, explained the strategy."
+    ],
+    "answerIndex": 3,
+    "explanation": "The appositive our new coach renames Ms. Ortiz and adds information without creating a separate sentence.",
+    "difficulty": 5,
+    "skill": "Expanding with an appositive",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which sentence expands 'The runner crossed the finish line' by adding a resumptive modifier that repeats the noun?",
+    "choices": [
+     "The runner crossed the finish line, dreaming of it for years.",
+     "The runner crossed the finish line, which she had dreamed of for years.",
+     "The runner crossed the finish line; she had dreamed of it for years.",
+     "The runner crossed the finish line, a finish line she had dreamed of for years."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct answer repeats the noun 'finish line' in a resumptive modifier that elaborates on it.",
+    "difficulty": 6,
+    "skill": "Resumptive modifier",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q44",
+    "prompt": "Which sentence expands the plain sentence 'The committee approved the proposal' by adding an absolute phrase introduced by a noun and a past participle?",
+    "choices": [
+     "The committee approved the proposal and funded the project.",
+     "The committee, despite strong opposition, approved the proposal.",
+     "Because the data were convincing, the committee approved the proposal.",
+     "The proposal approved, the committee celebrated."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option A uses the absolute phrase 'The proposal approved' (noun + past participle) at the start of the sentence.",
+    "difficulty": 5,
+    "skill": "Sentence Expansion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence uses a compound-complex sentence with two independent clauses and a dependent when-clause?",
+    "choices": [
+     "When practice improves, confidence grows because the team performs better.",
+     "When practice improves, confidence grows, and the team performs better.",
+     "Although practice improves, confidence grows, and the team performs better.",
+     "If practice improves, confidence grows and the team performs better."
+    ],
+    "answerIndex": 1,
+    "explanation": "The when-clause is dependent, while confidence grows and the team performs better are two coordinated independent clauses.",
+    "difficulty": 7,
+    "skill": "Building a compound-complex sentence",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which sentence expands the idea that the group will succeed by using parallel structure in which three verbs share the same grammatical form?",
+    "choices": [
+     "We will plan, preparing, and succeed.",
+     "We will plan, prepare, and succeed.",
+     "We will plan, preparation, and succeed.",
+     "We will plan, to prepare, and succeed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The three infinitives plan, prepare, and succeed share the same grammatical form and create parallel structure.",
+    "difficulty": 5,
+    "skill": "Maintaining parallel structure",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q26",
+    "prompt": "Which sentence expands 'The engineer designed the bridge' by creating a cumulative sentence that adds successive modifying phrases?",
+    "choices": [
+     "The engineer designed the bridge, calculating loads, selecting materials, and testing models.",
+     "The engineer designed the bridge, a sleek arch spanning the river, using recycled steel, and incorporating seismic dampers.",
+     "The engineer designed the bridge; it is a sleek arch spanning the river.",
+     "The engineer designed the bridge and built a sleek arch spanning the river."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct answer builds a cumulative sentence, layering appositive and participial phrases after the main clause.",
+    "difficulty": 6,
+    "skill": "Cumulative sentence structure",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which sentence expands the plain sentence 'That the project succeeds is important' by using an expletive it construction?",
+    "choices": [
+     "It is important that the project succeeds.",
+     "The project’s success is important.",
+     "Important is the fact that the project succeeds.",
+     "That the project succeeds remains important."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option 0 introduces the dummy subject 'it' and extraposes the clause 'that the project succeeds' to the end of the sentence.",
+    "difficulty": 5,
+    "skill": "Expletive it construction",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which sentence expands the plain sentence 'The dancer entered the stage' by adding a fronted participial phrase that describes how she entered?",
+    "choices": [
+     "Because she was spinning gracefully, the dancer entered the stage.",
+     "The dancer entered the stage, spinning gracefully.",
+     "The dancer, who was spinning gracefully, entered the stage.",
+     "Spinning gracefully, the dancer entered the stage."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 0 places a present‑participle phrase at the front of the sentence, modifying the subject before the main verb.",
+    "difficulty": 5,
+    "skill": "Fronted participial phrase",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q36",
+    "prompt": "Which sentence expands the plain sentence 'She loves the sunrise' by creating an antithesis with a contrasting clause?",
+    "choices": [
+     "Because she loves the sunrise, she wakes early.",
+     "She loves the sunrise, and she watches it each morning.",
+     "Loving the sunrise, she greets each day.",
+     "She loves the sunrise; he prefers the sunset."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option 0 pairs the original clause with a parallel clause that presents the opposite preference, forming an antithesis.",
+    "difficulty": 6,
+    "skill": "Antithesis",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q41",
+    "prompt": "Which sentence expands \"The manager approved the request\" by linking a second independent clause with a semicolon and a conjunctive adverb?",
+    "choices": [
+     "The manager approved the request; consequently, the project moved forward.",
+     "The manager approved the request, and the project moved forward.",
+     "Because the manager approved the request, the project moved forward.",
+     "The manager approved the request—an unexpected decision."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option joins two independent clauses with a semicolon and the conjunctive adverb \"consequently.\"",
+    "difficulty": 5,
+    "skill": "Semicolon with conjunctive adverb",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which sentence expands the plain sentence 'The engineer tested the prototype' by adding a resumptive modifier that repeats the noun 'test'?",
+    "choices": [
+     "The engineer tested the prototype; consequently, the design was altered.",
+     "The engineer, after reviewing the data, tested the prototype.",
+     "Testing the prototype, the engineer discovered the flaw.",
+     "The engineer tested the prototype, a test that revealed the flaw."
+    ],
+    "answerIndex": 3,
+    "explanation": "Option A adds the resumptive modifier 'a test that revealed the flaw,' which repeats the noun 'test'.",
+    "difficulty": 5,
+    "skill": "Sentence Expansion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which sentence adds a restrictive relative clause to identify which students improved most?",
+    "choices": [
+     "The students improved most, and they practice daily.",
+     "The students, who practice daily, improved most.",
+     "The students who practice daily improved most.",
+     "The students improved most because they practice daily."
+    ],
+    "answerIndex": 2,
+    "explanation": "The clause who practice daily is a restrictive relative clause because it identifies which students improved most.",
+    "difficulty": 4,
+    "skill": "Adding restrictive relative clauses",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q47",
+    "prompt": "Which sentence expands the plain sentence 'The author revised the manuscript' by using an it‑cleft that emphasizes the reason for the action?",
+    "choices": [
+     "Revising the manuscript, the author improved its clarity.",
+     "The author, who wanted a clearer text, revised the manuscript.",
+     "It was because the editor requested changes that the author revised the manuscript.",
+     "The author revised the manuscript; consequently, the publisher accepted it."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option A creates an it‑cleft ('It was because … that …') that foregrounds the reason.",
+    "difficulty": 5,
+    "skill": "Sentence Expansion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which sentence expands The course develops useful skills by using two balanced, parallel independent clauses?",
+    "choices": [
+     "The course builds strong readers, and it creates confident writers.",
+     "Although the course builds strong readers, it creates confident writers.",
+     "Building strong readers, the course creates confident writers.",
+     "Because the course builds strong readers, confident writers emerge."
+    ],
+    "answerIndex": 0,
+    "explanation": "The two independent clauses use matching subject-verb-object structures, with builds and creates expressing the parallel actions.",
+    "difficulty": 6,
+    "skill": "Creating a balanced sentence",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which sentence expands 'The committee approved the proposal' by using a correlative conjunction to add a second subject?",
+    "choices": [
+     "The committee approved the proposal, and the board did too.",
+     "The committee, as well as the board, approved the proposal.",
+     "Both the committee and the board approved the proposal.",
+     "The committee approved the proposal; the board approved it as well."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct answer employs the correlative conjunction 'Both … and' to join two subjects in a single expanded sentence.",
+    "difficulty": 5,
+    "skill": "Correlative conjunction",
+    "topic": "Expand a Sentence - Rhetorical Grammar"
+   }
+  ],
+  "feedback": {
+   "correct": "The hole swallows the batch and grows — your sentence expansion held its shape.",
+   "incorrect": "The hole stays the same size. Reread how the structure signals its effect, then try again.",
+   "win": "The whole map is swallowed. You can now stretch a plain sentence into whatever shape your purpose demands.",
+   "lose": "The hole can no longer grow. Reset the round and review cumulative, periodic, and balanced structures.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Which sentence adds a participial phrase to the plain sentence about a team celebrating, showing how the celebration happened?",
+   "choices": [
+    "The team, shouting with joy, celebrated.",
+    "The team celebrated with joy.",
+    "The team, after the match, celebrated.",
+    "The team, because it won, celebrated."
+   ],
+   "answerIndex": 0,
+   "explanation": "The participial phrase shouting with joy adds vivid detail by showing how the team celebrated.",
+   "difficulty": 4,
+   "skill": "Adding a participial phrase",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the idea that the group will succeed by using parallel structure in which three verbs share the same grammatical form?",
+   "choices": [
+    "We will plan, preparing, and succeed.",
+    "We will plan, preparation, and succeed.",
+    "We will plan, prepare, and succeed.",
+    "We will plan, to prepare, and succeed."
+   ],
+   "answerIndex": 2,
+   "explanation": "The three infinitives plan, prepare, and succeed share the same grammatical form and create parallel structure.",
+   "difficulty": 5,
+   "skill": "Maintaining parallel structure",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence turns the idea that delay is unacceptable into a rhetorical question that directly challenges the audience?",
+   "choices": [
+    "We cannot delay our work any longer.",
+    "How quickly we are working!",
+    "If we delay our work, we will face problems.",
+    "Are we willing to delay our work any longer?"
+   ],
+   "answerIndex": 3,
+   "explanation": "This rhetorical question presents the audience with a direct challenge and gives the idea greater persuasive force.",
+   "difficulty": 4,
+   "skill": "Forming a rhetorical question",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence adds an appositive to the plain sentence about Ms. Ortiz explaining the strategy, and the appositive renames Ms. Ortiz?",
+   "choices": [
+    "Ms. Ortiz, our new coach, explained the strategy.",
+    "Our new coach, Ms. Ortiz explained the strategy.",
+    "Ms. Ortiz explained the strategy, our new coach.",
+    "Ms. Ortiz, who is our new coach explained the strategy."
+   ],
+   "answerIndex": 0,
+   "explanation": "The appositive our new coach renames Ms. Ortiz and adds information without creating a separate sentence.",
+   "difficulty": 5,
+   "skill": "Expanding with an appositive",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands The climbers stored their ropes by adding a prepositional phrase that tells where they stored them?",
+   "choices": [
+    "The climbers stored their ropes before the storm arrived.",
+    "The climbers stored their ropes inside the blue shelter.",
+    "The climbers stored their ropes with careful teamwork.",
+    "The climbers stored their ropes after reaching the summit."
+   ],
+   "answerIndex": 1,
+   "explanation": "The prepositional phrase inside the blue shelter tells where the climbers stored their ropes.",
+   "difficulty": 4,
+   "skill": "Adding a prepositional phrase",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands The scientist explained the results by adding a nonrestrictive relative clause that gives extra information about the scientist?",
+   "choices": [
+    "The scientist who had reviewed the data twice explained the results.",
+    "Before the team checked the notes, the scientist explained the results.",
+    "The scientist, who had reviewed the data twice, explained the results.",
+    "Explaining the results clearly, the scientist surprised the team."
+   ],
+   "answerIndex": 2,
+   "explanation": "The clause who had reviewed the data twice is set off by commas and adds nonrestrictive information about the scientist.",
+   "difficulty": 5,
+   "skill": "Adding a nonrestrictive relative clause",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands The researcher repeated the experiment by adding an adverbial clause of concession?",
+   "choices": [
+    "Because the evidence was limited, the researcher repeated the experiment.",
+    "When the evidence was limited, the researcher repeated the experiment.",
+    "If the evidence was limited, the researcher repeated the experiment.",
+    "Although the evidence was limited, the researcher repeated the experiment."
+   ],
+   "answerIndex": 3,
+   "explanation": "The although-clause expresses concession by showing that the experiment was repeated despite limited evidence.",
+   "difficulty": 5,
+   "skill": "Adding an adverbial clause of concession",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands The student opened the notebook by using an absolute phrase introduced by a noun and participle without a preposition?",
+   "choices": [
+    "With her hands trembling, the student opened the notebook.",
+    "Her hands trembling, the student opened the notebook.",
+    "Her hands trembled while the student opened the notebook.",
+    "The student opened the notebook, and her hands trembled."
+   ],
+   "answerIndex": 1,
+   "explanation": "Her hands trembling is an absolute phrase whose participle describes the student's hands and whose subject differs from the main subject.",
+   "difficulty": 6,
+   "skill": "Adding an absolute phrase",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands The course develops useful skills by using two balanced, parallel independent clauses?",
+   "choices": [
+    "Building strong readers, the course creates confident writers.",
+    "Although the course builds strong readers, it creates confident writers.",
+    "The course builds strong readers, and it creates confident writers.",
+    "Because the course builds strong readers, confident writers emerge."
+   ],
+   "answerIndex": 2,
+   "explanation": "The two independent clauses use matching subject-verb-object structures, with builds and creates expressing the parallel actions.",
+   "difficulty": 6,
+   "skill": "Creating a balanced sentence",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a compound-complex sentence with two independent clauses and a dependent when-clause?",
+   "choices": [
+    "When practice improves, confidence grows, and the team performs better.",
+    "When practice improves, confidence grows because the team performs better.",
+    "Although practice improves, confidence grows, and the team performs better.",
+    "If practice improves, confidence grows and the team performs better."
+   ],
+   "answerIndex": 0,
+   "explanation": "The when-clause is dependent, while confidence grows and the team performs better are two coordinated independent clauses.",
+   "difficulty": 7,
+   "skill": "Building a compound-complex sentence",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence adds a restrictive relative clause to identify which students improved most?",
+   "choices": [
+    "The students who practice daily improved most.",
+    "The students, who practice daily, improved most.",
+    "The students improved most, and they practice daily.",
+    "The students improved most because they practice daily."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause who practice daily is a restrictive relative clause because it identifies which students improved most.",
+   "difficulty": 4,
+   "skill": "Adding restrictive relative clauses",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands We planted native trees by adding an infinitive phrase that expresses purpose?",
+   "choices": [
+    "We planted native trees to restore the habitat.",
+    "We planted native trees because we restored the habitat.",
+    "We planted native trees, restoring the habitat.",
+    "We planted native trees while the habitat was restored."
+   ],
+   "answerIndex": 0,
+   "explanation": "The infinitive phrase to restore the habitat expresses the purpose of planting the native trees.",
+   "difficulty": 4,
+   "skill": "Using infinitives to express purpose",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence reverses the subject and object of one clause to create chiasmus?",
+   "choices": [
+    "The coach challenged the players, and the players challenged the coach.",
+    "The coach challenged the players, and the players answered the coach.",
+    "The coach challenged the players, while the players listened carefully.",
+    "The coach challenged the players, and then the coach praised them."
+   ],
+   "answerIndex": 0,
+   "explanation": "The second clause reverses the subject and object of the first, creating the characteristic crosswise arrangement of chiasmus.",
+   "difficulty": 5,
+   "skill": "Constructing chiasmus",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence is periodic, placing the main clause after a series of introductory dependent clauses?",
+   "choices": [
+    "After the debate, after the long delay, and after the final count, the chair declared the winner.",
+    "After the debate, the chair declared the winner after the long delay and the final count.",
+    "The chair declared the winner after the debate, the long delay, and the final count.",
+    "Although the debate was long, the chair declared the winner after the final count."
+   ],
+   "answerIndex": 0,
+   "explanation": "The series of introductory dependent clauses delays the main clause until the end, making the sentence periodic.",
+   "difficulty": 6,
+   "skill": "Creating periodic sentences",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses parataxis, joining three complete independent clauses with semicolons?",
+   "choices": [
+    "We listened carefully; we asked questions; we revised our notes.",
+    "We listened carefully, we asked questions, and we revised our notes.",
+    "We listened carefully and asked questions before revising our notes.",
+    "After listening carefully, we asked questions and revised our notes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolons join three independent clauses without conjunctions, which is the defining pattern of parataxis.",
+   "difficulty": 7,
+   "skill": "Using parataxis for emphasis",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The engineer designed the bridge' by adding a series of participial phrases that elaborate on the design process?",
+   "choices": [
+    "The engineer designed the bridge, calculating loads, selecting materials, and consulting experts.",
+    "The engineer, who had studied structural dynamics, designed the bridge.",
+    "It was the engineer who designed the bridge.",
+    "The engineer designed the bridge and the road and the tunnel."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence adds three participial phrases after the main clause to create a cumulative structure.",
+   "difficulty": 5,
+   "skill": "Cumulative sentence expansion",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The teacher assigned the project' by using a pseudo-cleft to focus on the direct object?",
+   "choices": [
+    "What the teacher assigned was the project.",
+    "The teacher assigned the project, the essay, and the presentation.",
+    "The project was assigned by the teacher.",
+    "The teacher assigned the project because it was due."
+   ],
+   "answerIndex": 0,
+   "explanation": "The pseudo-cleft 'What the teacher assigned was the project' uses a nominal relative clause to highlight the object.",
+   "difficulty": 5,
+   "skill": "Pseudo-cleft expansion",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The chef prepared the meal' by using polysyndeton to list multiple actions?",
+   "choices": [
+    "The chef prepared the meal and chopped the vegetables and seared the meat and plated the dish.",
+    "The chef prepared the meal, chopped the vegetables, seared the meat, and plated the dish.",
+    "The chef, who had trained in Paris, prepared the meal.",
+    "It was the chef who prepared the meal."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence repeats the conjunction 'and' between each verb phrase to create a polysyndetonic effect.",
+   "difficulty": 5,
+   "skill": "Polysyndeton expansion",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The runner crossed the finish line' by using asyndeton to list a series of actions without conjunctions?",
+   "choices": [
+    "The runner crossed the finish line, raised her arms, smiled at the crowd, accepted the medal.",
+    "The runner crossed the finish line and raised her arms and smiled at the crowd and accepted the medal.",
+    "The runner, exhausted but triumphant, crossed the finish line.",
+    "After the race, the runner crossed the finish line."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence omits conjunctions between the final three verb phrases, creating an asyndetonic list.",
+   "difficulty": 5,
+   "skill": "Asyndeton expansion",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The committee approved the proposal' by inserting a parenthetical dash-enclosed phrase that adds a concession?",
+   "choices": [
+    "The committee—despite strong opposition—approved the proposal.",
+    "The committee, although facing strong opposition, approved the proposal.",
+    "The committee approved the proposal, which was controversial.",
+    "It was the committee that approved the proposal."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dashes set off the concessive phrase 'despite strong opposition' as a parenthetical interruption.",
+   "difficulty": 5,
+   "skill": "Parenthetical dash expansion",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The library opened its doors' by adding a fronted adverbial clause of cause?",
+   "choices": [
+    "Because the funding arrived, the library opened its doors.",
+    "The library, which received new funding, opened its doors.",
+    "The library opened its doors, and the community celebrated.",
+    "Opening its doors, the library welcomed visitors."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer adds a fronted adverbial clause of cause ('Because the funding arrived') to the base sentence.",
+   "difficulty": 5,
+   "skill": "Adverbial clause of cause",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The artist painted the mural' by using a colon to introduce a series of actions?",
+   "choices": [
+    "The artist painted the mural: sketched the outline, mixed the colors, and applied the layers.",
+    "The artist painted the mural, sketching the outline, mixing the colors, and applying the layers.",
+    "The artist painted the mural; she sketched the outline, mixed the colors, and applied the layers.",
+    "The artist painted the mural, and then she sketched the outline, mixed the colors, and applied the layers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer uses a colon after the main clause to introduce a detailed list of sequential actions.",
+   "difficulty": 5,
+   "skill": "Colon introducing a series",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The committee approved the proposal' by using a correlative conjunction to add a second subject?",
+   "choices": [
+    "Both the committee and the board approved the proposal.",
+    "The committee, as well as the board, approved the proposal.",
+    "The committee approved the proposal, and the board did too.",
+    "The committee approved the proposal; the board approved it as well."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer employs the correlative conjunction 'Both … and' to join two subjects in a single expanded sentence.",
+   "difficulty": 5,
+   "skill": "Correlative conjunction",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The runner crossed the finish line' by adding a resumptive modifier that repeats the noun?",
+   "choices": [
+    "The runner crossed the finish line, a finish line she had dreamed of for years.",
+    "The runner crossed the finish line, which she had dreamed of for years.",
+    "The runner crossed the finish line; she had dreamed of it for years.",
+    "The runner crossed the finish line, dreaming of it for years."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer repeats the noun 'finish line' in a resumptive modifier that elaborates on it.",
+   "difficulty": 6,
+   "skill": "Resumptive modifier",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The teacher explained the concept' by using an it‑cleft that emphasizes the manner adverbial?",
+   "choices": [
+    "It was with great patience that the teacher explained the concept.",
+    "The teacher, who was very patient, explained the concept.",
+    "The teacher explained the concept, and she did so patiently.",
+    "With great patience, the teacher explained the concept."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer forms an it‑cleft ('It was … that') to foreground the adverbial phrase 'with great patience'.",
+   "difficulty": 6,
+   "skill": "It‑cleft emphasizing manner",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The engineer designed the bridge' by creating a cumulative sentence that adds successive modifying phrases?",
+   "choices": [
+    "The engineer designed the bridge, a sleek arch spanning the river, using recycled steel, and incorporating seismic dampers.",
+    "The engineer designed the bridge, calculating loads, selecting materials, and testing models.",
+    "The engineer designed the bridge; it is a sleek arch spanning the river.",
+    "The engineer designed the bridge and built a sleek arch spanning the river."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer builds a cumulative sentence, layering appositive and participial phrases after the main clause.",
+   "difficulty": 6,
+   "skill": "Cumulative sentence structure",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The birds sang' by adding a fronted prepositional phrase?",
+   "choices": [
+    "In the early morning, the birds sang.",
+    "The birds sang with great enthusiasm.",
+    "The birds, perched on the highest branch, sang.",
+    "Singing sweetly, the birds greeted the dawn."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer places the prepositional phrase 'In the early morning' at the front of the sentence.",
+   "difficulty": 5,
+   "skill": "Fronted prepositional phrase",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'I have never seen such a sight' by using inversion after a negative adverbial?",
+   "choices": [
+    "Never have I seen such a sight.",
+    "I have never seen such a sight before.",
+    "Such a sight I have never seen.",
+    "I have not ever seen such a sight."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer inverts the subject and auxiliary after the negative adverbial 'Never'.",
+   "difficulty": 5,
+   "skill": "Negative adverbial inversion",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'A solution exists for the problem' by using an expletive there construction?",
+   "choices": [
+    "There is a solution for the problem.",
+    "A solution for the problem exists.",
+    "The problem has a solution.",
+    "A solution, which is effective, exists for the problem."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer uses the expletive 'There' followed by a form of 'be' to introduce the subject.",
+   "difficulty": 6,
+   "skill": "Expletive there construction",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'She read the book' by using an it-cleft that emphasizes the direct object?",
+   "choices": [
+    "It was the book that she read.",
+    "She read the book carefully.",
+    "The book was read by her.",
+    "Reading the book, she learned a lot."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer uses an it-cleft structure to focus on the object 'the book'.",
+   "difficulty": 5,
+   "skill": "It-cleft object focus",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands 'The manager will approve the request' by using a correlative conjunction to add an alternative subject?",
+   "choices": [
+    "Either the manager or the assistant will approve the request.",
+    "The manager will approve the request soon.",
+    "The manager, along with the assistant, will approve the request.",
+    "The request will be approved by the manager."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer uses the correlative conjunction 'Either ... or' to join two possible subjects.",
+   "difficulty": 5,
+   "skill": "Correlative conjunction either...or",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The dancer entered the stage' by adding a fronted participial phrase that describes how she entered?",
+   "choices": [
+    "Spinning gracefully, the dancer entered the stage.",
+    "The dancer entered the stage, spinning gracefully.",
+    "The dancer, who was spinning gracefully, entered the stage.",
+    "Because she was spinning gracefully, the dancer entered the stage."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option 0 places a present‑participle phrase at the front of the sentence, modifying the subject before the main verb.",
+   "difficulty": 5,
+   "skill": "Fronted participial phrase",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The audience applauded' by adding a fronted adverbial clause of time?",
+   "choices": [
+    "When the final note faded, the audience applauded.",
+    "The audience applauded when the final note faded.",
+    "The audience, after the final note faded, applauded.",
+    "Because the final note faded, the audience applauded."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option 0 opens the sentence with a subordinate clause indicating the time of the applause.",
+   "difficulty": 5,
+   "skill": "Fronted adverbial clause of time",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The decision surprised everyone' by using a noun clause as the subject?",
+   "choices": [
+    "What the committee decided surprised everyone.",
+    "The committee's decision surprised everyone.",
+    "Everyone was surprised by the decision the committee made.",
+    "The decision that the committee made surprised everyone."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option 0 replaces the simple noun subject with a noun clause introduced by 'what'.",
+   "difficulty": 6,
+   "skill": "Noun clause as subject",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'They found the missing keys' by using an it‑cleft that emphasizes the place?",
+   "choices": [
+    "It was in the garden that they found the missing keys.",
+    "They found the missing keys in the garden.",
+    "In the garden they found the missing keys.",
+    "The missing keys were found by them in the garden."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option 0 uses an it‑cleft construction to foreground the locative adverbial 'in the garden'.",
+   "difficulty": 6,
+   "skill": "It‑cleft emphasizing place",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'She loves the sunrise' by creating an antithesis with a contrasting clause?",
+   "choices": [
+    "She loves the sunrise; he prefers the sunset.",
+    "She loves the sunrise, and she watches it each morning.",
+    "Loving the sunrise, she greets each day.",
+    "Because she loves the sunrise, she wakes early."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option 0 pairs the original clause with a parallel clause that presents the opposite preference, forming an antithesis.",
+   "difficulty": 6,
+   "skill": "Antithesis",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'That the project succeeds is important' by using an expletive it construction?",
+   "choices": [
+    "It is important that the project succeeds.",
+    "The project’s success is important.",
+    "Important is the fact that the project succeeds.",
+    "That the project succeeds remains important."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option 0 introduces the dummy subject 'it' and extraposes the clause 'that the project succeeds' to the end of the sentence.",
+   "difficulty": 5,
+   "skill": "Expletive it construction",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands \"The team will practice\" by adding a fronted conditional clause?",
+   "choices": [
+    "If the weather clears, the team will practice.",
+    "The team will practice if the weather clears.",
+    "To improve, the team will practice.",
+    "Not only will the team practice, but they will also review tape."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option places the conditional clause at the beginning of the sentence.",
+   "difficulty": 5,
+   "skill": "Fronted conditional clause",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands \"She studied the material\" by adding a fronted infinitive phrase of purpose?",
+   "choices": [
+    "To master the concepts, she studied the material.",
+    "She studied the material to master the concepts.",
+    "Because she wanted to master the concepts, she studied the material.",
+    "Not only did she study the material, but she also taught it."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option begins the sentence with an infinitive phrase that expresses purpose.",
+   "difficulty": 5,
+   "skill": "Fronted infinitive of purpose",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands \"The committee approved the plan\" by using the correlative conjunction \"Not only … but also\" to add a second verb phrase?",
+   "choices": [
+    "Not only did the committee approve the plan, but it also funded the project.",
+    "The committee approved the plan and funded the project.",
+    "The committee, which reviewed the data, approved the plan.",
+    "If the data supported it, the committee approved the plan."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option uses the correlative pair to coordinate two verb phrases.",
+   "difficulty": 6,
+   "skill": "Correlative conjunction adding a second predicate",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands \"The manager approved the request\" by linking a second independent clause with a semicolon and a conjunctive adverb?",
+   "choices": [
+    "The manager approved the request; consequently, the project moved forward.",
+    "The manager approved the request, and the project moved forward.",
+    "Because the manager approved the request, the project moved forward.",
+    "The manager approved the request—an unexpected decision."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option joins two independent clauses with a semicolon and the conjunctive adverb \"consequently.\"",
+   "difficulty": 5,
+   "skill": "Semicolon with conjunctive adverb",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands \"The manager approved the request\" by using inversion after a fronted \"Only after\" phrase?",
+   "choices": [
+    "Only after the review did the manager approve the request.",
+    "The manager approved the request only after the review.",
+    "After the review, the manager approved the request.",
+    "The manager, after the review, approved the request."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option triggers subject‑auxiliary inversion by placing \"Only after the review\" at the front.",
+   "difficulty": 6,
+   "skill": "Inversion after fronted \"Only after\" phrase",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The scientist publishes the findings' by adding a fronted conditional clause?",
+   "choices": [
+    "If the peer review succeeds, the scientist publishes the findings.",
+    "The scientist, who completed the study, publishes the findings.",
+    "Publishing the findings, the scientist celebrated the result.",
+    "The scientist publishes the findings; consequently, the community responds."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A adds a fronted conditional clause ('If the peer review succeeds') before the main clause.",
+   "difficulty": 5,
+   "skill": "Sentence Expansion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The committee approved the proposal' by adding an absolute phrase introduced by a noun and a past participle?",
+   "choices": [
+    "The proposal approved, the committee celebrated.",
+    "The committee, despite strong opposition, approved the proposal.",
+    "Because the data were convincing, the committee approved the proposal.",
+    "The committee approved the proposal and funded the project."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A uses the absolute phrase 'The proposal approved' (noun + past participle) at the start of the sentence.",
+   "difficulty": 5,
+   "skill": "Sentence Expansion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The athlete broke the record' by using an it‑cleft that emphasizes the time of the action?",
+   "choices": [
+    "It was at the championship that the athlete broke the record.",
+    "The athlete, who trained for years, broke the record.",
+    "Breaking the record, the athlete raised her arms in triumph.",
+    "The athlete broke the record; therefore, she earned a medal."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A forms an it‑cleft ('It was at the championship that …') placing the time phrase in focus.",
+   "difficulty": 5,
+   "skill": "Sentence Expansion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The city built a new bridge' by adding a fronted perfect participial phrase?",
+   "choices": [
+    "Having completed the design, the city built a new bridge.",
+    "The city, which secured funding, built a new bridge.",
+    "The city built a new bridge, a bridge that spans the river.",
+    "To improve traffic flow, the city built a new bridge."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A begins with the perfect participial phrase 'Having completed the design,' which modifies the main clause.",
+   "difficulty": 5,
+   "skill": "Sentence Expansion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The author revised the manuscript' by using an it‑cleft that emphasizes the reason for the action?",
+   "choices": [
+    "It was because the editor requested changes that the author revised the manuscript.",
+    "The author, who wanted a clearer text, revised the manuscript.",
+    "Revising the manuscript, the author improved its clarity.",
+    "The author revised the manuscript; consequently, the publisher accepted it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A creates an it‑cleft ('It was because … that …') that foregrounds the reason.",
+   "difficulty": 5,
+   "skill": "Sentence Expansion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence 'The engineer tested the prototype' by adding a resumptive modifier that repeats the noun 'test'?",
+   "choices": [
+    "The engineer tested the prototype, a test that revealed the flaw.",
+    "The engineer, after reviewing the data, tested the prototype.",
+    "Testing the prototype, the engineer discovered the flaw.",
+    "The engineer tested the prototype; consequently, the design was altered."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A adds the resumptive modifier 'a test that revealed the flaw,' which repeats the noun 'test'.",
+   "difficulty": 5,
+   "skill": "Sentence Expansion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence \"The project cannot start\" by adding a fronted conditional clause introduced by \"Unless\"?",
+   "choices": [
+    "Unless the budget increases, the project cannot start.",
+    "If the budget increases, the project cannot start.",
+    "Because the budget increases, the project cannot start.",
+    "When the budget increases, the project cannot start."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence places an \"Unless\" clause at the front, creating a fronted conditional clause that expresses a necessary condition for the main clause.",
+   "difficulty": 5,
+   "skill": "Fronted conditional clause (unless)",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence expands the plain sentence \"The author revised the manuscript\" by adding a fronted adverbial clause of reason introduced by \"Since\"?",
+   "choices": [
+    "Since the data were inconclusive, the author revised the manuscript.",
+    "Because the data were inconclusive, the author revised the manuscript.",
+    "Although the data were inconclusive, the author revised the manuscript.",
+    "When the data were inconclusive, the author revised the manuscript."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence opens with a \"Since\" clause, a fronted adverbial clause of reason that explains why the author revised the manuscript.",
+   "difficulty": 6,
+   "skill": "Fronted adverbial clause of reason (since)",
+   "topic": "Expand a Sentence - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence uses anaphora to expand the idea that immediate action is necessary?",
+   "choices": [
+    "The river must be protected, its habitat must be restored, and its future must be defended.",
+    "We must protect the river; we must restore its habitat; and we must defend it for the future.",
+    "We must protect the river; its habitat must be restored; and the future must be defended.",
+    "We must protect the river and we must restore its habitat and we must defend it for the future."
+   ],
+   "answerIndex": 1,
+   "explanation": "Anaphora repeats we at the beginning of successive clauses, giving the expanded sentence emphatic momentum.",
+   "reason": "A: not exactly one correct (Both options (1) and (3) use anaphora (repetition of \"we must\" at the start of clauses), so the question does not have exactly one correct a) | B: picked 3 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence uses inversion to expand the plain sentence about a sudden bell echoing through a hall?",
+   "choices": [
+    "The sudden bell echoed through the hall.",
+    "Through the hall echoed the sudden bell.",
+    "Through the hall, the sudden bell echoed.",
+    "The sudden bell, through the hall, echoed."
+   ],
+   "answerIndex": 1,
+   "explanation": "The inverted order places the subject after the verb, giving the sudden bell emphasis while preserving the original meaning.",
+   "reason": "B: picked 2 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence uses epistrophe by repeating the same word at the ends of three clauses?",
+   "choices": [
+    "Restore the river for migrating fish; restore the hills for grazing deer; restore the coast for nesting birds.",
+    "Because rivers erode, because hills slide, and because coasts flood, we plan.",
+    "We restore rivers, we restore hills, and we restore coasts for habitat.",
+    "To restore rivers, protect hills; to restore coasts, repair wetlands."
+   ],
+   "answerIndex": 0,
+   "explanation": "The repeated word for appears at the end of each clause, which is the defining feature of epistrophe.",
+   "reason": "A: picked -1 not 0 (No option uses epistrophe) | B: picked -1 not 0 (No option correctly employs epistrophe.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "Which sentence expands 'The musician composed a symphony' by using an it-cleft to emphasize the subject?",
+   "choices": [
+    "It was the musician who composed a symphony.",
+    "The musician, a talented composer, wrote a symphony.",
+    "What the musician composed was a symphony.",
+    "The musician composed a symphony and a concerto."
+   ],
+   "answerIndex": 0,
+   "explanation": "The it-cleft construction 'It was the musician who composed a symphony' places emphasis on the subject by embedding the original clause in a relative clause.",
+   "reason": "source: \"An it-cleft uses the structure 'It was X who Y' to emphasize X.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence expands 'The team needs a strategy' by using parallel infinitive phrases?",
+   "choices": [
+    "To analyze, to plan, and to execute are the team's strategy.",
+    "The team needs a winning strategy.",
+    "The team develops a strategy each season.",
+    "A strategy is needed by the team."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct answer presents three infinitive phrases in parallel as the subject of the sentence.",
+   "reason": "A: picked -1 not 0 (No option is correct.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence expands \"The team needs a clear strategy\" by forming a pseudo‑cleft that focuses on the predicate?",
+   "choices": [
+    "What the team needs is a clear strategy.",
+    "The team needs a clear strategy, which is essential.",
+    "A clear strategy is what the team needs.",
+    "The team needs a clear strategy; therefore, it will draft one."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option uses a pseudo‑cleft (\"What … is …\") to highlight the needed strategy.",
+   "reason": "B: not exactly one correct (The question asks for a pseudo-cleft focusing on the predicate, but 'a clear strategy' is the direct object; option 0 focuses on the object,)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence expands the plain sentence \"The player scored the winning goal\" by adding a prepositional absolute phrase introduced by \"with\"?",
+   "choices": [
+    "With the crowd roaring, the player scored the winning goal.",
+    "With great skill the player scored the winning goal.",
+    "The player, with the crowd roaring, scored the winning goal.",
+    "The player scored the winning goal, with the crowd roaring."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option begins with a \"with\" + noun + participle construction, forming a prepositional absolute phrase that modifies the whole main clause.",
+   "reason": "A: not exactly one correct (multiple defensible options)"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": false
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  }
+ ],
+ "applied": false
+}

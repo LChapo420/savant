@@ -1,0 +1,993 @@
+{
+ "collection": "block_plans",
+ "row_id": 6,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P82",
+   "wrong": "'If it rains, we would move the picnic indoors.'",
+   "correct": "A first conditional is \"If it rains, we will move the picnic indoors\" (or second: \"If it rained, we would...\"); \"If it rains, we would\" mixes the two.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P83",
+   "wrong": "'If we hurry, we would catch it.'",
+   "correct": "\"If we hurry, we will catch it\" (or \"If we hurried, we would catch it\"); \"If we hurry, we would\" is nonstandard.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Conditional: an if/then situation that could happen. 'If it rains, we would move the picnic indoors.'",
+   "replace": "Conditional: an if/then situation that could happen. 'If it rains, we will move the picnic indoors.'",
+   "fixes": [
+    "P82"
+   ]
+  },
+  {
+   "find": "Conditional — imagined but possible: 'If we hurry, we would catch it.'",
+   "replace": "Conditional — imagined but possible: 'If we hurried, we would catch it.'",
+   "fixes": [
+    "P83"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[2].data.prerequisites[3]",
+   "before": "Conditional: an if/then situation that could happen. 'If it rains, we would move the picnic indoors.'",
+   "after": "Conditional: an if/then situation that could happen. 'If it rains, we will move the picnic indoors.'",
+   "fixes": [
+    "P82"
+   ]
+  },
+  {
+   "path": "blocks[8].data.expansions[2].phrase",
+   "before": "Conditional — imagined but possible: 'If we hurry, we would catch it.'",
+   "after": "Conditional — imagined but possible: 'If we hurried, we would catch it.'",
+   "fixes": [
+    "P83"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Hook_Dilemma",
+    "purpose": "Presents two versions of the same news sentence — 'The ball was dropped by the ref' vs 'The ref dropped the ball' — and asks which one hides the mistake, opening the question of why a writer would choose each.",
+    "data": {
+     "context": "Same event. Same words, almost. But one version puts your eye on the ref, and the other puts your eye on the ball. In one, someone is to blame; in the other, a mistake just seems to happen.",
+     "eyebrow": "Warm-Up Dilemma",
+     "footerNote": "By the end of this lesson, you will be able to explain exactly why a writer would pick each one.",
+     "leftChoice": {
+      "body": "The subject, the ref, performs the action. This is active voice — direct, clear, and it points a finger.",
+      "label": "OPTION A",
+      "tone": "accent",
+      "title": "The ref dropped the ball."
+     },
+     "prompt": "Two sports reporters describe the same play. Which version hides the mistake — and why would a writer ever want to hide it?",
+     "rightChoice": {
+      "body": "The subject, the ball, receives the action. This is passive voice — the doer gets pushed to the end, or dropped entirely.",
+      "label": "OPTION B",
+      "tone": "neutral",
+      "title": "The ball was dropped by the ref."
+     },
+     "versusLabel": "VS"
+    },
+    "repaired": false,
+    "index": 0
+   },
+   {
+    "block": "Theory_ContrastSplit",
+    "purpose": "Side-by-side columns define active vs passive voice (who does the action vs who receives it) and show when each serves a purpose: emphasis, unknown actor, or tact.",
+    "data": {
+     "footnote": "Neither voice is better. The right question is always: who do I want the reader looking at?",
+     "leftColumn": {
+      "heading": "What active voice IS",
+      "items": [
+       {
+        "label": "The subject acts",
+        "text": "The subject of the sentence performs the action. The doer comes first and owns the verb.",
+        "example": "Maria scored the winning goal."
+       },
+       {
+        "label": "Clear and direct",
+        "text": "Active voice uses fewer words and tells the reader exactly who is responsible. It creates emphasis on the doer.",
+        "example": "The committee approved the plan."
+       },
+       {
+        "label": "Stronger for most writing",
+        "text": "When you want energy, accountability, or a clear story, reach for active voice first.",
+        "example": "I made a mistake."
+       }
+      ],
+      "tone": "success"
+     },
+     "rightColumn": {
+      "heading": "What passive voice is NOT",
+      "items": [
+       {
+        "label": "Not automatically wrong",
+        "text": "Passive voice is a tool, not a bad habit. It is the right choice when the doer is unknown, when you want to be tactful, or when the receiver matters more.",
+        "example": "My bike was stolen last night. (Doer unknown — nobody to name.)"
+       },
+       {
+        "label": "Not the same as weak verbs",
+        "text": "Passive is about who receives the action, not about word choice. 'The window was broken' is passive; 'The window shattered' is active.",
+        "example": "Passive: The trophy was awarded to Nadia."
+       },
+       {
+        "label": "Not for hiding yourself carelessly",
+        "text": "Sometimes writers use passive to dodge responsibility — 'Mistakes were made.' Choose passive for a reason, not to avoid one.",
+        "example": "Tactful on purpose: The recipe was followed incorrectly."
+       }
+      ],
+      "tone": "caution"
+     },
+     "subtitle": "Voice answers one question: does the subject DO the verb or RECEIVE it?",
+     "title": "Active vs. Passive Voice"
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Theory_RuleCard",
+    "purpose": "States the anchor rule for mood — indicative states facts, imperative commands, conditional imagines with 'if/would', subjunctive expresses wishes or unreal situations — with prerequisites on verb forms.",
+    "data": {
+     "anchor": "Indicative states facts, imperative gives commands, conditional imagines with if and would, and subjunctive expresses wishes, demands, and unreal situations — usually with were instead of was.",
+     "prerequisites": [
+      "Every sentence has a mood — the form of the verb that shows the speaker's attitude toward what they are saying.",
+      "Indicative: most sentences you write. 'The store closes at nine.' It states or asks about fact.",
+      "Imperative: the subject is usually an unstated 'you.' 'Close the door.' 'Please submit your essay by Friday.'",
+      "Conditional: an if/then situation that could happen. 'If it rains, we will move the picnic indoors.'",
+      "Subjunctive: contrary to fact or wished for. 'I wish I were taller.' 'If I were you, I would apologize.' The situation is not real, so English uses were, even with I, he, or she."
+     ],
+     "ruleName": "The Four Moods",
+     "tag": "Grammar Core"
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Concept_AnalogyBridge",
+    "purpose": "Compares voice/mood choices to a camera angle in a movie: the same scene told from different angles changes who the audience roots for, making the abstract grammar choice feel concrete.",
+    "data": {
+     "analogies": [
+      {
+       "because": "Both choices do not change what happened — only who the camera is pointed at. Voice selects the subject that frames the sentence.",
+       "everydayScene": "A director films the same soccer goal twice. Shot one: close on the striker's foot striking the ball. Shot two: close on the goalie's outstretched hands, just missing it. Identical event, completely different hero and villain.",
+       "icon": "prism",
+       "mapsTo": "Active voice points the camera at the doer: 'The striker scored.' Passive points it at the receiver: 'The goal was scored' — and the striker never appears on screen.",
+       "objectName": "A camera angle"
+      },
+      {
+       "because": "The same camera setting communicates a different attitude depending on where the scene could happen — real or imagined. Mood selects the verb form that tells the reader which world we are in.",
+       "everydayScene": "Filmed as a documentary, a scene feels like fact: this happened. Filmed with a dreamy filter and 'what if' narration, the same scene feels imagined. A drill sergeant barking orders gives you a third feel entirely.",
+       "icon": "mirror",
+       "mapsTo": "Indicative is documentary footage (fact). Imperative is the director shouting 'Action!' (command). Conditional is the 'what if' take ('If we had one more shot, we would win'). Subjunctive is the dream sequence ('I wish I were the hero').",
+       "objectName": "A film filter"
+      }
+     ],
+     "bridgeStatement": "Grammar is directing: same scene, different shot, different feeling.",
+     "conceptLabel": "Concept",
+     "conceptTitle": "Voice and Mood Are Camera Angles",
+     "rule": "Choosing active or passive voice and one of the four moods is a directing decision: it controls where the reader's attention goes and how real the scene feels."
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Interact_WordBankMatch",
+    "purpose": "Learner drags voice and mood labels (active, passive, conditional, subjunctive, imperative) onto example sentences, practising identification right after the teaching blocks.",
+    "data": {
+     "chips": [
+      {
+       "id": "active",
+       "note": "Subject performs the action: clear, direct, emphasizes the doer.",
+       "text": "Active voice"
+      },
+      {
+       "id": "passive",
+       "note": "Subject receives the action: doer pushed to the end or left out.",
+       "text": "Passive voice"
+      },
+      {
+       "id": "imperative",
+       "note": "Command form; the subject is an unstated 'you.'",
+       "text": "Imperative"
+      },
+      {
+       "id": "conditional",
+       "note": "Imagined if/then situation that could happen.",
+       "text": "Conditional"
+      },
+      {
+       "id": "subjunctive",
+       "note": "Wish or unreal situation; were instead of was.",
+       "text": "Subjunctive"
+      }
+     ],
+     "feedbackCorrect": "Perfect match. You can now identify all four moods and both voices on sight.",
+     "feedbackTryAgain": "Not quite. Check whether the subject performs or receives the action — and whether the situation is real, commanded, imagined, or wished for.",
+     "instructions": "Drag each label onto the sentence it describes. Watch for the verb form and for whether the subject acts or receives.",
+     "slots": [
+      {
+       "correctChipId": "active",
+       "hint": "Who is doing the verb?",
+       "id": "s1",
+       "label": "The marching band practiced until sunset."
+      },
+      {
+       "correctChipId": "passive",
+       "hint": "The real doer is not the subject.",
+       "id": "s2",
+       "label": "The gym was repainted over the summer."
+      },
+      {
+       "correctChipId": "imperative",
+       "hint": "Who is being told to do something?",
+       "id": "s3",
+       "label": "Read the passage twice before answering."
+      },
+      {
+       "correctChipId": "conditional",
+       "hint": "It could actually happen.",
+       "id": "s4",
+       "label": "If we win Friday's game, we would make the playoffs."
+      },
+      {
+       "correctChipId": "subjunctive",
+       "hint": "Is this situation real or imagined?",
+       "id": "s5",
+       "label": "I wish my alarm were quieter."
+      }
+     ],
+     "subtitle": "Five labels, five sentences, one skill: identifying voice and mood on sight.",
+     "title": "Label the Sentence"
+    },
+    "repaired": false,
+    "index": 4
+   },
+   {
+    "block": "Concept_BeforeAfter",
+    "purpose": "Shows a flat paragraph rewritten sentence-by-sentence using deliberate voice and mood choices, revealing how the revision changes emphasis and tone.",
+    "data": {
+     "after": {
+      "body": "Firefighters rescued a cat from a roof on Monday, and neighbors cheered. If you spot a stray animal in trouble, call animal control first — do not attempt the rescue yourself. If I were on that roof, I would wait for the professionals too. Next time, we will hope the cat stays indoors.",
+      "caption": "Deliberate choices: each sentence serves its purpose.",
+      "label": "After",
+      "points": [
+       "Active 'Firefighters rescued' credits the doers — news should name them.",
+       "Imperative 'call animal control' gives a clear instruction.",
+       "Subjunctive 'If I were' correctly marks an unreal situation.",
+       "The confused ending is cut."
+      ],
+      "title": "Revised with Purpose",
+      "tone": "success"
+     },
+     "before": {
+      "body": "A cat was rescued from a roof on Monday, and it was cheered by neighbors. If you spot a stray animal in trouble, animal control should be called first — do not attempt the rescue yourself, and then, you will want to be calling again if it were a bigger animal.",
+      "caption": "Every sentence avoids a decision.",
+      "label": "Before",
+      "points": [
+       "'was rescued' and 'was cheered' bury the heroes — the doers never lead.",
+       "Mid-sentence voice shift: 'you spot' flips to 'animal control should be called.'",
+       "'you will want to be calling' is clumsy conditional drift.",
+       "The ending mixes moods and loses the reader."
+      ],
+      "title": "First Draft",
+      "tone": "error"
+     },
+     "conceptSubtitle": "A short news blurb, improved one sentence at a time.",
+     "conceptTitle": "Rewriting for Effect",
+     "dividerStart": 50,
+     "footerNote": "Voice and mood are not rules to obey — they are choices to make on purpose.",
+     "prompt": "Sweep the divider and watch what each rewrite changes: who leads the sentence, and how the mood directs the reader."
+    },
+    "repaired": false,
+    "index": 5
+   },
+   {
+    "block": "Interact_ErrorHighlighter",
+    "purpose": "Learner taps sentences in a short passage that use the wrong voice or mood for their purpose, targeting the prior topic's struggle with inappropriate shifts.",
+    "data": {
+     "incompleteMessage": "Almost — some shifts are still hiding. Look for sentences where the voice or mood changes without a reason.",
+     "instructions": "Tap every word or phrase where the sentence shifts voice or mood inappropriately for its purpose. There are 4 errors.",
+     "maxErrors": 4,
+     "paragraph": "The school garden was planted by the environmental club in September. Join us on Saturdays if you want to help. The vegetables are picked by students, and then we sell them at the market. If I were taller, I would have reached the top shelf. Weeding was finished by everyone, and everyone felt proud.",
+     "resetLabel": "Try again",
+     "revealLabel": "Reveal errors",
+     "successMessage": "All four found. Now the passage keeps one voice and one purpose at a time.",
+     "tokens": [
+      {
+       "text": "The",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "school",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "garden",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "was",
+       "isError": true,
+       "errorId": "e1",
+       "explanation": "The doer (the environmental club) should lead for credit: 'The environmental club planted the school garden.'"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "planted",
+       "isError": true,
+       "errorId": "e1"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "by",
+       "isError": true,
+       "errorId": "e1"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "the",
+       "isError": true,
+       "errorId": "e1"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "environmental",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "club",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "in",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "September.",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "Join",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "us",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "on",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "Saturdays",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "if",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "you",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "want",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "to",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "help.",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "The",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "vegetables",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "are",
+       "isError": true,
+       "errorId": "e2",
+       "explanation": "This shifts from the active imperative 'Join us' to passive for no reason; students do the picking, so keep it active: 'students pick the vegetables.'"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "picked",
+       "isError": true,
+       "errorId": "e2"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "by",
+       "isError": true,
+       "errorId": "e2"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "students,",
+       "isError": true,
+       "errorId": "e2"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "and",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "then",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "we",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "sell",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "them",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "at",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "the",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "market.",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "If",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "I",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "were",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "taller,",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "I",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "would",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "have",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "reached",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "the",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "top",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "shelf.",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "Weeding",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "was",
+       "isError": true,
+       "errorId": "e4",
+       "explanation": "The next clause is active ('everyone felt proud'), and the doers deserve credit; keep the sentence in one voice: 'Everyone finished weeding, and everyone felt proud.'"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "finished",
+       "isError": true,
+       "errorId": "e4"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "by",
+       "isError": true,
+       "errorId": "e4"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "everyone,",
+       "isError": true,
+       "errorId": "e4"
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "and",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "everyone",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "felt",
+       "isError": false
+      },
+      {
+       "text": " ",
+       "isError": false
+      },
+      {
+       "text": "proud.",
+       "isError": false
+      }
+     ]
+    },
+    "repaired": false,
+    "index": 6
+   },
+   {
+    "block": "Trap_CommonError",
+    "purpose": "Targets the #1 mistake: thinking passive voice is always wrong, by presenting a case where passive is clearly the better choice and asking why.",
+    "data": {
+     "choices": [
+      "The report was submitted an hour before the deadline.",
+      "The principal submitted the report an hour before the deadline.",
+      "Someone submitted the report an hour before the deadline.",
+      "The report, an hour before the deadline, got submitted."
+     ],
+     "commonErrorLabel": "Treating passive voice as always wrong",
+     "correctIndex": 0,
+     "context": "Your school news article needs this sentence: the report's timing matters most, and nobody is sure which staff member actually submitted it.",
+     "difficulty": "Trap",
+     "question": "Your English teacher marked every passive sentence in your essay and said to revise them. Given the assignment notes below, which sentence is actually the BEST choice?",
+     "recoveryTip": "Before revising any passive sentence, ask: is the doer known, and is the doer the focus? If not, passive is doing its job.",
+     "standardTag": "Voice and Mood",
+     "trapChoiceIndexes": [
+      1
+     ],
+     "trapReasons": {
+      "1": "It is active, but it names the principal as the doer — information the writer does not have, so it may be false.",
+      "2": "Vague and weak; the passive original actually handles the unknown actor better.",
+      "3": "Wordy and awkward — fixing voice is no excuse for a clunky sentence."
+     },
+     "whyIntuitionFailed": "The rule is not 'passive is wrong.' Passive is the right choice when the doer is unknown, unimportant, or when you want to emphasize the receiver. 'The principal submitted the report' sounds active and confident, but it invents a fact: it names the principal as the doer when nobody is sure.",
+     "correctReasoning": "'The report was submitted an hour before the deadline' keeps the emphasis on the report — the receiver, which is the real news — and it does not guess at an unknown doer. Choosing active here would add false information."
+    },
+    "repaired": false,
+    "index": 7
+   },
+   {
+    "block": "Memory_MnemonicAnchor",
+    "purpose": "Anchors the four moods with a compact badge ('FACT, ORDER, IF, WISH') so indicative, imperative, conditional, and subjunctive are retrievable later.",
+    "data": {
+     "accent": "cyan",
+     "anchor": "FACT • ORDER • IF • WISH",
+     "categoryLabel": "Voice and Mood",
+     "expansions": [
+      {
+       "letter": "FACT",
+       "phrase": "Indicative — states fact or asks a question: 'The bus leaves at seven.'"
+      },
+      {
+       "letter": "ORDER",
+       "phrase": "Imperative — commands, subject is an unstated you: 'Take out the trash.'"
+      },
+      {
+       "letter": "IF",
+       "phrase": "Conditional — imagined but possible: 'If we hurried, we would catch it.'"
+      },
+      {
+       "letter": "WISH",
+       "phrase": "Subjunctive — unreal or contrary to fact, uses were: 'I wish I were there.'"
+      }
+     ],
+     "mnemonicType": "acronym",
+     "rationale": "Run the four words in order before any revision pass: is this sentence stating fact, giving an order, imagining a possibility, or wishing for something unreal? The answer tells you which verb form to reach for.",
+     "subtitle": "The four moods, one badge: fact, command, possibility, unreality.",
+     "title": "The Mood Badge"
+    },
+    "repaired": false,
+    "index": 8
+   },
+   {
+    "block": "Memory_CheatSheet",
+    "purpose": "Compact reference matrix of when to use each voice and mood, closing the lesson with a one-glance summary.",
+    "data": {
+     "rows": [
+      {
+       "detail": "Best default for clarity and emphasis on the doer.",
+       "key": "Active voice",
+       "tone": "success",
+       "value": "Subject performs the action. Use it to be clear, direct, and to emphasize who did it."
+      },
+      {
+       "detail": "Doer unknown, tact needed, or the receiver is the real news.",
+       "key": "Passive voice",
+       "tone": "success",
+       "value": "Subject receives the action. Use it when the doer is unknown, when you need tact, or when the receiver deserves emphasis."
+      },
+      {
+       "key": "Voice rule",
+       "tone": "accent",
+       "value": "Choose voice for your purpose every time — never by habit, and never assume passive is wrong."
+      },
+      {
+       "key": "Indicative mood",
+       "tone": "accent",
+       "value": "Statements of fact: 'She practices daily.'"
+      },
+      {
+       "key": "Imperative mood",
+       "tone": "accent",
+       "value": "Commands and instructions: 'Practice daily.'"
+      },
+      {
+       "key": "Conditional mood",
+       "tone": "accent",
+       "value": "Imagined if/then situations with would or could: 'If I practiced, I would improve.'"
+      },
+      {
+       "detail": "The situation is not real, so use were even with I, he, she, it.",
+       "key": "Subjunctive mood",
+       "tone": "accent",
+       "value": "Wishes, demands, and contrary-to-fact statements: 'I wish I were,' 'If she were here, she would help.'"
+      },
+      {
+       "key": "Fixing shifts",
+       "tone": "caution",
+       "value": "Keep one voice and one mood per sentence unless the change has a clear purpose; revise so the doer leads and the mood matches the meaning."
+      },
+      {
+       "key": "Watch out for",
+       "tone": "error",
+       "value": "Two traps: calling all passive voice wrong, and using was where subjunctive were is required."
+      }
+     ],
+     "subtitle": "Voice and Mood for Effect — unit reference",
+     "title": "One-Glance Cheat Sheet"
+    },
+    "repaired": false,
+    "index": 9
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "author_purpose",
+    "skill_name": "Author purpose and tone",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A school news article reads, 'The senior class raised $2,000 at the car wash.' Why did the writer most likely choose active voice here?",
+    "answer": "Active, because it makes the doer lead the sentence and emphasizes who acted",
+    "rationale": "The writer wants to credit and emphasize the doer, so the subject performing the action must come first.",
+    "source": "ai",
+    "hint": "Ask: who should the reader's attention land on first?",
+    "choices": [
+     "Active, because it makes the doer lead the sentence and emphasizes who acted",
+     "Passive, because the receiver should always come first",
+     "Passive, because active voice is too casual for news",
+     "Active, because passive voice is grammatically incorrect"
+    ],
+    "id": "c1",
+    "after": 0,
+    "focus": "Deciding which voice a writer chooses to emphasize the doer"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Which sentence is written in the subjunctive mood?",
+    "answer": "If I were in charge, I would move the deadline to Friday.",
+    "rationale": "Only this version uses were after I for a contrary-to-fact situation, which marks the subjunctive.",
+    "source": "ai",
+    "hint": "The situation is unreal, so the verb after I should be were, not was.",
+    "choices": [
+     "If I was in charge, I would move the deadline to Friday.",
+     "If I were in charge, I would move the deadline to Friday.",
+     "If I am in charge, I will move the deadline to Friday.",
+     "I was in charge, so I moved the deadline to Friday."
+    ],
+    "id": "c2",
+    "after": 2,
+    "focus": "Identifying the subjunctive mood in a sentence"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "Fix the inappropriate voice shift in one short phrase: 'At the theater, you show your ticket, and then the tickets are collected by an usher.'",
+    "answer": "the tickets are collected by an usher",
+    "rationale": "The first clause is active ('you show'), so the second should stay active for a consistent, deliberate voice.",
+    "source": "ai",
+    "hint": "The sentence starts in active voice with 'you show' — the second half should stay active too.",
+    "id": "c3",
+    "after": 4,
+    "focus": "Recognizing an inappropriate shift of voice mid-sentence"
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Which sentence uses the correct conditional/subjunctive verb forms?",
+    "answer": "If she were the captain, she would choose a new warm-up song.",
+    "rationale": "The contrary-to-fact if-clause requires were, and the imagined result requires would.",
+    "source": "ai",
+    "hint": "Unreal if-clauses take were, and the result clause pairs with would.",
+    "choices": [
+     "If she was the captain, she would choose a new warm-up song.",
+     "If she were the captain, she would choose a new warm-up song.",
+     "If she were the captain, she will choose a new warm-up song.",
+     "If she is the captain, she would choose a new warm-up song."
+    ],
+    "id": "c4",
+    "after": 6,
+    "focus": "Choosing the correct conditional/subjunctive verb form"
+   },
+   {
+    "skill_id": "author_purpose",
+    "skill_name": "Author purpose and tone",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "When is passive voice the RIGHT choice for a writer?",
+    "answer": "When the doer is unknown or when you want to emphasize the receiver",
+    "rationale": "Passive serves a real purpose when the actor is unknown or the receiver deserves the emphasis.",
+    "source": "ai",
+    "hint": "Think of 'My bike was stolen' — who did it?",
+    "choices": [
+     "When the doer is unknown or when you want to emphasize the receiver",
+     "Never — passive voice should be avoided in all writing",
+     "Whenever a sentence needs more words to sound formal",
+     "Whenever the writer wants to sound more energetic"
+    ],
+    "id": "c5",
+    "after": 8,
+    "focus": "Explaining when passive voice is the right choice"
+   }
+  ]
+ }
+}

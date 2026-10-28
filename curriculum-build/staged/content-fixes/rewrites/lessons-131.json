@@ -1,0 +1,196 @@
+{
+ "collection": "lessons",
+ "row_id": 131,
+ "shared": false,
+ "user_id": 252,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 3,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P21",
+   "wrong": "In x + 7 = 12, subtracting 7 from the right side only. That gives x = 12, because you never balanced the left side. Subtract 7 from both sides to get x = 5.",
+   "correct": "Subtracting 7 from the RIGHT side only of x + 7 = 12 gives x + 7 = 5; x = 12 comes from removing the 7 on the LEFT only.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P22",
+   "wrong": "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x = 6, and 6 - 4 = 2 does not equal 10.",
+   "correct": "Subtracting 4 from both sides of x - 4 = 10 gives x - 8 = 6 (x = 14), not x = 6.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P24",
+   "wrong": "In x / 5 = 4, dividing both sides by 5 again. That gives x = 4/5, but (4/5) / 5 is not 4.",
+   "correct": "Dividing both sides of x/5 = 4 by 5 gives x/25 = 4/5 (still x = 20), not x = 4/5.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "In x + 7 = 12, subtracting 7 from the right side only. That gives x = 12, because you never balanced the left side. Subtract 7 from both sides to get x = 5.",
+   "replace": "In x + 7 = 12, subtracting 7 from the right side only. That gives x + 7 = 5; x = 12 comes from removing the 7 on the left side only. Subtract 7 from both sides to get x = 5.",
+   "fixes": [
+    "P21"
+   ]
+  },
+  {
+   "find": "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x = 6, and 6 - 4 = 2 does not equal 10. The opposite of minus 4 is plus 4.",
+   "replace": "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x - 8 = 6, so x = 14, not x = 6. The opposite of minus 4 is plus 4, so add 4 to both sides to get x = 14.",
+   "fixes": [
+    "P22"
+   ]
+  },
+  {
+   "find": "In x / 5 = 4, dividing both sides by 5 again. That gives x = 4/5, but (4/5) / 5 is not 4. The x is divided by 5, so multiply both sides by 5 to get x = 20.",
+   "replace": "In x / 5 = 4, dividing both sides by 5 again. That gives x / 25 = 4/5, so x = 20, not x = 4/5. The x is divided by 5, so multiply both sides by 5 to get x = 20.",
+   "fixes": [
+    "P24"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "In x + 7 = 12, subtracting 7 from the right side only. That gives x = 12, because you never balanced the left side. Subtract 7 from both sides to get x = 5.",
+   "after": "In x + 7 = 12, subtracting 7 from the right side only. That gives x + 7 = 5; x = 12 comes from removing the 7 on the left side only. Subtract 7 from both sides to get x = 5.",
+   "fixes": [
+    "P21"
+   ]
+  },
+  {
+   "path": "common_mistakes[1]",
+   "before": "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x = 6, and 6 - 4 = 2 does not equal 10. The opposite of minus 4 is plus 4.",
+   "after": "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x - 8 = 6, so x = 14, not x = 6. The opposite of minus 4 is plus 4, so add 4 to both sides to get x = 14.",
+   "fixes": [
+    "P22"
+   ]
+  },
+  {
+   "path": "common_mistakes[3]",
+   "before": "In x / 5 = 4, dividing both sides by 5 again. That gives x = 4/5, but (4/5) / 5 is not 4. The x is divided by 5, so multiply both sides by 5 to get x = 20.",
+   "after": "In x / 5 = 4, dividing both sides by 5 again. That gives x / 25 = 4/5, so x = 20, not x = 4/5. The x is divided by 5, so multiply both sides by 5 to get x = 20.",
+   "fixes": [
+    "P24"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "One-Step Linear Equations: Undo the Operation",
+  "intro": "A linear equation tells you that two expressions are equal. To solve one like x + 7 = 12, you undo whatever is happening to x. This lesson shows that single move, and how to check your answer.",
+  "sections": [
+   {
+    "heading": "The rule: undo with the opposite operation",
+    "body": "The rule: whatever operation touches x, apply its opposite to BOTH sides to undo it. Adding and subtracting are opposites, multiplying and dividing are opposites. Doing it to both sides keeps the equation balanced.",
+    "example": "x + 7 = 12\nThe + 7 touches x, so subtract 7 from both sides.\nx + 7 - 7 = 12 - 7\nx = 5\nCheck: 5 + 7 = 12. Correct."
+   },
+   {
+    "heading": "When x has a minus sign, add",
+    "body": "The rule works the same way for subtraction: to undo minus a number, add that number to both sides. This is the step most people get backwards, so say it to yourself: minus 4 means I add 4.",
+    "example": "x - 4 = 10\nThe - 4 touches x, so add 4 to both sides.\nx - 4 + 4 = 10 + 4\nx = 14\nCheck: 14 - 4 = 10. Correct."
+   },
+   {
+    "heading": "When x is multiplied or divided, use the opposite",
+    "body": "The rule again: 3x means 3 times x, so divide both sides by 3. And x / 5 means x divided by 5, so multiply both sides by 5. The number with the x is undone by its opposite, not by adding or subtracting.",
+    "example": "3x = 21\nThe 3 multiplies x, so divide both sides by 3.\n3x / 3 = 21 / 3\nx = 7\nCheck: 3 times 7 is 21. Correct."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 6x = 42.",
+   "steps": [
+    "Read the equation: 6 multiplies x, so the operation touching x is multiplication by 6.",
+    "Name the opposite operation: the opposite of multiplying by 6 is dividing by 6.",
+    "Divide both sides by 6: 6x / 6 = 42 / 6.",
+    "Simplify each side: 6x / 6 leaves x, and 42 / 6 = 7.",
+    "So x = 7.",
+    "Check by substituting back: 6 times 7 = 42, which matches the right side, so x = 7 is correct."
+   ],
+   "answer": "x = 7"
+  },
+  "common_mistakes": [
+   "In x + 7 = 12, subtracting 7 from the right side only. That gives x + 7 = 5; x = 12 comes from removing the 7 on the left side only. Subtract 7 from both sides to get x = 5.",
+   "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x - 8 = 6, so x = 14, not x = 6. The opposite of minus 4 is plus 4, so add 4 to both sides to get x = 14.",
+   "In 3x = 21, subtracting 3 because 3 is the number you see. That gives x = 18, but 3 times 18 is 54, not 21. The 3 multiplies x, so you divide both sides by 3.",
+   "In x / 5 = 4, dividing both sides by 5 again. That gives x / 25 = 4/5, so x = 20, not x = 4/5. The x is divided by 5, so multiply both sides by 5 to get x = 20."
+  ],
+  "summary": "To solve a one-step equation, name the operation touching x and apply its opposite to both sides. Add to undo subtraction, subtract to undo addition, divide to undo multiplication, multiply to undo division. Then substitute your answer back in to check it.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x + 6 = 11.",
+    "answer": "x = 5",
+    "rationale": "The + 6 touches x, so subtract 6 from both sides: 11 - 6 = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "x = 5",
+     "x = 17",
+     "x = -5",
+     "x = 6"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x - 9 = 4. Give the value of x.",
+    "answer": "13",
+    "rationale": "The opposite of minus 9 is plus 9, so add 9 to both sides: 4 + 9 = 13.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Which move correctly solves 7x = 56?",
+    "answer": "Divide both sides by 7",
+    "rationale": "The 7 multiplies x, so its opposite, dividing by 7, must be applied to both sides to keep them equal.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Subtract 7 from both sides",
+     "Divide both sides by 7",
+     "Multiply both sides by 7",
+     "Divide the left side by 7 only"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x / 4 = 3. Give the value of x.",
+    "answer": "12",
+    "rationale": "The opposite of dividing x by 4 is multiplying by 4, so multiply both sides by 4: 3 times 4 = 12.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

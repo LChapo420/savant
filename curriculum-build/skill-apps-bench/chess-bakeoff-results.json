@@ -1,0 +1,169 @@
+{
+  "machine": "Ryzen 9 6900HS (8 cores / 16 threads), RTX 3050 Laptop 4 GB, Windows 11; other jobs were running at the same time",
+  "date": "2026-10-23T07:17:05.023Z",
+  "sets": {
+    "tactics": 300,
+    "evals": 300,
+    "human": 300
+  },
+  "tactics": {
+    "ours@100ms": {
+      "solved_pct": 59.3,
+      "median_ms": 39,
+      "nps": 20912,
+      "by_rating": {
+        "400": "23/30",
+        "800": "33/60",
+        "1200": "43/60",
+        "1600": "41/60",
+        "2000": "26/60",
+        "2400": "12/30"
+      }
+    },
+    "leorik@100ms": {
+      "solved_pct": 97.7,
+      "median_ms": 26,
+      "nps": 1044591,
+      "by_rating": {
+        "400": "30/30",
+        "800": "60/60",
+        "1200": "60/60",
+        "1600": "59/60",
+        "2000": "58/60",
+        "2400": "26/30"
+      }
+    },
+    "stockfish@100ms": {
+      "solved_pct": 99.7,
+      "median_ms": 100,
+      "nps": 488842,
+      "by_rating": {
+        "400": "30/30",
+        "800": "60/60",
+        "1200": "60/60",
+        "1600": "60/60",
+        "2000": "59/60",
+        "2400": "30/30"
+      }
+    },
+    "ours@1000ms": {
+      "solved_pct": 77,
+      "median_ms": 391,
+      "nps": 36476,
+      "by_rating": {
+        "400": "30/30",
+        "800": "56/60",
+        "1200": "52/60",
+        "1600": "43/60",
+        "2000": "35/60",
+        "2400": "15/30"
+      }
+    },
+    "leorik@1000ms": {
+      "solved_pct": 99.7,
+      "median_ms": 460,
+      "nps": 1057207,
+      "by_rating": {
+        "400": "30/30",
+        "800": "60/60",
+        "1200": "60/60",
+        "1600": "60/60",
+        "2000": "60/60",
+        "2400": "29/30"
+      }
+    },
+    "stockfish@1000ms": {
+      "solved_pct": 100,
+      "median_ms": 1000,
+      "nps": 764794,
+      "by_rating": {
+        "400": "30/30",
+        "800": "60/60",
+        "1200": "60/60",
+        "1600": "60/60",
+        "2000": "60/60",
+        "2400": "30/30"
+      }
+    },
+    "stockfish-4threads@1000ms": {
+      "solved_pct": 99.7
+    },
+    "maia2-1100": {
+      "solved_pct": 61,
+      "median_ms": 12.48
+    },
+    "maia2-1500": {
+      "solved_pct": 62,
+      "median_ms": 21.54
+    },
+    "maia2-1900": {
+      "solved_pct": 63.3,
+      "median_ms": 21.35
+    }
+  },
+  "evals": {
+    "ours@100ms": {
+      "best_move_agree_pct": 35.7,
+      "mean_abs_eval_error_cp": 124,
+      "median_abs_eval_error_cp": 65
+    },
+    "leorik@100ms": {
+      "best_move_agree_pct": 56.3,
+      "mean_abs_eval_error_cp": 88,
+      "median_abs_eval_error_cp": 40
+    },
+    "stockfish@100ms": {
+      "best_move_agree_pct": 67.3,
+      "mean_abs_eval_error_cp": 81,
+      "median_abs_eval_error_cp": 31
+    },
+    "ours@1000ms": {
+      "best_move_agree_pct": 38,
+      "mean_abs_eval_error_cp": 120,
+      "median_abs_eval_error_cp": 60
+    },
+    "leorik@1000ms": {
+      "best_move_agree_pct": 61.7,
+      "mean_abs_eval_error_cp": 83,
+      "median_abs_eval_error_cp": 35
+    },
+    "stockfish@1000ms": {
+      "best_move_agree_pct": 75,
+      "mean_abs_eval_error_cp": 81,
+      "median_abs_eval_error_cp": 22
+    }
+  },
+  "human": {
+    "ours@1000ms": {
+      "top1_match_pct": 17.7
+    },
+    "ours-strength3": {
+      "top1_match_pct": 25.3
+    },
+    "leorik@100ms": {
+      "top1_match_pct": 7
+    },
+    "stockfish@100ms": {
+      "top1_match_pct": 3
+    },
+    "maia2-1100": {
+      "top1_match_pct": 41.3
+    },
+    "maia2-1500": {
+      "top1_match_pct": 39.7
+    },
+    "maia2-1900": {
+      "top1_match_pct": 39.7
+    }
+  },
+  "maia_speed": {
+    "cuda": {
+      "first_call_ms_incl_load": 5955,
+      "median_ms": 21.98
+    },
+    "cpu": {
+      "first_call_ms_incl_load": 3859,
+      "median_ms": 20.53
+    }
+  }
+}

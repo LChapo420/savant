@@ -1,0 +1,4080 @@
+{
+ "track_id": "math",
+ "grade_id": "transformations_pythagorean_theorem_and_data_models",
+ "generated_at": "2026-10-26T03:38:11.748Z",
+ "items": [
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L52",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Point P is at (2, -1). Translate P 3 units right, then reflect it across the x-axis. What are the coordinates of P after both transformations?",
+   "choices": [
+    "(5, 1)",
+    "(5, -1)",
+    "(-1, 1)",
+    "(1, 5)"
+   ],
+   "answer": "(5, 1)",
+   "rationale": "Translating 3 units right changes (2, -1) to (5, -1). Reflecting across the x-axis changes the sign of the y-coordinate, giving (5, 1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L52",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Point Q is at (3, 1). Rotate Q 90° clockwise about the origin, then dilate it by a factor of 2 about the origin. What are the final coordinates of Q?",
+   "choices": [
+    "(2, -6)",
+    "(2, -3)",
+    "(-2, 6)",
+    "(6, 2)"
+   ],
+   "answer": "(2, -6)",
+   "rationale": "A 90° clockwise rotation changes (3, 1) to (1, -3). A dilation by a factor of 2 doubles both coordinates, producing (2, -6).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L52",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which sequence maps the square with vertices (0, 0), (2, 0), (2, 2), and (0, 2) onto the square with vertices (4, 0), (6, 0), (6, 2), and (4, 2)?",
+   "choices": [
+    "Translate it 4 units to the right.",
+    "Translate it 4 units to the left.",
+    "Reflect it across the x-axis.",
+    "Rotate it 90° clockwise about the origin."
+   ],
+   "answer": "Translate it 4 units to the right.",
+   "rationale": "Every vertex moves 4 units right without changing its orientation, so a translation of 4 units to the right maps the first square exactly onto the second.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L62",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A translation moves every point 3 units right and 2 units down. Which coordinate rule represents this translation?",
+   "choices": [
+    "(x + 3, y - 2)",
+    "(x - 3, y + 2)",
+    "(x + 3, y + 2)",
+    "(x - 3, y - 2)"
+   ],
+   "answer": "(x + 3, y - 2)",
+   "rationale": "Moving right increases x by 3, and moving down decreases y by 2, so the rule is (x + 3, y - 2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L62",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which coordinate rule maps each point (x, y) to its reflection across the y-axis?",
+   "choices": [
+    "(x, -y)",
+    "(-x, -y)",
+    "(-x, y)",
+    "(-y, x)"
+   ],
+   "answer": "(-x, y)",
+   "rationale": "Reflection across the y-axis changes the sign of x while leaving y unchanged, so the rule is (-x, y).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L62",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which coordinate rule represents a 90° clockwise rotation about the origin?",
+   "choices": [
+    "(y, -x)",
+    "(-y, x)",
+    "(x, -y)",
+    "(-x, y)"
+   ],
+   "answer": "(y, -x)",
+   "rationale": "A 90° clockwise rotation switches the coordinates and makes the new y-coordinate negative, giving (y, -x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L62",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which coordinate rule represents a 180° rotation about the origin?",
+   "choices": [
+    "(y, -x)",
+    "(-x, -y)",
+    "(x, -y)",
+    "(-y, x)"
+   ],
+   "answer": "(-x, -y)",
+   "rationale": "A 180° rotation sends a point to the opposite side of the origin, changing both coordinate signs to give (-x, -y).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L72",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "The two remote interior angles of an exterior angle measure 54° and 81°. What is the measure of the exterior angle?",
+   "choices": [
+    "126°",
+    "133°",
+    "135°",
+    "144°"
+   ],
+   "answer": "135°",
+   "rationale": "An exterior angle equals the sum of its two remote interior angles, so 54° + 81° = 135°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A triangle's exterior angle equals the sum of its two remote interior angles.",
+      "url": "https://en.wikipedia.org/wiki/Exterior_angle_theorem",
+      "quote": "The size of an exterior angle at a vertex of a triangle equals the sum of the sizes of the interior angles at the other two vertices of the triangle (remote interior angles).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L72",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "One exterior angle of a triangle measures 117°. The two interior angles not adjacent to it measure 45° and x. What is x?",
+   "choices": [
+    "72°",
+    "63°",
+    "82°",
+    "92°"
+   ],
+   "answer": "72°",
+   "rationale": "An exterior angle equals the sum of the two remote interior angles, so x = 117° − 45° = 72°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A triangle's exterior angle equals the sum of its two remote interior angles.",
+      "url": "https://en.wikipedia.org/wiki/Exterior_angle_theorem",
+      "quote": "the size of an exterior angle at a vertex of a triangle equals the sum of the sizes of the interior angles at the other two vertices of the triangle (remote interior angles).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L72",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "An exterior angle of a triangle measures 96°. One remote interior angle measures 37°. Which equation can be used to find the other remote interior angle x?",
+   "choices": [
+    "x = 96° − 37°",
+    "x = 96° + 37°",
+    "x = 180° − 37°",
+    "x = 180° − 96°"
+   ],
+   "answer": "x = 96° − 37°",
+   "rationale": "The exterior angle equals the sum of the two remote interior angles, so x + 37° = 96°, or x = 96° − 37°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A triangle's exterior angle equals the sum of its two remote interior angles.",
+      "url": "https://en.wikipedia.org/wiki/Exterior_angle_theorem",
+      "quote": "the measure of an exterior angle of a triangle is equal to the sum of the measures of the remote interior angles",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L72",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "In a triangle, two interior angles measure 43° and 68°. What is the measure of the third interior angle?",
+   "choices": [
+    "69°",
+    "57°",
+    "89°",
+    "111°"
+   ],
+   "answer": "69°",
+   "rationale": "The interior angles of a triangle sum to 180°, so the third angle is 180° − 43° − 68° = 69°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The sum of the interior angles of a triangle is 180 degrees.",
+      "url": "https://en.wikipedia.org/wiki/Sum_of_angles_of_a_triangle",
+      "quote": "In a Euclidean space , the sum of angles of a triangle equals a straight angle (180 degrees , π radians , two right angles , or a half- turn ).",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L115",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Triangle ABC is similar to triangle DEF, with A corresponding to D, B to E, and C to F. If AB = 6 cm, DE = 9 cm, and AC = 8 cm, what is the length of DF?",
+   "choices": [
+    "4.5 cm",
+    "6 cm",
+    "12 cm",
+    "13.5 cm"
+   ],
+   "answer": "12 cm",
+   "rationale": "The scale factor from triangle ABC to triangle DEF is 9 ÷ 6 = 1.5, so DF = 8 × 1.5 = 12 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L115",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "A triangle is enlarged to a similar triangle. One corresponding side changes from 5 cm to 8 cm. What is the scale factor from the original triangle to the enlarged triangle?",
+   "choices": [
+    "5/8",
+    "3/8",
+    "8/3",
+    "8/5"
+   ],
+   "answer": "8/5",
+   "rationale": "The scale factor is the enlarged length divided by the original length: 8/5 = 1.6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L115",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has a horizontal leg of 9 units and a vertical leg of 12 units. A similar right triangle has a horizontal leg of 15 units. What is the slope of its hypotenuse?",
+   "choices": [
+    "3/4",
+    "4/3",
+    "5/4",
+    "5/3"
+   ],
+   "answer": "4/3",
+   "rationale": "The similar triangle’s vertical leg is 12 × (15/9) = 20 units, so its hypotenuse has slope 20/15 = 4/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L105",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, AB = 6 cm and BC = 8 cm. A dilation centered at A maps B to B′ and C to C′. If AB′ = 15 cm, what is B′C′?",
+   "choices": [
+    "10 cm",
+    "15 cm",
+    "20 cm",
+    "25 cm"
+   ],
+   "answer": "20 cm",
+   "rationale": "The dilation scale factor is 15 ÷ 6 = 2.5. Thus, B′C′ = 8 × 2.5 = 20 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L105",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A dilation maps a triangle’s side of length 4 cm to a corresponding side of length 14 cm. What is the scale factor of the dilation?",
+   "choices": [
+    "0.8",
+    "1.4",
+    "2.8",
+    "3.5"
+   ],
+   "answer": "3.5",
+   "rationale": "The scale factor is the image length divided by the original length: 14 ÷ 4 = 3.5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L105",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A square is reflected, rotated 90°, translated, and then dilated by a factor of 3. If the final square has a side length of 21 cm, what was the original side length?",
+   "choices": [
+    "5 cm",
+    "6 cm",
+    "7 cm",
+    "9 cm"
+   ],
+   "answer": "7 cm",
+   "rationale": "The rigid motions do not change side length. Since the dilation factor is 3, the original side length is 21 ÷ 3 = 7 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L127",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Triangle ABC has angles 40°, 60°, 80°. Triangle DEF has angles 40°, 60°, 80°. Side AB = 6 cm, side DE = 9 cm. If BC = 8 cm, what is EF?",
+   "choices": [
+    "12 cm",
+    "10 cm",
+    "14 cm",
+    "16 cm"
+   ],
+   "answer": "12 cm",
+   "rationale": "The triangles are similar by AA (two equal angles). Corresponding sides are proportional: AB/DE = 6/9 = 2/3, so BC/EF = 2/3. Thus EF = 8 × 3/2 = 12 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L127",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Triangle ABC is similar to triangle DEF by AA. AB = 4 cm, AC = 6 cm, DE = 10 cm. Find DF.",
+   "choices": [
+    "15 cm",
+    "12 cm",
+    "18 cm",
+    "20 cm"
+   ],
+   "answer": "15 cm",
+   "rationale": "AA similarity implies AB/DE = AC/DF. AB/DE = 4/10 = 2/5, so 6/DF = 2/5. Solving gives DF = 6 × 5/2 = 15 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Corresponding sides of similar triangles are proportional.",
+      "url": "https://en.wikipedia.org/wiki/Similarity_(geometry)",
+      "quote": "Two triangles, △ ABC and △ A'B'C' are similar if and only if corresponding angles have the same measure: this implies that they are similar if and only if the lengths of corresponding sides are proportional .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L127",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "In triangle PQR, angle P = 30°, angle Q = 70°. In triangle STU, angle S = 30°, angle T = 70°. PQ = 5 cm, ST = 10 cm. QR = 7 cm. Find TU.",
+   "choices": [
+    "14 cm",
+    "12 cm",
+    "16 cm",
+    "18 cm"
+   ],
+   "answer": "14 cm",
+   "rationale": "AA similarity gives proportional sides. PQ/ST = 5/10 = 1/2, so QR/TU = 1/2. Therefore TU = 7 × 2 = 14 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Triangles with two equal corresponding angles are similar, so their corresponding sides are proportional.",
+      "url": "https://en.wikipedia.org/wiki/Similarity_(geometry)",
+      "quote": "If two angles of a triangle have measures equal to the measures of two angles of another triangle, then the triangles are similar. Corresponding sides of similar polygons are in proportion, and corresponding angles of similar polygons have the same measure.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L137",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A vertical pole 3 m tall casts a 1.5 m shadow. At the same time, a tree casts a 10 m shadow. What is the tree’s height?",
+   "choices": [
+    "12.5 m",
+    "18 m",
+    "20 m",
+    "25 m"
+   ],
+   "answer": "20 m",
+   "rationale": "The pole and tree form similar triangles with their shadows, so h/10 = 3/1.5. Solving gives h = 20 m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L137",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "On level ground, a student 1.5 m tall stands 2.4 m from a mirror. A vertical pole’s base is 1.6 m from the mirror on the other side. What is the pole’s height?",
+   "choices": [
+    "0.8 m",
+    "1.0 m",
+    "1.4 m",
+    "1.6 m"
+   ],
+   "answer": "1.0 m",
+   "rationale": "The reflected sight lines form similar triangles, so 1.5/2.4 = h/1.6. Solving gives h = 1.0 m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L137",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A scale model is built at 1 cm for every 8 m of actual length. If the model is 7.5 cm long, how long is the actual object?",
+   "choices": [
+    "52.5 m",
+    "60 m",
+    "62.5 m",
+    "75 m"
+   ],
+   "answer": "60 m",
+   "rationale": "The actual length is 7.5 × 8 = 60 m because each model centimetre represents 8 actual metres.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L137",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "ratios",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A 6 cm model car represents an actual car that is 4.5 m long. What is the scale of the model to the actual car?",
+   "choices": [
+    "1:25",
+    "1:50",
+    "1:75",
+    "1:100"
+   ],
+   "answer": "1:75",
+   "rationale": "The actual car is 450 cm long, and 450 ÷ 6 = 75. Therefore, the model-to-car scale is 1:75.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L85",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Two vertical parallel lines, ℓ and m, are cut by a horizontal transversal, crossing ℓ at A and m at B. At each intersection, label the upper-left, upper-right, lower-left, and lower-right angles 1–4 at A and 5–8 at B. Which pair are corresponding angles?",
+   "choices": [
+    "∠2 and ∠5",
+    "∠3 and ∠5",
+    "∠2 and ∠7",
+    "∠1 and ∠5"
+   ],
+   "answer": "∠1 and ∠5",
+   "rationale": "Corresponding angles occupy the same relative position at the two intersections, so ∠1 and ∠5 form a corresponding pair.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L85",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Two vertical parallel lines are cut by a horizontal transversal. At the first intersection, the upper-right and lower-right angles are ∠2 and ∠4; at the second, the upper-left and lower-left angles are ∠5 and ∠7. Which pair are alternate interior angles?",
+   "choices": [
+    "∠2 and ∠5",
+    "∠2 and ∠7",
+    "∠1 and ∠5",
+    "∠4 and ∠7"
+   ],
+   "answer": "∠2 and ∠7",
+   "rationale": "Alternate interior angles lie between the parallel lines and on opposite sides of the transversal, so ∠2 and ∠7 qualify.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L85",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Two vertical parallel lines are cut by a horizontal transversal. At the left intersection, the interior angles are ∠2 and ∠4; at the right intersection, they are ∠5 and ∠7. Which pair are co-interior angles?",
+   "choices": [
+    "∠2 and ∠7",
+    "∠4 and ∠5",
+    "∠2 and ∠6",
+    "∠2 and ∠5"
+   ],
+   "answer": "∠2 and ∠5",
+   "rationale": "Co-interior angles lie between the parallel lines and on the same side of the transversal, so ∠2 and ∠5 qualify.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L85",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Parallel lines ℓ and m are cut by a transversal. One co-interior angle at ℓ measures 125°. What is the measure of the other co-interior angle at m?",
+   "choices": [
+    "55°",
+    "65°",
+    "125°",
+    "135°"
+   ],
+   "answer": "55°",
+   "rationale": "Co-interior angles formed by parallel lines are supplementary, so the unknown angle is 180° − 125° = 55°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L211",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Line A has slope 3. What is the slope of a line parallel to Line A?",
+   "choices": [
+    "3",
+    "-3",
+    "-1/3",
+    "1/3"
+   ],
+   "answer": "3",
+   "rationale": "Parallel lines have equal slopes, so a line parallel to Line A also has slope 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L211",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "A line has slope 5/4. What is the slope of a line perpendicular to it?",
+   "choices": [
+    "-5/4",
+    "4/5",
+    "-4/5",
+    "5/4"
+   ],
+   "answer": "-4/5",
+   "rationale": "Perpendicular slopes are negative reciprocals, and the negative reciprocal of 5/4 is -4/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L211",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "The equations y = 2x + 1 and y = 2x - 4 are graphed on the same coordinate plane. What is the relationship between the two lines?",
+   "choices": [
+    "parallel lines",
+    "perpendicular lines",
+    "intersecting lines",
+    "the same line"
+   ],
+   "answer": "parallel lines",
+   "rationale": "Both lines have slope 2 but different y-intercepts, so they are distinct parallel lines.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L211",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Which equation describes a line perpendicular to y = -3x + 2?",
+   "choices": [
+    "y = 1/3x + 5",
+    "y = -1/3x + 5",
+    "y = 3x + 5",
+    "y = -3x - 4"
+   ],
+   "answer": "y = 1/3x + 5",
+   "rationale": "A perpendicular line has slope 1/3 because (-3)(1/3) = -1. Any y-intercept is allowed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L189",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A ladder rests against a vertical wall. Its base is 5 feet from the wall, and it reaches 12 feet up the wall. How long is the ladder?",
+   "choices": [
+    "13 feet",
+    "15 feet",
+    "17 feet",
+    "7 feet"
+   ],
+   "answer": "13 feet",
+   "rationale": "The wall and ground form a right angle, so the ladder is the hypotenuse. Using a² + b² = c² gives c² = 5² + 12² = 169, so c = 13 feet.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L189",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A rectangular television screen is 40 inches across its diagonal and 24 inches wide. What is its height?",
+   "choices": [
+    "16 inches",
+    "30 inches",
+    "32 inches",
+    "46 inches"
+   ],
+   "answer": "32 inches",
+   "rationale": "The screen forms a right triangle with the diagonal as the hypotenuse. Thus h² = 40² − 24² = 1024, so h = 32 inches.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L189",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A rectangular box has dimensions 3 feet by 4 feet by 12 feet. What is the length of its space diagonal, from one corner to the opposite corner?",
+   "choices": [
+    "5 feet",
+    "12 feet",
+    "13 feet",
+    "15 feet"
+   ],
+   "answer": "13 feet",
+   "rationale": "First, the 3-by-4 face has a diagonal of 5 feet. The space diagonal is then the hypotenuse of a right triangle with legs 5 and 12, so its length is 13 feet.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L189",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A rectangular box has a square base with side length 6 inches and a height of 8 inches. Which pair of right triangles should be used to find its space diagonal?",
+   "choices": [
+    "Legs 6 and 8, then 10 and 8",
+    "Legs 6 and 6, then √72 and 8",
+    "Legs 6 and 8, then 6 and √108",
+    "Legs 6 and 6, then 12 and 8"
+   ],
+   "answer": "Legs 6 and 6, then √72 and 8",
+   "rationale": "First, use the base’s right triangle to find the face diagonal √(6² + 6²) = √72. Then use the space-diagonal triangle with legs √72 and 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L306",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot compares hours spent practicing (x-axis) with points scored (y-axis). Points form two tight groups near (2, 12) and (8, 30). How should the plot be described?",
+   "choices": [
+    "Two clusters separated by a gap",
+    "One cluster with one outlier",
+    "One gap with no clusters",
+    "One outlier and no clusters"
+   ],
+   "answer": "Two clusters separated by a gap",
+   "rationale": "The points form two distinct groups, so they represent two clusters separated by a gap.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L306",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "Most points in a scatter plot have x-values 1, 2, 3, 7, 8, and 9. No points have x-values 4, 5, or 6. Which x-values form the gap?",
+   "choices": [
+    "x-values 4 through 6",
+    "x-values 1 through 3",
+    "x-values 7 through 9",
+    "All x-values together"
+   ],
+   "answer": "x-values 4 through 6",
+   "rationale": "A gap is an interval with no data points, so the missing x-values 4 through 6 form the gap.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L306",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot compares minutes spent running (x) with calories burned (y). Most points lie from (10, 90) to (20, 120), but one point is (60, 320). Which point is the outlier?",
+   "choices": [
+    "At (10, 90)",
+    "At (15, 105)",
+    "At (20, 120)",
+    "At (60, 320)"
+   ],
+   "answer": "At (60, 320)",
+   "rationale": "The point (60, 320) lies far from the main group of points, making it the outlier.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L306",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot compares temperature and cups of water sold. Most days show 15–20°C and 100–140 cups sold. One day shows 15°C and 250 cups sold. What might this unusual point mean?",
+   "choices": [
+    "A school event may have boosted sales",
+    "The temperature may have been higher",
+    "Fewer students may have attended school",
+    "Water sales usually follow temperature"
+   ],
+   "answer": "A school event may have boosted sales",
+   "rationale": "The unusually high sales at the same temperature could result from a special event that brought more students or encouraged water purchases.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L254",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "A sphere has radius 6 cm. Using V = 4/3 π r³, what is its volume in terms of π?",
+   "choices": [
+    "288π cm³",
+    "144π cm³",
+    "864π cm³",
+    "216π cm³"
+   ],
+   "answer": "288π cm³",
+   "rationale": "V = 4/3 π (6)³ = 4/3 π * 216 = 288π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L254",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "A sphere and a cylinder share the same radius r. The cylinder’s height equals the sphere’s diameter. What fraction of the cylinder’s volume is the sphere’s volume?",
+   "choices": [
+    "1/2",
+    "2/3",
+    "3/4",
+    "1"
+   ],
+   "answer": "2/3",
+   "rationale": "Cylinder volume = π r² (2r) = 2π r³. Sphere volume = 4/3 π r³. Ratio = (4/3)/(2) = 2/3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A sphere has volume (4/3)πr³, and a cylinder has volume πr²h.",
+      "url": "https://en.wikipedia.org/wiki/Cylinder",
+      "quote": "The sphere has a volume two-thirds that of the circumscribed cylinder and a surface area two-thirds that of the cylinder (including the bases).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L254",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 4 cm and height 8 cm. A sphere has the same radius. What is the sphere’s volume?",
+   "choices": [
+    "256π/3 cm³",
+    "128π cm³",
+    "256π cm³",
+    "512π/3 cm³"
+   ],
+   "answer": "256π/3 cm³",
+   "rationale": "Sphere radius = 4 cm → V = 4/3 π (4)³ = 4/3 π * 64 = 256π/3 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The volume of a sphere is (4/3)πr³.",
+      "url": "https://en.wikipedia.org/wiki/Sphere",
+      "quote": "Archimedes first derived this formula ( On the Sphere and Cylinder c. 225 BCE) by showing that the volume inside a sphere is twice the volume between the sphere and the circumscribed cylinder of that sphere (having the height and diameter equal to the diameter of the sphere).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L159",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has legs of lengths a and b and a hypotenuse of length c. Which equation relates the areas of the squares built on its three sides?",
+   "choices": [
+    "a² + b² = c²",
+    "a² + c² = b²",
+    "b² + c² = a²",
+    "a + b = c"
+   ],
+   "answer": "a² + b² = c²",
+   "rationale": "The square on the hypotenuse has area c², and the squares on the legs have total area a² + b², so a² + b² = c².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L159",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has legs of length 6 cm and 8 cm. What is the length of its hypotenuse?",
+   "choices": [
+    "10 cm",
+    "12 cm",
+    "14 cm",
+    "16 cm"
+   ],
+   "answer": "10 cm",
+   "rationale": "By the Pythagorean Theorem, the hypotenuse is √(6² + 8²) = √100 = 10 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L159",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "In an area-rearrangement proof, four congruent right triangles are moved from one large square to another arrangement. What fact allows the areas of the two remaining squares to be compared with the original square?",
+   "choices": [
+    "The rearrangement preserves the total covered area.",
+    "The rearrangement increases the total covered area.",
+    "The rearrangement changes the squares’ side lengths.",
+    "The rearrangement removes all the empty space."
+   ],
+   "answer": "The rearrangement preserves the total covered area.",
+   "rationale": "Rearranging congruent triangles preserves area. After the same triangle areas are removed from both arrangements, the remaining square areas are equal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L159",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has a hypotenuse of length 10 and one leg of length 6. What is the length of the other leg?",
+   "choices": [
+    "4",
+    "6",
+    "8",
+    "10"
+   ],
+   "answer": "8",
+   "rationale": "If the missing leg is x, then x² + 6² = 10². Thus x² = 64, so x = 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L179",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Which of the following statements about the triangle with side lengths 7, 24, and 25 is correct?",
+   "choices": [
+    "Yes, because 7² + 24² = 25²",
+    "No, because 7 + 24 > 25",
+    "Yes, because 7 + 24 = 31",
+    "No, because 7² + 24² ≠ 25²"
+   ],
+   "answer": "Yes, because 7² + 24² = 25²",
+   "rationale": "The converse of the Pythagorean theorem states that if a² + b² = c² for the three side lengths, the triangle is right. 7² + 24² = 49 + 576 = 625 = 25², so the triangle is right.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L179",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Which set of side lengths can form a right triangle?",
+   "choices": [
+    "8, 15, 17",
+    "9, 12, 16",
+    "10, 10, 14",
+    "5, 12, 14"
+   ],
+   "answer": "8, 15, 17",
+   "rationale": "Only 8² + 15² = 64 + 225 = 289 = 17² satisfies a² + b² = c². The other triples do not meet this equality, so they cannot be right triangles.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L179",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Why does the converse of the Pythagorean theorem hold true?",
+   "choices": [
+    "Because if a² + b² = c² then the angle opposite c is 90° by construction of squares",
+    "Because the triangle inequality guarantees a right angle",
+    "Because the sum of angles is 180°, so equality forces a right angle",
+    "Because any triangle with integer sides is right"
+   ],
+   "answer": "Because if a² + b² = c² then the angle opposite c is 90° by construction of squares",
+   "rationale": "The converse follows from the geometric proof: constructing squares on the legs and hypotenuse shows that equality of areas forces the included angle to be a right angle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L179",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "A triangle has sides 6 cm, 8 cm, and 10 cm. Which statement correctly applies the converse?",
+   "choices": [
+    "Since 6² + 8² = 10², the triangle is right",
+    "Since 6 + 8 > 10, the triangle is right",
+    "Since 6² + 8² > 10², the triangle is acute",
+    "Since 6² + 8² < 10², the triangle is obtuse"
+   ],
+   "answer": "Since 6² + 8² = 10², the triangle is right",
+   "rationale": "6² + 8² = 36 + 64 = 100 = 10². By the converse of the Pythagorean theorem, this equality means the triangle is a right triangle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L318",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot shows points that generally increase from left to right, forming a cloud around an upward sloping line. Which description best matches the line a student should draw as an informal line of best fit?",
+   "choices": [
+    "Horizontal line through the middle",
+    "Vertical line through the middle",
+    "Upward sloping line through the center of the cloud",
+    "Downward sloping line through the center"
+   ],
+   "answer": "Upward sloping line through the center of the cloud",
+   "rationale": "An informal line of best fit should follow the overall direction of the data; for an upward trend the line slopes upward through the middle of the point cloud.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L318",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "Two students draw different lines on the same scatter plot. Student A's line passes near most points; Student B's line passes far from many points. Which statement correctly judges the fit?",
+   "choices": [
+    "Student A's line fits better because points are closer",
+    "Student B's line fits better because it goes through the origin",
+    "Both fit equally because they both cross the plot",
+    "Neither fits because lines must be horizontal"
+   ],
+   "answer": "Student A's line fits better because points are closer",
+   "rationale": "A better informal fit has points overall closer to the line; Student A's line achieves this while Student B's does not.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L318",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "When comparing two informal lines of best fit on the same scatter plot, what should students look at to decide which line is better?",
+   "choices": [
+    "The line that has the steepest slope",
+    "The line that goes through the most points exactly",
+    "The line whose points are overall closest to it",
+    "The line that extends farthest beyond the data"
+   ],
+   "answer": "The line whose points are overall closest to it",
+   "rationale": "The quality of an informal fit is judged by how close the data points are to the line overall, not by slope, exact hits, or extension.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L318",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot shows a weak upward trend with points widely scattered. A student draws a line that follows the general direction but misses many points. How should the student judge the fit?",
+   "choices": [
+    "The line is a perfect fit because it matches the trend direction",
+    "The line fits poorly because many points are far from it",
+    "The line fits well because it passes through the first and last points",
+    "The line cannot be judged without a calculator"
+   ],
+   "answer": "The line fits poorly because many points are far from it",
+   "rationale": "Even if a line captures the trend direction, a good informal fit requires points to be reasonably close; widely scattered points far from the line indicate a poor fit.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L328",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot of hours studied (x) versus test score (y) has a fitted line with slope 4.2 and y‑intercept –5. Which equation represents this line?",
+   "choices": [
+    "y = 4.2x – 5",
+    "y = –5x + 4.2",
+    "y = 5x – 4.2",
+    "y = –4.2x + 5"
+   ],
+   "answer": "y = 4.2x – 5",
+   "rationale": "The slope‑intercept form is y = mx + b; with m = 4.2 and b = –5 the correct equation is y = 4.2x – 5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L328",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "In the model y = 2.5x + 60, where y is test score and x is hours studied, what does the slope 2.5 mean in context?",
+   "choices": [
+    "Each extra hour of study raises the predicted score by 2.5 points.",
+    "The score starts at 2.5 points when no hours are studied.",
+    "Every 2.5 hours of study adds 1 point to the score.",
+    "The maximum possible score is 2.5 points."
+   ],
+   "answer": "Each extra hour of study raises the predicted score by 2.5 points.",
+   "rationale": "The slope tells the change in y per one‑unit increase in x; here it is a 2.5‑point increase per additional study hour.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L328",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "The fitted line for a data set is y = 1.8x + 10. What is the predicted y‑value when x = 7?",
+   "choices": [
+    "22.6",
+    "23.4",
+    "21.8",
+    "24.2"
+   ],
+   "answer": "22.6",
+   "rationale": "Substituting x = 7 gives y = 1.8(7) + 10 = 12.6 + 10 = 22.6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L328",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Data were collected for x between 2 and 8. Predicting y at x = 15 would be an example of:",
+   "choices": [
+    "extrapolation, which is less reliable",
+    "interpolation, which is very reliable",
+    "a valid prediction within the data range",
+    "a calculation that cannot be performed"
+   ],
+   "answer": "extrapolation, which is less reliable",
+   "rationale": "Because 15 lies outside the observed x‑range (2–8), the prediction uses extrapolation and is less trustworthy.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L350",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "A two-way table shows favorite fruit (Apple, Banana) by gender (Boy, Girl). The table has totals: Boys 30, Girls 20, Apples 25, Bananas 25, total 50. If 12 boys like apples, what is the joint frequency of girls who like bananas?",
+   "choices": [
+    "5",
+    "7",
+    "8",
+    "10"
+   ],
+   "answer": "7",
+   "rationale": "Boys who like bananas = 30 total boys - 12 boys apples = 18. Girls who like bananas = 25 total bananas - 18 boys bananas = 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L350",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "A survey of 120 students records transportation (Bus, Walk) and grade (6th, 7th). The joint frequencies are: 6th grade Bus 30, 6th grade Walk 20, 7th grade Bus 40, 7th grade Walk 30. What is the marginal frequency for students who walk?",
+   "choices": [
+    "40",
+    "50",
+    "60",
+    "70"
+   ],
+   "answer": "50",
+   "rationale": "Marginal frequency for Walk is the sum of joint frequencies for Walk across grades: 20 + 30 = 50.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L350",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "A two-way table shows pet ownership (Dog, Cat) by housing (House, Apartment). The joint frequencies are: House-Dog 18, House-Cat 12, Apartment-Dog 10, Apartment-Cat 20. What is the marginal frequency for Cat owners?",
+   "choices": [
+    "28",
+    "30",
+    "32",
+    "34"
+   ],
+   "answer": "32",
+   "rationale": "Marginal frequency for Cat is the sum of joint frequencies for Cat across housing types: 12 + 20 = 32.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L264",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "A cone has radius 4 cm and slant height 5 cm. What is its total surface area in terms of π?",
+   "choices": [
+    "36π cm²",
+    "20π cm²",
+    "28π cm²",
+    "44π cm²"
+   ],
+   "answer": "36π cm²",
+   "rationale": "Total surface area of a cone is πr(r + l) = π(4)(4 + 5) = 36π cm².",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L264",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "A cylindrical can has radius 2.5 cm and height 10 cm. How much metal is needed for the lateral surface only?",
+   "choices": [
+    "50π cm²",
+    "25π cm²",
+    "100π cm²",
+    "75π cm²"
+   ],
+   "answer": "50π cm²",
+   "rationale": "Lateral surface area = 2πrh = 2π(2.5)(10) = 50π cm².",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L264",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "A party hat shaped like a cone has radius 6 cm and slant height 10 cm. How much paper is needed for the lateral surface?",
+   "choices": [
+    "60π cm²",
+    "30π cm²",
+    "90π cm²",
+    "120π cm²"
+   ],
+   "answer": "60π cm²",
+   "rationale": "Lateral surface area of a cone is πrl = π(6)(10) = 60π cm².",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L380",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "Study scores are graphed on a vertical axis running from 90 to 100. What is the strongest possible criticism of the graph?",
+   "choices": [
+    "The truncated axis can make small differences look large.",
+    "The graph needs a legend to identify the score data.",
+    "The graph should use a circle instead of a line.",
+    "The graph should show scores from zero to 100."
+   ],
+   "answer": "The truncated axis can make small differences look large.",
+   "rationale": "A truncated vertical axis can visually magnify small differences, making the graph misleading.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L380",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "Only students in the robotics club are asked whether they want a longer lunch. The school concludes that most students agree. What is the strongest criticism?",
+   "choices": [
+    "The surveyed group may not represent all students.",
+    "The survey should ask every student by name.",
+    "The results should be shown as a pie chart.",
+    "The survey should give students more choices."
+   ],
+   "answer": "The surveyed group may not represent all students.",
+   "rationale": "Robotics club members may have different preferences from the wider student body, making the sample biased.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L380",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "A company says its average delivery takes 2 days, so every package arrives within 2 days. What is the strongest criticism?",
+   "choices": [
+    "The average does not show the range of individual delivery times.",
+    "The company should measure deliveries in hours, not days.",
+    "Customers should receive the average as a guaranteed time.",
+    "Every delivery should arrive on the same weekday."
+   ],
+   "answer": "The average does not show the range of individual delivery times.",
+   "rationale": "An average can remain 2 days even when individual deliveries take less or more time, so it cannot establish a maximum.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L380",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "A store's sales rise after it increases advertising. The store claims the advertising caused the rise. Which hidden assumption is needed?",
+   "choices": [
+    "Other factors affecting sales did not also change.",
+    "Every customer saw the store's advertisements.",
+    "Store sales usually stay constant throughout the year.",
+    "Advertising is the only influence on store sales."
+   ],
+   "answer": "Other factors affecting sales did not also change.",
+   "rationale": "The causal claim assumes that other possible influences, such as discounts or seasonal demand, did not cause the increase.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L286",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "A solid is formed by joining a rectangular prism measuring 6 cm by 5 cm by 4 cm to a triangular prism without overlap. The triangular prism has a right-triangle base with legs 3 cm and 4 cm and a length of 10 cm. What is the total volume?",
+   "choices": [
+    "120 cm³",
+    "150 cm³",
+    "180 cm³",
+    "240 cm³"
+   ],
+   "answer": "180 cm³",
+   "rationale": "The rectangular prism has volume 6 × 5 × 4 = 120 cm³. The triangular prism has volume (½ × 3 × 4) × 10 = 60 cm³, so the total is 180 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L286",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "A solid consists of a cylinder and a cone joined at their circular bases, with no overlap. Both have radius 3 cm. The cylinder has height 8 cm, and the cone has height 5 cm. What is the total volume?",
+   "choices": [
+    "72π cm³",
+    "87π cm³",
+    "102π cm³",
+    "117π cm³"
+   ],
+   "answer": "87π cm³",
+   "rationale": "The cylinder’s volume is π(3²)(8) = 72π cm³, and the cone’s volume is one-third of π(3²)(5) = 15π cm³. Their total is 87π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L286",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "A closed container is shaped like a cylinder topped by a hemisphere. Both have radius 3 cm, and the cylindrical section has height 10 cm. What is the container’s total volume?",
+   "choices": [
+    "90π cm³",
+    "108π cm³",
+    "126π cm³",
+    "144π cm³"
+   ],
+   "answer": "108π cm³",
+   "rationale": "The cylinder’s volume is π(3²)(10) = 90π cm³. The hemisphere’s volume is two-thirds of π(3³) = 18π cm³, giving a total of 108π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L286",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "An ice-cream model consists of a cone topped by a hemispherical scoop. Both have radius 3 cm, and the cone has vertical height 4 cm. What is the model’s total volume?",
+   "choices": [
+    "18π cm³",
+    "24π cm³",
+    "30π cm³",
+    "36π cm³"
+   ],
+   "answer": "30π cm³",
+   "rationale": "The cone’s volume is one-third of π(3²)(4) = 12π cm³. The hemisphere’s volume is two-thirds of π(3³) = 18π cm³, so the total is 30π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L10",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Point A is at (-2, 5). It is translated by the vector <4, -3>. What are the coordinates of A′ after the translation?",
+   "choices": [
+    "(2, 2)",
+    "(-2, -3)",
+    "(2, 8)",
+    "(-6, 2)"
+   ],
+   "answer": "(2, 2)",
+   "rationale": "Adding each component of the vector gives (-2 + 4, 5 - 3) = (2, 2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L10",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "A line has equation y = 2x + 1. It is translated by the vector <-3, 4>. What is the equation of the translated line?",
+   "choices": [
+    "y = 2x + 11",
+    "y = 2x + 5",
+    "y = 2x - 5",
+    "y = 2x + 7"
+   ],
+   "answer": "y = 2x + 11",
+   "rationale": "If (x′, y′) is on the image, then the original point is (x′ + 3, y′ - 4). Substitution gives y′ - 4 = 2(x′ + 3) + 1, so y′ = 2x′ + 11.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L244",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A cylinder’s volume is 432π cm³. A cone shares its base and height. What is the cone’s volume?",
+   "choices": [
+    "144π cm³",
+    "216π cm³",
+    "288π cm³",
+    "432π cm³"
+   ],
+   "answer": "144π cm³",
+   "rationale": "Since a cone occupies one‑third the volume of a cylinder with equal base and height, the cone’s volume is (1/3)·432π = 144π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A cone has one third the volume of a cylinder with the same base and height.",
+      "url": "https://en.wikipedia.org/wiki/Solid_geometry",
+      "quote": "Eudoxus established their measurement, proving the pyramid and cone to have one-third the volume of a prism and cylinder on the same base and of the same height.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L244",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 4 cm and height 9 cm. What is the volume of a cone with the same base and height?",
+   "choices": [
+    "48π cm³",
+    "144π cm³",
+    "96π cm³",
+    "192π cm³"
+   ],
+   "answer": "48π cm³",
+   "rationale": "The cylinder volume is π·4²·9 = 144π cm³. A cone with the same base and height holds one‑third of that, so its volume is (1/3)·144π = 48π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A cone with the same base radius and height as a cylinder has one-third of the cylinder's volume.",
+      "url": "https://en.wikipedia.org/wiki/Solid_geometry",
+      "quote": "Eudoxus established their measurement , proving the pyramid and cone to have one-third the volume of a prism and cylinder on the same base and of the same height .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L244",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A cone has a radius of 6 cm and a height of 10 cm. What is the cone’s volume?",
+   "choices": [
+    "40π cm³",
+    "80π cm³",
+    "120π cm³",
+    "360π cm³"
+   ],
+   "answer": "120π cm³",
+   "rationale": "Use V = (1/3)πr²h. Then V = (1/3)π(6²)(10) = 120π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L244",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A cone has a volume of 75π cm³. A cylinder has the same base and height as the cone. What is the cylinder’s volume?",
+   "choices": [
+    "25π cm³",
+    "150π cm³",
+    "225π cm³",
+    "675π cm³"
+   ],
+   "answer": "225π cm³",
+   "rationale": "A cylinder with the same base and height has three times the cone’s volume, so 3 × 75π = 225π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L221",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has legs 5 units and 12 units. A student writes c = 5 + 12 = 17. Which equation correctly finds the hypotenuse c?",
+   "choices": [
+    "c = √(5² + 12²) = 13",
+    "c = 5² + 12² = 169",
+    "c = √(5 + 12) = √17",
+    "c = 5 + 12 = 17"
+   ],
+   "answer": "c = √(5² + 12²) = 13",
+   "rationale": "The legs must be squared and added, followed by taking the square root: 5² + 12² = 169, so c = 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L221",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has legs 9 units and 12 units. A student writes c² = 9² + 12² = 225. What should the student do next to find c?",
+   "choices": [
+    "Take the square root of 225, giving 15.",
+    "Take the square of 225, giving 50,625.",
+    "Add 9 and 12, giving 21.",
+    "Subtract 12 from 9, giving −3."
+   ],
+   "answer": "Take the square root of 225, giving 15.",
+   "rationale": "The student forgot to take the square root. Since c² = 225, taking the square root gives c = 15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L221",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has sides 6, 8, and 10 units. A student labels the 8-unit side as the hypotenuse and writes 6 + 8 = 14. Which correction is valid?",
+   "choices": [
+    "The 10-unit side is the hypotenuse, and 6² + 8² = 10².",
+    "The 8-unit side is the hypotenuse, and 6 + 8 = 10.",
+    "The 10-unit side is the hypotenuse, and 6 + 8 = 10.",
+    "The 6-unit side is the hypotenuse, and 6² + 8² = 10²."
+   ],
+   "answer": "The 10-unit side is the hypotenuse, and 6² + 8² = 10².",
+   "rationale": "The 10-unit side is the hypotenuse because it is the longest side. The legs must be squared and added, not simply added.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L234",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A cylinder is modeled as infinitely many thin circular disks. Each disk has radius r and thickness dh, so its volume is πr²dh. What formula results when the disk volumes are added?",
+   "choices": [
+    "V = πrh²",
+    "V = 2πr²h",
+    "V = πr²h",
+    "V = 4πr³h"
+   ],
+   "answer": "V = πr²h",
+   "rationale": "Adding the disk volumes gives πr² times the total height h, so the cylinder’s volume is V = πr²h.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L234",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 3 cm and height 5 cm. What is its exact volume in cubic centimeters?",
+   "choices": [
+    "15π cm³",
+    "30π cm³",
+    "45π cm³",
+    "90π cm³"
+   ],
+   "answer": "45π cm³",
+   "rationale": "Using V = πr²h gives V = π(3)²(5) = 45π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L234",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has diameter 10 cm and height 6 cm. Using 3.14 for π, what is its approximate volume in cubic centimeters?",
+   "choices": [
+    "471 cm³",
+    "314 cm³",
+    "942 cm³",
+    "150 cm³"
+   ],
+   "answer": "471 cm³",
+   "rationale": "The radius is 5 cm, so V = 3.14(5)²(6) = 471 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L234",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 4 m and volume 128π m³. What is its height in meters?",
+   "choices": [
+    "4 m",
+    "8 m",
+    "16 m",
+    "32 m"
+   ],
+   "answer": "8 m",
+   "rationale": "From 128π = π(4)²h, dividing by 16π gives h = 8 m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L20",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes a reflection over the vertical line x = 2?",
+   "choices": [
+    "Distances from the line are preserved but angles change.",
+    "The figure's orientation reverses and side lengths double.",
+    "The line is the perpendicular bisector of each point-image segment.",
+    "The image results from a 180° rotation about the line."
+   ],
+   "answer": "The line is the perpendicular bisector of each point-image segment.",
+   "rationale": "In any reflection, the line of reflection is the perpendicular bisector of the segment joining each point to its image, preserving distances and angles.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Reflection over the vertical line x=2 maps a point (x,y) to (4−x, y), making the line the perpendicular bisector of the segment joining the point and its image.",
+      "url": "https://en.wikipedia.org/wiki/Oblique_reflection",
+      "quote": "The usual reflection of a point A in space in respect to the plane P is another point B in space, such that the midpoint of the segment AB is in the plane, and AB is perpendicular to the plane.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "In a reflection, the line of reflection is the perpendicular bisector of each segment connecting a point to its image.",
+      "url": "https://en.wikipedia.org/wiki/Oblique_reflection",
+      "quote": "the midpoint of the segment AB is in the plane, and AB is perpendicular to the plane.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L435",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Which expression is equivalent to (2^3 * 2^4) / 2^5?",
+   "choices": [
+    "2^2",
+    "2^3",
+    "2^4",
+    "2^5"
+   ],
+   "answer": "2^2",
+   "rationale": "Multiply powers with the same base by adding exponents: 2^3 * 2^4 = 2^(3+4) = 2^7. Then divide by subtracting exponents: 2^7 / 2^5 = 2^(7-5) = 2^2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L435",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Solve for x: sqrt(x + 9) = 5.",
+   "choices": [
+    "x = 16",
+    "x = 25",
+    "x = 34",
+    "x = 40"
+   ],
+   "answer": "x = 16",
+   "rationale": "Square both sides to remove the square root: x + 9 = 25. Subtract 9 from both sides to get x = 16.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L435",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Solve the equation 3(x - 2) = 2x + 4.",
+   "choices": [
+    "x = 10",
+    "x = 8",
+    "x = 6",
+    "x = 4"
+   ],
+   "answer": "x = 10",
+   "rationale": "Distribute: 3x - 6 = 2x + 4. Subtract 2x from both sides: x - 6 = 4. Add 6 to both sides: x = 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L435",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Find the solution to the system y = 2x + 1 and y = -x + 7.",
+   "choices": [
+    "(2, 5)",
+    "(3, 7)",
+    "(1, 3)",
+    "(4, 9)"
+   ],
+   "answer": "(2, 5)",
+   "rationale": "Set the right sides equal: 2x + 1 = -x + 7. Add x to both sides: 3x + 1 = 7. Subtract 1: 3x = 6. Divide by 3: x = 2. Substitute into y = 2x + 1 to get y = 5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L40",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Triangle P has vertices (1,1), (3,1), (1,4). Triangle Q has vertices (4,2), (6,2), (4,5). Which sequence of rigid motions maps P onto Q?",
+   "choices": [
+    "A translation by vector (3,1) maps P onto Q.",
+    "A 90° rotation about the origin then a translation maps P onto Q.",
+    "A reflection across the y‑axis then a translation maps P onto Q.",
+    "A translation by (2,2) then a 180° rotation maps P onto Q."
+   ],
+   "answer": "A translation by vector (3,1) maps P onto Q.",
+   "rationale": "The coordinates of Q are exactly 3 units right and 1 unit up from P, so a single translation by (3,1) maps P onto Q; the other sequences involve rotations or reflections that would change orientation or position incorrectly.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L40",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Quadrilateral C: (1,2),(3,2),(3,4),(1,4). Quadrilateral D: (-2,-1),(-2,1),(-4,1),(-4,-1). Which sequence of rigid motions maps C onto D?",
+   "choices": [
+    "Rotate 90° CCW about origin then translate (0,-2)",
+    "Translate (0,-2) then rotate 90° CCW",
+    "Reflect over x‑axis then translate",
+    "Rotate 180° then translate"
+   ],
+   "answer": "Rotate 90° CCW about origin then translate (0,-2)",
+   "rationale": "Rotating C 90° CCW yields (-2,1),(-2,3),(-4,3),(-4,1); translating these by (0,-2) gives the vertices of D.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L40",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Triangle G: (0,0),(3,0),(0,4). Triangle H: (0,0),(0,3),(-4,0). Which single rigid motion maps G onto H?",
+   "choices": [
+    "Rotation 90° CCW about the origin",
+    "Reflection over the line y=x",
+    "Translation by (0,0)",
+    "Rotation 180° about the origin"
+   ],
+   "answer": "Rotation 90° CCW about the origin",
+   "rationale": "A 90° counter‑clockwise rotation sends (3,0) to (0,3) and (0,4) to (-4,0), matching H exactly.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L360",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "A two-way table lists students by grade and activity. Grade 8: art 12, sports 18, total 30. Grade 9: art 20, sports 10, total 30. What is the row relative frequency of Grade 9 students who choose art, to the nearest hundredth?",
+   "choices": [
+    "0.33",
+    "0.50",
+    "0.67",
+    "0.75"
+   ],
+   "answer": "0.67",
+   "rationale": "The row total for Grade 9 is 30, and 20 students chose art. Thus, 20 ÷ 30 ≈ 0.67.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L360",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "Students recorded grade and preferred activity. Grade 8: art 20, sports 10. Grade 9: art 10, sports 20. Do grade and preferred activity appear associated?",
+   "choices": [
+    "No; every grade includes both activities.",
+    "No; the totals for both activities are equal.",
+    "Yes; the activity proportions differ by grade.",
+    "Yes; every student chose one activity."
+   ],
+   "answer": "Yes; the activity proportions differ by grade.",
+   "rationale": "Art accounts for 20/30 of Grade 8 but only 10/30 of Grade 9. The different activity proportions indicate an association.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L360",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "linear_eq",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "Students recorded grade and preferred activity. Grade 8: art 18, sports 12. Grade 9: art 27, sports 18. Do grade and preferred activity appear associated?",
+   "choices": [
+    "No; both grades have the same row total.",
+    "Yes; the number choosing art differs by grade.",
+    "Yes; the two activity column totals are unequal.",
+    "No; both grades have the same activity proportions."
+   ],
+   "answer": "No; both grades have the same activity proportions.",
+   "rationale": "Within each grade, 60% chose art and 40% chose sports. Because the conditional proportions are identical, the variables do not appear associated.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L201",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Which choice gives two points exactly 5 units apart?",
+   "choices": [
+    "(1, 1) and (4, 5)",
+    "(1, 1) and (5, 5)",
+    "(2, 2) and (5, 5)",
+    "(2, 2) and (6, 6)"
+   ],
+   "answer": "(1, 1) and (4, 5)",
+   "rationale": "For (1, 1) and (4, 5), the changes are 3 and 4 units. The distance is √(3² + 4²) = 5 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L201",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "What is the distance between the points (2, 3) and (6, 10)?",
+   "choices": [
+    "√65 units",
+    "√29 units",
+    "11 units",
+    "65 units"
+   ],
+   "answer": "√65 units",
+   "rationale": "The horizontal and vertical changes are 4 and 7 units, so the distance is √(4² + 7²) = √65 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L201",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Point A is (−1, 2), and point B is (7, y) with B above A. If AB = 10 units, what is y?",
+   "choices": [
+    "8",
+    "14",
+    "6",
+    "4"
+   ],
+   "answer": "8",
+   "rationale": "The horizontal change is 8 units. Since 8² + 6² = 10², the vertical change is 6 units, so y = 2 + 6 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L338",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 338,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot of children’s shoe size versus reading level shows a positive trend. Which explanation shows the correlation is not causal?",
+   "choices": [
+    "Older children have larger feet and more reading practice.",
+    "Bigger shoes improve balance, helping reading focus.",
+    "Reading more causes feet to grow faster.",
+    "Schools give larger shoes to better readers."
+   ],
+   "answer": "Older children have larger feet and more reading practice.",
+   "rationale": "Age is the lurking variable: as children grow older, both shoe size and reading ability increase, so the association does not imply causation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L370",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "A student enters x-values 2, 4, 6 in cells A2:A4 and y-values 5, 9, 13 in B2:B4. Which action creates a scatter plot using each pair?",
+   "choices": [
+    "Select A1:B4, then choose Insert and add a scatter chart.",
+    "Select A1:B4, then choose Insert and add a line chart.",
+    "Select A1:B4, then choose Insert and add a pie chart.",
+    "Select A1:B4, then choose Insert and add a bar chart."
+   ],
+   "answer": "Select A1:B4, then choose Insert and add a scatter chart.",
+   "rationale": "A scatter chart displays each ordered pair as a point, so the selected x- and y-values are plotted together.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L370",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "For the trend-line equation y = 3.5x + 12, what does the coefficient 3.5 describe?",
+   "choices": [
+    "A 3.5-unit increase in y per 1-unit increase in x",
+    "A 1-unit increase in y per 3.5-unit increase in x",
+    "The y-intercept of the trend line",
+    "The constant change in x per 1-unit increase in y"
+   ],
+   "answer": "A 3.5-unit increase in y per 1-unit increase in x",
+   "rationale": "In y = mx + b, the coefficient m gives the change in y for each 1-unit change in x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L370",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "A spreadsheet gives the trendline equation y = -2.3x + 45 for a scatter plot of hours studied (x) vs test score (y). What does the value 45 represent?",
+   "choices": [
+    "Predicted test score when hours studied is zero",
+    "Change in test score per additional hour studied",
+    "Number of data points used",
+    "Correlation coefficient of the fit"
+   ],
+   "answer": "Predicted test score when hours studied is zero",
+   "rationale": "In the linear equation y = mx + b, the constant term b is the y-intercept, giving the predicted y when x = 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L393",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "At x = 0, 1, 2, and 3, a quantity has values 7, 11, 15, and 19. Which equation models the data best?",
+   "choices": [
+    "y = x² + 6, a curved model",
+    "y = 2x + 7, a constant-rate model",
+    "y = 4x + 7, a constant-rate model",
+    "y = 3x + 4, a constant-rate model"
+   ],
+   "answer": "y = 4x + 7, a constant-rate model",
+   "rationale": "The values increase by 4 each time. The equation y = 4x + 7 has a constant rate of change and produces 7, 11, 15, and 19.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L393",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "At x = 0, 1, 2, and 3, a pattern has values 2, 5, 10, and 17. Which equation fits the pattern better than a constant-rate equation?",
+   "choices": [
+    "y = 5x + 2, a constant-rate model",
+    "y = x² + 2x + 2, a curved model",
+    "y = 2x² + 2x + 1, a curved model",
+    "y = 2x² + x + 2, a curved model"
+   ],
+   "answer": "y = x² + 2x + 2, a curved model",
+   "rationale": "The first differences are 3, 5, and 7, so the rate increases by 2 each time. The equation y = x² + 2x + 2 produces all four values.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L393",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "A centered-square pattern has 1 tile in layer 1, 5 in layer 2, 13 in layer 3, and 25 in layer 4. Which model should predict layer 5, and what is the prediction?",
+   "choices": [
+    "Use a curved model; predict 41 tiles.",
+    "Use a straight-line model; predict 41 tiles.",
+    "Use a curved model; predict 37 tiles.",
+    "Use a straight-line model; predict 37 tiles."
+   ],
+   "answer": "Use a curved model; predict 41 tiles.",
+   "rationale": "The increases are 4, 8, and 12, increasing by 4 each time. The next increase is 16, so layer 5 has 25 + 16 = 41 tiles.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L95",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Point P is at (-2, 4). A dilation centered at the origin with scale factor -3 creates P'. What are the coordinates of P'?",
+   "choices": [
+    "(-6, 12)",
+    "(6, -12)",
+    "(-6, -12)",
+    "(6, 12)"
+   ],
+   "answer": "(6, -12)",
+   "rationale": "Multiplying both coordinates by -3 gives (-2 × -3, 4 × -3) = (6, -12).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L95",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Triangle ABC has A(3, 2), B(6, 2), and C(3, 5). It is dilated from center D(1, 1) by scale factor 2. What are the coordinates of A'?",
+   "choices": [
+    "(5, 3)",
+    "(3, 5)",
+    "(6, 4)",
+    "(4, 2)"
+   ],
+   "answer": "(5, 3)",
+   "rationale": "Vector DA is (2, 1). Doubling it gives (4, 2), and adding center D gives A′ = (5, 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L95",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Point P(8, 5) is dilated from center C(2, -1) with scale factor 1/2. What are the coordinates of P'?",
+   "choices": [
+    "(8, 6)",
+    "(5, 1)",
+    "(5, 2)",
+    "(10, 4)"
+   ],
+   "answer": "(5, 2)",
+   "rationale": "A dilation takes the midpoint between each original point and the center: ((8+2)/2, (5+(-1))/2) = (5, 2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L276",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "A rectangular prism measures 3 cm by 2 cm by 1 cm. Every dimension is doubled. What is the volume of the new prism?",
+   "choices": [
+    "12 cm³",
+    "24 cm³",
+    "36 cm³",
+    "48 cm³"
+   ],
+   "answer": "48 cm³",
+   "rationale": "The new dimensions are 6 cm, 4 cm, and 2 cm, giving a volume of 6 × 4 × 2 = 48 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L276",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "Two similar triangles have corresponding sides of 4 cm, 6 cm, and 8 cm, and 10 cm, 15 cm, and 20 cm. What is the scale factor from the smaller triangle to the larger triangle?",
+   "choices": [
+    "2",
+    "2.5",
+    "5",
+    "10"
+   ],
+   "answer": "2.5",
+   "rationale": "Each corresponding side is multiplied by 2.5, since 4 × 2.5 = 10, 6 × 2.5 = 15, and 8 × 2.5 = 20.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L276",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "A rectangle measures 6 cm by 4 cm. Each dimension is doubled. What is the perimeter of the new rectangle?",
+   "choices": [
+    "20 cm",
+    "32 cm",
+    "40 cm",
+    "48 cm"
+   ],
+   "answer": "40 cm",
+   "rationale": "The new dimensions are 12 cm by 8 cm, so the perimeter is 2(12 + 8) = 40 cm. Doubling both dimensions doubles the perimeter.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L276",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "A cube has side length 4 cm. A similar cube has each edge 3 times as long. What is the ratio of the larger cube’s volume to the smaller cube’s volume?",
+   "choices": [
+    "3 to 1",
+    "6 to 1",
+    "9 to 1",
+    "27 to 1"
+   ],
+   "answer": "27 to 1",
+   "rationale": "Volume scales by the cube of the length scale factor. Since the edge scale factor is 3, the volume ratio is 3³ = 27 to 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L445",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "The graph of y = -x is reflected across the x-axis, then translated 3 units right and 4 units up. Which equation represents the final graph?",
+   "choices": [
+    "y = x + 1",
+    "y = x + 7",
+    "y = -x + 1",
+    "y = -x + 7"
+   ],
+   "answer": "y = x + 1",
+   "rationale": "Reflecting y = -x across the x-axis gives y = x. Moving right 3 replaces x with x - 3, and moving up 4 adds 4, so the equation is y = x + 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L445",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "Points A(0,0), B(6,0), and C(0,8) form a right triangle. What are the slope of AB and the length of hypotenuse BC?",
+   "choices": [
+    "0 and 10",
+    "0 and 14",
+    "1 and 10",
+    "1 and 14"
+   ],
+   "answer": "0 and 10",
+   "rationale": "AB is horizontal, so its slope is 0. By the Pythagorean theorem, BC = √(6² + 8²) = √100 = 10 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L445",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "Triangle ABC has vertices A(0,0), B(6,0), and C(0,8). It is translated 2 units right and 1 unit down, then reflected across the y-axis. What is the transformed hypotenuse’s length?",
+   "choices": [
+    "8 units",
+    "10 units",
+    "12 units",
+    "14 units"
+   ],
+   "answer": "10 units",
+   "rationale": "The transformed endpoints of the hypotenuse are B′(-8,-1) and C′(-2,7). Their distance is √(6² + 8²) = 10 units; transformations preserve lengths.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L445",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot contains (1,3), (2,5), (3,7), and (4,9). Which statement correctly describes the correlation and the predicted value at x = 5?",
+   "choices": [
+    "Positive correlation; y = 11 when x = 5.",
+    "Negative correlation; y = 11 when x = 5.",
+    "Positive correlation; y = 7 when x = 5.",
+    "No correlation; y = 11 when x = 5."
+   ],
+   "answer": "Positive correlation; y = 11 when x = 5.",
+   "rationale": "As x increases, y increases, so the correlation is positive. The points follow y = 2x + 1, giving y = 2(5) + 1 = 11 when x = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L455",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "functions",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "Which expression is equivalent to 4(x-2)+3x after simplifying?",
+   "choices": [
+    "7x-8",
+    "7x-2",
+    "4x-8+3x",
+    "7x-6"
+   ],
+   "answer": "7x-8",
+   "rationale": "Distributing 4 gives 4x-8; adding 3x yields 7x-8. Option 7x-2 drops the -8, 4x-8+3x is not fully simplified, and 7x-6 miscalculates the constant term.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L455",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "functions",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "Given f(x) = 2x² + 1, what is the value of f(−3)?",
+   "choices": [
+    "13",
+    "19",
+    "15",
+    "21"
+   ],
+   "answer": "19",
+   "rationale": "Substitute −3 for x: f(−3) = 2(−3)² + 1 = 2(9) + 1 = 19.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L455",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "functions",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "Solve the equation 3(x + 2) = 18. What is the value of x?",
+   "choices": [
+    "2",
+    "4",
+    "6",
+    "8"
+   ],
+   "answer": "4",
+   "rationale": "Divide both sides by 3 to get x + 2 = 6, then subtract 2 to get x = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L455",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "functions",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "Which equation assigns exactly one value of y to every value of x?",
+   "choices": [
+    "y = 2x + 1",
+    "x = 2y² + 1",
+    "x² + y² = 1",
+    "y² = x + 1"
+   ],
+   "answer": "y = 2x + 1",
+   "rationale": "In y = 2x + 1, each input x produces exactly one output y. The other equations can produce two possible y-values for some x-values.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L425",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "If the chosen cylinder uses 557 cm² of material costing $0.02 per cm², what is the total material cost?",
+   "choices": [
+    "$11.14",
+    "$10.90",
+    "$11.50",
+    "$12.10"
+   ],
+   "answer": "$11.14",
+   "rationale": "Total cost = 557 cm² × $0.02/cm² = $11.14. The other choices differ by at least $0.24 and are therefore incorrect.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L425",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "A rectangular-prism container measures 15 cm long, 12 cm wide, and 4 cm high. The design must hold at least 700 cm³. Which statement is correct?",
+   "choices": [
+    "Its volume is 690 cm³, so it does not meet the minimum.",
+    "Its volume is 720 cm³, so it meets the minimum.",
+    "Its volume is 730 cm³, so it meets the minimum.",
+    "Its volume is 740 cm³, so it does not meet the minimum."
+   ],
+   "answer": "Its volume is 720 cm³, so it meets the minimum.",
+   "rationale": "Volume = 15 × 12 × 4 = 720 cm³. Since 720 is at least 700 cm³, the container meets the volume constraint.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L425",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "A closed rectangular-prism container has a length twice its width and a height of 5 cm. It can use at most 300 cm² of material. What is the greatest whole-number width, in centimeters, that it can have?",
+   "choices": [
+    "4 cm; it uses 184 cm² of material.",
+    "5 cm; it uses 250 cm² of material.",
+    "6 cm; it uses 324 cm² of material.",
+    "7 cm; it uses 406 cm² of material."
+   ],
+   "answer": "5 cm; it uses 250 cm² of material.",
+   "rationale": "With width 5 cm, the length is 10 cm, so the surface area is 2(10×5 + 10×5 + 5×5) = 250 cm². A width of 6 cm would require 324 cm², exceeding the limit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L425",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "geometry_area",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "Two closed rectangular-prism containers are considered. Design A measures 10 × 10 × 8 cm, and Design B measures 20 × 10 × 4 cm. The container must hold at least 800 cm³ and use at most 600 cm² of material. Which choice is justified?",
+   "choices": [
+    "Design A; it holds 800 cm³ and uses 520 cm² of material.",
+    "Design B; it holds 800 cm³ and uses 640 cm² of material.",
+    "Design A; it holds 1,000 cm³ and uses 520 cm² of material.",
+    "Design B; it holds 1,000 cm³ and uses 640 cm² of material."
+   ],
+   "answer": "Design A; it holds 800 cm³ and uses 520 cm² of material.",
+   "rationale": "Both designs hold 800 cm³. Design A uses 2(100 + 80 + 80) = 520 cm², while Design B uses 2(200 + 80 + 40) = 640 cm². Only Design A meets both constraints.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L413",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "A segment has endpoints E(−4,1) and F(2,−3). Plot the points and draw the segment. What is the midpoint of EF?",
+   "choices": [
+    "(-1,-1)",
+    "(-1,2)",
+    "(1,-1)",
+    "(1,2)"
+   ],
+   "answer": "(-1,-1)",
+   "rationale": "The midpoint formula averages the x‑coordinates (−4+2)/2 = −1 and the y‑coordinates (1+−3)/2 = −1, yielding (−1,−1).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L413",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "Points G(0,0), H(6,0), I(6,8) form a right triangle. After sketching, which expression equals its area?",
+   "choices": [
+    "24 square units",
+    "18 square units",
+    "32 square units",
+    "30 square units"
+   ],
+   "answer": "24 square units",
+   "rationale": "The legs are along the axes: GH = 6 and HI = 8. Area = ½·6·8 = 24 square units.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L413",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "A student travels from A(−2, 3) to B(4, −1) along a straight segment. Which expression gives the distance from A to B?",
+   "choices": [
+    "√20 units",
+    "√36 units",
+    "√40 units",
+    "√52 units"
+   ],
+   "answer": "√52 units",
+   "rationale": "The horizontal change is 6 units and the vertical change is 4 units, so the distance is √(6² + 4²) = √52 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L413",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "slope_lines",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "A rectangle has three vertices P(−2, −1), Q(5, −1), and R(5, 4). Which coordinates should be the fourth vertex S?",
+   "choices": [
+    "(2, 4)",
+    "(−2, −4)",
+    "(−2, 4)",
+    "(5, −4)"
+   ],
+   "answer": "(−2, 4)",
+   "rationale": "In a rectangle, opposite sides are parallel and equal. Since P and R are opposite vertices, S shares P’s x-coordinate and R’s y-coordinate, so S is (−2, 4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L296",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot shows points that fall from left to right and curve downward. Which association best describes this pattern?",
+   "choices": [
+    "Negative linear association",
+    "Negative nonlinear association",
+    "Positive nonlinear association",
+    "No association"
+   ],
+   "answer": "Negative nonlinear association",
+   "rationale": "The points fall and curve, showing a negative nonlinear association.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L296",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot shows points that rise from left to right and curve upward. Which association best describes this pattern?",
+   "choices": [
+    "Positive linear association",
+    "Positive nonlinear association",
+    "Negative linear association",
+    "No association"
+   ],
+   "answer": "Positive nonlinear association",
+   "rationale": "The points rise and curve upward, indicating a positive nonlinear association.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "transformations_pythagorean_theorem_and_data_models:L296",
+   "track_id": "math",
+   "grade_id": "transformations_pythagorean_theorem_and_data_models",
+   "skill_id": "data_stats",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot shows points that rise from left to right in an approximately straight line. Which description matches the association?",
+   "choices": [
+    "Positive linear association",
+    "Negative linear association",
+    "Positive nonlinear association",
+    "No association"
+   ],
+   "answer": "Positive linear association",
+   "rationale": "Points that go upward as you move right and follow a straight trend indicate a positive linear relationship.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,234 @@
+{
+ "collection": "block_plans",
+ "row_id": 2,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P67",
+   "wrong": "The balanced-sentence scramble has the chip \"the sky writes poems\" twice (correctIndex 3 and 6), and the target order \"Reading builds patience poetry builds attention and the sky writes poems attention builds understanding so poetry builds understanding the sky writes poems\" is not a sentence.",
+   "correct": "Seven distinct chips whose correct order builds one balanced sentence."
+  },
+  {
+   "ref": "P69",
+   "wrong": "Caption: \"Two matching halves, mirrored on either side of the dash: practice builds / confidence builds.\" In \"Practice builds confidence, and confidence builds success — so practice builds success\" the mirrored halves sit on either side of \"and\", not the dash.",
+   "correct": "Say the halves mirror on either side of \"and\"."
+  }
+ ],
+ "edits": [
+  {
+   "path": "blocks[7].data.chips[0].text",
+   "before": "the sky writes poems",
+   "after": "—"
+  },
+  {
+   "path": "blocks[7].data.chips[1].text",
+   "before": "poetry builds attention",
+   "after": "patience builds attention"
+  },
+  {
+   "path": "blocks[7].data.chips[1].correctIndex",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "path": "blocks[7].data.chips[2].correctIndex",
+   "before": 2,
+   "after": 1
+  },
+  {
+   "path": "blocks[7].data.chips[3].text",
+   "before": "Reading builds patience",
+   "after": "Reading builds patience,"
+  },
+  {
+   "path": "blocks[7].data.chips[4].text",
+   "before": "attention builds understanding",
+   "after": "reading"
+  },
+  {
+   "path": "blocks[7].data.chips[4].correctIndex",
+   "before": 4,
+   "after": 5
+  },
+  {
+   "path": "blocks[7].data.chips[5].text",
+   "before": "so poetry builds understanding",
+   "after": "so"
+  },
+  {
+   "path": "blocks[7].data.chips[5].correctIndex",
+   "before": 5,
+   "after": 4
+  },
+  {
+   "path": "blocks[7].data.chips[6].text",
+   "before": "the sky writes poems",
+   "after": "builds attention."
+  },
+  {
+   "path": "blocks[7].data.tokens[0].text",
+   "before": "Reading builds patience",
+   "after": "Reading builds patience,"
+  },
+  {
+   "path": "blocks[7].data.tokens[1].text",
+   "before": "poetry builds attention",
+   "after": "patience builds attention"
+  },
+  {
+   "path": "blocks[7].data.tokens[3].text",
+   "before": "the sky writes poems",
+   "after": "—"
+  },
+  {
+   "path": "blocks[7].data.tokens[4].text",
+   "before": "attention builds understanding",
+   "after": "reading"
+  },
+  {
+   "path": "blocks[7].data.tokens[5].text",
+   "before": "so poetry builds understanding",
+   "after": "so"
+  },
+  {
+   "path": "blocks[7].data.tokens[6].text",
+   "before": "the sky writes poems",
+   "after": "builds attention."
+  },
+  {
+   "path": "blocks[7].data.feedbackCorrect",
+   "before": "Balanced. Each half mirrors the same subject + verb + object shape, and the extension echoes it too.",
+   "after": "Balanced. 'Reading builds patience' and 'patience builds attention' share the same subject + verb + object shape, and the ending echoes it: reading builds attention."
+  },
+  {
+   "path": "blocks[7].data.hintText",
+   "before": "Start with the first parallel half: \"Reading builds patience.\" The halves must share the same shape.",
+   "after": "Start with the first parallel half: \"Reading builds patience,\" then let the second half mirror it."
+  },
+  {
+   "path": "blocks[3].data.after.caption",
+   "before": "Two matching halves, mirrored on either side of the dash: practice builds / confidence builds.",
+   "after": "Two matching halves, mirrored on either side of \"and\": practice builds confidence / confidence builds success."
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[7].data.chips[0].text",
+   "before": "the sky writes poems",
+   "after": "—"
+  },
+  {
+   "path": "blocks[7].data.chips[1].text",
+   "before": "poetry builds attention",
+   "after": "patience builds attention"
+  },
+  {
+   "path": "blocks[7].data.chips[1].correctIndex",
+   "before": 1,
+   "after": 2
+  },
+  {
+   "path": "blocks[7].data.chips[2].correctIndex",
+   "before": 2,
+   "after": 1
+  },
+  {
+   "path": "blocks[7].data.chips[3].text",
+   "before": "Reading builds patience",
+   "after": "Reading builds patience,"
+  },
+  {
+   "path": "blocks[7].data.chips[4].text",
+   "before": "attention builds understanding",
+   "after": "reading"
+  },
+  {
+   "path": "blocks[7].data.chips[4].correctIndex",
+   "before": 4,
+   "after": 5
+  },
+  {
+   "path": "blocks[7].data.chips[5].text",
+   "before": "so poetry builds understanding",
+   "after": "so"
+  },
+  {
+   "path": "blocks[7].data.chips[5].correctIndex",
+   "before": 5,
+   "after": 4
+  },
+  {
+   "path": "blocks[7].data.chips[6].text",
+   "before": "the sky writes poems",
+   "after": "builds attention."
+  },
+  {
+   "path": "blocks[7].data.tokens[0].text",
+   "before": "Reading builds patience",
+   "after": "Reading builds patience,"
+  },
+  {
+   "path": "blocks[7].data.tokens[1].text",
+   "before": "poetry builds attention",
+   "after": "patience builds attention"
+  },
+  {
+   "path": "blocks[7].data.tokens[3].text",
+   "before": "the sky writes poems",
+   "after": "—"
+  },
+  {
+   "path": "blocks[7].data.tokens[4].text",
+   "before": "attention builds understanding",
+   "after": "reading"
+  },
+  {
+   "path": "blocks[7].data.tokens[5].text",
+   "before": "so poetry builds understanding",
+   "after": "so"
+  },
+  {
+   "path": "blocks[7].data.tokens[6].text",
+   "before": "the sky writes poems",
+   "after": "builds attention."
+  },
+  {
+   "path": "blocks[7].data.feedbackCorrect",
+   "before": "Balanced. Each half mirrors the same subject + verb + object shape, and the extension echoes it too.",
+   "after": "Balanced. 'Reading builds patience' and 'patience builds attention' share the same subject + verb + object shape, and the ending echoes it: reading builds attention."
+  },
+  {
+   "path": "blocks[7].data.hintText",
+   "before": "Start with the first parallel half: \"Reading builds patience.\" The halves must share the same shape.",
+   "after": "Start with the first parallel half: \"Reading builds patience,\" then let the second half mirror it."
+  },
+  {
+   "path": "blocks[3].data.after.caption",
+   "before": "Two matching halves, mirrored on either side of the dash: practice builds / confidence builds.",
+   "after": "Two matching halves, mirrored on either side of \"and\": practice builds confidence / confidence builds success."
+  }
+ ],
+ "judge_a": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "find strings included JSON syntax, so 10 of 11 edits matched 0 places",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

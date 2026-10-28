@@ -1,0 +1,173 @@
+{
+ "collection": "lessons",
+ "row_id": 40,
+ "shared": false,
+ "user_id": 108,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 2,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P4",
+   "wrong": "dividing by 2 first gives x + 3 = 5.5",
+   "correct": "Dividing both sides of 2x + 3 = 11 by 2 gives x + 1.5 = 5.5, so x = 4: dividing first is valid. The wrong answer 2.5 comes from dividing only the 2x term.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P5",
+   "wrong": "adding 3 to both sides gives 2x = 14 and then x = 7",
+   "correct": "Adding 3 to both sides of 2x + 3 = 11 gives 2x + 6 = 14 (x = 4). The slip that gives 2x = 14 is moving the +3 across without changing its sign.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Undoing multiplication instead of addition first. In 2x + 3 = 11, dividing by 2 first gives x + 3 = 5.5, then x = 2.5, which is wrong. Subtract 3 first to get 2x = 8, then divide to get x = 4.",
+   "replace": "Dividing only part of an equation. In 2x + 3 = 11, dividing both sides by 2 gives x + 1.5 = 5.5, then x = 4, so dividing first is valid. The wrong answer 2.5 comes from dividing only the 2x term.",
+   "fixes": [
+    "P4"
+   ]
+  },
+  {
+   "find": "Adding instead of subtracting. In 2x + 3 = 11, adding 3 to both sides gives 2x = 14 and then x = 7, which fails the check because 2(7) + 3 = 17. The opposite of adding 3 is subtracting 3.",
+   "replace": "Moving the +3 across without changing its sign. In 2x + 3 = 11, adding 3 to both sides gives 2x + 6 = 14, then x = 4. The slip that gives 2x = 14 is moving the +3 across without changing its sign.",
+   "fixes": [
+    "P5"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[1]",
+   "before": "Undoing multiplication instead of addition first. In 2x + 3 = 11, dividing by 2 first gives x + 3 = 5.5, then x = 2.5, which is wrong. Subtract 3 first to get 2x = 8, then divide to get x = 4.",
+   "after": "Dividing only part of an equation. In 2x + 3 = 11, dividing both sides by 2 gives x + 1.5 = 5.5, then x = 4, so dividing first is valid. The wrong answer 2.5 comes from dividing only the 2x term.",
+   "fixes": [
+    "P4"
+   ]
+  },
+  {
+   "path": "common_mistakes[2]",
+   "before": "Adding instead of subtracting. In 2x + 3 = 11, adding 3 to both sides gives 2x = 14 and then x = 7, which fails the check because 2(7) + 3 = 17. The opposite of adding 3 is subtracting 3.",
+   "after": "Moving the +3 across without changing its sign. In 2x + 3 = 11, adding 3 to both sides gives 2x + 6 = 14, then x = 4. The slip that gives 2x = 14 is moving the +3 across without changing its sign.",
+   "fixes": [
+    "P5"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving linear equations: get x alone",
+  "intro": "A linear equation is a statement that two expressions are equal, and your job is to find the value of x that makes it true. In this lesson you will learn the one rule that solves almost all of them, then use it on equations with one step and with two steps.",
+  "sections": [
+   {
+    "heading": "The rule: undo with the opposite operation",
+    "body": "An equation stays balanced as long as you do the same thing to both sides. The rule is: undo whatever is happening to x by doing the opposite operation to both sides. If 3 is added to x, subtract 3 from both sides, and x is free.",
+    "example": "x + 3 = 9. Subtract 3 from both sides: x + 3 - 3 = 9 - 3, so x = 6. Check: 6 + 3 = 9. Correct."
+   },
+   {
+    "heading": "Undo multiplication with division",
+    "body": "When x is multiplied by a number, the opposite operation is division. Divide both sides by that number and x stands alone. The number stays glued to x until you divide it away.",
+    "example": "5x = 35. Divide both sides by 5: 5x/5 = 35/5, so x = 7. Check: 5 times 7 = 35. Correct."
+   },
+   {
+    "heading": "Two-step equations: undo addition first",
+    "body": "When x is multiplied and then a number is added, undo the addition first, then undo the multiplication. Doing it in this order keeps the x term clean and avoids decimals.",
+    "example": "2x + 3 = 11. Subtract 3 from both sides: 2x = 8. Divide both sides by 2: x = 4. Check: 2(4) + 3 = 11. Correct."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 3x + 5 = 20.",
+   "steps": [
+    "Identify what is happening to x: x is multiplied by 3, then 5 is added.",
+    "Undo the addition first. Subtract 5 from both sides: 3x + 5 - 5 = 20 - 5, which gives 3x = 15.",
+    "Undo the multiplication. Divide both sides by 3: 3x/3 = 15/3, which gives x = 5.",
+    "Check by substituting back: 3(5) + 5 = 15 + 5 = 20. The left side equals the right side, so x = 5 is correct."
+   ],
+   "answer": "x = 5"
+  },
+  "common_mistakes": [
+   "Changing only one side. In x + 4 = 10, subtracting 4 from the left only gives x = 10, because the right side was never adjusted. The same operation must hit both sides.",
+   "Dividing only part of an equation. In 2x + 3 = 11, dividing both sides by 2 gives x + 1.5 = 5.5, then x = 4, so dividing first is valid. The wrong answer 2.5 comes from dividing only the 2x term.",
+   "Moving the +3 across without changing its sign. In 2x + 3 = 11, adding 3 to both sides gives 2x + 6 = 14, then x = 4. The slip that gives 2x = 14 is moving the +3 across without changing its sign.",
+   "Treating 3x like x + 3. In 3x = 12, subtracting 3 gives x = 9, which is wrong because 3x means 3 times x. Divide both sides by 3 to get x = 4."
+  ],
+  "summary": "To solve a linear equation, undo each operation on x by doing its opposite to both sides. Undo addition or subtraction first, then undo multiplication by dividing. Always check your answer by substituting it back into the original equation.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x + 6 = 11.",
+    "answer": "x = 5",
+    "rationale": "Subtract 6 from both sides: x + 6 - 6 = 11 - 6, so x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 4x = 28. What is x?",
+    "answer": "7",
+    "rationale": "The opposite of multiplying x by 4 is dividing, so divide both sides by 4: 28/4 = 7.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "24",
+     "7",
+     "32",
+     "112"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 2x + 3 = 11. What is x?",
+    "answer": "4",
+    "rationale": "Undo the addition first: 2x = 8. Then divide both sides by 2 to get x = 4.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "4",
+     "7",
+     "8",
+     "2.5"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 5x - 2 = 18.",
+    "answer": "x = 4",
+    "rationale": "Add 2 to both sides to get 5x = 20, then divide both sides by 5 to get x = 4. The check confirms it: 5(4) - 2 = 18.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

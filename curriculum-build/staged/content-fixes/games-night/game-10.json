@@ -1,0 +1,3115 @@
+{
+ "row_id": 10,
+ "engine_id": "whack-a-mole",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 8,
+ "generated_at": "2026-10-24T09:21:36.975Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 57,
+  "code_rejected": 4,
+  "sent_to_judges": 53,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 53,
+   "picked_same_option": 52,
+   "a_picked_key": 53,
+   "b_picked_key": 52,
+   "models_a": [
+    "minimax/minimax-m3.1-flash",
+    "minimax-m3.1-flash:free"
+   ],
+   "models_b": [
+    "nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "gemini-3.6-flash:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": [],
+  "rebalanced": "options re-ordered so the keys spread over the slots (texts unchanged; judges answered blind)"
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "whack-a-mole",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 8,
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "title": "Entry Check: Publishing Findings and Formal Debate",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 7,
+    "end": 9,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q17",
+    "prompt": "Reviewers offer conflicting suggestions about a report’s organization. Which response best demonstrates responsible revision?",
+    "choices": [
+     "Compare the suggestions with the report’s purpose and audience, choose the organization that best supports both, and explain the final decision.",
+     "Combine every suggested section order so no reviewer can claim that a recommendation was ignored.",
+     "Follow only the reviewer who proposed the most detailed structure because that suggestion is automatically the strongest.",
+     "Reject all conflicting suggestions and retain the original organization without further revision."
+    ],
+    "answerIndex": 0,
+    "explanation": "This response bases revision choices on the report’s purpose and audience while requiring the writer to justify decisions rather than follow feedback mechanically.",
+    "difficulty": 8,
+    "skill": "Synthesizing reviewer feedback",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q14",
+    "prompt": "With only three minutes left in a formal discussion, which action most effectively helps the group reach a useful conclusion?",
+    "choices": [
+     "Ask every participant to repeat their earliest point so the chair can identify the longest argument.",
+     "Synthesize the points of agreement and disagreement, prioritize the unresolved issue that affects the decision, and invite a final response.",
+     "Allow each new speaker equal time, even if several repeat arguments already presented.",
+     "Call for an immediate vote before the remaining speakers can address the main disagreement."
+    ],
+    "answerIndex": 1,
+    "explanation": "This action turns the limited time into a structured synthesis, focuses attention on the decisive issue, and preserves a path to a reasoned decision.",
+    "difficulty": 7,
+    "skill": "Facilitating a formal discussion",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q35",
+    "prompt": "During a formal discussion, a speaker argues that districts with later start times have higher average attendance, so the later start times cause higher attendance. Which response most directly evaluates the claim?",
+    "choices": [
+     "Do parents in districts with later start times report that their children prefer the schedule?",
+     "Do school districts generally have enough buses to operate later start times?",
+     "Could higher attendance cause districts to adopt later start times, rather than later start times causing higher attendance?",
+     "Have other schools reported positive attendance results after adopting later start times?"
+    ],
+    "answerIndex": 2,
+    "explanation": "The claim assumes that the schedule causes higher attendance, so considering whether higher attendance could instead lead districts to adopt the schedule tests a key alternative explanation.",
+    "difficulty": 8,
+    "skill": "Evaluating causal reasoning in formal discussion",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q39",
+    "prompt": "During a debate, a team cites one student's success with a peer-tutoring program to claim that the program will improve writing scores for all participating students. Which response most responsibly evaluates the claim?",
+    "choices": [
+     "Ask whether other students would prefer meeting with a peer tutor during class.",
+     "Accept the claim because direct testimony from a successful participant is persuasive.",
+     "Reject the claim because a single student's experience cannot support any conclusion.",
+     "Ask whether the student's experience is typical and compare the claim with results from a larger, relevant group of participating students."
+    ],
+    "answerIndex": 3,
+    "explanation": "A single success can motivate further investigation, but broader evidence from a relevant group is needed to support a prediction about participating students generally.",
+    "difficulty": 8,
+    "skill": "Weighing anecdotal evidence in debate",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q45",
+    "prompt": "A report says an online discussion changed students’ attitudes because nearly all volunteers reported being persuaded. Which limitation most directly weakens that causal conclusion?",
+    "choices": [
+     "The report did not measure students’ attitudes before the discussion.",
+     "The survey used a five-point scale for every response.",
+     "The report included quotations from several participants.",
+     "The researchers published the survey questions."
+    ],
+    "answerIndex": 0,
+    "explanation": "Without a pre-discussion measure, the report cannot establish that attitudes changed rather than already favoring the discussion.",
+    "difficulty": 9,
+    "skill": "Causal evidence evaluation",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q33",
+    "prompt": "A report's heading states New Program Eliminates Tardiness, but the study found that tardiness fell 20% in participating schools. Which revised heading is most accurate?",
+    "choices": [
+     "New Program Eliminates Tardiness in Participating Schools",
+     "New Program Linked to 20% Lower Tardiness in Participating Schools",
+     "New Program Has No Measurable Effect on Tardiness",
+     "Tardiness Fell 20% Across All Schools"
+    ],
+    "answerIndex": 1,
+    "explanation": "The revised heading reports the observed 20% reduction while avoiding an unsupported claim that the program caused the change or that it affected schools outside the study.",
+    "difficulty": 8,
+    "skill": "Writing an accurate findings-report heading",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q22",
+    "prompt": "Both debate teams agree that more revision practice could improve essays, but one proposes peer review and the other teacher feedback. Which question best examines the central assumption behind each proposal?",
+    "choices": [
+     "Which form of feedback students generally prefer receiving after drafting?",
+     "Which proposal would cost schools less money to implement each year?",
+     "What must be true about students' use of feedback for each proposal to improve revision?",
+     "Which topic should the teams investigate first in the next debate?"
+    ],
+    "answerIndex": 2,
+    "explanation": "This question targets the unstated conditions each proposal needs in order to produce its claimed benefit.",
+    "difficulty": 8,
+    "skill": "Analyzing assumptions in debate",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q18",
+    "prompt": "A researcher wants to test whether a new writing workshop improves essays. Which study design would best support a causal conclusion about participating ninth graders?",
+    "choices": [
+     "Ask teachers to divide students into similar groups based on writing ability, then compare the groups afterward.",
+     "Let students choose whether to attend the workshop, then compare participating students with students who did not volunteer.",
+     "Have every student write an essay before and after the workshop, then compare the two sets of scores.",
+     "Randomly assign students to a workshop group and a control group, then compare their essays using blinded scoring."
+    ],
+    "answerIndex": 3,
+    "explanation": "Random assignment and blinded scoring best reduce alternative explanations, strengthening a causal conclusion about the participating ninth graders.",
+    "difficulty": 8,
+    "skill": "Evaluating experimental evidence",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q43",
+    "prompt": "A student finds a chart in a nonprofit report and reproduces it in a presentation without attribution. Which revision best meets academic-integrity standards?",
+    "choices": [
+     "Credit the chart's creator and source, and confirm whether permission is required for reuse.",
+     "Replace the chart with a screenshot and add the report's web address.",
+     "Paraphrase the chart's caption without identifying the report.",
+     "Describe the chart's findings in the student's own words and omit attribution."
+    ],
+    "answerIndex": 0,
+    "explanation": "Crediting the creator and source, while checking reuse requirements, properly attributes the chart and addresses permission for its reproduction.",
+    "difficulty": 7,
+    "skill": "Attributing sources ethically",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q9",
+    "prompt": "A reviewer writes that a section is confusing but does not identify a specific problem. Which response best turns that feedback into an actionable revision?",
+    "choices": [
+     "Rewrite the entire section immediately, interpreting the comment as a request for a different argument.",
+     "Ask the reviewer to identify the confusing passage and intended meaning, then revise that passage to address the mismatch.",
+     "Delete the section and move its strongest quotation to the introduction.",
+     "Retain the section unchanged but add a sentence declaring that the organization is clear."
+    ],
+    "answerIndex": 1,
+    "explanation": "Requesting a specific passage and intended meaning allows the writer to make a focused, evidence-based revision.",
+    "difficulty": 8,
+    "skill": "Using specific peer feedback",
+    "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q44",
+    "prompt": "A findings report includes students’ full names with quotations that could identify them. Which revision best protects participants while preserving the findings?",
+    "choices": [
+     "Remove every quotation and report only the numerical results instead.",
+     "Keep the full names because quotations make the report more persuasive to readers.",
+     "Replace each full name with a pseudonym and omit details that could identify the student.",
+     "Replace the full names with initials while retaining class, age, and teacher."
+    ],
+    "answerIndex": 2,
+    "explanation": "Replacing names with pseudonyms and removing identifying details protects participants while allowing the report to preserve and explain the findings.",
+    "difficulty": 8,
+    "skill": "Ethical publication",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q41",
+    "prompt": "During a formal discussion, one participant calls a proposal \"ridiculous,\" while another calls it \"surprisingly effective.\" What should the chair do first?",
+    "choices": [
+     "Ask the first speaker to apologize for using emotional language.",
+     "Hold a vote to determine which reaction is held by more participants.",
+     "End the discussion because the participants have different interpretations.",
+     "Ask each speaker to identify the proposal's specific feature and the evidence informing their judgment."
+    ],
+    "answerIndex": 3,
+    "explanation": "Requesting the specific feature and supporting evidence turns the disagreement into a focused comparison of claims and reasons.",
+    "difficulty": 7,
+    "skill": "Facilitating productive disagreement",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q1",
+    "prompt": "During a formal discussion, which response most effectively evaluates the reasoning behind a claim?",
+    "choices": [
+     "Ask what evidence supports the claim and whether it warrants the conclusion.",
+     "Ask how many sources support the claim and whether their viewpoints agree.",
+     "Ask how clearly the claim was stated and whether listeners remembered it.",
+     "Ask how recently the examples were given and whether their dates were included."
+    ],
+    "answerIndex": 0,
+    "explanation": "Evaluating whether cited evidence warrants a conclusion directly tests the logical reasoning behind the claim.",
+    "difficulty": 8,
+    "skill": "Evaluating arguments",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q2",
+    "prompt": "A speaker claims that introducing school uniforms caused attendance to rise. Which evidence would most directly test that causal claim?",
+    "choices": [
+     "Attendance data from the same school before uniforms were introduced",
+     "Attendance data from comparable schools that did not adopt uniforms",
+     "Survey responses from students who support the uniform policy",
+     "Counts of uniform-related discipline incidents after the policy began"
+    ],
+    "answerIndex": 1,
+    "explanation": "Attendance data from comparable schools without uniforms provides a direct comparison for testing whether uniforms caused the increase.",
+    "difficulty": 8,
+    "skill": "Testing causal claims",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q32",
+    "prompt": "A 2019 article supports a 2025 claim that online learning improves concentration. Which additional source would best determine whether the claim remains well supported?",
+    "choices": [
+     "A recent webpage that repeats the 2019 article's conclusion.",
+     "A list of online-learning platforms currently used by schools.",
+     "A recent empirical study that tests the same learning outcome with comparable students and online lessons.",
+     "A 2025 opinion column that agrees that online learning improves concentration."
+    ],
+    "answerIndex": 2,
+    "explanation": "A recent empirical study directly tests the same outcome with a relevant population, making it better suited than repetition or opinion for evaluating the current claim.",
+    "difficulty": 8,
+    "skill": "Assessing source currency and relevance",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q10",
+    "prompt": "Two speakers in a formal discussion cite conflicting statistics. Which question would best help the group compare the statistics fairly?",
+    "choices": [
+     "Can the group decide which statistic is larger before the speakers clarify how it was calculated?",
+     "Can each speaker state whether the statistic supports the other speaker's conclusion?",
+     "Can each speaker read the statistic aloud again and then explain the numerical difference?",
+     "Can each speaker identify the population, time period, and measurement behind the statistic?"
+    ],
+    "answerIndex": 3,
+    "explanation": "Comparing the populations, time periods, and measurements reveals whether the conflicting statistics are genuinely comparable.",
+    "difficulty": 9,
+    "skill": "Comparing evidence in formal discussion",
+    "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q50",
+    "prompt": "A report states that because 64% of surveyed students preferred flexible deadlines, the school should make flexible deadlines the only option. Which revision best keeps the finding and recommendation within the evidence?",
+    "choices": [
+     "Report that 64% of surveyed students preferred flexible deadlines, note the limits of the survey, and treat flexibility as a policy option for further review.",
+     "Keep the recommendation but change “because” to “although,” showing that the preference contradicts the proposed policy.",
+     "State that all students prefer flexible deadlines, making the recommendation directly supported by the survey.",
+     "Remove the survey result and recommend flexible deadlines as the only option on the basis of school leaders’ preferences."
+    ],
+    "answerIndex": 0,
+    "explanation": "This revision accurately reports what the surveyed students said, acknowledges that a survey preference does not by itself establish a universal policy mandate, and presents the proposal as something that deserves further evaluation.",
+    "difficulty": 8,
+    "skill": "Revising claims and recommendations",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q27",
+    "prompt": "In a formal discussion, a speaker says that public funding for arts programs is a waste of money but provides no supporting evidence. Which response best advances the discussion?",
+    "choices": [
+     "Treat the statement as a measurable factual claim and ask only for numerical data.",
+     "Ask the speaker to clarify what outcomes count as waste, then evaluate the factual assumptions supporting the claim.",
+     "Ask whether any arts program has ever succeeded, regardless of the speaker's standards.",
+     "Accept the statement as a personal opinion and move on to the next speaker."
+    ],
+    "answerIndex": 1,
+    "explanation": "This response distinguishes the speaker's value judgment from factual assumptions and creates a basis for evaluating the argument.",
+    "difficulty": 8,
+    "skill": "Evaluating value claims in formal discussion",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q3",
+    "prompt": "During revision, a reviewer says that a conclusion is too broad for the population represented by the cited survey. Which response demonstrates productive use of the feedback?",
+    "choices": [
+     "Remove the cited survey, then present the conclusion without supporting evidence.",
+     "Review the survey method, then keep the conclusion exactly as it was written.",
+     "Compare the survey sample with the conclusion, then narrow the claim to the population represented.",
+     "Challenge the reviewer's interpretation, then retain the original conclusion and wording."
+    ],
+    "answerIndex": 2,
+    "explanation": "Comparing the surveyed population with the conclusion and narrowing the claim appropriately addresses the reviewer's concern.",
+    "difficulty": 7,
+    "skill": "Responding to revision feedback",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q6",
+    "prompt": "After a presentation, an audience member challenges whether a graph's percentage changes can support a conclusion about individual students. Which response is most accurate?",
+    "choices": [
+     "State that the graph is visually clear, so the individual conclusion requires no qualification.",
+     "Recalculate percentages from the same graph to make the individual claim appear more precise.",
+     "Generalize the graph's group pattern to all students without revising the claim's scope.",
+     "Clarify that the graph describes aggregate data, so it cannot establish the claim about each individual."
+    ],
+    "answerIndex": 3,
+    "explanation": "A graph reporting aggregate percentages cannot by itself support conclusions about every individual member of the group.",
+    "difficulty": 8,
+    "skill": "Interpreting published findings",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q7",
+    "prompt": "Before sharing a technical findings report with a general audience, which revision best preserves accuracy while improving clarity?",
+    "choices": [
+     "Define specialized terms in plain language, connect each main finding to a relevant example, and retain the study's stated limits.",
+     "Replace statistical terms with stronger claims, provide dramatic examples, and omit limits that might weaken the conclusion.",
+     "Keep the technical wording, add a decorative illustration, and assume readers will infer the study's limits.",
+     "Remove the methods section, quote only the most favorable results, and present the conclusion as settled."
+    ],
+    "answerIndex": 0,
+    "explanation": "This revision makes the findings understandable while preserving the meaning and limitations of the original evidence.",
+    "difficulty": 8,
+    "skill": "Adapting technical findings for an audience",
+    "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q13",
+    "prompt": "A reviewer’s feedback conflicts with a student’s intended meaning in one paragraph. What is the most productive next step?",
+    "choices": [
+     "Rewrite the paragraph immediately so that it matches the reviewer’s preferred wording.",
+     "Discuss the disagreement by comparing the passage with the claim it is meant to support.",
+     "Remove the paragraph because the reviewer reports confusion about it.",
+     "Keep the paragraph unchanged and submit it without further review."
+    ],
+    "answerIndex": 1,
+    "explanation": "This response treats the disagreement as a discussion of how the passage supports the report’s claim rather than altering or deleting content without justification.",
+    "difficulty": 8,
+    "skill": "Responding constructively to feedback",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q21",
+    "prompt": "During a formal discussion, a participant says, Answer the question, without stating which question they mean. What should the chair do first?",
+    "choices": [
+     "Invite another participant to infer the intended question and provide an answer.",
+     "Ask the participant to answer the last question without seeking clarification.",
+     "Ask the participant to state the precise question they want answered.",
+     "Move the request to a vote on whether the question is relevant."
+    ],
+    "answerIndex": 2,
+    "explanation": "Requesting the precise question restores clarity and gives the group an issue it can evaluate directly.",
+    "difficulty": 7,
+    "skill": "Facilitating formal discussion",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q36",
+    "prompt": "During a debate, one team argues that a district should adopt a mentoring program because a similar program improved graduation rates in another city. Which question most directly tests whether that comparison supports the conclusion?",
+    "choices": [
+     "Has the other city received more funding for education during the past five years?",
+     "Did officials in the other city announce the mentoring program before the graduation results became known?",
+     "Would students in the debating district be willing to meet mentors after school each week?",
+     "Are the two cities' student populations, available resources, program features, and measures of success similar enough for the comparison to support the conclusion?"
+    ],
+    "answerIndex": 3,
+    "explanation": "A comparison can support a conclusion only when the compared programs and circumstances are sufficiently similar in the features that could affect the outcome.",
+    "difficulty": 8,
+    "skill": "Assessing analogies in debate",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q37",
+    "prompt": "A reviewer says a report accurately presents its data but does not explain why the findings matter to school leaders. Which revision best addresses the feedback without overstating the evidence?",
+    "choices": [
+     "Add an implication sentence that explains how the documented finding could inform a school decision while labeling it as an implication rather than a proven causal effect.",
+     "Replace the reported finding with a broader claim about school effectiveness because broader claims are more useful to leaders.",
+     "Remove the study's limitations so that the findings appear more decisive to school leaders.",
+     "Add quotations from school leaders praising the program so the report reflects their reactions to the findings."
+    ],
+    "answerIndex": 0,
+    "explanation": "A clearly identified implication can connect a documented finding to its practical significance without presenting that connection as a proven cause-and-effect relationship.",
+    "difficulty": 8,
+    "skill": "Responding to actionable feedback",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q48",
+    "prompt": "Two interventions raise test scores by 4 and 6 points, respectively, but their 95% confidence intervals overlap. Which conclusion is most defensible?",
+    "choices": [
+     "The six-point intervention is proven to be superior.",
+     "The available comparison does not establish a clear winner.",
+     "The four-point intervention is proven to be superior.",
+     "Both interventions have exactly equal effectiveness."
+    ],
+    "answerIndex": 1,
+    "explanation": "Overlapping confidence intervals do not by themselves establish that one intervention is clearly more effective than the other.",
+    "difficulty": 9,
+    "skill": "Interpreting statistical uncertainty",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q40",
+    "prompt": "A debate team cites a newspaper article claiming that a new tutoring program reduced dropout rates. Which action would best determine whether the source supports the team's claim?",
+    "choices": [
+     "Compare the article's wording with a similar article.",
+     "Repeat the newspaper's claim in larger type at the start.",
+     "Locate the original study and examine its sample, methods, and findings.",
+     "Count how many other outlets repeated the same claim."
+    ],
+    "answerIndex": 2,
+    "explanation": "The original study allows the team to evaluate the sample, methods, and findings rather than relying on a secondary report's summary.",
+    "difficulty": 8,
+    "skill": "Evaluating an evidence source",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q19",
+    "prompt": "A report uses a bar chart with a vertical axis extending from 24 to 26 to show mean scores of 25 and 26. Which caption most accurately communicates the graph without exaggerating the difference?",
+    "choices": [
+     "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 20.",
+     "The mean score rose by 2 points, from 24 to 26, and the vertical axis begins at 24.",
+     "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 0.",
+     "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 24."
+    ],
+    "answerIndex": 3,
+    "explanation": "This caption states the actual one-point increase and discloses the graph's restricted vertical scale.",
+    "difficulty": 7,
+    "skill": "Interpreting and explaining graphs",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q16",
+    "prompt": "A researcher cites a manufacturer’s press release about its own product. Which evaluation best determines whether the source supports the claim?",
+    "choices": [
+     "Check whether the release provides relevant data, methods, and a comparison group rather than relying on its conclusion.",
+     "Use the release if several independent websites repeat its claim without adding any analysis.",
+     "Accept the manufacturer’s conclusion because the company has direct knowledge of its own product.",
+     "Treat the release as strong evidence because its statistics come from a primary source."
+    ],
+    "answerIndex": 0,
+    "explanation": "A manufacturer’s press release is an interested source, so its data, methods, and comparison group must be examined before it can support a claim.",
+    "difficulty": 8,
+    "skill": "Evaluating source quality",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q12",
+    "prompt": "Before finalizing a findings report, a student discovers one unsupported claim and several imprecise sentences. Which revision plan is strongest?",
+    "choices": [
+     "Edit the imprecise sentences first, then use the polished wording to make the unsupported claim appear credible.",
+     "Verify or remove the unsupported claim, then edit the imprecise sentences for clarity and precision.",
+     "Add persuasive language to the unsupported claim, then correct the sentence-level issues in the next draft.",
+     "Keep both problems unchanged because revising the wording may weaken the report's overall argument."
+    ],
+    "answerIndex": 1,
+    "explanation": "Substantive accuracy should be addressed before sentence-level refinement so that clarity does not disguise an unsupported claim.",
+    "difficulty": 8,
+    "skill": "Prioritizing revision tasks",
+    "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q23",
+    "prompt": "Three speakers debate whether a school should require community service. Speaker 1 cites scheduling conflicts, Speaker 2 argues that service builds civic responsibility, and Speaker 3 says costs are manageable if deadlines are flexible. Which closing summary accurately preserves the discussion?",
+    "choices": [
+     "Speaker 1 emphasized civic benefits, Speaker 2 raised scheduling conflicts, and Speaker 3 argued that cost concerns were impossible to resolve.",
+     "Speaker 1 raised scheduling conflicts, Speaker 2 emphasized civic benefits, and Speaker 3 said flexible deadlines would not reduce cost concerns.",
+     "Speaker 1 raised scheduling conflicts, Speaker 2 emphasized civic benefits, and Speaker 3 proposed flexible deadlines to address cost concerns.",
+     "Speaker 1 argued that service should end, Speaker 2 supported mandatory service, and Speaker 3 reported unanimous support for flexible deadlines."
+    ],
+    "answerIndex": 2,
+    "explanation": "This summary accurately assigns each speaker's main point without inventing agreement or changing the arguments presented.",
+    "difficulty": 8,
+    "skill": "Summarizing formal discussion",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q29",
+    "prompt": "A speaker concedes that one survey found mixed results but argues that the policy should still be adopted. Which rebuttal responds to the concession most effectively?",
+    "choices": [
+     "Ignore the mixed findings because one study cannot determine outcomes in any setting.",
+     "Repeat the proposal without discussing the mixed findings to avoid confusing the audience.",
+     "Claim that the mixed findings prove the proposal will fail because one survey outweighed all other evidence.",
+     "Acknowledge the mixed findings, then explain why the remaining evidence supports a narrower version of the proposal."
+    ],
+    "answerIndex": 3,
+    "explanation": "This response acknowledges the counterevidence and limits the proposal to what the remaining evidence can support without dismissing the mixed findings.",
+    "difficulty": 8,
+    "skill": "Constructing a concession-based rebuttal",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q5",
+    "prompt": "In a debate, one team has strong evidence against the opposing team's proposal. Which move strengthens its case most responsibly?",
+    "choices": [
+     "Acknowledge the opponent's strongest point and explain why the evidence still weighs against the proposal.",
+     "Accept the opponent's main premise and focus only on presentation style.",
+     "Omit the opponent's strongest point and repeat the claim most often stated.",
+     "Treat all opposing evidence equally and avoid weighing its relative strength."
+    ],
+    "answerIndex": 0,
+    "explanation": "Acknowledging the strongest opposing point while explaining why the overall evidence still favors the proposal is credible and responsive debate practice.",
+    "difficulty": 7,
+    "skill": "Constructing a rebuttal",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which opening statement most effectively frames a debate before the teams present their cases?",
+    "choices": [
+     "Begin with a personal story, describe the opposing team, and invite sympathy for the team's cause.",
+     "Define the key terms, state the team's position, and identify the criteria by which both proposals will be judged.",
+     "Summarize the strongest opposing argument and rebut it before stating the team's own proposal or criteria.",
+     "List several publications and read excerpts from each without identifying the team's position or the issue's key terms."
+    ],
+    "answerIndex": 1,
+    "explanation": "A strong debate frame establishes shared terms, the team's position, and the standards used to evaluate the competing proposals.",
+    "difficulty": 8,
+    "skill": "Framing a debate",
+    "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q34",
+    "prompt": "A survey found that 18 of 24 students who attended a writing workshop said they would recommend it. Which statement reports the finding most accurately?",
+    "choices": [
+     "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, showing that 75% of the school would recommend it.",
+     "Among all students, 75% said they would recommend the writing workshop.",
+     "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, a response rate of 75%.",
+     "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, a response rate of 18%."
+    ],
+    "answerIndex": 2,
+    "explanation": "Because 18 divided by 24 equals 75%, the result applies to the 24 surveyed workshop participants rather than to every student.",
+    "difficulty": 8,
+    "skill": "Reporting survey results accurately",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q49",
+    "prompt": "Before publication, a reviewer asks whether a reported effect would still appear if one school were removed. Which response best addresses the reviewer’s concern?",
+    "choices": [
+     "Rewrite the conclusion more forcefully to discourage further questions.",
+     "Insist that the school is typical, so no further calculation is needed.",
+     "Remove the school’s data permanently without checking the remaining results.",
+     "Recalculate the result without that school and report whether the conclusion changes."
+    ],
+    "answerIndex": 3,
+    "explanation": "Recalculating the result without one school directly tests whether the finding depends on that school and allows the report to address the concern accurately.",
+    "difficulty": 9,
+    "skill": "Responding to review feedback",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q15",
+    "prompt": "A speaker argues that recorded lectures should replace some in-class practice because replaying explanations helps students review. Which response accurately restates the position before the group discusses it?",
+    "choices": [
+     "The speaker believes recorded lectures can support independent review while freeing some class time for practice.",
+     "The speaker claims that replaying explanations is a substitute for feedback from an instructor.",
+     "The speaker argues that recorded lectures improve review only for students who miss class.",
+     "The speaker wants to eliminate all in-class practice and replace every live lecture with a recording."
+    ],
+    "answerIndex": 0,
+    "explanation": "This restatement captures both the speaker’s proposed benefit and the limited claim that only some in-class practice would be replaced.",
+    "difficulty": 8,
+    "skill": "Accurately paraphrasing a position",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q25",
+    "prompt": "During a formal discussion, a speaker repeats a point already made twice while the group has limited time left. What should the chair do?",
+    "choices": [
+     "Call for an immediate vote on the repeated point without hearing any remaining responses.",
+     "Summarize the repeated point, group it with related comments, and invite speakers to contribute a new point or question.",
+     "Allow the speaker to continue because repetition may indicate that the point is important to the group.",
+     "Ask another participant to restate the same point before the chair responds to it."
+    ],
+    "answerIndex": 1,
+    "explanation": "Summarizing the point and inviting new contributions helps the chair preserve time while keeping the discussion focused.",
+    "difficulty": 7,
+    "skill": "Facilitating a focused formal discussion",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q42",
+    "prompt": "A survey report states that \"90% of students preferred digital textbooks,\" but it omits important details about the sample. Which addition would make the claim easiest to assess?",
+    "choices": [
+     "The average time students spent reading each digital textbook.",
+     "The number of pages contained in each digital textbook.",
+     "The number of students invited, the number who responded, and the method used to select them.",
+     "The percentage of teachers who recommended digital textbooks."
+    ],
+    "answerIndex": 2,
+    "explanation": "The response count and selection method reveal who the percentage represents and whether the sample is adequate for assessing the claim.",
+    "difficulty": 8,
+    "skill": "Providing statistical context",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q46",
+    "prompt": "A report presents a single expert’s prediction as a finding even though no data were collected. Which revision best corrects the mismatch?",
+    "choices": [
+     "Omit the prediction because predictions cannot appear in research reports.",
+     "Present it as a finding because experts possess specialized knowledge.",
+     "Add a second expert’s prediction and present both as confirmed evidence.",
+     "Label it as the expert’s prediction and distinguish it from empirical findings."
+    ],
+    "answerIndex": 3,
+    "explanation": "Labeling the statement as a prediction accurately communicates that it is expert commentary rather than evidence collected through research.",
+    "difficulty": 8,
+    "skill": "Distinguishing evidence from claims",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q26",
+    "prompt": "A reviewer recommends deleting a sentence that states the study covered only one middle school because the limitation weakens the conclusion. Which response is strongest?",
+    "choices": [
+     "Retain the limitation and explain how it narrows the strength and scope of the conclusion.",
+     "Delete the sentence because limitations interfere with readers' ability to accept a study.",
+     "Replace the limitation with a broader statement about the study population without additional evidence.",
+     "Keep the study population hidden so readers focus on the positive findings."
+    ],
+    "answerIndex": 0,
+    "explanation": "Retaining the limitation and explaining its effect preserves transparency and helps readers interpret the conclusion accurately.",
+    "difficulty": 8,
+    "skill": "Responding to feedback about study limitations",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q4",
+    "prompt": "During a formal discussion, one speaker cites a passage, but an opponent argues that the passage supports a different meaning. Which move best addresses the disagreement?",
+    "choices": [
+     "Ask the speaker to summarize the source's main point in one sentence.",
+     "Ask the speaker to read the passage in context and explain the inference it supports.",
+     "Ask the opponent to provide two additional sources before the discussion continues.",
+     "Ask the audience to choose based on which speaker used more examples."
+    ],
+    "answerIndex": 1,
+    "explanation": "Reading the passage in context and explaining its inference directly examines whether the cited evidence supports the speaker's interpretation.",
+    "difficulty": 8,
+    "skill": "Responding to challenges in formal discussion",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q28",
+    "prompt": "A results table lists mean scores of 82 and 76 for two groups but gives no sample sizes. Which revision most responsibly improves the report?",
+    "choices": [
+     "Remove means for groups with fewer than 20 students.",
+     "Average the two means and report one combined score.",
+     "Add the number of students in each group beside its mean.",
+     "Increase each mean to the scale's maximum before comparing groups."
+    ],
+    "answerIndex": 2,
+    "explanation": "Adding each group's sample size beside its mean shows how many observations the averages represent, making the comparison easier to interpret.",
+    "difficulty": 7,
+    "skill": "Reporting group sample sizes",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q47",
+    "prompt": "Speakers disagree about whether a proposed school policy is fair. Which question from the chair would most productively move the discussion toward a reasoned decision?",
+    "choices": [
+     "How frequently could the district change the policy again?",
+     "Do you personally prefer the policy or oppose it?",
+     "Has anyone spoken with people outside this discussion group?",
+     "Which criteria should the group use to judge fairness in this context?"
+    ],
+    "answerIndex": 3,
+    "explanation": "Identifying relevant criteria gives speakers a shared basis for evaluating fairness and developing a defensible decision.",
+    "difficulty": 8,
+    "skill": "Facilitating reasoned discussion",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q11",
+    "prompt": "A chart shows that participating students' mean test score rose by 8 points from pretest to posttest. Which conclusion is most defensible?",
+    "choices": [
+     "For participating students, the mean score rose by 8 points from pretest to posttest, but the chart does not establish a causal effect.",
+     "Tutoring caused an 8-point increase for participating students because the pretest and posttest scores were compared.",
+     "Every participating student improved by 8 points, and students who received no tutoring did not improve.",
+     "The program was associated with an 8-point mean increase, and the comparison proves that tutoring was the most effective intervention."
+    ],
+    "answerIndex": 0,
+    "explanation": "The chart supports a descriptive statement about the participating group's mean change but does not show that tutoring caused the change.",
+    "difficulty": 9,
+    "skill": "Drawing evidence-bounded conclusions",
+    "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q24",
+    "prompt": "A report states that students' vocabulary scores rose and concludes that their writing became more sophisticated. Which revision best addresses the mismatch between the evidence and the conclusion?",
+    "choices": [
+     "State that the higher vocabulary scores prove that every aspect of students' writing improved.",
+     "Clarify that the results show improved performance on the vocabulary measure but do not by themselves establish broader writing sophistication.",
+     "Replace the vocabulary-test results with teacher impressions and present the impressions as the measured finding.",
+     "Conclude that the study measured writing sophistication even though only vocabulary scores were reported."
+    ],
+    "answerIndex": 1,
+    "explanation": "The revision correctly limits the conclusion to the construct actually measured by the vocabulary assessment.",
+    "difficulty": 8,
+    "skill": "Matching conclusions to the measure used",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q30",
+    "prompt": "During a formal discussion, one speaker has spoken for most of the time, while three participants have not spoken. Which action by the chair best supports fair participation?",
+    "choices": [
+     "Allow the frequent speaker to continue because the discussion is already well focused.",
+     "Ask the quieter participants to save their comments until the end of the discussion.",
+     "Invite each participant who has not spoken to offer one concise response before the discussion continues.",
+     "Summarize the frequent speaker's argument and ask whether anyone agrees with it."
+    ],
+    "answerIndex": 2,
+    "explanation": "Inviting each unheard participant to contribute briefly gives speakers equitable access without allowing one person to dominate the discussion.",
+    "difficulty": 8,
+    "skill": "Facilitating equitable formal discussion",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q38",
+    "prompt": "During a formal discussion, participants offer evidence for two school policies but use different standards for judging them. Which intervention by the chair would make the comparison more productive?",
+    "choices": [
+     "Ask the participants to postpone all criticism until both proposals have been summarized in full.",
+     "Ask the participants to take turns speaking until each team has presented every supporting example.",
+     "Ask the participants to vote for the policy with the larger number of supporting examples.",
+     "Ask the participants to clarify the criteria for a successful policy, then evaluate both proposals against those shared criteria."
+    ],
+    "answerIndex": 3,
+    "explanation": "Shared criteria allow evidence for the two proposals to be compared consistently rather than according to each participant's preferred standard.",
+    "difficulty": 8,
+    "skill": "Facilitating criteria-based formal discussion",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   },
+   {
+    "id": "q20",
+    "prompt": "Before publication, a reviewer asks how participants were selected, but the draft says only that students from local high schools were studied. Which revision best makes the methods transparent?",
+    "choices": [
+     "Add the recruitment procedure, eligibility criteria, and period during which participants were selected.",
+     "Add the names of all participants and publish each student's complete response transcript.",
+     "Remove the participant details to protect the study's findings from public scrutiny.",
+     "State that the participants were representative without describing how they were selected."
+    ],
+    "answerIndex": 0,
+    "explanation": "Describing recruitment, eligibility, and timing allows readers to evaluate how the sample was assembled.",
+    "difficulty": 7,
+    "skill": "Revising methods for transparency",
+    "topic": "Tester 8 of 9: Entry Check, Part 8 of 9"
+   },
+   {
+    "id": "q31",
+    "prompt": "A study finds that 12% of sampled students improved and reports a margin of error of 4 percentage points. Which caption communicates the result accurately?",
+    "choices": [
+     "Exactly 12% of students improved, with an uncertainty range of 4 percentage points.",
+     "The estimated improvement rate among sampled students was 12%, with a margin of error of 4 percentage points.",
+     "The improvement rate was 12%, with a possible error equal to 4% of the 12% reported.",
+     "The improvement rate was 12%, and the margin of error confirms that 12% was the exact population rate."
+    ],
+    "answerIndex": 1,
+    "explanation": "The caption correctly identifies 12% as an estimate and expresses the margin of error in percentage points rather than presenting the result as exact.",
+    "difficulty": 8,
+    "skill": "Communicating statistical uncertainty",
+    "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion"
+   }
+  ],
+  "feedback": {
+   "correct": "Clean hit! That mole won't be publishing anything.",
+   "incorrect": "The mole slipped away — review the debate and feedback skills and try again.",
+   "win": "All moles whacked! You have mastered publishing findings and responding to feedback.",
+   "lose": "Too many moles got loose. Revisit formal discussion skills before your next entry check.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "During a formal discussion, which response most effectively evaluates the reasoning behind a claim?",
+   "choices": [
+    "Ask what evidence supports the claim and whether it warrants the conclusion.",
+    "Ask how many sources support the claim and whether their viewpoints agree.",
+    "Ask how clearly the claim was stated and whether listeners remembered it.",
+    "Ask how recently the examples were given and whether their dates were included."
+   ],
+   "answerIndex": 0,
+   "explanation": "Evaluating whether cited evidence warrants a conclusion directly tests the logical reasoning behind the claim.",
+   "difficulty": 8,
+   "skill": "Evaluating arguments",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A speaker claims that introducing school uniforms caused attendance to rise. Which evidence would most directly test that causal claim?",
+   "choices": [
+    "Attendance data from comparable schools that did not adopt uniforms",
+    "Attendance data from the same school before uniforms were introduced",
+    "Survey responses from students who support the uniform policy",
+    "Counts of uniform-related discipline incidents after the policy began"
+   ],
+   "answerIndex": 0,
+   "explanation": "Attendance data from comparable schools without uniforms provides a direct comparison for testing whether uniforms caused the increase.",
+   "difficulty": 8,
+   "skill": "Testing causal claims",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "During revision, a reviewer says that a conclusion is too broad for the population represented by the cited survey. Which response demonstrates productive use of the feedback?",
+   "choices": [
+    "Compare the survey sample with the conclusion, then narrow the claim to the population represented.",
+    "Review the survey method, then keep the conclusion exactly as it was written.",
+    "Remove the cited survey, then present the conclusion without supporting evidence.",
+    "Challenge the reviewer's interpretation, then retain the original conclusion and wording."
+   ],
+   "answerIndex": 0,
+   "explanation": "Comparing the surveyed population with the conclusion and narrowing the claim appropriately addresses the reviewer's concern.",
+   "difficulty": 7,
+   "skill": "Responding to revision feedback",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, one speaker cites a passage, but an opponent argues that the passage supports a different meaning. Which move best addresses the disagreement?",
+   "choices": [
+    "Ask the speaker to read the passage in context and explain the inference it supports.",
+    "Ask the speaker to summarize the source's main point in one sentence.",
+    "Ask the opponent to provide two additional sources before the discussion continues.",
+    "Ask the audience to choose based on which speaker used more examples."
+   ],
+   "answerIndex": 0,
+   "explanation": "Reading the passage in context and explaining its inference directly examines whether the cited evidence supports the speaker's interpretation.",
+   "difficulty": 8,
+   "skill": "Responding to challenges in formal discussion",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In a debate, one team has strong evidence against the opposing team's proposal. Which move strengthens its case most responsibly?",
+   "choices": [
+    "Acknowledge the opponent's strongest point and explain why the evidence still weighs against the proposal.",
+    "Accept the opponent's main premise and focus only on presentation style.",
+    "Omit the opponent's strongest point and repeat the claim most often stated.",
+    "Treat all opposing evidence equally and avoid weighing its relative strength."
+   ],
+   "answerIndex": 0,
+   "explanation": "Acknowledging the strongest opposing point while explaining why the overall evidence still favors the proposal is credible and responsive debate practice.",
+   "difficulty": 7,
+   "skill": "Constructing a rebuttal",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "After a presentation, an audience member challenges whether a graph's percentage changes can support a conclusion about individual students. Which response is most accurate?",
+   "choices": [
+    "Clarify that the graph describes aggregate data, so it cannot establish the claim about each individual.",
+    "Recalculate percentages from the same graph to make the individual claim appear more precise.",
+    "Generalize the graph's group pattern to all students without revising the claim's scope.",
+    "State that the graph is visually clear, so the individual conclusion requires no qualification."
+   ],
+   "answerIndex": 0,
+   "explanation": "A graph reporting aggregate percentages cannot by itself support conclusions about every individual member of the group.",
+   "difficulty": 8,
+   "skill": "Interpreting published findings",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Before sharing a technical findings report with a general audience, which revision best preserves accuracy while improving clarity?",
+   "choices": [
+    "Define specialized terms in plain language, connect each main finding to a relevant example, and retain the study's stated limits.",
+    "Replace statistical terms with stronger claims, provide dramatic examples, and omit limits that might weaken the conclusion.",
+    "Keep the technical wording, add a decorative illustration, and assume readers will infer the study's limits.",
+    "Remove the methods section, quote only the most favorable results, and present the conclusion as settled."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision makes the findings understandable while preserving the meaning and limitations of the original evidence.",
+   "difficulty": 8,
+   "skill": "Adapting technical findings for an audience",
+   "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which opening statement most effectively frames a debate before the teams present their cases?",
+   "choices": [
+    "Define the key terms, state the team's position, and identify the criteria by which both proposals will be judged.",
+    "Begin with a personal story, describe the opposing team, and invite sympathy for the team's cause.",
+    "Summarize the strongest opposing argument and rebut it before stating the team's own proposal or criteria.",
+    "List several publications and read excerpts from each without identifying the team's position or the issue's key terms."
+   ],
+   "answerIndex": 0,
+   "explanation": "A strong debate frame establishes shared terms, the team's position, and the standards used to evaluate the competing proposals.",
+   "difficulty": 8,
+   "skill": "Framing a debate",
+   "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A reviewer writes that a section is confusing but does not identify a specific problem. Which response best turns that feedback into an actionable revision?",
+   "choices": [
+    "Ask the reviewer to identify the confusing passage and intended meaning, then revise that passage to address the mismatch.",
+    "Rewrite the entire section immediately, interpreting the comment as a request for a different argument.",
+    "Delete the section and move its strongest quotation to the introduction.",
+    "Retain the section unchanged but add a sentence declaring that the organization is clear."
+   ],
+   "answerIndex": 0,
+   "explanation": "Requesting a specific passage and intended meaning allows the writer to make a focused, evidence-based revision.",
+   "difficulty": 8,
+   "skill": "Using specific peer feedback",
+   "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Two speakers in a formal discussion cite conflicting statistics. Which question would best help the group compare the statistics fairly?",
+   "choices": [
+    "Can each speaker identify the population, time period, and measurement behind the statistic?",
+    "Can each speaker state whether the statistic supports the other speaker's conclusion?",
+    "Can each speaker read the statistic aloud again and then explain the numerical difference?",
+    "Can the group decide which statistic is larger before the speakers clarify how it was calculated?"
+   ],
+   "answerIndex": 0,
+   "explanation": "Comparing the populations, time periods, and measurements reveals whether the conflicting statistics are genuinely comparable.",
+   "difficulty": 9,
+   "skill": "Comparing evidence in formal discussion",
+   "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A chart shows that participating students' mean test score rose by 8 points from pretest to posttest. Which conclusion is most defensible?",
+   "choices": [
+    "For participating students, the mean score rose by 8 points from pretest to posttest, but the chart does not establish a causal effect.",
+    "Tutoring caused an 8-point increase for participating students because the pretest and posttest scores were compared.",
+    "Every participating student improved by 8 points, and students who received no tutoring did not improve.",
+    "The program was associated with an 8-point mean increase, and the comparison proves that tutoring was the most effective intervention."
+   ],
+   "answerIndex": 0,
+   "explanation": "The chart supports a descriptive statement about the participating group's mean change but does not show that tutoring caused the change.",
+   "difficulty": 9,
+   "skill": "Drawing evidence-bounded conclusions",
+   "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Before finalizing a findings report, a student discovers one unsupported claim and several imprecise sentences. Which revision plan is strongest?",
+   "choices": [
+    "Verify or remove the unsupported claim, then edit the imprecise sentences for clarity and precision.",
+    "Edit the imprecise sentences first, then use the polished wording to make the unsupported claim appear credible.",
+    "Add persuasive language to the unsupported claim, then correct the sentence-level issues in the next draft.",
+    "Keep both problems unchanged because revising the wording may weaken the report's overall argument."
+   ],
+   "answerIndex": 0,
+   "explanation": "Substantive accuracy should be addressed before sentence-level refinement so that clarity does not disguise an unsupported claim.",
+   "difficulty": 8,
+   "skill": "Prioritizing revision tasks",
+   "topic": "Entry Check, Part 8 of 9: Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A reviewer’s feedback conflicts with a student’s intended meaning in one paragraph. What is the most productive next step?",
+   "choices": [
+    "Rewrite the paragraph immediately so that it matches the reviewer’s preferred wording.",
+    "Remove the paragraph because the reviewer reports confusion about it.",
+    "Discuss the disagreement by comparing the passage with the claim it is meant to support.",
+    "Keep the paragraph unchanged and submit it without further review."
+   ],
+   "answerIndex": 2,
+   "explanation": "This response treats the disagreement as a discussion of how the passage supports the report’s claim rather than altering or deleting content without justification.",
+   "difficulty": 8,
+   "skill": "Responding constructively to feedback",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "With only three minutes left in a formal discussion, which action most effectively helps the group reach a useful conclusion?",
+   "choices": [
+    "Ask every participant to repeat their earliest point so the chair can identify the longest argument.",
+    "Allow each new speaker equal time, even if several repeat arguments already presented.",
+    "Synthesize the points of agreement and disagreement, prioritize the unresolved issue that affects the decision, and invite a final response.",
+    "Call for an immediate vote before the remaining speakers can address the main disagreement."
+   ],
+   "answerIndex": 2,
+   "explanation": "This action turns the limited time into a structured synthesis, focuses attention on the decisive issue, and preserves a path to a reasoned decision.",
+   "difficulty": 7,
+   "skill": "Facilitating a formal discussion",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A speaker argues that recorded lectures should replace some in-class practice because replaying explanations helps students review. Which response accurately restates the position before the group discusses it?",
+   "choices": [
+    "The speaker wants to eliminate all in-class practice and replace every live lecture with a recording.",
+    "The speaker claims that replaying explanations is a substitute for feedback from an instructor.",
+    "The speaker argues that recorded lectures improve review only for students who miss class.",
+    "The speaker believes recorded lectures can support independent review while freeing some class time for practice."
+   ],
+   "answerIndex": 3,
+   "explanation": "This restatement captures both the speaker’s proposed benefit and the limited claim that only some in-class practice would be replaced.",
+   "difficulty": 8,
+   "skill": "Accurately paraphrasing a position",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A researcher cites a manufacturer’s press release about its own product. Which evaluation best determines whether the source supports the claim?",
+   "choices": [
+    "Accept the manufacturer’s conclusion because the company has direct knowledge of its own product.",
+    "Use the release if several independent websites repeat its claim without adding any analysis.",
+    "Check whether the release provides relevant data, methods, and a comparison group rather than relying on its conclusion.",
+    "Treat the release as strong evidence because its statistics come from a primary source."
+   ],
+   "answerIndex": 2,
+   "explanation": "A manufacturer’s press release is an interested source, so its data, methods, and comparison group must be examined before it can support a claim.",
+   "difficulty": 8,
+   "skill": "Evaluating source quality",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Reviewers offer conflicting suggestions about a report’s organization. Which response best demonstrates responsible revision?",
+   "choices": [
+    "Compare the suggestions with the report’s purpose and audience, choose the organization that best supports both, and explain the final decision.",
+    "Combine every suggested section order so no reviewer can claim that a recommendation was ignored.",
+    "Follow only the reviewer who proposed the most detailed structure because that suggestion is automatically the strongest.",
+    "Reject all conflicting suggestions and retain the original organization without further revision."
+   ],
+   "answerIndex": 0,
+   "explanation": "This response bases revision choices on the report’s purpose and audience while requiring the writer to justify decisions rather than follow feedback mechanically.",
+   "difficulty": 8,
+   "skill": "Synthesizing reviewer feedback",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A researcher wants to test whether a new writing workshop improves essays. Which study design would best support a causal conclusion about participating ninth graders?",
+   "choices": [
+    "Randomly assign students to a workshop group and a control group, then compare their essays using blinded scoring.",
+    "Let students choose whether to attend the workshop, then compare participating students with students who did not volunteer.",
+    "Have every student write an essay before and after the workshop, then compare the two sets of scores.",
+    "Ask teachers to divide students into similar groups based on writing ability, then compare the groups afterward."
+   ],
+   "answerIndex": 0,
+   "explanation": "Random assignment and blinded scoring best reduce alternative explanations, strengthening a causal conclusion about the participating ninth graders.",
+   "difficulty": 8,
+   "skill": "Evaluating experimental evidence",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A report uses a bar chart with a vertical axis extending from 24 to 26 to show mean scores of 25 and 26. Which caption most accurately communicates the graph without exaggerating the difference?",
+   "choices": [
+    "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 24.",
+    "The mean score rose by 2 points, from 24 to 26, and the vertical axis begins at 24.",
+    "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 0.",
+    "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 20."
+   ],
+   "answerIndex": 0,
+   "explanation": "This caption states the actual one-point increase and discloses the graph's restricted vertical scale.",
+   "difficulty": 7,
+   "skill": "Interpreting and explaining graphs",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Before publication, a reviewer asks how participants were selected, but the draft says only that students from local high schools were studied. Which revision best makes the methods transparent?",
+   "choices": [
+    "Add the recruitment procedure, eligibility criteria, and period during which participants were selected.",
+    "Add the names of all participants and publish each student's complete response transcript.",
+    "Remove the participant details to protect the study's findings from public scrutiny.",
+    "State that the participants were representative without describing how they were selected."
+   ],
+   "answerIndex": 0,
+   "explanation": "Describing recruitment, eligibility, and timing allows readers to evaluate how the sample was assembled.",
+   "difficulty": 7,
+   "skill": "Revising methods for transparency",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, a participant says, Answer the question, without stating which question they mean. What should the chair do first?",
+   "choices": [
+    "Ask the participant to state the precise question they want answered.",
+    "Ask the participant to answer the last question without seeking clarification.",
+    "Invite another participant to infer the intended question and provide an answer.",
+    "Move the request to a vote on whether the question is relevant."
+   ],
+   "answerIndex": 0,
+   "explanation": "Requesting the precise question restores clarity and gives the group an issue it can evaluate directly.",
+   "difficulty": 7,
+   "skill": "Facilitating formal discussion",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Both debate teams agree that more revision practice could improve essays, but one proposes peer review and the other teacher feedback. Which question best examines the central assumption behind each proposal?",
+   "choices": [
+    "What must be true about students' use of feedback for each proposal to improve revision?",
+    "Which proposal would cost schools less money to implement each year?",
+    "Which form of feedback students generally prefer receiving after drafting?",
+    "Which topic should the teams investigate first in the next debate?"
+   ],
+   "answerIndex": 0,
+   "explanation": "This question targets the unstated conditions each proposal needs in order to produce its claimed benefit.",
+   "difficulty": 8,
+   "skill": "Analyzing assumptions in debate",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Three speakers debate whether a school should require community service. Speaker 1 cites scheduling conflicts, Speaker 2 argues that service builds civic responsibility, and Speaker 3 says costs are manageable if deadlines are flexible. Which closing summary accurately preserves the discussion?",
+   "choices": [
+    "Speaker 1 raised scheduling conflicts, Speaker 2 emphasized civic benefits, and Speaker 3 proposed flexible deadlines to address cost concerns.",
+    "Speaker 1 raised scheduling conflicts, Speaker 2 emphasized civic benefits, and Speaker 3 said flexible deadlines would not reduce cost concerns.",
+    "Speaker 1 emphasized civic benefits, Speaker 2 raised scheduling conflicts, and Speaker 3 argued that cost concerns were impossible to resolve.",
+    "Speaker 1 argued that service should end, Speaker 2 supported mandatory service, and Speaker 3 reported unanimous support for flexible deadlines."
+   ],
+   "answerIndex": 0,
+   "explanation": "This summary accurately assigns each speaker's main point without inventing agreement or changing the arguments presented.",
+   "difficulty": 8,
+   "skill": "Summarizing formal discussion",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A report states that students' vocabulary scores rose and concludes that their writing became more sophisticated. Which revision best addresses the mismatch between the evidence and the conclusion?",
+   "choices": [
+    "State that the higher vocabulary scores prove that every aspect of students' writing improved.",
+    "Replace the vocabulary-test results with teacher impressions and present the impressions as the measured finding.",
+    "Clarify that the results show improved performance on the vocabulary measure but do not by themselves establish broader writing sophistication.",
+    "Conclude that the study measured writing sophistication even though only vocabulary scores were reported."
+   ],
+   "answerIndex": 2,
+   "explanation": "The revision correctly limits the conclusion to the construct actually measured by the vocabulary assessment.",
+   "difficulty": 8,
+   "skill": "Matching conclusions to the measure used",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, a speaker repeats a point already made twice while the group has limited time left. What should the chair do?",
+   "choices": [
+    "Summarize the repeated point, group it with related comments, and invite speakers to contribute a new point or question.",
+    "Call for an immediate vote on the repeated point without hearing any remaining responses.",
+    "Allow the speaker to continue because repetition may indicate that the point is important to the group.",
+    "Ask another participant to restate the same point before the chair responds to it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Summarizing the point and inviting new contributions helps the chair preserve time while keeping the discussion focused.",
+   "difficulty": 7,
+   "skill": "Facilitating a focused formal discussion",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A reviewer recommends deleting a sentence that states the study covered only one middle school because the limitation weakens the conclusion. Which response is strongest?",
+   "choices": [
+    "Delete the sentence because limitations interfere with readers' ability to accept a study.",
+    "Retain the limitation and explain how it narrows the strength and scope of the conclusion.",
+    "Replace the limitation with a broader statement about the study population without additional evidence.",
+    "Keep the study population hidden so readers focus on the positive findings."
+   ],
+   "answerIndex": 1,
+   "explanation": "Retaining the limitation and explaining its effect preserves transparency and helps readers interpret the conclusion accurately.",
+   "difficulty": 8,
+   "skill": "Responding to feedback about study limitations",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "In a formal discussion, a speaker says that public funding for arts programs is a waste of money but provides no supporting evidence. Which response best advances the discussion?",
+   "choices": [
+    "Treat the statement as a measurable factual claim and ask only for numerical data.",
+    "Ask the speaker to clarify what outcomes count as waste, then evaluate the factual assumptions supporting the claim.",
+    "Ask whether any arts program has ever succeeded, regardless of the speaker's standards.",
+    "Accept the statement as a personal opinion and move on to the next speaker."
+   ],
+   "answerIndex": 1,
+   "explanation": "This response distinguishes the speaker's value judgment from factual assumptions and creates a basis for evaluating the argument.",
+   "difficulty": 8,
+   "skill": "Evaluating value claims in formal discussion",
+   "topic": "Tester 8 of 9: Entry Check, Part 8 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A results table lists mean scores of 82 and 76 for two groups but gives no sample sizes. Which revision most responsibly improves the report?",
+   "choices": [
+    "Add the number of students in each group beside its mean.",
+    "Average the two means and report one combined score.",
+    "Remove means for groups with fewer than 20 students.",
+    "Increase each mean to the scale's maximum before comparing groups."
+   ],
+   "answerIndex": 0,
+   "explanation": "Adding each group's sample size beside its mean shows how many observations the averages represent, making the comparison easier to interpret.",
+   "difficulty": 7,
+   "skill": "Reporting group sample sizes",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A speaker concedes that one survey found mixed results but argues that the policy should still be adopted. Which rebuttal responds to the concession most effectively?",
+   "choices": [
+    "Ignore the mixed findings because one study cannot determine outcomes in any setting.",
+    "Repeat the proposal without discussing the mixed findings to avoid confusing the audience.",
+    "Acknowledge the mixed findings, then explain why the remaining evidence supports a narrower version of the proposal.",
+    "Claim that the mixed findings prove the proposal will fail because one survey outweighed all other evidence."
+   ],
+   "answerIndex": 2,
+   "explanation": "This response acknowledges the counterevidence and limits the proposal to what the remaining evidence can support without dismissing the mixed findings.",
+   "difficulty": 8,
+   "skill": "Constructing a concession-based rebuttal",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, one speaker has spoken for most of the time, while three participants have not spoken. Which action by the chair best supports fair participation?",
+   "choices": [
+    "Allow the frequent speaker to continue because the discussion is already well focused.",
+    "Ask the quieter participants to save their comments until the end of the discussion.",
+    "Summarize the frequent speaker's argument and ask whether anyone agrees with it.",
+    "Invite each participant who has not spoken to offer one concise response before the discussion continues."
+   ],
+   "answerIndex": 3,
+   "explanation": "Inviting each unheard participant to contribute briefly gives speakers equitable access without allowing one person to dominate the discussion.",
+   "difficulty": 8,
+   "skill": "Facilitating equitable formal discussion",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A study finds that 12% of sampled students improved and reports a margin of error of 4 percentage points. Which caption communicates the result accurately?",
+   "choices": [
+    "Exactly 12% of students improved, with an uncertainty range of 4 percentage points.",
+    "The estimated improvement rate among sampled students was 12%, with a margin of error of 4 percentage points.",
+    "The improvement rate was 12%, with a possible error equal to 4% of the 12% reported.",
+    "The improvement rate was 12%, and the margin of error confirms that 12% was the exact population rate."
+   ],
+   "answerIndex": 1,
+   "explanation": "The caption correctly identifies 12% as an estimate and expresses the margin of error in percentage points rather than presenting the result as exact.",
+   "difficulty": 8,
+   "skill": "Communicating statistical uncertainty",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A 2019 article supports a 2025 claim that online learning improves concentration. Which additional source would best determine whether the claim remains well supported?",
+   "choices": [
+    "A recent webpage that repeats the 2019 article's conclusion.",
+    "A list of online-learning platforms currently used by schools.",
+    "A recent empirical study that tests the same learning outcome with comparable students and online lessons.",
+    "A 2025 opinion column that agrees that online learning improves concentration."
+   ],
+   "answerIndex": 2,
+   "explanation": "A recent empirical study directly tests the same outcome with a relevant population, making it better suited than repetition or opinion for evaluating the current claim.",
+   "difficulty": 8,
+   "skill": "Assessing source currency and relevance",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A report's heading states New Program Eliminates Tardiness, but the study found that tardiness fell 20% in participating schools. Which revised heading is most accurate?",
+   "choices": [
+    "New Program Linked to 20% Lower Tardiness in Participating Schools",
+    "New Program Eliminates Tardiness in Participating Schools",
+    "New Program Has No Measurable Effect on Tardiness",
+    "Tardiness Fell 20% Across All Schools"
+   ],
+   "answerIndex": 0,
+   "explanation": "The revised heading reports the observed 20% reduction while avoiding an unsupported claim that the program caused the change or that it affected schools outside the study.",
+   "difficulty": 8,
+   "skill": "Writing an accurate findings-report heading",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A survey found that 18 of 24 students who attended a writing workshop said they would recommend it. Which statement reports the finding most accurately?",
+   "choices": [
+    "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, a response rate of 75%.",
+    "Among all students, 75% said they would recommend the writing workshop.",
+    "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, showing that 75% of the school would recommend it.",
+    "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, a response rate of 18%."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because 18 divided by 24 equals 75%, the result applies to the 24 surveyed workshop participants rather than to every student.",
+   "difficulty": 8,
+   "skill": "Reporting survey results accurately",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, a speaker argues that districts with later start times have higher average attendance, so the later start times cause higher attendance. Which response most directly evaluates the claim?",
+   "choices": [
+    "Could higher attendance cause districts to adopt later start times, rather than later start times causing higher attendance?",
+    "Do school districts generally have enough buses to operate later start times?",
+    "Do parents in districts with later start times report that their children prefer the schedule?",
+    "Have other schools reported positive attendance results after adopting later start times?"
+   ],
+   "answerIndex": 0,
+   "explanation": "The claim assumes that the schedule causes higher attendance, so considering whether higher attendance could instead lead districts to adopt the schedule tests a key alternative explanation.",
+   "difficulty": 8,
+   "skill": "Evaluating causal reasoning in formal discussion",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a debate, one team argues that a district should adopt a mentoring program because a similar program improved graduation rates in another city. Which question most directly tests whether that comparison supports the conclusion?",
+   "choices": [
+    "Are the two cities' student populations, available resources, program features, and measures of success similar enough for the comparison to support the conclusion?",
+    "Did officials in the other city announce the mentoring program before the graduation results became known?",
+    "Would students in the debating district be willing to meet mentors after school each week?",
+    "Has the other city received more funding for education during the past five years?"
+   ],
+   "answerIndex": 0,
+   "explanation": "A comparison can support a conclusion only when the compared programs and circumstances are sufficiently similar in the features that could affect the outcome.",
+   "difficulty": 8,
+   "skill": "Assessing analogies in debate",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A reviewer says a report accurately presents its data but does not explain why the findings matter to school leaders. Which revision best addresses the feedback without overstating the evidence?",
+   "choices": [
+    "Add an implication sentence that explains how the documented finding could inform a school decision while labeling it as an implication rather than a proven causal effect.",
+    "Replace the reported finding with a broader claim about school effectiveness because broader claims are more useful to leaders.",
+    "Remove the study's limitations so that the findings appear more decisive to school leaders.",
+    "Add quotations from school leaders praising the program so the report reflects their reactions to the findings."
+   ],
+   "answerIndex": 0,
+   "explanation": "A clearly identified implication can connect a documented finding to its practical significance without presenting that connection as a proven cause-and-effect relationship.",
+   "difficulty": 8,
+   "skill": "Responding to actionable feedback",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, participants offer evidence for two school policies but use different standards for judging them. Which intervention by the chair would make the comparison more productive?",
+   "choices": [
+    "Ask the participants to clarify the criteria for a successful policy, then evaluate both proposals against those shared criteria.",
+    "Ask the participants to take turns speaking until each team has presented every supporting example.",
+    "Ask the participants to vote for the policy with the larger number of supporting examples.",
+    "Ask the participants to postpone all criticism until both proposals have been summarized in full."
+   ],
+   "answerIndex": 0,
+   "explanation": "Shared criteria allow evidence for the two proposals to be compared consistently rather than according to each participant's preferred standard.",
+   "difficulty": 8,
+   "skill": "Facilitating criteria-based formal discussion",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a debate, a team cites one student's success with a peer-tutoring program to claim that the program will improve writing scores for all participating students. Which response most responsibly evaluates the claim?",
+   "choices": [
+    "Ask whether the student's experience is typical and compare the claim with results from a larger, relevant group of participating students.",
+    "Accept the claim because direct testimony from a successful participant is persuasive.",
+    "Reject the claim because a single student's experience cannot support any conclusion.",
+    "Ask whether other students would prefer meeting with a peer tutor during class."
+   ],
+   "answerIndex": 0,
+   "explanation": "A single success can motivate further investigation, but broader evidence from a relevant group is needed to support a prediction about participating students generally.",
+   "difficulty": 8,
+   "skill": "Weighing anecdotal evidence in debate",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A debate team cites a newspaper article claiming that a new tutoring program reduced dropout rates. Which action would best determine whether the source supports the team's claim?",
+   "choices": [
+    "Locate the original study and examine its sample, methods, and findings.",
+    "Repeat the newspaper's claim in larger type at the start.",
+    "Compare the article's wording with a similar article.",
+    "Count how many other outlets repeated the same claim."
+   ],
+   "answerIndex": 0,
+   "explanation": "The original study allows the team to evaluate the sample, methods, and findings rather than relying on a secondary report's summary.",
+   "difficulty": 8,
+   "skill": "Evaluating an evidence source",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "During a formal discussion, one participant calls a proposal \"ridiculous,\" while another calls it \"surprisingly effective.\" What should the chair do first?",
+   "choices": [
+    "Ask each speaker to identify the proposal's specific feature and the evidence informing their judgment.",
+    "Hold a vote to determine which reaction is held by more participants.",
+    "End the discussion because the participants have different interpretations.",
+    "Ask the first speaker to apologize for using emotional language."
+   ],
+   "answerIndex": 0,
+   "explanation": "Requesting the specific feature and supporting evidence turns the disagreement into a focused comparison of claims and reasons.",
+   "difficulty": 7,
+   "skill": "Facilitating productive disagreement",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A survey report states that \"90% of students preferred digital textbooks,\" but it omits important details about the sample. Which addition would make the claim easiest to assess?",
+   "choices": [
+    "The number of students invited, the number who responded, and the method used to select them.",
+    "The number of pages contained in each digital textbook.",
+    "The average time students spent reading each digital textbook.",
+    "The percentage of teachers who recommended digital textbooks."
+   ],
+   "answerIndex": 0,
+   "explanation": "The response count and selection method reveal who the percentage represents and whether the sample is adequate for assessing the claim.",
+   "difficulty": 8,
+   "skill": "Providing statistical context",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A student finds a chart in a nonprofit report and reproduces it in a presentation without attribution. Which revision best meets academic-integrity standards?",
+   "choices": [
+    "Credit the chart's creator and source, and confirm whether permission is required for reuse.",
+    "Replace the chart with a screenshot and add the report's web address.",
+    "Paraphrase the chart's caption without identifying the report.",
+    "Describe the chart's findings in the student's own words and omit attribution."
+   ],
+   "answerIndex": 0,
+   "explanation": "Crediting the creator and source, while checking reuse requirements, properly attributes the chart and addresses permission for its reproduction.",
+   "difficulty": 7,
+   "skill": "Attributing sources ethically",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A findings report includes students’ full names with quotations that could identify them. Which revision best protects participants while preserving the findings?",
+   "choices": [
+    "Replace each full name with a pseudonym and omit details that could identify the student.",
+    "Keep the full names because quotations make the report more persuasive to readers.",
+    "Remove every quotation and report only the numerical results instead.",
+    "Replace the full names with initials while retaining class, age, and teacher."
+   ],
+   "answerIndex": 0,
+   "explanation": "Replacing names with pseudonyms and removing identifying details protects participants while allowing the report to preserve and explain the findings.",
+   "difficulty": 8,
+   "skill": "Ethical publication",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A report says an online discussion changed students’ attitudes because nearly all volunteers reported being persuaded. Which limitation most directly weakens that causal conclusion?",
+   "choices": [
+    "The report did not measure students’ attitudes before the discussion.",
+    "The survey used a five-point scale for every response.",
+    "The report included quotations from several participants.",
+    "The researchers published the survey questions."
+   ],
+   "answerIndex": 0,
+   "explanation": "Without a pre-discussion measure, the report cannot establish that attitudes changed rather than already favoring the discussion.",
+   "difficulty": 9,
+   "skill": "Causal evidence evaluation",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A report presents a single expert’s prediction as a finding even though no data were collected. Which revision best corrects the mismatch?",
+   "choices": [
+    "Label it as the expert’s prediction and distinguish it from empirical findings.",
+    "Present it as a finding because experts possess specialized knowledge.",
+    "Add a second expert’s prediction and present both as confirmed evidence.",
+    "Omit the prediction because predictions cannot appear in research reports."
+   ],
+   "answerIndex": 0,
+   "explanation": "Labeling the statement as a prediction accurately communicates that it is expert commentary rather than evidence collected through research.",
+   "difficulty": 8,
+   "skill": "Distinguishing evidence from claims",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Speakers disagree about whether a proposed school policy is fair. Which question from the chair would most productively move the discussion toward a reasoned decision?",
+   "choices": [
+    "Which criteria should the group use to judge fairness in this context?",
+    "Do you personally prefer the policy or oppose it?",
+    "Has anyone spoken with people outside this discussion group?",
+    "How frequently could the district change the policy again?"
+   ],
+   "answerIndex": 0,
+   "explanation": "Identifying relevant criteria gives speakers a shared basis for evaluating fairness and developing a defensible decision.",
+   "difficulty": 8,
+   "skill": "Facilitating reasoned discussion",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Two interventions raise test scores by 4 and 6 points, respectively, but their 95% confidence intervals overlap. Which conclusion is most defensible?",
+   "choices": [
+    "The available comparison does not establish a clear winner.",
+    "The six-point intervention is proven to be superior.",
+    "The four-point intervention is proven to be superior.",
+    "Both interventions have exactly equal effectiveness."
+   ],
+   "answerIndex": 0,
+   "explanation": "Overlapping confidence intervals do not by themselves establish that one intervention is clearly more effective than the other.",
+   "difficulty": 9,
+   "skill": "Interpreting statistical uncertainty",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Before publication, a reviewer asks whether a reported effect would still appear if one school were removed. Which response best addresses the reviewer’s concern?",
+   "choices": [
+    "Recalculate the result without that school and report whether the conclusion changes.",
+    "Insist that the school is typical, so no further calculation is needed.",
+    "Remove the school’s data permanently without checking the remaining results.",
+    "Rewrite the conclusion more forcefully to discourage further questions."
+   ],
+   "answerIndex": 0,
+   "explanation": "Recalculating the result without one school directly tests whether the finding depends on that school and allows the report to address the concern accurately.",
+   "difficulty": 9,
+   "skill": "Responding to review feedback",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A report states that because 64% of surveyed students preferred flexible deadlines, the school should make flexible deadlines the only option. Which revision best keeps the finding and recommendation within the evidence?",
+   "choices": [
+    "Report that 64% of surveyed students preferred flexible deadlines, note the limits of the survey, and treat flexibility as a policy option for further review.",
+    "Keep the recommendation but change “because” to “although,” showing that the preference contradicts the proposed policy.",
+    "State that all students prefer flexible deadlines, making the recommendation directly supported by the survey.",
+    "Remove the survey result and recommend flexible deadlines as the only option on the basis of school leaders’ preferences."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision accurately reports what the surveyed students said, acknowledges that a survey preference does not by itself establish a universal policy mandate, and presents the proposal as something that deserves further evaluation.",
+   "difficulty": 8,
+   "skill": "Revising claims and recommendations",
+   "topic": "Publishing Findings and Responding to Feedback through Debate and Formal Discussion",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A study finds that 62% of first-month volunteers used a new feature at least weekly. Which sentence communicates the finding accurately?",
+   "choices": [
+    "The feature suits every student population because frequent use was reported by first-month volunteers.",
+    "Among first-month volunteers, 62% reported using the new feature at least weekly.",
+    "Among all potential users, 62% will use the new feature at least weekly.",
+    "Among first-month volunteers, 62% will continue using the new feature all year."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence preserves the study’s population, time frame, and reported behavior without converting a past finding into a prediction or broader claim.",
+   "reason": "explanation-key: the explanation describes option 1 (score 1.50) more than the keyed option 2 (score 0.50)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A debate concerns whether a district should adopt a later school start time. Which question most directly evaluates whether the proposal is feasible rather than whether it is desirable?",
+   "choices": [
+    "Would most students arrive later and feel more rested?",
+    "Can the district operate the proposed schedule while meeting transportation and instructional-time requirements?",
+    "Have other schools considered changing their start times?",
+    "Is student well-being more important than the length of the school day?"
+   ],
+   "answerIndex": 1,
+   "explanation": "The question tests whether the district can implement the schedule under necessary operational constraints.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A findings report presents a survey of 300 students and eight written comments from a separate group of participants. Which revision most accurately presents the combined findings?",
+   "choices": [
+    "Combine all comments and survey responses into one count because they came from the same report.",
+    "Use the written comments as confirmation of the survey percentage without examining the two samples.",
+    "Describe each data source and its sample, report the results separately, and avoid combining them into an unsupported comparison.",
+    "Use the survey percentage to represent the views of every participant mentioned in the report."
+   ],
+   "answerIndex": 2,
+   "explanation": "The revision keeps the quantitative and qualitative findings distinct because they came from different samples and measure different forms of evidence.",
+   "reason": "explanation-key: the explanation describes option 1 (score 1.00) more than the keyed option 3 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A report states, \"Only two buses were late, so the route is unreliable.\" Which revision most accurately separates the evidence from the interpretation?",
+   "choices": [
+    "Two of five buses were late during the observations, but the small sample cannot establish the route's overall reliability.",
+    "The route is unreliable because any delay matters to students.",
+    "Few buses were late, so the route performs well overall.",
+    "The route's reliability depends on how late each bus was."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision identifies the observed evidence and limits the conclusion without treating a small sample as proof of the route's general reliability.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A team argues that a new reporting system will reduce late assignments because it sends automatic reminders. Which question best evaluates the team's causal reasoning?",
+   "choices": [
+    "Were students who already submitted assignments on time assigned more frequent reminders?",
+    "Can automatic reminders be delivered without technical errors?",
+    "Do students prefer receiving reminders by text message or email?",
+    "Can teachers send reminders during class periods?"
+   ],
+   "answerIndex": 0,
+   "explanation": "The question checks whether an existing tendency to submit assignments on time helped produce the observed difference in late work.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "During a debate, a speaker says, “Schools must either ban every phone or stop expecting students to manage distractions themselves.” Which response best addresses the reasoning?",
+   "choices": [
+    "The speaker creates a false dilemma by presenting two extreme choices; the debaters should consider a wider range of policies, including limits on phone use during class.",
+    "The speaker makes a hasty generalization from older students to teenagers; the debaters should request data across different age groups.",
+    "The speaker commits a false-cause error by placing phone use before academic distraction; the debaters should ask which happened first.",
+    "The speaker relies on a slippery slope; the debaters should ask how one phone ban would lead to the removal of all classroom expectations."
+   ],
+   "answerIndex": 0,
+   "explanation": "The statement incorrectly limits the available choices to two extremes, so proposing partial policies and other reasonable alternatives directly addresses the false dilemma.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Before a findings report is published, its prose says that 63% of participants improved, but its final table lists 37%. Which correction is most responsible?",
+   "choices": [
+    "Check the source data and calculation, then revise the prose and table so both present the same verified result.",
+    "Change the prose to 37% without checking whether the table and text use different groups.",
+    "Keep both figures and add a note that the report contains inconsistent results.",
+    "Remove the table and retain the prose because the table is more difficult to interpret."
+   ],
+   "answerIndex": 0,
+   "explanation": "Verifying the source and calculation prevents an unsupported figure from being published and ensures that the narrative and table accurately report the same finding.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  }
+ ],
+ "applied": false,
+ "original_order": [
+  {
+   "id": "q17",
+   "choices": [
+    "Compare the suggestions with the report’s purpose and audience, choose the organization that best supports both, and explain the final decision.",
+    "Combine every suggested section order so no reviewer can claim that a recommendation was ignored.",
+    "Follow only the reviewer who proposed the most detailed structure because that suggestion is automatically the strongest.",
+    "Reject all conflicting suggestions and retain the original organization without further revision."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q14",
+   "choices": [
+    "Ask every participant to repeat their earliest point so the chair can identify the longest argument.",
+    "Allow each new speaker equal time, even if several repeat arguments already presented.",
+    "Synthesize the points of agreement and disagreement, prioritize the unresolved issue that affects the decision, and invite a final response.",
+    "Call for an immediate vote before the remaining speakers can address the main disagreement."
+   ],
+   "answerIndex": 2
+  },
+  {
+   "id": "q35",
+   "choices": [
+    "Could higher attendance cause districts to adopt later start times, rather than later start times causing higher attendance?",
+    "Do school districts generally have enough buses to operate later start times?",
+    "Do parents in districts with later start times report that their children prefer the schedule?",
+    "Have other schools reported positive attendance results after adopting later start times?"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q39",
+   "choices": [
+    "Ask whether the student's experience is typical and compare the claim with results from a larger, relevant group of participating students.",
+    "Accept the claim because direct testimony from a successful participant is persuasive.",
+    "Reject the claim because a single student's experience cannot support any conclusion.",
+    "Ask whether other students would prefer meeting with a peer tutor during class."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q45",
+   "choices": [
+    "The report did not measure students’ attitudes before the discussion.",
+    "The survey used a five-point scale for every response.",
+    "The report included quotations from several participants.",
+    "The researchers published the survey questions."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q33",
+   "choices": [
+    "New Program Linked to 20% Lower Tardiness in Participating Schools",
+    "New Program Eliminates Tardiness in Participating Schools",
+    "New Program Has No Measurable Effect on Tardiness",
+    "Tardiness Fell 20% Across All Schools"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q22",
+   "choices": [
+    "What must be true about students' use of feedback for each proposal to improve revision?",
+    "Which proposal would cost schools less money to implement each year?",
+    "Which form of feedback students generally prefer receiving after drafting?",
+    "Which topic should the teams investigate first in the next debate?"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q18",
+   "choices": [
+    "Randomly assign students to a workshop group and a control group, then compare their essays using blinded scoring.",
+    "Let students choose whether to attend the workshop, then compare participating students with students who did not volunteer.",
+    "Have every student write an essay before and after the workshop, then compare the two sets of scores.",
+    "Ask teachers to divide students into similar groups based on writing ability, then compare the groups afterward."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q43",
+   "choices": [
+    "Credit the chart's creator and source, and confirm whether permission is required for reuse.",
+    "Replace the chart with a screenshot and add the report's web address.",
+    "Paraphrase the chart's caption without identifying the report.",
+    "Describe the chart's findings in the student's own words and omit attribution."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q9",
+   "choices": [
+    "Ask the reviewer to identify the confusing passage and intended meaning, then revise that passage to address the mismatch.",
+    "Rewrite the entire section immediately, interpreting the comment as a request for a different argument.",
+    "Delete the section and move its strongest quotation to the introduction.",
+    "Retain the section unchanged but add a sentence declaring that the organization is clear."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q44",
+   "choices": [
+    "Replace each full name with a pseudonym and omit details that could identify the student.",
+    "Keep the full names because quotations make the report more persuasive to readers.",
+    "Remove every quotation and report only the numerical results instead.",
+    "Replace the full names with initials while retaining class, age, and teacher."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q41",
+   "choices": [
+    "Ask each speaker to identify the proposal's specific feature and the evidence informing their judgment.",
+    "Hold a vote to determine which reaction is held by more participants.",
+    "End the discussion because the participants have different interpretations.",
+    "Ask the first speaker to apologize for using emotional language."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q1",
+   "choices": [
+    "Ask what evidence supports the claim and whether it warrants the conclusion.",
+    "Ask how many sources support the claim and whether their viewpoints agree.",
+    "Ask how clearly the claim was stated and whether listeners remembered it.",
+    "Ask how recently the examples were given and whether their dates were included."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q2",
+   "choices": [
+    "Attendance data from comparable schools that did not adopt uniforms",
+    "Attendance data from the same school before uniforms were introduced",
+    "Survey responses from students who support the uniform policy",
+    "Counts of uniform-related discipline incidents after the policy began"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q32",
+   "choices": [
+    "A recent webpage that repeats the 2019 article's conclusion.",
+    "A list of online-learning platforms currently used by schools.",
+    "A recent empirical study that tests the same learning outcome with comparable students and online lessons.",
+    "A 2025 opinion column that agrees that online learning improves concentration."
+   ],
+   "answerIndex": 2
+  },
+  {
+   "id": "q10",
+   "choices": [
+    "Can each speaker identify the population, time period, and measurement behind the statistic?",
+    "Can each speaker state whether the statistic supports the other speaker's conclusion?",
+    "Can each speaker read the statistic aloud again and then explain the numerical difference?",
+    "Can the group decide which statistic is larger before the speakers clarify how it was calculated?"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q50",
+   "choices": [
+    "Report that 64% of surveyed students preferred flexible deadlines, note the limits of the survey, and treat flexibility as a policy option for further review.",
+    "Keep the recommendation but change “because” to “although,” showing that the preference contradicts the proposed policy.",
+    "State that all students prefer flexible deadlines, making the recommendation directly supported by the survey.",
+    "Remove the survey result and recommend flexible deadlines as the only option on the basis of school leaders’ preferences."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q27",
+   "choices": [
+    "Treat the statement as a measurable factual claim and ask only for numerical data.",
+    "Ask the speaker to clarify what outcomes count as waste, then evaluate the factual assumptions supporting the claim.",
+    "Ask whether any arts program has ever succeeded, regardless of the speaker's standards.",
+    "Accept the statement as a personal opinion and move on to the next speaker."
+   ],
+   "answerIndex": 1
+  },
+  {
+   "id": "q3",
+   "choices": [
+    "Compare the survey sample with the conclusion, then narrow the claim to the population represented.",
+    "Review the survey method, then keep the conclusion exactly as it was written.",
+    "Remove the cited survey, then present the conclusion without supporting evidence.",
+    "Challenge the reviewer's interpretation, then retain the original conclusion and wording."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q6",
+   "choices": [
+    "Clarify that the graph describes aggregate data, so it cannot establish the claim about each individual.",
+    "Recalculate percentages from the same graph to make the individual claim appear more precise.",
+    "Generalize the graph's group pattern to all students without revising the claim's scope.",
+    "State that the graph is visually clear, so the individual conclusion requires no qualification."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q7",
+   "choices": [
+    "Define specialized terms in plain language, connect each main finding to a relevant example, and retain the study's stated limits.",
+    "Replace statistical terms with stronger claims, provide dramatic examples, and omit limits that might weaken the conclusion.",
+    "Keep the technical wording, add a decorative illustration, and assume readers will infer the study's limits.",
+    "Remove the methods section, quote only the most favorable results, and present the conclusion as settled."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q13",
+   "choices": [
+    "Rewrite the paragraph immediately so that it matches the reviewer’s preferred wording.",
+    "Remove the paragraph because the reviewer reports confusion about it.",
+    "Discuss the disagreement by comparing the passage with the claim it is meant to support.",
+    "Keep the paragraph unchanged and submit it without further review."
+   ],
+   "answerIndex": 2
+  },
+  {
+   "id": "q21",
+   "choices": [
+    "Ask the participant to state the precise question they want answered.",
+    "Ask the participant to answer the last question without seeking clarification.",
+    "Invite another participant to infer the intended question and provide an answer.",
+    "Move the request to a vote on whether the question is relevant."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q36",
+   "choices": [
+    "Are the two cities' student populations, available resources, program features, and measures of success similar enough for the comparison to support the conclusion?",
+    "Did officials in the other city announce the mentoring program before the graduation results became known?",
+    "Would students in the debating district be willing to meet mentors after school each week?",
+    "Has the other city received more funding for education during the past five years?"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q37",
+   "choices": [
+    "Add an implication sentence that explains how the documented finding could inform a school decision while labeling it as an implication rather than a proven causal effect.",
+    "Replace the reported finding with a broader claim about school effectiveness because broader claims are more useful to leaders.",
+    "Remove the study's limitations so that the findings appear more decisive to school leaders.",
+    "Add quotations from school leaders praising the program so the report reflects their reactions to the findings."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q48",
+   "choices": [
+    "The available comparison does not establish a clear winner.",
+    "The six-point intervention is proven to be superior.",
+    "The four-point intervention is proven to be superior.",
+    "Both interventions have exactly equal effectiveness."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q40",
+   "choices": [
+    "Locate the original study and examine its sample, methods, and findings.",
+    "Repeat the newspaper's claim in larger type at the start.",
+    "Compare the article's wording with a similar article.",
+    "Count how many other outlets repeated the same claim."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q19",
+   "choices": [
+    "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 24.",
+    "The mean score rose by 2 points, from 24 to 26, and the vertical axis begins at 24.",
+    "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 0.",
+    "The mean score rose by 1 point, from 25 to 26, and the vertical axis begins at 20."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q16",
+   "choices": [
+    "Accept the manufacturer’s conclusion because the company has direct knowledge of its own product.",
+    "Use the release if several independent websites repeat its claim without adding any analysis.",
+    "Check whether the release provides relevant data, methods, and a comparison group rather than relying on its conclusion.",
+    "Treat the release as strong evidence because its statistics come from a primary source."
+   ],
+   "answerIndex": 2
+  },
+  {
+   "id": "q12",
+   "choices": [
+    "Verify or remove the unsupported claim, then edit the imprecise sentences for clarity and precision.",
+    "Edit the imprecise sentences first, then use the polished wording to make the unsupported claim appear credible.",
+    "Add persuasive language to the unsupported claim, then correct the sentence-level issues in the next draft.",
+    "Keep both problems unchanged because revising the wording may weaken the report's overall argument."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q23",
+   "choices": [
+    "Speaker 1 raised scheduling conflicts, Speaker 2 emphasized civic benefits, and Speaker 3 proposed flexible deadlines to address cost concerns.",
+    "Speaker 1 raised scheduling conflicts, Speaker 2 emphasized civic benefits, and Speaker 3 said flexible deadlines would not reduce cost concerns.",
+    "Speaker 1 emphasized civic benefits, Speaker 2 raised scheduling conflicts, and Speaker 3 argued that cost concerns were impossible to resolve.",
+    "Speaker 1 argued that service should end, Speaker 2 supported mandatory service, and Speaker 3 reported unanimous support for flexible deadlines."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q29",
+   "choices": [
+    "Ignore the mixed findings because one study cannot determine outcomes in any setting.",
+    "Repeat the proposal without discussing the mixed findings to avoid confusing the audience.",
+    "Acknowledge the mixed findings, then explain why the remaining evidence supports a narrower version of the proposal.",
+    "Claim that the mixed findings prove the proposal will fail because one survey outweighed all other evidence."
+   ],
+   "answerIndex": 2
+  },
+  {
+   "id": "q5",
+   "choices": [
+    "Acknowledge the opponent's strongest point and explain why the evidence still weighs against the proposal.",
+    "Accept the opponent's main premise and focus only on presentation style.",
+    "Omit the opponent's strongest point and repeat the claim most often stated.",
+    "Treat all opposing evidence equally and avoid weighing its relative strength."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q8",
+   "choices": [
+    "Define the key terms, state the team's position, and identify the criteria by which both proposals will be judged.",
+    "Begin with a personal story, describe the opposing team, and invite sympathy for the team's cause.",
+    "Summarize the strongest opposing argument and rebut it before stating the team's own proposal or criteria.",
+    "List several publications and read excerpts from each without identifying the team's position or the issue's key terms."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q34",
+   "choices": [
+    "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, a response rate of 75%.",
+    "Among all students, 75% said they would recommend the writing workshop.",
+    "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, showing that 75% of the school would recommend it.",
+    "Among the 24 surveyed workshop participants, 18 said they would recommend the workshop, a response rate of 18%."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q49",
+   "choices": [
+    "Recalculate the result without that school and report whether the conclusion changes.",
+    "Insist that the school is typical, so no further calculation is needed.",
+    "Remove the school’s data permanently without checking the remaining results.",
+    "Rewrite the conclusion more forcefully to discourage further questions."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q15",
+   "choices": [
+    "The speaker wants to eliminate all in-class practice and replace every live lecture with a recording.",
+    "The speaker claims that replaying explanations is a substitute for feedback from an instructor.",
+    "The speaker argues that recorded lectures improve review only for students who miss class.",
+    "The speaker believes recorded lectures can support independent review while freeing some class time for practice."
+   ],
+   "answerIndex": 3
+  },
+  {
+   "id": "q25",
+   "choices": [
+    "Summarize the repeated point, group it with related comments, and invite speakers to contribute a new point or question.",
+    "Call for an immediate vote on the repeated point without hearing any remaining responses.",
+    "Allow the speaker to continue because repetition may indicate that the point is important to the group.",
+    "Ask another participant to restate the same point before the chair responds to it."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q42",
+   "choices": [
+    "The number of students invited, the number who responded, and the method used to select them.",
+    "The number of pages contained in each digital textbook.",
+    "The average time students spent reading each digital textbook.",
+    "The percentage of teachers who recommended digital textbooks."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q46",
+   "choices": [
+    "Label it as the expert’s prediction and distinguish it from empirical findings.",
+    "Present it as a finding because experts possess specialized knowledge.",
+    "Add a second expert’s prediction and present both as confirmed evidence.",
+    "Omit the prediction because predictions cannot appear in research reports."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q26",
+   "choices": [
+    "Delete the sentence because limitations interfere with readers' ability to accept a study.",
+    "Retain the limitation and explain how it narrows the strength and scope of the conclusion.",
+    "Replace the limitation with a broader statement about the study population without additional evidence.",
+    "Keep the study population hidden so readers focus on the positive findings."
+   ],
+   "answerIndex": 1
+  },
+  {
+   "id": "q4",
+   "choices": [
+    "Ask the speaker to read the passage in context and explain the inference it supports.",
+    "Ask the speaker to summarize the source's main point in one sentence.",
+    "Ask the opponent to provide two additional sources before the discussion continues.",
+    "Ask the audience to choose based on which speaker used more examples."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q28",
+   "choices": [
+    "Add the number of students in each group beside its mean.",
+    "Average the two means and report one combined score.",
+    "Remove means for groups with fewer than 20 students.",
+    "Increase each mean to the scale's maximum before comparing groups."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q47",
+   "choices": [
+    "Which criteria should the group use to judge fairness in this context?",
+    "Do you personally prefer the policy or oppose it?",
+    "Has anyone spoken with people outside this discussion group?",
+    "How frequently could the district change the policy again?"
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q11",
+   "choices": [
+    "For participating students, the mean score rose by 8 points from pretest to posttest, but the chart does not establish a causal effect.",
+    "Tutoring caused an 8-point increase for participating students because the pretest and posttest scores were compared.",
+    "Every participating student improved by 8 points, and students who received no tutoring did not improve.",
+    "The program was associated with an 8-point mean increase, and the comparison proves that tutoring was the most effective intervention."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q24",
+   "choices": [
+    "State that the higher vocabulary scores prove that every aspect of students' writing improved.",
+    "Replace the vocabulary-test results with teacher impressions and present the impressions as the measured finding.",
+    "Clarify that the results show improved performance on the vocabulary measure but do not by themselves establish broader writing sophistication.",
+    "Conclude that the study measured writing sophistication even though only vocabulary scores were reported."
+   ],
+   "answerIndex": 2
+  },
+  {
+   "id": "q30",
+   "choices": [
+    "Allow the frequent speaker to continue because the discussion is already well focused.",
+    "Ask the quieter participants to save their comments until the end of the discussion.",
+    "Summarize the frequent speaker's argument and ask whether anyone agrees with it.",
+    "Invite each participant who has not spoken to offer one concise response before the discussion continues."
+   ],
+   "answerIndex": 3
+  },
+  {
+   "id": "q38",
+   "choices": [
+    "Ask the participants to clarify the criteria for a successful policy, then evaluate both proposals against those shared criteria.",
+    "Ask the participants to take turns speaking until each team has presented every supporting example.",
+    "Ask the participants to vote for the policy with the larger number of supporting examples.",
+    "Ask the participants to postpone all criticism until both proposals have been summarized in full."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q20",
+   "choices": [
+    "Add the recruitment procedure, eligibility criteria, and period during which participants were selected.",
+    "Add the names of all participants and publish each student's complete response transcript.",
+    "Remove the participant details to protect the study's findings from public scrutiny.",
+    "State that the participants were representative without describing how they were selected."
+   ],
+   "answerIndex": 0
+  },
+  {
+   "id": "q31",
+   "choices": [
+    "Exactly 12% of students improved, with an uncertainty range of 4 percentage points.",
+    "The estimated improvement rate among sampled students was 12%, with a margin of error of 4 percentage points.",
+    "The improvement rate was 12%, with a possible error equal to 4% of the 12% reported.",
+    "The improvement rate was 12%, and the margin of error confirms that 12% was the exact population rate."
+   ],
+   "answerIndex": 1
+  }
+ ]
+}

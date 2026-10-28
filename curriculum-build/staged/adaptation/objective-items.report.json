@@ -1,0 +1,543 @@
+{
+ "started_at": "2026-10-23T05:55:05.984Z",
+ "per_objective": 3,
+ "writer": [
+  {
+   "model": "deepseek-ai/deepseek-v4.1-flash",
+   "effort": "high"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "effort": "high"
+  }
+ ],
+ "judge_a": [
+  {
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "effort": "medium"
+  }
+ ],
+ "judge_b": [
+  {
+   "model": "z-ai/glm-5.3",
+   "effort": "high"
+  }
+ ],
+ "grades": {
+  "math:volume_coordinates_and_expressions": {
+   "objectives": 41,
+   "written": 0,
+   "kept": 0,
+   "objectives_with_two_or_more": 0,
+   "objectives_with_none": [
+    "volume_coordinates_and_expressions:L10",
+    "volume_coordinates_and_expressions:L20",
+    "volume_coordinates_and_expressions:L30",
+    "volume_coordinates_and_expressions:L42",
+    "volume_coordinates_and_expressions:L52",
+    "volume_coordinates_and_expressions:L62",
+    "volume_coordinates_and_expressions:L72",
+    "volume_coordinates_and_expressions:L85",
+    "volume_coordinates_and_expressions:L95",
+    "volume_coordinates_and_expressions:L105",
+    "volume_coordinates_and_expressions:L117",
+    "volume_coordinates_and_expressions:L127",
+    "volume_coordinates_and_expressions:L137",
+    "volume_coordinates_and_expressions:L147",
+    "volume_coordinates_and_expressions:L159",
+    "volume_coordinates_and_expressions:L169",
+    "volume_coordinates_and_expressions:L179",
+    "volume_coordinates_and_expressions:L191",
+    "volume_coordinates_and_expressions:L201",
+    "volume_coordinates_and_expressions:L211",
+    "volume_coordinates_and_expressions:L224",
+    "volume_coordinates_and_expressions:L234",
+    "volume_coordinates_and_expressions:L244",
+    "volume_coordinates_and_expressions:L254",
+    "volume_coordinates_and_expressions:L266",
+    "volume_coordinates_and_expressions:L276",
+    "volume_coordinates_and_expressions:L286",
+    "volume_coordinates_and_expressions:L298",
+    "volume_coordinates_and_expressions:L308",
+    "volume_coordinates_and_expressions:L318",
+    "volume_coordinates_and_expressions:L328",
+    "volume_coordinates_and_expressions:L340",
+    "volume_coordinates_and_expressions:L350",
+    "volume_coordinates_and_expressions:L360",
+    "volume_coordinates_and_expressions:L373",
+    "volume_coordinates_and_expressions:L383",
+    "volume_coordinates_and_expressions:L393",
+    "volume_coordinates_and_expressions:L403",
+    "volume_coordinates_and_expressions:L415",
+    "volume_coordinates_and_expressions:L425",
+    "volume_coordinates_and_expressions:L435"
+   ],
+   "errors": [
+    {
+     "objective": "volume_coordinates_and_expressions:L10",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L20",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L30",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L42",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L52",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L62",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L72",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L85",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L95",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L105",
+     "error": "judge: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L117",
+     "error": "writer: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L127",
+     "error": "writer: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L137",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L147",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L159",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L169",
+     "error": "writer: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L179",
+     "error": "writer: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L191",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L201",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L211",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L224",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L234",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L244",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L254",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L266",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L276",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L286",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L298",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L308",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L318",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L328",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L340",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L350",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L360",
+     "error": "writer: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L373",
+     "error": "writer: nvidia network error: fetch failed"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L383",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L393",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L403",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L415",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L425",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "volume_coordinates_and_expressions:L435",
+     "error": "judge: nvidia 429: Too Many Requests"
+    }
+   ],
+   "rejected": [],
+   "file": "objective-items.math.volume_coordinates_and_expressions.json"
+  },
+  "english:intermediate": {
+   "objectives": 57,
+   "written": 0,
+   "kept": 0,
+   "objectives_with_two_or_more": 0,
+   "objectives_with_none": [
+    "intermediate:L10",
+    "intermediate:L20",
+    "intermediate:L30",
+    "intermediate:L42",
+    "intermediate:L52",
+    "intermediate:L62",
+    "intermediate:L75",
+    "intermediate:L85",
+    "intermediate:L95",
+    "intermediate:L107",
+    "intermediate:L117",
+    "intermediate:L129",
+    "intermediate:L139",
+    "intermediate:L149",
+    "intermediate:L161",
+    "intermediate:L171",
+    "intermediate:L181",
+    "intermediate:L194",
+    "intermediate:L204",
+    "intermediate:L214",
+    "intermediate:L226",
+    "intermediate:L236",
+    "intermediate:L246",
+    "intermediate:L258",
+    "intermediate:L268",
+    "intermediate:L278",
+    "intermediate:L290",
+    "intermediate:L300",
+    "intermediate:L313",
+    "intermediate:L323",
+    "intermediate:L333",
+    "intermediate:L345",
+    "intermediate:L355",
+    "intermediate:L365",
+    "intermediate:L377",
+    "intermediate:L387",
+    "intermediate:L397",
+    "intermediate:L409",
+    "intermediate:L419",
+    "intermediate:L429",
+    "intermediate:L442",
+    "intermediate:L452",
+    "intermediate:L462",
+    "intermediate:L474",
+    "intermediate:L484",
+    "intermediate:L494",
+    "intermediate:L506",
+    "intermediate:L516",
+    "intermediate:L528",
+    "intermediate:L538",
+    "intermediate:L548",
+    "intermediate:L561",
+    "intermediate:L571",
+    "intermediate:L581",
+    "intermediate:L593",
+    "intermediate:L603",
+    "intermediate:L613"
+   ],
+   "errors": [
+    {
+     "objective": "intermediate:L10",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L20",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L30",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L42",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L52",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L62",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L75",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L85",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L95",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L107",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L117",
+     "error": "judge: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L129",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L139",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L149",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L161",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L171",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L181",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L194",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L204",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L214",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L226",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L236",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L246",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L258",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L268",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L278",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L290",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L300",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L313",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L323",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L333",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L345",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L355",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L365",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L377",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L387",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L397",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L409",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L419",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L429",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L442",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L452",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L462",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L474",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L484",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L494",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L506",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L516",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L528",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L538",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L548",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L561",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L571",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L581",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L593",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L603",
+     "error": "writer: nvidia 429: Too Many Requests"
+    },
+    {
+     "objective": "intermediate:L613",
+     "error": "writer: nvidia 429: Too Many Requests"
+    }
+   ],
+   "rejected": [],
+   "file": "objective-items.english.intermediate.json"
+  }
+ },
+ "seconds": 40404
+}

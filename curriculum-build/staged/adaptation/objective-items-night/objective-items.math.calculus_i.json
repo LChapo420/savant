@@ -1,0 +1,5665 @@
+{
+ "track_id": "math",
+ "grade_id": "calculus_i",
+ "generated_at": "2026-10-26T03:38:11.776Z",
+ "items": [
+  {
+   "objective_id": "calculus_i:L20",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A table gives f(x): 1→3, 2→5, 3→9, 4→15. What is the average rate of change of f from x=1 to x=4?",
+   "choices": [
+    "3 units per x",
+    "4 units per x",
+    "5 units per x",
+    "6 units per x"
+   ],
+   "answer": "4 units per x",
+   "rationale": "Average rate = (f(4)-f(1))/(4-1) = (15-3)/3 = 12/3 = 4 units per x.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L20",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "For g(t)=t^2-2t, find the average rate of change from t=1 to t=4.",
+   "choices": [
+    "2 units per t",
+    "3 units per t",
+    "4 units per t",
+    "5 units per t"
+   ],
+   "answer": "3 units per t",
+   "rationale": "g(1)=-1, g(4)=8; ARC = (8-(-1))/(4-1) = 9/3 = 3 units per t.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L20",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Given h(x)=3x^3-5x, compute the average rate of change on the interval [0,2].",
+   "choices": [
+    "5 units per x",
+    "6 units per x",
+    "7 units per x",
+    "8 units per x"
+   ],
+   "answer": "7 units per x",
+   "rationale": "h(0)=0, h(2)=14; ARC = (14-0)/(2-0) = 14/2 = 7 units per x.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L20",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Temperature T (°C) recorded: t=0h →20, t=3h →29, t=5h →33. What is the average rate of change from 0 to 5 hours?",
+   "choices": [
+    "2.2 °C/h",
+    "2.6 °C/h",
+    "3.0 °C/h",
+    "3.4 °C/h"
+   ],
+   "answer": "2.6 °C/h",
+   "rationale": "ARC = (33-20)/(5-0) = 13/5 = 2.6 °C per hour.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L40",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "A table gives x-values 1.7, 1.9, 2.1, 2.3 and f(x)-values 0.90, 0.97, 1.03, 1.08. What is the limit of f(x) as x approaches 2?",
+   "choices": [
+    "The limit is 1.",
+    "The limit is 1.03.",
+    "The limit is 2.",
+    "The limit does not exist."
+   ],
+   "answer": "The limit is 1.",
+   "rationale": "The values on both sides of x = 2 approach 1, so the limit is 1. The single value f(2) is not provided and is not needed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L40",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "For x not equal to 2, the graph of f is the line y = x + 1, with an open circle at (2, 3). There is a filled dot at (2, 5). What are the limit and f(2)?",
+   "choices": [
+    "The limit is 3 and f(2) is 5.",
+    "The limit is 3 and f(2) is 3.",
+    "The limit is 5 and f(2) is 3.",
+    "The limit does not exist, but f(2) is 5."
+   ],
+   "answer": "The limit is 3 and f(2) is 5.",
+   "rationale": "The graph approaches y = 3 from both sides of x = 2, so the limit is 3. The filled dot shows that the function value is f(2) = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L40",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "As x approaches 1 from the left, the values of f(x) approach −2. As x approaches 1 from the right, the values of f(x) approach 4. What is the limit of f(x) as x approaches 1?",
+   "choices": [
+    "The limit does not exist.",
+    "The limit is −2.",
+    "The limit is 4.",
+    "The limit is 0."
+   ],
+   "answer": "The limit does not exist.",
+   "rationale": "A two-sided limit exists only when the left-hand and right-hand limits are equal. Because −2 and 4 are different, the limit does not exist.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L40",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "The graph of f approaches the horizontal line y = 3 as x increases without bound. What is the limit of f(x) as x approaches positive infinity?",
+   "choices": [
+    "The limit equals 3.",
+    "The limit equals 0.",
+    "The limit does not exist.",
+    "The limit equals infinity."
+   ],
+   "answer": "The limit equals 3.",
+   "rationale": "A horizontal asymptote at y = 3 means the graph’s y-values approach 3 as x approaches positive infinity, so the limit is 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L62",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "What is the limit as x approaches 2 of (x^2 - 4)/(x - 2)?",
+   "choices": [
+    "The limit is 4.",
+    "The limit is 2.",
+    "The limit is 0.",
+    "The limit is undefined."
+   ],
+   "answer": "The limit is 4.",
+   "rationale": "Factor numerator as (x-2)(x+2), cancel (x-2), then substitute x=2 to get 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L62",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Evaluate the limit as x approaches 0 of (sqrt(x+4)-2)/x.",
+   "choices": [
+    "The limit is 1/4.",
+    "The limit is 1/2.",
+    "The limit is 0.",
+    "The limit is undefined."
+   ],
+   "answer": "The limit is 1/4.",
+   "rationale": "Multiply numerator and denominator by conjugate sqrt(x+4)+2 to get x/(x(sqrt(x+4)+2)) = 1/(sqrt(x+4)+2), then substitute x=0 to get 1/4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L62",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Find the limit as x approaches 2 of (x^3 - 8)/(x - 2).",
+   "choices": [
+    "The limit is 12.",
+    "The limit is 6.",
+    "The limit is 0.",
+    "The limit is undefined."
+   ],
+   "answer": "The limit is 12.",
+   "rationale": "Factor numerator as (x-2)(x^2+2x+4), cancel (x-2), then substitute x=2 to get 4+4+4=12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L62",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Determine the limit as x approaches 1 of (x^2 - 1)/(x^2 - x).",
+   "choices": [
+    "The limit is 2.",
+    "The limit is 0.",
+    "The limit is 1.",
+    "The limit is undefined."
+   ],
+   "answer": "The limit is 2.",
+   "rationale": "Factor numerator (x-1)(x+1) and denominator x(x-1), cancel (x-1), then substitute x=1 to get (1+1)/1 = 2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L72",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Consider f(x) = {x² + 1 for x < 2; 2x − 1 for x ≥ 2}. What are lim as x → 2⁻ f(x) and lim as x → 2⁺ f(x)?",
+   "choices": [
+    "5 and 3",
+    "3 and 5",
+    "5 and 5",
+    "3 and 3"
+   ],
+   "answer": "5 and 3",
+   "rationale": "Approaching 2 from the left uses x² + 1, which approaches 5. Approaching from the right uses 2x − 1, which approaches 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L72",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Consider g(x) = {x + 1 for x < 0; 2x + 1 for x ≥ 0}. What is lim as x → 0 g(x)?",
+   "choices": [
+    "0",
+    "2",
+    "1",
+    "Does not exist"
+   ],
+   "answer": "1",
+   "rationale": "The left-hand limit is 1 because x + 1 approaches 1. The right-hand limit is also 1 because 2x + 1 approaches 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L72",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = 1/(x² − 4), which values of x give vertical asymptotes?",
+   "choices": [
+    "x = −2 and x = 2",
+    "x = −2 and x = 0",
+    "x = 0 and x = 2",
+    "x = 0 and x = 4"
+   ],
+   "answer": "x = −2 and x = 2",
+   "rationale": "The denominator is zero at x = −2 and x = 2, and the numerator remains 1. Thus the function becomes unbounded at both values.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L72",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "For h(x) = −1/(x − 3), what happens to h(x) as x approaches 3 from the left and from the right?",
+   "choices": [
+    "+∞ and −∞",
+    "−∞ and +∞",
+    "+∞ and +∞",
+    "−∞ and −∞"
+   ],
+   "answer": "+∞ and −∞",
+   "rationale": "From the left, x − 3 is negative, so h(x) becomes positive without bound. From the right, it is positive, so h(x) becomes negative without bound.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L52",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Desmos graphs g(x) = (x² − 1)/(x − 1). Which statement about the behavior at x = 1 is correct?",
+   "choices": [
+    "The limit is 2, but g(1) is undefined.",
+    "The limit is 1, but g(1) is undefined.",
+    "The limit is 2, and g(1) = 2.",
+    "The limit does not exist because g(1) is undefined."
+   ],
+   "answer": "The limit is 2, but g(1) is undefined.",
+   "rationale": "For x ≠ 1, factoring gives g(x) = x + 1. Therefore, the graph approaches height 2, even though the function itself is undefined at x = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L52",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Using radians, a Python loop evaluates sin(x)/x for x = 10⁻ᵏ, where k = 1, 2, …, 8. The values stay near 1. Which limit conjecture is best supported?",
+   "choices": [
+    "The limit is 0.",
+    "The limit does not exist.",
+    "The limit is 1.",
+    "The limit is undefined."
+   ],
+   "answer": "The limit is 1.",
+   "rationale": "The loop supports the conjecture that the limit is 1 because sin(x)/x approaches 1 as x approaches 0. The quotient is undefined at 0, but that does not prevent a limit from existing.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L52",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Desmos graphs h(x) = sin(1/x) for x ≠ 0, with h(0) = 0. Zooming near x = 0 shows oscillations between −1 and 1. Which conclusion is best supported?",
+   "choices": [
+    "The limit is 0.",
+    "The limit is 1.",
+    "The limit is −1.",
+    "The limit does not exist."
+   ],
+   "answer": "The limit does not exist.",
+   "rationale": "As x approaches 0, 1/x takes arbitrarily large values, so h(x) keeps oscillating between −1 and 1. These values do not approach one number, so the limit does not exist.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L92",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "Which condition correctly defines continuity of a function f at x = a?",
+   "choices": [
+    "The left-hand limit equals f(a).",
+    "The right-hand limit equals f(a).",
+    "The two-sided limit equals f(a).",
+    "The two-sided limit may differ from f(a)."
+   ],
+   "answer": "The two-sided limit equals f(a).",
+   "rationale": "A function is continuous at a when the two-sided limit as x approaches a exists and equals f(a).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L92",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = (x² − 4)/(x − 2), how should the discontinuity at x = 2 be classified?",
+   "choices": [
+    "A removable discontinuity",
+    "A jump discontinuity",
+    "An infinite discontinuity",
+    "No discontinuity at x = 2"
+   ],
+   "answer": "A removable discontinuity",
+   "rationale": "The limit at x = 2 is 4, but f(2) is undefined. Defining f(2) = 4 would make the function continuous, so the discontinuity is removable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L92",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "A graph approaches y = 2 from the left of x = 1, approaches y = 5 from the right, and passes through (1, 2). What type of discontinuity occurs at x = 1?",
+   "choices": [
+    "A removable discontinuity",
+    "A jump discontinuity",
+    "An infinite discontinuity",
+    "No discontinuity at x = 1"
+   ],
+   "answer": "A jump discontinuity",
+   "rationale": "The one-sided limits at x = 1 are different: the left-hand limit is 2 and the right-hand limit is 5. This is a jump discontinuity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L92",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = 1/(x − 2)², how should the discontinuity at x = 2 be classified?",
+   "choices": [
+    "A removable discontinuity",
+    "A jump discontinuity",
+    "An infinite discontinuity",
+    "No discontinuity at x = 2"
+   ],
+   "answer": "An infinite discontinuity",
+   "rationale": "As x approaches 2 from either side, f(x) grows without bound. Therefore, x = 2 is an infinite discontinuity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L82",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "What is the limit of √(x² + x) − x as x approaches positive infinity?",
+   "choices": [
+    "1/2",
+    "1",
+    "0",
+    "2"
+   ],
+   "answer": "1/2",
+   "rationale": "Rationalizing gives x/(√(x² + x) + x). Dividing by x shows that the denominator approaches 2, so the limit is 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L82",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "What is the limit of eˣ divided by x² as x approaches positive infinity?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "+∞"
+   ],
+   "answer": "+∞",
+   "rationale": "An exponential function grows faster than any fixed power of x, so eˣ eventually exceeds x² by an unbounded factor.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L82",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "For g(x) = (x⁴ + 3)/(x² + 2), which statement correctly describes its behavior as x approaches positive infinity?",
+   "choices": [
+    "It grows without bound like x².",
+    "It grows without bound like x⁴.",
+    "It approaches the horizontal asymptote y = 2.",
+    "It approaches the horizontal asymptote y = 0."
+   ],
+   "answer": "It grows without bound like x².",
+   "rationale": "The numerator has degree 4 and the denominator has degree 2, so g(x) behaves like x² and grows without bound.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L157",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "The slope of a function y is 5 when x = 2. Which equation uses prime notation to state this fact correctly?",
+   "choices": [
+    "y'(2) = 5",
+    "y'(5) = 2",
+    "y(2) = 5",
+    "y'(2) = 2"
+   ],
+   "answer": "y'(2) = 5",
+   "rationale": "Prime notation states the derivative at a specific input as y'(2). Its value, 5, is the slope at x = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L157",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "A quantity q changes with time t. Its instantaneous rate of change is 7 units per second. Which expression uses Leibniz notation correctly?",
+   "choices": [
+    "dq/dt = 7",
+    "q/t = 7",
+    "d(t)/q = 7",
+    "q'(t) = 7"
+   ],
+   "answer": "dq/dt = 7",
+   "rationale": "Leibniz notation writes the derivative of q with respect to t as dq/dt. The other derivative expression uses prime notation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L157",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "A graph of f' contains the point (3, -2). What does this information tell you about a graph of f?",
+   "choices": [
+    "The tangent to f at x = 3 has slope -2.",
+    "The tangent to f at x = -2 has slope 3.",
+    "The value of f at x = 3 is -2.",
+    "The tangent to f at x = 3 has slope 3."
+   ],
+   "answer": "The tangent to f at x = 3 has slope -2.",
+   "rationale": "A point (3, -2) on the graph of f' means f'(3) = -2, so f has tangent slope -2 at x = 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L157",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "A cyclist's position s is measured in miles, and time t is measured in hours. At a particular time, ds/dt = 18. What does this mean?",
+   "choices": [
+    "At that time, the cyclist's velocity is 18 miles per hour.",
+    "Over the whole trip, the cyclist averages 18 miles per hour.",
+    "At that time, the cyclist's position is 18 miles.",
+    "At that time, the cyclist's velocity is 18 miles."
+   ],
+   "answer": "At that time, the cyclist's velocity is 18 miles per hour.",
+   "rationale": "The derivative ds/dt is the cyclist's instantaneous rate of change of position. Since distance is measured in miles and time in hours, its units are miles per hour.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L187",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Find the derivative of f(x)=x^2 sin x using the product rule.",
+   "choices": [
+    "2x sin x + x^2 cos x",
+    "2x sin x",
+    "x^2 cos x",
+    "2x sin x - x^2 cos x"
+   ],
+   "answer": "2x sin x + x^2 cos x",
+   "rationale": "The product rule gives (2x)sin x + x^2(cos x) = 2x sin x + x^2 cos x.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L187",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Differentiate g(x)=e^x / x using the quotient rule.",
+   "choices": [
+    "e^x (x-1)/x^2",
+    "e^x / x",
+    "e^x (1-x)/x^2",
+    "e^x / x^2"
+   ],
+   "answer": "e^x (x-1)/x^2",
+   "rationale": "Quotient rule: (x·e^x - e^x·1)/x^2 = e^x(x-1)/x^2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L187",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Which expression correctly gives the derivative of h(x)= (sin x)/x^2 by the quotient rule?",
+   "choices": [
+    "(x^2 cos x - 2x sin x)/x^4",
+    "(x^2 cos x - sin x)/x^2",
+    "(cos x - 2x sin x)/x^2",
+    "(x^2 cos x - 2x sin x)/x^2"
+   ],
+   "answer": "(x^2 cos x - 2x sin x)/x^4",
+   "rationale": "Quotient rule: (x^2·cos x - sin x·2x)/(x^2)^2 = (x^2 cos x - 2x sin x)/x^4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L177",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "What is the derivative of f(x) = 3x^4 - 2x^2 + 5?",
+   "choices": [
+    "12x^3 - 4x",
+    "12x^3 - 4x + 5",
+    "6x^3 - 4x",
+    "3x^5 - 2x^3 + 5"
+   ],
+   "answer": "12x^3 - 4x",
+   "rationale": "Applying the power, constant multiple, and sum rules gives f'(x) = 3(4x^3) - 2(2x) = 12x^3 - 4x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L177",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "Using the definition of the derivative, what is f'(2) if f(x) = x^3?",
+   "choices": [
+    "6",
+    "8",
+    "12",
+    "18"
+   ],
+   "answer": "12",
+   "rationale": "The difference quotient is lim(h->0) (((2+h)^3 - 8)/h). Expanding and simplifying gives lim(h->0)(12 + 6h + h^2) = 12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L177",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "In a binomial proof of the power rule for a positive integer n, which term in ((x+h)^n - x^n)/h remains as h approaches 0?",
+   "choices": [
+    "n x^(n-1)",
+    "(n-1)x^(n-2)",
+    "n(n-1)x^(n-2)",
+    "x^(n-1)"
+   ],
+   "answer": "n x^(n-1)",
+   "rationale": "The binomial term containing exactly one h contributes n x^(n-1)h before division by h. All terms containing h^2 or higher powers approach 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L199",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Using lim(h→0) sin(h)/h = 1 and lim(h→0) (1−cos(h))/h = 0, evaluate lim(h→0) [sin(x+h)−sin(x)]/h.",
+   "choices": [
+    "cos(x)",
+    "−sin(x)",
+    "sin(x)",
+    "1−cos(x)"
+   ],
+   "answer": "cos(x)",
+   "rationale": "The sine angle-addition identity separates the limit into terms involving sin(h) and 1−cos(h), producing cos(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L199",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Using the limit definition and angle-addition identities, evaluate lim(h→0) [cos(x+h)−cos(x)]/h.",
+   "choices": [
+    "−sin(x)",
+    "cos(x)",
+    "sin(x)",
+    "1−cos(x)"
+   ],
+   "answer": "−sin(x)",
+   "rationale": "Expanding cos(x+h) and applying the standard trigonometric limits gives a factor of cos(x) and a remaining term equal to −sin(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L199",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "If the derivatives of sine and cosine are known, which pair of formulas follows by applying the quotient rule to tangent and cotangent?",
+   "choices": [
+    "tan′(x)=sec²(x), cot′(x)=−csc²(x)",
+    "tan′(x)=sec²(x), cot′(x)=csc²(x)",
+    "tan′(x)=−sec²(x), cot′(x)=−csc²(x)",
+    "tan′(x)=−sec²(x), cot′(x)=csc²(x)"
+   ],
+   "answer": "tan′(x)=sec²(x), cot′(x)=−csc²(x)",
+   "rationale": "The quotient rule gives sec²(x) for tangent and −csc²(x) for cotangent after simplifying with the sine and cosine identities.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L199",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Using the reciprocal rule and the derivatives of sine and cosine, which pair correctly gives the derivatives of secant and cosecant?",
+   "choices": [
+    "sec′(x)=sec(x)tan(x), csc′(x)=−csc(x)cot(x)",
+    "sec′(x)=sec(x)tan(x), csc′(x)=csc(x)cot(x)",
+    "sec′(x)=−sec(x)tan(x), csc′(x)=−csc(x)cot(x)",
+    "sec′(x)=−sec(x)tan(x), csc′(x)=csc(x)cot(x)"
+   ],
+   "answer": "sec′(x)=sec(x)tan(x), csc′(x)=−csc(x)cot(x)",
+   "rationale": "Differentiating the reciprocal forms and simplifying with the sine and cosine identities gives these two derivative formulas.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L209",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Let f(x)=x^2+1 and g(x)=3x-2. What is the derivative of f(g(x)) evaluated at x=2?",
+   "choices": [
+    "24",
+    "12",
+    "18",
+    "30"
+   ],
+   "answer": "24",
+   "rationale": "The Chain Rule gives (f∘g)'(2)=f'(g(2))g'(2). Since g(2)=4, this is (2·4)(3)=24.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L209",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Differentiate h(x)=sin(x^2).",
+   "choices": [
+    "2x cos(x^2)",
+    "2x sin(x^2)",
+    "x cos(x^2)",
+    "2 cos(x^2)"
+   ],
+   "answer": "2x cos(x^2)",
+   "rationale": "Differentiate the outside function, sin(u), and multiply by the inside derivative: cos(x^2)·2x=2x cos(x^2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L209",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Suppose y=f(g(t)), f'(3)=2, g'(4)=5, and g(4)=3. What is y'(4)?",
+   "choices": [
+    "5",
+    "6",
+    "10",
+    "15"
+   ],
+   "answer": "10",
+   "rationale": "By the Chain Rule, y'(4)=f'(g(4))g'(4)=2·5=10, multiplying the two rates of change.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L209",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "A square has side length s(t) centimeters and area A(t)=s(t)^2. If ds/dt=3 cm/s when s=4 cm, what is dA/dt?",
+   "choices": [
+    "24 cm^2/s",
+    "12 cm^2/s",
+    "48 cm^2/s",
+    "6 cm^2/s"
+   ],
+   "answer": "24 cm^2/s",
+   "rationale": "Differentiating A=s^2 gives dA/dt=2s(ds/dt). At s=4, this is 2·4·3=24 cm^2/s.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L219",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "For the circle x² + y² = 25, what is dy/dx at the point (3, 4)?",
+   "choices": [
+    "-3/4",
+    "3/4",
+    "-4/3",
+    "4/3"
+   ],
+   "answer": "-3/4",
+   "rationale": "Implicit differentiation gives 2x + 2y(dy/dx) = 0, so dy/dx = −x/y. At (3, 4), this is −3/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L219",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "What is the tangent line to the circle x² + y² = 13 at the point (2, 3)?",
+   "choices": [
+    "2x + 3y = 13",
+    "3x + 2y = 12",
+    "3x − 2y = 0",
+    "−2x + 3y = 5"
+   ],
+   "answer": "2x + 3y = 13",
+   "rationale": "The circle’s slope is dy/dx = −x/y = −2/3 at (2, 3). The tangent line is y − 3 = −(2/3)(x − 2), which simplifies to 2x + 3y = 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L219",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "For y defined by x² + y² = 25, what is d²y/dx² at the point (3, 4)?",
+   "choices": [
+    "−25/64",
+    "25/64",
+    "−64/25",
+    "64/25"
+   ],
+   "answer": "−25/64",
+   "rationale": "Since dy/dx = −x/y, differentiating again gives d²y/dx² = −(x² + y²)/y³ = −25/y³. At y = 4, the value is −25/64.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L219",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "For the curve x² + xy + y² = 7, what is dy/dx at the point (1, 2)?",
+   "choices": [
+    "−4/5",
+    "4/5",
+    "−3/5",
+    "3/5"
+   ],
+   "answer": "−4/5",
+   "rationale": "Implicit differentiation gives 2x + y + (x + 2y)dy/dx = 0, so dy/dx = −(2x + y)/(x + 2y). At (1, 2), this equals −4/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L229",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = 2x + 3 for all real x. What is the formula for f^{-1}(x)?",
+   "choices": [
+    "(x - 3) / 2",
+    "-(x - 3) / 2",
+    "(x + 3) / 2",
+    "(3 - x) / 2"
+   ],
+   "answer": "(x - 3) / 2",
+   "rationale": "Swapping x and y gives x = 2y + 3, so y = (x - 3) / 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L229",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Suppose f is differentiable and one-to-one. If f(2) = 5 and f'(2) = 3, what is (f^{-1})'(5)?",
+   "choices": [
+    "3",
+    "1/3",
+    "5/3",
+    "2/3"
+   ],
+   "answer": "1/3",
+   "rationale": "The inverse derivative formula gives (f^{-1})'(5) = 1/f'(2) = 1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L229",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "If g = f^{-1} and both functions are differentiable, which equation follows from differentiating f(g(x)) = x?",
+   "choices": [
+    "f'(g(x))g'(x) = 1",
+    "f'(g(x))g'(x) = 0",
+    "g'(f(x))f'(x) = 1",
+    "g'(f(x))f'(x) = 0"
+   ],
+   "answer": "f'(g(x))g'(x) = 1",
+   "rationale": "The chain rule gives f'(g(x))g'(x) = 1, which leads to the inverse derivative formula.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L229",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "The graph of f(x) = x^3 contains (2, 8). What are the coordinates and tangent slope at the corresponding point on the graph of f^{-1}?",
+   "choices": [
+    "(8, 2); slope 1/12",
+    "(2, 8); slope 1/12",
+    "(8, 2); slope 12",
+    "(2, 8); slope 12"
+   ],
+   "answer": "(8, 2); slope 1/12",
+   "rationale": "Reflection across y = x changes (2, 8) to (8, 2). Since f'(2) = 12, the inverse slope is 1/12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L271",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "If the position of a particle is s(t) = t^3 - 4t^2 + 5t, what is its second derivative s''(t)?",
+   "choices": [
+    "6t - 8",
+    "6t + 8",
+    "-6t + 8",
+    "3t - 8"
+   ],
+   "answer": "6t - 8",
+   "rationale": "Differentiating once gives s'(t) = 3t^2 - 8t + 5, and differentiating again gives s''(t) = 6t - 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L271",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "If the position of a particle is s(t) = 2t^4 - 3t^3 + t, what is its third derivative s'''(t)?",
+   "choices": [
+    "48t - 18",
+    "24t - 18",
+    "48t + 18",
+    "24t^2 - 18t"
+   ],
+   "answer": "48t - 18",
+   "rationale": "Successive differentiation gives s''(t) = 24t^2 - 18t and s'''(t) = 48t - 18.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L271",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "At t = 2, a particle has position -8, velocity -8, acceleration 0, and jerk 6. Which description is correct?",
+   "choices": [
+    "The particle is 8 units left of the origin, moving left, with zero acceleration and positive jerk.",
+    "The particle is 8 units right of the origin, moving right, with zero acceleration and positive jerk.",
+    "The particle is 8 units left of the origin, moving right, with positive acceleration and positive jerk.",
+    "The particle is 8 units left of the origin, moving left, with positive acceleration and negative jerk."
+   ],
+   "answer": "The particle is 8 units left of the origin, moving left, with zero acceleration and positive jerk.",
+   "rationale": "A negative position means left of the origin, negative velocity means leftward motion, zero acceleration means no change in velocity, and positive jerk means acceleration is increasing.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L271",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 271,
+   "format": "multiple_choice",
+   "prompt": "The position of a particle is s(t) = t^4 - 2t. At t = 1, what are its velocity, acceleration, and jerk?",
+   "choices": [
+    "v(1) = 2, a(1) = 12, j(1) = 24",
+    "v(1) = 2, a(1) = 24, j(1) = 12",
+    "v(1) = 4, a(1) = 12, j(1) = 24",
+    "v(1) = 2, a(1) = 12, j(1) = 48"
+   ],
+   "answer": "v(1) = 2, a(1) = 12, j(1) = 24",
+   "rationale": "The derivatives are s'(t) = 4t^3 - 2, s''(t) = 12t^2, and s'''(t) = 24t, so their values at t = 1 are 2, 12, and 24.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L125",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Suppose lim(x→3) (3x+2) = 11. Which choice of δ makes |x−3|<δ imply |(3x+2)−11|<ε for every ε>0?",
+   "choices": [
+    "δ = ε/3",
+    "δ = 3ε",
+    "δ = ε",
+    "δ = 3/ε"
+   ],
+   "answer": "δ = ε/3",
+   "rationale": "Working backward, |(3x+2)−11| = 3|x−3|. Thus |x−3|<ε/3 gives 3|x−3|<ε, so δ=ε/3 works.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L125",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "For lim(x→3) x² = 9, a proof first restricts |x−3|<1, giving |x+3|<7. Which δ correctly completes the proof?",
+   "choices": [
+    "δ = min{1, ε/7}",
+    "δ = min{1, 7ε}",
+    "δ = min{1, √ε}",
+    "δ = min{1, ε/5}"
+   ],
+   "answer": "δ = min{1, ε/7}",
+   "rationale": "Factoring gives |x²−9| = |x−3||x+3| < 7|x−3|. The restriction |x−3|<1 and the requirement 7|x−3|<ε are both satisfied by δ=min{1, ε/7}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L125",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Let δ=min{1, ε/7}, and assume |x−3|<δ. Then |x+3|<7. Which line correctly proves that |x²−9|<ε?",
+   "choices": [
+    "A: |x²−9| = |x−3||x+3| < 7δ ≤ ε",
+    "B: |x²−9| = |x−3||x+3| < 7δ = ε",
+    "C: |x²−9| = |x−3||x+3| < 7ε",
+    "D: |x²−9| = |x−3||x+3| < δ+7 ≤ 1+ε"
+   ],
+   "answer": "A: |x²−9| = |x−3||x+3| < 7δ ≤ ε",
+   "rationale": "Since |x−3|<δ and |x+3|<7, their product is less than 7δ. By the definition of δ, 7δ≤ε, so |x²−9|<ε.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L125",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Which choice gives a valid epsilon-delta proof that lim(x→−1) (4x+3) = −1?",
+   "choices": [
+    "Let ε>0 and δ=ε/4. If |x+1|<δ, then |(4x+3)−(−1)|=4|x+1|<4δ=ε.",
+    "Let ε>0 and δ=4ε. If |x+1|<δ, then |(4x+3)−(−1)|=4|x+1|<4δ=4ε.",
+    "Let ε>0 and δ=ε/4. If |x+1|<δ, then |(4x+3)−(−1)|=4|x+1|<4δ=4ε.",
+    "Let ε>0 and δ=ε/4. If |x+1|<δ, then |(4x+3)−(−1)|=|x+1|<δ=ε/4."
+   ],
+   "answer": "Let ε>0 and δ=ε/4. If |x+1|<δ, then |(4x+3)−(−1)|=4|x+1|<4δ=ε.",
+   "rationale": "The target difference is 4|x+1|. Choosing δ=ε/4 ensures 4|x+1|<4δ=ε, which proves the stated limit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L284",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "A 25-foot ladder leans against a wall. Its foot slides away from the wall at 2 ft/s. When the foot is 15 feet from the wall, how fast is the ladder’s top moving, and in what direction?",
+   "choices": [
+    "1.5 ft/s downward",
+    "1.5 ft/s upward",
+    "2.5 ft/s downward",
+    "2.5 ft/s upward"
+   ],
+   "answer": "1.5 ft/s downward",
+   "rationale": "With x as the foot’s distance and y as the height, x²+y²=25². At x=15, y=20, so 2x dx/dt+2y dy/dt=0. Thus dy/dt=−(15/20)(2)=−1.5 ft/s, meaning the top moves downward.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L284",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "For a cone, radius increases at 1 cm/s and height increases at 2 cm/s. At radius 3 cm and height 4 cm, how fast is the cone’s volume changing, and in what direction?",
+   "choices": [
+    "14π cm³/s increasing",
+    "28π cm³/s increasing",
+    "42π cm³/s increasing",
+    "14π cm³/s decreasing"
+   ],
+   "answer": "14π cm³/s increasing",
+   "rationale": "Using V=(1/3)πr²h gives dV/dt=(π/3)(2rh dr/dt+r² dh/dt). Substitution yields (π/3)(24+18)=14π cm³/s, so the volume is increasing.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L284",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "A 6-foot pole casts a shadow when the sun’s elevation angle is 45°. The angle decreases at 0.1 rad/s. Taking increasing shadow length as positive, what is the shadow’s rate of change?",
+   "choices": [
+    "1.2 ft/s",
+    "−1.2 ft/s",
+    "0.6 ft/s",
+    "−0.6 ft/s"
+   ],
+   "answer": "1.2 ft/s",
+   "rationale": "The shadow length is s=6 cot θ. Therefore ds/dt=−6 csc²θ dθ/dt. At θ=45° and dθ/dt=−0.1 rad/s, ds/dt=−6(2)(−0.1)=1.2 ft/s.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L284",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "A 12-foot pole and a 5-foot person stand on level ground. The person walks away from the pole at 2 ft/s. How fast is the tip of the person’s shadow moving away from the pole?",
+   "choices": [
+    "24/7 ft/s",
+    "12/7 ft/s",
+    "10/7 ft/s",
+    "2 ft/s"
+   ],
+   "answer": "24/7 ft/s",
+   "rationale": "Let x be the pole-to-person distance and s the shadow length. Similar triangles give s=5x/7. The tip is x+s=12x/7 feet from the pole, so its speed is (12/7)(2)=24/7 ft/s.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L115",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "At a=2, f(x)=3x, and the target limit is L=6. If the challenger chooses ε=0.06, which δ is a valid response that keeps every sufficiently close input within the tolerance?",
+   "choices": [
+    "Choose δ=0.02.",
+    "Choose δ=0.03.",
+    "Choose δ=0.06.",
+    "Choose δ=0.12."
+   ],
+   "answer": "Choose δ=0.02.",
+   "rationale": "Since |f(x)-6|=3|x-2|, choosing δ=0.02 ensures that 0<|x-2|<0.02 gives |f(x)-6|<0.06. The larger choices do not guarantee this.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L115",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let P mean 0<|x-a|<δ and Q mean |f(x)-L|<ε. Which quantifier pattern states the epsilon-delta definition of lim as x approaches a?",
+   "choices": [
+    "∀ε>0 ∃δ>0 ∀x (P⇒Q)",
+    "∀δ>0 ∃ε>0 ∀x (P⇒Q)",
+    "∃ε>0 ∀δ>0 ∀x (P⇒Q)",
+    "∀ε>0 ∃δ>0 ∀x (|x-a|<δ⇒Q)"
+   ],
+   "answer": "∀ε>0 ∃δ>0 ∀x (P⇒Q)",
+   "rationale": "For every positive tolerance ε, the responder must provide a positive closeness δ so that every x within δ of a, but not equal to a, produces a function value within ε of L.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L115",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Suppose |f(x)-L|≤4|x-a| for every x in the domain. For any challenge ε>0, which response guarantees |f(x)-L|<ε whenever |x-a|<δ?",
+   "choices": [
+    "Set δ=ε/4.",
+    "Set δ=ε/2.",
+    "Set δ=2ε.",
+    "Set δ=4ε."
+   ],
+   "answer": "Set δ=ε/4.",
+   "rationale": "If δ=ε/4, then |f(x)-L|≤4|x-a|<4δ=ε. The other choices can make the error exceed the requested tolerance.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L115",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let B mean 0<|x-a|<δ and |f(x)-L|≥ε. Which quantifier pattern correctly negates the epsilon-delta statement for lim as x approaches a?",
+   "choices": [
+    "∃ε>0 ∀δ>0 ∃x: B",
+    "∀ε>0 ∃δ>0 ∃x: B",
+    "∃ε>0 ∃δ>0 ∃x: B",
+    "∀δ>0 ∃ε>0 ∃x: B"
+   ],
+   "answer": "∃ε>0 ∀δ>0 ∃x: B",
+   "rationale": "Failure means some fixed positive tolerance cannot be achieved: for every positive closeness δ, there is an x near a whose function value misses L by at least that tolerance.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L261",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Let y = arcsin(x), so sin(y) = x. For -1 < x < 1, which expression gives dy/dx?",
+   "choices": [
+    "-1/sqrt(1-x^2)",
+    "1/sqrt(1-x^2)",
+    "1/sqrt(1+x^2)",
+    "x/sqrt(1-x^2)"
+   ],
+   "answer": "1/sqrt(1-x^2)",
+   "rationale": "Implicit differentiation gives cos(y)y' = 1. Since cos(y) = sqrt(1-x^2), it follows that y' = 1/sqrt(1-x^2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L261",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Let y = arccos(x), so cos(y) = x. For -1 < x < 1, which expression gives dy/dx?",
+   "choices": [
+    "1/sqrt(1-x^2)",
+    "x/sqrt(1-x^2)",
+    "-1/sqrt(1-x^2)",
+    "-1/sqrt(1+x^2)"
+   ],
+   "answer": "-1/sqrt(1-x^2)",
+   "rationale": "Implicit differentiation gives -sin(y)y' = 1. Because sin(y) = sqrt(1-x^2), the derivative is y' = -1/sqrt(1-x^2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L261",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Let y = arctan(x), so tan(y) = x. Which expression gives dy/dx for all real x?",
+   "choices": [
+    "x/(1+x^2)",
+    "1/(1-x^2)",
+    "-1/(1+x^2)",
+    "1/(1+x^2)"
+   ],
+   "answer": "1/(1+x^2)",
+   "rationale": "Implicit differentiation gives sec^2(y)y' = 1. Since sec^2(y) = 1 + tan^2(y) = 1 + x^2, the derivative is 1/(1+x^2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L261",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has hypotenuse 5 and a side opposite θ equal to 3. If θ = arcsin(3/5), what is the derivative of arcsin(x) at x = 3/5?",
+   "choices": [
+    "5/4",
+    "4/5",
+    "3/4",
+    "3/5"
+   ],
+   "answer": "5/4",
+   "rationale": "The adjacent side is 4, so cos(θ) = 4/5. Since the derivative of arcsin(x) is 1/sqrt(1-x^2), its value at x = 3/5 is 1/(4/5) = 5/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L251",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Let y=x²(x+1)³ for x>0. Use logarithmic differentiation to find y′.",
+   "choices": [
+    "x(x+1)²(5x+2)",
+    "x(x+1)³(5x+2)",
+    "x(x+1)²(2x+5)",
+    "x²(x+1)²(5x+2)"
+   ],
+   "answer": "x(x+1)²(5x+2)",
+   "rationale": "Taking logarithms gives y′/y=2/x+3/(x+1)=(5x+2)/(x(x+1)). Multiplying by y yields y′=x(x+1)²(5x+2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L251",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Let y=(x+1)/(x²+1) for x>0. Use logarithmic differentiation to find y′.",
+   "choices": [
+    "(1−2x−x²)/(x²+1)²",
+    "(1+2x−x²)/(x²+1)²",
+    "(1−2x+x²)/(x²+1)²",
+    "(1−2x−x²)/(x²+1)"
+   ],
+   "answer": "(1−2x−x²)/(x²+1)²",
+   "rationale": "Logarithmic differentiation gives y′/y=1/(x+1)−2x/(x²+1). Simplifying and multiplying by y produces y′=(1−2x−x²)/(x²+1)².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L251",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "For x>0, use logarithmic differentiation to find the derivative of y=x^x.",
+   "choices": [
+    "x^x(ln x+1)",
+    "x^x ln x",
+    "x^x(1−ln x)",
+    "x^(x−1)(ln x+1)"
+   ],
+   "answer": "x^x(ln x+1)",
+   "rationale": "Since ln y=x ln x, differentiation gives y′/y=ln x+1. Thus y′=x^x(ln x+1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L251",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "For x>0 and real r, which calculation proves (x^r)′=r x^(r−1)?",
+   "choices": [
+    "Write x^r=e^(r ln x); then (x^r)′=r e^(r ln x)/x=r x^(r−1).",
+    "Write x^r=e^(x ln r); then (x^r)′=x e^(x ln r)/r=r x^(r−1).",
+    "Write x^r=r e^(ln x); then (x^r)′=r e^(ln x)=r x^(r−1).",
+    "Write x^r=e^(r ln x); then (x^r)′=e^(r ln x)=r x^(r−1)."
+   ],
+   "answer": "Write x^r=e^(r ln x); then (x^r)′=r e^(r ln x)/x=r x^(r−1).",
+   "rationale": "For x>0, x^r=e^(r ln x). The chain rule gives (x^r)′=r e^(r ln x)/x=r x^(r−1), proving the general power rule.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L10",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "If s(t) gives an object's position, its instantaneous velocity is found by:",
+   "choices": [
+    "Integrating the position function",
+    "Averaging the position function",
+    "Differentiating the position function",
+    "Finding area under position graph"
+   ],
+   "answer": "Differentiating the position function",
+   "rationale": "Velocity is the derivative of the position function with respect to time.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Instantaneous velocity is the derivative of the position function with respect to time.",
+      "url": "https://en.wikipedia.org/wiki/Instantaneous_velocity",
+      "quote": "At any particular time t , it can be calculated as the derivative of the position with respect to time:",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L10",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which calculus concept answers the question 'how fast does a quantity change at an instant'?",
+   "choices": [
+    "Derivative",
+    "Integral",
+    "Limit",
+    "Series"
+   ],
+   "answer": "Derivative",
+   "rationale": "The derivative measures the instantaneous rate of change of a quantity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The derivative gives the instantaneous rate of change of a quantity.",
+      "url": "https://en.wikipedia.org/wiki/Differential_calculus",
+      "quote": "The derivative of a function at a chosen input equals the instantaneous rate of change of the function at that input.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L241",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Find the derivative of f(x)=e^{3x}.",
+   "choices": [
+    "3e^{3x}",
+    "e^{3x}",
+    "3e^{x}",
+    "e^{3x}/3"
+   ],
+   "answer": "3e^{3x}",
+   "rationale": "By the chain rule, d/dx e^{kx}=k e^{kx}; here k=3, giving 3e^{3x}.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L241",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Differentiate g(x)=ln(5x^2).",
+   "choices": [
+    "2/x",
+    "1/(5x^2)",
+    "5/x",
+    "2/(5x)"
+   ],
+   "answer": "2/x",
+   "rationale": "Using the chain rule, d/dx ln(u)=u'/u. With u=5x^2, u'=10x, so the derivative is 10x/(5x^2)=2/x.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L241",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "What is d/dx[2^{x^2}]?",
+   "choices": [
+    "2x ln2·2^{x^2}",
+    "x ln2·2^{x^2}",
+    "ln2·2^{x^2}",
+    "2x·2^{x^2}"
+   ],
+   "answer": "2x ln2·2^{x^2}",
+   "rationale": "For a^u, d/dx = a^u ln a·u'. Here a=2, u=x^2, u'=2x, yielding 2x ln2·2^{x^2}.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L336",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Let f be differentiable, and suppose f'(x) > 0 for every x in (2, 5). Which conclusion is guaranteed?",
+   "choices": [
+    "f is increasing on (2, 5).",
+    "f is decreasing on (2, 5).",
+    "f has a local maximum at x = 2.",
+    "f has a local minimum at x = 2."
+   ],
+   "answer": "f is increasing on (2, 5).",
+   "rationale": "For any x₁ < x₂ in (2, 5), the Mean Value Theorem gives f(x₂) − f(x₁) = f'(c)(x₂ − x₁) > 0 for some c between them. Thus f is increasing.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L336",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "At x = 3, the sign of f' is positive immediately to the left and negative immediately to the right. What is the best conclusion?",
+   "choices": [
+    "f has a local maximum at x = 3.",
+    "f has a local minimum at x = 3.",
+    "f is decreasing on both sides of x = 3.",
+    "f is increasing on both sides of x = 3."
+   ],
+   "answer": "f has a local maximum at x = 3.",
+   "rationale": "A change in the derivative's sign from positive to negative means f changes from increasing to decreasing, so f has a local maximum at x = 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L336",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "If f'(x) > 0 throughout [a, b], which argument correctly proves that f is increasing on [a, b]?",
+   "choices": [
+    "MVT gives a positive difference quotient, so f(d) > f(c).",
+    "MVT gives a positive difference quotient, so f(c) > f(d).",
+    "MVT evaluates the difference quotient at c, so f(d) > f(c).",
+    "MVT averages the endpoint derivatives, so f(d) > f(c)."
+   ],
+   "answer": "MVT gives a positive difference quotient, so f(d) > f(c).",
+   "rationale": "For a < c < d ≤ b, the Mean Value Theorem gives (f(d) − f(c))/(d − c) = f'(ξ) > 0. Since d − c > 0, it follows that f(d) > f(c).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L336",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "A differentiable function has f'(x) < 0 for x < 1, f'(x) > 0 for 1 < x < 3, and f'(x) < 0 for x > 3. Which choice correctly lists its local extrema?",
+   "choices": [
+    "Local minimum at x = 1 and local maximum at x = 3.",
+    "Local maximum at x = 1 and local minimum at x = 3.",
+    "Local maximum at both x = 1 and x = 3.",
+    "Local minimum at both x = 1 and x = 3."
+   ],
+   "answer": "Local minimum at x = 1 and local maximum at x = 3.",
+   "rationale": "At x = 1, f' changes from negative to positive, giving a local minimum. At x = 3, f' changes from positive to negative, giving a local maximum.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L147",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let f be differentiable at a. Which limit equals f′(a)?",
+   "choices": [
+    "lim(h→0) [f(a+h)−f(a)]/h",
+    "lim(h→0) [f(a+h)+f(a)]/h",
+    "lim(h→0) [f(a+h)−f(a)]/a",
+    "lim(h→0) [f(a)−f(a+h)]/h"
+   ],
+   "answer": "lim(h→0) [f(a+h)−f(a)]/h",
+   "rationale": "The derivative at a is defined by the limit of the difference quotient [f(a+h)−f(a)]/h as h approaches 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L147",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=|x|, what does the limit of the difference quotient give at x=0?",
+   "choices": [
+    "f′(0) equals 0",
+    "f′(0) equals 1",
+    "f′(0) equals −1",
+    "f′(0) is undefined"
+   ],
+   "answer": "f′(0) is undefined",
+   "rationale": "The quotient is |h|/h. It approaches 1 from the right and −1 from the left, so the two-sided limit and derivative do not exist.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The derivative of |x| at x=0 does not exist (limit is undefined)",
+      "url": "https://en.wikipedia.org/wiki/Derivative",
+      "quote": "Consequently, the secant lines do not approach any single slope, so the limit of the difference quotient does not exist.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L147",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Using the limit definition, compute f′(2) for f(x) = x².",
+   "choices": [
+    "0",
+    "2",
+    "4",
+    "8"
+   ],
+   "answer": "4",
+   "rationale": "The definition gives lim_{h→0} [(2+h)²−2²]/h = lim_{h→0}(4+h) = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L147",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Using the limit definition, which formula gives f′(x) for f(x) = x²?",
+   "choices": [
+    "2x",
+    "x",
+    "x²",
+    "2"
+   ],
+   "answer": "2x",
+   "rationale": "The difference quotient is [(x+h)²−x²]/h = 2x+h, whose limit as h approaches 0 is 2x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L356",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Find lim_{x→0} sin(3x)/x.",
+   "choices": [
+    "0",
+    "1",
+    "3",
+    "DNE"
+   ],
+   "answer": "3",
+   "rationale": "The limit is a 0/0 form. Applying L'Hôpital's Rule gives lim_{x→0} 3cos(3x) = 3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L356",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Find lim_{x→∞} ln(x)/x.",
+   "choices": [
+    "0",
+    "1",
+    "∞",
+    "DNE"
+   ],
+   "answer": "0",
+   "rationale": "This is an ∞/∞ indeterminate form. L'Hôpital's Rule yields lim_{x→∞} (1/x)/1 = 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L356",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Evaluate lim_{x→0+} x ln x.",
+   "choices": [
+    "0",
+    "-1",
+    "1",
+    "DNE"
+   ],
+   "answer": "0",
+   "rationale": "Rewrite as ln x / (1/x) (∞/∞). L'Hôpital gives lim_{x→0+} (1/x) / (-1/x^2) = lim_{x→0+} -x = 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L356",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "Which limit is NOT an indeterminate form suitable for L'Hôpital's Rule?",
+   "choices": [
+    "sin x / x as x→0",
+    "e^x / x^2 as x→∞",
+    "(x+1)/x as x→0",
+    "x ln x as x→0+"
+   ],
+   "answer": "(x+1)/x as x→0",
+   "rationale": "(x+1)/x approaches 1/0, a non‑indeterminate infinite limit; L'Hôpital's Rule does not apply.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L346",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x^3−3x, we have f''(x)=6x. On which interval is the graph concave upward?",
+   "choices": [
+    "(−∞, 0)",
+    "(0, ∞)",
+    "(−∞, 0) and (0, ∞)",
+    "Neither interval"
+   ],
+   "answer": "(0, ∞)",
+   "rationale": "Since f''(x)=6x>0 when x>0, the graph is concave upward on (0, ∞).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L346",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x^4−4x^3, which coordinates identify all inflection points?",
+   "choices": [
+    "(0, 0) and (2, −16)",
+    "(0, 0) and (1, −1)",
+    "(1, −1) and (3, −9)",
+    "(2, −16) and (3, −9)"
+   ],
+   "answer": "(0, 0) and (2, −16)",
+   "rationale": "Here f''(x)=12x(x−2), whose sign changes at x=0 and x=2. The corresponding function values are 0 and −16.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L346",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x^3−3x+4, x=−1 is a critical point. How does the second derivative test classify it?",
+   "choices": [
+    "Local maximum",
+    "Local minimum",
+    "Neither maximum nor minimum",
+    "Inflection point"
+   ],
+   "answer": "Local maximum",
+   "rationale": "At x=−1, f''(−1)=−6<0, so the second derivative test identifies a local maximum.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L346",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x^4, x=0 is a critical point and f''(0)=0. What does the second derivative test conclude?",
+   "choices": [
+    "The test is inconclusive",
+    "It is a local maximum",
+    "It is a local minimum",
+    "It is not a critical point"
+   ],
+   "answer": "The test is inconclusive",
+   "rationale": "Because f''(0)=0, the second derivative test gives no classification; further analysis is required.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L398",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "The total cost to produce x units is C(x)=3x^2+4x+20. What is the marginal cost at x=5?",
+   "choices": [
+    "34",
+    "38",
+    "42",
+    "46"
+   ],
+   "answer": "34",
+   "rationale": "Marginal cost is C'(x)=6x+4; at x=5 this equals 6·5+4=34.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L398",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Revenue from selling x items is R(x)=100x-2x^2. What is the marginal revenue when x=10?",
+   "choices": [
+    "56",
+    "60",
+    "64",
+    "68"
+   ],
+   "answer": "60",
+   "rationale": "Marginal revenue is R'(x)=100-4x; at x=10 this equals 100-40=60.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L398",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Cost C(x)=5x^2+20x+50 and price p(x)=80-3x. Find the output that maximizes profit.",
+   "choices": [
+    "2.5",
+    "3.75",
+    "4.5",
+    "5.0"
+   ],
+   "answer": "3.75",
+   "rationale": "Profit π(x)=p(x)x-C(x)=80x-3x^2-5x^2-20x-50=60x-8x^2-50. Setting π'(x)=60-16x=0 gives x=60/16=3.75.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L398",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "If marginal revenue exceeds marginal cost at current output, what happens to profit if production is increased slightly?",
+   "choices": [
+    "Profit decreases",
+    "Profit stays the same",
+    "Profit increases",
+    "Profit becomes negative"
+   ],
+   "answer": "Profit increases",
+   "rationale": "When MR > MC, each additional unit adds more revenue than cost, so total profit rises.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L366",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Consider f(x) = (x^2−4)/(x−2). Which statement accurately combines its domain, intercepts, asymptotes, monotonicity, and concavity?",
+   "choices": [
+    "Domain all real except x=2 (hole); y‑intercept 2; x‑intercept −2; no vertical asymptote; oblique asymptote y=x+2; increasing everywhere; graph is a line with a hole at (2,4), no curvature.",
+    "Domain all real; vertical asymptote x=2; y‑intercept 2; x‑intercepts −2,2; decreasing on (−∞,2) and increasing on (2,∞); concave up everywhere.",
+    "Domain all real except x=2; horizontal asymptote y=1; y‑intercept 0; x‑intercept 0; increasing on (−∞,2) only; concave down for x<2.",
+    "Domain all real; no intercepts; vertical asymptote x=2; function constant; no monotonic change; linear."
+   ],
+   "answer": "Domain all real except x=2 (hole); y‑intercept 2; x‑intercept −2; no vertical asymptote; oblique asymptote y=x+2; increasing everywhere; graph is a line with a hole at (2,4), no curvature.",
+   "rationale": "Simplifying f gives x+2 with a removable discontinuity at x=2. The domain excludes 2, the y‑intercept is f(0)=2, the only x‑intercept is −2, there is no vertical asymptote but an oblique asymptote y=x+2, the derivative is 1 so the function increases everywhere, and the second derivative is 0 so there is no concavity change.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L366",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "For g(x)=x^3−3x, select the description that correctly lists its domain, intercepts, asymptotes, intervals of increase/decrease, and concavity.",
+   "choices": [
+    "Domain ℝ; intercepts at x=0, ±√3; no asymptotes; increasing on (−∞,−1)∪(1,∞), decreasing on (−1,1); inflection at x=0, concave down for x<0, up for x>0.",
+    "Domain ℝ; only y‑intercept 0; horizontal asymptote y=0; increasing everywhere; concave up everywhere.",
+    "Domain x≥0; intercepts at 0 and 2; vertical asymptote x=1; decreasing on (0,1), increasing on (1,∞); inflection at x=1.",
+    "Domain ℝ; intercepts at x=±1; vertical asymptote x=0; increasing on (−∞,0), decreasing on (0,∞); concave down everywhere."
+   ],
+   "answer": "Domain ℝ; intercepts at x=0, ±√3; no asymptotes; increasing on (−∞,−1)∪(1,∞), decreasing on (−1,1); inflection at x=0, concave down for x<0, up for x>0.",
+   "rationale": "g is a cubic with domain all real numbers. Its zeros are 0, ±√3. No asymptotes exist. g' = 3x^2−3 gives critical points at ±1, yielding the stated monotonic intervals. g'' = 6x gives an inflection at 0 with concavity changing from down to up.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L366",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "Which description correctly captures the graph of h(x)=e^{−x^2} in terms of domain, intercepts, asymptotes, monotonicity, and concavity?",
+   "choices": [
+    "Domain ℝ; y‑intercept 1; no x‑intercepts; horizontal asymptote y=0 as x→±∞; increasing on (−∞,0), decreasing on (0,∞); inflection points at x=±1/√2, concave down between them, up outside.",
+    "Domain x>0; y‑intercept 0; vertical asymptote x=0; increasing everywhere; concave up everywhere.",
+    "Domain ℝ; y‑intercept 0; horizontal asymptote y=1; decreasing on (−∞,0), increasing on (0,∞); inflection at x=0, concave up everywhere.",
+    "Domain ℝ; no intercepts; vertical asymptote x=0; constant function; no monotonic change; no concavity."
+   ],
+   "answer": "Domain ℝ; y‑intercept 1; no x‑intercepts; horizontal asymptote y=0 as x→±∞; increasing on (−∞,0), decreasing on (0,∞); inflection points at x=±1/√2, concave down between them, up outside.",
+   "rationale": "h is defined for all real x, h(0)=1, and it never crosses the x‑axis. As |x|→∞, h→0 giving a horizontal asymptote y=0. h' = −2x e^{−x^2} shows increase on (−∞,0) and decrease on (0,∞). h'' = (4x^2−2)e^{−x^2} yields inflection points at ±1/√2 with the stated concavity pattern.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L430",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "sequences",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Evaluate the sum: ∑ from k = 1 to 5 of (2k + 1).",
+   "choices": [
+    "25",
+    "30",
+    "35",
+    "40"
+   ],
+   "answer": "35",
+   "rationale": "Substituting k = 1, 2, 3, 4, and 5 gives 3 + 5 + 7 + 9 + 11 = 35.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L430",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "sequences",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Which sigma expression represents 1³ + 2³ + 3³ + ⋯ + 8³?",
+   "choices": [
+    "∑ from k = 1 to 8 of k²",
+    "∑ from k = 1 to 7 of k³",
+    "∑ from k = 1 to 8 of (k − 1)³",
+    "∑ from k = 1 to 8 of k³"
+   ],
+   "answer": "∑ from k = 1 to 8 of k³",
+   "rationale": "The index runs from 1 through 8, and the general term is k cubed, so the sum is ∑ from k = 1 to 8 of k³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L430",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "sequences",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Using the sum-of-squares formula, evaluate 1² + 2² + 3² + ⋯ + 10².",
+   "choices": [
+    "285",
+    "335",
+    "385",
+    "435"
+   ],
+   "answer": "385",
+   "rationale": "The formula gives 10·11·21 divided by 6, which equals 385.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L430",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "sequences",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Using the sum-of-cubes formula, evaluate 1³ + 2³ + 3³ + ⋯ + 6³.",
+   "choices": [
+    "126",
+    "256",
+    "441",
+    "486"
+   ],
+   "answer": "441",
+   "rationale": "The sum of the first 6 integers is 21, and its square is 21² = 441.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L418",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "Find the antiderivative of g(x)=cos(3x).",
+   "choices": [
+    "(1/3) sin(3x) + C",
+    "3 sin(3x) + C",
+    "sin(3x) + C",
+    "-(1/3) sin(3x) + C"
+   ],
+   "answer": "(1/3) sin(3x) + C",
+   "rationale": "The antiderivative of cos(kx) is (1/k) sin(kx); here k=3, so (1/3) sin(3x) + C.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L418",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "Given F'(x)=4x^3 and F(2)=10, which function is F(x)?",
+   "choices": [
+    "x^4 - 6",
+    "x^4 + 6",
+    "4x^4 - 6",
+    "x^4 - 10"
+   ],
+   "answer": "x^4 - 6",
+   "rationale": "Antiderivative of 4x^3 is x^4 + C. Using F(2)=10 gives 16 + C = 10, so C = -6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L418",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "A particle moves with velocity v(t)=2t+3. If s(0)=5, what is s(2)?",
+   "choices": [
+    "15",
+    "13",
+    "11",
+    "17"
+   ],
+   "answer": "15",
+   "rationale": "Integrate v(t): s(t)=t^2+3t+C. With s(0)=5, C=5. Then s(2)=4+6+5=15.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L440",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = 2x on [0, 3], use three equal-width rectangles and evaluate the function at each midpoint. What is the midpoint Riemann sum?",
+   "choices": [
+    "9",
+    "6",
+    "12",
+    "15"
+   ],
+   "answer": "9",
+   "rationale": "Each rectangle has width 1, and the midpoint values are f(0.5) = 1, f(1.5) = 3, and f(2.5) = 5. Their sum is 9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L440",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "For the increasing function f(x) = x² on [0, 2], how do left-endpoint and right-endpoint sums compare with the exact area?",
+   "choices": [
+    "The left sum is below and the right sum is above",
+    "The right sum is below and the left sum is above",
+    "Both sums are below the exact area",
+    "Both sums are above the exact area"
+   ],
+   "answer": "The left sum is below and the right sum is above",
+   "rationale": "Because f(x) = x² is increasing, each left-endpoint value is below the function on its interval, while each right-endpoint value is above it.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L440",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x² on [0, 2], how does the absolute error of the right-endpoint sum change when n doubles from 2 to 4?",
+   "choices": [
+    "It increases from 7/3 to 13/12",
+    "It decreases from 7/3 to 13/12",
+    "It remains equal to 7/3",
+    "It decreases from 7/3 to 0"
+   ],
+   "answer": "It decreases from 7/3 to 13/12",
+   "rationale": "The exact area is 8/3. The right-endpoint sums are 5 for n = 2 and 15/4 for n = 4, giving errors 7/3 and 13/12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L440",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x³ on [0, 2], use two equal-width rectangles with each function value evaluated at its midpoint. What is the midpoint sum?",
+   "choices": [
+    "4",
+    "5/2",
+    "7/2",
+    "9/2"
+   ],
+   "answer": "7/2",
+   "rationale": "The interval width is 1, and the midpoints are 0.5 and 1.5. Thus the sum is f(0.5) + f(1.5) = 1/8 + 27/8 = 7/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L388",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A farmer has 200 m of fencing to enclose a rectangular garden against a straight wall (the wall forms one side, so only three sides need fencing). What dimensions maximize the enclosed area?",
+   "choices": [
+    "100 m by 50 m",
+    "66.7 m by 66.7 m",
+    "75 m by 50 m",
+    "120 m by 40 m"
+   ],
+   "answer": "100 m by 50 m",
+   "rationale": "With x + 2y = 200, area A = y(200−2y) = 200y−2y². dA/dy = 200−4y = 0 gives y = 50 m, x = 100 m, which yields the maximum area.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L388",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A cylindrical can must hold 1000 cm³. To minimize the material (surface area including top and bottom), what should the radius and height be (approximately)?",
+   "choices": [
+    "r ≈ 5.4 cm, h ≈ 10.8 cm",
+    "r ≈ 6.0 cm, h ≈ 8.8 cm",
+    "r ≈ 4.5 cm, h ≈ 15.7 cm",
+    "r ≈ 7.0 cm, h ≈ 6.5 cm"
+   ],
+   "answer": "r ≈ 5.4 cm, h ≈ 10.8 cm",
+   "rationale": "For minimum surface area, h = 2r. Using V = πr²h = 2πr³ = 1000 gives r = (500/π)^{1/3} ≈ 5.4 cm, h = 2r ≈ 10.8 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L388",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "An open‑top box with a square base must have volume 32 ft³. What base side length and height minimize the amount of material used?",
+   "choices": [
+    "side 4 ft, height 2 ft",
+    "side 3 ft, height 3.56 ft",
+    "side 5 ft, height 1.28 ft",
+    "side 2 ft, height 8 ft"
+   ],
+   "answer": "side 4 ft, height 2 ft",
+   "rationale": "Surface area S = s² + 4sh with h = 32/s² → S = s² + 128/s. dS/ds = 2s − 128/s² = 0 → s³ = 64 → s = 4 ft, h = 32/16 = 2 ft.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L167",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "If f is differentiable at x = a, which statement must be true?",
+   "choices": [
+    "f is continuous at a.",
+    "f has a corner at a.",
+    "f has a vertical tangent at a.",
+    "f is not defined at a."
+   ],
+   "answer": "f is continuous at a.",
+   "rationale": "Differentiability at a point implies the function is continuous there; the other options describe non-differentiable behaviors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L167",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which function is continuous at x = 0 but not differentiable there?",
+   "choices": [
+    "f(x)=x^2",
+    "f(x)=|x|",
+    "f(x)=sin x",
+    "f(x)=e^x"
+   ],
+   "answer": "f(x)=|x|",
+   "rationale": "The absolute value function has a corner at x = 0, making it continuous but not differentiable.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L167",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "The function f(x)=x^{1/3} has what feature at x=0?",
+   "choices": [
+    "corner point",
+    "cusp point",
+    "vertical tangent",
+    "removable discontinuity"
+   ],
+   "answer": "vertical tangent",
+   "rationale": "The derivative tends to +∞ from both sides, indicating a vertical tangent line at x = 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L30",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "For s(t)=t^2, the average velocity on [1,1+h] is ((1+h)^2-1)/h. As h→0, what value do these average velocities approach?",
+   "choices": [
+    "2",
+    "1",
+    "3",
+    "0"
+   ],
+   "answer": "2",
+   "rationale": "The derivative of t^2 at t=1 is 2, which is the limit of the average velocities as h→0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L30",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=√x, the secant slope between x=4 and x=4+h is (√(4+h)-2)/h. What value does this slope approach as h→0?",
+   "choices": [
+    "0.25",
+    "0.5",
+    "0.125",
+    "0.2"
+   ],
+   "answer": "0.25",
+   "rationale": "The derivative of √x at x=4 is 1/(2√4)=1/4=0.25, the limit of the secant slopes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L30",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which description matches the method of approximating an instantaneous rate by shrinking secant intervals?",
+   "choices": [
+    "Taking the limit of the average rates as width vanishes",
+    "Computing the average rate over a fixed interval exactly now",
+    "Finding the slope of the secant line at the midpoint",
+    "Using the function value at a single point only now"
+   ],
+   "answer": "Taking the limit of the average rates as width vanishes",
+   "rationale": "The limit of average rates as the interval shrinks to zero defines the instantaneous rate.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L30",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "A table shows average velocities for h=0.1,0.01,0.001 as 3.1, 3.01, 3.001. What value do they approach as h→0?",
+   "choices": [
+    "3",
+    "3.1",
+    "3.01",
+    "3.001"
+   ],
+   "answer": "3",
+   "rationale": "The values 3.1, 3.01, 3.001 get closer to 3, so the limit is 3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L460",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "Suppose ∫₀² f(x) dx = 3, ∫₂⁵ f(x) dx = 5, and ∫₅⁶ f(x) dx = 1. What is the value of ∫₀⁶ f(x) dx?",
+   "choices": [
+    "9",
+    "8",
+    "7",
+    "6"
+   ],
+   "answer": "9",
+   "rationale": "By additivity, the integral over [0,6] equals the sum of the three adjacent integrals: 3 + 5 + 1 = 9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L460",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "Suppose ∫₀⁴ f(x) dx = 5 and ∫₀⁴ g(x) dx = 4. What is the value of ∫₀⁴ (3f(x) − 2g(x)) dx?",
+   "choices": [
+    "7",
+    "23",
+    "−7",
+    "1"
+   ],
+   "answer": "7",
+   "rationale": "By linearity, the integral equals 3(5) − 2(4) = 15 − 8 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L460",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "If 0 ≤ f(x) ≤ g(x) on [0,3] and ∫₀³ g(x) dx = 6, which range must contain the value of ∫₀³ f(x) dx?",
+   "choices": [
+    "0 ≤ ∫₀³ f(x) dx ≤ 6",
+    "−6 ≤ ∫₀³ f(x) dx ≤ 6",
+    "0 ≤ ∫₀³ f(x) dx ≤ 3",
+    "∫₀³ f(x) dx = 6"
+   ],
+   "answer": "0 ≤ ∫₀³ f(x) dx ≤ 6",
+   "rationale": "Comparison gives 0 ≤ ∫₀³ f(x) dx ≤ ∫₀³ g(x) dx = 6, so the value must lie between 0 and 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L460",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "If f is an odd, integrable function on [−2,2] and ∫₀² f(x) dx = 5, what is the value of ∫₋₂² f(x) dx?",
+   "choices": [
+    "0",
+    "5",
+    "10",
+    "−5"
+   ],
+   "answer": "0",
+   "rationale": "For an odd function, the integrals over the two symmetric halves are opposites. Therefore, the integral over [−2,2] is 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L294",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = √x. Using the tangent line at x = 3, which expression best approximates f(3.1)?",
+   "choices": [
+    "√3 + 1/(20√3)",
+    "√3 + 1/(30√3)",
+    "√3 + 1/(2√3)",
+    "√3 + 1/(6√3)"
+   ],
+   "answer": "√3 + 1/(20√3)",
+   "rationale": "Since f′(x) = 1/(2√x), linearization gives √3 + [1/(2√3)](0.1) = √3 + 1/(20√3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L294",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "A circular disk has radius 20 cm, but its measured radius may be off by 0.1 cm. Using differentials, what is the maximum estimated error in its area A = πr²?",
+   "choices": [
+    "2π cm²",
+    "0.2π cm²",
+    "4π cm²",
+    "40π cm²"
+   ],
+   "answer": "4π cm²",
+   "rationale": "Using dA = 2πr dr, the estimated error is 2π(20)(0.1) = 4π cm².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L294",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Let f(x) = ln x. Which statement best justifies using L(x) = x − 1, the tangent line at x = 1, to approximate ln(1.05)?",
+   "choices": [
+    "The input is far from 1, so the tangent approximation should be poor.",
+    "The logarithm is unbounded, so no tangent line can approximate it well.",
+    "The tangent line at 1 equals ln x exactly for every positive input.",
+    "The input is close to 1, and ln x has a continuous derivative there."
+   ],
+   "answer": "The input is close to 1, and ln x has a continuous derivative there.",
+   "rationale": "Because 1.05 is close to 1 and ln x is differentiable with a continuous derivative near 1, its tangent line should closely approximate ln(1.05).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L294",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "The tangent line L(x) = 1 + x approximates f(x) = eˣ at x = 0. At x = 0.1, L(0.1) = 1.1 and f(0.1) ≈ 1.10517. Which conclusion is justified?",
+   "choices": [
+    "The relative error is about 4.7%, so the approximation is poor.",
+    "The relative error is about 0.47%, so the approximation is accurate.",
+    "The tangent overestimates the function value by about 0.00517.",
+    "The tangent has no error because both values begin with 1.1."
+   ],
+   "answer": "The relative error is about 0.47%, so the approximation is accurate.",
+   "rationale": "The absolute error is about 0.00517, and 0.00517 ÷ 1.10517 × 100% ≈ 0.47%, so the linearization is quite accurate.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L513",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "What is the average value of f(x)=3x^2 on the interval [1,4]?",
+   "choices": [
+    "21",
+    "7",
+    "15",
+    "12"
+   ],
+   "answer": "21",
+   "rationale": "Average value = (1/(4-1))∫_1^4 3x^2 dx = (1/3)[x^3]_1^4 = (1/3)(64-1)=21.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L513",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=sin x on [0,π], the Mean Value Theorem for Integrals guarantees a c with f(c) equal to the average value. Which expression gives such a c?",
+   "choices": [
+    "c = arcsin(2/π)",
+    "c = π/2",
+    "c = 0",
+    "c = π"
+   ],
+   "answer": "c = arcsin(2/π)",
+   "rationale": "Average = (1/π)∫_0^π sin x dx = 2/π. MVT gives sin c = 2/π, so c = arcsin(2/π).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L513",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "If f(x)=4 for all x in [2,5], what is the average value of f on this interval?",
+   "choices": [
+    "4",
+    "2",
+    "6",
+    "8"
+   ],
+   "answer": "4",
+   "rationale": "Constant function average equals the constant: (1/(5-2))∫_2^5 4 dx = 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L513",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "A continuous function on [a,b] has average value 5. By the Mean Value Theorem for Integrals, which conclusion must hold?",
+   "choices": [
+    "There exists c∈[a,b] with f(c)=5",
+    "f(x)=5 for all x∈[a,b]",
+    "∫_a^b f(x)dx =5",
+    "The maximum of f is 5"
+   ],
+   "answer": "There exists c∈[a,b] with f(c)=5",
+   "rationale": "MVT for integrals states there is at least one c in [a,b] where f(c) equals the average value, here 5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L503",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫₀²(3x + 1)² dx using u = 3x + 1.",
+   "choices": [
+    "114",
+    "171",
+    "38",
+    "342"
+   ],
+   "answer": "38",
+   "rationale": "With du = 3 dx, the new limits are u = 1 and u = 7. Thus the integral is (1/3)∫₁⁷u² du = (343 − 1)/9 = 38.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L503",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "For ∫₁²(2x)/(x² + 1) dx, let u = x² + 1. Which limits should be used for u?",
+   "choices": [
+    "1 to 5",
+    "2 to 5",
+    "0 to 4",
+    "1 to 4"
+   ],
+   "answer": "2 to 5",
+   "rationale": "When x = 1, u = 1² + 1 = 2. When x = 2, u = 2² + 1 = 5, so the limits are 2 to 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L503",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Use symmetry to evaluate ∫₋₃³(x³ + 2x + 4) dx.",
+   "choices": [
+    "0",
+    "12",
+    "48",
+    "24"
+   ],
+   "answer": "24",
+   "rationale": "The odd terms x³ + 2x cancel over the symmetric interval. The even term 4 contributes 2∫₀³4 dx = 24.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L324",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly states Rolle’s Theorem?",
+   "choices": [
+    "Continuous on [a,b], differentiable on (a,b), f(a)=f(b) ⇒ ∃c∈(a,b): f′(c)=0.",
+    "Continuous on [a,b], differentiable on (a,b), f(a)<f(b) ⇒ ∃c∈(a,b): f′(c)=1.",
+    "Continuous on [a,b], differentiable on (a,b), f(a)=f(b) ⇒ ∃c∈(a,b): f(c)=0.",
+    "Continuous on [a,b], differentiable on (a,b), f(a)=f(b) ⇒ ∃c∈(a,b): f′(c)=1."
+   ],
+   "answer": "Continuous on [a,b], differentiable on (a,b), f(a)=f(b) ⇒ ∃c∈(a,b): f′(c)=0.",
+   "rationale": "Rolle’s Theorem requires continuity on [a,b], differentiability on (a,b), and equal endpoint values; it guarantees an interior point where f′(c)=0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L324",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x³−3x on [−1,2], f(−1)=f(2)=2. Which interior value of c is guaranteed by Rolle’s Theorem?",
+   "choices": [
+    "c=−1",
+    "c=0",
+    "c=1",
+    "c=2"
+   ],
+   "answer": "c=1",
+   "rationale": "Since f′(x)=3x²−3, its zeros are x=−1 and x=1. Only x=1 lies in the open interval (−1,2), so Rolle’s Theorem guarantees c=1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L324",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x²+1 on [1,3], the Mean Value Theorem guarantees a c∈(1,3) with f′(c) equal to the average rate of change. What is c?",
+   "choices": [
+    "c=1",
+    "c=3/2",
+    "c=2",
+    "c=5/2"
+   ],
+   "answer": "c=2",
+   "rationale": "The average rate of change is (f(3)−f(1))/(3−1)=(10−2)/2=4. Since f′(x)=2x, solving f′(c)=4 gives c=2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L324",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Which is a valid short proof of the Mean Value Theorem under its usual hypotheses?",
+   "choices": [
+    "g=f−m(x−a); m=(f(b)−f(a))/(b−a); g(a)=g(b), Rolle ⇒ g′(c)=0 ⇒ f′(c)=m.",
+    "g=f−m(x−a); m=(f(b)−f(a))/(b−a); g(a)=g(b), Rolle ⇒ g(c)=0 ⇒ f′(c)=m.",
+    "g=f−m(x−a); m=(f(b)−f(a))/(b−a); g(a)=−g(b), Rolle ⇒ g′(c)=0 ⇒ f′(c)=m.",
+    "g=f−m(x+a); m=(f(b)−f(a))/(b−a); g(a)=g(b), Rolle ⇒ g′(c)=0 ⇒ f′(c)=m."
+   ],
+   "answer": "g=f−m(x−a); m=(f(b)−f(a))/(b−a); g(a)=g(b), Rolle ⇒ g′(c)=0 ⇒ f′(c)=m.",
+   "rationale": "Let m=(f(b)−f(a))/(b−a) and g(x)=f(x)−m(x−a). Then g(a)=g(b), so Rolle’s Theorem gives g′(c)=0. Because g′(c)=f′(c)−m, this yields f′(c)=m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L555",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A bacterial culture doubles every 3 hours. If N(t) is its population, which model correctly describes the instantaneous growth rate?",
+   "choices": [
+    "dN/dt = (ln 2 / 3)N",
+    "dN/dt = (ln 3 / 2)N",
+    "dN/dt = N / 3",
+    "dN/dt = 3N / ln 2"
+   ],
+   "answer": "dN/dt = (ln 2 / 3)N",
+   "rationale": "A population satisfying N' = kN has N = N₀e^(kt). Doubling in 3 hours requires e^(3k) = 2, so k = ln(2)/3 and N' = (ln(2)/3)N.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L555",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "At time t = 3 seconds, a particle's position is 5 meters and its velocity is 2 m/s. What does the velocity value represent?",
+   "choices": [
+    "Average velocity from t = 0 to t = 3: 2 m/s",
+    "Total displacement from t = 0 to t = 3: 2 m",
+    "Instantaneous velocity at t = 3: 2 m/s",
+    "Distance traveled from t = 3 to t = 6: exactly 2 m"
+   ],
+   "answer": "Instantaneous velocity at t = 3: 2 m/s",
+   "rationale": "Velocity is the derivative of position, so it gives the particle's instantaneous rate of change at the stated time, not an average or a later distance.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L555",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "Suppose C(q) is the cost of producing q units, and C'(50) = $8 per unit. Which interpretation is correct?",
+   "choices": [
+    "The average cost of the first 50 units is $8",
+    "Producing the 51st unit adds about $8 to cost",
+    "The total cost of producing 50 units is $8",
+    "Reducing output from 50 to 49 units saves exactly $8"
+   ],
+   "answer": "Producing the 51st unit adds about $8 to cost",
+   "rationale": "C'(50) is the marginal cost at an output of 50 units. It approximates the added cost of producing one more unit near that output level.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L555",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "In a tank-filling model, water enters at rate R(t) = 2t + 3 liters per minute. What does the integral from 0 to 4 of R(t) dt give?",
+   "choices": [
+    "The average rate during minutes 0-4: 7 liters per minute",
+    "The water added during minute 4 alone: 11 liters",
+    "The water added during minutes 0-4: 16 liters",
+    "The total water added during minutes 0-4: 28 liters"
+   ],
+   "answer": "The total water added during minutes 0-4: 28 liters",
+   "rationale": "An accumulation integral adds the rate over time. Here, ∫₀⁴(2t + 3)dt = [t² + 3t]₀⁴ = 16 + 12 = 28 liters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L378",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A rectangular box with a square base and open top must have volume 32 ft^3. Which dimensions give the minimum surface area?",
+   "choices": [
+    "Base 4 ft, height 2 ft",
+    "Base 2 ft, height 8 ft",
+    "Base 8 ft, height 0.5 ft",
+    "Base 3 ft, height 3.56 ft"
+   ],
+   "answer": "Base 4 ft, height 2 ft",
+   "rationale": "The surface area function S(x)=x^2+128/x on (0,∞) has derivative 2x-128/x^2, zero at x=4, giving minimum S=48 ft^2; dimensions base 4 ft, height 2 ft.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L378",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A farmer has 600 m of fencing to enclose a rectangular field along a river (no fence needed on the river side). What dimensions maximize the area?",
+   "choices": [
+    "300 m by 150 m",
+    "200 m by 200 m",
+    "400 m by 100 m",
+    "250 m by 175 m"
+   ],
+   "answer": "300 m by 150 m",
+   "rationale": "Area A(y)=600y-2y^2 on [0,300] has vertex at y=150, giving max area 45000 m^2; dimensions 300 m by 150 m.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L378",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A cylindrical can must hold 500 cm^3. Which radius and height minimize the surface area (including top and bottom)?",
+   "choices": [
+    "r ≈ 4.30 cm, h ≈ 8.60 cm",
+    "r ≈ 5.00 cm, h ≈ 6.37 cm",
+    "r ≈ 3.99 cm, h ≈ 10.0 cm",
+    "r ≈ 4.64 cm, h ≈ 4.64 cm"
+   ],
+   "answer": "r ≈ 4.30 cm, h ≈ 8.60 cm",
+   "rationale": "Surface area S(r)=2πr^2+1000/r on (0,∞) has derivative 4πr-1000/r^2, zero at r=(250/π)^(1/3)≈4.30, giving h=2r≈8.60, the absolute minimum.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L378",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A rectangular poster has printed area 100 in^2 with 1-inch side margins and 2-inch top/bottom margins. What overall dimensions minimize the total poster area?",
+   "choices": [
+    "Width ≈ 9.07 in, height ≈ 18.14 in",
+    "Width ≈ 10 in, height ≈ 14 in",
+    "Width ≈ 12 in, height ≈ 12 in",
+    "Width ≈ 8 in, height ≈ 20 in"
+   ],
+   "answer": "Width ≈ 9.07 in, height ≈ 18.14 in",
+   "rationale": "Total area A(x)=4x+200/x+108 on (0,∞) has derivative 4-200/x^2, zero at x=√50≈7.07, giving overall width x+2≈9.07 and height 100/x+4≈18.14, the absolute minimum.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L450",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x on [0,2], partition [0,2] into n equal subintervals and use right endpoints. Which expression represents the definite integral as the limit of these Riemann sums?",
+   "choices": [
+    "4/n² ∑ₖ₌₁ⁿ k",
+    "2/n² ∑ₖ₌₁ⁿ k",
+    "4/n³ ∑ₖ₌₁ⁿ k",
+    "2/n³ ∑ₖ₌₁ⁿ k"
+   ],
+   "answer": "4/n² ∑ₖ₌₁ⁿ k",
+   "rationale": "Each subinterval has width 2/n and right endpoint 2k/n, so each rectangle has area 4k/n². Summing gives the first expression.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L450",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "Using right-endpoint Riemann sums with n equal subintervals, compute ∫₀² x² dx.",
+   "choices": [
+    "8/3",
+    "4/3",
+    "2/3",
+    "16/3"
+   ],
+   "answer": "8/3",
+   "rationale": "The sum is (2/n³)∑k². Taking the limit gives (2/6)·2(3)=8/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L450",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=−2x on [0,3], how should the signed area represented by ∫₀³(−2x) dx be interpreted?",
+   "choices": [
+    "−9 square units, opposite the geometric area",
+    "9 square units, equal to the geometric area",
+    "−3 square units, opposite the geometric area",
+    "3 square units, equal to the geometric area"
+   ],
+   "answer": "−9 square units, opposite the geometric area",
+   "rationale": "The region lies below the x-axis and has geometric area ½(3)(6)=9, so its signed area is −9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L545",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A student writes lim(x→0) (sin 5x)/x = (sin 0)/0 = 0 and stops there. Which statement identifies the error and gives the correct limit?",
+   "choices": [
+    "Substitution is valid, so the limit equals 0.",
+    "The limit equals 1, using (sin x)/x → 1.",
+    "The form 0/0 is indeterminate, so the limit is 5.",
+    "The limit is undefined because f(0) is undefined."
+   ],
+   "answer": "The form 0/0 is indeterminate, so the limit is 5.",
+   "rationale": "Substituting gives 0/0, an indeterminate form rather than a value. Rewriting (sin 5x)/x as 5·(sin 5x)/(5x) and using sin u/u → 1 shows the limit is 5, so option 3 is correct.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L545",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A student computes d/dx e^(x²) = e^(x²). Which correction identifies the chain-rule error?",
+   "choices": [
+    "The derivative is e^(2x).",
+    "The derivative is 2x e^(x²).",
+    "The derivative is x² e^(x² − 1).",
+    "The derivative is 2x e^(2x)."
+   ],
+   "answer": "The derivative is 2x e^(x²).",
+   "rationale": "The chain rule gives d/dx e^u = e^u · u′. With u = x² and u′ = 2x, the derivative is 2x e^(x²). The student applied only the outer derivative and forgot the inner factor 2x, so option 2 is correct.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L545",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A student computes ∫ (1/x) dx = ln x + C and claims it holds for all x ≠ 0. Which correction is right?",
+   "choices": [
+    "The antiderivative is −1/x² + C, using the power rule.",
+    "The antiderivative is ln(x²) + C, since x² is positive.",
+    "The antiderivative is ln x + C for all x ≠ 0.",
+    "The antiderivative is ln|x| + C for all x ≠ 0."
+   ],
+   "answer": "The antiderivative is ln|x| + C for all x ≠ 0.",
+   "rationale": "For x < 0, ln x is undefined, so it cannot cover all x ≠ 0. Since d/dx ln|x| = 1/x on each side of 0, the correct antiderivative is ln|x| + C, making option 4 correct; ln(x²) + C differentiates to 2/x, and −1/x² is the derivative of 1/x, not an antiderivative.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L545",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A student omits +C, writes y = x² for dy/dx = 2x with y(1) = 4, gets 4 = 1, and concludes no solution exists. What is the correct particular solution?",
+   "choices": [
+    "y = x² + 3",
+    "y = x² + 4",
+    "y = x² − 3",
+    "y = 4x²"
+   ],
+   "answer": "y = x² + 3",
+   "rationale": "The antiderivative is y = x² + C. Substituting y(1) = 4 gives 1 + C = 4, so C = 3 and y = x² + 3. Adding C right after integrating avoids the false contradiction, so option 1 is correct.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L493",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "For the integral ∫ 2x e^(x²) dx, which choice of u makes the integral simplest?",
+   "choices": [
+    "the square of x",
+    "twice the value of x",
+    "the exponential expression",
+    "the value of x"
+   ],
+   "answer": "the square of x",
+   "rationale": "Choosing u = x² gives du = 2x dx, leaving ∫ e^u du = e^u + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L493",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "Evaluate the indefinite integral ∫ x/(x² + 4) dx.",
+   "choices": [
+    "ln(x² + 4) + C",
+    "1/2 arctan(x/2) + C",
+    "1/2 ln(x² + 4) + C",
+    "1/2 ln(x + 4) + C"
+   ],
+   "answer": "1/2 ln(x² + 4) + C",
+   "rationale": "Let u = x² + 4, so du = 2x dx. Then ∫ x/(x² + 4) dx = (1/2)∫ u⁻¹ du = (1/2)ln(u) + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L493",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "Which calculation correctly checks the proposed antiderivative F(x) = sin(x²) for ∫ 2x cos(x²) dx?",
+   "choices": [
+    "F'(x) = x² cos(x²)",
+    "F'(x) = 2x sin(x²)",
+    "F'(x) = 2x cos(x²)",
+    "F'(x) = cos(x²)"
+   ],
+   "answer": "F'(x) = 2x cos(x²)",
+   "rationale": "By the chain rule, differentiating sin(x²) gives cos(x²) multiplied by 2x, which equals the integrand.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L483",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A particle’s velocity is v(t) = 3t meters per second for 0 ≤ t ≤ 4. What is its net change in position?",
+   "choices": [
+    "0 meters",
+    "12 meters",
+    "24 meters",
+    "48 meters"
+   ],
+   "answer": "24 meters",
+   "rationale": "Net change in position is ∫₀⁴ 3t dt = [1.5t²]₀⁴ = 24 meters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L483",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A particle’s velocity is v(t) = t − 2 meters per second for 0 ≤ t ≤ 4. What total distance does the particle travel?",
+   "choices": [
+    "0 meters",
+    "2 meters",
+    "3 meters",
+    "4 meters"
+   ],
+   "answer": "4 meters",
+   "rationale": "Total distance is the integral of speed. The areas on [0,2] and [2,4] are each 2, giving 4 meters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L483",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A reservoir loses water at a rate of 2 gallons per minute for 5 minutes. How many gallons of water are lost?",
+   "choices": [
+    "2 gallons",
+    "5 gallons",
+    "7 gallons",
+    "10 gallons"
+   ],
+   "answer": "10 gallons",
+   "rationale": "The accumulated loss is ∫₀⁵ 2 dt = 10 gallons, using 2t as an antiderivative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L408",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x²−2, a tangent line is drawn at x₀=1. What is the x-coordinate of the tangent line’s x-intercept?",
+   "choices": [
+    "1/2",
+    "2/3",
+    "3/2",
+    "3/4"
+   ],
+   "answer": "3/2",
+   "rationale": "At x₀=1, the tangent line is y=2(x−1). Setting y=0 gives the x-intercept x=3/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L408",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "In Python, which assignment correctly updates x to the next Newton iterate for f(x)=x²−2?",
+   "choices": [
+    "x = x - (x**2 - 2) / (2*x)",
+    "x = x - (x^2 - 2) / (2*x)",
+    "x = x - (x**2 - 2) / 2",
+    "x = x - (x**2 - 2) / (2**x)"
+   ],
+   "answer": "x = x - (x**2 - 2) / (2*x)",
+   "rationale": "Newton’s update is x−f(x)/f′(x). Here f′(x)=2x, and Python uses ** for exponentiation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L408",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "The tangent line to y = f(x) at (x_k, f(x_k)) has equation y = f(x_k) + f'(x_k)(x - x_k). Setting y = 0 gives the next Newton iterate. Which formula results?",
+   "choices": [
+    "x_{k+1} = x_k - f(x_k)/f'(x_k)",
+    "x_{k+1} = x_k + f(x_k)/f'(x_k)",
+    "x_{k+1} = f(x_k)/f'(x_k)",
+    "x_{k+1} = x_k - f'(x_k)/f(x_k)"
+   ],
+   "answer": "x_{k+1} = x_k - f(x_k)/f'(x_k)",
+   "rationale": "Setting the tangent line y = f(x_k) + f'(x_k)(x - x_k) equal to zero and solving for x yields x = x_k - f(x_k)/f'(x_k), the standard Newton update.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L408",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x^3 - 2x + 2, Newton's method starting at x0 = 0 produces the sequence 0, 1, 0, 1, … . What does this indicate?",
+   "choices": [
+    "It converges to the real root near -1.769.",
+    "It diverges to infinity.",
+    "It cycles between 0 and 1.",
+    "It converges to 0."
+   ],
+   "answer": "It cycles between 0 and 1.",
+   "rationale": "At x=0, f(0)=2 and f'(0)=-2 giving x1=1; at x=1, f(1)=1 and f'(1)=1 giving x2=0, so the iterates repeat 0,1,0,1 … indicating a 2-cycle and failure to converge.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L525",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "Given |f''(x)| ≤ 4 on [0, 3] and using the composite trapezoid rule with n = 6 subintervals, what is the theoretical error bound?",
+   "choices": [
+    "0.25",
+    "0.50",
+    "0.125",
+    "0.75"
+   ],
+   "answer": "0.25",
+   "rationale": "Error ≤ (b‑a)·h²·M/12 with h = (3‑0)/6 = 0.5, M = 4 → 3·0.25·4/12 = 0.25.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The composite trapezoidal-rule error satisfies |E_T|≤K(b-a)^3/(12n^2).",
+      "url": "https://en.wikipedia.org/wiki/Composite_trapezoidal_rule",
+      "quote": "{\\displaystyle {\\text{E}}=-{\\frac {(b-a)^{3}}{12N^{2}}}f''(\\xi )}",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The composite trapezoid rule error bound is ≤ ((b-a)^3)/(12n^2) * max |f''|.",
+      "url": "https://en.wikipedia.org/wiki/Trapezoid_rule",
+      "quote": "{\\displaystyle {\\text{E}}=-{\\frac {(b-a)^{3}}{12N^{2}}}f''(\\xi )}",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L525",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x² on [0, 2], one trapezoid and one midpoint rectangle are used to approximate the integral. What is the difference T₁ − M₁?",
+   "choices": [
+    "1",
+    "2",
+    "4",
+    "8/3"
+   ],
+   "answer": "2",
+   "rationale": "The trapezoid approximation is T₁ = (2/2)(0 + 4) = 4, while the midpoint approximation is M₁ = 2(1²) = 2. Therefore, T₁ − M₁ = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L525",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "This Python code approximates ∫₀² x² dx using four midpoint rectangles: h = 0.5; s = 0; for i in range(4): x = (i + 0.5) * h; s += h * (x ** 2). What value does print(s) display?",
+   "choices": [
+    "2.25",
+    "2.50",
+    "2.625",
+    "2.75"
+   ],
+   "answer": "2.625",
+   "rationale": "The midpoint x-values are 0.25, 0.75, 1.25, and 1.75. Multiplying their squared values by h = 0.5 and adding gives s = 2.625.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L525",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "Let I = ∫ₐᵇ f(x) dx, and let Tₙ and Mₙ be composite trapezoid and midpoint sums with n > 0. If f''(x) > 0 throughout [a,b], which ordering is correct?",
+   "choices": [
+    "Tₙ > I > Mₙ",
+    "Tₙ < I < Mₙ",
+    "Tₙ < Mₙ < I",
+    "Mₙ < Tₙ < I"
+   ],
+   "answer": "Tₙ > I > Mₙ",
+   "rationale": "Since f is strictly concave up, the trapezoids lie above the graph, so Tₙ > I. The midpoint rectangles lie below the graph, so Mₙ < I.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L473",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "If G(x) = ∫_2^{x^3} e^{t^2} dt, find G'(x).",
+   "choices": [
+    "e^{x^6}",
+    "3x^2 e^{x^6}",
+    "3x^2 e^{x^3}",
+    "e^{x^3}"
+   ],
+   "answer": "3x^2 e^{x^6}",
+   "rationale": "Apply the chain rule: derivative of the upper limit x^3 is 3x^2, multiplied by the integrand evaluated at t = x^3, yielding 3x^2 e^{(x^3)^2} = 3x^2 e^{x^6}.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L473",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Given H(x) = ∫_x^5 cos(t) dt, compute H'(x).",
+   "choices": [
+    "cos(x)",
+    "-sin(x)",
+    "sin(x)",
+    "-cos(x)"
+   ],
+   "answer": "-cos(x)",
+   "rationale": "When the variable is the lower limit, the derivative is the negative of the integrand evaluated at that limit: H'(x) = -cos(x).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L473",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Let F(x) = ∫₀ˣ (t² + 1) dt. What is F′(3)?",
+   "choices": [
+    "9",
+    "10",
+    "11",
+    "12"
+   ],
+   "answer": "10",
+   "rationale": "By the Fundamental Theorem of Calculus, F′(x) = x² + 1, so F′(3) = 3² + 1 = 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L473",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Let G(x) = ∫ₓˣ² 1/(1 + t²) dt. Which expression equals G′(x)?",
+   "choices": [
+    "2x/(1 + x⁴) − 1/(1 + x²)",
+    "2x/(1 + x⁴) + 1/(1 + x²)",
+    "1/(1 + x⁴) − 2x/(1 + x²)",
+    "2x/(1 + x²) − 1/(1 + x⁴)"
+   ],
+   "answer": "2x/(1 + x⁴) − 1/(1 + x²)",
+   "rationale": "Differentiate the upper limit and subtract the derivative of the lower limit: G′(x) = 2x/(1 + (x²)²) − 1/(1 + x²) = 2x/(1 + x⁴) − 1/(1 + x²).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L314",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "functions",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x^3 - 3x^2 + 2, which x-values are critical numbers?",
+   "choices": [
+    "0 and 2",
+    "0 and 3",
+    "1 and 2",
+    "−1 and 2"
+   ],
+   "answer": "0 and 2",
+   "rationale": "Since f′(x) = 3x^2 - 6x = 3x(x − 2), the derivative is zero at x = 0 and x = 2, and it is defined everywhere.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L314",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "functions",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "On [0, 3], what are the absolute minimum and maximum values of f(x) = x^2 − 4x + 5, in that order?",
+   "choices": [
+    "1 and 5",
+    "1 and 2",
+    "2 and 5",
+    "5 and 8"
+   ],
+   "answer": "1 and 5",
+   "rationale": "The parabola has its minimum at x = 2, where f(2) = 1. At the endpoints, f(0) = 5 and f(3) = 2, so the absolute maximum is 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L314",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "functions",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "On [0, 3], what are the absolute minimum and maximum values of f(x) = 2x^3 - 9x^2 + 12x?",
+   "choices": [
+    "(0, 9)",
+    "(4, 9)",
+    "(0, 5)",
+    "(4, 5)"
+   ],
+   "answer": "(0, 9)",
+   "rationale": "f'(x)=6(x-1)(x-2) gives critical points at x=1,2; evaluating f at 0,1,2,3 yields values 0,5,4,9, so the absolute minimum is 0 and the absolute maximum is 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L314",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "functions",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the Extreme Value Theorem?",
+   "choices": [
+    "If a function is differentiable on an open interval, it has both an absolute maximum and minimum there.",
+    "If a function is continuous on a closed interval [a,b], it attains an absolute maximum and an absolute minimum on that interval.",
+    "If a function is continuous on an open interval, it has both a relative maximum and minimum.",
+    "If a function is defined on a closed interval, it must have an absolute maximum and minimum."
+   ],
+   "answer": "If a function is continuous on a closed interval [a,b], it attains an absolute maximum and an absolute minimum on that interval.",
+   "rationale": "The Extreme Value Theorem guarantees absolute extrema for continuous functions on closed intervals; differentiability or open intervals are insufficient.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Extreme Value Theorem states that a continuous function on a closed interval attains both an absolute maximum and an absolute minimum on that interval.",
+      "url": "https://en.wiktionary.org/wiki/extreme_value_theorem",
+      "quote": "A theorem that states a continuous function on a closed interval must have a maximum value and a minimum value on that interval.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L304",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Which SymPy command subtracts a hand-written expression from the computed derivative and simplifies the difference, producing 0 when the hand calculation is correct?",
+   "choices": [
+    "simplify(diff(x*exp(x), x) + (exp(x) + x*exp(x)))",
+    "simplify(diff(x*exp(x), x) - exp(x) + x*exp(x))",
+    "simplify(diff(x*exp(x), x) - diff(exp(x), x))",
+    "simplify(diff(x*exp(x), x) - (exp(x) + x*exp(x)))"
+   ],
+   "answer": "simplify(diff(x*exp(x), x) - (exp(x) + x*exp(x)))",
+   "rationale": "Subtracting the hand expression from the CAS derivative and simplifying the residual gives 0 exactly when the two expressions agree.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L304",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Which SymPy command computes and simplifies the derivative of f(x) = x² sin(x) with respect to x?",
+   "choices": [
+    "simplify(diff(x**2*sin(x), x))",
+    "simplify(integrate(x**2*sin(x), x))",
+    "simplify(diff(x**2*sin(x), 2))",
+    "simplify(limit(x**2*sin(x), x, 0))"
+   ],
+   "answer": "simplify(diff(x**2*sin(x), x))",
+   "rationale": "The command diff differentiates with respect to x, and simplify reduces the resulting expression to a standard simplified form.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L535",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly writes the Mean Value Theorem in a proof, using full sentences, proper notation, and cites the theorem?",
+   "choices": [
+    "By the Mean Value Theorem, there exists c in (a,b) such that f'(c) = (f(b)-f(a))/(b-a).",
+    "There is a c where f'(c) = (f(b)-f(a))/(b-a) because MVT.",
+    "Since f is continuous on [a,b] and differentiable on (a,b), f'(c) = (f(b)-f(a))/(b-a).",
+    "The MVT says f'(c) = (f(b)-f(a))/(b-a) for some c."
+   ],
+   "answer": "By the Mean Value Theorem, there exists c in (a,b) such that f'(c) = (f(b)-f(a))/(b-a).",
+   "rationale": "Option A states the theorem by name, uses complete sentences, proper notation (exists c in (a,b)), and gives the exact equality. The other options omit the theorem name, the existence quantifier, or use informal language.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Mean Value Theorem states that if f is continuous on [a,b] and differentiable on (a,b), then there exists c in (a,b) such that f'(c)=(f(b)-f(a))/(b-a).",
+      "url": "https://en.wiktionary.org/wiki/mean_value_theorem",
+      "quote": "In mathematical terms, if f : ℝ → ℝ is continuous on [ a , b ] and differentiable on ( a , b ) (where a < b ) then ∃ c ∈ ( a , b ) : f ′ ( c ) = f ( b ) − f ( a ) b − a .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_i:L535",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Let f be continuous on [0,3] and differentiable on (0,3), with f(0)=f(3). Which sentence correctly applies a theorem and records its conclusion?",
+   "choices": [
+    "Since f is continuous on [0,3], differentiable on (0,3), and f(0)=f(3), Rolle’s theorem gives c ∈ (0,3) such that f′(c)=0.",
+    "Since f is continuous on [0,3] and f(0)=f(3), Rolle’s theorem gives c ∈ (0,3) such that f′(c)=0.",
+    "Since f(0)=f(3), Rolle’s theorem gives c ∈ (0,3) such that f′(c)=f(3)−f(0).",
+    "Since f is continuous on [0,3] and differentiable on (0,3), Rolle’s theorem gives c ∈ [0,3] such that f′(c)=0."
+   ],
+   "answer": "Since f is continuous on [0,3], differentiable on (0,3), and f(0)=f(3), Rolle’s theorem gives c ∈ (0,3) such that f′(c)=0.",
+   "rationale": "Option 0 states all hypotheses of Rolle’s theorem and gives the correct conclusion: some c in (0,3) satisfies f′(c)=0. The other options omit a hypothesis, misstate the conclusion, or allow c to be an endpoint.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L535",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Let h(x)=(x²+1)(x³−2). Which sentence computes h′(x) with correct notation and a stated rule?",
+   "choices": [
+    "By the product rule, h′(x)=(x²+1)(3x²)+(2x)(x³−2).",
+    "By the chain rule, h′(x)=(x²+1)(3x²)+(2x)(x³−2).",
+    "By the product rule, h′(x)=(2x)(3x²)+(x²+1)(x³−2).",
+    "By the sum rule, h′(x)=(x²+1)(3x²)+(2x)(x³−2)."
+   ],
+   "answer": "By the product rule, h′(x)=(x²+1)(3x²)+(2x)(x³−2).",
+   "rationale": "Option 0 correctly applies the product rule to the two factors, differentiating x²+1 as 2x and x³−2 as 3x². The other options cite the wrong rule or differentiate a factor incorrectly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_i:L535",
+   "track_id": "math",
+   "grade_id": "calculus_i",
+   "skill_id": "calculus",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "While peer-checking a limit proof, a student reads: “Choose ε>0. Therefore δ exists so that 0<|x−2|<δ implies |f(x)−5|<ε.” Which revision best makes the argument complete and clear?",
+   "choices": [
+    "State that for every ε>0 there exists δ>0 satisfying the implication, and show how δ is chosen to guarantee the inequality.",
+    "State that there exists ε>0 satisfying the implication, and show how δ is chosen to guarantee the inequality.",
+    "State that for every δ>0 there exists ε>0 satisfying the implication, and show how ε is chosen to guarantee the inequality.",
+    "State that δ=ε guarantees the implication, and show how the chosen value of δ produces the required inequality."
+   ],
+   "answer": "State that for every ε>0 there exists δ>0 satisfying the implication, and show how δ is chosen to guarantee the inequality.",
+   "rationale": "Option 0 states the quantifiers in the definition of a limit correctly and requires an explanation of how δ ensures the desired bound. The other revisions reverse or weaken the quantifiers or make an unjustified choice of δ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

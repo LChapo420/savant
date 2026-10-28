@@ -1,0 +1,137 @@
+{
+ "generated": "2026-10-24T20:39:09.534Z",
+ "changes": [
+  {
+   "key": "skill:bb-semicircle-B06",
+   "errors": [
+    {
+     "ref": "B06",
+     "wrong": "The lesson gives the FIBA no-charge semicircle as \"1.25 metre\" with no edge named. FIBA Official Basketball Rules 2026, 2.5.7: \"A semi-circle line with the radius of 1.30 m measured from the point on the court beneath the exact centre of the basket to the outer edge of the semi-circle.\" All lines are 5 cm wide (2.4), so the inner edge is at 1.25 m (Wikipedia: \"The FIBA adopted the NBA's restricted area arc with a marginally wider radius of 1.25 meters\"). NBA Rule 1: \"A Restricted Area shall be marked with a half-circle 4' from the center of the basket ring\". NBA Rule 10 Section VII is the Defensive Three-Second Rule.",
+     "correct": "Say exactly: 1.25 m to the inner edge and 1.30 m to the outer edge of the 5 cm line; do not bundle unsourced NBA claims into the description."
+    }
+   ],
+   "diff": [
+    {
+     "path": "drafts/B06.txt line 66",
+     "before": "[Rules] FIBA Versus NBA: Semicircle, Backboard and Defensive Three Seconds | Compare the 1.25 metre FIBA and 4 foot NBA semicircles, balls passing over the backboard, and NBA defensive three seconds as of 2026.",
+     "after": "[Rules] FIBA Versus NBA: Semicircle, Backboard and Defensive Three Seconds | Compare FIBA's no-charge semicircle, 1.25 m to the inner edge and 1.30 m to the outer edge of its 5 cm line, with NBA rules."
+    }
+   ],
+   "judge_a": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true,
+   "applied": "curriculum-build source drafts, validate.js passing"
+  },
+  {
+   "key": "skill:pi-minor-order-P04",
+   "errors": [
+    {
+     "ref": "P04",
+     "wrong": "The procedure lesson \"A and D Natural Minor Scales\" comes one line BEFORE the concept lesson \"Minor Keys Sharing Major Signatures\". The prerequisite graph has the edge relative_minor -> natural_minor (the concept first: D natural minor's B-flat is explained by sharing F major's signature), and the curriculum's ordering rule 1 is \"Prerequisites first. Concept, then procedure, then fluency, then transfer.\" The next line (Harmonic Minor With a Raised Seventh) needs natural minor first (edge natural_minor -> harmonic_minor).",
+     "correct": "Teach \"Minor Keys Sharing Major Signatures\" first, then \"A and D Natural Minor Scales\", then harmonic minor."
+    }
+   ],
+   "diff": [
+    {
+     "path": "drafts/P04.txt lines 31-32 (the order after the edit is the order taught)",
+     "before": "[Technique] A and D Natural Minor Scales | Play A and D natural minor two octaves in each hand, hearing how the lowered third gives the minor colour.\n[Reading] Minor Keys Sharing Major Signatures | Find the relative minor three semitones below a major, read A, D and E minor signatures as C, F and G, and play each pair.",
+     "after": "[Reading] Minor Keys Sharing Major Signatures | Find the relative minor three semitones below a major, read A, D and E minor signatures as C, F and G, and play each pair.\n[Technique] A and D Natural Minor Scales | Play A and D natural minor two octaves in each hand, hearing how the lowered third gives the minor colour."
+    }
+   ],
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true,
+   "applied": "curriculum-build source drafts, validate.js passing"
+  },
+  {
+   "key": "skill:bb-cold-B05",
+   "errors": [
+    {
+     "ref": "B05",
+     "wrong": "Judge-chosen line (29 words, over the 25-word limit): \"[Practice] Judge Shooting by the Next-Day Cold Set | After the general warm-up, log your first ten elbow jump shots before taking any other elbow shots, because same-shot repetition can make today's percentage look better than next-day retention.\" Evidence: blocked (same-shot) practice scores best during practice, while varied practice retains and transfers better (Shamshiri et al. 2025); the app judges a skill by the first ten shots the next day (the cold set).",
+     "correct": "The same claim in at most 25 words, without saying blocked practice always inflates a score."
+    }
+   ],
+   "diff": [
+    {
+     "path": "drafts/B05.txt, new line after line 98",
+     "before": "(none)",
+     "after": "[Practice] Judge Shooting by the Next-Day Cold Set | Next day, after warming up, log your first ten elbow jump shots, because same-shot practice can make today's percentage look better than retention."
+    }
+   ],
+   "judge_a": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true,
+   "applied": "curriculum-build source drafts, validate.js passing"
+  },
+  {
+   "key": "skill:pi-interleave-P05",
+   "errors": [
+    {
+     "ref": "P05",
+     "wrong": "Judge-chosen line (29 words, over the 25-word limit): \"[Practice] Shuffle Scales After One Correct Run | Play G, D, F and A major scales correctly once each, then shuffle their order, because random-order practice is retained better two days later even though it feels harder.\" Evidence: random-order practice of short melodies was retained better at two days than fixed-order practice while learners judged the opposite (Abushanab and Bishara 2013); the benefit holds for short units once learned (Verwey et al. 2021).",
+     "correct": "The same claim in at most 25 words."
+    }
+   ],
+   "diff": [
+    {
+     "path": "drafts/P05.txt, new line after line 25",
+     "before": "(none)",
+     "after": "[Practice] Shuffle Scales After One Correct Run | Play G, D, F and A major correctly once each, then shuffle their order, because shuffled practice is retained better despite feeling harder."
+    }
+   ],
+   "judge_a": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true,
+   "applied": "curriculum-build source drafts, validate.js passing"
+  }
+ ]
+}

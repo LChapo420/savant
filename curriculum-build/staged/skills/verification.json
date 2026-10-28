@@ -1,0 +1,1425 @@
+{
+ "at": "2026-10-24T04:16:18.932Z",
+ "failed": 0,
+ "results": [
+  {
+   "section": "all",
+   "name": "chess/progression.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "chess/skill-graph.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "chess/drills.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "chess: every stage grade id exists (19)",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "section": "all",
+   "name": "chess: every live grade is mapped to a stage or track",
+   "ok": true,
+   "detail": "all mapped"
+  },
+  {
+   "section": "all",
+   "name": "piano/progression.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "piano/skill-graph.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "piano/drills.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "piano: every stage grade id exists (19)",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "section": "all",
+   "name": "piano: every live grade is mapped to a stage or track",
+   "ok": true,
+   "detail": "all mapped"
+  },
+  {
+   "section": "all",
+   "name": "basketball/progression.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "basketball/skill-graph.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "basketball/drills.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "basketball: every stage grade id exists (13)",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "section": "all",
+   "name": "basketball: every live grade is mapped to a stage or track",
+   "ok": true,
+   "detail": "not mapped: basketball_master, basketball_frontier"
+  },
+  {
+   "section": "all",
+   "name": "lesson-changes.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "lesson-specs.json parses",
+   "ok": true
+  },
+  {
+   "section": "all",
+   "name": "basketball/rules-facts.json parses",
+   "ok": true
+  },
+  {
+   "section": "graphs",
+   "name": "chess: 62/62 nodes matched over 1250 lessons",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "section": "graphs",
+   "name": "chess: 54/54 prerequisite edges hold in the live order",
+   "ok": true,
+   "detail": "all hold"
+  },
+  {
+   "section": "graphs",
+   "name": "piano: 46/46 nodes matched over 1568 lessons",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "section": "graphs",
+   "name": "piano: 35/36 prerequisite edges hold in the live order",
+   "ok": true,
+   "detail": [
+    {
+     "kind": "order",
+     "edge": [
+      "relative_minor",
+      "natural_minor"
+     ],
+     "a": "P04:32 Minor Keys Sharing Major Signatures",
+     "b": "P04:31 A and D Natural Minor Scales"
+    }
+   ]
+  },
+  {
+   "section": "graphs",
+   "name": "basketball: 36/36 nodes matched over 1297 lessons",
+   "ok": true,
+   "detail": []
+  },
+  {
+   "section": "graphs",
+   "name": "basketball: 25/25 prerequisite edges hold in the live order",
+   "ok": true,
+   "detail": "all hold"
+  },
+  {
+   "section": "chess",
+   "name": "KQK: every legal white-to-move position is won; longest mate 10 moves (standard figure 10)",
+   "ok": true,
+   "detail": {
+    "legalWhiteToMove": 144508,
+    "wins": 144508,
+    "draws": 0,
+    "maxDTM": 10,
+    "longest": {
+     "wk": "a1",
+     "q": "b2",
+     "bk": "f5"
+    }
+   }
+  },
+  {
+   "section": "chess",
+   "name": "KRK: every legal white-to-move position is won; longest mate 16 moves (standard figure 16)",
+   "ok": true,
+   "detail": {
+    "legalWhiteToMove": 175168,
+    "wins": 175168,
+    "draws": 0,
+    "maxDTM": 16,
+    "longest": {
+     "wk": "a1",
+     "r": "b2",
+     "bk": "c3"
+    }
+   }
+  },
+  {
+   "section": "chess",
+   "name": "key-square rule: white king on a key square of a b-g pawn wins in 15354/15358 positions",
+   "ok": true,
+   "detail": {
+    "exceptions": 4,
+    "first": [
+     "c7 Pb6 ka8 b",
+     "c8 Pb6 ka8 b",
+     "f7 Pg6 kh8 b",
+     "f8 Pg6 kh8 b"
+    ]
+   }
+  },
+  {
+   "section": "chess",
+   "name": "square rule (black to move: inside the square or can step into it) agrees with the table in 704/704 positions",
+   "ok": true,
+   "detail": {
+    "exceptions": 0,
+    "first": []
+   }
+  },
+  {
+   "section": "chess",
+   "name": "all 57 chess drill answers recomputed",
+   "ok": true,
+   "detail": "all agree"
+  },
+  {
+   "section": "chess",
+   "name": "square colours: a1 dark, h1 light (light square on the right), d1 light and d8 dark (each queen on her own colour)",
+   "ok": true,
+   "detail": "computed"
+  },
+  {
+   "section": "piano",
+   "name": "102 technique items re-derived from key signatures",
+   "ok": true,
+   "detail": "all agree"
+  },
+  {
+   "section": "piano",
+   "name": "technique spellings agree with the app theory engine (content/piano-theory.js)",
+   "ok": true,
+   "detail": "all agree"
+  },
+  {
+   "section": "piano",
+   "name": "sight-reading staircase: 10 levels, keys within caps, never easier",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "section": "piano",
+   "name": "ear batteries: interval and chord sizes",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "section": "piano",
+   "name": "tempo ladder steps 60..100 by 10",
+   "ok": true,
+   "detail": [
+    60,
+    70,
+    80,
+    90,
+    100
+   ]
+  },
+  {
+   "section": "piano",
+   "name": "P04 lesson claims: relative minor three semitones below; A, D, E minor share C, F, G; harmonic sevenths G# and C#",
+   "ok": true,
+   "detail": "computed"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-3pt (FIBA): The three-point arc has a radius of 6.75 m.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-ft-line (FIBA): The free-throw line's furthest edge is 5.80 m from the inner edge of the endline.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-quarters (FIBA): A game is 4 quarters of 10 minutes.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-overtime (FIBA): Overtimes are 5 minutes, as many as needed to break the tie.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-shot-clock (FIBA): A team must attempt a shot within 24 seconds.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-14 (FIBA): The shot clock resets to 14 seconds in set frontcourt situations (e.g. a frontcourt throw-in after a foul or violation, or the same team regaining control after the ball touches the ring).",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-8s (FIBA): The ball must be brought into the frontcourt within 8 seconds.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-3s (FIBA): Three-second rule exists (Article 26).",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-5s-guarded (FIBA): A closely guarded player must pass, shoot or dribble within 5 seconds.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-5s-throwin (FIBA): A throw-in must be released within 5 seconds.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-5-fouls (FIBA): A player with 5 fouls must leave the game.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-team-fouls (FIBA): A team is in the team foul penalty after 4 team fouls in a quarter (so the 5th brings free throws); overtime fouls count with the 4th quarter.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-same-foot (FIBA): After ending a dribble a player may not touch the court consecutively with the same foot or both feet.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-injury-15 (FIBA): An injured player who cannot continue immediately (within approximately 15 seconds) must be substituted.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule fiba-no-charge (FIBA): The no-charge semi-circle is 1.30 m from the point under the centre of the basket to its OUTER edge (2026 text); the older wording '1.25 m' measured to the inner edge of a 5 cm line describes the same line.",
+   "ok": true,
+   "detail": "found in fiba"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-3pt (NBA): NBA arc 23 ft 9 in from the middle of the basket, with lines 3 ft from the sidelines in the corners.",
+   "ok": true,
+   "detail": "found in nba1"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-restricted (NBA): The NBA restricted area is a half-circle 4 ft from the centre of the basket ring.",
+   "ok": true,
+   "detail": "found in nba1"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-quarters (NBA): NBA periods are twelve minutes; overtimes five minutes.",
+   "ok": true,
+   "detail": "found in nba5"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-14 (NBA): The NBA shot clock resets to 14 seconds in set situations.",
+   "ok": true,
+   "detail": "found in nba7"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-6-fouls (NBA): An NBA player is disqualified on the sixth personal foul.",
+   "ok": true,
+   "detail": "found in nba3"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-ot-penalty (NBA): In NBA overtime, common team fouls in excess of three are penalised with free throws.",
+   "ok": true,
+   "detail": "found in nba12"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-5s-back (NBA): Below the free-throw line extended an offensive player may not dribble with back or side to the basket for more than five seconds.",
+   "ok": true,
+   "detail": "found in nba10"
+  },
+  {
+   "section": "basketball",
+   "name": "rule nba-def-3s (NBA): The NBA has a defensive three-second rule.",
+   "ok": true,
+   "detail": "found in nba10"
+  },
+  {
+   "section": "basketball",
+   "name": "rule youth-max-hours (NBA/USA Basketball youth guidelines): Maximum organised basketball per week: 3 h (7-8), 5 h (9-11), 10 h (12-14), 14 h (grades 9-12).",
+   "ok": true,
+   "detail": "found in youth"
+  },
+  {
+   "section": "basketball",
+   "name": "rule youth-rest (NBA/USA Basketball youth guidelines): Minimum rest days per week: 2 (7-8), 2 (9-11), 1 (12-14), 1 (grades 9-12).",
+   "ok": true,
+   "detail": "found in youth"
+  },
+  {
+   "section": "basketball",
+   "name": "rule youth-specialise (NBA/USA Basketball youth guidelines): Delay specialisation in basketball until at least age 14.",
+   "ok": true,
+   "detail": "found in youth"
+  },
+  {
+   "section": "basketball",
+   "name": "rule youth-practice-7-8 (NBA/USA Basketball youth guidelines): Ages 7-8: 1 practice a week of 30-60 minutes recommended.",
+   "ok": true,
+   "detail": "found in youth"
+  },
+  {
+   "section": "basketball",
+   "name": "NOT VERIFIED HERE ncaa-10s: NCAA allows ten seconds to cross half court (lesson B04:37).",
+   "ok": true,
+   "detail": "no NCAA rulebook downloaded"
+  },
+  {
+   "section": "basketball",
+   "name": "NOT VERIFIED HERE nfhs-quarters-arc: NFHS: eight-minute quarters, a 19 ft 9 in arc, shot clocks only in adopting states (lesson B05:63).",
+   "ok": true,
+   "detail": "NFHS rules are not free to download"
+  },
+  {
+   "section": "basketball",
+   "name": "NOT VERIFIED HERE nfhs-bonus: NFHS two shots from the fifth team foul each quarter; NCAA men's one-and-one; NBA last-two-minute penalty (lesson B05:58).",
+   "ok": true,
+   "detail": "NFHS/NCAA not downloaded; the NBA part matches nba12's 'last two minutes' quota text"
+  },
+  {
+   "section": "basketball",
+   "name": "NOT VERIFIED HERE nba-take-foul: NBA transition take foul: one free throw plus possession outside the last two minutes (lesson B07:53).",
+   "ok": true,
+   "detail": "not found in the downloaded rule pages (may sit in Rule 12 comments)"
+  },
+  {
+   "section": "basketball",
+   "name": "NOT VERIFIED HERE fiba-ring-height: Rings are 3.05 m high (10 ft).",
+   "ok": true,
+   "detail": "the ring height is in FIBA's separate Basketball Equipment document, not in the rules text"
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-layup-low-ring-R: 13/20 at confidence 0.9; sequential lucky pass 3.0%, pass at +10 points 97.1%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.029666666666666668,
+    "fair": 0.9713333333333334
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-layup-low-ring-L: 13/20 at confidence 0.9; sequential lucky pass 3.0%, pass at +10 points 97.4%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.029666666666666668,
+    "fair": 0.9743333333333334
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-form-1m: 27/40 at confidence 0.8; sequential lucky pass 2.5%, pass at +10 points 99.3%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.025,
+    "fair": 0.993
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-layup-dribble-R: 15/20 at confidence 0.9; sequential lucky pass 2.6%, pass at +10 points 98.3%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.025666666666666667,
+    "fair": 0.983
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-layup-dribble-L: 15/20 at confidence 0.9; sequential lucky pass 3.0%, pass at +10 points 97.8%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.030333333333333334,
+    "fair": 0.978
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-ft-junior: 34/60 at confidence 0.8; sequential lucky pass 1.2%, pass at +10 points 99.1%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.011666666666666667,
+    "fair": 0.9913333333333333
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-ft-youth: 70/100 at confidence 0.8; sequential lucky pass 0.5%, pass at +10 points 99.4%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.005,
+    "fair": 0.9936666666666667
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "gate bb-spot-midrange: 26/50 at confidence 0.8; sequential lucky pass 1.5%, pass at +10 points 99.4%",
+   "ok": true,
+   "detail": {
+    "lucky": 0.015333333333333332,
+    "fair": 0.9943333333333333
+   }
+  },
+  {
+   "section": "basketball",
+   "name": "B04 lesson numbers: Wilson 95% 7/10 = 0.4,0.89, 5/10 = 0.24,0.76 (overlap); a 60% shooter makes 7/10 21% and 5/10 20% of the time; 70% shooter margin at 50 = 12.7 points",
+   "ok": true,
+   "detail": {
+    "w7": [
+     0.4,
+     0.89
+    ],
+    "w5": [
+     0.24,
+     0.76
+    ],
+    "p7": 0.21499084799999973,
+    "p5": 0.20065812479999962
+   }
+  },
+  {
+   "section": "stats",
+   "name": "expected score 0.75 -> puzzle 190.8 points below the learner; 0.6 -> 70.4",
+   "ok": true,
+   "detail": "Elo logistic"
+  },
+  {
+   "section": "stats",
+   "name": "performance-rating standard error over 12 games ~ 100 Elo (347/sqrt(n))",
+   "ok": true,
+   "detail": "computed"
+  },
+  {
+   "section": "stats",
+   "name": "live unitBelief: rights to prove a unit — past: MC 3, board 2; island: MC 4, board 2",
+   "ok": true,
+   "detail": {
+    "past4": 3,
+    "past30": 2,
+    "island4": 4,
+    "island30": 2
+   }
+  },
+  {
+   "section": "lessons",
+   "name": "7 staged lesson changes apply cleanly to a scratch copy",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "section": "lessons",
+   "name": "piano: validate.js on the changed drafts (format, 10-25 word descriptions, unique titles, same-tag runs)",
+   "ok": true,
+   "detail": "pass"
+  },
+  {
+   "section": "lessons",
+   "name": "basketball: validate.js on the changed drafts (format, 10-25 word descriptions, unique titles, same-tag runs)",
+   "ok": true,
+   "detail": "pass"
+  },
+  {
+   "section": "judges",
+   "name": "two free judges: 9/22 both 'correct'; 7 flagged 'wrong' by at least one; 0 without both verdicts",
+   "ok": true,
+   "detail": {
+    "items": 22,
+    "both_correct": 9,
+    "flagged": [
+     {
+      "id": "L-bb-aim-B03",
+      "A": {
+       "verdict": "wrong",
+       "issue": "Lesson tells shooters to drop the ball past the front rim into the middle, but the cited Tran & Silverberg 2008 evidence recommends aiming toward the back of the ring.",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "wrong",
+       "issue": "The item instructs aiming past the front rim into the middle of the ring, which contradicts the provided evidence that Tran and Silverberg (2008) recommend aiming toward the back of the ring.",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     },
+     {
+      "id": "L-bb-semicircle-B06",
+      "A": {
+       "verdict": "wrong",
+       "issue": "FIBA's no‑charge semicircle radius is 1.25 m, not 1.30 m as stated.",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "unsure",
+       "issue": "I cannot verify whether FIBA Official Basketball Rules 2026 v1.0 article 2.5.7 specifies a 1.30-metre no-charge semicircle rather than the traditional 1.25 metres.",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     },
+     {
+      "id": "R-nfhs",
+      "A": {
+       "verdict": "correct",
+       "issue": "",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "wrong",
+       "issue": "As of the 2025–26 season NFHS rules mandate a 30-second shot clock nationwide, so it is incorrect to state they use a shot clock only in states that adopt one.",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     },
+     {
+      "id": "C-tran",
+      "A": {
+       "verdict": "unsure",
+       "issue": "Cannot confirm the specific recommendations attributed to Tran and Silverberg (2008) in Journal of Sports Sciences.",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "wrong",
+       "issue": "Tran and Silverberg (2008) recommended aiming toward the center of the hoop, not the back of the ring.",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     },
+     {
+      "id": "C-act",
+      "A": {
+       "verdict": "unsure",
+       "issue": "Cannot confirm the Amsterdam Chess Test details and the response‑time validity claim from van der Maas and Wagenmakers (2005).",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "wrong",
+       "issue": "The Amsterdam Chess Test was developed by de Bruin, van der Maas, and Wagenmakers, not solely by van der Maas and Wagenmakers.",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     },
+     {
+      "id": "C-tables",
+      "A": {
+       "verdict": "correct",
+       "issue": "",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "wrong",
+       "issue": "Not every legal king-and-queen-versus-king position is a win because stalemate positions exist, and the longest forced mate takes up to 16 moves for KRvK, not 10 for KQvK as implied.",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     },
+     {
+      "id": "C-nbayouth",
+      "A": {
+       "verdict": "wrong",
+       "issue": "The NBA and USA Basketball Youth Guidelines recommend far fewer weekly hours (e.g., ~1 hr for 7‑8, ~2 hr for 9‑11, ~3 hr for 12‑14) and different rest‑day requirements than the 3/5/10/14 hr and 2/2/1/1 rest days stated.",
+       "model": "nvidia/nemotron-3-ultra-550b-a55b",
+       "effort": "medium"
+      },
+      "B": {
+       "verdict": "wrong",
+       "issue": "The NBA and USA Basketball Youth Guidelines recommend a maximum of 3 hours per week for ages 7-8, not the other values listed (e.g., they recommend 5 hours for ages 9-11, but the rest-day counts and some hour caps do not match the published guidelines exactly).",
+       "model": "xkiro:qwen/qwen3.8-max:free",
+       "effort": "default"
+      }
+     }
+    ],
+    "unsure_or_missing": 6,
+    "missing": 0
+   }
+  }
+ ],
+ "graphs": {
+  "chess": {
+   "board": {
+    "first": "C01:1",
+    "title": "Meet the Checkered Chessboard",
+    "lessons": 1
+   },
+   "rook": {
+    "first": "C01:4",
+    "title": "The Rook Rolls in Straight Lines",
+    "lessons": 1
+   },
+   "bishop": {
+    "first": "C01:8",
+    "title": "The Bishop Slides on Diagonals",
+    "lessons": 1
+   },
+   "queen": {
+    "first": "C01:10",
+    "title": "The Queen Moves Like Rook and Bishop",
+    "lessons": 1
+   },
+   "king": {
+    "first": "C01:12",
+    "title": "The King Takes One Small Step",
+    "lessons": 1
+   },
+   "knight": {
+    "first": "C01:14",
+    "title": "The Knight Jumps in an L",
+    "lessons": 1
+   },
+   "pawn": {
+    "first": "C01:17",
+    "title": "The Pawn Marches Forward",
+    "lessons": 2
+   },
+   "capture": {
+    "first": "C01:5",
+    "title": "Rook Snack Attack: Gobble the Pawns",
+    "lessons": 3
+   },
+   "setup": {
+    "first": "C01:23",
+    "title": "Setting Up the Back Row and Pawns",
+    "lessons": 1
+   },
+   "coordinates": {
+    "first": "C01:27",
+    "title": "Letters and Numbers Name Every Square",
+    "lessons": 1
+   },
+   "check": {
+    "first": "C02:10",
+    "title": "Check Means the King Is Attacked",
+    "lessons": 1
+   },
+   "mate": {
+    "first": "C02:14",
+    "title": "Checkmate Ends the Game",
+    "lessons": 1
+   },
+   "mate_in_1": {
+    "first": "C02:15",
+    "title": "Find the Mate in One",
+    "lessons": 1
+   },
+   "stalemate": {
+    "first": "C02:18",
+    "title": "Stalemate: No Legal Move, No Check",
+    "lessons": 5
+   },
+   "castling": {
+    "first": "C02:20",
+    "title": "Castling Kingside and Queenside",
+    "lessons": 1
+   },
+   "promotion": {
+    "first": "C02:22",
+    "title": "Pawn Promotion and Underpromotion",
+    "lessons": 1
+   },
+   "en_passant": {
+    "first": "C02:23",
+    "title": "Capturing En Passant",
+    "lessons": 1
+   },
+   "draw_rules": {
+    "first": "C02:28",
+    "title": "Draws by Agreement and Threefold Repetition",
+    "lessons": 3
+   },
+   "piece_values": {
+    "first": "C02:4",
+    "title": "Points for Every Piece",
+    "lessons": 1
+   },
+   "hanging": {
+    "first": "C02:3",
+    "title": "Grab the Hanging Piece",
+    "lessons": 1
+   },
+   "trades": {
+    "first": "C02:8",
+    "title": "Good Trades and Bad Trades",
+    "lessons": 1
+   },
+   "cct": {
+    "first": "C03:2",
+    "title": "Checks, Captures and Threats Scan",
+    "lessons": 1
+   },
+   "notation": {
+    "first": "C03:1",
+    "title": "Writing Moves: Captures, Checks and Castling",
+    "lessons": 1
+   },
+   "kqk": {
+    "first": "C02:24",
+    "title": "Queen and King Box Mate",
+    "lessons": 1
+   },
+   "two_rooks": {
+    "first": "C02:25",
+    "title": "Rook Roller: Two-Rook Staircase Mate",
+    "lessons": 1
+   },
+   "krk": {
+    "first": "C03:6",
+    "title": "King and Rook Box Mate",
+    "lessons": 1
+   },
+   "back_rank": {
+    "first": "C02:16",
+    "title": "The Back-Rank Mate",
+    "lessons": 1
+   },
+   "fork": {
+    "first": "C03:4",
+    "title": "The Knight Fork and Royal Fork",
+    "lessons": 1
+   },
+   "pin": {
+    "first": "C03:11",
+    "title": "The Absolute Pin",
+    "lessons": 1
+   },
+   "skewer": {
+    "first": "C03:14",
+    "title": "Skewers: Attack Through the Front Piece",
+    "lessons": 1
+   },
+   "discovered": {
+    "first": "C03:26",
+    "title": "The Discovered Attack",
+    "lessons": 1
+   },
+   "double_check": {
+    "first": "C04:3",
+    "title": "Double Check: The King Must Move",
+    "lessons": 1
+   },
+   "remove_defender": {
+    "first": "C03:27",
+    "title": "Removing the Defender",
+    "lessons": 1
+   },
+   "overload": {
+    "first": "C04:26",
+    "title": "Overloaded Defenders Cannot Do Two Jobs",
+    "lessons": 2
+   },
+   "deflection": {
+    "first": "C05:8",
+    "title": "Deflection: Pulling a Defender Off Its Duty",
+    "lessons": 1
+   },
+   "decoy": {
+    "first": "C05:11",
+    "title": "Decoy: Luring a Piece onto a Fatal Square",
+    "lessons": 2
+   },
+   "zwischenzug": {
+    "first": "C04:33",
+    "title": "The Zwischenzug: An In-Between Move",
+    "lessons": 1
+   },
+   "candidate_moves": {
+    "first": "C06:3",
+    "title": "Candidate Moves: List Before You Calculate",
+    "lessons": 1
+   },
+   "blunder_check": {
+    "first": "C07:60",
+    "title": "Blunder-Checking the Quiet Move",
+    "lessons": 1
+   },
+   "pawn_race": {
+    "first": "C03:30",
+    "title": "Pawn Races to Promotion",
+    "lessons": 1
+   },
+   "square_rule": {
+    "first": "C04:20",
+    "title": "The Square of the Pawn",
+    "lessons": 1
+   },
+   "opposition": {
+    "first": "C04:25",
+    "title": "Direct Opposition Between Kings",
+    "lessons": 1
+   },
+   "key_squares": {
+    "first": "C05:4",
+    "title": "Key Squares: The Real Goal of Pawn Endings",
+    "lessons": 2
+   },
+   "triangulation": {
+    "first": "C07:4",
+    "title": "Triangulation: Losing a Tempo on Purpose",
+    "lessons": 1
+   },
+   "corresponding": {
+    "first": "C08:12",
+    "title": "Corresponding Squares and Mutual Zugzwang",
+    "lessons": 2
+   },
+   "lucena": {
+    "first": "C06:38",
+    "title": "Lucena Position: Building the Bridge on the Fourth Rank",
+    "lessons": 1
+   },
+   "philidor_rook": {
+    "first": "C06:39",
+    "title": "Philidor Position: Third-Rank Defence",
+    "lessons": 1
+   },
+   "vancura": {
+    "first": "C08:25",
+    "title": "The Vancura Defence",
+    "lessons": 1
+   },
+   "zugzwang": {
+    "first": "C06:61",
+    "title": "Zugzwang: When Moving Hurts",
+    "lessons": 1
+   },
+   "weak_pawns": {
+    "first": "C05:19",
+    "title": "Weak Pawns: Isolated, Doubled and Backward",
+    "lessons": 1
+   },
+   "outposts": {
+    "first": "C05:30",
+    "title": "Outposts: Squares Where Knights Dominate",
+    "lessons": 1
+   },
+   "iqp": {
+    "first": "C07:36",
+    "title": "IQP and Hanging Pawns: Plans for Both Sides",
+    "lessons": 1
+   },
+   "minority": {
+    "first": "C07:44",
+    "title": "Minority Attack and Plans from the Structure",
+    "lessons": 1
+   },
+   "prophylaxis": {
+    "first": "C08:2",
+    "title": "Prophylaxis: Stopping Plans Before They Start",
+    "lessons": 1
+   },
+   "kbnk": {
+    "first": "C07:72",
+    "title": "Bishop and Knight Mate: The W Manoeuvre",
+    "lessons": 1
+   },
+   "greek_gift": {
+    "first": "C07:5",
+    "title": "The Greek Gift Sacrifice and Its Conditions",
+    "lessons": 1
+   },
+   "visual_1": {
+    "first": "C03:17",
+    "title": "See One Move Ahead Without Moving",
+    "lessons": 1
+   },
+   "visual_squares": {
+    "first": "C04:37",
+    "title": "Square Colours and Knight Paths Blindfold",
+    "lessons": 1
+   },
+   "visual_lines": {
+    "first": "C08:49",
+    "title": "Blindfold Basics: Lines Without a Board",
+    "lessons": 1
+   },
+   "opening_principles": {
+    "first": "C02:35",
+    "title": "How to Start Your First Games",
+    "lessons": 2
+   },
+   "repertoire": {
+    "first": "C07:33",
+    "title": "A White Repertoire After 1.e4 e5",
+    "lessons": 1
+   },
+   "own_game_review": {
+    "first": "C04:61",
+    "title": "Review Your Games and Do Homework",
+    "lessons": 1
+   }
+  },
+  "piano": {
+   "steady_beat": {
+    "first": "P01:5",
+    "title": "March to the Steady Beat",
+    "lessons": 1
+   },
+   "finger_numbers": {
+    "first": "P01:4",
+    "title": "Finger Numbers With Thumbs as One",
+    "lessons": 1
+   },
+   "landmark_c": {
+    "first": "P02:9",
+    "title": "Every C Sits Left of Two Black Keys",
+    "lessons": 1
+   },
+   "landmark_f": {
+    "first": "P02:13",
+    "title": "Every F Sits Left of Three Black Keys",
+    "lessons": 1
+   },
+   "middle_c": {
+    "first": "P02:10",
+    "title": "Middle C, Its Octaves and All 88 Keys",
+    "lessons": 1
+   },
+   "five_finger_rh": {
+    "first": "P02:18",
+    "title": "Right-Hand C Five-Finger Pattern",
+    "lessons": 1
+   },
+   "five_finger_lh": {
+    "first": "P02:21",
+    "title": "Left-Hand C Five-Finger Pattern",
+    "lessons": 1
+   },
+   "treble_clef": {
+    "first": "P02:44",
+    "title": "The Treble Clef Curls Around the G Line",
+    "lessons": 1
+   },
+   "bass_clef": {
+    "first": "P02:46",
+    "title": "The Bass Clef Dots Hug the F Line",
+    "lessons": 1
+   },
+   "grand_staff": {
+    "first": "P02:47",
+    "title": "Treble and Bass Joined in the Grand Staff",
+    "lessons": 1
+   },
+   "sharps": {
+    "first": "P02:34",
+    "title": "Sharps Raise a Note to the Next Key Up",
+    "lessons": 1
+   },
+   "flats": {
+    "first": "P02:37",
+    "title": "Flats Lower a Note to the Next Key Down",
+    "lessons": 1
+   },
+   "half_steps": {
+    "first": "P03:15",
+    "title": "Half Steps Are Next-Door Keys",
+    "lessons": 1
+   },
+   "whole_steps": {
+    "first": "P03:25",
+    "title": "Whole Steps Are Two Half Steps",
+    "lessons": 1
+   },
+   "time_signatures": {
+    "first": "P03:6",
+    "title": "Time Signatures Count the Beats",
+    "lessons": 1
+   },
+   "eighths": {
+    "first": "P04:1",
+    "title": "Eighth-Note Pairs Share One Beat",
+    "lessons": 1
+   },
+   "dotted_quarter": {
+    "first": "P04:21",
+    "title": "Dotted Quarter and Eighth: Long, Short",
+    "lessons": 1
+   },
+   "syncopation": {
+    "first": "P06:26",
+    "title": "Simple Syncopation: Short-Long-Short",
+    "lessons": 1
+   },
+   "triplets": {
+    "first": "P05:45",
+    "title": "Eighth-Note Triplets: Count, Play and Write",
+    "lessons": 1
+   },
+   "intervals_shape": {
+    "first": "P03:46",
+    "title": "Intervals by Shape From Seconds to Fifths",
+    "lessons": 1
+   },
+   "intervals_quality": {
+    "first": "P06:31",
+    "title": "Intervals by Number and Quality",
+    "lessons": 1
+   },
+   "major_scale_build": {
+    "first": "P04:4",
+    "title": "Build a Major Scale From Tones and Semitones",
+    "lessons": 1
+   },
+   "key_signatures": {
+    "first": "P04:15",
+    "title": "Key Signatures of C, G, D and F Major",
+    "lessons": 1
+   },
+   "relative_minor": {
+    "first": "P04:32",
+    "title": "Minor Keys Sharing Major Signatures",
+    "lessons": 1
+   },
+   "circle_of_fifths": {
+    "first": "P08:1",
+    "title": "The Circle of Fifths and All Key Signatures",
+    "lessons": 1
+   },
+   "c_scale": {
+    "first": "P03:55",
+    "title": "C Major Scale One Octave With Thumb Under",
+    "lessons": 1
+   },
+   "hands_separately": {
+    "first": "P03:22",
+    "title": "Hands Separately Before Hands Together",
+    "lessons": 1
+   },
+   "hands_together": {
+    "first": "P03:23",
+    "title": "Hands Together in Parallel Motion",
+    "lessons": 1
+   },
+   "natural_minor": {
+    "first": "P04:31",
+    "title": "A and D Natural Minor Scales",
+    "lessons": 1
+   },
+   "harmonic_minor": {
+    "first": "P04:33",
+    "title": "Harmonic Minor With a Raised Seventh",
+    "lessons": 1
+   },
+   "triads": {
+    "first": "P03:50",
+    "title": "Triads Up the White Keys, Broken and Blocked",
+    "lessons": 1
+   },
+   "inversions": {
+    "first": "P04:29",
+    "title": "Build and Invert Tonic Triads",
+    "lessons": 1
+   },
+   "primary_chords": {
+    "first": "P05:30",
+    "title": "Inversions for Smooth I-IV-V Changes",
+    "lessons": 1
+   },
+   "chord_symbols": {
+    "first": "P04:42",
+    "title": "Chord Symbols for C, F and G",
+    "lessons": 1
+   },
+   "lead_sheet": {
+    "first": "P06:25",
+    "title": "Read a Lead Sheet: Melody Right, Chords Left",
+    "lessons": 1
+   },
+   "dominant_seventh": {
+    "first": "P07:34",
+    "title": "Dominant Seventh in All Inversions, Resolving Home",
+    "lessons": 1
+   },
+   "modulation": {
+    "first": "P09:90",
+    "title": "Modulation to Related Keys Through Pivot Chords",
+    "lessons": 2
+   },
+   "arpeggios": {
+    "first": "P04:52",
+    "title": "G Major and A Minor Arpeggios",
+    "lessons": 1
+   },
+   "damper_pedal": {
+    "first": "P02:39",
+    "title": "Damper Pedal Colours That Make the Piano Ring",
+    "lessons": 1
+   },
+   "legato_pedal": {
+    "first": "P05:55",
+    "title": "Legato Pedal: Change Just After the Note",
+    "lessons": 1
+   },
+   "sight_read_scan": {
+    "first": "P03:12",
+    "title": "Scan First, Then Sight-Read Four Steps",
+    "lessons": 1
+   },
+   "metronome_ladder": {
+    "first": "P04:39",
+    "title": "Climb the Metronome Ladder",
+    "lessons": 1
+   },
+   "memory_first": {
+    "first": "P03:48",
+    "title": "Play a Short Piece From Memory",
+    "lessons": 1
+   },
+   "memory_structure": {
+    "first": "P07:68",
+    "title": "Memorise by Phrases and Harmonic Landmarks",
+    "lessons": 1
+   },
+   "memory_entry_points": {
+    "first": "P07:77",
+    "title": "Start From Any Entry Point",
+    "lessons": 1
+   },
+   "interleave_practice": {
+    "first": "P09:38",
+    "title": "Interleaving and Spacing Pieces Across the Week",
+    "lessons": 1
+   }
+  },
+  "basketball": {
+   "warmup": {
+    "first": "B01:2",
+    "title": "Wake Up Your Body Warm-Up Game",
+    "lessons": 1
+   },
+   "pain_rule": {
+    "first": "B01:7",
+    "title": "When It Hurts Stop and Tell a Grown-Up",
+    "lessons": 1
+   },
+   "landing": {
+    "first": "B01:6",
+    "title": "Bunny Jumps With Quiet Landings",
+    "lessons": 1
+   },
+   "ready_stance": {
+    "first": "B02:2",
+    "title": "Ready Stance Like a Coiled Spring",
+    "lessons": 1
+   },
+   "jump_stop": {
+    "first": "B02:4",
+    "title": "Jump Stop Land Like a Statue",
+    "lessons": 1
+   },
+   "pivot": {
+    "first": "B02:17",
+    "title": "Pick a Pivot Foot and Keep It Glued",
+    "lessons": 1
+   },
+   "triple_threat": {
+    "first": "B02:21",
+    "title": "Triple Threat Shoot Pass or Dribble",
+    "lessons": 1
+   },
+   "dribble_both": {
+    "first": "B02:9",
+    "title": "Low Middle and Wide Dribbles With Both Hands",
+    "lessons": 1
+   },
+   "crossover": {
+    "first": "B04:9",
+    "title": "Crossover Dribble Low and Quick",
+    "lessons": 1
+   },
+   "chest_pass": {
+    "first": "B02:13",
+    "title": "Two-Hand Chest Pass to a Target",
+    "lessons": 1
+   },
+   "bounce_pass": {
+    "first": "B02:14",
+    "title": "Two-Hand Bounce Pass to the Waist",
+    "lessons": 1
+   },
+   "layup": {
+    "first": "B02:35",
+    "title": "Lay-Up From One Step Two Steps Then a Dribble",
+    "lessons": 1
+   },
+   "layup_full_speed": {
+    "first": "B04:34",
+    "title": "Lay-Ups at Full Speed From Both Sides",
+    "lessons": 1
+   },
+   "shooting_grip": {
+    "first": "B02:28",
+    "title": "Shooting Grip With Finger Pads and a Small Gap",
+    "lessons": 1
+   },
+   "form_shots": {
+    "first": "B03:32",
+    "title": "One-Hand Form Shots From One Metre",
+    "lessons": 1
+   },
+   "jump_shot": {
+    "first": "B05:12",
+    "title": "From Set Shot to Jump Shot on the Ten-Foot Ring",
+    "lessons": 1
+   },
+   "ft_routine": {
+    "first": "B04:26",
+    "title": "Free-Throw Routine and One Focus Word",
+    "lessons": 1
+   },
+   "def_stance": {
+    "first": "B02:36",
+    "title": "Defensive Stance and Big-to-Bigger Slides",
+    "lessons": 1
+   },
+   "stay_in_front": {
+    "first": "B03:39",
+    "title": "Keep a Gap and Slide to Stay in Front",
+    "lessons": 1
+   },
+   "closeout": {
+    "first": "B04:51",
+    "title": "Closeouts With Short Chop Steps",
+    "lessons": 1
+   },
+   "help_recover": {
+    "first": "B04:58",
+    "title": "Help Your Teammate Then Recover",
+    "lessons": 1
+   },
+   "help_side": {
+    "first": "B05:73",
+    "title": "Ball, Ball-Side and Help-Side on the Split Line",
+    "lessons": 1
+   },
+   "box_out": {
+    "first": "B04:60",
+    "title": "Box Out Find Hit Get",
+    "lessons": 1
+   },
+   "give_and_go": {
+    "first": "B03:44",
+    "title": "Give and Go Pass Then Cut",
+    "lessons": 1
+   },
+   "spacing": {
+    "first": "B04:63",
+    "title": "Half-Court Spacing Around the Arc",
+    "lessons": 1
+   },
+   "drive_kick": {
+    "first": "B04:64",
+    "title": "Drive and Kick to the Open Spot",
+    "lessons": 1
+   },
+   "ball_screen": {
+    "first": "B05:84",
+    "title": "First Ball Screens: Roll, Pop or Slip",
+    "lessons": 1
+   },
+   "ball_screen_def": {
+    "first": "B06:56",
+    "title": "Over, Under or Through on a Ball Screen",
+    "lessons": 1
+   },
+   "zone": {
+    "first": "B06:86",
+    "title": "Zone Concepts and the 2-3 Zone",
+    "lessons": 1
+   },
+   "travel_rule": {
+    "first": "B02:20",
+    "title": "Travelling and Double Dribble Explained",
+    "lessons": 1
+   },
+   "pivot_travel": {
+    "first": "B03:3",
+    "title": "Lifting the Pivot Foot Is a Travel",
+    "lessons": 1
+   },
+   "block_charge": {
+    "first": "B04:52",
+    "title": "Blocking Foul or Charge",
+    "lessons": 1
+   },
+   "box_score": {
+    "first": "B04:31",
+    "title": "Box Score and Shooting Percentages From Your Games",
+    "lessons": 1
+   },
+   "efg_ts": {
+    "first": "B06:101",
+    "title": "Effective Field Goal, True Shooting and Free-Throw Rate",
+    "lessons": 1
+   },
+   "two_v_one": {
+    "first": "B02:42",
+    "title": "Pass Shoot or Dribble Choices in 2v1",
+    "lessons": 1
+   },
+   "concussion": {
+    "first": "B04:7",
+    "title": "Head Knocks Mean Sit Out and Get Cleared",
+    "lessons": 1
+   }
+  }
+ }
+}

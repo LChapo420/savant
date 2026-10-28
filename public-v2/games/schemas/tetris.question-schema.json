@@ -1,0 +1,28 @@
+{
+  "engineId": "tetris",
+  "displayName": "Tetris",
+  "difficulty": "high",
+  "mechanic": "Real Tetris on a 10-column, 20-row board with seven falling tetrominoes, movement, rotation, soft/hard drop, a ghost piece and next-piece preview. Filling horizontal rows clears them and pauses the game for one multiple-choice question per cleared row, including multi-row clears. A correct answer banks 100 points for that row; an incorrect answer banks nothing, but the row stays cleared. Feedback stays visible until Continue. After all questions for a clear are answered, play resumes; a round completes at 5 or more cleared rows, loses when the stack blocks a new piece, or ends as a draw through Finish. Pausing or leaving the tab stops gravity. Play again resets the board and scores but continues the question cursor.",
+  "questionType": "multiple_choice",
+  "questionCount": 50,
+  "questionCountNote": "50 unique questions per level. A round only ever moves forward through them: losing, answering wrong, or pressing Play again continues at the next unseen question, so the pool must outlast many rounds.",
+  "choicesPerQuestion": 4,
+  "answerIndexRange": [0, 3],
+  "difficultyScale": { "start": 7, "end": 9, "curve": "flat", "label": "high" },
+  "requiresExplanation": true,
+  "requiresTopicTag": true,
+  "plainTextOnly": true,
+  "distractorRules": "Wrong options must be the same kind of thing as the right one — same units, same part of speech, same level of detail, similar length. No option may be identifiable by its shape or position; each must be a mistake somebody at this level would actually make.",
+  "payloadShape": {
+    "schemaVersion": 1,
+    "meta": ["subject", "grade", "level", "topic", "title", "ageRange"],
+    "settings": {
+      "questionCount": 50,
+      "choicesPerTurn": 4,
+      "difficulty": { "start": 7, "end": 9, "curve": "flat" },
+      "timeLimitSec": null
+    },
+    "questions": ["id", "prompt", "choices[4]", "answerIndex", "explanation", "difficulty", "skill", "topic"],
+    "feedback": ["correct", "incorrect", "win", "lose", "draw", "outOfQuestions"]
+  }
+}

@@ -1,0 +1,1886 @@
+<style>
+  #base-lesson-body {
+    --base: #030712;
+    --surface: #07191D;
+    --surface-2: #0A2229;
+    --surface-3: #0D2C33;
+    --accent: #0D9488;
+    --accent-dark: #0B5F58;
+    --accent-glow: rgba(13, 148, 136, .55);
+    --lime: #84CC16;
+    --lime-glow: rgba(132, 204, 22, .5);
+    --amber: #F97316;
+    --danger: #F43F5E;
+    --violet: #A855F7;
+    --sky: #38BDF8;
+    --ink: #DCFAF5;
+    --ink-dim: #8BB8B3;
+    --line: rgba(13, 148, 136, .34);
+    --card: linear-gradient(180deg, rgba(10, 34, 41, .94), rgba(6, 22, 27, .97));
+
+    position: relative;
+    isolation: isolate;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 14px 46px;
+    border-radius: 16px;
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.58;
+    background:
+      radial-gradient(circle at 10% 4%, rgba(13, 148, 136, .16), transparent 42%),
+      radial-gradient(circle at 92% 88%, rgba(132, 204, 22, .10), transparent 48%),
+      radial-gradient(circle at 50% 50%, rgba(249, 115, 22, .05), transparent 60%),
+      var(--base);
+  }
+
+  #base-lesson-body * { box-sizing: border-box; }
+  #base-lesson-body p { margin: 0 0 10px; }
+  #base-lesson-body ul, #base-lesson-body ol { margin: 0 0 10px; padding-left: 20px; }
+  #base-lesson-body li { margin-bottom: 6px; }
+  #base-lesson-body h2, #base-lesson-body h3, #base-lesson-body h4 { margin: 0 0 8px; line-height: 1.26; }
+  #base-lesson-body strong { color: #F0FFFB; }
+  #base-lesson-body em { color: #B9E9E2; font-style: italic; }
+
+  /* ---------- HUD ---------- */
+  #base-lesson-body .bl-hud {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    margin: 0 -14px 16px;
+    background: linear-gradient(180deg, rgba(3, 12, 16, .97), rgba(3, 12, 16, .86));
+    border-bottom: 2px solid var(--line);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, .6);
+  }
+  #base-lesson-body .bl-hud-left,
+  #base-lesson-body .bl-hud-right { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+  #base-lesson-body .bl-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 9px;
+    border: 2px solid var(--line);
+    background: linear-gradient(180deg, #0A2229, #061418);
+    color: var(--ink);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, .55);
+    white-space: nowrap;
+  }
+  #base-lesson-body .bl-chip-lvl {
+    background: linear-gradient(180deg, #14B8A6, #0B6A61);
+    border-color: #2DD4BF;
+    color: #02100E;
+    box-shadow: 0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .bl-chip-xp { border-color: var(--lime); color: #D9F99D; }
+  #base-lesson-body .bl-chip-xp b { color: #ECFCCB; font-size: .82rem; }
+
+  #base-lesson-body .bl-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .64rem;
+    letter-spacing: .1em;
+    font-weight: 800;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+  #base-lesson-body .bl-call input {
+    width: 108px;
+    font: inherit;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #CFFCF4;
+    background: #041216;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    padding: 5px 8px;
+    outline: none;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, .7);
+  }
+  #base-lesson-body .bl-call input:focus { border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+
+  #base-lesson-body .bl-gauge { min-width: 172px; }
+  #base-lesson-body .bl-gauge-lab {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    font-weight: 800;
+    color: #7FE3D6;
+    margin-bottom: 4px;
+  }
+  #base-lesson-body .bl-gauge-track {
+    height: 12px;
+    border-radius: 7px;
+    border: 2px solid var(--line);
+    background: #041014;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .8);
+  }
+  #base-lesson-body .bl-gauge-fill {
+    height: 100%;
+    width: 25%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #0D9488, #84CC16);
+    box-shadow: 0 0 14px var(--accent-glow);
+    transition: width .7s cubic-bezier(.34, 1.3, .64, 1);
+  }
+
+  #base-lesson-body .bl-mission {
+    margin: 0 0 6px;
+    padding: 12px 14px;
+    border-left: 4px solid var(--amber);
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(249, 115, 22, .12), rgba(249, 115, 22, 0));
+    font-size: .88rem;
+    color: #FFE7D3;
+  }
+
+  /* ---------- Section frame ---------- */
+  #base-lesson-body .bl-sec-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 34px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--line);
+  }
+  #base-lesson-body .bl-sec-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .74rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+    color: #02100E;
+    background: var(--accent);
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: 0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .bl-sec-head h2 {
+    margin: 0;
+    font-size: 1.02rem;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+    color: #EDFFFB;
+  }
+
+  #base-lesson-body .bl-card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 13px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .045);
+  }
+  #base-lesson-body .bl-card > h3 {
+    font-size: .88rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #7FE3D6;
+    margin-bottom: 10px;
+  }
+  #base-lesson-body .bl-card h4 {
+    font-size: .78rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  #base-lesson-body .bl-grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 12px 0;
+  }
+  #base-lesson-body .bl-grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 12px 0;
+  }
+  #base-lesson-body .bl-mini {
+    background: linear-gradient(180deg, rgba(13, 44, 51, .7), rgba(6, 20, 24, .8));
+    border: 2px solid rgba(13, 148, 136, .26);
+    border-radius: 10px;
+    padding: 11px 13px;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, .5);
+  }
+  #base-lesson-body .bl-mini h4 { margin-bottom: 5px; }
+  #base-lesson-body .bl-mini p { font-size: .83rem; margin: 0; color: #C6E9E4; }
+
+  /* ---------- Syntax tags ---------- */
+  #base-lesson-body .bl-tag {
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-weight: 700;
+    border-bottom: 2px solid;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  #base-lesson-body .bl-t-claim { background: rgba(56, 189, 248, .16); border-color: var(--sky); color: #BAE6FD; }
+  #base-lesson-body .bl-t-ground { background: rgba(132, 204, 22, .15); border-color: var(--lime); color: #D9F99D; }
+  #base-lesson-body .bl-t-warrant { background: rgba(249, 115, 22, .15); border-color: var(--amber); color: #FED7AA; }
+  #base-lesson-body .bl-t-qual { background: rgba(13, 148, 136, .22); border-color: var(--accent); color: #99F6E4; }
+  #base-lesson-body .bl-t-bound { background: rgba(168, 85, 247, .16); border-color: var(--violet); color: #E9D5FF; }
+
+  #base-lesson-body .bl-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 4px;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  #base-lesson-body .bl-legend span { padding: 4px 9px; border-radius: 7px; border: 2px solid var(--line); background: #06161A; }
+
+  #base-lesson-body .bl-example {
+    background: linear-gradient(180deg, rgba(4, 18, 24, .95), rgba(3, 12, 16, .95));
+    border: 2px solid rgba(13, 148, 136, .3);
+    border-left: 5px solid var(--accent);
+    border-radius: 11px;
+    padding: 13px 15px;
+    font-size: .88rem;
+    line-height: 1.7;
+    color: #D6F5F0;
+    margin-bottom: 12px;
+  }
+  #base-lesson-body .bl-decoder {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  #base-lesson-body .bl-decoder div {
+    font-size: .8rem;
+    background: rgba(10, 34, 41, .6);
+    border: 2px solid rgba(13, 148, 136, .2);
+    border-radius: 9px;
+    padding: 9px 11px;
+    color: #BFE6E0;
+  }
+  #base-lesson-body .bl-decoder b { display: block; font-size: .68rem; letter-spacing: .09em; text-transform: uppercase; margin-bottom: 3px; }
+
+  /* ---------- Pods ---------- */
+  #base-lesson-body .bl-pods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  #base-lesson-body .bl-pod {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 13px;
+    padding: 15px 16px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .04);
+  }
+  #base-lesson-body .bl-pod header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+    padding-bottom: 9px;
+    border-bottom: 2px dashed rgba(13, 148, 136, .3);
+  }
+  #base-lesson-body .bl-pod-ico {
+    font-size: 1.15rem;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: linear-gradient(180deg, #0D2C33, #061418);
+    border: 2px solid var(--line);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, .5);
+    flex: 0 0 auto;
+  }
+  #base-lesson-body .bl-pod h3 { margin: 0; font-size: .87rem; letter-spacing: .03em; color: #EDFFFB; }
+  #base-lesson-body .bl-pod-block { margin-bottom: 10px; }
+  #base-lesson-body .bl-pod-block:last-child { margin-bottom: 0; }
+  #base-lesson-body .bl-pod-block ul { padding-left: 18px; font-size: .82rem; color: #C3E7E2; }
+  #base-lesson-body .bl-pod-block p { font-size: .82rem; color: #C3E7E2; }
+  #base-lesson-body .bl-ex {
+    font-size: .82rem;
+    font-style: italic;
+    background: rgba(4, 16, 20, .85);
+    border-left: 4px solid var(--amber);
+    border-radius: 8px;
+    padding: 9px 11px;
+    color: #FFE3CB;
+  }
+  #base-lesson-body .bl-diag {
+    font-size: .8rem;
+    margin-top: 8px;
+    color: #A9D8D2;
+    background: rgba(244, 63, 94, .07);
+    border: 2px solid rgba(244, 63, 94, .25);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  #base-lesson-body .bl-diag b { color: #FFB3C2; }
+
+  /* ---------- Buttons ---------- */
+  #base-lesson-body .bl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font: inherit;
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: #EAFBF7;
+    background: linear-gradient(180deg, #12A99B, #0B7C71);
+    border: 2px solid #2DD4BF;
+    border-radius: 11px;
+    padding: 12px 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--accent-dark), 0 6px 16px rgba(0, 0, 0, .5);
+    transition: transform .12s ease, box-shadow .15s ease, background .2s ease;
+  }
+  #base-lesson-body .bl-btn:hover {
+    box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark);
+    transform: translateY(-1px);
+  }
+  #base-lesson-body .bl-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--accent-dark);
+  }
+  #base-lesson-body .bl-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: 0 4px 0 #0A2B28; }
+
+  #base-lesson-body .bl-btn-danger {
+    background: linear-gradient(180deg, #F43F5E, #A8123A);
+    border-color: #FB7185;
+    box-shadow: 0 4px 0 #7A0D2B, 0 6px 16px rgba(0, 0, 0, .5);
+  }
+  #base-lesson-body .bl-btn-danger:hover { box-shadow: 0 4px 16px rgba(244, 63, 94, .6), 0 4px 0 #7A0D2B; }
+  #base-lesson-body .bl-btn-danger:active { box-shadow: 0 2px 0 #7A0D2B; }
+
+  #base-lesson-body .bl-btn-lime {
+    background: linear-gradient(180deg, #9BE31F, #5F9E0E);
+    border-color: #BEF264;
+    color: #0B1B02;
+    box-shadow: 0 4px 0 #3F6B08, 0 6px 16px rgba(0, 0, 0, .5);
+  }
+  #base-lesson-body .bl-btn-lime:hover { box-shadow: 0 4px 16px var(--lime-glow), 0 4px 0 #3F6B08; }
+  #base-lesson-body .bl-btn-lime:active { box-shadow: 0 2px 0 #3F6B08; }
+
+  /* ---------- Rig ---------- */
+  #base-lesson-body .bl-stage {
+    position: relative;
+    height: 372px;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background:
+      linear-gradient(rgba(13, 148, 136, .075) 1px, transparent 1px) 0 0 / 100% 34px,
+      linear-gradient(90deg, rgba(13, 148, 136, .075) 1px, transparent 1px) 0 0 / 34px 100%,
+      radial-gradient(circle at 50% 130%, rgba(13, 148, 136, .3), transparent 62%),
+      #04121A;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, .8);
+    transition: border-color .3s, box-shadow .3s;
+  }
+  #base-lesson-body .bl-stage.bl-fracture {
+    border-color: var(--danger);
+    box-shadow: inset 0 0 60px rgba(244, 63, 94, .35), 0 0 26px rgba(244, 63, 94, .35);
+    animation: blShake .5s ease;
+  }
+  #base-lesson-body .bl-stage.bl-grounded {
+    border-color: var(--lime);
+    box-shadow: inset 0 0 60px rgba(132, 204, 22, .22), 0 0 26px var(--lime-glow);
+  }
+  @keyframes blShake {
+    0%, 100% { transform: translate(0, 0); }
+    18% { transform: translate(-5px, 2px); }
+    36% { transform: translate(5px, -2px); }
+    54% { transform: translate(-4px, 1px); }
+    72% { transform: translate(4px, -1px); }
+    88% { transform: translate(-2px, 1px); }
+  }
+
+  #base-lesson-body .bl-beam {
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    top: 58px;
+    height: 12px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #1FC7B6, #0A6159);
+    box-shadow: 0 0 20px rgba(13, 148, 136, .55), inset 0 1px 0 rgba(255, 255, 255, .4);
+    transform-origin: 50% 50%;
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform .95s cubic-bezier(.34, 1.4, .64, 1), box-shadow .3s;
+  }
+  #base-lesson-body .bl-stage.bl-fracture .bl-beam { background: linear-gradient(180deg, #FB7185, #8E1230); box-shadow: 0 0 22px rgba(244, 63, 94, .6); }
+  #base-lesson-body .bl-stage.bl-grounded .bl-beam { background: linear-gradient(180deg, #BEF264, #4D7C0F); box-shadow: 0 0 22px var(--lime-glow); }
+
+  #base-lesson-body .bl-pan {
+    position: absolute;
+    top: 12px;
+    width: 158px;
+    transform-origin: 50% 0;
+    transform: rotate(calc(-1 * var(--tilt, 0deg)));
+    transition: transform .95s cubic-bezier(.34, 1.4, .64, 1);
+  }
+  #base-lesson-body .bl-pan-l { left: 0; margin-left: -79px; }
+  #base-lesson-body .bl-pan-r { right: 0; margin-right: -79px; }
+  #base-lesson-body .bl-cable { width: 2px; height: 22px; margin: 0 auto; background: rgba(45, 212, 191, .55); }
+  #base-lesson-body .bl-tray {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 86px;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 9px;
+    background: linear-gradient(180deg, rgba(10, 34, 41, .96), rgba(4, 16, 20, .96));
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .05);
+  }
+  #base-lesson-body .bl-tray-lab {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .56rem;
+    letter-spacing: .14em;
+    font-weight: 900;
+    color: #5EEAD4;
+  }
+  #base-lesson-body .bl-tray-txt { font-size: .7rem; line-height: 1.35; color: #CFF3EE; font-weight: 600; }
+  #base-lesson-body .bl-tray-r .bl-tray-lab { color: #7DD3FC; }
+
+  #base-lesson-body .bl-fulcrum {
+    position: absolute;
+    left: 50%;
+    top: 70px;
+    width: 0;
+    height: 0;
+    margin-left: -30px;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 182px solid rgba(13, 148, 136, .16);
+    transition: border-bottom-color .3s;
+  }
+  #base-lesson-body .bl-stage.bl-fracture .bl-fulcrum { border-bottom-color: rgba(244, 63, 94, .24); }
+
+  #base-lesson-body .bl-base {
+    position: absolute;
+    left: 50%;
+    bottom: 62px;
+    width: 230px;
+    margin-left: -115px;
+    height: 14px;
+    border-radius: 7px;
+    background: linear-gradient(180deg, #11564F, #062A27);
+    box-shadow: 0 0 16px rgba(13, 148, 136, .4);
+  }
+  #base-lesson-body .bl-damper {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    padding: 7px 13px;
+    border-radius: 9px;
+    border: 2px dashed rgba(13, 148, 136, .5);
+    background: rgba(4, 16, 20, .92);
+    color: #6FA8A3;
+    max-width: 92%;
+    text-align: center;
+    transition: all .3s;
+  }
+  #base-lesson-body .bl-damper.on {
+    border-style: solid;
+    border-color: var(--amber);
+    color: #FFD9AE;
+    box-shadow: 0 0 18px rgba(249, 115, 22, .45);
+  }
+
+  #base-lesson-body .bl-alert {
+    position: absolute;
+    left: 50%;
+    top: 12px;
+    transform: translateX(-50%) translateY(-16px);
+    opacity: 0;
+    pointer-events: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--line);
+    background: rgba(3, 10, 14, .95);
+    color: #CFF3EE;
+    transition: opacity .3s, transform .3s;
+    text-align: center;
+  }
+  #base-lesson-body .bl-alert.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #base-lesson-body .bl-alert.bad { border-color: var(--danger); color: #FFD5DD; box-shadow: 0 0 22px rgba(244, 63, 94, .55); }
+  #base-lesson-body .bl-alert.good { border-color: var(--lime); color: #E7FFC2; box-shadow: 0 0 22px var(--lime-glow); }
+
+  #base-lesson-body .bl-console-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+  }
+  #base-lesson-body .bl-panel {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 13px 14px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .55);
+  }
+  #base-lesson-body .bl-panel-title {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .64rem;
+    letter-spacing: .13em;
+    font-weight: 900;
+    color: #5EEAD4;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #base-lesson-body .bl-panel-title b { color: var(--amber); }
+
+  #base-lesson-body .bl-opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    font-size: .8rem;
+    line-height: 1.42;
+    color: var(--ink);
+    background: linear-gradient(180deg, #0C2A31, #081F25);
+    border: 2px solid rgba(13, 148, 136, .4);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #05191D;
+    transition: transform .12s, box-shadow .15s, border-color .15s, background .2s;
+  }
+  #base-lesson-body .bl-opt:last-child { margin-bottom: 0; }
+  #base-lesson-body .bl-opt:hover { border-color: var(--accent); box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 #05191D; }
+  #base-lesson-body .bl-opt:active { transform: translateY(2px); box-shadow: 0 2px 0 #05191D; }
+  #base-lesson-body .bl-opt.sel {
+    border-color: var(--lime);
+    background: linear-gradient(180deg, #16331B, #0B2213);
+    box-shadow: 0 4px 0 #223D0E, 0 0 16px var(--lime-glow);
+  }
+  #base-lesson-body .bl-opt-key {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .66rem;
+    font-weight: 900;
+    color: #02100E;
+    background: #5EEAD4;
+    border-radius: 5px;
+    padding: 1px 6px;
+    margin-right: 7px;
+  }
+  #base-lesson-body .bl-opt.sel .bl-opt-key { background: var(--lime); }
+
+  #base-lesson-body .bl-readout {
+    margin-top: 14px;
+    border: 2px solid var(--line);
+    border-left: 5px solid var(--accent);
+    border-radius: 11px;
+    padding: 12px 14px;
+    background: linear-gradient(90deg, rgba(13, 148, 136, .1), rgba(3, 12, 16, .9));
+    font-size: .84rem;
+    color: #CFF3EE;
+    min-height: 62px;
+  }
+  #base-lesson-body .bl-readout.bad { border-left-color: var(--danger); background: linear-gradient(90deg, rgba(244, 63, 94, .14), rgba(3, 12, 16, .9)); }
+  #base-lesson-body .bl-readout.good { border-left-color: var(--lime); background: linear-gradient(90deg, rgba(132, 204, 22, .14), rgba(3, 12, 16, .9)); }
+  #base-lesson-body .bl-dim { color: var(--ink-dim); }
+
+  #base-lesson-body .bl-claim-strip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: .86rem;
+    background: linear-gradient(90deg, rgba(56, 189, 248, .13), rgba(3, 12, 16, .9));
+    border: 2px solid rgba(56, 189, 248, .35);
+    border-radius: 11px;
+    padding: 11px 13px;
+    margin-bottom: 12px;
+    color: #D6F1FF;
+  }
+  #base-lesson-body .bl-claim-strip .bl-lab {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .6rem;
+    letter-spacing: .13em;
+    font-weight: 900;
+    color: #7DD3FC;
+    flex: 0 0 auto;
+  }
+
+  /* ---------- Detonator ---------- */
+  #base-lesson-body .bl-det-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(10, 30, 37, .96), rgba(5, 17, 21, .97));
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .55);
+    transition: border-color .3s, box-shadow .3s, transform .3s;
+  }
+  #base-lesson-body .bl-det-card.bl-armed {
+    border-color: var(--danger);
+    box-shadow: 0 0 34px rgba(244, 63, 94, .55), 0 4px 0 rgba(0, 0, 0, .55);
+    animation: blPulse .5s ease infinite alternate;
+  }
+  @keyframes blPulse {
+    from { box-shadow: 0 0 18px rgba(244, 63, 94, .35), 0 4px 0 rgba(0, 0, 0, .55); }
+    to { box-shadow: 0 0 42px rgba(244, 63, 94, .8), 0 4px 0 rgba(0, 0, 0, .55); }
+  }
+  #base-lesson-body .bl-det-card.bl-boom { animation: blShake .55s ease; border-color: #FB7185; }
+  #base-lesson-body .bl-det-card.bl-collapsed { opacity: .82; }
+
+  #base-lesson-body .bl-cracks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  #base-lesson-body .bl-det-card.bl-boom .bl-cracks { opacity: 1; }
+  #base-lesson-body .bl-cracks svg { width: 100%; height: 100%; }
+  #base-lesson-body .bl-cracks path {
+    stroke: #FB7185;
+    stroke-width: 2.4;
+    fill: none;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 5px rgba(244, 63, 94, .9));
+  }
+
+  #base-lesson-body .bl-det-plate {
+    margin-top: 12px;
+    border: 2px solid var(--amber);
+    border-radius: 11px;
+    padding: 12px 14px;
+    background: linear-gradient(180deg, rgba(249, 115, 22, .14), rgba(3, 12, 16, .9));
+    box-shadow: 0 0 20px rgba(249, 115, 22, .28), inset 0 0 24px rgba(249, 115, 22, .12);
+  }
+  #base-lesson-body .bl-det-lab {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .6rem;
+    letter-spacing: .14em;
+    font-weight: 900;
+    color: #FDBA74;
+    margin-bottom: 6px;
+  }
+  #base-lesson-body .bl-det-plate p { margin: 0; font-size: .9rem; color: #FFE7D3; font-weight: 600; }
+
+  #base-lesson-body .bl-frags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    min-height: 0;
+  }
+  #base-lesson-body .bl-frag {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+    padding: 6px 10px;
+    border-radius: 7px;
+    border: 2px solid var(--danger);
+    background: rgba(244, 63, 94, .16);
+    color: #FFC9D5;
+    animation: blFly .9s cubic-bezier(.2, .8, .3, 1) forwards;
+  }
+  @keyframes blFly {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; }
+    25% { opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.86); opacity: .68; }
+  }
+
+  #base-lesson-body .bl-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: none;
+    place-items: center;
+    padding: 18px;
+    background: rgba(2, 6, 10, .82);
+    backdrop-filter: blur(4px);
+  }
+  #base-lesson-body .bl-modal.on { display: grid; }
+  #base-lesson-body .bl-modal-box {
+    max-width: 520px;
+    width: 100%;
+    border: 2px solid var(--danger);
+    border-radius: 14px;
+    padding: 20px;
+    background: linear-gradient(180deg, #0C2027, #04121A);
+    box-shadow: 0 0 40px rgba(244, 63, 94, .5), 0 6px 0 rgba(0, 0, 0, .6);
+    text-align: center;
+  }
+  #base-lesson-body .bl-modal-box h3 {
+    font-size: .95rem;
+    letter-spacing: .1em;
+    color: #FFD5DD;
+    margin-bottom: 10px;
+  }
+  #base-lesson-body .bl-modal-box p { font-size: .87rem; color: #CFEDE8; }
+
+  /* ---------- X-Ray ---------- */
+  #base-lesson-body .bl-modebar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  #base-lesson-body .bl-mode {
+    font: inherit;
+    font-size: .74rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #CFF3EE;
+    background: linear-gradient(180deg, #0C2A31, #081F25);
+    border: 2px solid rgba(13, 148, 136, .4);
+    box-shadow: 0 4px 0 #05191D;
+    transition: transform .12s, box-shadow .15s, border-color .15s;
+  }
+  #base-lesson-body .bl-mode:hover { box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 #05191D; }
+  #base-lesson-body .bl-mode:active { transform: translateY(2px); box-shadow: 0 2px 0 #05191D; }
+  #base-lesson-body .bl-mode.on { border-color: var(--lime); color: #E7FFC2; box-shadow: 0 4px 0 #223D0E, 0 0 16px var(--lime-glow); }
+
+  #base-lesson-body .bl-xray-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  #base-lesson-body .bl-console {
+    background: linear-gradient(180deg, rgba(4, 18, 24, .97), rgba(3, 11, 15, .97));
+    border: 2px solid var(--line);
+    border-radius: 13px;
+    padding: 16px;
+    box-shadow: inset 0 0 34px rgba(0, 0, 0, .7);
+  }
+  #base-lesson-body .bl-passage { font-size: .9rem; line-height: 1.95; color: #B9DAD5; margin: 0; }
+  #base-lesson-body .bl-passage span { border-radius: 5px; padding: 1px 2px; transition: background .3s, box-shadow .3s, color .3s; }
+
+  #base-lesson-body .bl-console.mode-g .g,
+  #base-lesson-body .bl-console.mode-c .c,
+  #base-lesson-body .bl-console.mode-w .w,
+  #base-lesson-body .bl-console.mode-w .u {
+    color: #F4FFFE;
+    box-shadow: 0 0 14px currentColor;
+  }
+  #base-lesson-body .bl-console.mode-g .g { background: rgba(132, 204, 22, .26); box-shadow: 0 0 14px rgba(132, 204, 22, .55); }
+  #base-lesson-body .bl-console.mode-c .c { background: rgba(56, 189, 248, .26); box-shadow: 0 0 14px rgba(56, 189, 248, .55); }
+  #base-lesson-body .bl-console.mode-w .w { background: rgba(249, 115, 22, .26); box-shadow: 0 0 14px rgba(249, 115, 22, .55); }
+  #base-lesson-body .bl-console.mode-w .u { background: rgba(168, 85, 247, .26); box-shadow: 0 0 14px rgba(168, 85, 247, .55); }
+
+  #base-lesson-body .bl-inspector {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 13px;
+    padding: 14px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .55);
+    min-height: 180px;
+  }
+  #base-lesson-body .bl-inspector h4 {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .63rem;
+    letter-spacing: .13em;
+    color: #5EEAD4;
+    margin-bottom: 9px;
+  }
+  #base-lesson-body .bl-note {
+    font-size: .8rem;
+    color: #C3E7E2;
+    border-left: 3px solid var(--accent);
+    padding: 6px 0 6px 10px;
+    margin-bottom: 9px;
+    background: rgba(13, 148, 136, .06);
+  }
+  #base-lesson-body .bl-note:last-child { margin-bottom: 0; }
+
+  #base-lesson-body .bl-flaw {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  #base-lesson-body .bl-hyp {
+    font: inherit;
+    text-align: left;
+    font-size: .8rem;
+    line-height: 1.42;
+    color: var(--ink);
+    background: linear-gradient(180deg, #0C2A31, #081F25);
+    border: 2px solid rgba(13, 148, 136, .4);
+    border-radius: 11px;
+    padding: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #05191D;
+    transition: transform .12s, box-shadow .15s, border-color .15s;
+  }
+  #base-lesson-body .bl-hyp:hover { border-color: var(--accent); box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 #05191D; }
+  #base-lesson-body .bl-hyp:active { transform: translateY(2px); box-shadow: 0 2px 0 #05191D; }
+  #base-lesson-body .bl-hyp.right { border-color: var(--lime); background: linear-gradient(180deg, #16331B, #0B2213); box-shadow: 0 4px 0 #223D0E, 0 0 18px var(--lime-glow); }
+  #base-lesson-body .bl-hyp.wrong { border-color: var(--danger); background: linear-gradient(180deg, #331319, #1D0A10); box-shadow: 0 4px 0 #4A0E1C; }
+  #base-lesson-body .bl-hyp .bl-hkey {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    font-weight: 900;
+    color: #FDBA74;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Protocol ---------- */
+  #base-lesson-body .bl-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--line);
+    margin-bottom: 16px;
+  }
+  #base-lesson-body .bl-matrix > div {
+    background: linear-gradient(180deg, #0A2229, #061418);
+    padding: 11px 13px;
+    font-size: .8rem;
+    color: #C3E7E2;
+  }
+  #base-lesson-body .bl-matrix > div.hd {
+    background: linear-gradient(180deg, #11564F, #0A3833);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .64rem;
+    letter-spacing: .12em;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #D9FFFA;
+  }
+  #base-lesson-body .bl-matrix > div.comp { color: #E7FFC2; font-weight: 700; }
+  #base-lesson-body .bl-matrix > div.fail { color: #FFC9D5; }
+
+  #base-lesson-body .bl-steps { counter-reset: none; padding-left: 0; list-style: none; }
+  #base-lesson-body .bl-steps li {
+    position: relative;
+    padding: 11px 13px 11px 48px;
+    margin-bottom: 10px;
+    border: 2px solid rgba(13, 148, 136, .3);
+    border-radius: 11px;
+    background: linear-gradient(180deg, rgba(10, 34, 41, .85), rgba(5, 17, 21, .9));
+    box-shadow: 0 4px 0 rgba(0, 0, 0, .5);
+    font-size: .84rem;
+    color: #C9EDE8;
+  }
+  #base-lesson-body .bl-steps li::before {
+    counter-increment: stepc;
+    content: counter(stepc);
+    position: absolute;
+    left: 11px;
+    top: 11px;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .74rem;
+    font-weight: 900;
+    color: #02100E;
+    background: linear-gradient(180deg, #2DD4BF, #0D9488);
+    box-shadow: 0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .bl-steps { counter-reset: stepc; }
+  #base-lesson-body .bl-steps strong { color: #E7FFC2; }
+
+  /* ---------- Finish ---------- */
+  #base-lesson-body .bl-finish-wrap { display: flex; justify-content: center; margin: 34px 0 8px; }
+  #base-lesson-body .bl-finish {
+    font-size: .95rem;
+    letter-spacing: .12em;
+    padding: 18px 42px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #14B8A6, #0B6A61);
+    border: 2px solid #5EEAD4;
+    box-shadow: 0 6px 0 var(--accent-dark), 0 10px 26px rgba(0, 0, 0, .6);
+  }
+  #base-lesson-body .bl-finish:hover { box-shadow: 0 6px 22px var(--accent-glow), 0 6px 0 var(--accent-dark); transform: translateY(-2px); }
+  #base-lesson-body .bl-finish:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--accent-dark); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    #base-lesson-body .bl-pods,
+    #base-lesson-body .bl-grid2,
+    #base-lesson-body .bl-grid3,
+    #base-lesson-body .bl-console-grid,
+    #base-lesson-body .bl-decoder,
+    #base-lesson-body .bl-xray-grid,
+    #base-lesson-body .bl-flaw { grid-template-columns: 1fr; }
+    #base-lesson-body .bl-matrix { grid-template-columns: 1fr; }
+    #base-lesson-body .bl-matrix > div.hd { display: none; }
+    #base-lesson-body .bl-stage { height: 320px; }
+    #base-lesson-body .bl-pan { width: 116px; }
+    #base-lesson-body .bl-pan-l { margin-left: -58px; }
+    #base-lesson-body .bl-pan-r { margin-right: -58px; }
+    #base-lesson-body .bl-tray { min-height: 74px; padding: 6px 7px; }
+    #base-lesson-body .bl-tray-txt { font-size: .64rem; }
+    #base-lesson-body .bl-fulcrum { border-bottom-width: 150px; margin-left: -22px; border-left-width: 22px; border-right-width: 22px; }
+    #base-lesson-body .bl-base { width: 170px; margin-left: -85px; }
+    #base-lesson-body .bl-hud { position: static; }
+  }
+  @media (max-width: 520px) {
+    #base-lesson-body { font-size: 14px; padding: 0 10px 40px; }
+    #base-lesson-body .bl-stage { height: 292px; }
+    #base-lesson-body .bl-beam { top: 50px; }
+    #base-lesson-body .bl-fulcrum { top: 62px; border-bottom-width: 132px; }
+    #base-lesson-body .bl-pan { width: 100px; }
+    #base-lesson-body .bl-pan-l { margin-left: -50px; }
+    #base-lesson-body .bl-pan-r { margin-right: -50px; }
+    #base-lesson-body .bl-finish { padding: 16px 24px; width: 100%; }
+  }
+</style>
+
+<div id="base-lesson-body">
+
+  <!-- ============ 1. HUD ============ -->
+  <div class="bl-hud">
+    <div class="bl-hud-left">
+      <span class="bl-chip bl-chip-lvl">LEVEL 179</span>
+      <span class="bl-chip bl-chip-sub">English · Rhetorical Analysis: Concepts</span>
+      <span class="bl-chip bl-chip-grade">9th–10th Grade | Ages 12–16</span>
+    </div>
+    <div class="bl-hud-right">
+      <label class="bl-call">CALLSIGN
+        <input id="blCallsign" value="ANALYST-179" maxlength="14" aria-label="Player callsign">
+      </label>
+      <span class="bl-chip bl-chip-xp">XP <b id="blXp">0</b></span>
+      <div class="bl-gauge">
+        <span class="bl-gauge-lab" id="blGaugeTxt">25% CALIBRATION</span>
+        <div class="bl-gauge-track"><div class="bl-gauge-fill" id="blGaugeFill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="bl-mission">
+    <strong>Mission:</strong> The abyssal archive has lowered a cantilever load-test rig into your hands. Dock real grounds on the left arm, seat a load-bearing warrant in the damper slot, and prove that every claim you meet can actually carry its own weight.
+  </p>
+
+  <!-- ============ 2. SECTION 01 ============ -->
+  <div class="bl-sec-head"><span class="bl-sec-num">01</span><h2>Comprehensive Foundation — The Architecture of Persuasion</h2></div>
+
+  <div class="bl-card">
+    <h3>1.1 The Rhetorical Situation: What Every Text Is Answering</h3>
+    <p>Rhetorical analysis is not summary and it is not opinion. It is the systematic study of <strong>how</strong> a text attempts to move a specific audience, and <strong>whether the machinery it uses can bear the weight it places on it</strong>. Every persuasive text answers a situation, and that situation has five load-bearing parts.</p>
+    <div class="bl-grid2">
+      <div class="bl-mini">
+        <h4>Exigence</h4>
+        <p>The urgent problem or moment the text exists to resolve. <em>“Ninth-graders are failing algebra”</em> is an exigence; <em>“algebra exists”</em> is not.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>Rhetor</h4>
+        <p>The identity the speaker <em>constructs</em> — not their biography. Credibility is built through demonstrated competence, fairness signals, and acknowledged limits.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>Audience</h4>
+        <p>The specific people whose beliefs or actions the text wants to shift. A text addressed to “everyone” usually persuades no one in particular.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>Constraints</h4>
+        <p>The limits on what can be said: genre, length, medium, audience priors, taboos, and the evidence actually available.</p>
+      </div>
+    </div>
+    <p><strong>Purpose</strong> sits above all four: to persuade, to move to action, to reframe a debate, or to reinforce a commitment. Naming the purpose tells you what the text <em>must</em> prove — and therefore what it must never leave unstated.</p>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.2 The Full Structural Model: Five Load-Bearing Components</h3>
+    <p>Every argument, from a tweet to a Supreme Court brief, can be dismantled into five components. If you can label all five, you can diagnose any failure.</p>
+
+    <div class="bl-mini" style="margin-bottom:10px;">
+      <h4>① Core Assertion / Outcome (The Claim)</h4>
+      <p>The conclusion the text wants you to accept. It may be a <em>factual claim</em> (“X is true”), a <em>causal claim</em> (“X causes Y”), a <em>policy claim</em> (“we should do X”), or a <em>value claim</em> (“X is good”). Different claim types require different kinds of support. A policy claim always requires both a factual premise and a value premise; writers frequently supply only the first.</p>
+    </div>
+
+    <div class="bl-mini" style="margin-bottom:10px;">
+      <h4>② Empirical Grounds / Inputs (The Evidence)</h4>
+      <p>The data, testimony, examples, statistics, quotations, or observations offered as support. Grounds are the <em>raw weight</em> on the scale — they are not self-interpreting. Statistics, personal narratives, expert testimony, and textual quotation each carry different structural strength and different failure modes.</p>
+    </div>
+
+    <div class="bl-mini" style="margin-bottom:10px;">
+      <h4>③ Connecting Bridge / Mechanism (The Warrant)</h4>
+      <p>The principle that licenses the move from grounds to claim. Warrants are usually <strong>unstated</strong>, which is exactly why they are where arguments break. A warrant is not evidence — it is the <em>rule of inference</em> that says “evidence of this kind counts as support for a claim of that kind.” If the warrant is false or contested, the evidence becomes weight that is not attached to the beam.</p>
+    </div>
+
+    <div class="bl-mini" style="margin-bottom:10px;">
+      <h4>④ Scope Qualifiers (The Reach Limiters)</h4>
+      <p>The words that set how far the claim extends: <em>usually, tends to, in most cases, under these conditions, likely, may, for urban districts</em>. Qualifiers are not weakness — they are honest engineering. A claim with no qualifier is an absolute claim and must be defended absolutely. Note the difference between <strong>modal qualifiers</strong> (“probably”) and <strong>quantitative qualifiers</strong> (“in 7 of 9 districts”).</p>
+    </div>
+
+    <div class="bl-mini">
+      <h4>⑤ Boundary Conditions (The Falsification Frame)</h4>
+      <p>The circumstances under which the claim would fail or would not apply. A strong writer names them; a weak writer hides them. Boundary conditions are the difference between a claim that can be tested and a claim that can only be asserted. Ask: <em>“What would have to be true for this to be false — and did the writer check?”</em></p>
+    </div>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.3 The Four Core Verification Criteria</h3>
+    <p>Grounds are only as good as their ability to pass four independent inspections. Weak arguments almost always fail on one of these four — and the failure is usually visible before you have finished reading.</p>
+    <div class="bl-grid2">
+      <div class="bl-mini">
+        <h4>① Relevance</h4>
+        <p><strong>Does the evidence bear on the exact claim made?</strong> Evidence can be true, vivid, and completely beside the point. Test: restate the claim in one sentence and ask whether the evidence would change your confidence in <em>that</em> sentence — not in a nearby sentence.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>② Sufficiency</h4>
+        <p><strong>Is there enough of it, and is it the right kind?</strong> One anecdote cannot support a general rule; a single case study cannot support a national policy. Sufficiency is about the ratio of evidence to the size of the claim’s scope.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>③ Accuracy</h4>
+        <p><strong>Is it true, correctly measured, and correctly reported?</strong> Watch for truncated statistics, misread graphs, dropped denominators, and numbers whose source has quietly changed meaning between collection and citation.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>④ Independence</h4>
+        <p><strong>Do the sources actually corroborate each other, or are they echoes?</strong> Five articles quoting the same press release are one source wearing five costumes. Independence is the hardest criterion to satisfy and the easiest to fake.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.4 Structural Validity vs. Soundness — Two Different Verdicts</h3>
+    <div class="bl-grid2">
+      <div class="bl-mini">
+        <h4>Structural Validity</h4>
+        <p>A purely <em>internal</em> property. An argument is valid if the conclusion <strong>must</strong> follow from the premises as stated — even if the premises are false. Validity is about the shape of the reasoning, not the truth of the world. A valid argument can be built entirely from fiction.</p>
+        <p><strong>Test:</strong> Assume every premise true. Could the conclusion still be false without contradiction? If yes, the structure leaks.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>Soundness</h4>
+        <p>Validity <strong>plus</strong> verified factual truth of every premise. A sound argument is valid <em>and</em> its grounds are actually accurate, relevant, sufficient, and independent. Soundness is the only verdict that licenses belief.</p>
+        <p><strong>Test:</strong> Check the shape first, then walk the evidence back to primary sources. Most real-world failures live here, not in the shape.</p>
+      </div>
+    </div>
+    <p style="font-size:.84rem;color:#A9D8D2;"><strong>Practical rule:</strong> never announce “this argument is wrong” until you have decided <em>which</em> verdict you are giving — invalid structure, unsound evidence, or both.</p>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.5 Deductive Systems vs. Inductive Systems</h3>
+    <div class="bl-grid2">
+      <div class="bl-mini">
+        <h4>Deductive Reasoning — Truth-Preserving Certainty</h4>
+        <p>Moves from general rules to specific conclusions. If the premises are true and the form is valid, the conclusion is <strong>guaranteed</strong>. It cannot add new information beyond what the premises already contained.</p>
+        <p><em>All mammals regulate body temperature. A whale is a mammal. Therefore a whale regulates body temperature.</em></p>
+        <p><strong>Failure mode:</strong> a false or over-broad general premise produces a confidently wrong conclusion. Deduction amplifies whatever the premises already assume.</p>
+      </div>
+      <div class="bl-mini">
+        <h4>Inductive Reasoning — Probabilistic Strength</h4>
+        <p>Moves from specific observations to general conclusions. The conclusion is <strong>probable</strong>, never guaranteed. Strength is graded, not binary, and depends on sample size, sample representativeness, and the absence of systematic bias.</p>
+        <p><em>In 42 studies across 11 states, tablet use raised retention. Therefore tablet use probably raises retention broadly.</em></p>
+        <p><strong>Failure mode:</strong> an unrepresentative sample, a voluntary cohort, or survivor bias silently inflates the strength of the conclusion.</p>
+      </div>
+    </div>
+    <p style="font-size:.84rem;color:#A9D8D2;">Almost all persuasive writing in English class is <strong>inductive or mixed</strong>. That means your analysis should never ask only “is this true?” but always also “<em>how much</em> does this evidence actually raise the probability of this claim?”</p>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.6 Key Presumption Traps and Fallacies in Rhetorical Analysis</h3>
+    <div class="bl-grid2">
+      <div class="bl-mini"><h4>Ad Hominem</h4><p>Attacking the rhetor’s character instead of the grounds. Structurally irrelevant: the claim’s truth value does not depend on who said it.</p></div>
+      <div class="bl-mini"><h4>Straw Man</h4><p>Replacing the opponent’s actual claim with a weaker caricature, then defeating the caricature. Check whether the rebutted claim matches the original scope qualifiers.</p></div>
+      <div class="bl-mini"><h4>False Dilemma</h4><p>Presenting two options when a third exists. Structurally, it is a hidden premise: “only X or Y are possible,” which is almost never true.</p></div>
+      <div class="bl-mini"><h4>Appeal to Authority</h4><p>Citing an expert outside their field, or citing consensus as if it were data. Authority is legitimate evidence only when the expertise is relevant and the field is genuinely settled.</p></div>
+      <div class="bl-mini"><h4>Circular Reasoning</h4><p>The conclusion is smuggled into the premise. The argument is technically valid and completely uninformative — the scale weighs nothing because the weight was never added.</p></div>
+      <div class="bl-mini"><h4>Hasty Generalization</h4><p>Moving from a small or skewed sample to a broad rule. This is the inductive failure mode; it appears constantly in op-eds and advertising copy.</p></div>
+    </div>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.7 Worked Example A — Colour-Coded Structural Decode</h3>
+    <div class="bl-legend">
+      <span class="bl-t-claim">Core Assertion</span>
+      <span class="bl-t-ground">Empirical Grounds</span>
+      <span class="bl-t-warrant">Connecting Bridge / Warrant</span>
+      <span class="bl-t-qual">Scope Qualifier</span>
+      <span class="bl-t-bound">Boundary Condition</span>
+    </div>
+    <div class="bl-example">
+      <span class="bl-tag bl-t-claim">Later start times are the single most effective reform available to American high schools.</span>
+      <span class="bl-tag bl-t-ground">When the Seattle School District moved bell times from 7:50 to 8:45 a.m. in 2016, university researchers recorded a median nightly sleep gain of 34 minutes and a 4.5% rise in median grades in the affected cohort.</span>
+      <span class="bl-tag bl-t-warrant">Because sleep duration is the mechanism through which adolescent attention, memory consolidation, and mood regulation operate, a policy that reliably extends sleep must improve academic performance.</span>
+      <span class="bl-tag bl-t-bound">This holds only where commute times remain constant and where first-period attendance is not optional.</span>
+      <span class="bl-tag bl-t-qual">For most comprehensive high schools with a fixed transportation fleet, the effect is likely substantial.</span>
+    </div>
+    <div class="bl-decoder">
+      <div><b>Claim type</b>Comparative policy claim (“most effective”). It must be defended against every rival reform, not merely shown to work.</div>
+      <div><b>Grounds audit</b>Relevant (a measured outcome directly tied to the claim). Accurate (published cohort study). Independence is the soft spot — it is a <em>single</em> district.</div>
+      <div><b>Warrant exposed</b>The bridge is a physiological mechanism, which is exactly what makes it testable. If sleep duration did not drive performance, the evidence would detach from the claim.</div>
+      <div><b>Qualifier function</b>“Likely” and “most” keep the claim inside its evidence base. Delete them and the argument becomes false rather than merely unsupported.</div>
+    </div>
+  </div>
+
+  <div class="bl-card">
+    <h3>1.8 Worked Example B — Structural Decode of a Policy Op-Ed</h3>
+    <div class="bl-example">
+      <span class="bl-tag bl-t-claim">Downtown should be closed to private cars.</span>
+      <span class="bl-tag bl-t-ground">In the twelve months after Oslo removed through-traffic from its central grid, pedestrian counts rose 19% and retail vacancy fell from 9.1% to 6.4%.</span>
+      <span class="bl-tag bl-t-warrant">If a district’s street space is a shared resource, then reallocating it from low-occupancy vehicles to foot traffic increases total economic throughput per square metre.</span>
+      <span class="bl-tag bl-t-bound">The argument applies to dense cores with existing transit alternatives; in low-density areas with no bus service, the same premise would predict the opposite outcome.</span>
+      <span class="bl-tag bl-t-qual">The claim is offered as a strong tendency, not a universal law.</span>
+    </div>
+    <div class="bl-decoder">
+      <div><b>Hidden value premise</b>“Street space is a shared resource” is a <em>value</em> claim smuggled into the warrant. A reader who rejects it rejects the whole argument regardless of the Oslo numbers.</div>
+      <div><b>Confounding risk</b>Oslo changed many things at once. The warrant must explain why <em>this</em> change, rather than simultaneous transit investment, produced the shift.</div>
+      <div><b>Boundary condition value</b>By naming low-density areas as a boundary, the writer pre-empts the strongest counter-example and narrows the scope honestly.</div>
+      <div><b>Verdict</b>Structurally valid; soundness depends entirely on whether the shared-resource premise is accepted and whether confounding variables were ruled out.</div>
+    </div>
+  </div>
+
+  <!-- ============ 3. SECTION 02 ============ -->
+  <div class="bl-sec-head"><span class="bl-sec-num">02</span><h2>The Four Hazard Pods — Unstated Assumptions That Break Arguments</h2></div>
+  <p style="color:#A9D8D2;font-size:.86rem;max-width:78ch;">These four archetypes account for the overwhelming majority of failures you will diagnose in this unit. Each one hides in the <em>unstated bridge</em>, which is why it survives a casual read.</p>
+
+  <div class="bl-pods">
+
+    <article class="bl-pod">
+      <header><span class="bl-pod-ico">⚖️</span><h3>Pod 1 — The Value Trap</h3></header>
+      <p class="bl-pod-block"><strong>Presupposing unstated priorities, moral hierarchies, or preferences.</strong> The grounds prove a fact; the claim asserts a value; the warrant quietly converts one into the other.</p>
+      <div class="bl-pod-block">
+        <h4>Identification Rules</h4>
+        <ul>
+          <li>Locate every “should,” “must,” “ought,” “better,” or “more important.”</li>
+          <li>Ask which <em>priority</em> the claim assumes — safety over liberty, growth over equity, novelty over tradition.</li>
+          <li>Check whether that priority appears anywhere in the grounds. If it does not, it is being smuggled.</li>
+          <li>Test: could a reasonable person accept every fact and still reject the conclusion? If yes, a value premise is doing hidden work.</li>
+        </ul>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Catastrophic Failure Risk</h4>
+        <p>Because the value premise is never stated, it is never defended. The argument appears airtight to readers who already share the value and collapses instantly for readers who do not — and neither side can see why. This is the single most common cause of “we agree on the facts but not the conclusion” deadlock.</p>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Field Excerpt + Diagnostic</h4>
+        <p class="bl-ex">“A just society protects its most vulnerable members. Therefore the district must fund the after-school programme.”</p>
+        <p class="bl-diag"><b>Breakdown:</b> The grounds establish that the programme protects vulnerable students. The claim asserts an obligation to fund it. The unstated bridge is a priority ranking: <em>protection of the vulnerable outranks other budget demands</em>. That ranking is never argued, and the budget alternatives are never named.</p>
+      </div>
+    </article>
+
+    <article class="bl-pod">
+      <header><span class="bl-pod-ico">🧪</span><h3>Pod 2 — The Causal Leap</h3></header>
+      <p class="bl-pod-block"><strong>Conflating correlation or sequence with direct causation; omitted variable bias.</strong> Two things move together; the writer declares that one moves the other.</p>
+      <div class="bl-pod-block">
+        <h4>Identification Rules</h4>
+        <ul>
+          <li>Flag any “because,” “caused,” “led to,” “resulted in,” or “as a result” resting only on co-occurrence or time order.</li>
+          <li>Ask whether a <strong>mechanism</strong> is described. Correlation without a mechanism is a picture, not an argument.</li>
+          <li>Search for a third variable that could drive both (weather, funding cycles, population change, a pandemic).</li>
+          <li>Check for <strong>reverse causation</strong>: could the outcome be causing the supposed cause?</li>
+        </ul>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Catastrophic Failure Risk</h4>
+        <p>Policy built on a causal leap does not merely fail — it fails <em>expensively</em>, because it treats an unverified mechanism as a lever. It also produces the strongest possible confirmation bias: the correlation keeps appearing, so the writer keeps believing.</p>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Field Excerpt + Diagnostic</h4>
+        <p class="bl-ex">“Cities with more police officers record more violent crime, so hiring more officers increases violence.”</p>
+        <p class="bl-diag"><b>Breakdown:</b> The correlation is real; the direction is assumed. The unstated bridge is <em>officers cause crime</em>. A competing model — high-crime cities hire more officers in response — fits the same data. Reverse causation and omitted variables (poverty, density, reporting rates) are never examined.</p>
+      </div>
+    </article>
+
+    <article class="bl-pod">
+      <header><span class="bl-pod-ico">🔀</span><h3>Pod 3 — The Definitional Shift</h3></header>
+      <p class="bl-pod-block"><strong>Equivocation; sliding between colloquial and technical definitions mid-argument.</strong> A key term is used in two different senses, and the conclusion depends on the slide going unnoticed.</p>
+      <div class="bl-pod-block">
+        <h4>Identification Rules</h4>
+        <ul>
+          <li>Circle every abstract noun: freedom, theory, success, intelligence, natural, fair, safe, growth.</li>
+          <li>Write down the definition implied at the <em>first</em> use and again at the <em>last</em> use. Compare them.</li>
+          <li>Watch for terms that shift from measurable to moral (a “strong” economy becomes a “strong” nation).</li>
+          <li>Ask: does the evidence support the term in sense A, while the conclusion needs sense B?</li>
+        </ul>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Catastrophic Failure Risk</h4>
+        <p>The argument becomes unfalsifiable. Any counter-evidence can be absorbed by redefining the term, so the claim can never be tested and never corrected. Debates built on equivocation run forever without ever touching the same subject.</p>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Field Excerpt + Diagnostic</h4>
+        <p class="bl-ex">“A free market is one in which people are free. Our new regulations restrict the market, therefore they restrict freedom.”</p>
+        <p class="bl-diag"><b>Breakdown:</b> “Free market” begins as a technical economic term (low barriers to entry, open competition) and ends as a political term (absence of constraint). The unstated bridge is <em>market freedom and personal freedom are the same quantity</em>. They are not: competition rules can increase personal freedom by constraining corporate power.</p>
+      </div>
+    </article>
+
+    <article class="bl-pod">
+      <header><span class="bl-pod-ico">🎯</span><h3>Pod 4 — The Micro-Sample Mirage</h3></header>
+      <p class="bl-pod-block"><strong>Generalising from non-representative samples, voluntary cohorts, or survivor bias.</strong> The evidence is real but the sample cannot carry the weight of the claim placed on it.</p>
+      <div class="bl-pod-block">
+        <h4>Identification Rules</h4>
+        <ul>
+          <li>Look for small numbers presented without scale: “three teachers,” “my class,” “several customers.”</li>
+          <li>Ask <strong>who was missing</strong> from the sample. Who dropped out, never responded, or never survived to be counted?</li>
+          <li>Distinguish <em>voluntary</em> cohorts (survey responders, programme joiners) from random ones.</li>
+          <li>Compare the scope of the claim to the size of the sample. A district-wide claim needs district-wide data.</li>
+        </ul>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Catastrophic Failure Risk</h4>
+        <p>Survivor bias produces confident, warm, and completely misleading testimony. The failures are invisible because they left the sample. Whole industries have been built on evidence drawn only from the people for whom the product worked.</p>
+      </div>
+      <div class="bl-pod-block">
+        <h4>Field Excerpt + Diagnostic</h4>
+        <p class="bl-ex">“Every student I surveyed said the new schedule improved their focus, so the schedule works for the whole school.”</p>
+        <p class="bl-diag"><b>Breakdown:</b> The cohort is voluntary — students who disliked the schedule were less likely to return the survey, and students who left the school are absent entirely. The unstated bridge is <em>this self-selected group represents the full population</em>. Sufficiency fails: the sample cannot support a school-wide conclusion.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ============ 4. SECTION 03 ============ -->
+  <div class="bl-sec-head"><span class="bl-sec-num">03</span><h2>Signature Engine — The Cantilever Balance Arm</h2></div>
+  <p style="color:#A9D8D2;font-size:.86rem;max-width:78ch;">Dock <strong>grounds</strong> on the left arm and the <strong>claim</strong> sits on the right. A claim with no load-bearing warrant is an unsupported output: the right arm drops into <strong style="color:#FFB3C2;">Torque Fracture</strong>. Seat a qualifying damper to stabilise the beam.</p>
+
+  <div class="bl-stage" id="blStage">
+    <div class="bl-alert" id="blAlert"></div>
+    <div class="bl-beam" id="blBeam">
+      <div class="bl-pan bl-pan-l">
+        <div class="bl-cable"></div>
+        <div class="bl-tray bl-tray-l">
+          <span class="bl-tray-lab">◀ GROUNDS</span>
+          <span class="bl-tray-txt" id="blTrayL">— no grounds docked —</span>
+        </div>
+      </div>
+      <div class="bl-pan bl-pan-r">
+        <div class="bl-cable"></div>
+        <div class="bl-tray bl-tray-r">
+          <span class="bl-tray-lab">CLAIM ▶</span>
+          <span class="bl-tray-txt" id="blTrayR">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="bl-fulcrum"></div>
+    <div class="bl-base"></div>
+    <div class="bl-damper" id="blDamper">DAMPER SLOT: EMPTY</div>
+  </div>
+
+  <div class="bl-claim-strip" style="margin-top:14px;">
+    <span class="bl-lab">LOAD TEST <span id="blRound">1 / 3</span></span>
+    <span id="blClaimText">—</span>
+  </div>
+
+  <div class="bl-console-grid">
+    <div class="bl-panel">
+      <div class="bl-panel-title">LEFT ARM · EVIDENCE CARTRIDGE BANK <b id="blEvStatus">SELECT ONE</b></div>
+      <div id="blEvBox"></div>
+    </div>
+    <div class="bl-panel">
+      <div class="bl-panel-title">DAMPER SLOT · WARRANT SELECTION <b id="blWaStatus">SELECT ONE</b></div>
+      <div id="blWaBox"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin-top:16px;">
+    <button class="bl-btn" id="blRunBtn">⚡ ENGAGE LOAD TEST</button>
+  </div>
+
+  <div class="bl-readout" id="blReadout"><span class="bl-dim">Awaiting load test. Dock a grounds cartridge on the left arm, seat a warrant in the damper slot, then engage.</span></div>
+
+  <!-- ============ 5. SECTION 04 ============ -->
+  <div class="bl-sec-head"><span class="bl-sec-num">04</span><h2>The Negation Detonator — Active Heuristic Destruction</h2></div>
+  <p style="color:#A9D8D2;font-size:.86rem;max-width:78ch;">The Negation Test is the fastest structural probe in rhetorical analysis. Negate the hidden assumption. If the argument collapses, the assumption was load-bearing — it was never optional decoration.</p>
+
+  <div class="bl-det-card" id="blDetCard">
+    <div class="bl-cracks">
+      <svg viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 40 L120 96 L96 160 L190 210 L150 300" />
+        <path d="M600 30 L470 88 L500 150 L420 205 L462 300" />
+        <path d="M250 0 L286 70 L232 122 L300 178 L262 300" />
+        <path d="M600 190 L520 214 L556 300" />
+        <path d="M0 210 L84 236 L52 300" />
+      </svg>
+    </div>
+
+    <p style="font-size:.88rem;color:#C9EDE8;margin-bottom:12px;">
+      <strong>Scenario under load — city safety brief:</strong> “Our city’s new curfew has made the streets safer. Since the curfew took effect, reported vandalism has fallen 30%, and residents say they feel more secure. Any city that wants safer streets should adopt the same policy.”
+    </p>
+
+    <div class="bl-det-plate">
+      <span class="bl-det-lab">TARGET IMPLICIT WARRANT — ILLUMINATED PLATE</span>
+      <p id="blDetWarrant">“A fall in <em>reported</em> incidents is the same thing as a fall in <em>actual</em> incidents, and no other cause could explain the drop.”</p>
+    </div>
+
+    <div class="bl-frags" id="blFrags"></div>
+
+    <div style="display:flex;justify-content:center;margin-top:16px;">
+      <button class="bl-btn bl-btn-danger" id="blDetBtn">💣 DETONATE NEGATION TEST</button>
+    </div>
+
+    <div class="bl-readout" id="blDetReadout"><span class="bl-dim">Detonator armed and standing by. Fire the negation to test whether the warrant is load-bearing.</span></div>
+  </div>
+
+  <div class="bl-modal" id="blModal">
+    <div class="bl-modal-box">
+      <h3>💥 DETONATION SUCCESSFUL</h3>
+      <p>By proving the opposite of the implicit assumption, the entire premise collapsed. The Negation Test proves this assumption was a fatal structural dependency — the argument had no other support beneath it.</p>
+      <p style="font-size:.82rem;color:#9FD3CC;">Negated form: reporting practices changed while the underlying behaviour did not. With that single change, the 30% figure loses all causal force and the policy recommendation is left standing on nothing.</p>
+      <button class="bl-btn" id="blModalClose" style="margin-top:12px;">✔ ACKNOWLEDGE DEBRIEF</button>
+    </div>
+  </div>
+
+  <!-- ============ 6. SECTION 05 ============ -->
+  <div class="bl-sec-head"><span class="bl-sec-num">05</span><h2>Live Fire Forensics — Interactive Text X-Ray</h2></div>
+  <p style="color:#A9D8D2;font-size:.86rem;max-width:78ch;">Activate a scan channel to illuminate one structural layer of the passage. Then find the fatal flaw.</p>
+
+  <div class="bl-modebar">
+    <button class="bl-mode" data-mode="g">🟢 SCAN FOUNDATION / GROUNDS</button>
+    <button class="bl-mode" data-mode="c">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+    <button class="bl-mode" data-mode="w">🟠 DETECT UNSTATED MECHANISMS / WARRANTS</button>
+  </div>
+
+  <div class="bl-xray-grid">
+    <div class="bl-console" id="blConsole">
+      <p class="bl-passage" id="blPassage">
+        <span class="c">America’s schools should abandon standardized testing entirely.</span>
+        <span class="g">In 2021, the average SAT score in our district fell by 42 points while screen time among sixteen-year-olds rose by two hours a day.</span>
+        <span class="g">Meanwhile, three of the four teachers I interviewed at Lincoln High said that testing weeks were the most stressful of the year.</span>
+        <span class="w">When students are anxious they cannot learn; testing provokes anxiety; therefore testing prevents learning.</span>
+        <span class="w">Because accountability systems measure only what is easy to count, they inevitably erode what actually matters.</span>
+        <span class="c">Every school that has dropped the SAT has seen its graduation rate improve, so the policy is proven.</span>
+        <span class="u">A school that refuses to abandon testing is a school that values compliance over children.</span>
+      </p>
+    </div>
+    <aside class="bl-inspector" id="blInspector">
+      <h4>INSPECTOR NOTES</h4>
+      <div class="bl-note">Select a scan channel above to illuminate a structural layer of the passage.</div>
+    </aside>
+  </div>
+
+  <div class="bl-flaw" id="blFlaw">
+    <button class="bl-hyp" data-correct="0"><span class="bl-hkey">HYPOTHESIS A</span>The passage’s tone is too emotional, so it contains no analysable argument.</button>
+    <button class="bl-hyp" data-correct="1"><span class="bl-hkey">HYPOTHESIS B</span>The writer never establishes that falling SAT scores and rising screen time are caused by testing; the bridge is an unstated causal warrant exposed to confounding variables such as the pandemic.</button>
+    <button class="bl-hyp" data-correct="0"><span class="bl-hkey">HYPOTHESIS C</span>The passage uses too many statistics, which makes it difficult to follow.</button>
+  </div>
+
+  <div class="bl-readout" id="blFlawReadout"><span class="bl-dim">Three hypotheses on the table. Select the one that names the structural failure.</span></div>
+
+  <!-- ============ 7. SECTION 06 ============ -->
+  <div class="bl-sec-head"><span class="bl-sec-num">06</span><h2>Quick-Reference Procedural Protocol</h2></div>
+
+  <div class="bl-matrix">
+    <div class="hd">Component</div>
+    <div class="hd">Failure Mode</div>
+    <div class="hd">Elimination Triage</div>
+
+    <div class="comp">Core Assertion / Outcome</div>
+    <div class="fail">Unqualified absolute claim; scope far exceeds evidence.</div>
+    <div>What would make this false, and did the writer check?</div>
+
+    <div class="comp">Empirical Grounds / Inputs</div>
+    <div class="fail">Irrelevant, insufficient, inaccurate, or non-independent.</div>
+    <div>Which of the four verification criteria fails first?</div>
+
+    <div class="comp">Connecting Bridge / Warrant</div>
+    <div class="fail">Unstated value premise, causal leap, or equivocation.</div>
+    <div>What must be true for this evidence to support this claim?</div>
+
+    <div class="comp">Scope Qualifiers</div>
+    <div class="fail">Missing or deleted between grounds and conclusion.</div>
+    <div>Does the conclusion reach further than the evidence does?</div>
+
+    <div class="comp">Boundary Conditions</div>
+    <div class="fail">Hidden; the claim is presented as universally applicable.</div>
+    <div>Where would this argument predict the opposite outcome?</div>
+  </div>
+
+  <ol class="bl-steps">
+    <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark certainty limiters.</li>
+    <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check for sample representation, bias, and source independence.</li>
+    <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle linking inputs to outcomes.</li>
+    <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge; if the outcome collapses, the component is load-bearing.</li>
+    <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, and definitional shifts.</li>
+  </ol>
+
+  <!-- ============ 8. FINISH ============ -->
+  <div class="bl-finish-wrap">
+    <button class="bl-btn bl-finish" id="blFinish">🎓 FINISH LESSON</button>
+  </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ---------------- HUD STATE ---------------- */
+  var xp = 0;
+  var integrity = 25;
+  var xpEl = document.getElementById('blXp');
+  var gaugeFill = document.getElementById('blGaugeFill');
+  var gaugeTxt = document.getElementById('blGaugeTxt');
+
+  function setIntegrity(v) {
+    integrity = Math.max(0, Math.min(100, v));
+    gaugeFill.style.width = integrity + '%';
+    gaugeTxt.textContent = integrity + '% ' + (integrity >= 100 ? 'SECURED' : 'CALIBRATION');
+  }
+  function addXp(n) {
+    xp += n;
+    xpEl.textContent = xp;
+  }
+  setIntegrity(25);
+
+  /* ---------------- SECTION 03 : CANTILEVER BALANCE ARM ---------------- */
+  var ROUNDS = [
+    {
+      claim: '“School districts should replace printed textbooks with digital tablets.”',
+      claimShort: 'REPLACE PRINT WITH TABLETS',
+      evidence: [
+        {
+          t: 'A 2019 meta-analysis of 42 studies across 11 states found students using tablets scored 12% higher on delayed-retention tests than print-only peers.',
+          short: 'META-ANALYSIS · 42 STUDIES · 11 STATES',
+          ok: true,
+          why: 'Relevant, accurate, and drawn from a broad independent sample with a measured outcome that maps directly onto the claim.'
+        },
+        {
+          t: 'My cousin’s class got tablets last year and everyone said they loved them.',
+          short: 'ONE CLASS · ANECDOTE',
+          ok: false,
+          why: 'This is a micro-sample mirage: a single voluntary cohort, no measured outcome, and no independence. It cannot carry a district-wide policy claim.'
+        },
+        {
+          t: 'Tablets contain rare-earth minerals mined under labour conditions that many consider exploitative.',
+          short: 'MINING-ETHICS OBJECTION',
+          ok: false,
+          why: 'The evidence is true and important, but it answers a different question than the one the claim defends. It shifts the grounds to procurement ethics.'
+        }
+      ],
+      warrant: [
+        {
+          t: 'Because delayed-retention performance is the outcome instruction exists to produce, a tool that reliably raises it should be adopted.',
+          short: 'RETENTION → INSTRUCTIONAL GOAL',
+          ok: true
+        },
+        {
+          t: 'Because anything newer is automatically better than what it replaces.',
+          short: 'NOVELTY IS SUPERIORITY',
+          ok: false,
+          why: 'A value trap: it smuggles in a preference for novelty that the evidence never earned and never argued.'
+        },
+        {
+          t: 'Because tablets cost more per unit, and expensive tools must be superior tools.',
+          short: 'PRICE → QUALITY',
+          ok: false,
+          why: 'A causal leap dressed as economics. Price is not a mechanism for learning, so the bridge carries no weight.'
+        }
+      ]
+    },
+    {
+      claim: '“The school library should extend its hours during final-exam week.”',
+      claimShort: 'EXTEND LIBRARY HOURS',
+      evidence: [
+        {
+          t: 'A survey of 1,200 students across every grade level found 68% report no quiet place to study after 5 p.m., and library use rose 40% during last year’s extended-hours pilot.',
+          short: 'SURVEY n=1200 · PILOT DATA',
+          ok: true,
+          why: 'Broad, grade-spanning, and paired with observed behaviour during an actual pilot — relevant, sufficient, and independently measurable.'
+        },
+        {
+          t: 'Three students who stayed late last year all earned A’s.',
+          short: 'THREE STUDENTS · ANECDOTE',
+          ok: false,
+          why: 'A textbook micro-sample mirage. Three self-selected high performers cannot establish demand for a school-wide service change.'
+        },
+        {
+          t: 'Libraries have existed for thousands of years, so they must be important.',
+          short: 'LONGEVITY APPEAL',
+          ok: false,
+          why: 'Longevity is not evidence about exam-week demand. The grounds never touch the claim’s actual subject.'
+        }
+      ],
+      warrant: [
+        {
+          t: 'Because documented unmet demand for study space during a bounded period justifies a temporary expansion of service.',
+          short: 'UNMET DEMAND → TEMPORARY EXPANSION',
+          ok: true
+        },
+        {
+          t: 'Because students who study more always get better grades, and the library is the only place to study.',
+          short: '“ALWAYS” + “ONLY”',
+          ok: false,
+          why: 'Two absolute claims in one bridge: a definitional shift on “only place to study” plus an unqualified universal. Neither survives a single counter-example.'
+        },
+        {
+          t: 'Because tradition is a sufficient reason to fund any institution.',
+          short: 'TRADITION → FUNDING',
+          ok: false,
+          why: 'A value trap. It asserts a funding priority that the demand data never established and that many taxpayers would contest.'
+        }
+      ]
+    },
+    {
+      claim: '“The town’s curbside recycling programme has reduced landfill waste.”',
+      claimShort: 'RECYCLING CUT LANDFILL',
+      evidence: [
+        {
+          t: 'Tonnage records from the town’s single weigh station show landfill intake fell from 4,100 to 3,050 tons in the 12 months after curbside recycling began, while population held steady.',
+          short: 'WEIGH-STATION TONNAGE · 12 MONTHS',
+          ok: true,
+          why: 'A direct physical measurement at the single disposal point, over a full year, with the main confounder (population) held constant.'
+        },
+        {
+          t: 'The programme’s own director says it has been a huge success.',
+          short: 'PROGRAMME DIRECTOR TESTIMONY',
+          ok: false,
+          why: 'Independence fails. The source is the programme itself; self-report is not corroboration, it is echo.'
+        },
+        {
+          t: 'Recycling is a moral duty that every citizen should embrace.',
+          short: 'MORAL DUTY CLAIM',
+          ok: false,
+          why: 'This is a value claim, not evidence. It cannot measure whether tonnage actually fell.'
+        }
+      ],
+      warrant: [
+        {
+          t: 'Because a sustained, measured drop in intake tonnage at the sole disposal point, with population held constant, indicates diversion rather than delay.',
+          short: 'SUSTAINED DROP → DIVERSION',
+          ok: true
+        },
+        {
+          t: 'Because anyone who opposes recycling hates the environment.',
+          short: 'OPPOSITION = HATRED',
+          ok: false,
+          why: 'A false dilemma plus a value trap: it replaces analysis of the mechanism with an attack on motives.'
+        },
+        {
+          t: 'Because the programme was expensive, it must have worked.',
+          short: 'COST → EFFECTIVENESS',
+          ok: false,
+          why: 'A causal leap. Expenditure is an input, never an outcome; the bridge confuses money spent with results produced.'
+        }
+      ]
+    }
+  ];
+
+  var rIdx = 0;
+  var selEv = null;
+  var selWa = null;
+  var solvedRounds = 0;
+  var roundDone = false;
+
+  var stage = document.getElementById('blStage');
+  var beam = document.getElementById('blBeam');
+  var trayL = document.getElementById('blTrayL');
+  var trayR = document.getElementById('blTrayR');
+  var damper = document.getElementById('blDamper');
+  var alertEl = document.getElementById('blAlert');
+  var evBox = document.getElementById('blEvBox');
+  var waBox = document.getElementById('blWaBox');
+  var evStatus = document.getElementById('blEvStatus');
+  var waStatus = document.getElementById('blWaStatus');
+  var roundLbl = document.getElementById('blRound');
+  var claimText = document.getElementById('blClaimText');
+  var readout = document.getElementById('blReadout');
+  var runBtn = document.getElementById('blRunBtn');
+
+  function markSel(container, btn) {
+    var kids = container.querySelectorAll('.bl-opt');
+    for (var i = 0; i < kids.length; i++) kids[i].classList.remove('sel');
+    btn.classList.add('sel');
+  }
+
+  function clearAlert() {
+    alertEl.classList.remove('on', 'bad', 'good');
+  }
+
+  function renderRound(i) {
+    var r = ROUNDS[i];
+    roundDone = false;
+    selEv = null;
+    selWa = null;
+
+    roundLbl.textContent = (i + 1) + ' / ' + ROUNDS.length;
+    claimText.textContent = r.claim;
+    trayR.textContent = r.claimShort;
+    trayL.textContent = '— no grounds docked —';
+    damper.textContent = 'DAMPER SLOT: EMPTY';
+    damper.classList.remove('on');
+    evStatus.textContent = 'SELECT ONE';
+    waStatus.textContent = 'SELECT ONE';
+
+    beam.style.setProperty('--tilt', '0deg');
+    stage.classList.remove('bl-fracture', 'bl-grounded');
+    clearAlert();
+
+    evBox.innerHTML = '';
+    waBox.innerHTML = '';
+
+    r.evidence.forEach(function (e, k) {
+      var b = document.createElement('button');
+      b.className = 'bl-opt';
+      b.type = 'button';
+      b.innerHTML = '<span class="bl-opt-key">' + String.fromCharCode(65 + k) + '</span>' + e.t;
+      b.addEventListener('click', function () {
+        if (roundDone) return;
+        selEv = k;
+        markSel(evBox, b);
+        trayL.textContent = e.short;
+        evStatus.textContent = 'DOCKED · ' + String.fromCharCode(65 + k);
+      });
+      evBox.appendChild(b);
+    });
+
+    r.warrant.forEach(function (w, k) {
+      var b = document.createElement('button');
+      b.className = 'bl-opt';
+      b.type = 'button';
+      b.innerHTML = '<span class="bl-opt-key">' + String.fromCharCode(65 + k) + '</span>' + w.t;
+      b.addEventListener('click', function () {
+        if (roundDone) return;
+        selWa = k;
+        markSel(waBox, b);
+        damper.textContent = 'DAMPER: ' + w.short;
+        damper.classList.add('on');
+        waStatus.textContent = 'SEATED · ' + String.fromCharCode(65 + k);
+      });
+      waBox.appendChild(b);
+    });
+
+    readout.className = 'bl-readout';
+    readout.innerHTML = '<span class="bl-dim">Load test ' + (i + 1) + ' standing by. Dock a grounds cartridge on the left arm, seat a warrant in the damper slot, then engage.</span>';
+    runBtn.disabled = false;
+    runBtn.textContent = '⚡ ENGAGE LOAD TEST';
+  }
+
+  function shakeStage() {
+    stage.classList.remove('bl-fracture');
+    void stage.offsetWidth;
+    stage.classList.add('bl-fracture');
+  }
+
+  function runTest() {
+    if (roundDone) return;
+    var r = ROUNDS[rIdx];
+
+    if (selEv === null || selWa === null) {
+      readout.className = 'bl-readout';
+      readout.innerHTML = '<strong>Incomplete load configuration.</strong> Both a grounds cartridge and a damper warrant must be seated before the beam can be tested. An argument with no evidence and an argument with no bridge are different failures — you must see which one you have.';
+      return;
+    }
+
+    var ev = r.evidence[selEv];
+    var wa = r.warrant[selWa];
+
+    if (ev.ok && wa.ok) {
+      roundDone = true;
+      beam.style.setProperty('--tilt', '0deg');
+      stage.classList.remove('bl-fracture');
+      stage.classList.add('bl-grounded');
+      alertEl.textContent = '◆ BALANCE ACHIEVED · LOAD PATH VERIFIED';
+      alertEl.className = 'bl-alert on good';
+      readout.className = 'bl-readout good';
+      readout.innerHTML = '<strong>Beam stabilised.</strong> The docked grounds pass all four criteria — relevance, sufficiency, accuracy and independence — and the seated warrant is a real mechanism rather than a smuggled preference. Because the bridge actually connects the evidence to the conclusion, the arm holds under full load.';
+      solvedRounds++;
+      addXp(100);
+      setIntegrity(integrity + 15);
+      runBtn.disabled = true;
+      runBtn.textContent = '✔ LOAD TEST PASSED';
+      if (rIdx < ROUNDS.length - 1) {
+        setTimeout(function () {
+          rIdx++;
+          renderRound(rIdx);
+        }, 1900);
+      } else {
+        setTimeout(function () {
+          readout.className = 'bl-readout good';
+          readout.innerHTML = '<strong>All three load tests passed.</strong> You have now verified a claim with empirical grounds, a claim with demand data, and a claim resting on a physical measurement. The rig is cleared for the next stage: negation testing.';
+          runBtn.textContent = '✔ RIG CLEARED';
+        }, 1900);
+      }
+      return;
+    }
+
+    if (!wa.ok) {
+      beam.style.setProperty('--tilt', '16deg');
+      shakeStage();
+      alertEl.textContent = '⚠ TORQUE FRACTURE — UNSUPPORTED OUTPUT';
+      alertEl.className = 'bl-alert on bad';
+      readout.className = 'bl-readout bad';
+      readout.innerHTML = '<strong>Torque fracture on the output arm.</strong> ' + wa.why + ' With no load-bearing bridge, the evidence is weight that never reaches the claim, so the right arm drops under its own unsupported conclusion.';
+      return;
+    }
+
+    beam.style.setProperty('--tilt', '-16deg');
+    shakeStage();
+    alertEl.textContent = '⚠ GROUND FAILURE — INPUTS WILL NOT CARRY';
+    alertEl.className = 'bl-alert on bad';
+    readout.className = 'bl-readout bad';
+    readout.innerHTML = '<strong>Input arm overloaded and failed.</strong> ' + ev.why + ' The warrant is sound, but a sound bridge cannot rescue grounds that fail relevance, sufficiency, accuracy or independence.';
+  }
+
+  runBtn.addEventListener('click', runTest);
+
+  /* ---------------- SECTION 04 : NEGATION DETONATOR ---------------- */
+  var detBtn = document.getElementById('blDetBtn');
+  var detCard = document.getElementById('blDetCard');
+  var detReadout = document.getElementById('blDetReadout');
+  var frags = document.getElementById('blFrags');
+  var modal = document.getElementById('blModal');
+  var modalClose = document.getElementById('blModalClose');
+  var detDone = false;
+
+  var FRAG_WORDS = ['CURFEW', 'CAUSED', 'SAFER', 'STREETS', '30% FALL', 'PROVEN POLICY'];
+
+  function spawnFragments() {
+    frags.innerHTML = '';
+    FRAG_WORDS.forEach(function (w, i) {
+      var s = document.createElement('span');
+      s.className = 'bl-frag';
+      s.textContent = w;
+      var dx = (i % 2 === 0 ? -1 : 1) * (20 + i * 13);
+      var dy = 14 + i * 9;
+      var rot = (i % 2 === 0 ? -1 : 1) * (8 + i * 4);
+      s.style.setProperty('--dx', dx + 'px');
+      s.style.setProperty('--dy', dy + 'px');
+      s.style.setProperty('--rot', rot + 'deg');
+      s.style.animationDelay = (i * 60) + 'ms';
+      frags.appendChild(s);
+    });
+  }
+
+  detBtn.addEventListener('click', function () {
+    if (detDone) return;
+    detDone = true;
+    detBtn.disabled = true;
+    detCard.classList.add('bl-armed');
+    detReadout.className = 'bl-readout';
+    detReadout.innerHTML = '<span class="bl-dim">Charge armed… negating the warrant…</span>';
+
+    setTimeout(function () {
+      detCard.classList.remove('bl-armed');
+      detCard.classList.add('bl-boom');
+      spawnFragments();
+      detCard.classList.add('bl-collapsed');
+      detReadout.className = 'bl-readout bad';
+      detReadout.innerHTML = '<strong>Structural collapse confirmed.</strong> The warrant “reported decline equals actual decline” was load-bearing: negate it and the 30% figure supports nothing at all. Because the writer supplied no independent mechanism, the recommendation to copy the policy has no remaining support.';
+      addXp(100);
+      setIntegrity(integrity + 15);
+      detBtn.textContent = '💥 NEGATION COMPLETE';
+      setTimeout(function () { modal.classList.add('on'); }, 620);
+    }, 620);
+  });
+
+  modalClose.addEventListener('click', function () {
+    modal.classList.remove('on');
+  });
+
+  /* ---------------- SECTION 05 : LIVE FIRE FORENSICS ---------------- */
+  var consoleEl = document.getElementById('blConsole');
+  var inspector = document.getElementById('blInspector');
+  var modeBtns = root.querySelectorAll('.bl-mode');
+
+  var NOTES = {
+    g: [
+      '<strong>Ground 1 —</strong> “SAT scores fell 42 points while screen time rose two hours a day.” This is a bare correlation with no mechanism and an obvious confounding variable (the pandemic). Accuracy is unverified; the two figures may come from different populations.',
+      '<strong>Ground 2 —</strong> “Three of the four teachers I interviewed.” A voluntary micro-sample with n=4. Sufficiency fails immediately: it cannot support a claim about American schools.',
+      '<strong>Verdict:</strong> Neither ground passes independence. Both describe one district and one hallway, yet they are asked to carry a national policy claim.'
+    ],
+    c: [
+      '<strong>Core claim 1 —</strong> “America’s schools should abandon standardized testing entirely.” An unqualified national policy claim with a value premise hidden inside “entirely.”',
+      '<strong>Core claim 2 —</strong> “Every school that has dropped the SAT has seen its graduation rate improve, so the policy is proven.” “Every” is a universal quantifier; “proven” is a certainty word. Neither can be earned by the evidence presented.',
+      '<strong>Verdict:</strong> The scope qualifiers are missing. The conclusion reaches far beyond anything the grounds could support.'
+    ],
+    w: [
+      '<strong>Bridge 1 —</strong> “When students are anxious they cannot learn; testing provokes anxiety; therefore testing prevents learning.” The middle step is asserted, not measured, and “anxiety” shifts from a clinical term to a general feeling.',
+      '<strong>Bridge 2 —</strong> “Accountability systems measure only what is easy to count, therefore they inevitably erode what matters.” A definitional shift: “measure” becomes “erode” with no mechanism between them.',
+      '<strong>Bridge 3 —</strong> “A school that refuses to abandon testing values compliance over children.” A false dilemma wrapped in a value trap; it converts a policy disagreement into a moral accusation.',
+      '<strong>Verdict:</strong> The unstated mechanism connecting falling SAT scores to testing harm is never supplied. This is the fatal flaw.'
+    ]
+  };
+
+  function setMode(mode) {
+    consoleEl.classList.remove('mode-g', 'mode-c', 'mode-w');
+    consoleEl.classList.add('mode-' + mode);
+    for (var i = 0; i < modeBtns.length; i++) {
+      modeBtns[i].classList.toggle('on', modeBtns[i].getAttribute('data-mode') === mode);
+    }
+    var notes = NOTES[mode] || [];
+    var html = '';
+    for (var j = 0; j < notes.length; j++) {
+      html += '<div class="bl-note">' + notes[j] + '</div>';
+    }
+    inspector.innerHTML = '<h4>INSPECTOR NOTES</h4>' + html;
+  }
+
+  for (var m = 0; m < modeBtns.length; m++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        setMode(btn.getAttribute('data-mode'));
+      });
+    })(modeBtns[m]);
+  }
+
+  var hypBtns = root.querySelectorAll('.bl-hyp');
+  var flawReadout = document.getElementById('blFlawReadout');
+  var flawDone = false;
+
+  for (var h = 0; h < hypBtns.length; h++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        if (flawDone) return;
+        var correct = btn.getAttribute('data-correct') === '1';
+        if (correct) {
+          flawDone = true;
+          btn.classList.add('right');
+          flawReadout.className = 'bl-readout good';
+          flawReadout.innerHTML = '<strong>Fatal flaw located — structural clearance granted.</strong> The passage’s central bridge treats a correlation between falling SAT scores and rising screen time as proof that testing causes harm, and it never rules out confounding variables such as the pandemic, changed test formats, or shifting test-taking populations. With the warrant negated, the policy claim has nothing beneath it.';
+          addXp(100);
+          setIntegrity(integrity + 15);
+        } else {
+          btn.classList.add('wrong');
+          flawReadout.className = 'bl-readout bad';
+          flawReadout.innerHTML = '<strong>Not the structural failure.</strong> Tone and readability are surface features; they do not determine whether an argument’s grounds can carry its claim. Re-examine the unstated bridge between the SAT data and the conclusion.';
+        }
+      });
+    })(hypBtns[h]);
+  }
+
+  /* ---------------- BOOT ---------------- */
+  renderRound(0);
+
+  /* ---------------- FINISH ---------------- */
+  var finishBtn = document.getElementById('blFinish');
+  finishBtn.addEventListener('click', function () {
+    if (typeof window.polymathFinishLesson === 'function') {
+      window.polymathFinishLesson();
+    }
+  });
+});
+</script>

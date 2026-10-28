@@ -1,0 +1,154 @@
+{
+ "collection": "lessons",
+ "row_id": 79,
+ "shared": false,
+ "user_id": 162,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P14",
+   "wrong": "Picking the number closest to zero as the smaller one when signs differ. Between -6 and -2, -2 is closer to zero but -6 sits farther left, so -6 is the smaller number.",
+   "correct": "-6 and -2 have the SAME sign; the example does not show the \"signs differ\" case it claims.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Picking the number closest to zero as the smaller one when signs differ. Between -6 and -2, -2 is closer to zero but -6 sits farther left, so -6 is the smaller number.",
+   "replace": "Picking the number closest to zero as the smaller one when signs differ. Between -6 and +2, +2 is closer to zero, but -6 is the smaller number because a negative number is always less than a positive number.",
+   "fixes": [
+    "P14"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[3]",
+   "before": "Picking the number closest to zero as the smaller one when signs differ. Between -6 and -2, -2 is closer to zero but -6 sits farther left, so -6 is the smaller number.",
+   "after": "Picking the number closest to zero as the smaller one when signs differ. Between -6 and +2, +2 is closer to zero, but -6 is the smaller number because a negative number is always less than a positive number.",
+   "fixes": [
+    "P14"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax-m3.1-flash:free",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Signed Numbers: Reading Signs and Adding",
+  "intro": "A signed number is a number with a plus or minus sign in front, like +4 or -4. In this lesson you will learn what the sign means on a number line, then two rules for adding signed numbers.",
+  "sections": [
+   {
+    "heading": "What the sign tells you",
+    "body": "Rule: the sign tells you which direction from zero the number sits. Positive numbers are to the right of zero, negative numbers are to the left, and the bigger the size after the sign, the farther from zero it is. So -4 sits four steps left of zero, and +4 sits four steps right of it. Two numbers like +4 and -4 are the same distance from zero but in opposite directions.",
+    "example": "-2 is two steps left of zero. +2 is two steps right of zero. Between -2 and +2, the one farther left is -2, so -2 is the smaller number."
+   },
+   {
+    "heading": "Adding numbers with the same sign",
+    "body": "Rule: when both numbers have the same sign, add their sizes and keep that sign. The sizes just stack in the same direction. This works for two positives and for two negatives.",
+    "example": "-4 + -3. Both signs are negative, so add the sizes: 4 + 3 = 7. Keep the negative sign, so -4 + -3 = -7. For two positives, 4 + 3 = 7 the same way, giving +7."
+   },
+   {
+    "heading": "Adding numbers with different signs",
+    "body": "Rule: when the signs differ, subtract the smaller size from the larger size, then keep the sign of the number with the larger size. One number pulls right and the other pulls left, so part of the move cancels out. The bigger pull decides the final sign.",
+    "example": "-6 + 4. The signs differ, so subtract the sizes: 6 - 4 = 2. The larger size is 6, which belongs to -6, so keep the negative sign. The answer is -2."
+   }
+  ],
+  "worked_example": {
+   "problem": "Find -9 + 5 + (-2).",
+   "steps": [
+    "Take the first two numbers, -9 and 5. Their signs differ, so use the different-sign rule.",
+    "Subtract the smaller size from the larger size: 9 - 5 = 4.",
+    "The larger size is 9, and it belongs to -9, so the result keeps the negative sign: -9 + 5 = -4.",
+    "Now add -4 + (-2). The signs are the same, so use the same-sign rule.",
+    "Add the sizes: 4 + 2 = 6, and keep the negative sign.",
+    "-4 + (-2) = -6, so the full answer is -6."
+   ],
+   "answer": "-6"
+  },
+  "common_mistakes": [
+   "Adding the sizes when the signs differ. For -6 + 4, adding 6 + 4 gives 10 (or -10), but the different-sign rule says subtract: 6 - 4 = 2, giving -2.",
+   "Subtracting the sizes when the signs are the same. For -4 + -3, writing -1 comes from subtracting 4 - 3, but the same-sign rule says add the sizes: 4 + 3 = 7, giving -7.",
+   "Dropping the negative sign after adding two negatives. For -4 + -3, writing 7 keeps only the size; the sign must stay negative, so the answer is -7.",
+   "Picking the number closest to zero as the smaller one when signs differ. Between -6 and +2, +2 is closer to zero, but -6 is the smaller number because a negative number is always less than a positive number."
+  ],
+  "summary": "The sign of a number tells you which side of zero it sits on. Same signs: add the sizes and keep the sign. Different signs: subtract the smaller size from the larger, and keep the sign of the larger size.",
+  "check_questions": [
+   {
+    "skill_id": "integers",
+    "skill_name": "Signed numbers",
+    "difficulty": 1.6867469879518073,
+    "prompt": "What is -4 + -3?",
+    "answer": "-7",
+    "rationale": "The signs are the same, so the same-sign rule applies: add the sizes 4 + 3 = 7 and keep the negative sign, giving -7.",
+    "source": "ai",
+    "role": "the learner",
+    "format": "multiple_choice",
+    "choices": [
+     "-7",
+     "7",
+     "-1",
+     "1"
+    ]
+   },
+   {
+    "skill_id": "integers",
+    "skill_name": "Signed numbers",
+    "difficulty": 1.6867469879518073,
+    "prompt": "What is -7 + 4?",
+    "answer": "-3",
+    "rationale": "The signs differ, so subtract the sizes 7 - 4 = 3 and keep the sign of the larger size, which is the 7 in -7, giving -3.",
+    "source": "ai",
+    "role": "the learner",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "integers",
+    "skill_name": "Signed numbers",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Which number is smaller?",
+    "answer": "-6",
+    "rationale": "Both are left of zero, and -6 sits farther left than -2, so -6 is the smaller number.",
+    "source": "ai",
+    "role": "the learner",
+    "format": "multiple_choice",
+    "choices": [
+     "-6",
+     "-2",
+     "They are equal",
+     "There is not enough information"
+    ]
+   },
+   {
+    "skill_id": "integers",
+    "skill_name": "Signed numbers",
+    "difficulty": 1.6867469879518073,
+    "prompt": "What is 5 + (-8)?",
+    "answer": "-3",
+    "rationale": "The signs differ, so subtract the sizes 8 - 5 = 3 and keep the sign of the larger size, which is the 8 in -8, giving -3.",
+    "source": "ai",
+    "role": "the learner",
+    "format": "type_in"
+   }
+  ]
+ }
+}

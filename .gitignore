@@ -1,0 +1,29 @@
+node_modules/
+npm-debug.log*
+.DS_Store
+
+# Secrets: keys, the admin sign-in secret, one-time codes
+.env
+*.env
+!.env.example
+**/code.txt
+*.pem
+!spanish-check/tsa/cacert.pem
+
+# Learner data, ledgers and database backups (all of data/)
+data/
+*.backup
+*.bak
+*.backup.*
+*.backup-*
+
+# Logs
+*.log
+
+# Raw downloads and big rebuildable files
+spanish-check/raw/
+spanish-check/pool.json
+spanish-check/results/
+site/geo/
+curriculum-build/staged/**/state/
+curriculum-build/staged/adaptation/objective-items-night/results.jsonl

@@ -1,0 +1,119 @@
+{
+ "collection": "lessons",
+ "row_id": 50,
+ "shared": false,
+ "user_id": 121,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P10",
+   "wrong": "Keep the rule from the examples in mind: Subtract 18 from both sides: 7x = 7. Divide by 7: x = 1.",
+   "correct": "The summary is a stray solution (\"Subtract 18 from both sides: 7x = 7 ... x = 1\") for an equation the lesson never shows; replace with the general rule (undo the constant, then divide by the coefficient). The Common Mistakes list is empty.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Keep the rule from the examples in mind: Subtract 18 from both sides: 7x = 7. Divide by 7: x = 1.",
+   "replace": "Keep the rule from the examples in mind: Undo the constant on both sides, then divide by the coefficient of x.",
+   "fixes": [
+    "P10"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "summary",
+   "before": "Keep the rule from the examples in mind: Subtract 18 from both sides: 7x = 7. Divide by 7: x = 1.",
+   "after": "Keep the rule from the examples in mind: Undo the constant on both sides, then divide by the coefficient of x.",
+   "fixes": [
+    "P10"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Linear equations",
+  "intro": "This level is about linear equations. Work through the examples below, then answer a few questions to the learner it stuck.",
+  "sections": [
+   {
+    "heading": "How linear equations works",
+    "body": "Subtract 18 from both sides: 7x = 7. Divide by 7: x = 1.",
+    "example": "Solve for x:  7x + 18 = 25\nAnswer: 1"
+   },
+   {
+    "heading": "The same idea, one step harder",
+    "body": "Subtract 12 from both sides: 9x = 27. Divide by 9: x = 3.",
+    "example": "Solve for x:  9x + 12 = 39\nAnswer: 3"
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve for x:  9x + 12 = 39",
+   "steps": [
+    "Subtract 12 from both sides: 9x = 27. Divide by 9: x = 3."
+   ],
+   "answer": "3"
+  },
+  "common_mistakes": [],
+  "summary": "Keep the rule from the examples in mind: Undo the constant on both sides, then divide by the coefficient of x.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1,
+    "format": "type_in",
+    "prompt": "Solve for x:  7x + 18 = 25",
+    "answer": "1",
+    "rationale": "Subtract 18 from both sides: 7x = 7. Divide by 7: x = 1.",
+    "source": "bank",
+    "gen_seed": "linear_eq:1:1790452782461:0:0",
+    "role": "the learner"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3,
+    "format": "type_in",
+    "prompt": "Solve for x:  9x + 12 = 39",
+    "answer": "3",
+    "rationale": "Subtract 12 from both sides: 9x = 27. Divide by 9: x = 3.",
+    "source": "bank",
+    "gen_seed": "linear_eq:1.3253012048192772:1790452782461:1:0",
+    "role": "the learner"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.8,
+    "format": "type_in",
+    "prompt": "Solve for x:  6x + 7 = 79",
+    "answer": "12",
+    "rationale": "Subtract 7 from both sides: 6x = 72. Divide by 6: x = 12.",
+    "source": "bank",
+    "gen_seed": "linear_eq:1.8253012048192772:1790452782461:2:0",
+    "role": "the learner"
+   }
+  ]
+ }
+}

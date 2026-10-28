@@ -1,0 +1,196 @@
+diff --git a/scripts/key-gate-test.js b/scripts/key-gate-test.js
+new file mode 100644
+--- /dev/null
++++ b/scripts/key-gate-test.js
+@@ -0,0 +1,28 @@
++/**
++ * The staged explanation-key gate (services/key-gate.js), with a fake blind judge.
++ *   node scripts/key-gate-test.js
++ */
++process.env.NODE_ENV = 'test';
++const keyGate = require('../services/key-gate');
++
++let failed = 0;
++let passed = 0;
++const check = (name, ok, detail = '') => { if (ok) passed++; else { failed++; console.log(`FAIL ${name}${detail ? ` — ${detail}` : ''}`); } };
++
++const wrongKey = { prompt: "Choose the correct word: 'The new practice schedule will ___ the team's score.'", choices: ['affect', 'effected', 'effect', 'affection'], answerIndex: 2,
++  explanation: 'Affect is the verb meaning to influence, which fits after will.' };
++const rightKey = { ...wrongKey, answerIndex: 0 };
++
++(async () => {
++  delete process.env.KEY_GATE;
++  check('off by default: nothing is rejected', (await keyGate.rejectedByKeyGate([wrongKey], { judge: async () => [0] })).length === 0);
++  process.env.KEY_GATE = 'on';
++  check('an unflagged question never reaches the judge', (await keyGate.rejectedByKeyGate([rightKey], { judge: async () => { throw new Error('should not be called'); } })).length === 0);
++  check('a flagged question the blind judge keys the same way is kept', (await keyGate.rejectedByKeyGate([wrongKey], { judge: async () => [2] })).length === 0);
++  const rej = await keyGate.rejectedByKeyGate([rightKey, wrongKey], { judge: async () => [0] });
++  check('a flagged question the blind judge keys differently is rejected, by its index', rej.length === 1 && rej[0].index === 1 && /blind check picked option 1/.test(rej[0].reason), JSON.stringify(rej));
++  const down = await keyGate.rejectedByKeyGate([wrongKey], { judge: async () => { throw new Error('429'); } });
++  check('no judge answer is a rejection, never a keep', down.length === 1 && /no blind check/.test(down[0].reason));
++  console.log(`key-gate-test: ${passed} passed, ${failed} failed`);
++  process.exit(failed ? 1 : 0);
++})();
+diff --git a/services/ai.js b/services/ai.js
+--- a/services/ai.js
++++ b/services/ai.js
+@@ -581,7 +581,19 @@
+     userId,
+   });
+ 
+-  return validateLesson(payload, skillId, difficulty);
++  const lesson = validateLesson(payload, skillId, difficulty);
++  if (!lesson) return null;
++  // The explanation-key gate (KEY_GATE=on): a multiple-choice check whose rationale
++  // describes another option, and that a blind check does not confirm, is removed.
++  // eslint-disable-next-line global-require
++  const rejected = await require('./key-gate').rejectedByKeyGate(lesson.check_questions.map((q) => ({
++    prompt: q.prompt, choices: q.choices || [], answer: q.answer, rationale: q.rationale,
++  })));
++  if (!rejected.length) return lesson;
++  console.warn(`lessons: key gate removed ${rejected.length} check(s) from "${lesson.title}": ${rejected.map((r) => r.reason).join(' | ').slice(0, 400)}`);
++  const drop = new Set(rejected.map((r) => r.index));
++  const checks = lesson.check_questions.filter((_, i) => !drop.has(i));
++  return checks.length < 2 ? null : { ...lesson, check_questions: checks };
+ }
+ 
+ /** A lesson a learner should never see half-built: checked before it is stored. */
+diff --git a/services/block-levels.js b/services/block-levels.js
+--- a/services/block-levels.js
++++ b/services/block-levels.js
+@@ -2088,6 +2088,20 @@
+     for (const [index, reason] of result.dropReasons) brokenChecks.push({ index, spec: layout.checks[index], raw: null, reason });
+     for (const i of verification.checks_fixed) repairedChecks.add(i);
+   }
++  // The explanation-key gate (KEY_GATE=on): a multiple-choice check whose rationale
++  // describes another option, and that a blind check does not confirm, is dropped
++  // with its reason (listed in the plan's dropped checks, never silently).
++  {
++    // eslint-disable-next-line global-require
++    const keyGate = require('./key-gate');
++    const mc = items.map((it, i) => ({ it, i })).filter((x) => x.it && x.it.format === 'multiple_choice' && Array.isArray(x.it.choices));
++    const rejected = await keyGate.rejectedByKeyGate(mc.map((x) => ({ prompt: x.it.prompt, choices: x.it.choices, answer: x.it.answer, rationale: x.it.rationale })));
++    for (const r of rejected) {
++      const index = mc[r.index].i;
++      items[index] = null;
++      brokenChecks.push({ index, spec: layout.checks[index], raw: null, reason: `key gate: ${r.reason}` });
++    }
++  }
+   const kept = blocks.filter((b) => !b.problems.length);
+   const dropped = blocks.filter((b) => b.problems.length).map((b) => ({ block: b.block, problems: b.problems.slice(0, 4) }));
+ 
+diff --git a/services/game-payloads.js b/services/game-payloads.js
+--- a/services/game-payloads.js
++++ b/services/game-payloads.js
+@@ -264,6 +264,17 @@
+   };
+ }
+ 
++/** The explanation-key gate's rejections, as inspectPayload-style problems ("qN: ..."). */
++async function keyGateProblems(reply) {
++  // eslint-disable-next-line global-require
++  const keyGate = require('./key-gate');
++  if (!keyGate.on() || !reply || !Array.isArray(reply.questions)) return [];
++  const rejected = await keyGate.rejectedByKeyGate(reply.questions.map((q) => ({
++    prompt: String(q.prompt || ''), choices: (q.choices || []).map(String), answerIndex: Number(q.answerIndex), explanation: String(q.explanation || ''),
++  })));
++  return rejected.map((r) => `q${r.index + 1}: ${r.reason}`);
++}
++
+ /** Whether every problem is one question's own, and there are few of them. */
+ function patchable(problems) {
+   if (!problems.length || !problems.every((p) => /^q\d+:/.test(p))) return false;
+@@ -447,6 +458,17 @@
+     await repairPayload(reply, schema, userId);
+     problems = inspectPayload(reply, schema);
+   }
++  // The explanation-key gate (KEY_GATE=on): a question whose explanation describes
++  // another option is re-keyed blind; one the blind check does not confirm is
++  // rewritten once, and checked again. Still failing, the set is not stored as clean.
++  if (reply && !problems.length) {
++    problems = await keyGateProblems(reply);
++    if (problems.length && patchable(problems)) {
++      reply = await patchQuestions(reply, schema, problems, prompt, userId);
++      problems = inspectPayload(reply, schema);
++      if (!problems.length) problems = await keyGateProblems(reply);
++    }
++  }
+ 
+   const payload = reply ? envelope(trackId, gradeId, level, schema, reply, null) : null;
+   const writer = providers.current('blocks');
+@@ -674,6 +696,14 @@
+     await repairPayload(reply, schema, userId);
+     problems = inspectPayload(reply, schema);
+   }
++  if (reply && !problems.length) {
++    problems = await keyGateProblems(reply);
++    if (problems.length && patchable(problems)) {
++      reply = await patchQuestions(reply, schema, problems, prompt, userId);
++      problems = inspectPayload(reply, schema);
++      if (!problems.length) problems = await keyGateProblems(reply);
++    }
++  }
+   const payload = reply && !problems.length ? envelope(trackId, gradeId, level, schema, reply, null) : null;
+   const row = {
+     user_id: userId,
+diff --git a/services/key-gate.js b/services/key-gate.js
+new file mode 100644
+--- /dev/null
++++ b/services/key-gate.js
+@@ -0,0 +1,56 @@
++/**
++ * The explanation-key gate at generation time (staged; on with KEY_GATE=on).
++ *
++ * services/key-agreement.js flags a multiple-choice question whose own explanation
++ * describes a different option than its key (the 2026-10-23 audit's error: 119 game
++ * questions). A flag is not a verdict (about 1 in 9 flags is a good question), so a
++ * flagged question is re-keyed blind by an independent judge that is never shown the
++ * key or the explanation:
++ *
++ *   judge picks the key      -> kept
++ *   judge picks another one  -> rejected, with the reason, for the caller to rewrite
++ *   no judge answer          -> rejected (never kept on no evidence)
++ *
++ * The judge is NVIDIA Nemotron Ultra, named explicitly (no fallback chain, so nothing
++ * can reach a paid provider): a different family from the GLM / DeepSeek writers of
++ * the `blocks` role. Only question text and options are sent, never a learner's words.
++ */
++const keyAgreement = require('./key-agreement');
++
++const JUDGE_MODELS = () => [{ model: process.env.KEY_GATE_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b', effort: 'medium' }];
++const on = () => process.env.KEY_GATE === 'on';
++
++const SYSTEM = 'You answer multiple-choice questions for a school course. For each question, work it out yourself and give the index (0-based) of the one option you believe is correct. You are not told the answer key.';
++const SCHEMA = {
++  type: 'object',
++  properties: { picks: { type: 'array', items: { type: 'object', properties: { index: { type: 'integer' }, chosen_index: { type: 'integer' } }, required: ['index', 'chosen_index'] } } },
++  required: ['picks'],
++};
++
++/** Blind picks for a batch of {prompt, choices}, one per question (null when not answered). */
++async function nemotronJudge(batch) {
++  // eslint-disable-next-line global-require
++  const nvidia = require('./providers/nvidia');
++  if (!nvidia.isEnabled('check')) return batch.map(() => null);
++  const user = `${batch.map((q, i) => `Question ${i}: ${q.prompt}\n${q.choices.map((c, j) => `  (${j}) ${c}`).join('\n')}`).join('\n\n')}\n\nReturn one pick per question, with its index.`;
++  const r = await nvidia.structured({ role: 'check', system: SYSTEM, user, schema: SCHEMA, schemaName: 'submit_picks', maxTokens: 3000, models: JUDGE_MODELS(), timeoutMs: 120000, attempts: 2 });
++  const by = new Map(((r && r.data && r.data.picks) || []).map((p) => [p.index, p.chosen_index]));
++  return batch.map((_, i) => (Number.isInteger(by.get(i)) ? by.get(i) : null));
++}
++
++/**
++ * @param {object[]} questions {prompt, choices, answerIndex|answer, explanation|rationale}
++ * @returns {Promise<{index: number, reason: string}[]>} the questions to reject; [] when the gate is off
++ */
++async function rejectedByKeyGate(questions, { judge = nemotronJudge } = {}) {
++  if (!on() || !Array.isArray(questions) || !questions.length) return [];
++  const results = await keyAgreement.rekeyFlagged(questions, { judge: (batch) => judge(batch).catch(() => batch.map(() => null)) });
++  return results.filter((r) => r.verdict === 'rejected' || r.verdict === 'unjudged').map((r) => ({
++    index: r.index,
++    reason: r.verdict === 'rejected'
++      ? `${r.flag.reason}, and a blind check picked option ${r.judgePicked + 1}`
++      : `${r.flag.reason}, and no blind check could settle it`,
++  }));
++}
++
++module.exports = { rejectedByKeyGate, nemotronJudge, on };

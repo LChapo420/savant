@@ -1,0 +1,1709 @@
+{
+ "track_id": "basketball",
+ "grade_ids": [
+  "basketball_ball_explorer",
+  "basketball_mini_starter",
+  "basketball_mini_player",
+  "basketball_junior_club_player",
+  "basketball_youth_team_player",
+  "basketball_youth_advanced",
+  "basketball_varsity",
+  "basketball_elite_junior",
+  "basketball_collegiate",
+  "basketball_high_major",
+  "basketball_professional",
+  "basketball_elite_professional",
+  "basketball_all_star_and_olympic",
+  "basketball_master",
+  "basketball_frontier"
+ ],
+ "grades": [
+  {
+   "grade_id": "basketball_ball_explorer",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Holding the ball with spider fingers",
+     "prompt": "Your coach says, \"Hold the ball with spider fingers.\" Where should your fingers be?",
+     "choices": [
+      "Pressing the ball flat with your palm",
+      "Spread out on the ball like spider legs",
+      "Curled into a fist at your side",
+      "Held behind your back out of sight"
+     ],
+     "answer": "Spread out on the ball like spider legs",
+     "rationale": "Spider fingers means spreading your fingers wide on the ball like spider legs, not squeezing it with your palm or a fist.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Bunny jumps with quiet landings",
+     "prompt": "In Bunny Jumps, what makes your landing a quiet one?",
+     "choices": [
+      "Landing stiff with straight legs",
+      "Landing flat on your back",
+      "Landing on your tiptoes only",
+      "Landing softly with bent knees"
+     ],
+     "answer": "Landing softly with bent knees",
+     "rationale": "Quiet landings come from soft knees that bend as your feet touch the ground, so stiff legs, tiptoe-only landings, and falling down are all wrong.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "When it hurts, stop and tell a grown-up",
+     "prompt": "You fall on the court and your knee hurts. What does your Ball Explorer rule tell you to do first?",
+     "choices": [
+      "Stop playing and tell a grown-up",
+      "Keep playing so you do not miss your turn",
+      "Run to the far basket to shake it off",
+      "Rub it quietly so nobody sees it happened"
+     ],
+     "answer": "Stop playing and tell a grown-up",
+     "rationale": "The grade's safety rule is that when something hurts, you stop right away and tell a grown-up instead of playing on or hiding it.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Bounce test hand shape",
+     "prompt": "During the Fist‑Palm‑Finger bounce test, you try three hand shapes. Which hand shape gives the most consistent, controlled bounce for a beginner?",
+     "choices": [
+      "Bouncing with a closed fist keeps the ball low and steady.",
+      "Bouncing with a flat palm spreads the force evenly across the hand.",
+      "Bouncing with the fingertips allows the greatest feel and control.",
+      "All three shapes produce an identical bounce height and rhythm."
+     ],
+     "answer": "Bouncing with the fingertips allows the greatest feel and control.",
+     "rationale": "The fingertips give the player the most tactile feedback, letting a beginner regulate bounce height. A fist or flat palm reduces feel, and the three shapes do not behave identically.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Scoring basket identification",
+     "prompt": "In the Throw‑Catch‑Score relay, a player must throw the ball into which basket to earn a point for their team?",
+     "choices": [
+      "The basket your team is defending.",
+      "The basket the opposing team is defending.",
+      "The nearest basket to where you receive the pass.",
+      "The basket the coach designates for that round."
+     ],
+     "answer": "The basket the opposing team is defending.",
+     "rationale": "A point is scored by putting the ball in the opponent's basket. The other options describe the defensive basket, proximity, or a coach‑chosen target, which are not the scoring rule.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Jump up and catch the high ball",
+     "prompt": "You jump up and catch a high ball with two hands. What should you do right after your hands grab it?",
+     "choices": [
+      "Slap it away fast so you can jump again",
+      "Keep it high over your head and stand still",
+      "Let it bounce off you and pick it up later",
+      "Pull it in and hold it against your chest"
+     ],
+     "answer": "Pull it in and hold it against your chest",
+     "rationale": "After a high catch you pull the ball in close to your chest so nobody can knock it away, instead of holding it loose overhead or letting it go.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Empty space, court lines, and the scoring relay",
+     "prompt": "In Throw, Catch and Score, where on the court is it easiest to catch a pass without the other team taking the ball away?",
+     "choices": [
+      "In the crowd where all the players are standing",
+      "Just outside the line at the edge of the court",
+      "In the empty space away from all the other players",
+      "Right beside the player who is guarding you"
+     ],
+     "answer": "In the empty space away from all the other players",
+     "rationale": "The grade teaches that running into the empty space, inside the lines and away from the crowd, makes you the easiest teammate to pass to safely.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_mini_starter",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Ready stance",
+     "prompt": "In Ready Stance Like a Coiled Spring, how does your body look when your coach calls 'ready'?",
+     "choices": [
+      "Standing tall with knees locked straight",
+      "Knees bent, feet apart, leaning a little forward, ready to spring",
+      "Feet together with all your weight on your heels",
+      "Kneeling down with both hands flat on the floor"
+     ],
+     "answer": "Knees bent, feet apart, leaning a little forward, ready to spring",
+     "rationale": "A coiled spring stance means knees bent and feet apart with weight forward, so you can spring off in any direction.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Jump stop landing technique",
+     "prompt": "When executing a jump stop, what should the player do immediately after both feet touch the floor to stay balanced and avoid a travel?",
+     "choices": [
+      "Land on one foot first, then quickly bring the other foot down.",
+      "Land with feet wide apart and immediately sprint forward.",
+      "Land on both feet simultaneously, keep knees slightly bent, and hold the position without moving.",
+      "Land on the toes only, keeping heels off the ground."
+     ],
+     "answer": "Land on both feet simultaneously, keep knees slightly bent, and hold the position without moving.",
+     "rationale": "A proper jump stop requires a simultaneous two‑foot landing with a quiet, balanced hold; landing on one foot, sprinting, or toe‑only landings each create momentum or instability that leads to traveling or loss of control.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Stride stop footwork",
+     "prompt": "In the stride stop drill, how do the feet contact the floor to create the one‑two rhythm?",
+     "choices": [
+      "The feet strike the floor together in a single motion.",
+      "The rear foot lands first, then the front foot follows instantly.",
+      "The front foot lands first, then the rear foot follows instantly.",
+      "The player hops on one foot before planting both."
+     ],
+     "answer": "The front foot lands first, then the rear foot follows instantly.",
+     "rationale": "The stride stop is defined by a front‑foot‑then‑rear‑foot sequence that creates the characteristic one‑two timing. Simultaneous landing, rear‑first, or a hop do not match the taught pattern.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Pivot foot",
+     "prompt": "You catch the ball and choose one foot to be your pivot foot. What is that pivot foot allowed to do?",
+     "choices": [
+      "Stay glued to its spot while your other foot steps anywhere",
+      "Slide across the floor as long as you hold the ball high",
+      "Hop along toward the ring while you still have the ball",
+      "Lift into the air and swap to the other foot in mid-jump"
+     ],
+     "answer": "Stay glued to its spot while your other foot steps anywhere",
+     "rationale": "Once the pivot foot is picked it stays glued to the same floor spot while the free foot does the moving.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Shooting grip",
+     "prompt": "In your shooting grip, the ball rests on your finger pads. Where is the small gap supposed to be?",
+     "choices": [
+      "Between your two hands as you line up the shot",
+      "Between the palm of your shooting hand and the ball",
+      "Between your wrist and the inside of your forearm",
+      "Between the ball and the near side of the ring"
+     ],
+     "answer": "Between the palm of your shooting hand and the ball",
+     "rationale": "The ball sits on the finger pads with a small gap between palm and ball, so the fingers control the shot.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Guarding your player",
+     "prompt": "The player you are guarding starts running toward the ring to score. Where do you slide so she cannot get an easy shot?",
+     "choices": [
+      "Stay behind her and watch the ball instead of her body",
+      "Slide to the spot on the court she just ran away from",
+      "Run over to help your teammate guard a different player",
+      "Stay between her and the ring, keeping your body facing her"
+     ],
+     "answer": "Stay between her and the ring, keeping your body facing her",
+     "rationale": "A defender stays in the gap between her player and the ring, so every path to the basket is blocked.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Mini-basketball rules",
+     "prompt": "At your 2v2 festival the coach lists the mini-basketball rules your games follow. Which set is the right one?",
+     "choices": [
+      "A full-height ring, a smaller ball, and the fastest players play the most",
+      "A lower ring, a full-size ball, and each player plays only one half",
+      "A lower ring, a smaller ball, and every player must play",
+      "A taller ring, a full-size ball, and no substitutions all season"
+     ],
+     "answer": "A lower ring, a smaller ball, and every player must play",
+     "rationale": "Mini-basketball fits young players with a lower ring and a smaller ball, and it rules that everyone gets on the court.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_mini_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Pivot away from pressure (U1)",
+     "prompt": "A defender crowds you and keeps reaching for the ball you are holding. Your coach told you to pivot away from pressure. What does that look like?",
+     "choices": [
+      "Lift the foot you chose as your pivot and take a few running steps with the ball",
+      "Turn on your pivot foot so your body moves between the defender and the ball",
+      "Hold the ball out where she can reach it and try to snatch it back before she does",
+      "Pass it straight away to a teammate even though she has a defender right next to her"
+     ],
+     "answer": "Turn on your pivot foot so your body moves between the defender and the ball",
+     "rationale": "Pivoting away from pressure means keeping your pivot foot planted and swinging your body around it so the ball moves out of the defender's reach.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Pain that changes how you move means stop (U2)",
+     "prompt": "During practice your heel starts to hurt a little, and you notice you have begun hopping instead of running. What does your rule from this grade tell you to do?",
+     "choices": [
+      "Keep going as long as the pain stays small",
+      "Stop and rest, because pain that changes how you move means stop",
+      "Run only on your toes so the heel never touches the floor",
+      "Wrap the heel with tape and finish every drill before you say anything"
+     ],
+     "answer": "Stop and rest, because pain that changes how you move means stop",
+     "rationale": "The grade's rule is that pain which changes how you move, like a limp or a hop, means stop, even if the pain feels small.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Scanning the floor with eyes up (U4)",
+     "prompt": "Your coach calls out 'scanning' while you dribble up the court. What are your eyes doing when you scan the floor?",
+     "choices": [
+      "Watching the ball the whole time so it never hits your foot",
+      "Watching the referee in case he blows his whistle",
+      "Looking down at your shoelaces between each dribble",
+      "Looking up and around to see teammates and defenders before you make your move"
+     ],
+     "answer": "Looking up and around to see teammates and defenders before you make your move",
+     "rationale": "Scanning means keeping your eyes up while dribbling so you can see open teammates and defenders before deciding what to do.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Right‑hand lay‑up footwork",
+     "prompt": "During a right‑hand lay‑up approach, which foot should the player push off from to jump toward the basket?",
+     "choices": [
+      "Jump off the right foot, the same side as the shooting hand.",
+      "Jump off the left foot, the foot opposite the shooting hand.",
+      "Jump off both feet together as in a jump stop.",
+      "Jump off whichever foot feels most comfortable at the moment."
+     ],
+     "answer": "Jump off the left foot, the foot opposite the shooting hand.",
+     "rationale": "A right‑hand lay‑up uses a left‑foot take‑off (opposite the shooting hand) to align the body, protect the ball, and generate vertical lift; the other options describe incorrect foot patterns that produce poor angle or travel risk.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Lead pass into the runner's path (U9)",
+     "prompt": "Your teammate is sprinting along the sideline ahead of you in a fast break drill. Where should your pass go so she can keep running?",
+     "choices": [
+      "Right at her chest, so she does not have to reach for it",
+      "Into the empty space in front of her, where she will meet it on the run",
+      "Behind her back, so she can turn around and chase it down",
+      "High above her head, so she has to stop and jump up to catch it"
+     ],
+     "answer": "Into the empty space in front of her, where she will meet it on the run",
+     "rationale": "A lead pass is thrown into the space ahead of the runner so she catches the ball in stride without slowing down.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Steal the pass, not the ball (U13)",
+     "prompt": "Your coach says, 'Steal the pass, not the ball.' The player you are guarding is dribbling toward you, and her teammate is winding up to pass to her. What is your best chance to take it away?",
+     "choices": [
+      "Slap down hard at the ball while she is still dribbling",
+      "Grab her wrist so she cannot lift the ball up",
+      "Watch for the pass and step into the ball's path to catch it in the air",
+      "Turn and chase after the ball once it is already in her hands"
+     ],
+     "answer": "Watch for the pass and step into the ball's path to catch it in the air",
+     "rationale": "Stealing the pass means jumping into the passing lane and catching the ball in flight, instead of reaching at the dribbler.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Fast break 2v1 decisions (U15)",
+     "prompt": "In a 3v3 festival game you get the ball and sprint down the court with a teammate running beside you, and only one defender is back. What is the smartest play?",
+     "choices": [
+      "Pull up and take the long shot before the other defenders can catch up",
+      "Stop and hold the ball until a defender comes close to you",
+      "Pass to your teammate right away without moving, hoping the defender runs at her instead",
+      "Drive at the defender so she has to stop you, then pass to your open teammate for the lay-up"
+     ],
+     "answer": "Drive at the defender so she has to stop you, then pass to your open teammate for the lay-up",
+     "rationale": "On a 2v1 fast break you attack so the lone defender must commit to you, which frees your teammate for an easy lay-up.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_junior_club_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Neuromuscular warm-up before every session",
+     "prompt": "You get to the gym early and want to jump straight into shooting games, but your club's rule says every session begins with the neuromuscular warm-up. What does that warm-up actually do for you?",
+     "choices": [
+      "It burns off your extra energy so your first shots are less wild",
+      "It wakes up the nerves and muscles you need to react, change direction and land safely",
+      "It replaces all the stretching you would otherwise do after the session",
+      "It is mostly a fun way to sort players into teams for the first drill"
+     ],
+     "answer": "It wakes up the nerves and muscles you need to react, change direction and land safely",
+     "rationale": "A neuromuscular warm-up primes the nervous system and muscles for cutting, reacting and landing, which is why it comes before play.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Shoe grip: fit, tread and when to replace",
+     "prompt": "Your coach has you do the shoe check before the season starts. How does the shoe grip science rule tell you it is time to replace your court shoes?",
+     "choices": [
+      "The midsole has compressed so your heel sits noticeably lower than your toe",
+      "The laces have stretched to the point where you have to double-knot them",
+      "The tread pattern on the sole has worn smooth and slides on a dry court",
+      "The upper has faded where you drag your toes on your stops"
+     ],
+     "answer": "The tread pattern on the sole has worn smooth and slides on a dry court",
+     "rationale": "Grip comes from the sole's tread; once the tread is worn smooth the shoe slides on a dry floor and must be replaced.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Crossover dribble low and quick",
+     "prompt": "A defender stands in your path with both hands low, so your coach calls for a crossover. How is the crossover done so it beats him instead of being stolen?",
+     "choices": [
+      "Low and quick, with the ball staying low and close to your body",
+      "High and slow, so the ball travels far away from his reaching hands",
+      "With a long pause between the two bounces to gather your strength",
+      "Stepping backwards first to pull him away, then crossing over in place"
+     ],
+     "answer": "Low and quick, with the ball staying low and close to your body",
+     "rationale": "The crossover works only when the ball crosses low and fast, staying out of the low defender's reach.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Retreat dribble to escape pressure",
+     "prompt": "You are still dribbling when two defenders trap you near the sideline. What is the retreat dribble for in that exact moment?",
+     "choices": [
+      "Stepping between them to split the trap with one hard push of the ball",
+      "Picking the ball up and holding it high above your head to protect it",
+      "Passing immediately through their outstretched hands to your nearest teammate",
+      "Dribbling backwards out of the trap into open space while your dribble stays alive"
+     ],
+     "answer": "Dribbling backwards out of the trap into open space while your dribble stays alive",
+     "rationale": "The retreat dribble backs the ball out of the trap into space without picking it up, so no turnover happens and the dribble can be used again.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Box out: find, hit, get",
+     "prompt": "A shot goes up against your team in a 3v3 game, and your coach barks out the box-out sequence you drilled all season. What is the correct order of the three steps?",
+     "choices": [
+      "Go get the ball first, then find an opponent once you have secured it",
+      "Find the opponent nearest you, make contact to box her out, then go get the ball",
+      "Make contact with your opponent, chase the ball, then find someone to pass to",
+      "Watch the ball all the way to the rim and grab it before anyone else moves"
+     ],
+     "answer": "Find the opponent nearest you, make contact to box her out, then go get the ball",
+     "rationale": "The sequence is Find, Hit, Get: find an opponent, make contact to box out, then go get the ball — chasing the ball first leaves your player free to rebound.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Blocking foul or charge",
+     "prompt": "A shooter leaves the floor for a lay-up, and a defender slides sideways to cut her off. Their bodies collide while the shot is still in the air, and the defender's feet are still moving when contact happens. What should the call be?",
+     "choices": [
+      "A technical foul for contact during the act of shooting",
+      "A travelling violation on the shooter for leaving the floor in traffic",
+      "A blocking foul on the defender, who was still moving into the shooter's path",
+      "A charging foul on the shooter, because she jumped into the defender's body"
+     ],
+     "answer": "A blocking foul on the defender, who was still moving into the shooter's path",
+     "rationale": "A defender who has not stopped moving before the airborne shooter arrives does not have legal position, so the contact is a blocking foul, not a charge.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Drive and kick when help arrives",
+     "prompt": "In a game you catch on the wing in triple threat, jab, and cross over past your defender — but a second defender steps across your driving lane to the ring. What is the read this grade has trained you to make?",
+     "choices": [
+      "Stop the drive and kick the ball to the teammate the helper abandoned",
+      "Force a tough shot over the taller helper, since he left his man to stop you",
+      "Retreat dribble all the way back and wait for a teammate to come collect the ball",
+      "Pick the ball up, jump-stop and pivot in a circle until the helper retreats"
+     ],
+     "answer": "Stop the drive and kick the ball to the teammate the helper abandoned",
+     "rationale": "When help steps into your lane, the drive-and-kick read is to deliver the ball to the spot the helper just left, because that teammate is now open — a read that needs the triple-threat, dribble-move and drive-and-kick levels together.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_youth_team_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Head Knock: When in Doubt, Sit Out",
+     "prompt": "In practice your teammate and another player knock heads going for a loose ball. He sits out for a minute, says he feels fine, and asks to go back in. What does your head-knock rule tell you to do?",
+     "choices": [
+      "He goes straight back in, since his coach saw the whole bump happen",
+      "He sits out, and a grown-up checks him before he plays again",
+      "He can return once he has run one lap without feeling dizzy",
+      "He keeps practicing but must not jump for the rest of the session"
+     ],
+     "answer": "He sits out, and a grown-up checks him before he plays again",
+     "rationale": "The grade's rule is 'when in doubt, sit out': any knock to the head means staying out until a grown-up has checked you, no matter how fine you feel.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Bridges, Side Planks and Band Walks for Hip Control",
+     "prompt": "You are running your own warm-up before practice, and the circuit puts bridges, side planks and band walks before your squats and pushes. What are those first three exercises training?",
+     "choices": [
+      "The calf muscles that push you off the floor for rebounds",
+      "The shoulders that hold your arms up while you defend",
+      "The wrists and fingers that control the ball when you shoot",
+      "The muscles around your hips, which keep your knees steady when you cut and land"
+     ],
+     "answer": "The muscles around your hips, which keep your knees steady when you cut and land",
+     "rationale": "This grade's warm-up puts bridges, side planks and band walks first to build hip control, because steady hips protect the knees during cuts and landings.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Shot-Ready Feet: Hop or One-Two Into the Catch",
+     "prompt": "You are waiting in the corner and the ball is about to be passed to you for a quick three-pointer. What does 'shot-ready feet' mean you do just before the ball arrives?",
+     "choices": [
+      "Hop or step one-two into the catch so your feet and knees are already set to shoot",
+      "Stand tall and relaxed, then bend your knees after the ball lands",
+      "Take one dribble after catching to settle yourself before rising up",
+      "Turn your back to the ring first to protect the ball, then turn back"
+     ],
+     "answer": "Hop or step one-two into the catch so your feet and knees are already set to shoot",
+     "rationale": "Shot-ready feet means landing off a hop or a one-two stop as you catch, so you are already balanced and can shoot the instant the ball hits your hands.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Free-Throw Routine as a Focus Anchor",
+     "prompt": "Your coach calls your free-throw routine your 'focus anchor.' What makes the routine work as an anchor?",
+     "choices": [
+      "You change the routine slightly from night to night so it never becomes boring",
+      "You use it only in close games, saving your focus for the moments that matter most",
+      "You repeat the same short sequence in the same order every time, so your body settles into the shot under any pressure",
+      "You make the routine as long as possible so you have plenty of time to think through your shot"
+     ],
+     "answer": "You repeat the same short sequence in the same order every time, so your body settles into the shot under any pressure",
+     "rationale": "An anchor only works because it is identical every time: the same breath, the same dribbles, the same words, so the mind has one familiar rhythm to settle into.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Channel the Dribbler Full Court to the Weak Hand",
+     "prompt": "The other team's guard brings the ball up the floor against you, and he is clearly stronger with his right hand. Your coach yells 'Channel him!' from the sideline. How do you channel him?",
+     "choices": [
+      "Stand square in his path so he cannot tell which side you are protecting, then react to his first move",
+      "Shade your stance onto his right side so the only comfortable dribble left to him is with his left hand",
+      "Body him up chest-to-chest in the open court so he cannot advance with either hand",
+      "Give ground straight toward your own ring and let him speed up wherever he likes"
+     ],
+     "answer": "Shade your stance onto his right side so the only comfortable dribble left to him is with his left hand",
+     "rationale": "Channeling means angling your stance onto the strong side so his easy path keeps the ball in his weak hand for the length of the floor.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Protect the Ball on the Gather: Rip High or Swing Low",
+     "prompt": "You have just picked up your dribble in the lane, and a defender clamps both hands low around the ball at your waist. How does your rip-or-swing rule say to get the ball free?",
+     "choices": [
+      "Swing the ball down in a low arc beneath his hands",
+      "Rip the ball sharply back toward your own hip and pivot away",
+      "Hold it with both hands at your waist and wait for help to arrive",
+      "Rip the ball high, sweeping it up and over his hands"
+     ],
+     "answer": "Rip the ball high, sweeping it up and over his hands",
+     "rationale": "You rip or swing the ball to where the defender's hands are not, so against hands clamped low you sweep the ball high and over them into your shot.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Read the Guided Defender: Finish, Stop or Kick",
+     "prompt": "In your team's guided-defender drill, you catch on the wing and drive along the baseline. The coach playing the guided defender slides with you the whole way, staying between you and the ring, and every other defender stays with her own player. What does your read tell you to do?",
+     "choices": [
+      "Plant and rise into your pull-up jump shot, because he took away the finish and no helper came",
+      "Keep driving into his chest and try to finish the lay-up over the top of him",
+      "Kick the ball to your corner teammate, because someone on the back side must be open",
+      "Pull the dribble back out beyond the three-point line and wait for a new play"
+     ],
+     "answer": "Plant and rise into your pull-up jump shot, because he took away the finish and no helper came",
+     "rationale": "The read is finish, stop or kick: the defender closing the lane takes away the finish and no help ever comes to open a pass, so the correct option is the stop-and-shoot.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_youth_advanced",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "ACL risk reduction warm‑up",
+     "prompt": "During the dynamic warm‑up you perform a series of single‑leg hops to activate the ACL‑protective muscles. Which cue best describes the landing technique that research shows reduces ACL load?",
+     "choices": [
+      "Land softly on the forefoot with knee tracking over the second toe",
+      "Land flat‑footed with the knee collapsing inward",
+      "Land on the heel and immediately push off",
+      "Land with the knee fully extended and hips back"
+     ],
+     "answer": "Land softly on the forefoot with knee tracking over the second toe",
+     "rationale": "Forefoot landing with proper knee alignment lowers peak ACL strain compared with heel or valgus landings.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Concussion danger signs and repeat risk",
+     "prompt": "A teammate shows confusion, headache, and sensitivity to light after a collision. According to the concussion protocol taught in this grade, what is the immediate next step?",
+     "choices": [
+      "Remove the athlete from play and begin the six‑step return‑to‑sport progression",
+      "Allow the athlete to continue if symptoms disappear within five minutes",
+      "Send the athlete to the locker room for a brief rest then re‑evaluate",
+      "Give the athlete water and monitor for 10 minutes before deciding"
+     ],
+     "answer": "Remove the athlete from play and begin the six‑step return‑to‑sport progression",
+     "rationale": "Any observed concussion sign mandates immediate removal and initiation of the graduated return protocol.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "One‑motion vs two‑motion set point",
+     "prompt": "When reviewing your shooting film you notice the ball leaves your hand from a set point that is level with your forehead. Which shooting model does this most closely match?",
+     "choices": [
+      "One‑motion shot with a high set point",
+      "Two‑motion shot with a low set point",
+      "One‑motion shot with a low set point",
+      "Two‑motion shot with a high set point"
+     ],
+     "answer": "One‑motion shot with a high set point",
+     "rationale": "A single fluid motion that releases from a high set point (forehead level) characterises the one‑motion technique.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Rocker step purpose",
+     "prompt": "In the rocker step drill (jab, rock back, then drive), what is the primary purpose of the rock‑back phase?",
+     "choices": [
+      "Shift weight onto the back foot to create separation before exploding forward.",
+      "Force the defender to commit to the initial jab fake.",
+      "Keep the dribble low while moving laterally across the court.",
+      "Set up a quick pass to a teammate trailing the play."
+     ],
+     "answer": "Shift weight onto the back foot to create separation before exploding forward.",
+     "rationale": "The rock‑back loads the back leg, storing elastic energy and creating space from the defender before the drive. The other options describe defensive reaction, dribble height, or passing, which are not the drill's main goal.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Closeout technique versus three‑point shooter",
+     "prompt": "During a live‑defender closeout drill, the coach stresses “gap and closeout by personnel.” When the offensive player is a known three‑point shooter, which closeout rule should the defender follow?",
+     "choices": [
+      "Close out short, stay low, and funnel the driver toward the baseline.",
+      "Close out long with a high hand, contest the shot, and stay on the hip to prevent a drive.",
+      "Close out aggressively, then immediately double‑team the shooter.",
+      "Close out short, give space, and recover to help defense."
+     ],
+     "answer": "Close out long with a high hand, contest the shot, and stay on the hip to prevent a drive.",
+     "rationale": "Against a known shooter the defender must close out long (aggressively) with a high hand to contest the shot while staying on the hip to prevent a drive; the other options describe incorrect closeout depths or rotations.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Pro hop gather and two‑foot finish",
+     "prompt": "You are executing a pro‑hop gather and two‑foot finish after a fast break. What biomechanical cue ensures a safe, balanced landing?",
+     "choices": [
+      "Land with both feet simultaneously, knees flexed 30‑45°, and hips back",
+      "Land on the dominant foot first, then bring the other foot down",
+      "Land with straight legs to maximise vertical force",
+      "Land on the forefoot of the lead foot only"
+     ],
+     "answer": "Land with both feet simultaneously, knees flexed 30‑45°, and hips back",
+     "rationale": "Simultaneous two‑foot contact with controlled flexion distributes forces and protects the knee joint.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integrated ball‑screen offense and finishing",
+     "prompt": "In the final scrimmage you must integrate the full offensive system: read a ball‑screen (choose over, under, or through), execute the correct pocket pass to the rolling screener, and finish through contact for an and‑one. Which sequence correctly orders these actions?",
+     "choices": [
+      "Read screen → Choose coverage → Pocket pass to roller → Attack rim → Absorb contact → Finish",
+      "Pocket pass → Read screen → Choose coverage → Attack rim → Finish → Absorb contact",
+      "Choose coverage → Read screen → Attack rim → Pocket pass → Finish → Absorb contact",
+      "Attack rim → Read screen → Choose coverage → Pocket pass → Absorb contact → Finish"
+     ],
+     "answer": "Read screen → Choose coverage → Pocket pass to roller → Attack rim → Absorb contact → Finish",
+     "rationale": "The offense starts with reading the screen, then the coverage decision dictates the pocket pass, after which the ball handler attacks, absorbs contact, and finishes.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_varsity",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Competitive warm‑up design",
+     "prompt": "During the varsity competitive warm‑up the coach wants players to activate the glutes and hamstrings while protecting the knees and ankles. Which exercise sequence best matches that goal?",
+     "choices": [
+      "Walking lunges → high knees → static hamstring stretch",
+      "Banded glute bridges → single‑leg hops landing softly → controlled Nordic curl eccentrics",
+      "Jump rope → deep squat hold → ballistic leg swings",
+      "Plank variations → calf raises → rapid fire sprints"
+     ],
+     "answer": "Banded glute bridges → single‑leg hops landing softly → controlled Nordic curl eccentrics",
+     "rationale": "This sequence first activates the glutes, then adds a low‑impact plyometric that teaches soft landings, and finishes with an eccentric hamstring exercise that protects the knee and ankle.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Heat illness recognition and response",
+     "prompt": "A varsity player feels dizzy, nauseous, and has hot, dry skin after 30 minutes of intense practice in 32 °C heat. According to the grade’s heat‑illness protocol, what is the immediate action?",
+     "choices": [
+      "Give water and let her continue at reduced intensity",
+      "Have her sit and monitor for 10 minutes before deciding",
+      "Move her to shade, remove excess gear, and begin rapid cooling with ice towels",
+      "Apply a cold pack to the neck and resume after she says she feels better"
+     ],
+     "answer": "Move her to shade, remove excess gear, and begin rapid cooling with ice towels",
+     "rationale": "The protocol calls for immediate removal from heat, removal of insulating equipment, and aggressive cooling to lower core temperature.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Periodised strength – off‑season volume",
+     "prompt": "In the varsity off‑season strength block the program emphasizes high volume, moderate intensity to build work capacity. Which set‑rep scheme matches that focus?",
+     "choices": [
+      "4 × 12 at 65 % 1RM",
+      "5 × 5 at 85 % 1RM",
+      "3 × 3 at 90 % 1RM",
+      "6 × 2 at 80 % 1RM"
+     ],
+     "answer": "4 × 12 at 65 % 1RM",
+     "rationale": "Four sets of twelve repetitions at roughly two‑thirds of 1RM provides the high‑volume, moderate‑load stimulus prescribed for the off‑season.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "FIBA gather step and zero step definition",
+     "prompt": "Under FIBA rules, a player ends a dribble and gains control of the ball. The first foot to touch the floor after control is gained is called the:",
+     "choices": [
+      "Second step that must occur after the pivot foot is established.",
+      "Step that is illegal unless the player has already established a pivot foot.",
+      "Gather step (zero step) and may serve as the pivot foot.",
+      "Extra step allowed only on a fast break."
+     ],
+     "answer": "Gather step (zero step) and may serve as the pivot foot.",
+     "rationale": "FIBA defines the first foot to touch after gaining control as the gather (zero) step; it becomes the pivot foot if the other foot lifts. The other choices describe illegal or later steps.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Contesting a step‑back without fouling",
+     "prompt": "When defending a step‑back jumper in the Varsity curriculum, what is the primary defensive principle taught to avoid a foul on the shooter’s landing?",
+     "choices": [
+      "Maintain verticality and contest the shot without reaching for the ball",
+      "Jump forward and swipe at the ball as the shooter releases",
+      "Close out with hands high and slide underneath the shooter’s landing spot",
+      "Force the shooter toward the baseline before the step‑back begins"
+     ],
+     "answer": "Maintain verticality and contest the shot without reaching for the ball",
+     "rationale": "The Varsity U5 unit ‘Contest the Step‑Back Without Fouling the Landing’ teaches defenders to stay vertical, keep hands up, and avoid initiating contact on the shooter’s landing. The other options describe aggressive or illegal techniques that the curriculum explicitly warns against.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Defending flare screens – force baseline",
+     "prompt": "In a varsity defensive scheme the team chooses to ‘force baseline’ on a flare screen. The primary responsibility of the defender guarding the screener is to:",
+     "choices": [
+      "Switch onto the cutter and trail the ball handler",
+      "Stay attached to the screener, deny the slip, and push the cutter toward the baseline",
+      "Hedge hard on the ball handler then recover to the screener",
+      "Drop into the paint and protect the rim"
+     ],
+     "answer": "Stay attached to the screener, deny the slip, and push the cutter toward the baseline",
+     "rationale": "Forcing baseline requires the screener’s defender to maintain contact, prevent the slip pass, and direct the cutter toward the sideline.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integrated season load planning and fatigue management",
+     "prompt": "A varsity head coach must schedule the final two weeks before the conference tournament, balancing a high‑intensity practice, a Yo‑Yo IR2 test, and a 4‑quarter scrimmage while monitoring each player’s acute‑chronic workload ratio. Which sequencing best respects the grade’s load‑management principles?",
+     "choices": [
+      "Recovery day → Yo‑Yo test → high‑intensity practice → scrimmage → recovery day",
+      "Yo‑Yo test → high‑intensity practice → scrimmage → recovery day",
+      "High‑intensity practice → scrimmage → Yo‑Yo test → two recovery days",
+      "Scrimmage → recovery day → high‑intensity practice → Yo‑Yo test → recovery day"
+     ],
+     "answer": "Recovery day → Yo‑Yo test → high‑intensity practice → scrimmage → recovery day",
+     "rationale": "Starting with a recovery day lowers acute load, the Yo‑Yo test provides a fresh fitness benchmark, followed by a single high‑intensity session and a game‑like scrimmage before a final recovery day, keeping the acute‑chronic ratio within safe limits.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_elite_junior",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Elite Activation Warm‑Up",
+     "prompt": "During the elite activation warm‑up, which movement sequence is prescribed first to prime the posterior chain before any plyometrics?",
+     "choices": [
+      "Banded glute bridges → single‑leg hops → controlled sprint strides",
+      "Single‑leg hops → banded glute bridges → controlled sprint strides",
+      "Controlled sprint strides → banded glute bridges → single‑leg hops",
+      "Dynamic lunges → banded glute bridges → single‑leg hops"
+     ],
+     "answer": "Banded glute bridges → single‑leg hops → controlled sprint strides",
+     "rationale": "The curriculum lists banded glute bridges as the initial posterior‑chain primer before any hopping or sprinting drills.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Concussion Protocol at Elite Speed",
+     "prompt": "An elite junior player reports a brief headache and blurred vision after a collision but says she feels fine. According to the grade’s concussion rule, what must happen immediately?",
+     "choices": [
+      "She continues playing while a trainer monitors from the bench",
+      "She is removed from play and the six‑step return‑to‑play protocol begins",
+      "She sits out the remainder of the quarter then re‑enters if symptoms clear",
+      "She is given a water break and reevaluated at halftime"
+     ],
+     "answer": "She is removed from play and the six‑step return‑to‑play protocol begins",
+     "rationale": "The grade mandates immediate removal and initiation of the six‑step protocol for any suspected concussion.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Power Development – Jump Squats",
+     "prompt": "In the off‑season power block the program prescribes jump squats at 30 % 1RM for 5 × 3 with 90‑second rest. What is the primary physiological target of this scheme?",
+     "choices": [
+      "Maximal strength recruitment of type IIx fibers",
+      "Hypertrophy of the quadriceps and glutes",
+      "Rate of force development and elastic‑reactive power",
+      "Aerobic capacity of the lower‑body musculature"
+     ],
+     "answer": "Rate of force development and elastic‑reactive power",
+     "rationale": "Light‑load, high‑velocity jump squats are used to train rapid force production rather than maximal strength or hypertrophy.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Snatch‑Back and Double‑Crossover Counters",
+     "prompt": "When a defender over‑commits on a snatch‑back move, the offensive player’s counter is to:",
+     "choices": [
+      "Plant the outside foot and explode into a straight‑line drive",
+      "Pull up for a mid‑range jump shot before the defender recovers",
+      "Pass to the trailing wing for a catch‑and‑shoot",
+      "Execute a quick double‑crossover back to the original hand and attack the vacated lane"
+     ],
+     "answer": "Execute a quick double‑crossover back to the original hand and attack the vacated lane",
+     "rationale": "The curriculum teaches a double‑crossover as the direct counter to an over‑committed defender on a snatch‑back.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Pick‑and‑Roll Handler Reads – Drop Coverage",
+     "prompt": "Facing a drop coverage, the ball‑handler reads the screener’s defender sagging deep. The optimal read is to:",
+     "choices": [
+      "Snake around the screener and attack the middle",
+      "Reject the screen and drive baseline",
+      "Split the two defenders and finish at the rim",
+      "Re‑screen for the roller and look for the slip"
+     ],
+     "answer": "Snake around the screener and attack the middle",
+     "rationale": "Against drop coverage the handler snakes the screen to exploit the space created by the sagging defender.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Scramble defense rotation after trap",
+     "prompt": "After the defense traps the ball‑handler in the corner and the offense rotates, the scramble principle dictates that the nearest defender should:",
+     "choices": [
+      "Sprint to the open shooter on the weak side.",
+      "Deny the outlet pass and protect the basket.",
+      "Switch onto the ball‑handler and apply pressure.",
+      "Tag the roller and rotate behind the ball."
+     ],
+     "answer": "Tag the roller and rotate behind the ball.",
+     "rationale": "Scramble defense teaches the nearest defender to tag the rolling screener then rotate behind the ball to protect the rim; the other options describe alternative rotations not prescribed for the nearest defender.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integrated Elite Junior Mastery",
+     "prompt": "Which sequence demonstrates mastery of the entire Elite Junior curriculum in a single possession?",
+     "choices": [
+      "Warm‑up → jump‑squat power set → snatch‑back → drop‑coverage read → scramble rotation → mental‑reset",
+      "Load check → Olympic lift → double‑crossover → hedge coverage → deny outlet → fear‑of‑failure talk",
+      "Elite activation → monitored load → jump‑squat power → snatch‑back counter → pick‑and‑roll snake read → scramble deny‑outlet → resilient finish",
+      "Concussion protocol → overreaching signs → deep‑range pull‑up → Spain pick‑and‑roll → zone switch → post‑game review"
+     ],
+     "answer": "Elite activation → monitored load → jump‑squat power → snatch‑back counter → pick‑and‑roll snake read → scramble deny‑outlet → resilient finish",
+     "rationale": "Only this option strings together every major unit—activation, load monitoring, power, advanced handling, PnR decision‑making, scramble defence, and mental resilience—showing full‑grade command.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_collegiate",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Depth drop landing mechanics",
+     "prompt": "In the collegiate warm‑up depth drop from a 30‑cm box, which landing cue best protects the ankles and knees?",
+     "choices": [
+      "Land softly on the forefoot letting the knees collapse inward upon contact firmly.",
+      "Land flat‑footed locking the knees seeking maximum stability instantly upon landing today.",
+      "Land on the heels first then roll forward onto the toes with control.",
+      "Land softly on midfoot with knees over second toe flexing hips knees absorb."
+     ],
+     "answer": "Land softly on midfoot with knees over second toe flexing hips knees absorb.",
+     "rationale": "Research‑based landing mechanics advise a midfoot contact, knees tracking over the second toe, and controlled hip/knee flexion to dissipate forces; the other cues promote valgus collapse, locked joints, or heel‑first impact, all of which increase joint loading.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Ankle Sprains: The Most Common Basketball Injury",
+     "prompt": "A collegiate player rolls an ankle during practice and feels mild swelling but can bear weight. According to the grade’s ankle‑sprain protocol, what is the first step before any return‑to‑play activity?",
+     "choices": [
+      "Apply heat and begin light jogging immediately",
+      "Elevate, compress, ice, and obtain a clinical evaluation before loading",
+      "Tape the ankle tightly and continue the scheduled drill",
+      "Take an oral anti‑inflammatory and finish the session"
+     ],
+     "answer": "Elevate, compress, ice, and obtain a clinical evaluation before loading",
+     "rationale": "The protocol prioritizes protection, controlled swelling management, and a professional assessment before any loading.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Release Height, Angle and Speed: The Speed‑Accuracy Trade‑Off",
+     "prompt": "When shooting from the FIBA 6.75‑m line, the speed‑accuracy trade‑off model predicts an optimal release angle that balances flight time and entry margin. Which release angle range is recommended for a collegiate shooter?",
+     "choices": [
+      "30‑35 degrees",
+      "45‑50 degrees",
+      "55‑60 degrees",
+      "65‑70 degrees"
+     ],
+     "answer": "45‑50 degrees",
+     "rationale": "Research cited in the curriculum shows a 45‑50° release maximizes shot‑making probability at the 6.75‑m distance.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Effective field‑goal percentage calculation",
+     "prompt": "A player attempts 100 field goals, making 30 two‑point shots and 10 three‑point shots. Using the effective field‑goal percentage formula taught in this grade, what is the player’s eFG%?",
+     "choices": [
+      "42.0%",
+      "45.0%",
+      "48.0%",
+      "50.0%"
+     ],
+     "answer": "45.0%",
+     "rationale": "FGM = 30 + 10 = 40; 3PM = 10. eFG% = (40 + 0.5×10) / 100 = 45 %. The other percentages result from common calculation errors.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Expected Points per Shot by Floor Location",
+     "prompt": "According to the Expected Points per Shot (EPS) table for collegiate floor locations, which zone yields the highest EPS for a typical Division‑I offense?",
+     "choices": [
+      "Restricted area (within 4 ft of the rim)",
+      "Mid‑range (15‑19 ft)",
+      "Corner three (22 ft)",
+      "Above‑the‑break three (23.75 ft)"
+     ],
+     "answer": "Restricted area (within 4 ft of the rim)",
+     "rationale": "The EPS data shows the restricted‑area shots generate the greatest expected points due to high conversion rates and frequent fouls.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Flex offence flex cut timing",
+     "prompt": "In the Flex offence, the flex cut is initiated by the cutter. What is the precise trigger for the cutter to begin the flex cut?",
+     "choices": [
+      "When the screener’s defender steps up to hedge.",
+      "When the trailer’s defender rotates to the weak side.",
+      "When the ball‑handler passes to the wing.",
+      "When the screener’s inside shoulder clears the defender’s hip."
+     ],
+     "answer": "When the ball‑handler passes to the wing.",
+     "rationale": "The flex cut is timed off the pass to the wing, which sets the flex screen; the other options describe unrelated defensive movements.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Pack‑Line Principles, Switching and Pre‑Switching, Scram Switch to Fix a Post Mi",
+     "prompt": "A collegiate team runs a Pack‑Line man‑to‑man base, incorporates pre‑switching on ball screens, and uses a scramble‑switch rule to correct post mismatches. During a possession the offense runs a high ball‑screen, the screener rolls, and the defender on the screener’s man helps on the roll. According to the full defensive system taught in this grade, what is the correct sequence of defensive actions?",
+     "choices": [
+      "Help defender drops to the roll, on‑ball defender fights over, weak‑side defender rotates to the vacated corner, and the scramble switch assigns the nearest defender to the post",
+      "On‑ball defender goes under, help defender stays, weak‑side defender doubles the ball‑handler, no scramble switch",
+      "On‑ball defender fights over, help defender shows, weak‑side defender fills the gap, and the scramble switch is ignored because the mismatch is on the perimeter",
+      "On‑ball defender fights over, help defender shows, weak‑side defender rotates to the corner, and the scramble switch assigns the nearest defender to the post"
+     ],
+     "answer": "On‑ball defender fights over, help defender shows, weak‑side defender rotates to the corner, and the scramble switch assigns the nearest defender to the post",
+     "rationale": "The integrated defensive curriculum requires fighting over the screen, a show‑help from the screener’s defender, weak‑side rotation, and a scramble‑switch to cover the resulting post mismatch.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_high_major",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Half‑second decision making after catch",
+     "prompt": "The curriculum teaches that in the half‑second after a perimeter catch, a high‑major wing should first:",
+     "choices": [
+      "Assess the defender’s closeout distance and decide to shoot if open.",
+      "Immediately call for a ball screen to create an advantage.",
+      "Drive baseline regardless of defensive positioning.",
+      "Pass to the nearest teammate without looking."
+     ],
+     "answer": "Assess the defender’s closeout distance and decide to shoot if open.",
+     "rationale": "The half‑second decision framework prioritizes an immediate read of the closeout to shoot, drive, or pass; the other actions are secondary or contrary to the taught priority.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Game‑Day Fuel, Fluids and Warm‑Up",
+     "prompt": "The High‑Major nutrition protocol recommends a carbohydrate‑rich snack how many minutes before tip‑off to maximize glycogen availability?",
+     "choices": [
+      "90 minutes",
+      "60 minutes",
+      "30 minutes",
+      "10 minutes"
+     ],
+     "answer": "30 minutes",
+     "rationale": "Research cited in the grade shows a 30‑minute pre‑game carb snack optimizes blood glucose without gastrointestinal distress.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Drop vs At the Level: Where the Big Meets the Screen",
+     "prompt": "When the defending big drops to the level of the screener on a side pick‑and‑roll, what is the primary offensive read for the ball‑handler?",
+     "choices": [
+      "Attack the middle with a snake dribble",
+      "Pull up for a mid‑range jumper",
+      "Pass to the roller for a dunk",
+      "Reset and call for a flare screen"
+     ],
+     "answer": "Attack the middle with a snake dribble",
+     "rationale": "A drop big leaves the middle open; the taught counter is a snake dribble back to the middle to exploit the gap.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Pocket Pass to the Roller",
+     "prompt": "In a high‑major pick‑and‑roll, the pocket pass is delivered to the roller when the defender goes under the screen. Which cue signals the correct timing for the pass?",
+     "choices": [
+      "The ball‑handler's eyes lock on the rim",
+      "The low man tags the roller",
+      "The defender's feet cross the free‑throw line",
+      "The screener's inside shoulder clears the defender's hip"
+     ],
+     "answer": "The screener's inside shoulder clears the defender's hip",
+     "rationale": "The grade defines that moment as the trigger for a safe pocket pass to the rolling big.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Switch Variants: Late, Steer and Blitz‑to‑Switch",
+     "prompt": "During a late‑switch coverage, the on‑ball defender initially fights over the screen before the big steps up to take the ball‑handler. What is the offensive counter the grade emphasizes?",
+     "choices": [
+      "Immediate pick‑and‑pop for a three",
+      "Quick slip screen to the short roll",
+      "Attack the mismatch with a pull‑up from the elbow",
+      "Reset and run a dribble hand‑off"
+     ],
+     "answer": "Quick slip screen to the short roll",
+     "rationale": "The slip exploits the momentary confusion before the switch is completed, creating a high‑percentage short‑roll opportunity.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Dean Oliver Four Factors",
+     "prompt": "A high‑major team loses despite posting a higher effective field‑goal percentage than its opponent. According to Dean Oliver’s Four Factors, which factor most likely accounts for the loss?",
+     "choices": [
+      "Lower offensive rebounding percentage",
+      "Higher team turnover percentage",
+      "Reduced team free‑throw rate",
+      "Opponent higher effective FG percentage"
+     ],
+     "answer": "Higher team turnover percentage",
+     "rationale": "Turnover percentage is one of the Four Factors and a higher rate can outweigh a superior eFG%.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integrated High‑Major Mastery (Full Curriculum)",
+     "prompt": "Which sequence demonstrates mastery of the entire High‑Major curriculum in a single possession, from pre‑game preparation through offensive execution, defensive rotation, analytics review, and post‑game recovery?",
+     "choices": [
+      "Warm‑up → Shot‑chart profiling → Drop coverage → Pocket pass → Switch variant → Four‑factor audit → Sleep extension",
+      "Game‑day fuel → Combine shooting drills → Snake dribble → Blitz → X‑out rotation → Assist‑to‑turnover ratio → Mental‑skills plan",
+      "Half‑second decision → Shot‑quality offence → Hedge and recover → Pocket pass → Late switch → Four‑factor audit → Recovery sprints",
+      "Nutrition plan → Role archetype analysis → At‑the‑level defense → Split hedge → Drop load → Turnover percentage → Crew film review"
+     ],
+     "answer": "Half‑second decision → Shot‑quality offence → Hedge and recover → Pocket pass → Late switch → Four‑factor audit → Recovery sprints",
+     "rationale": "This chain links every unit of the grade—decision making, shot selection, screen defense, roll passing, switch handling, analytics, and conditioning—into one complete possession.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_professional",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "NBA concussion protocol steps",
+     "prompt": "In the NBA concussion protocol, what is the mandatory first action when a player shows any sign of a concussion during a game?",
+     "choices": [
+      "The player is immediately removed from the game and evaluated by medical staff.",
+      "The player completes the current possession before a sideline assessment.",
+      "The player is allowed to finish the quarter if symptoms appear mild.",
+      "The player receives a brief on‑court check and may continue if cleared."
+     ],
+     "answer": "The player is immediately removed from the game and evaluated by medical staff.",
+     "rationale": "The NBA protocol requires instant removal and a formal medical evaluation before any return to play.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Ankle sprain rehab phases",
+     "prompt": "During the professional‑grade return‑to‑play progression for an ankle sprain, which phase follows the acute‑injury phase?",
+     "choices": [
+      "Sub‑acute mobility and controlled loading phase",
+      "Full‑contact scrimmage phase",
+      "High‑intensity plyometric phase",
+      "Maintenance and prevention phase"
+     ],
+     "answer": "Sub‑acute mobility and controlled loading phase",
+     "rationale": "Rehab guidelines progress from acute care to a sub‑acute phase focused on restoring range of motion and gradual loading.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "FIBA defensive three‑second rule",
+     "prompt": "Which statement accurately describes the defensive three‑second rule under FIBA regulations?",
+     "choices": [
+      "FIBA does not enforce a defensive three‑second violation.",
+      "Defenders may remain in the restricted area for three seconds without guarding.",
+      "The rule applies only when the defender is actively guarding an opponent.",
+      "FIBA’s rule is identical to the NBA’s defensive three‑second rule."
+     ],
+     "answer": "FIBA does not enforce a defensive three‑second violation.",
+     "rationale": "FIBA has no defensive three‑second rule; only the NBA applies it. The other options incorrectly attribute a rule to FIBA.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Roamer coverage: spy off a non-shooter",
+     "prompt": "In 'roamer' (spy) coverage, the defence assigns one defender to an opponent who is not a shooting threat and lets him leave that player. What is that defender's main job?",
+     "choices": [
+      "Deny his man the ball all over the court",
+      "Pick up the ball-handler full court on every possession",
+      "Switch onto every screener his man sets",
+      "Sag off his man to help at the rim and shadow the main ball-handler's drives"
+     ],
+     "answer": "Sag off his man to help at the rim and shadow the main ball-handler's drives",
+     "rationale": "The roamer is guarding a non-shooter, so he can leave him and act as a free helper ('spy') on the ball-handler and the paint; the other options keep him attached to his man or on the ball.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "141c92580b920ac5"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Stint matrix construction",
+     "prompt": "When building a stint matrix from play‑by‑play data, which event signals the start of a new stint for a player?",
+     "choices": [
+      "A substitution that brings the player onto the court",
+      "A timeout called by either team",
+      "A change in the player’s primary defensive assignment",
+      "The beginning of a new quarter"
+     ],
+     "answer": "A substitution that brings the player onto the court",
+     "rationale": "A stint is defined by continuous on‑court time bounded by substitutions; timeouts or assignment changes do not end a stint.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Observer form communication rating",
+     "prompt": "In the NBA referee observer form used for self‑evaluation, which section specifically rates crew communication during dead‑ball situations?",
+     "choices": [
+      "Dead‑ball communication",
+      "Mechanics and positioning",
+      "Rule knowledge application",
+      "Game management and flow"
+     ],
+     "answer": "Dead‑ball communication",
+     "rationale": "The observer form includes a dedicated 'Dead‑ball communication' category to assess how officials coordinate when the ball is not live.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Curriculum unit order",
+     "prompt": "Which of the following lists the Professional grade units in the exact order they are presented in the syllabus?",
+     "choices": [
+      "U1 → U2 → U3 → U4 → U5",
+      "U2 → U1 → U3 → U4 → U5",
+      "U1 → U3 → U2 → U5 → U4",
+      "U4 → U5 → U1 → U2 → U3"
+     ],
+     "answer": "U1 → U2 → U3 → U4 → U5",
+     "rationale": "The syllabus lists the units sequentially as U1, U2, U3, U4, U5; only the first option matches that order.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_elite_professional",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Load‑management consecutive‑rest rule",
+     "prompt": "Under the NBA’s 2023‑24 Participation Policy, a healthy player may be rested for at most how many consecutive games before the league can impose a fine?",
+     "choices": [
+      "Zero games",
+      "One game",
+      "Two games",
+      "Three games"
+     ],
+     "answer": "One game",
+     "rationale": "The Load Management unit states the maximum consecutive rest games without a documented medical reason is one; a second straight absence triggers league discipline.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Load management policy",
+     "prompt": "The Elite Professional grade’s Load Management, Participation Policy and Award Eligibility unit defines ‘load management’ as:",
+     "choices": [
+      "Resting a player for an entire game once per month regardless of schedule",
+      "Limiting a player to no more than 30 minutes in any back‑to‑back situation",
+      "Strategically reducing a player’s minutes and intensity across the season to preserve health and playoff readiness",
+      "Assigning a player to a reduced role only after a documented injury"
+     ],
+     "answer": "Strategically reducing a player’s minutes and intensity across the season to preserve health and playoff readiness",
+     "rationale": "U1’s Load Management section describes a season‑long, data‑driven approach to minute distribution, not a fixed game‑off rule, a hard minute cap for back‑to‑backs, or an injury‑only reduction. The correct choice captures the strategic, proactive nature emphasized in the curriculum.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Moreyball expected‑points zone",
+     "prompt": "In the Moreyball expected‑points model taught in the Elite Professional grade, which floor zone receives the highest expected points per shot?",
+     "choices": [
+      "Restricted area near basket",
+      "Mid‑range jump‑shot zone",
+      "Above‑the‑break three‑point zone",
+      "Corner three‑point area"
+     ],
+     "answer": "Restricted area near basket",
+     "rationale": "Shots in the restricted area have the highest field‑goal percentage, giving them the greatest expected points per attempt in the model.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Hawk‑Eye new measurable metric",
+     "prompt": "When the league moved from SportVU to Hawk‑Eye optical tracking, which metric became directly measurable for every player on every possession for the first time?",
+     "choices": [
+      "Player speed at 25 Hz",
+      "Ball‑handler defensive pressure radius",
+      "Shot‑quality index (qSQ)",
+      "Off‑ball screen assist probability"
+     ],
+     "answer": "Off‑ball screen assist probability",
+     "rationale": "Hawk‑Eye’s 3D pose tracking captures off‑ball screening actions continuously, enabling a direct screen‑assist probability metric for all players each possession.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Supermax Designated Veteran Contracts Explained",
+     "prompt": "Under the current CBA, a player eligible for a Supermax Designated Veteran extension can sign a contract worth what percentage of the salary cap in the first year?",
+     "choices": [
+      "30 %",
+      "35 %",
+      "40 %",
+      "45 %"
+     ],
+     "answer": "35 %",
+     "rationale": "The Supermax allows a first‑year salary of 35 % of the cap for qualifying veterans.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "NBA Coach's Challenge: what is at stake",
+     "prompt": "Under the NBA's Coach's Challenge rule, a team must have a timeout available to challenge. What happens to that timeout if the challenge is unsuccessful?",
+     "choices": [
+      "The team keeps the timeout but loses its next challenge",
+      "The team is charged a technical foul instead",
+      "The opponent is awarded one free throw",
+      "The team is charged the timeout it used to challenge"
+     ],
+     "answer": "The team is charged the timeout it used to challenge",
+     "rationale": "A challenge uses a timeout: if the call is overturned the team keeps it, if the challenge fails the timeout is charged. No technical foul or free throw is involved.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "69b3e54ca0b8dcfe"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Elite Professional unit sequence",
+     "prompt": "Which option lists the Elite Professional grade units in the exact order they appear in the syllabus?",
+     "choices": [
+      "U1 → U2 → U3 → U4",
+      "U2 → U1 → U4 → U3",
+      "U3 → U4 → U1 → U2",
+      "U4 → U3 → U2 → U1"
+     ],
+     "answer": "U1 → U2 → U3 → U4",
+     "rationale": "The syllabus presents the units sequentially as U1, U2, U3, U4; only the first choice matches that ordering.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_all_star_and_olympic",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Running a Team Injury-Prevention Programme",
+     "prompt": "When implementing a team-wide injury-prevention program at the All‑Star level, which component is scheduled first in the weekly microcycle?",
+     "choices": [
+      "High-intensity plyometrics are performed to prime the nervous system.",
+      "Mobility and activation circuit prepares tissues before higher loads.",
+      "Full-court scrimmage replicates game intensity early in the week.",
+      "Strength-max testing determines baseline power for the cycle."
+     ],
+     "answer": "Mobility and activation circuit prepares tissues before higher loads.",
+     "rationale": "The program begins with low-load mobility to ready muscles and joints before any high-stress work.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Step-back footwork against length",
+     "prompt": "Against a defender with a 7‑foot wingspan, the recommended first footwork action for a step‑back jumper is:",
+     "choices": [
+      "A quick jab step toward the baseline creates initial separation.",
+      "A hard gather step onto the inside foot starts the backward motion.",
+      "A simultaneous two‑foot hop backward generates vertical lift.",
+      "A crossover dribble into the shot shifts the defender laterally."
+     ],
+     "answer": "A quick jab step toward the baseline creates initial separation.",
+     "rationale": "The jab step is the standard initial move to create space against a long defender; the gather, hop, or crossover are subsequent or alternative actions, not the prescribed first step.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Usage Versus Efficiency for a High-Usage Star",
+     "prompt": "In evaluating a high‑usage star, the metric that best isolates offensive efficiency from volume is:",
+     "choices": [
+      "True Shooting Percentage accounts for all scoring attempts independent of volume.",
+      "Player Efficiency Rating blends counting stats with pace adjustments.",
+      "Usage Rate measures the share of team plays a player finishes.",
+      "Offensive Box Plus/Minus estimates impact per 100 possessions."
+     ],
+     "answer": "True Shooting Percentage accounts for all scoring attempts independent of volume.",
+     "rationale": "TS% incorporates field goals, three-pointers, and free throws without weighting by usage.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Legal foul-drawing on the drive",
+     "prompt": "A legal technique for drawing a foul on a drive requires the offensive player to:",
+     "choices": [
+      "Lower the shoulder into the defender's chest to initiate contact.",
+      "Drive into the defender before they establish a legal guarding position.",
+      "Extend the arm into the defender's torso to create a whistle.",
+      "Jump into the defender while airborne to draw a blocking call."
+     ],
+     "answer": "Drive into the defender before they establish a legal guarding position.",
+     "rationale": "Contact initiated before the defender has a legal guarding position is a defensive foul; the other actions constitute offensive fouls or illegal contact.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Expected possession value interpretation",
+     "prompt": "A possession model gives a corner‑three attempt an Expected Possession Value of 1.12 points. What is the approximate league‑average points per possession implied by this value?",
+     "choices": [
+      "1.00 points",
+      "1.05 points",
+      "0.95 points",
+      "1.10 points"
+     ],
+     "answer": "1.00 points",
+     "rationale": "League‑average PPP is roughly 1.00; a corner three at 1.12 is above average.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Coordinating a Performance Team Around One Player",
+     "prompt": "The primary responsibility of the performance-team lead when integrating biometric data for a single superstar is:",
+     "choices": [
+      "Designing the player’s on-court playbook to maximize strengths.",
+      "Ensuring data privacy consent and aligning load metrics with training.",
+      "Negotiating the player’s contract incentives based on performance.",
+      "Selecting the team’s travel schedule to reduce fatigue."
+     ],
+     "answer": "Ensuring data privacy consent and aligning load metrics with training.",
+     "rationale": "The lead must manage consent and translate biometric load into individualized training decisions.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Roster Construction Across Contend, Retool and Rebuild",
+     "prompt": "Which sequence reflects the full All‑Star and Olympic curriculum from pre-season planning through in-tournament adjustment?",
+     "choices": [
+      "Injury-prevention → Step-back shooting → Usage analysis → Playoff series adjustment → EPV modeling → Olympic history → Cap-jump projection.",
+      "Mobility circuit → Foul-drawing drills → Star-role minutes talk → Matchup inference → Markov possession models → FIBA-NBA style switch → Draft-lottery simulation.",
+      "Team injury-prevention program → Legal foul drawing → High-usage efficiency metrics → Series-level playoff adjustment → Spatio-temporal EPV case study → Menstrual-cycle training considerations → Roster construction across contend/retool/rebuild.",
+      "Warm-up activation → Quiet-eye free throws → Two-for-one arithmetic → Crew chief leadership → Hawk-Eye pose tracking → Media communication → Similarity-based projections."
+     ],
+     "answer": "Team injury-prevention program → Legal foul drawing → High-usage efficiency metrics → Series-level playoff adjustment → Spatio-temporal EPV case study → Menstrual-cycle training considerations → Roster construction across contend/retool/rebuild.",
+     "rationale": "This ordering traverses every unit of the grade in the prescribed sequence, demonstrating complete mastery.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_master",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Era‑defining rule changes (U1)",
+     "prompt": "Which rule change introduced in the 1954‑55 season effectively ended the era of stall‑ball by limiting the time a team could hold the ball?",
+     "choices": [
+      "Widening the lane to 12 feet",
+      "Adoption of the 24‑second shot clock",
+      "Legalization of goaltending",
+      "Implementation of the three‑point line"
+     ],
+     "answer": "Adoption of the 24‑second shot clock",
+     "rationale": "The 24‑second shot clock was the specific rule that forced teams to attempt a shot within a set time, eliminating deliberate stalling.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Classic team systems (U2)",
+     "prompt": "What was the signature transition offense of Red Auerbach’s Boston Celtics during their dynasty of the late 1950s and 1960s?",
+     "choices": [
+      "Half‑court isolation post play",
+      "Full‑court press with trap rotations",
+      "Set‑play oriented motion offense",
+      "Rebound‑outlet fast break"
+     ],
+     "answer": "Rebound‑outlet fast break",
+     "rationale": "Auerbach’s Celtics built their dominance on grabbing the rebound and immediately throwing a long outlet pass to start the break.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Jordan Rules defensive strategy",
+     "prompt": "The Master grade’s Bad Boys Pistons unit describes the primary objective of the ‘Jordan Rules’ defense as:",
+     "choices": [
+      "Push Jordan toward the baseline on drives and wall the paint with multiple defenders",
+      "Force Michael Jordan into mid‑range jump shots",
+      "Double‑team Jordan on every possession once he receives the ball",
+      "Deny Jordan the ball entirely by fronting him on the perimeter"
+     ],
+     "answer": "Push Jordan toward the baseline on drives and wall the paint with multiple defenders",
+     "rationale": "U3 ‘Bad Boys Pistons and the Jordan Rules’ explains that the scheme’s core concept was to force Jordan left, crowd the paint with help defenders, and use physical walling on drives, rather than simply conceding mid‑range shots, mandatory double‑teams, or full denial. The distractors reflect common misconceptions about the strategy.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Impact of rule changes on strategy (U4)",
+     "prompt": "After the NBA legalized zone defense in 2001, which tactical adjustment became widespread among teams?",
+     "choices": [
+      "Elimination of the pick‑and‑roll from offensive playbooks",
+      "Mandatory increase in three‑point attempt rate",
+      "Increased use of matchup zones and hybrid defenses",
+      "Return to exclusive man‑to‑man assignments"
+     ],
+     "answer": "Increased use of matchup zones and hybrid defenses",
+     "rationale": "Legal zone allowance encouraged coaches to blend zone principles with man‑to‑man responsibilities, creating hybrid schemes.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Workload‑injury methodology (U10)",
+     "prompt": "In load‑injury research, the acute:chronic workload ratio (ACWR) compares the 1‑week acute load to the 4‑week chronic load. A ratio exceeding which value is most commonly linked to heightened injury risk?",
+     "choices": [
+      "1.0",
+      "1.3",
+      "1.5",
+      "2.0"
+     ],
+     "answer": "1.5",
+     "rationale": "Empirical studies consistently show that an ACWR above roughly 1.5 correlates with a spike in subsequent injury incidence.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Hot‑hand debate and bias correction (U12‑U13)",
+     "prompt": "Miller and Sanjurjo (2018) demonstrated that the classic “hot‑hand” streak analyses suffer from which specific statistical bias?",
+     "choices": [
+      "Survivorship bias from only examining completed streaks",
+      "Publication bias toward positive findings",
+      "Selection bias from conditioning on streak endpoints",
+      "Measurement error in shot‑outcome recording"
+     ],
+     "answer": "Selection bias from conditioning on streak endpoints",
+     "rationale": "Their work shows that selecting shots only after a streak begins inflates the conditional probability of a make, creating a false hot‑hand signal.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Hot hand: the Miller-Sanjurjo correction",
+     "prompt": "Gilovich, Vallone and Tversky (1985) found no 'hot hand' in basketball shooting data. Miller and Sanjurjo (2018) showed that their method contained a bias. What was it?",
+     "choices": [
+      "Shot selection: players attempted harder shots after a run of makes, lowering their percentage",
+      "Sample size: there were too few players and shots to reach statistical significance",
+      "Data mixing: the study counted free throws together with field-goal attempts",
+      "Streak selection: in a finite sequence, the hit rate right after hits is expected to fall below the true rate"
+     ],
+     "answer": "Streak selection: in a finite sequence, the hit rate right after hits is expected to fall below the true rate",
+     "rationale": "Miller and Sanjurjo's streak-selection bias: conditioning on prior hits in a finite sequence biases the measured conditional rate downward. Shot difficulty after makes is a different critique (Bocskocsky et al.), not theirs.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "6e139c5375b3299b"
+    }
+   ]
+  },
+  {
+   "grade_id": "basketball_frontier",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Confounding by scheme, teammates, opponents",
+     "prompt": "In a player‑value regression, why does collinearity between a player's usage rate and his teammates' offensive rating bias the coefficient on usage?",
+     "choices": [
+      "Because usage rate is measured with less error than teammate rating, the coefficient is attenuated.",
+      "Because usage and teammate offensive rating move together, the model cannot separate their individual effects.",
+      "Because the regression includes a random intercept for each team, collinearity is automatically removed.",
+      "Because the model uses ridge regularization, the bias from collinearity disappears completely."
+     ],
+     "answer": "Because usage and teammate offensive rating move together, the model cannot separate their individual effects.",
+     "rationale": "Collinearity makes the predictors indistinguishable, so the regression cannot attribute unique effect to usage.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Design an injury‑risk model and state its causal limits",
+     "prompt": "When building an injury‑risk model from tracking data, which step must be taken before claiming a causal link between workload spikes and injury?",
+     "choices": [
+      "Collect all tracking frames and fit a logistic regression without any validation.",
+      "Compare injured players to a random sample of healthy players using a t‑test.",
+      "Adjust for schedule density by adding a fixed effect for each month of the season.",
+      "Establish a counterfactual workload trajectory for each player using a matched control."
+     ],
+     "answer": "Establish a counterfactual workload trajectory for each player using a matched control.",
+     "rationale": "Causal inference requires a credible counterfactual, which matched controls provide.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Ghosting and imitation‑learned defenders",
+     "prompt": "What is the primary purpose of a ghosting model in defensive evaluation?",
+     "choices": [
+      "To simulate the optimal defender trajectory given the offensive players' observed movements.",
+      "To replace human annotators by automatically labeling every defensive assignment.",
+      "To compute a player's defensive rating solely from box‑score statistics.",
+      "To generate synthetic offensive plays for data augmentation."
+     ],
+     "answer": "To simulate the optimal defender trajectory given the offensive players' observed movements.",
+     "rationale": "Ghosting models generate the counterfactual optimal defense to measure actual defensive deviation.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Expected Possession Value as a stochastic process",
+     "prompt": "In an EPV stochastic‑process framework, what does the 'touch bias' refer to?",
+     "choices": [
+      "The increase in EPV that occurs when a player holds the ball longer than average.",
+      "The systematic over‑estimation of EPV for lineups that play at a faster pace.",
+      "The tendency for EPV to increase simply because the ball handler receives more touches, not because of better decisions.",
+      "The bias introduced when EPV is calculated using only shot‑location data."
+     ],
+     "answer": "The tendency for EPV to increase simply because the ball handler receives more touches, not because of better decisions.",
+     "rationale": "Touch bias captures the spurious EPV inflation from mere possession frequency.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Allocative efficiency and Skinner's price of anarchy",
+     "prompt": "According to Skinner's price of anarchy, what does a value greater than 1 indicate about a team's offensive allocation?",
+     "choices": [
+      "The team's offensive efficiency exceeds the theoretical maximum for any shot distribution.",
+      "The team's actual scoring efficiency is lower than the efficiency achievable under a socially optimal shot distribution.",
+      "The price of anarchy equals the ratio of assisted to unassisted field goals.",
+      "A value above one means the defense is forcing the offense into sub‑optimal shots."
+     ],
+     "answer": "The team's actual scoring efficiency is lower than the efficiency achievable under a socially optimal shot distribution.",
+     "rationale": "Price of anarchy >1 quantifies the efficiency loss from selfish shot selection.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Critique last two minute reports as accuracy data",
+     "prompt": "Why are NBA Last Two Minute Reports problematic as ground‑truth labels for training a foul‑call classifier?",
+     "choices": [
+      "They provide exhaustive coverage of every foul and non‑foul event in the final two minutes.",
+      "They are generated by an automated algorithm with no human review.",
+      "They include detailed biomechanical data for each player involved in the play.",
+      "They only cover a non‑representative subset of plays and omit many non‑call events."
+     ],
+     "answer": "They only cover a non‑representative subset of plays and omit many non‑call events.",
+     "rationale": "The reports are selective and miss the majority of non‑call situations, biasing training data.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Causal inference, tracking defense, incentive design frontier",
+     "prompt": "Which research direction best represents an unresolved frontier that combines causal inference, tracking‑based defensive analysis, and league‑level incentive design?",
+     "choices": [
+      "Building larger labeled video datasets for supervised pose estimation across leagues.",
+      "Accelerating expected possession value calculations for real‑time broadcast integration.",
+      "Quantifying how rule‑driven defensive shifts causally alter offensive shot selection and win probability.",
+      "Standardizing a universal definition of shot quality for all professional competitions."
+     ],
+     "answer": "Quantifying how rule‑driven defensive shifts causally alter offensive shot selection and win probability.",
+     "rationale": "This option uniquely integrates causal inference, tracking‑based defense, and incentive‑design implications.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    }
+   ]
+  }
+ ],
+ "code_problems": [],
+ "model": "nvidia/nemotron-3-ultra-550b-a55b",
+ "written_at": "2026-10-24T07:04:49.795Z",
+ "complete": true
+}

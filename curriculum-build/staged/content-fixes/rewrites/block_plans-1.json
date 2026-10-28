@@ -1,0 +1,139 @@
+{
+ "collection": "block_plans",
+ "row_id": 1,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P70",
+   "wrong": "Hook dilemma asks \"Which of these texts is a real, complete sentence?\" but option A is a fragment and option B (\"The buzzer beat us by half a second, we lost.\") is a comma splice, so neither is complete.",
+   "correct": "Exactly one option must be complete: make option B a correct compound sentence (\"..., and we lost.\")."
+  },
+  {
+   "ref": "P71",
+   "wrong": "Error-highlighter marks \"Because\" in \"Because the gym was booked, practice was moved.\" as a fragment starter, but that sentence is a correct complex sentence.",
+   "correct": "Make the first sentence a real fragment (\"Because the gym was booked. Practice was moved.\") so \"Because\" is truly the fragment starter."
+  },
+  {
+   "ref": "P72",
+   "wrong": "Trap card keys \"Complete sentence\" for \"The alarm didn't go off because the power had gone out overnight, we overslept by an hour.\", which is a comma splice.",
+   "correct": "Make the sentence the one its reasoning describes (\"The alarm didn't go off because the power had gone out overnight.\"), which is complete, and make the trap labels match."
+  }
+ ],
+ "edits": [
+  {
+   "path": "blocks[0].data.rightChoice.body",
+   "before": "\"The buzzer beat us by half a second, we lost.\"",
+   "after": "\"The buzzer beat us by half a second, and we lost.\""
+  },
+  {
+   "path": "blocks[0].data.rightChoice.title",
+   "before": "The buzzer beat us by half a second, we lost.",
+   "after": "The buzzer beat us by half a second, and we lost."
+  },
+  {
+   "path": "blocks[6].data.paragraph",
+   "before": "Because the gym was booked, practice was moved. My coach texted the team we all showed up late, the warm-up was rushed.",
+   "after": "Because the gym was booked. Practice was moved. My coach texted the team we all showed up late, the warm-up was rushed."
+  },
+  {
+   "path": "blocks[6].data.tokens[8].text",
+   "before": "booked,",
+   "after": "booked."
+  },
+  {
+   "path": "blocks[6].data.tokens[10].text",
+   "before": "practice",
+   "after": "Practice"
+  },
+  {
+   "path": "blocks[7].data.context",
+   "before": "The alarm didn't go off because the power had gone out overnight, we overslept by an hour.",
+   "after": "The alarm didn't go off because the power had gone out overnight."
+  },
+  {
+   "path": "blocks[7].data.commonErrorLabel",
+   "before": "Trusting 'it has a comma and a subject-verb pair, so it's fine'",
+   "after": "Assuming every sentence with 'because' in it is a fragment"
+  },
+  {
+   "path": "blocks[7].data.trapReasons.0",
+   "before": "Longer and starting with 'because' tricks you into expecting a missing piece.",
+   "after": "The long 'because' clause tricks you into expecting a missing piece."
+  },
+  {
+   "path": "blocks[7].data.trapReasons.3",
+   "before": "There is no comma joining two full clauses — the comma sits inside the dependent clause.",
+   "after": "There is no comma at all, so nothing is splicing two full clauses together."
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[0].data.rightChoice.body",
+   "before": "\"The buzzer beat us by half a second, we lost.\"",
+   "after": "\"The buzzer beat us by half a second, and we lost.\""
+  },
+  {
+   "path": "blocks[0].data.rightChoice.title",
+   "before": "The buzzer beat us by half a second, we lost.",
+   "after": "The buzzer beat us by half a second, and we lost."
+  },
+  {
+   "path": "blocks[6].data.paragraph",
+   "before": "Because the gym was booked, practice was moved. My coach texted the team we all showed up late, the warm-up was rushed.",
+   "after": "Because the gym was booked. Practice was moved. My coach texted the team we all showed up late, the warm-up was rushed."
+  },
+  {
+   "path": "blocks[6].data.tokens[8].text",
+   "before": "booked,",
+   "after": "booked."
+  },
+  {
+   "path": "blocks[6].data.tokens[10].text",
+   "before": "practice",
+   "after": "Practice"
+  },
+  {
+   "path": "blocks[7].data.context",
+   "before": "The alarm didn't go off because the power had gone out overnight, we overslept by an hour.",
+   "after": "The alarm didn't go off because the power had gone out overnight."
+  },
+  {
+   "path": "blocks[7].data.commonErrorLabel",
+   "before": "Trusting 'it has a comma and a subject-verb pair, so it's fine'",
+   "after": "Assuming every sentence with 'because' in it is a fragment"
+  },
+  {
+   "path": "blocks[7].data.trapReasons.0",
+   "before": "Longer and starting with 'because' tricks you into expecting a missing piece.",
+   "after": "The long 'because' clause tricks you into expecting a missing piece."
+  },
+  {
+   "path": "blocks[7].data.trapReasons.3",
+   "before": "There is no comma joining two full clauses — the comma sits inside the dependent clause.",
+   "after": "There is no comma at all, so nothing is splicing two full clauses together."
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "writer copied JSON syntax (keys, quotes, newlines) into its find strings, so 15 of 15 edits matched 0 places",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

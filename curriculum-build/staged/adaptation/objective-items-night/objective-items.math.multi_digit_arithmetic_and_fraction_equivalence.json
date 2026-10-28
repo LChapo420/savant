@@ -1,0 +1,5386 @@
+{
+ "track_id": "math",
+ "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+ "generated_at": "2026-10-26T03:38:11.686Z",
+ "items": [
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L30",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Round 274,581 to the nearest ten thousand.",
+   "choices": [
+    "270,000",
+    "280,000",
+    "274,000",
+    "275,000"
+   ],
+   "answer": "270,000",
+   "rationale": "The thousands digit is 4 (<5), so the ten‑thousands digit stays 7 and all lower places become zero, giving 270,000.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L30",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the rule for rounding 56,789 to the nearest thousand?",
+   "choices": [
+    "If the hundreds digit is 5 or more, increase the thousands digit by one.",
+    "If the tens digit is 5 or more, increase the hundreds digit by one.",
+    "If the thousands digit is 5 or more, increase the ten‑thousands digit by one.",
+    "If the ones digit is 5 or more, increase the tens digit by one."
+   ],
+   "answer": "If the hundreds digit is 5 or more, increase the thousands digit by one.",
+   "rationale": "Rounding to the nearest thousand looks at the hundreds digit; 7 ≥ 5 so the thousands digit 6 becomes 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L30",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Round 999,999 to the nearest hundred thousand.",
+   "choices": [
+    "1,000,000",
+    "900,000",
+    "990,000",
+    "1,100,000"
+   ],
+   "answer": "1,000,000",
+   "rationale": "The ten‑thousands digit is 9 (≥5), so the hundred‑thousands digit 9 rounds up to 10, making 1,000,000.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L52",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "What is 345,678 + 123,456?",
+   "choices": [
+    "469,134",
+    "468,134",
+    "469,234",
+    "469,124"
+   ],
+   "answer": "469,134",
+   "rationale": "Adding each column with regrouping gives 469,134; the other choices reflect common place‑value errors such as missing a thousand, hundred, or ten.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L52",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "What is 500,000 + 499,999?",
+   "choices": [
+    "999,999",
+    "1,000,000",
+    "999,989",
+    "999,899"
+   ],
+   "answer": "999,999",
+   "rationale": "Column addition with regrouping yields 999,999; 1,000,000 results from forgetting to carry the final 1, while the others misplace tens or hundreds.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L52",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "What is 276,543 + 324,457?",
+   "choices": [
+    "601,000",
+    "600,000",
+    "601,100",
+    "600,900"
+   ],
+   "answer": "601,000",
+   "rationale": "The sum is 601,000 after carrying from the hundreds column; 600,000 omits that carry, and the other options add extra hundreds or tens.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L52",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "What is 123,456 + 876,544?",
+   "choices": [
+    "1,000,000",
+    "999,999",
+    "1,000,010",
+    "1,000,100"
+   ],
+   "answer": "1,000,000",
+   "rationale": "Adding each place value with regrouping produces exactly 1,000,000; the distractors show typical off‑by‑one, ten, or hundred mistakes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L62",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "What is 5,000 - 2,376?",
+   "choices": [
+    "2,624",
+    "2,634",
+    "2,724",
+    "2,524"
+   ],
+   "answer": "2,624",
+   "rationale": "Subtracting 2,376 from 5,000 requires regrouping across three zeros; the correct difference is 2,624.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L62",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which addition check confirms that 7,000 - 2,345 = 4,655?",
+   "choices": [
+    "4,655 + 2,345 = 7,000",
+    "4,655 + 2,345 = 6,990",
+    "4,655 + 2,345 = 7,010",
+    "4,655 + 2,345 = 6,980"
+   ],
+   "answer": "4,655 + 2,345 = 7,000",
+   "rationale": "Adding the difference 4,655 to the subtrahend 2,345 must return the minuend 7,000; only the first option does.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L62",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "In the subtraction 6,000 - 1,278, which digit is written in the hundreds place of the difference?",
+   "choices": [
+    "7",
+    "6",
+    "8",
+    "5"
+   ],
+   "answer": "7",
+   "rationale": "6,000 - 1,278 = 4,722; the hundreds digit of 4,722 is 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L62",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Find the missing digit: 9,0_0 - 4,321 = 4,679.",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "0",
+   "rationale": "Adding 4,679 and 4,321 gives 9,000, so the missing tens digit in 9,0_0 is 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L117",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "Which list contains only multiples of 5?",
+   "choices": [
+    "5, 10, 15, 20, 25",
+    "6, 12, 18, 24, 30",
+    "8, 16, 24, 32, 40",
+    "9, 18, 27, 36, 45"
+   ],
+   "answer": "5, 10, 15, 20, 25",
+   "rationale": "Multiples of 5 end in 0 or 5, so 5, 10, 15, 20, and 25 are all multiples of 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L117",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "Is 4,725 divisible by 3? Explain using the digit-sum rule.",
+   "choices": [
+    "Yes; 4+7+2+5=18, which is divisible by 3.",
+    "No; 4+7+2+5=18, which is divisible by 5.",
+    "Yes; a last digit of 5 makes it divisible by 3.",
+    "No; divisibility by 3 depends on the last digit."
+   ],
+   "answer": "Yes; 4+7+2+5=18, which is divisible by 3.",
+   "rationale": "The digit sum is 4+7+2+5=18. Because 18 is divisible by 3, 4,725 is divisible by 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L117",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "Which number is a multiple of 9?",
+   "choices": [
+    "4,281",
+    "4,284",
+    "4,286",
+    "4,288"
+   ],
+   "answer": "4,284",
+   "rationale": "The digit sum of 4,284 is 4+2+8+4=18. Since 18 is divisible by 9, 4,284 is a multiple of 9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L117",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "Which number is divisible by both 2 and 10?",
+   "choices": [
+    "12,340",
+    "12,342",
+    "12,345",
+    "12,351"
+   ],
+   "answer": "12,340",
+   "rationale": "12,340 ends in 0, so it is divisible by 10. It is also even, so it is divisible by 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L75",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Estimate the sum of 4,567 + 3,289 by rounding each number to the nearest hundred.",
+   "choices": [
+    "7,800",
+    "7,900",
+    "8,000",
+    "8,100"
+   ],
+   "answer": "7,900",
+   "rationale": "Rounding 4,567 to 4,600 and 3,289 to 3,300 gives 4,600 + 3,300 = 7,900.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L75",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Estimate the difference 9,432 − 4,768 by rounding each number to the nearest thousand.",
+   "choices": [
+    "3,000",
+    "4,000",
+    "5,000",
+    "6,000"
+   ],
+   "answer": "4,000",
+   "rationale": "9,432 rounds to 9,000 and 4,768 rounds to 5,000; 9,000 − 5,000 = 4,000.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L75",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "The exact sum of 12,345 + 6,789 is 19,134. Using rounding to the nearest thousand, is this answer reasonable?",
+   "choices": [
+    "Yes, the estimate 19,000 is close to 19,134.",
+    "No, the estimate 18,000 is far from 19,134.",
+    "Yes, the estimate 20,000 matches 19,134.",
+    "No, the estimate 19,500 is not close."
+   ],
+   "answer": "Yes, the estimate 19,000 is close to 19,134.",
+   "rationale": "Rounding 12,345 to 12,000 and 6,789 to 7,000 gives an estimate of 19,000, which is very close to the exact sum 19,134, so the answer is reasonable.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L75",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Estimate 2,345 + 1,678 by rounding each addend to the nearest hundred.",
+   "choices": [
+    "3,900",
+    "4,000",
+    "4,100",
+    "4,200"
+   ],
+   "answer": "4,000",
+   "rationale": "2,345 rounds to 2,300 and 1,678 rounds to 1,700; 2,300 + 1,700 = 4,000.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L85",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Maria has 3 times as many stickers as Luis. If Luis has 7 stickers, how many stickers does Maria have?",
+   "choices": [
+    "10",
+    "21",
+    "24",
+    "28"
+   ],
+   "answer": "21",
+   "rationale": "Multiplicative comparison means multiplying: 3 × 7 = 21. The other options come from adding (7+3), multiplying by 4, or multiplying by 4 incorrectly.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L85",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "A garden has 5 rows of flowers. Each row has 4 times as many tulips as daisies. If there are 6 daisies in a row, how many tulips are in that row?",
+   "choices": [
+    "10",
+    "20",
+    "24",
+    "30"
+   ],
+   "answer": "24",
+   "rationale": "The comparison is per row: 4 × 6 = 24 tulips. 10 adds 4, 20 multiplies rows by 4, and 30 multiplies rows by daisies.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L85",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Jake read 12 pages on Monday. On Tuesday he read 3 times as many pages as Monday. How many pages did he read on Tuesday?",
+   "choices": [
+    "15",
+    "36",
+    "39",
+    "48"
+   ],
+   "answer": "36",
+   "rationale": "Multiplicative comparison: 3 × 12 = 36 pages. 15 adds 3, 39 adds 27, and 48 uses 4 times instead of 3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L95",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Maria has 36 stickers. She gives 9 to her brother and then buys 5 packs of 4 stickers each. Let s be the final number of stickers. Which equation represents the situation?",
+   "choices": [
+    "s = 36 - 9 + 5 × 4",
+    "s = 36 - (9 + 5) × 4",
+    "s = (36 - 9) × 5 + 4",
+    "s = 36 - 9 × 5 + 4"
+   ],
+   "answer": "s = 36 - 9 + 5 × 4",
+   "rationale": "The problem starts with 36 stickers, subtract 9 given away, then add 5 packs of 4 stickers (5 × 4). The equation s = 36 - 9 + 5 × 4 follows the order of operations and matches the steps.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L95",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "A baker made 84 cookies. He packed them into boxes of 7 cookies each. Then he sold 4 boxes. Let c be the number of cookies left. Which equation models this?",
+   "choices": [
+    "c = (84 ÷ 7 - 4) × 7",
+    "c = 84 ÷ (7 - 4) × 7",
+    "c = (84 - 4) ÷ 7 × 7",
+    "c = 84 ÷ 7 - 4 × 7"
+   ],
+   "answer": "c = (84 ÷ 7 - 4) × 7",
+   "rationale": "First divide 84 cookies into boxes of 7 (84 ÷ 7 = 12 boxes). Then subtract 4 sold boxes (12 - 4 = 8 boxes left). Finally multiply by 7 cookies per box (8 × 7 = 56). The equation c = (84 ÷ 7 - 4) × 7 captures these steps.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L95",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "A gardener plants 6 rows of 8 flowers each. Then he plants 3 more rows of 8 flowers each. Let f be the total flowers. Which equation shows the total?",
+   "choices": [
+    "f = (6 + 3) × 8",
+    "f = 6 × 8 + 3",
+    "f = 6 + 3 × 8",
+    "f = 6 × (8 + 3)"
+   ],
+   "answer": "f = (6 + 3) × 8",
+   "rationale": "The gardener plants 6 rows and then 3 more rows, each with 8 flowers. Total rows = 6 + 3 = 9. Total flowers = 9 × 8. The equation f = (6 + 3) × 8 represents this.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L95",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "A library has 150 books. 30 books are checked out. The rest are placed equally on 5 shelves. Let b be the books per shelf. Which equation represents this?",
+   "choices": [
+    "b = (150 - 30) ÷ 5",
+    "b = 150 - 30 ÷ 5",
+    "b = 150 ÷ 5 - 30",
+    "b = (150 - 5) ÷ 30"
+   ],
+   "answer": "b = (150 - 30) ÷ 5",
+   "rationale": "Start with 150 books, subtract 30 checked out (150 - 30 = 120). Then divide the remaining equally among 5 shelves (120 ÷ 5 = 24). The equation b = (150 - 30) ÷ 5 models this.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L169",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "What is 23 × 100?",
+   "choices": [
+    "2,300",
+    "230",
+    "23,000",
+    "2,3000"
+   ],
+   "answer": "2,300",
+   "rationale": "Multiplying by 100 shifts the digits two places left, adding two zeros, giving 2,300.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L169",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Find the product of 47 and 1,000.",
+   "choices": [
+    "47,000",
+    "4,700",
+    "470,000",
+    "4,7000"
+   ],
+   "answer": "47,000",
+   "rationale": "Multiplying by 1,000 moves the digits three places left and appends three zeros, resulting in 47,000.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L169",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Which number multiplied by 10 equals 560?",
+   "choices": [
+    "56",
+    "560",
+    "5.6",
+    "5600"
+   ],
+   "answer": "56",
+   "rationale": "Dividing 560 by 10 (or shifting digits one place right) gives 56, so 56 × 10 = 560.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L169",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Which description matches multiplying a whole number by 100?",
+   "choices": [
+    "Digits move two places left and two zeros are added",
+    "Digits move one place left and one zero is added",
+    "Digits stay the same and two zeros are added",
+    "Digits move two places right and two zeros are removed"
+   ],
+   "answer": "Digits move two places left and two zeros are added",
+   "rationale": "Multiplying by 100 shifts each digit two places to the left, which is equivalent to appending two zeros.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L159",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "To find 23 × 6, a learner first finds 20 × 6 and 3 × 6, then adds. What is 23 × 6?",
+   "choices": [
+    "69",
+    "126",
+    "138",
+    "150"
+   ],
+   "answer": "138",
+   "rationale": "The simpler products are 120 and 18. Adding them gives 138.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L159",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "To find 156 ÷ 12, a learner first finds 120 ÷ 12 and 36 ÷ 12, then adds. What is 156 ÷ 12?",
+   "choices": [
+    "11",
+    "12",
+    "13",
+    "14"
+   ],
+   "answer": "13",
+   "rationale": "The simpler quotients are 10 and 3. Their sum is 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L159",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "To find 2 + 4 + 6 + 8 + 10 + 12 + 14 + 16 + 18 + 20, a learner pairs the first and last numbers. Each pair totals 22. What is the sum?",
+   "choices": [
+    "100",
+    "108",
+    "110",
+    "120"
+   ],
+   "answer": "110",
+   "rationale": "There are five pairs, each totaling 22. Thus, 5 × 22 = 110.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L191",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "An area model for 27 × 6 splits 27 into 20 and 7. What are the two partial products?",
+   "choices": [
+    "20×6 = 120 and 7×6 = 42",
+    "20×6 = 120 and 7×6 = 35",
+    "20×6 = 100 and 7×6 = 42",
+    "20×6 = 120 and 7×6 = 48"
+   ],
+   "answer": "20×6 = 120 and 7×6 = 42",
+   "rationale": "The area model separates 27 into 20 and 7. Multiplying each part by 6 gives 20×6 = 120 and 7×6 = 42, which are the partial products that sum to 162.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L191",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "For 34 × 12, the area model breaks 34 into 30+4 and 12 into 10+2. Which expression shows the sum of all four partial products?",
+   "choices": [
+    "(30×10)+(30×2)+(4×10)+(4×2)",
+    "(30×10)+(30×2)+(4×10)+(4×1)",
+    "(30×10)+(30×1)+(4×10)+(4×2)",
+    "(30×10)+(30×2)+(4×1)+(4×2)"
+   ],
+   "answer": "(30×10)+(30×2)+(4×10)+(4×2)",
+   "rationale": "The distributive property requires multiplying each part of the first factor by each part of the second: 30×10, 30×2, 4×10, and 4×2. Only the first option includes all four correct products.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L191",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "A student writes 56 × 8 = (50×8) + (6×8). Which property of multiplication does this demonstrate?",
+   "choices": [
+    "Distributive property",
+    "Associative property",
+    "Commutative property",
+    "Identity property"
+   ],
+   "answer": "Distributive property",
+   "rationale": "Breaking 56 into 50 and 6 and multiplying each by 8 before adding is the definition of the distributive property: a×(b+c) = a×b + a×c.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L191",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "In an area model for 48 × 5, one rectangle shows 40×5 = 200. What partial product does the other rectangle show?",
+   "choices": [
+    "8×5 = 40",
+    "5×8 = 45",
+    "48×5 = 240",
+    "40×5 = 200"
+   ],
+   "answer": "8×5 = 40",
+   "rationale": "The model splits 48 into 40 and 8. The first rectangle represents 40×5. The remaining part is 8×5, which equals 40. The other options either give an incorrect product, the total product, or repeat the known rectangle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L20",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which standard form matches the word form \"seven thousand three hundred forty-two\"?",
+   "choices": [
+    "7,342",
+    "7,432",
+    "7,243",
+    "7,324"
+   ],
+   "answer": "7,342",
+   "rationale": "The word form translates directly to 7 thousands, 3 hundreds, 4 tens, and 2 ones, which is 7,342.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L20",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "What is the standard form of the expanded expression 5,000 + 600 + 30 + 8?",
+   "choices": [
+    "5,683",
+    "5,638",
+    "5,368",
+    "5,836"
+   ],
+   "answer": "5,638",
+   "rationale": "Adding the place‑value parts gives 5,000 + 600 = 5,600; 5,600 + 30 = 5,630; 5,630 + 8 = 5,638.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L20",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which inequality correctly compares 4,215 and 4,152?",
+   "choices": [
+    "4,215 < 4,152",
+    "4,215 > 4,152",
+    "4,215 = 4,152",
+    "4,215 < 4,251"
+   ],
+   "answer": "4,215 > 4,152",
+   "rationale": "Both numbers have 4 thousands; the hundreds digit 2 is greater than 1, so 4,215 is greater than 4,152.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L20",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Write 9,076 in word form.",
+   "choices": [
+    "nine thousand seventy-six",
+    "nine thousand seven hundred six",
+    "nine thousand sixty-seven",
+    "nine thousand six hundred seventy"
+   ],
+   "answer": "nine thousand seventy-six",
+   "rationale": "9,076 has 9 thousands, 0 hundreds, 7 tens, and 6 ones, read as \"nine thousand seventy-six\".",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L278",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "What is the quotient and remainder when 47 is divided by 5?",
+   "choices": [
+    "9 R2",
+    "9 R3",
+    "8 R7",
+    "10 R-3"
+   ],
+   "answer": "9 R2",
+   "rationale": "47 divided by 5 gives 9 groups of 5 (45) with 2 left over; the remainder 2 is less than the divisor 5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L278",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "A teacher has 63 markers and wants to put them into boxes of 8. How many full boxes and how many markers are left over?",
+   "choices": [
+    "7 boxes, 7 left",
+    "7 boxes, 8 left",
+    "8 boxes, -1 left",
+    "6 boxes, 15 left"
+   ],
+   "answer": "7 boxes, 7 left",
+   "rationale": "8 × 7 = 56, and 63 − 56 = 7 markers remain; the remainder 7 is less than the divisor 8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L278",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "When dividing 29 by 6, which statement about the remainder is true?",
+   "choices": [
+    "The remainder is 5, which is less than 6.",
+    "The remainder is 6, which equals the divisor.",
+    "The remainder is 7, which is greater than 6.",
+    "The remainder is -1, which is negative."
+   ],
+   "answer": "The remainder is 5, which is less than 6.",
+   "rationale": "29 = 6 × 4 + 5, so the remainder is 5, and it is always less than the divisor 6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L278",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "When dividing by 9, which remainder cannot occur?",
+   "choices": [
+    "8",
+    "9",
+    "7",
+    "0"
+   ],
+   "answer": "9",
+   "rationale": "A remainder must be strictly less than the divisor; therefore a remainder of 9 is impossible when dividing by 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L214",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 214,
+   "format": "multiple_choice",
+   "prompt": "When multiplying 234 × 6 using the standard algorithm, what are the three partial products before adding?",
+   "choices": [
+    "24, 180, 1200",
+    "24, 180, 120",
+    "24, 18, 1200",
+    "24, 180, 12"
+   ],
+   "answer": "24, 180, 1200",
+   "rationale": "6×4=24 (ones), 6×30=180 (tens), 6×200=1200 (hundreds); these are the three partial products.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L214",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 214,
+   "format": "multiple_choice",
+   "prompt": "In the work for 317 × 5, the student wrote 1555. Where is the first mistake?",
+   "choices": [
+    "Writing the wrong ones digit",
+    "Forgetting to add the carry when multiplying the tens digit",
+    "Multiplying the hundreds digit incorrectly",
+    "Placing the final digits in wrong order"
+   ],
+   "answer": "Forgetting to add the carry when multiplying the tens digit",
+   "rationale": "5×7=35 (write 5, carry 3); 5×1=5+3=8, but the student wrote 5, so the first error is not adding the carry in the tens step.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L214",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 214,
+   "format": "multiple_choice",
+   "prompt": "The partial products for 2,341 × 6 are 6, 240, 1,800, and 12,000. What is the final product?",
+   "choices": [
+    "14,040",
+    "14,036",
+    "14,056",
+    "14,046"
+   ],
+   "answer": "14,046",
+   "rationale": "Adding the partial products: 6+240+1,800+12,000 = 14,046.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L234",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Using the standard algorithm, multiply 27 × 34. What is the product?",
+   "choices": [
+    "918",
+    "928",
+    "938",
+    "948"
+   ],
+   "answer": "918",
+   "rationale": "27 × 34 = (20+7)×(30+4) = 600+80+210+28 = 918, which is the sum of the four partial products in the standard algorithm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L234",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "In the standard algorithm for 58 × 27, the partial product from multiplying the ones digits (58 × 7) is ___.",
+   "choices": [
+    "406",
+    "416",
+    "426",
+    "396"
+   ],
+   "answer": "406",
+   "rationale": "58 × 7 = 406; this is the first partial product written under the line in the standard algorithm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L234",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "When adding the four partial products for 39 × 64, the final sum is ___.",
+   "choices": [
+    "2496",
+    "2396",
+    "2596",
+    "2486"
+   ],
+   "answer": "2496",
+   "rationale": "39 × 64 = (30+9)×(60+4) = 1800+120+540+36 = 2496, the sum of the four partial products.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L298",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "Mina packs 5 apples into each bag. She has 23 apples and wants as many completely filled bags as possible. How many bags can she fill completely?",
+   "choices": [
+    "4 bags",
+    "5 bags",
+    "3 bags",
+    "4 bags with 3 left"
+   ],
+   "answer": "4 bags",
+   "rationale": "Four bags hold 20 apples. The remaining 3 apples are not enough to fill another bag, so the remainder is dropped.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L298",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "Each bus can carry up to 30 students. There are 76 students, and every student needs a seat. What is the least number of buses needed?",
+   "choices": [
+    "2 buses",
+    "3 buses",
+    "4 buses",
+    "2 buses with room"
+   ],
+   "answer": "3 buses",
+   "rationale": "Two buses hold only 60 students, so 3 buses are required. The remainder is used to determine that another bus is needed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L298",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "Cookies come in packages of 8. After filling 5 boxes with 8 cookies each, 6 cookies remain. How many cookies are there altogether?",
+   "choices": [
+    "40 cookies",
+    "43 cookies",
+    "46 cookies",
+    "50 cookies"
+   ],
+   "answer": "46 cookies",
+   "rationale": "The 5 full boxes contain 40 cookies. Adding the remainder of 6 gives 46 cookies altogether.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L298",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "There are 29 marbles shared equally among 4 children. How many marbles does each child get, and how many are left over?",
+   "choices": [
+    "7 each and 1 left",
+    "8 each and none left",
+    "7 each and 2 left",
+    "6 each and 5 left"
+   ],
+   "answer": "7 each and 1 left",
+   "rationale": "Dividing 29 by 4 gives 7 marbles for each child with a remainder of 1 marble. The remainder must be included in the answer.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L320",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 320,
+   "format": "multiple_choice",
+   "prompt": "What is 23 × 7?",
+   "choices": [
+    "161",
+    "151",
+    "171",
+    "141"
+   ],
+   "answer": "161",
+   "rationale": "23 × 7 = (20 × 7) + (3 × 7) = 140 + 21 = 161.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L320",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 320,
+   "format": "multiple_choice",
+   "prompt": "What is 144 ÷ 12?",
+   "choices": [
+    "12",
+    "11",
+    "13",
+    "10"
+   ],
+   "answer": "12",
+   "rationale": "144 ÷ 12 = 12 because 12 × 12 = 144.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L320",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 320,
+   "format": "multiple_choice",
+   "prompt": "Which expression equals 36 × 5?",
+   "choices": [
+    "180",
+    "170",
+    "190",
+    "160"
+   ],
+   "answer": "180",
+   "rationale": "36 × 5 = (30 × 5) + (6 × 5) = 150 + 30 = 180.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L320",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "place_value",
+   "level": 320,
+   "format": "multiple_choice",
+   "prompt": "A student solves 64 × 6 by calculating (60 × 6) + (4 × 6). Which strategy is this?",
+   "choices": [
+    "Use the distributive property",
+    "Use the standard algorithm",
+    "Use the lattice method",
+    "Use repeated addition"
+   ],
+   "answer": "Use the distributive property",
+   "rationale": "Breaking 64 into 60 + 4 and multiplying each part by 6 applies the distributive property.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L330",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 330,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is divided into 3 equal vertical strips; 2 strips are shaded. Each strip is then cut into 4 equal smaller strips. How many of the 12 smaller strips are shaded?",
+   "choices": [
+    "6",
+    "8",
+    "9",
+    "10"
+   ],
+   "answer": "8",
+   "rationale": "The original 2 out of 3 strips are each split into 4 pieces, giving 2 × 4 = 8 shaded pieces out of the total 3 × 4 = 12 pieces.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L330",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 330,
+   "format": "multiple_choice",
+   "prompt": "On a number line from 0 to 1, the point at 2/3 is marked. The segment between 0 and 1 is first split into 3 equal parts, then each part is split into 4 equal sub‑parts. Which fraction labels the same point?",
+   "choices": [
+    "6/12",
+    "8/12",
+    "9/12",
+    "10/12"
+   ],
+   "answer": "8/12",
+   "rationale": "Dividing each third into 4 creates 12 equal sub‑segments; the point at 2/3 lies after 2 × 4 = 8 of those sub‑segments, so it is 8/12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L330",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 330,
+   "format": "multiple_choice",
+   "prompt": "A circle is divided into 3 equal sectors; 2 sectors are shaded. Each sector is further divided into 4 equal pieces. What fraction of the whole circle is now shaded?",
+   "choices": [
+    "6/12",
+    "8/12",
+    "9/12",
+    "10/12"
+   ],
+   "answer": "8/12",
+   "rationale": "Each of the 2 shaded sectors is cut into 4 pieces, giving 2 × 4 = 8 shaded pieces out of the total 3 × 4 = 12 pieces, which is 8/12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L256",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 256,
+   "format": "multiple_choice",
+   "prompt": "What is 360 ÷ 9?",
+   "choices": [
+    "40",
+    "30",
+    "45",
+    "50"
+   ],
+   "answer": "40",
+   "rationale": "9 × 40 = 360; using place value, 360 ÷ 9 = 40.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L256",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 256,
+   "format": "multiple_choice",
+   "prompt": "What is 300 ÷ 6?",
+   "choices": [
+    "50",
+    "55",
+    "45",
+    "40"
+   ],
+   "answer": "50",
+   "rationale": "6 × 50 = 300; the quotient of a multiple of 100 divided by 6 is 50.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L256",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 256,
+   "format": "multiple_choice",
+   "prompt": "What is 480 ÷ 6?",
+   "choices": [
+    "80",
+    "70",
+    "90",
+    "60"
+   ],
+   "answer": "80",
+   "rationale": "6 × 80 = 480; applying basic facts and place‑value reasoning gives 80.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L256",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 256,
+   "format": "multiple_choice",
+   "prompt": "What is 1,200 ÷ 4?",
+   "choices": [
+    "300",
+    "200",
+    "400",
+    "500"
+   ],
+   "answer": "300",
+   "rationale": "4 × 300 = 1,200; dividing the multiple of 100 by 4 yields 300.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L201",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Maya multiplies 34 × 26 by adding partial products. Jonah uses the box method. Which statement correctly compares their results?",
+   "choices": [
+    "Both methods find 884.",
+    "Both methods find 846.",
+    "Only partial products find 884.",
+    "Only the box method finds 884."
+   ],
+   "answer": "Both methods find 884.",
+   "rationale": "Both methods correctly calculate 34 × 26 as 884 because they represent the same place-value multiplication.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L201",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Why do lattice, box, and partial-products methods all give the same product for 23 × 45?",
+   "choices": [
+    "Each method uses place value to combine equal groups.",
+    "Each method rounds both factors to the nearest ten.",
+    "Each method splits one factor and adds only tens.",
+    "Each method multiplies digits without regrouping."
+   ],
+   "answer": "Each method uses place value to combine equal groups.",
+   "rationale": "All three methods break the multiplication into place-value parts and then combine the same partial products.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L201",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Which multiplication method is usually easiest to use mentally when multiplying a three-digit number by a one-digit number?",
+   "choices": [
+    "The partial-products method",
+    "The lattice method",
+    "The box method",
+    "The repeated-addition method"
+   ],
+   "answer": "The partial-products method",
+   "rationale": "Partial products are usually practical for mental multiplication because each smaller product can be calculated and added step by step.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L201",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "A learner writes 20 × 13 + 4 × 13 = 260 + 52 for 24 × 13. A box method gives 312. What should the learner conclude?",
+   "choices": [
+    "The partial-product sum is correct: 260 + 52 = 312.",
+    "The box method omitted the product of 4 and 13.",
+    "The product should be rounded to 300.",
+    "The partial products belong to a different number."
+   ],
+   "answer": "The partial-product sum is correct: 260 + 52 = 312.",
+   "rationale": "The partial products 260 and 52 add to 312, so the two methods agree and 24 × 13 = 312.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L181",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 181,
+   "format": "multiple_choice",
+   "prompt": "When multiplying 4,506 by 3 using an area model, what is the sum of all partial products?",
+   "choices": [
+    "13,518",
+    "12,518",
+    "13,508",
+    "12,508"
+   ],
+   "answer": "13,518",
+   "rationale": "The total product of 4,506 × 3 is 13,518. In an area model, the sum of the partial products equals the final product.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L181",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 181,
+   "format": "multiple_choice",
+   "prompt": "Which expression shows the correct decomposition of 2,379 for an area model multiplied by 5?",
+   "choices": [
+    "2,000 + 300 + 70 + 9",
+    "2,000 + 30 + 7 + 9",
+    "200 + 30 + 7 + 9",
+    "2,000 + 300 + 7 + 9"
+   ],
+   "answer": "2,000 + 300 + 70 + 9",
+   "rationale": "An area model breaks a number into its place-value parts: thousands, hundreds, tens, and ones. For 2,379 that is 2,000 + 300 + 70 + 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L181",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 181,
+   "format": "multiple_choice",
+   "prompt": "In the area model for 1,204 × 6, the partial product for the tens place is missing. What is that partial product?",
+   "choices": [
+    "0 × 6 = 0",
+    "4 × 6 = 24",
+    "200 × 6 = 1,200",
+    "1,000 × 6 = 6,000"
+   ],
+   "answer": "0 × 6 = 0",
+   "rationale": "The tens digit of 1,204 is 0, so the tens place contributes 0 × 6 = 0 to the area model.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L385",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 385,
+   "format": "multiple_choice",
+   "prompt": "What is 2/5 + 1/5?",
+   "choices": [
+    "3/5",
+    "3/10",
+    "2/5",
+    "1/5"
+   ],
+   "answer": "3/5",
+   "rationale": "Fractions with the same denominator keep the denominator and add the numerators: 2 + 1 = 3, so 2/5 + 1/5 = 3/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L385",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 385,
+   "format": "multiple_choice",
+   "prompt": "On a number line, start at 0. Move 3/8 unit right, then 2/8 unit more. Which point do you reach?",
+   "choices": [
+    "5/16",
+    "3/8",
+    "5/8",
+    "6/8"
+   ],
+   "answer": "5/8",
+   "rationale": "The two moves add to 3/8 + 2/8 = 5/8, so the final point is 5/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L385",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 385,
+   "format": "multiple_choice",
+   "prompt": "A pizza is cut into 8 equal slices. Ana eats 4 slices at lunch and 3 slices at dinner. What fraction of the whole pizza does she eat?",
+   "choices": [
+    "6/8",
+    "7/8",
+    "7/16",
+    "4/8"
+   ],
+   "answer": "7/8",
+   "rationale": "The 4 eaten slices and 3 eaten slices make 7 of the 8 equal slices, so Ana eats 7/8 of the pizza.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L385",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 385,
+   "format": "multiple_choice",
+   "prompt": "Which fraction completes the equation 4/9 + □/9 = 1?",
+   "choices": [
+    "5/9",
+    "13/9",
+    "4/9",
+    "5/18"
+   ],
+   "answer": "5/9",
+   "rationale": "The missing numerator must make 9, and 4 + 5 = 9, so the missing fraction is 5/9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L127",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "data_stats",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "On a sieve chart up to 100, the number 1 is marked as:",
+   "choices": [
+    "Prime",
+    "Composite",
+    "Neither",
+    "Both"
+   ],
+   "answer": "Neither",
+   "rationale": "1 has only one factor, so it is neither prime nor composite.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "1 is neither prime nor composite.",
+      "url": "https://en.wikipedia.org/wiki/Prime",
+      "quote": "1 is not prime, as it is specifically excluded in the definition.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The number 1 is neither prime nor composite.",
+      "url": "https://en.wikipedia.org/wiki/Composite_number",
+      "quote": "Every positive integer is composite, prime , or the unit 1, so the composite numbers are exactly the natural numbers that are not prime and not a unit.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L437",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 437,
+   "format": "multiple_choice",
+   "prompt": "How many copies of 1/5 are needed to show 3 × 2/5 using repeated addition?",
+   "choices": [
+    "2 copies",
+    "3 copies",
+    "5 copies",
+    "6 copies"
+   ],
+   "answer": "6 copies",
+   "rationale": "Since 2/5 equals 2 copies of 1/5, multiplying by 3 gives 3 × 2 = 6 copies of 1/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L437",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 437,
+   "format": "multiple_choice",
+   "prompt": "On a number line, a student starts at 0 and makes six jumps of 1/5 to the right. Which point is reached?",
+   "choices": [
+    "1/5",
+    "5/6",
+    "6/5",
+    "5/5"
+   ],
+   "answer": "6/5",
+   "rationale": "Six jumps of 1/5 move a total distance of 6 × 1/5 = 6/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L437",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 437,
+   "format": "multiple_choice",
+   "prompt": "Which equation uses repeated addition to show 4 × 3/7?",
+   "choices": [
+    "1/7 + 1/7 + 1/7 + 1/7 = 4/7",
+    "3/7 + 3/7 + 3/7 = 9/7",
+    "3/7 + 3/7 + 3/7 + 3/7 = 12/7",
+    "3/7 + 3/7 + 3/7 + 3/7 + 3/7 = 15/7"
+   ],
+   "answer": "3/7 + 3/7 + 3/7 + 3/7 = 12/7",
+   "rationale": "Multiplying 3/7 by 4 means adding four copies of 3/7, which totals 12/7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L437",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 437,
+   "format": "multiple_choice",
+   "prompt": "A student starts at 0 on a number line and jumps 1/8 to the right each time. Which numbered jump lands at 3/2?",
+   "choices": [
+    "the 10th jump",
+    "the 11th jump",
+    "the 12th jump",
+    "the 16th jump"
+   ],
+   "answer": "the 12th jump",
+   "rationale": "There are 12 jumps of 1/8 because 12 × 1/8 = 12/8 = 3/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L395",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 395,
+   "format": "multiple_choice",
+   "prompt": "On a number line marked in eighths from 0 to 1, start at 5/8 and move back 2/8. Where do you land?",
+   "choices": [
+    "3/8",
+    "7/8",
+    "1/2",
+    "1/4"
+   ],
+   "answer": "3/8",
+   "rationale": "Subtract the numerators (5‑2=3) while keeping the denominator 8, so the result is 3/8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L395",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 395,
+   "format": "multiple_choice",
+   "prompt": "What is 7/12 minus 4/12?",
+   "choices": [
+    "3/12",
+    "9/12",
+    "5/12",
+    "1/12"
+   ],
+   "answer": "3/12",
+   "rationale": "With like denominators, subtract the numerators: 7‑4 = 3, giving 3/12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L395",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 395,
+   "format": "multiple_choice",
+   "prompt": "The distance between 9/12 and 5/12 on a number line is?",
+   "choices": [
+    "4/12",
+    "8/12",
+    "2/12",
+    "6/12"
+   ],
+   "answer": "4/12",
+   "rationale": "Distance equals the difference of the numerators: 9‑5 = 4, so 4/12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L310",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 310,
+   "format": "multiple_choice",
+   "prompt": "A farmer has 124 apples. He packs them into boxes of 8. He gives 3 boxes to a friend. How many apples does he have left? Use estimation to check.",
+   "choices": [
+    "100",
+    "96",
+    "104",
+    "108"
+   ],
+   "answer": "100",
+   "rationale": "124÷8 = 15 R4 → 15 boxes (120 apples) + 4 leftover. Giving away 3 boxes = 24 apples. 124−24 = 100 apples left. Estimation: 120÷8 = 15 boxes; 12 boxes×8 = 96 ≈ 100.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L310",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "word_problems",
+   "level": 310,
+   "format": "multiple_choice",
+   "prompt": "A school has 237 students. They are placed into teams of 6. After forming as many full teams as possible, the remaining students form a smaller group. How many students are in the smaller group? Estimate to verify.",
+   "choices": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "answer": "3",
+   "rationale": "237÷6 = 39 R3. The smaller group consists of the 3 remainder students. Estimation: 240÷6 = 40, so remainder must be small (3).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L149",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 149,
+   "format": "multiple_choice",
+   "prompt": "Starting a factor tree for 84 with 7 × 12 or 6 × 14 yields the same prime factors. Which list is correct?",
+   "choices": [
+    "2, 2, 3, 7",
+    "2, 3, 14, 1",
+    "3, 4, 7, 1",
+    "2, 6, 7, 1"
+   ],
+   "answer": "2, 2, 3, 7",
+   "rationale": "84 = 2 × 2 × 3 × 7. Whether you start with 7×12 or 6×14, the prime factors are always two 2s, one 3, and one 7. The other lists include composites (14, 4, 6) or extra 1s.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L149",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 149,
+   "format": "multiple_choice",
+   "prompt": "A factor tree for 100 starts with 10 × 10. Which list gives the prime factors found when both branches are fully factored?",
+   "choices": [
+    "2, 2, 5, 5",
+    "2, 2, 5, 10",
+    "2, 4, 5, 5",
+    "2, 5, 5, 10"
+   ],
+   "answer": "2, 2, 5, 5",
+   "rationale": "Each 10 factors into 2 × 5, so the two branches produce 2, 2, 5, and 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L137",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "The rule is \"add 4\" starting at 3. What is the 6th number in the pattern?",
+   "choices": [
+    "23",
+    "21",
+    "27",
+    "19"
+   ],
+   "answer": "23",
+   "rationale": "The 6th term equals the first term plus five additions of 4: 3 + 5×4 = 23.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L137",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A pattern follows the rule “add 3” starting at 2. Which statement about the pattern is true but was not given in the rule?",
+   "choices": [
+    "All terms are multiples of 3",
+    "The terms alternate between even and odd",
+    "Every term is a prime number",
+    "The terms increase by 2 each time"
+   ],
+   "answer": "The terms alternate between even and odd",
+   "rationale": "Adding 3 changes the parity each step, so the terms alternate even, odd, even, odd… a feature not stated in the rule.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L137",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "add_sub",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A pattern starts at 7 and follows the rule 'add 8'. What is the first term in the pattern that is greater than 50?",
+   "choices": [
+    "63",
+    "47",
+    "55",
+    "39"
+   ],
+   "answer": "55",
+   "rationale": "Starting at 7 and adding 8 gives the sequence 7, 15, 23, 31, 39, 47, 55. The first term greater than 50 is 55.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L524",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "data_stats",
+   "level": 524,
+   "format": "multiple_choice",
+   "prompt": "A line plot shows the lengths of 6 pencils: 1/4 in. (2 pencils), 3/8 in. (1 pencil), 1/2 in. (2 pencils), 5/8 in. (1 pencil). What is the total length of all pencils?",
+   "choices": [
+    "2 1/2 in",
+    "2 3/8 in",
+    "2 5/8 in",
+    "3 in"
+   ],
+   "answer": "2 1/2 in",
+   "rationale": "The total length is 2*(1/4) + 1*(3/8) + 2*(1/2) + 1*(5/8) = 1/2 + 3/8 + 1 + 5/8 = 20/8 = 2 1/2 inches.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L524",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "data_stats",
+   "level": 524,
+   "format": "multiple_choice",
+   "prompt": "A line plot displays the number of students who read for each fraction of an hour: 1/4 hr (3 students), 3/8 hr (2 students), 1/2 hr (4 students), 5/8 hr (1 student). How many more total hours did the 1/2-hour readers read than the 1/4-hour readers?",
+   "choices": [
+    "1 1/4 hr",
+    "1 1/2 hr",
+    "1 3/4 hr",
+    "2 hr"
+   ],
+   "answer": "1 1/4 hr",
+   "rationale": "Total hours for 1/2-hour readers = 4 * 1/2 = 2 hr. Total for 1/4-hour readers = 3 * 1/4 = 3/4 hr. Difference = 2 - 3/4 = 1 1/4 hr.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L524",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "data_stats",
+   "level": 524,
+   "format": "multiple_choice",
+   "prompt": "A line plot shows the weights of 5 bags of flour in pounds: 1/8 (1 bag), 1/4 (2 bags), 3/8 (1 bag), 1/2 (1 bag). If you combine the two lightest bags, what is their total weight?",
+   "choices": [
+    "3/8 lb",
+    "1/2 lb",
+    "5/8 lb",
+    "3/4 lb"
+   ],
+   "answer": "3/8 lb",
+   "rationale": "The two lightest individual bags are 1/8 lb and 1/4 lb. Their sum is 1/8 + 2/8 = 3/8 lb.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L534",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 534,
+   "format": "multiple_choice",
+   "prompt": "A plant's height was recorded each week for five weeks: Week 1 = 3 cm, Week 2 = 5 cm, Week 3 = 5 cm, Week 4 = 8 cm, Week 5 = 10 cm. Between which two consecutive weeks did the height stay the same?",
+   "choices": [
+    "Week 1 to Week 2",
+    "Week 2 to Week 3",
+    "Week 3 to Week 4",
+    "Week 4 to Week 5"
+   ],
+   "answer": "Week 2 to Week 3",
+   "rationale": "The height is 5 cm in both Week 2 and Week 3, so it does not change between those weeks. All other consecutive weeks show a change.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L534",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 534,
+   "format": "multiple_choice",
+   "prompt": "A plant's height was recorded each week for five weeks: Week 1 = 7 cm, Week 2 = 9 cm, Week 3 = 6 cm, Week 4 = 8 cm, Week 5 = 8 cm. Between which two consecutive weeks did the plant's height fall?",
+   "choices": [
+    "Week 1 to Week 2",
+    "Week 2 to Week 3",
+    "Week 3 to Week 4",
+    "Week 4 to Week 5"
+   ],
+   "answer": "Week 2 to Week 3",
+   "rationale": "The height drops from 9 cm in Week 2 to 6 cm in Week 3, a decrease. All other consecutive weeks show an increase or no change.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L534",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 534,
+   "format": "multiple_choice",
+   "prompt": "A plant's height was recorded each week for five weeks: Week 1 = 2 cm, Week 2 = 5 cm, Week 3 = 5 cm, Week 4 = 9 cm, Week 5 = 10 cm. Between which two consecutive weeks was the increase in height the greatest?",
+   "choices": [
+    "Week 1 to Week 2",
+    "Week 2 to Week 3",
+    "Week 3 to Week 4",
+    "Week 4 to Week 5"
+   ],
+   "answer": "Week 3 to Week 4",
+   "rationale": "The increases are +3 cm (Week 1‑2), 0 cm (Week 2‑3), +4 cm (Week 3‑4), and +1 cm (Week 4‑5). The largest rise is +4 cm between Week 3 and Week 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L556",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 556,
+   "format": "multiple_choice",
+   "prompt": "A coin (Heads, Tails) is flipped and a spinner with three equal sections (Red, Blue, Green) is spun. Which list shows every possible outcome?",
+   "choices": [
+    "H-Red, H-Blue, H-Green, T-Red, T-Blue, T-Green",
+    "H-Red, H-Blue, H-Yellow, T-Red, T-Blue, T-Green",
+    "H-Red, H-Blue, H-Green, T-Red, T-Yellow, T-Green",
+    "H-Red, H-Blue, H-Green, T-Red, T-Blue, H-Red"
+   ],
+   "answer": "H-Red, H-Blue, H-Green, T-Red, T-Blue, T-Green",
+   "rationale": "The correct list includes each coin result paired with each spinner color exactly once, giving 2×3=6 outcomes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L556",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 556,
+   "format": "multiple_choice",
+   "prompt": "Spinner A has numbers 1 and 2. Spinner B has letters X and Y. Which table lists all possible outcomes?",
+   "choices": [
+    "1X, 1Y, 2X, 2Y",
+    "1X, 1Y, 2X, 1Y",
+    "1X, 2Y, 2X, 2Y",
+    "1X, 1Y, 2X, 3Y"
+   ],
+   "answer": "1X, 1Y, 2X, 2Y",
+   "rationale": "The table must pair each number on Spinner A with each letter on Spinner B, producing 2×2=4 unique outcomes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L556",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 556,
+   "format": "multiple_choice",
+   "prompt": "A spinner has four sections labeled A, B, C, D. A coin is flipped. Which list shows all 8 outcomes?",
+   "choices": [
+    "H-A, H-B, H-C, H-D, T-A, T-B, T-C, T-D",
+    "H-A, H-B, H-C, H-D, T-A, T-B, T-C, T-E",
+    "H-A, H-B, H-C, H-D, T-A, T-B, T-C, H-A",
+    "H-A, H-B, H-C, H-E, T-A, T-B, T-C, T-D"
+   ],
+   "answer": "H-A, H-B, H-C, H-D, T-A, T-B, T-C, T-D",
+   "rationale": "Each of the 4 spinner sections combines with both coin sides, yielding 4×2=8 distinct outcomes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L469",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 469,
+   "format": "multiple_choice",
+   "prompt": "A place‑value chart shows 3 in the tenths column and 7 in the hundredths column. Which decimal does the chart represent?",
+   "choices": [
+    "0.37",
+    "0.73",
+    "0.03",
+    "3.07"
+   ],
+   "answer": "0.37",
+   "rationale": "The tenths digit is 3 and the hundredths digit is 7, so the decimal is 0.37.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L469",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 469,
+   "format": "multiple_choice",
+   "prompt": "A 10‑by‑10 grid has 27 squares shaded. What decimal shows the shaded part of the grid?",
+   "choices": [
+    "0.27",
+    "0.72",
+    "0.02",
+    "2.07"
+   ],
+   "answer": "0.27",
+   "rationale": "Each square represents one hundredth; 27 shaded squares equal 27 hundredths, or 0.27.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L469",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 469,
+   "format": "multiple_choice",
+   "prompt": "The phrase \"forty‑three hundredths\" is read aloud. Write the decimal.",
+   "choices": [
+    "0.43",
+    "0.34",
+    "4.30",
+    "0.04"
+   ],
+   "answer": "0.43",
+   "rationale": "\"Forty‑three hundredths\" means 43 parts out of 100, which is written as 0.43.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L546",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 546,
+   "format": "multiple_choice",
+   "prompt": "A spinner has four equal sections colored red, blue, green, and yellow. Which list shows all possible outcomes?",
+   "choices": [
+    "red, blue, green",
+    "red, blue, green, yellow",
+    "red, blue",
+    "red, yellow"
+   ],
+   "answer": "red, blue, green, yellow",
+   "rationale": "The spinner has four colors; the only list containing all four is red, blue, green, yellow.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L546",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 546,
+   "format": "multiple_choice",
+   "prompt": "A bag contains 3 red marbles and 2 blue marbles. What fraction represents the chance of drawing a red marble?",
+   "choices": [
+    "3/5",
+    "2/5",
+    "3/2",
+    "5/3"
+   ],
+   "answer": "3/5",
+   "rationale": "There are 3 red marbles out of 5 total, so the probability of red is 3/5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L546",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 546,
+   "format": "multiple_choice",
+   "prompt": "A spinner has eight equal sections numbered 1 through 8. How would you describe the event of spinning a number greater than 5?",
+   "choices": [
+    "certain",
+    "likely",
+    "unlikely",
+    "impossible"
+   ],
+   "answer": "unlikely",
+   "rationale": "Numbers greater than 5 are 6, 7, 8 — three of eight equally likely outcomes, which is less than half, making the event unlikely.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L566",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 566,
+   "format": "multiple_choice",
+   "prompt": "A fair spinner has four equal sections: red, blue, green, yellow. After 20 spins the tally chart shows red 6, blue 5, green 5, yellow 4. Which color occurred more often than the theoretical prediction?",
+   "choices": [
+    "Red",
+    "Blue",
+    "Green",
+    "Yellow"
+   ],
+   "answer": "Red",
+   "rationale": "The theoretical expectation for each color is 5 spins (20 ÷ 4). Red appeared 6 times, which is greater than 5, while the other colors appeared 5 or 4 times.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L566",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 566,
+   "format": "multiple_choice",
+   "prompt": "A six‑sided die is rolled 24 times. The tally chart shows: 1→3, 2→5, 3→4, 4→5, 5→3, 6→5. The theoretical expectation for each face is 4 rolls. Which face’s experimental count matches the prediction exactly?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "3",
+   "rationale": "Only face 3 appears exactly 4 times, matching the theoretical expectation of 4 rolls per face. All other faces differ from 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L566",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "measurement",
+   "level": 566,
+   "format": "multiple_choice",
+   "prompt": "In an experiment a spinner with three equal sections (A, B, C) is spun 18 times. The tally chart shows A 7, B 5, C 6. The theoretical probability predicts 6 for each section. Which section’s experimental frequency is lower than predicted?",
+   "choices": [
+    "A",
+    "B",
+    "C",
+    "None"
+   ],
+   "answer": "B",
+   "rationale": "Theoretical count per section = 18 ÷ 3 = 6. Section B occurred 5 times, which is less than 6, while A and C are 7 and 6 respectively.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L449",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 449,
+   "format": "multiple_choice",
+   "prompt": "A fraction strip is divided into 4 equal parts. Maya shades 3 parts. She makes 5 identical strips and shades the same parts on each. What is the total shaded amount expressed as a mixed number?",
+   "choices": [
+    "3 3/4",
+    "15/4",
+    "2 3/4",
+    "5 3/4"
+   ],
+   "answer": "3 3/4",
+   "rationale": "Multiplying 3/4 by 5 gives 15/4, which as a mixed number is 3 3/4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L449",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 449,
+   "format": "multiple_choice",
+   "prompt": "On a number line, each jump is 2/3 of a unit. If Leo makes 4 jumps starting at 0, where does he land? Give the answer as a mixed number.",
+   "choices": [
+    "2 2/3",
+    "8/3",
+    "1 2/3",
+    "3 2/3"
+   ],
+   "answer": "2 2/3",
+   "rationale": "4 jumps of 2/3 each equal 8/3, which is 2 2/3 as a mixed number.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L449",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 449,
+   "format": "multiple_choice",
+   "prompt": "A recipe calls for 5/6 cup of flour. If you make the recipe 3 times, how many cups of flour do you need? Write as a mixed number.",
+   "choices": [
+    "2 1/2",
+    "15/6",
+    "1 1/2",
+    "3 1/2"
+   ],
+   "answer": "2 1/2",
+   "rationale": "3 times 5/6 cup equals 15/6 cups, which simplifies to 2 1/2 cups.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L449",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 449,
+   "format": "multiple_choice",
+   "prompt": "A board is 2 1/4 feet long. If you lay 3 such boards end to end, what is the total length? Express as a mixed number.",
+   "choices": [
+    "6 3/4",
+    "27/4",
+    "5 3/4",
+    "7 1/4"
+   ],
+   "answer": "6 3/4",
+   "rationale": "3 boards of 2 1/4 feet each give 6 3/4 feet total (2 1/4 × 3 = 6 3/4).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L288",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "Use the standard algorithm to divide 248 by 4. What is the quotient?",
+   "choices": [
+    "62",
+    "54",
+    "61",
+    "64"
+   ],
+   "answer": "62",
+   "rationale": "Dividing 24 by 4 gives 6, and dividing the remaining 8 by 4 gives 2, so the quotient is 62.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L288",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "When dividing 84 by 7, a learner takes 7 tens, leaves 1 ten, and brings down 4 ones. What is the complete partial quotient?",
+   "choices": [
+    "11",
+    "12",
+    "13",
+    "14"
+   ],
+   "answer": "12",
+   "rationale": "The first partial quotient is 1 ten, or 10, and the second is 2 ones. The complete partial quotient is 10 + 2 = 12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L288",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "In the long division of 632 by 8, the quotient digit in the tens place is 7. What value does that digit represent?",
+   "choices": [
+    "7",
+    "70",
+    "700",
+    "7000"
+   ],
+   "answer": "70",
+   "rationale": "A digit in the tens place represents seven groups of ten, so its value is 70.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L343",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 343,
+   "format": "multiple_choice",
+   "prompt": "Multiply the numerator and denominator of 2/7 by 4. What is the resulting fraction?",
+   "choices": [
+    "8/28",
+    "6/11",
+    "8/31",
+    "2/28"
+   ],
+   "answer": "8/28",
+   "rationale": "Multiplying both numerator and denominator by the same number (4) gives 2×4=8 and 7×4=28, so the equivalent fraction is 8/28. The other choices result from adding, changing only one part, or multiplying only the denominator.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L343",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 343,
+   "format": "multiple_choice",
+   "prompt": "Simplify 18/24 by dividing numerator and denominator by their greatest common factor.",
+   "choices": [
+    "3/4",
+    "9/12",
+    "6/8",
+    "2/3"
+   ],
+   "answer": "3/4",
+   "rationale": "The greatest common factor of 18 and 24 is 6. Dividing both by 6 yields 3/4. The other options come from dividing by smaller common factors (2 or 3) or an incorrect division.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L343",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 343,
+   "format": "multiple_choice",
+   "prompt": "Which fraction is NOT equivalent to 5/6?",
+   "choices": [
+    "10/12",
+    "15/18",
+    "20/24",
+    "25/31"
+   ],
+   "answer": "25/31",
+   "rationale": "10/12, 15/18, and 20/24 are each obtained by multiplying numerator and denominator of 5/6 by 2, 3, and 4 respectively, so they are equivalent. 25/31 cannot be formed by multiplying both parts by the same integer, so it is not equivalent.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L343",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 343,
+   "format": "multiple_choice",
+   "prompt": "What fraction is equivalent to 7/9 with denominator 27?",
+   "choices": [
+    "21/27",
+    "14/27",
+    "28/27",
+    "7/27"
+   ],
+   "answer": "21/27",
+   "rationale": "To get a denominator of 27 from 9, multiply by 3. The numerator must also be multiplied by 3, giving 7×3=21, so the equivalent fraction is 21/27. The other choices result from multiplying only the numerator, multiplying by the wrong factor, or leaving the numerator unchanged.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L482",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 482,
+   "format": "multiple_choice",
+   "prompt": "Which comparison correctly relates 0.56 and 0.6?",
+   "choices": [
+    "0.56 < 0.6",
+    "0.56 > 0.6",
+    "0.56 = 0.6",
+    "0.56 ? 0.6"
+   ],
+   "answer": "0.56 < 0.6",
+   "rationale": "0.6 is the same as 0.60; since 56 hundredths is less than 60 hundredths, 0.56 is less than 0.6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L482",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 482,
+   "format": "multiple_choice",
+   "prompt": "Order the decimals 0.42, 0.4, and 0.405 from least to greatest.",
+   "choices": [
+    "0.4, 0.405, 0.42",
+    "0.4, 0.42, 0.405",
+    "0.405, 0.4, 0.42",
+    "0.42, 0.405, 0.4"
+   ],
+   "answer": "0.4, 0.405, 0.42",
+   "rationale": "0.4 equals 0.40; 0.405 has 5 thousandths, making it larger than 0.40 but smaller than 0.42.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L482",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 482,
+   "format": "multiple_choice",
+   "prompt": "On a number line, point A is at 0.37 and point B is at 0.4. Which point represents the greater value?",
+   "choices": [
+    "0.37 is greater",
+    "0.4 is greater",
+    "They are equal",
+    "Cannot tell"
+   ],
+   "answer": "0.4 is greater",
+   "rationale": "0.4 equals 0.40, which is 3 hundredths more than 0.37, so point B is farther to the right.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L482",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 482,
+   "format": "multiple_choice",
+   "prompt": "A hundredths grid shows 68 shaded squares. Another model shows 0.7 shaded. How do the two amounts compare?",
+   "choices": [
+    "0.68 < 0.7",
+    "0.68 > 0.7",
+    "0.68 = 0.7",
+    "0.68 ? 0.7"
+   ],
+   "answer": "0.68 < 0.7",
+   "rationale": "68 hundredths is 0.68; 0.7 equals 0.70, which is 2 hundredths more, so 0.68 is less than 0.7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L42",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "What is 54 ÷ 6?",
+   "choices": [
+    "8",
+    "9",
+    "10",
+    "7"
+   ],
+   "answer": "9",
+   "rationale": "There are 9 groups of 6 in 54 because 9 × 6 = 54.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L42",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Which multiplication fact matches 9 × 5 + 9?",
+   "choices": [
+    "9 × 5 = 45",
+    "9 × 6 = 54",
+    "9 × 7 = 63",
+    "9 × 4 = 36"
+   ],
+   "answer": "9 × 6 = 54",
+   "rationale": "9 × 5 + 9 is equal to 45 + 9, so it matches 9 × 6 = 54.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L42",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "A number multiplied by 6 equals 42. What is the number?",
+   "choices": [
+    "6",
+    "8",
+    "7",
+    "9"
+   ],
+   "answer": "7",
+   "rationale": "6 × 7 = 42, so the missing number is 7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L621",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 621,
+   "format": "multiple_choice",
+   "prompt": "A ray divides a 70° angle into angles of 25° and x°. What is the measure of angle x?",
+   "choices": [
+    "45°",
+    "55°",
+    "65°",
+    "95°"
+   ],
+   "answer": "45°",
+   "rationale": "The two parts make the whole angle, so x = 70° − 25° = 45°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L621",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 621,
+   "format": "multiple_choice",
+   "prompt": "Four adjacent angles form a straight angle. Three measure 24°, 35°, and 21°. What is the measure of the fourth angle?",
+   "choices": [
+    "90°",
+    "100°",
+    "110°",
+    "120°"
+   ],
+   "answer": "100°",
+   "rationale": "A straight angle measures 180°, so the missing angle is 180° − (24° + 35° + 21°) = 100°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L621",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 621,
+   "format": "multiple_choice",
+   "prompt": "Two adjacent angles measure 38° and 27°. What is the measure of the larger angle they form together?",
+   "choices": [
+    "55°",
+    "65°",
+    "75°",
+    "85°"
+   ],
+   "answer": "65°",
+   "rationale": "Add the measures of the adjacent angles: 38° + 27° = 65°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L621",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 621,
+   "format": "multiple_choice",
+   "prompt": "An angle and its complement have a combined measure of 90°. If the angle measures 28°, what is the measure of its complement?",
+   "choices": [
+    "52°",
+    "58°",
+    "62°",
+    "68°"
+   ],
+   "answer": "62°",
+   "rationale": "Complementary angles add to 90°, so the missing measure is 90° − 28° = 62°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L266",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "When dividing 3,456 by 8, a student first takes out the friendly multiple 3,200. What is the first partial quotient?",
+   "choices": [
+    "400",
+    "320",
+    "40",
+    "300"
+   ],
+   "answer": "400",
+   "rationale": "Taking out 3,200 means calculating 3,200 ÷ 8, which equals 400.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L266",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "A student divides 2,736 by 9 by taking out 2,700 and then 36. What partial quotient should the student record for the last 36?",
+   "choices": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "answer": "4",
+   "rationale": "The remaining 36 divided by 9 equals 4, so the last partial quotient is 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L266",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "Using friendly multiples, a student divides 5,040 by 7 by taking out 4,900 and then 140. Which partial quotients and final quotient are correct?",
+   "choices": [
+    "700 and 20; quotient 720",
+    "700 and 14; quotient 714",
+    "490 and 20; quotient 510",
+    "70 and 200; quotient 270"
+   ],
+   "answer": "700 and 20; quotient 720",
+   "rationale": "Since 4,900 ÷ 7 = 700 and 140 ÷ 7 = 20, the partial quotients are 700 and 20, totaling 720.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L405",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 405,
+   "format": "multiple_choice",
+   "prompt": "What is 3 2/5 written as an improper fraction?",
+   "choices": [
+    "17/5",
+    "13/5",
+    "15/5",
+    "11/5"
+   ],
+   "answer": "17/5",
+   "rationale": "Multiply the whole number 3 by the denominator 5 to get 15, then add the numerator 2, giving 17/5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L405",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 405,
+   "format": "multiple_choice",
+   "prompt": "Express 22/7 as a mixed number.",
+   "choices": [
+    "3 1/7",
+    "3 2/7",
+    "3 1/6",
+    "4 1/7"
+   ],
+   "answer": "3 1/7",
+   "rationale": "Dividing 22 by 7 yields 3 with a remainder of 1, so the mixed number is 3 1/7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L405",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 405,
+   "format": "multiple_choice",
+   "prompt": "How many 1/4 unit fractions make up 3 1/4?",
+   "choices": [
+    "13",
+    "12",
+    "14",
+    "15"
+   ],
+   "answer": "13",
+   "rationale": "3 1/4 equals 13/4, meaning there are thirteen 1/4 unit fractions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L459",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 459,
+   "format": "multiple_choice",
+   "prompt": "What is 3/10 + 4/100 written as a fraction with denominator 100?",
+   "choices": [
+    "34/100",
+    "30/100",
+    "7/100",
+    "34/10"
+   ],
+   "answer": "34/100",
+   "rationale": "3/10 equals 30/100; adding 4/100 gives 34/100.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L459",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 459,
+   "format": "multiple_choice",
+   "prompt": "Which fraction equals 7/10 + 5/100 when written with denominator 100?",
+   "choices": [
+    "75/100",
+    "70/100",
+    "12/100",
+    "75/10"
+   ],
+   "answer": "75/100",
+   "rationale": "7/10 equals 70/100; adding 5/100 yields 75/100.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L459",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "decimals",
+   "level": 459,
+   "format": "multiple_choice",
+   "prompt": "What is 2/10 + 30/100 expressed as a fraction with denominator 100?",
+   "choices": [
+    "50/100",
+    "20/100",
+    "32/100",
+    "50/10"
+   ],
+   "answer": "50/100",
+   "rationale": "2/10 equals 20/100; adding 30/100 gives 50/100.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L598",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 598,
+   "format": "multiple_choice",
+   "prompt": "A full turn around a point is 360°. What fraction of a full turn is a 90° angle?",
+   "choices": [
+    "1/4",
+    "1/3",
+    "1/2",
+    "3/4"
+   ],
+   "answer": "1/4",
+   "rationale": "A full turn is 360°, so 90° is one‑quarter of 360°, i.e., 1/4 of a full turn.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L598",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 598,
+   "format": "multiple_choice",
+   "prompt": "If you rotate a spinner 180°, what fraction of a full circle have you turned?",
+   "choices": [
+    "1/3",
+    "1/2",
+    "1/4",
+    "2/3"
+   ],
+   "answer": "1/2",
+   "rationale": "180° is half of 360°, so the turn equals 1/2 of a full circle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A full circle measures 360 degrees.",
+      "url": "https://en.wiktionary.org/wiki/full_circle",
+      "quote": "Arcs are measured in degrees, with 360° in the full circle.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L598",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 598,
+   "format": "multiple_choice",
+   "prompt": "One degree represents what part of a full circle?",
+   "choices": [
+    "1/180",
+    "1/90",
+    "1/360",
+    "1/45"
+   ],
+   "answer": "1/360",
+   "rationale": "A full circle has 360 degrees, therefore one degree is 1/360 of the circle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A full circle measures 360 degrees.",
+      "url": "https://en.wiktionary.org/wiki/full_circle",
+      "quote": "Arcs are measured in degrees, with 360° in the full circle.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L631",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 631,
+   "format": "multiple_choice",
+   "prompt": "A triangle has angle measures of 40°, 50°, and 90°. How should it be classified by its angle sizes?",
+   "choices": [
+    "right",
+    "acute",
+    "obtuse",
+    "equiangular"
+   ],
+   "answer": "right",
+   "rationale": "A triangle containing a 90° angle is classified as right.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L631",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 631,
+   "format": "multiple_choice",
+   "prompt": "A quadrilateral has four right angles, two pairs of parallel opposite sides, and adjacent sides of different lengths. What is its most precise name?",
+   "choices": [
+    "rectangle",
+    "square",
+    "rhombus",
+    "trapezoid"
+   ],
+   "answer": "rectangle",
+   "rationale": "A quadrilateral with four right angles is a rectangle. The unequal adjacent sides show that it is not a square.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L631",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 631,
+   "format": "multiple_choice",
+   "prompt": "A triangle has three sides of exactly the same length. Which classification describes it by side lengths?",
+   "choices": [
+    "equilateral",
+    "isosceles",
+    "scalene",
+    "right"
+   ],
+   "answer": "equilateral",
+   "rationale": "A triangle with three equal sides is classified as equilateral.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L631",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 631,
+   "format": "multiple_choice",
+   "prompt": "A quadrilateral has four right angles. What relationship must every pair of adjacent sides have?",
+   "choices": [
+    "parallel",
+    "perpendicular",
+    "equal length",
+    "neither intersecting nor parallel"
+   ],
+   "answer": "perpendicular",
+   "rationale": "Adjacent sides that form a 90° angle are perpendicular to each other.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L417",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 417,
+   "format": "multiple_choice",
+   "prompt": "What is 2 1/4 + 1 2/4?",
+   "choices": [
+    "3 3/4",
+    "3 2/4",
+    "2 3/4",
+    "4 3/4"
+   ],
+   "answer": "3 3/4",
+   "rationale": "Add the whole numbers to get 3 and the fractions to get 3/4, so the sum is 3 3/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L417",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 417,
+   "format": "multiple_choice",
+   "prompt": "What is 6 4/7 - 2 1/7?",
+   "choices": [
+    "4 3/7",
+    "4 2/7",
+    "3 3/7",
+    "5 4/7"
+   ],
+   "answer": "4 3/7",
+   "rationale": "Subtract the whole numbers to get 4 and the fractions to get 3/7, so the difference is 4 3/7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L417",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 417,
+   "format": "multiple_choice",
+   "prompt": "After regrouping, what is 2 3/7 + 1 6/7 in simplest form?",
+   "choices": [
+    "3 1/7",
+    "4 1/7",
+    "4 2/7",
+    "3 2/7"
+   ],
+   "answer": "4 2/7",
+   "rationale": "The whole parts total 3, and 3/7 + 6/7 = 9/7 = 1 2/7. Therefore, the sum is 4 2/7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L673",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 673,
+   "format": "multiple_choice",
+   "prompt": "A circle’s diameter is 14 inches. What is the length of its radius?",
+   "choices": [
+    "7 in",
+    "28 in",
+    "14 in",
+    "21 in"
+   ],
+   "answer": "7 in",
+   "rationale": "The radius is half the diameter, so 14 in ÷ 2 = 7 in.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A circle's radius is half its diameter.",
+      "url": "https://en.wikipedia.org/wiki/Turning_radius",
+      "quote": "The turning radius is half of the turning diameter.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L673",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 673,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the relationship between a circle’s radius and its diameter?",
+   "choices": [
+    "The diameter is half the radius",
+    "The radius is twice the diameter",
+    "The diameter is twice the radius",
+    "The radius and diameter are always equal"
+   ],
+   "answer": "The diameter is twice the radius",
+   "rationale": "By definition, the diameter of a circle equals two times its radius.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A circle's diameter is twice its radius.",
+      "url": "https://en.wikipedia.org/wiki/Diameter_(protocol)",
+      "quote": "a diameter is twice the radius",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L673",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 673,
+   "format": "multiple_choice",
+   "prompt": "A circle has center point M. Which segment is a radius of this circle?",
+   "choices": [
+    "Segment from M to a point on the circle",
+    "Segment connecting two points on the circle through M",
+    "Segment connecting two points on the circle not through M",
+    "Segment from one point on the circle to another not including M"
+   ],
+   "answer": "Segment from M to a point on the circle",
+   "rationale": "A radius is defined as the segment from the center of a circle to any point on the circle.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A radius is a segment from the center of a circle to a point on the circle.",
+      "url": "https://en.wiktionary.org/wiki/radius",
+      "quote": "A line segment between any point of a circle or sphere and its center.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L588",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 588,
+   "format": "multiple_choice",
+   "prompt": "In a rectangle, which pair of sides are parallel?",
+   "choices": [
+    "The top side and the left side",
+    "The top side and the bottom side",
+    "The left side and the diagonal",
+    "The right side and the diagonal"
+   ],
+   "answer": "The top side and the bottom side",
+   "rationale": "Opposite sides of a rectangle are parallel; the top and bottom sides form one such pair.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Opposite sides of a rectangle are parallel.",
+      "url": "https://en.wikipedia.org/wiki/Rectangle",
+      "quote": "both pairs of opposite sides are parallel and equal in length.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L588",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 588,
+   "format": "multiple_choice",
+   "prompt": "In an isosceles trapezoid, which pair of sides are parallel?",
+   "choices": [
+    "The bases",
+    "The legs",
+    "One base leg",
+    "Both diagonals"
+   ],
+   "answer": "The bases",
+   "rationale": "By definition, the two bases of a trapezoid are the parallel sides.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The two bases of an isosceles trapezoid are parallel.",
+      "url": "https://en.wikipedia.org/wiki/Isosceles_trapezoid",
+      "quote": "In any isosceles trapezoid, two opposite sides (the bases) are parallel , and the two other sides (the legs) are of equal length (properties shared with the parallelogram ), and the diagonals have equal length.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L373",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "Which equation shows a correct decomposition of 5/8 into unit fractions?",
+   "choices": [
+    "5/8 = 1/4 + 1/4 + 1/8",
+    "5/8 = 1/2 + 1/8 + 1/8",
+    "5/8 = 1/3 + 1/8 + 1/8",
+    "5/8 = 1/5 + 1/5 + 1/8"
+   ],
+   "answer": "5/8 = 1/4 + 1/4 + 1/8",
+   "rationale": "Option A is correct because 1/4 = 2/8, so 2/8 + 2/8 + 1/8 = 5/8. Option B sums to 3/4, option C sums to 7/12, and option D sums to 21/40.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L373",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "Which equation correctly decomposes 3/5 into a sum of unit fractions?",
+   "choices": [
+    "1/5 + 1/5 + 1/5",
+    "1/5 + 2/5",
+    "1/5 + 1/4 + 1/20",
+    "1/5 + 1/5 + 1/5 + 1/5"
+   ],
+   "answer": "1/5 + 1/5 + 1/5",
+   "rationale": "Only option A uses only unit fractions (all numerators 1) and the three 1/5 terms add to 3/5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L373",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "Which equation decomposes 3/8 into exactly two unit fractions?",
+   "choices": [
+    "1/8 + 1/4",
+    "1/8 + 2/8",
+    "1/4 + 1/4",
+    "1/8 + 1/8 + 1/8"
+   ],
+   "answer": "1/8 + 1/4",
+   "rationale": "Option A is the only choice that contains exactly two unit fractions whose sum equals 3/8 (1/8 + 1/4 = 3/8).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L353",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 353,
+   "format": "multiple_choice",
+   "prompt": "By finding a common denominator, which fraction is greater: 5/8 or 3/5?",
+   "choices": [
+    "5/8",
+    "3/5",
+    "They are equal",
+    "Not enough information"
+   ],
+   "answer": "5/8",
+   "rationale": "Common denominator 40 gives 5/8 = 25/40 and 3/5 = 24/40, so 5/8 > 3/5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L353",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 353,
+   "format": "multiple_choice",
+   "prompt": "Using the benchmark 1/2, which fraction is less than 1/2?",
+   "choices": [
+    "3/5",
+    "4/7",
+    "5/9",
+    "5/11"
+   ],
+   "answer": "5/11",
+   "rationale": "5/11 ≈ 0.455, which is less than 0.5; the other fractions are all greater than 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L353",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 353,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly compares 3/8 and 3/5, and gives a valid reason?",
+   "choices": [
+    "3/5 > 3/8 because the smaller denominator makes the fraction greater.",
+    "3/8 > 3/5 because the larger denominator makes the fraction greater.",
+    "3/5 = 3/8 because the numerators are the same.",
+    "3/8 > 3/5 because denominators can be ignored when numerators match."
+   ],
+   "answer": "3/5 > 3/8 because the smaller denominator makes the fraction greater.",
+   "rationale": "The fractions have the same numerator. With equal numerators, the fraction with the smaller denominator, 3/5, is greater.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L353",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 353,
+   "format": "multiple_choice",
+   "prompt": "Which fraction is greater than 1/2, and which comparison correctly justifies the answer?",
+   "choices": [
+    "3/8; 3/8 > 4/8 = 1/2",
+    "2/6; 2/6 > 3/6 = 1/2",
+    "5/8; 5/8 > 4/8 = 1/2",
+    "3/10; 3/10 > 5/10 = 1/2"
+   ],
+   "answer": "5/8; 5/8 > 4/8 = 1/2",
+   "rationale": "Half of 8 is 4. Since 5/8 is greater than 4/8, it is greater than the benchmark 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L10",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which expanded form shows 3,204,050 correctly?",
+   "choices": [
+    "3,000,000 + 200,000 + 4,000 + 50",
+    "3,000,000 + 20,000 + 4,000 + 500",
+    "3,000,000 + 200,000 + 40,000 + 50",
+    "3,000,000 + 200,000 + 4,000 + 5"
+   ],
+   "answer": "3,000,000 + 200,000 + 4,000 + 50",
+   "rationale": "3,204,050 = 3,000,000 + 200,000 + 4,000 + 50, matching the place values of each digit.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L10",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "How do you read 9,040,300 in words?",
+   "choices": [
+    "Nine million forty thousand three hundred",
+    "Nine million four hundred thousand three hundred",
+    "Nine million forty thousand three",
+    "Nine million four hundred three hundred"
+   ],
+   "answer": "Nine million forty thousand three hundred",
+   "rationale": "9,040,300 is read as nine million, forty thousand, three hundred, following place-value naming conventions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L10",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the relationship between the ten‑thousands place and the thousands place?",
+   "choices": [
+    "The ten‑thousands place is ten times the thousands place.",
+    "The ten‑thousands place is one hundred times the thousands place.",
+    "The ten‑thousands place is one thousand times the thousands place.",
+    "The ten‑thousands place is ten thousand times the thousands place."
+   ],
+   "answer": "The ten‑thousands place is ten times the thousands place.",
+   "rationale": "Each place to the left is ten times the place to its right; the ten‑thousands place is one position left of the thousands place, so it is ten times as great.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L10",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "mul_div",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which numeral represents four hundred six thousand, twenty‑nine?",
+   "choices": [
+    "406,029",
+    "460,029",
+    "406,290",
+    "460,290"
+   ],
+   "answer": "406,029",
+   "rationale": "Four hundred six thousand is 406,000; twenty‑nine is 29. Combined they make 406,029.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L427",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 427,
+   "format": "multiple_choice",
+   "prompt": "A ribbon is 7/8 meter long. Sam cuts off 3/8 meter. How much ribbon remains?",
+   "choices": [
+    "4/8 meter remains",
+    "5/8 meter remains",
+    "3/8 meter remains",
+    "6/8 meter remains"
+   ],
+   "answer": "4/8 meter remains",
+   "rationale": "Subtracting 3/8 from 7/8 leaves 4/8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L427",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 427,
+   "format": "multiple_choice",
+   "prompt": "Jenna has 1 2/6 cups of flour and adds 2 3/6 cups. How many cups does she have in total?",
+   "choices": [
+    "3 5/6 cups",
+    "4 1/6 cups",
+    "3 1/6 cups",
+    "4 5/6 cups"
+   ],
+   "answer": "3 5/6 cups",
+   "rationale": "Adding the whole numbers 1+2=3 and the fractions 2/6+3/6=5/6 gives 3 5/6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L427",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 427,
+   "format": "multiple_choice",
+   "prompt": "Lena walked 3 2/9 miles on Monday and 1 5/9 miles on Tuesday. How many miles did she walk in total?",
+   "choices": [
+    "4 7/9 miles",
+    "4 miles",
+    "3 7/9 miles",
+    "5 7/9 miles"
+   ],
+   "answer": "4 7/9 miles",
+   "rationale": "Add the whole numbers (3 + 1 = 4) and the fractions (2/9 + 5/9 = 7/9) to get 4 7/9 miles.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L427",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "fractions",
+   "level": 427,
+   "format": "multiple_choice",
+   "prompt": "A tank holds 5 3/8 gallons of water. After using 2 6/8 gallons, how much water remains?",
+   "choices": [
+    "2 5/8 gallons",
+    "3 gallons",
+    "3 3/8 gallons",
+    "2 3/8 gallons"
+   ],
+   "answer": "2 5/8 gallons",
+   "rationale": "Subtract the whole numbers (5 - 2 = 3) and the fractions (3/8 - 6/8 requires borrowing 1 = 8/8, so 11/8 - 6/8 = 5/8), giving 2 5/8 gallons.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L576",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 576,
+   "format": "multiple_choice",
+   "prompt": "A rectangle has an area of 36 square units and a width of 4 units. What is its length?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "9",
+   "rationale": "Area = length × width, so length = area ÷ width = 36 ÷ 4 = 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L576",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 576,
+   "format": "multiple_choice",
+   "prompt": "A rectangle has a perimeter of 28 units and a length of 8 units. What is its width?",
+   "choices": [
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "answer": "6",
+   "rationale": "Perimeter = 2 × (length + width). 28 = 2 × (8 + width) → 14 = 8 + width → width = 6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A rectangle's perimeter is twice the sum of its length and width.",
+      "url": "https://en.wiktionary.org/wiki/chi%E1%BB%81u_d%C3%A0i",
+      "quote": "The perimeter of a rectangle is twice the sum of its 2 side measurements.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L576",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 576,
+   "format": "multiple_choice",
+   "prompt": "A rectangle has an area of 48 square units and a length of 8 units. What is its perimeter?",
+   "choices": [
+    "24 units",
+    "28 units",
+    "32 units",
+    "36 units"
+   ],
+   "answer": "28 units",
+   "rationale": "Width = area ÷ length = 48 ÷ 8 = 6 units. Perimeter = 2 × (length + width) = 2 × (8 + 6) = 28 units.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L653",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 653,
+   "format": "multiple_choice",
+   "prompt": "Two shapes have matching side lengths and matching angles, but one faces the opposite direction. What is the relationship between them?",
+   "choices": [
+    "They have the same size and shape.",
+    "They have the same size but not the shape.",
+    "They have the same shape but not the size.",
+    "They differ in both size and shape."
+   ],
+   "answer": "They have the same size and shape.",
+   "rationale": "Matching side lengths and angles show that the shapes have the same size and shape.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L653",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 653,
+   "format": "multiple_choice",
+   "prompt": "A triangle is slid 4 units right and 2 units up. The moved triangle ___.",
+   "choices": [
+    "has the same side lengths and angles as the original",
+    "has longer sides than the original",
+    "has different angles than the original",
+    "is a mirror image of the original"
+   ],
+   "answer": "has the same side lengths and angles as the original",
+   "rationale": "Sliding (translation) does not change a shape's size or angles; the triangle remains congruent to the original.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "multi_digit_arithmetic_and_fraction_equivalence:L653",
+   "track_id": "math",
+   "grade_id": "multi_digit_arithmetic_and_fraction_equivalence",
+   "skill_id": "geometry_area",
+   "level": 653,
+   "format": "multiple_choice",
+   "prompt": "A regular pentagon is rotated 180° about its center. What can be said about the rotated pentagon?",
+   "choices": [
+    "It is congruent to the original pentagon",
+    "Its side lengths are doubled",
+    "Its interior angles change",
+    "Its area is halved"
+   ],
+   "answer": "It is congruent to the original pentagon",
+   "rationale": "Rotation (turn) keeps all side lengths and angles unchanged, so the pentagon remains congruent.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

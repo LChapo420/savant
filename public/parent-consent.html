@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parent consent | Savant</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="header"></header>
+  <main class="page">
+    <div class="wrap wrap-narrow consent-page">
+      <h1 id="title">A request for your consent</h1>
+      <div id="error" class="notice notice-error hidden" role="alert"></div>
+      <div id="loading" class="loading"><span class="spinner"></span>Loading the request</div>
+
+      <div id="request" class="hidden">
+        <p class="lede-sm"><strong id="child-name">Your child</strong> signed up to Savant, a learning app, and gave
+          <strong id="parent-email">this email address</strong> as their parent or guardian.
+          Please read what Savant keeps about your child, then decide below.</p>
+
+        <!-- The direct notice. Its words are versioned: the page sends the version
+             below with the answer, and the server refuses a stale one. Change the
+             text, change NOTICE_VERSION in routes/consent.js. -->
+        <section id="notice" class="policy" data-notice-version="2026-10-22.1" aria-labelledby="notice-title">
+          <h2 id="notice-title">What you are agreeing to</h2>
+          <p>We got your email address from your child, and we use it only to ask for your consent and, if you agree,
+            to run your parent account. Savant needs your consent before your child can use their account in full.
+            If you do nothing, we delete your email address, your child's account and everything in it after
+            <span data-pending-days>14</span> days.</p>
+
+          <h3>What we collect from your child</h3>
+          <ul>
+            <li>A first name or nickname, a username and a password (stored scrambled). We do not ask your child for an
+              email address, phone number, home address or photo.</li>
+            <li>Their month and year of birth and their country, from the age question.</li>
+            <li>Their learning record: subjects and levels, answers, scores, time spent on activities, streaks and
+              points, and what they type into lessons (answers, essays, comments about a lesson).</li>
+            <li>Results from activities that use the camera or microphone, such as "shot made" or "notes played
+              correctly". Never pictures, video or sound (see below).</li>
+            <li>One cookie that keeps them signed in. No advertising or analytics cookies.</li>
+          </ul>
+
+          <h3>How we use it</h3>
+          <p>Only to run Savant for your child: to find their level, choose and mark their lessons, show their progress,
+            keep them signed in and keep the service secure. We never sell it, never use it for advertising and never
+            show your child ads.</p>
+
+          <h3>Camera and microphone</h3>
+          <p>Some basketball and piano activities can use your child's camera or microphone. The camera or microphone
+            is only switched on when your child starts one of those activities and they are processed on your child's
+            device. Savant never uploads, records or keeps pictures, video or sound. We keep only results, such as
+            "shot made" or "notes played correctly", with your child's progress. We do not identify your child from
+            their face or voice. Your child's browser or phone will ask for permission each time or the first time;
+            you can say no and your child can still do the same activities by tapping or using the on-screen keys. You
+            can review and delete your child's results at any time.</p>
+
+          <h3>Outside AI services: off unless you choose them</h3>
+          <p>Some Savant features send what a learner writes or says to an outside AI company to answer or mark it:
+            the question coach and "ask about this", chat help inside lessons, essay marking, and the Spanish speaking
+            and writing activities. For your child these stay <strong>off</strong>. Agreeing below does not turn them
+            on. You can choose them separately below; because that means sharing your child's words with another
+            company, it takes a signed form as well (we explain how after you agree). The companies are named in the
+            <a href="/privacy#vendors">privacy policy</a>.</p>
+          <p>Savant does not use children's data to train AI models, its own or anyone else's. You can say now whether
+            you would ever allow it; that also needs a signed form, and we would tell you before starting.</p>
+
+          <h3>Keeping and deleting</h3>
+          <p>We keep your child's data while their account exists. You can delete the account and everything in it at
+            any time from the parent page, and it is deleted at once. If you withdraw consent, the account is locked
+            straight away and deleted after <span data-revoked-days>30</span> days unless you give consent again.</p>
+
+          <h3>Your rights</h3>
+          <p>At any time you can see everything we keep about your child and download it, turn the camera and
+            microphone features off, refuse further collection by withdrawing consent, and have the data deleted. You
+            can agree to Savant collecting and using your child's data without agreeing to any sharing with outside
+            companies. Use the parent page at <a href="/parent">/parent</a>, or contact us as the
+            <a href="/privacy#contact">privacy policy</a> says.</p>
+
+          <p class="tiny muted">Notice version <span class="mono" data-notice-version-label>2026-10-22.1</span>.
+            Read the full <a href="/privacy">privacy policy</a>.</p>
+        </section>
+
+        <form id="consent-form" class="consent-form" novalidate>
+          <h2>Your answer</h2>
+          <label class="field" id="password-field"><span id="password-label">Choose a password for your parent account</span>
+            <input type="password" id="password" autocomplete="new-password" minlength="8">
+            <span class="tiny muted field-hint" id="password-hint">At least 8 characters. You sign in at /parent with this email and password to see or change anything.</span>
+          </label>
+
+          <label class="check-row is-required">
+            <input type="checkbox" id="i_am_parent">
+            <span>I am this child's parent or legal guardian, and I agree to Savant collecting and using my child's
+              information as described above, including the camera and microphone paragraph.</span>
+          </label>
+
+          <fieldset class="opt-ins">
+            <legend>Separate choices (optional, each needs a signed form)</legend>
+            <label class="check-row">
+              <input type="checkbox" id="opt_third_party_ai">
+              <span>Also allow Savant to send what my child writes or says to the outside AI companies named in the
+                privacy policy, only to answer or mark it.</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="opt_ai_training">
+              <span>Also allow my child's data to be used to train AI models.</span>
+            </label>
+          </fieldset>
+
+          <label class="check-row">
+            <input type="checkbox" id="camera_mic_off">
+            <span>Turn off the camera and microphone features for this child. (They can still tap and use the on-screen
+              keys. You can change this later.)</span>
+          </label>
+
+          <div class="consent-actions">
+            <button class="btn btn-primary btn-lg" id="agree" type="submit">I agree</button>
+            <button class="btn-text" id="decline" type="button" aria-expanded="false" aria-controls="decline-confirm">I do not agree</button>
+          </div>
+          <div id="decline-confirm" class="notice hidden">
+            <p>Not agreeing deletes the account and everything in it now, and your email address with it. This cannot be undone.</p>
+            <button class="btn btn-danger" id="decline-yes" type="button">Delete the account</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="done" class="hidden" aria-live="polite">
+        <p class="lede-sm" id="done-text"></p>
+        <div id="done-form" class="notice hidden">
+          <p>You asked for one of the separate choices. It starts once we have your signed form:
+            <a href="/parent-form">print or save the form</a>, sign it and send it back as the form says.</p>
+        </div>
+        <p><a class="btn btn-primary" id="done-link" href="/parent">Go to the parent page</a></p>
+      </div>
+    </div>
+  </main>
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/parent-consent.js"></script>
+</body>
+</html>

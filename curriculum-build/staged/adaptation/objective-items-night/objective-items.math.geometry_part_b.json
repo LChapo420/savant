@@ -1,0 +1,5670 @@
+{
+ "track_id": "math",
+ "grade_id": "geometry_part_b",
+ "generated_at": "2026-10-26T03:38:11.759Z",
+ "items": [
+  {
+   "objective_id": "geometry_part_b:L20",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Triangle ABC is mapped to triangle DEF by a dilation with center at the origin and scale factor 2, followed by a translation. If AB = 5 cm, what is DE?",
+   "choices": [
+    "2.5 cm",
+    "5 cm",
+    "10 cm",
+    "15 cm"
+   ],
+   "answer": "10 cm",
+   "rationale": "A dilation with scale factor 2 multiplies all lengths by 2; translation does not change lengths, so DE = 2 × AB = 10 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L20",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Two quadrilaterals are similar via a similarity transformation. In the first, an interior angle measures 70°. What is the measure of the corresponding angle in the second?",
+   "choices": [
+    "35°",
+    "70°",
+    "110°",
+    "140°"
+   ],
+   "answer": "70°",
+   "rationale": "Similarity transformations preserve angle measures, so corresponding angles are congruent; the angle remains 70°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L20",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Figure X is mapped to Figure Y by a reflection across the y‑axis followed by a dilation of scale factor 3. If a segment in X has length 4 units, what is the length of the corresponding segment in Y?",
+   "choices": [
+    "1 unit",
+    "4 units",
+    "12 units",
+    "16 units"
+   ],
+   "answer": "12 units",
+   "rationale": "Reflection preserves lengths; the dilation of scale factor 3 multiplies the segment length by 3, so 4 × 3 = 12 units.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L82",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A 45-45-90 triangle has a hypotenuse of length 10 units. What is the length of each leg?",
+   "choices": [
+    "5√2 units",
+    "5 units",
+    "10√2 units",
+    "10√3 units"
+   ],
+   "answer": "5√2 units",
+   "rationale": "A 45-45-90 triangle has side ratio 1:1:√2. Thus each leg is 10√2/2 = 5√2 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L82",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A 30-60-90 triangle has a shorter leg of length 4 units. What is the length of its longer leg?",
+   "choices": [
+    "4√3 units",
+    "2√3 units",
+    "4√2 units",
+    "8√3 units"
+   ],
+   "answer": "4√3 units",
+   "rationale": "A 30-60-90 triangle has side ratio 1:√3:2. With shorter leg 4, the longer leg is 4√3 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L82",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A 30-60-90 triangle has a hypotenuse of length 12 units. What is the length of the side opposite the 60° angle?",
+   "choices": [
+    "6√3 units",
+    "6 units",
+    "12√3 units",
+    "3√3 units"
+   ],
+   "answer": "6√3 units",
+   "rationale": "The side opposite 60° is the longer leg. The shorter leg is 12/2 = 6, so the longer leg is 6√3 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L82",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A 30-60-90 triangle has a longer leg of length 6√3 units. What is the length of its shorter leg?",
+   "choices": [
+    "6 units",
+    "3 units",
+    "6√2 units",
+    "3√3 units"
+   ],
+   "answer": "6 units",
+   "rationale": "The longer leg equals √3 times the shorter leg. Therefore, the shorter leg is 6√3/√3 = 6 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L147",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Starting with c² = a² + b² − 2ab cos C, which algebraic step correctly isolates cos C?",
+   "choices": [
+    "cos C = (a² + b² − c²)/(2ab)",
+    "cos C = (a² + b² + c²)/(2ab)",
+    "cos C = (a² − b² − c²)/(2ab)",
+    "cos C = (a² + c² − b²)/(2ac)"
+   ],
+   "answer": "cos C = (a² + b² − c²)/(2ab)",
+   "rationale": "Subtracting c² and dividing by 2ab gives cos C = (a² + b² − c²)/(2ab), which is the law of cosines solved for an angle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L147",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A triangle has two sides of lengths 5 and 7 with an included angle of 60°. What is the length x of the third side?",
+   "choices": [
+    "√74",
+    "√39",
+    "√4",
+    "√109"
+   ],
+   "answer": "√39",
+   "rationale": "By the law of cosines, x² = 5² + 7² − 2(5)(7)cos 60° = 25 + 49 − 35 = 39, so x = √39.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L147",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A triangle has side lengths 5, 6, and 7. To the nearest tenth of a degree, what is the measure of the angle opposite the side of length 6?",
+   "choices": [
+    "78.5°",
+    "57.1°",
+    "44.4°",
+    "122.9°"
+   ],
+   "answer": "57.1°",
+   "rationale": "Let θ be opposite the side of length 6. Then cos θ = (5² + 7² − 6²)/(2·5·7) = 19/35, so θ ≈ 57.1°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L147",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Two sides and their included angle are known. Which law and quantity should be used most directly?",
+   "choices": [
+    "Law of sines; the third side",
+    "Law of cosines; the third side",
+    "Law of cosines; an opposite angle",
+    "Law of sines; the included angle"
+   ],
+   "answer": "Law of cosines; the third side",
+   "rationale": "The data form an SAS triangle. The law of cosines directly relates the two known sides and included angle to the unknown third side.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L167",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which option correctly defines both a radius and a diameter?",
+   "choices": [
+    "Radius: segment from center to circle; diameter: chord through center",
+    "Radius: segment from circle to center; diameter: chord beside center",
+    "Radius: chord through center; diameter: segment from center to circle",
+    "Radius: segment along a tangent; diameter: arc through the center"
+   ],
+   "answer": "Radius: segment from center to circle; diameter: chord through center",
+   "rationale": "A radius joins the center to a point on the circle. A diameter is a chord that passes through the center and is twice the radius.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L167",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Where must the vertex of a central angle be located, and what must its sides lie along?",
+   "choices": [
+    "At the circle's center, with sides along two radii",
+    "On the circle, with sides along two chords",
+    "Outside the circle, with sides along two tangents",
+    "On a diameter, with sides perpendicular to it"
+   ],
+   "answer": "At the circle's center, with sides along two radii",
+   "rationale": "A central angle has its vertex at the circle's center, and its sides are radii extending to points on the circle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L167",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which option correctly defines both an arc and a chord?",
+   "choices": [
+    "Arc: part of a circle; chord: segment joining two points on it",
+    "Arc: segment inside a circle; chord: part of its circumference",
+    "Arc: a radius and its center; chord: a diameter and its center",
+    "Arc: a line through the center; chord: a line tangent to the circle"
+   ],
+   "answer": "Arc: part of a circle; chord: segment joining two points on it",
+   "rationale": "An arc is a continuous part of a circle between two points. A chord is a line segment whose endpoints lie on the circle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L167",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which argument correctly proves that any two circles are similar?",
+   "choices": [
+    "Dilate one circle by the ratio of the radii, then move its center to the other.",
+    "Translate one circle until the centers match, then rotate it by 180 degrees.",
+    "Reflect one circle across a diameter, then choose equal radii for both.",
+    "Add the radii to form a third circle, then compare their circumferences."
+   ],
+   "answer": "Dilate one circle by the ratio of the radii, then move its center to the other.",
+   "rationale": "A dilation with scale factor equal to the ratio of the radii changes one circle into the other circle's size. A translation can then place the centers together, giving a similarity transformation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L177",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "A circle has center (2, 3) and radius 4. A dilation with scale factor 2.5 about the origin produces a new circle. What are its center and radius?",
+   "choices": [
+    "(5, 7.5) and 10",
+    "(5, 7.5) and 5",
+    "(4, 6) and 10",
+    "(5, 7.5) and 2.5"
+   ],
+   "answer": "(5, 7.5) and 10",
+   "rationale": "A dilation multiplies both coordinates and the radius by 2.5, giving center (5, 7.5) and radius 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L177",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "A circle has center (1, −2) and radius 3. It is translated by vector (−4, 5), then dilated by factor 4 about the origin. What are the final center and radius?",
+   "choices": [
+    "(−12, 12) and 12",
+    "(12, −12) and 12",
+    "(−3, 3) and 12",
+    "(−12, 12) and 3"
+   ],
+   "answer": "(−12, 12) and 12",
+   "rationale": "The translation gives center (−3, 3), and the dilation multiplies that center by 4 and the radius by 4, producing (−12, 12) and radius 12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L177",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "Two circles have radii 6 and 10. Their centers are first aligned by a translation. Which dilation factor about the common center maps the smaller circle onto the larger circle?",
+   "choices": [
+    "3/5",
+    "5/3",
+    "16",
+    "60"
+   ],
+   "answer": "5/3",
+   "rationale": "The dilation factor is the ratio of the larger radius to the smaller radius: 10 ÷ 6 = 5/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L177",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 177,
+   "format": "multiple_choice",
+   "prompt": "A circle has circumference 31.4 cm and diameter 10 cm. What is the ratio of its circumference to its diameter?",
+   "choices": [
+    "3.14",
+    "0.314",
+    "31.4",
+    "6.28"
+   ],
+   "answer": "3.14",
+   "rationale": "The ratio is 31.4 ÷ 10 = 3.14, illustrating the constant relationship C/d = π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L92",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "In a right triangle, let θ be an acute angle. Which ratio equals cos θ?",
+   "choices": [
+    "the adjacent leg divided by the hypotenuse",
+    "the opposite leg divided by the hypotenuse",
+    "the adjacent leg divided by the opposite leg",
+    "the opposite leg divided by the adjacent leg"
+   ],
+   "answer": "the adjacent leg divided by the hypotenuse",
+   "rationale": "Cosine is defined as the ratio of the adjacent leg to the hypotenuse: cos θ = adjacent/hypotenuse.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L92",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has sin θ = 1/2, a hypotenuse of 8 cm, and an opposite leg of x cm. What is x?",
+   "choices": [
+    "3 cm",
+    "4 cm",
+    "5 cm",
+    "6 cm"
+   ],
+   "answer": "4 cm",
+   "rationale": "Since sin θ = opposite/hypotenuse, 1/2 = x/8. Therefore, x = 4 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L92",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has cos θ = 3/5, an adjacent leg of 12 cm, and a hypotenuse of x cm. What is x?",
+   "choices": [
+    "15 cm",
+    "18 cm",
+    "20 cm",
+    "25 cm"
+   ],
+   "answer": "20 cm",
+   "rationale": "Since cos θ = adjacent/hypotenuse, 3/5 = 12/x. Cross-multiplication gives 3x = 60, so x = 20 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L92",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 92,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has tan θ = 2/3, an opposite leg of 10 cm, and an adjacent leg of x cm. What is x?",
+   "choices": [
+    "5 cm",
+    "10 cm",
+    "15 cm",
+    "20 cm"
+   ],
+   "answer": "15 cm",
+   "rationale": "Since tan θ = opposite/adjacent, 2/3 = 10/x. Cross-multiplication gives 2x = 30, so x = 15 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L72",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "An altitude from the right angle divides hypotenuse c into segments m and n, where m corresponds to leg a and n to leg b, and c=m+n. Which equation completes a proof using similar triangles?",
+   "choices": [
+    "a²+b²=hm+hn=h(m+n)=h²",
+    "h²=cm+cn=c(m+n)=c²",
+    "a²+b²=cm+cn=c(m+n)=c²",
+    "a²+b²=m²+n²=(m+n)²=c²"
+   ],
+   "answer": "a²+b²=cm+cn=c(m+n)=c²",
+   "rationale": "Similarity gives a²=cm and b²=cn. Adding yields a²+b²=c(m+n)=c², the Pythagorean theorem.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L72",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A triangle has side lengths 8, 15, and 17. Which statement correctly applies the converse of the Pythagorean theorem?",
+   "choices": [
+    "Since 8+15=17, the triangle is right.",
+    "Since 8²+15²=17², the triangle is right.",
+    "Since 8²+17²=15², the triangle is right.",
+    "Since 8²+15²>17², the triangle is obtuse."
+   ],
+   "answer": "Since 8²+15²=17², the triangle is right.",
+   "rationale": "Because 8²+15²=17², the converse of the Pythagorean theorem proves that the angle opposite the side of length 17 is a right angle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L72",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A triangle has side lengths 6, 7, and 8. What is its classification, and which comparison supports the answer?",
+   "choices": [
+    "Acute; 8²<6²+7²",
+    "Right; 8²=6²+7²",
+    "Obtuse; 8²>6²+7²",
+    "Obtuse; 6²<7²+8²"
+   ],
+   "answer": "Acute; 8²<6²+7²",
+   "rationale": "The longest side is 8, and 8²=64 is less than 6²+7²=85. Therefore, all three angles are acute.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L72",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A triangle has side lengths x, x, and 6. Which value of x makes the triangle right?",
+   "choices": [
+    "3",
+    "6",
+    "6√2",
+    "3√2"
+   ],
+   "answer": "3√2",
+   "rationale": "The side of length 6 must be the hypotenuse. Thus 2x²=36, so x²=18 and x=3√2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L219",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "In cyclic quadrilateral PQRS, angle P measures 70°. What is the measure of angle R?",
+   "choices": [
+    "70°",
+    "110°",
+    "180°",
+    "250°"
+   ],
+   "answer": "110°",
+   "rationale": "Opposite angles of a quadrilateral inscribed in a circle are supplementary, so angle R = 180° – 70° = 110°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Opposite angles of a cyclic quadrilateral are supplementary.",
+      "url": "https://en.wikipedia.org/wiki/Cyclic_quadrilateral",
+      "quote": "A convex quadrilateral ABCD is cyclic if and only if its opposite angles are supplementary , that is",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L219",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "To construct the incircle of triangle ABC, which point must be found first?",
+   "choices": [
+    "Intersection of the three angle bisectors",
+    "Intersection of the three perpendicular bisectors",
+    "Intersection of the three medians",
+    "Intersection of the three altitudes"
+   ],
+   "answer": "Intersection of the three angle bisectors",
+   "rationale": "The incenter, the center of the inscribed circle, is the point where the three angle bisectors of a triangle intersect.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The incenter of a triangle is the intersection of its three angle bisectors.",
+      "url": "https://en.wiktionary.org/wiki/incenter",
+      "quote": "The point formed at the intersection of the three angle bisectors of a triangle ; also the centre of the incircle .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L219",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "Which statement is always true for any quadrilateral inscribed in a circle?",
+   "choices": [
+    "Opposite angles are supplementary",
+    "Adjacent angles are supplementary",
+    "All sides are congruent",
+    "The diagonals are perpendicular"
+   ],
+   "answer": "Opposite angles are supplementary",
+   "rationale": "A fundamental property of cyclic quadrilaterals is that each pair of opposite angles sums to 180°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Opposite interior angles of a quadrilateral inscribed in a circle are supplementary.",
+      "url": "https://en.wikipedia.org/wiki/Concyclic_points",
+      "quote": "A quadrilateral ABCD with concyclic vertices is called a cyclic quadrilateral ; this happens if and only if ∠ CAD = ∠ CBD (the inscribed angle theorem ) which is true if and only if the opposite angles inside the quadrilateral are supplementary .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L219",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 219,
+   "format": "multiple_choice",
+   "prompt": "The circumcenter of triangle DEF is located at the intersection of which lines?",
+   "choices": [
+    "Perpendicular bisectors of the sides",
+    "Angle bisectors of the angles",
+    "Medians of the triangle",
+    "Altitudes of the triangle"
+   ],
+   "answer": "Perpendicular bisectors of the sides",
+   "rationale": "The circumcenter, the center of the circumscribed circle, is the point where the perpendicular bisectors of the three sides meet.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The circumcenter of a triangle is the intersection of the perpendicular bisectors of its sides.",
+      "url": "https://en.wikipedia.org/wiki/Midpoint",
+      "quote": "The three perpendicular bisectors of a triangle's three sides intersect at the circumcenter (the center of the circle through the three vertices).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L187",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "An inscribed angle in a circle intercepts an arc of 150°. Find the measure of the inscribed angle.",
+   "choices": [
+    "45°",
+    "75°",
+    "105°",
+    "150°"
+   ],
+   "answer": "75°",
+   "rationale": "By the inscribed angle theorem, the inscribed angle equals half the intercepted arc; 150° ÷ 2 = 75°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "An inscribed angle measures half the measure of its intercepted arc.",
+      "url": "https://en.wikipedia.org/wiki/Inscribed_angle",
+      "quote": "an angle θ inscribed in a circle is half of the central angle 2 θ that intercepts the same arc",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L187",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "A circle has a central angle of 80° that subtends arc XY. What is the measure of an inscribed angle that also subtends arc XY?",
+   "choices": [
+    "20°",
+    "40°",
+    "60°",
+    "80°"
+   ],
+   "answer": "40°",
+   "rationale": "The inscribed angle theorem states that an inscribed angle is half the measure of its intercepted central angle; half of 80° is 40°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "An inscribed angle measures half the measure of its intercepted arc.",
+      "url": "https://en.wikipedia.org/wiki/Inscribed_angle",
+      "quote": "The inscribed angle theorem states that an angle θ inscribed in a circle is half of the central angle 2 θ that intercepts the same arc on the circle.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L187",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Chord AB subtends an inscribed angle ACB of 30°. What is the measure of arc AB?",
+   "choices": [
+    "30°",
+    "45°",
+    "60°",
+    "90°"
+   ],
+   "answer": "60°",
+   "rationale": "An inscribed angle intercepts an arc twice its measure; 2 × 30° = 60°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "An intercepted arc measures twice the inscribed angle that subtends it.",
+      "url": "https://en.wikipedia.org/wiki/Inscribed_angle",
+      "quote": "The inscribed angle theorem states that an angle θ inscribed in a circle is half of the central angle 2 θ that intercepts the same arc on the circle.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L105",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "In a right triangle, the hypotenuse has length 12 and the side opposite angle θ has length 5. What is θ to the nearest tenth of a degree?",
+   "choices": [
+    "24.6°",
+    "65.4°",
+    "12.7°",
+    "45.0°"
+   ],
+   "answer": "24.6°",
+   "rationale": "Since sin θ = 5/12, θ = sin⁻¹(5/12) ≈ 24.6°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L105",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "In a right triangle, the hypotenuse has length 13 and the adjacent leg to angle θ has length 12. What is θ to the nearest tenth of a degree?",
+   "choices": [
+    "22.6°",
+    "67.4°",
+    "12.2°",
+    "60.0°"
+   ],
+   "answer": "22.6°",
+   "rationale": "Since cos θ = 12/13, θ = cos⁻¹(12/13) ≈ 22.6°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L105",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "In a right triangle, the side opposite angle θ has length 9 and the adjacent leg has length 12. What is θ to the nearest tenth of a degree?",
+   "choices": [
+    "36.9°",
+    "53.1°",
+    "9.0°",
+    "75.0°"
+   ],
+   "answer": "36.9°",
+   "rationale": "Since tan θ = 9/12, θ = tan⁻¹(9/12) ≈ 36.9°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L105",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has hypotenuse 25 and one leg 7. Find the missing leg and the smaller acute angle to the nearest tenth of a degree.",
+   "choices": [
+    "24.0 and 16.3°",
+    "7.0 and 16.3°",
+    "24.0 and 73.7°",
+    "18.0 and 28.1°"
+   ],
+   "answer": "24.0 and 16.3°",
+   "rationale": "The missing leg is √(25² − 7²) = 24, and the smaller angle is sin⁻¹(7/25) ≈ 16.3°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L125",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "If sin 30° = 0.5, what is cos 60°?",
+   "choices": [
+    "0.5",
+    "0.866",
+    "0.707",
+    "1.0"
+   ],
+   "answer": "0.5",
+   "rationale": "30° and 60° are complementary (30° + 60° = 90°). By the complementary-angle identity sin x = cos(90° − x), sin 30° = cos 60°, so cos 60° = 0.5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L125",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "For an acute angle θ, which expression equals sin θ?",
+   "choices": [
+    "cos(90°−θ)",
+    "cos θ",
+    "tan(90°−θ)",
+    "sec(90°−θ)"
+   ],
+   "answer": "cos(90°−θ)",
+   "rationale": "The complementary-angle relationship states sin θ = cos(90° − θ) for any acute θ. The other options involve different functions or the same angle and are not identities.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L125",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "In a right triangle, sin α = 3/5. Assuming α is acute, what is cos α?",
+   "choices": [
+    "4/5",
+    "3/5",
+    "5/4",
+    "1/5"
+   ],
+   "answer": "4/5",
+   "rationale": "Using the Pythagorean identity sin²α + cos²α = 1, cos²α = 1 − (3/5)² = 1 − 9/25 = 16/25, so cos α = 4/5 (positive for an acute angle).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L125",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "In a right triangle, the acute angles are A and B. If sin A = 0.6, what is cos B?",
+   "choices": [
+    "0.6",
+    "0.8",
+    "0.4",
+    "1.0"
+   ],
+   "answer": "0.6",
+   "rationale": "A and B are complementary (A + B = 90°). By the complementary-angle identity, cos B = sin A = 0.6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L52",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In right triangle ABC, ∠C = 90°, and CD is the altitude to hypotenuse AB. If AD = 9 and DB = 16, what is CD?",
+   "choices": [
+    "9",
+    "12",
+    "15",
+    "16"
+   ],
+   "answer": "12",
+   "rationale": "The altitude is the geometric mean of the two hypotenuse segments, so CD² = AD · DB = 9 · 16 = 144 and CD = 12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "In a right triangle, the altitude to the hypotenuse satisfies CD^2 = AD·DB.",
+      "url": "https://en.wikipedia.org/wiki/Right_triangle",
+      "quote": "The altitude to the hypotenuse is the geometric mean ( mean proportional ) of the two segments of the hypotenuse.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L52",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In right triangle ABC, ∠C = 90°, and CD is the altitude to hypotenuse AB. If AB = 25 and AD = 16, what is AC?",
+   "choices": [
+    "12",
+    "15",
+    "20",
+    "25"
+   ],
+   "answer": "20",
+   "rationale": "By similarity, AC² = AB · AD = 25 · 16 = 400, so AC = 20.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "In a right triangle, each leg is the geometric mean of the hypotenuse and the adjacent segment of the hypotenuse: AC^2 = AD·AB.",
+      "url": "https://en.wikipedia.org/wiki/Right_Triangle",
+      "quote": "Each leg of the triangle is the mean proportional of the hypotenuse and the segment of the hypotenuse that is adjacent to the leg.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L52",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In right triangle ABC, ∠C = 90°, and CD is the altitude to hypotenuse AB. If CD = 18 and AD = 12, what is DB?",
+   "choices": [
+    "27",
+    "30",
+    "36",
+    "12"
+   ],
+   "answer": "27",
+   "rationale": "The altitude relation is CD² = AD · DB. Thus DB = 18² ÷ 12 = 27.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L229",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "A sector of a circle with radius 5 m has a central angle of 60°. What is its area?",
+   "choices": [
+    "25π/6 m²",
+    "25π/3 m²",
+    "25π/2 m²",
+    "25π m²"
+   ],
+   "answer": "25π/6 m²",
+   "rationale": "Sector area = (θ/360)·πr² = (60/360)·25π = 25π/6 m².",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L229",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "An arc of length 3 cm on a circle of radius 2 cm subtends an angle of how many radians?",
+   "choices": [
+    "1.5 rad",
+    "0.75 rad",
+    "2 rad",
+    "3 rad"
+   ],
+   "answer": "1.5 rad",
+   "rationale": "Radian measure = arc length ÷ radius = 3 cm ÷ 2 cm = 1.5 rad.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L229",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "A circle of radius 10 cm has an arc of length 5π cm. What is the central angle in degrees?",
+   "choices": [
+    "90°",
+    "45°",
+    "180°",
+    "60°"
+   ],
+   "answer": "90°",
+   "rationale": "Arc length = (θ/360)·2πr ⇒ 5π = (θ/360)·20π ⇒ θ = 90°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "deepseek"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L229",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "A circle has radius 6 cm and a central angle of 120°. What is the length of the intercepted arc?",
+   "choices": [
+    "4π cm",
+    "8π cm",
+    "6π cm",
+    "12π cm"
+   ],
+   "answer": "4π cm",
+   "rationale": "Arc length = (θ/360)·2πr = (120/360)·12π = 4π cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Arc length equals the central angle divided by 360 degrees times the circle's circumference.",
+      "url": "https://en.wikipedia.org/wiki/Circular_arc",
+      "quote": "measure of angle in degrees/360° = L /circumference.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L115",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "A student standing on level ground looks from a point on the ground toward the top of a tower. Which named angle is formed between the horizontal ground and the line of sight?",
+   "choices": [
+    "angle of depression",
+    "angle of elevation",
+    "complementary angle",
+    "vertical angle"
+   ],
+   "answer": "angle of elevation",
+   "rationale": "The angle measured upward from a horizontal line to the top of the tower is the angle of elevation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L115",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "A straight path climbs 6 metres over a horizontal distance of 18 metres. Which equation correctly models its angle of elevation θ?",
+   "choices": [
+    "sin θ = 1/3",
+    "cos θ = 1/3",
+    "tan θ = 3",
+    "tan θ = 1/3"
+   ],
+   "answer": "tan θ = 1/3",
+   "rationale": "Tangent is the ratio of vertical rise to horizontal run, so tan θ = 6/18 = 1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L115",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "A ramp 10 m long makes a 15° angle of elevation with the ground. Which expression gives the vertical rise of the ramp?",
+   "choices": [
+    "10 sin 15°",
+    "10 cos 15°",
+    "10 tan 15°",
+    "10 / sin 15°"
+   ],
+   "answer": "10 sin 15°",
+   "rationale": "The vertical rise is the side opposite the 15° angle; with hypotenuse 10 m, opposite = hypotenuse × sin θ = 10 sin 15°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "For the ramp’s right triangle, sin 15° = opposite/hypotenuse = rise/10.",
+      "url": "https://en.wikipedia.org/wiki/Right_triangle",
+      "quote": "The trigonometric functions for acute angles can be defined as ratios of the sides of a right triangle.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L294",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Point P divides segment AB with A(2,3) and B(8,7) in the ratio 2:3 measured from A toward B. What are the coordinates of P?",
+   "choices": [
+    "(22/5, 23/5)",
+    "(14/5, 19/5)",
+    "(28/5, 31/5)",
+    "(16/5, 21/5)"
+   ],
+   "answer": "(22/5, 23/5)",
+   "rationale": "Using the section formula, P = A + (2/5)(B−A) = (2,3) + (2/5)(6,4) = (22/5, 23/5).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L294",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Point Q divides segment CD with C(-4,1) and D(5,-3) in the ratio 3:1 from C to D. What are the coordinates of Q?",
+   "choices": [
+    "(11/4, -2)",
+    "(7/4, -1)",
+    "(15/4, -3)",
+    "(9/4, -2)"
+   ],
+   "answer": "(11/4, -2)",
+   "rationale": "Applying the section formula, Q = C + (3/4)(D−C) = (-4,1) + (3/4)(9,-4) = (11/4, -2).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L294",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Find the area of the triangle with vertices (0,0), (6,0), and (2,5).",
+   "choices": [
+    "15",
+    "12",
+    "18",
+    "20"
+   ],
+   "answer": "15",
+   "rationale": "Shoelace formula gives area = 1/2|0·0 + 6·5 + 2·0 − (0·6 + 0·2 + 5·0)| = 15.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L294",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Find the perimeter of the rectangle with vertices (1,1), (1,5), (6,5), and (6,1).",
+   "choices": [
+    "18",
+    "16",
+    "20",
+    "22"
+   ],
+   "answer": "18",
+   "rationale": "Side lengths are 4 (vertical) and 5 (horizontal); perimeter = 2(4+5) = 18.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L336",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "A cone and a cylinder have the same radius and perpendicular height. What is the ratio of the cone’s volume to the cylinder’s volume?",
+   "choices": [
+    "1/3",
+    "1/2",
+    "2/3",
+    "1"
+   ],
+   "answer": "1/3",
+   "rationale": "A cone has one-third the volume of a cylinder with the same radius and height because V_cone = (1/3)πr²h, while V_cylinder = πr²h.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L336",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "A rectangular pyramid has a base measuring 8 cm by 6 cm and a perpendicular height of 10 cm. What is its volume?",
+   "choices": [
+    "144 cm³",
+    "160 cm³",
+    "240 cm³",
+    "480 cm³"
+   ],
+   "answer": "160 cm³",
+   "rationale": "The volume is V = (1/3)Bh = (1/3)(8 × 6)(10) = 160 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L336",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "A sphere has radius 5 cm. What is its exact volume?",
+   "choices": [
+    "125π/3 cm³",
+    "500π/3 cm³",
+    "500π cm³",
+    "1000π/3 cm³"
+   ],
+   "answer": "500π/3 cm³",
+   "rationale": "Using V = (4/3)πr³, the volume is (4/3)π(5³) = 500π/3 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L336",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "A cone and a pyramid have equal base areas and equal perpendicular heights. Which conclusion follows from Cavalieri’s principle?",
+   "choices": [
+    "Their volumes are equal.",
+    "The pyramid has twice their volume.",
+    "The cone has twice their volume.",
+    "The pyramid has one-third their volume."
+   ],
+   "answer": "Their volumes are equal.",
+   "rationale": "At every distance from the apex, corresponding parallel cross-sections of the cone and pyramid have equal areas, so Cavalieri’s principle gives equal volumes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L62",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "At the same time, a 1.8-meter pole casts a 2.4-meter shadow, and a building casts a 12-meter shadow. Using similar triangles, what is the building’s height?",
+   "choices": [
+    "6 meters",
+    "7.5 meters",
+    "9 meters",
+    "10.8 meters"
+   ],
+   "answer": "9 meters",
+   "rationale": "The height-to-shadow ratios are equal, so 1.8/2.4 = h/12. Thus h = 12(0.75) = 9 meters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L62",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A scale model of a town uses a scale of 1 cm : 20 m. A library is 7.5 cm long on the model. What is the library’s actual length?",
+   "choices": [
+    "150 m",
+    "15 m",
+    "1.5 m",
+    "375 m"
+   ],
+   "answer": "150 m",
+   "rationale": "At the scale 1 cm : 20 m, each model centimetre represents 20 actual metres. Therefore, 7.5 cm represents 7.5 × 20 = 150 m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L62",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "To estimate a tree’s height, a student uses a vertical mirror on level ground. Her eyes are 1.6 m above the ground and she stands 3 m from the mirror; the tree is 12 m beyond it. She moves until her eye level and the tree’s top are aligned in the mirror. How tall is the tree?",
+   "choices": [
+    "3.2 m",
+    "4.8 m",
+    "6.4 m",
+    "8.0 m"
+   ],
+   "answer": "6.4 m",
+   "rationale": "Equal reflection angles create similar triangles, so the tree’s height divided by 12 equals 1.6 divided by 3. The tree’s height is 12 × 1.6/3 = 6.4 m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L40",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "In triangle PQR, M and N are midpoints of PQ and PR. If MN = 8 cm, what is QR?",
+   "choices": [
+    "16 cm",
+    "8 cm",
+    "12 cm",
+    "4 cm"
+   ],
+   "answer": "16 cm",
+   "rationale": "The midsegment theorem says a segment joining midpoints of two sides is half the length of the third side, so QR = 2·MN = 16 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A triangle midsegment is half the length of the third side.",
+      "url": "https://en.wikipedia.org/wiki/Midpoint",
+      "quote": "It is parallel to the third side and has a length equal to one half of that third side.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L40",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, DE ∥ BC with D on AB and E on AC. AD = 3, DB = 5, AE = 4.5. Find EC.",
+   "choices": [
+    "7.5",
+    "6.0",
+    "9.0",
+    "5.0"
+   ],
+   "answer": "7.5",
+   "rationale": "By the triangle proportionality theorem, AD/DB = AE/EC. Substituting gives 3/5 = 4.5/EC, so EC = (4.5·5)/3 = 7.5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "When DE is parallel to BC, the triangle proportionality theorem gives AD/DB = AE/EC.",
+      "url": "https://en.wikipedia.org/wiki/Basic_Proportionality_Theorem",
+      "quote": ", then each parallel contains more than one line segment and the ratio of two line segments on one parallel equals the ratio of the according line segments on the other parallel.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L40",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, points D and E lie on sides AB and AC. If AD = 9, DB = 6, AE = 6, and EC = 4, which conclusion must be true?",
+   "choices": [
+    "DE is parallel to BC",
+    "DE is perpendicular to BC",
+    "D and E are midpoints",
+    "DE is equal in length to BC"
+   ],
+   "answer": "DE is parallel to BC",
+   "rationale": "AD/DB = 9/6 = 3/2 and AE/EC = 6/4 = 3/2. By the converse of the triangle proportionality theorem, DE is parallel to BC.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L366",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "A convex polyhedron has two congruent triangular faces and three congruent rectangular faces. What is the solid?",
+   "choices": [
+    "A triangular prism",
+    "A square pyramid",
+    "A triangular pyramid",
+    "A pentagonal prism"
+   ],
+   "answer": "A triangular prism",
+   "rationale": "A triangular prism has two congruent triangular bases joined by three congruent rectangular faces.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L366",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "A square pyramid has 5 vertices, 8 edges, and 5 faces. What is the value of V − E + F?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "2",
+   "rationale": "Substituting the values gives V − E + F = 5 − 8 + 5 = 2, as Euler’s formula requires.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L366",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 366,
+   "format": "multiple_choice",
+   "prompt": "A convex solid has six congruent square faces, with three faces meeting at every vertex. Which solid is it?",
+   "choices": [
+    "Cube",
+    "Octahedron",
+    "Tetrahedron",
+    "Icosahedron"
+   ],
+   "answer": "Cube",
+   "rationale": "A cube has six congruent square faces and three faces meeting at every vertex, so it is a Platonic solid.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L10",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "polynomials",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "In a proof, you dilate triangle ABC about point D with scale factor k to obtain triangle A'B'C'. Which property can you conclude?",
+   "choices": [
+    "Triangle A'B'C' is similar to triangle ABC.",
+    "Triangle A'B'C' is congruent to triangle ABC.",
+    "Triangle A'B'C' has the same area as triangle ABC.",
+    "Triangle A'B'C' has the same orientation as triangle ABC."
+   ],
+   "answer": "Triangle A'B'C' is similar to triangle ABC.",
+   "rationale": "A dilation produces a similar figure; corresponding angles are congruent and sides are proportional, so the triangles are similar.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A dilation with nonzero scale factor produces a similar figure with all corresponding lengths multiplied by the absolute value of the scale factor.",
+      "url": "https://en.wikipedia.org/wiki/Scaling_(geometry)",
+      "quote": "The result of uniform scaling is similar (in the geometric sense) to the original.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L241",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "A circle has radius 10 cm and a central angle of 60°. What is the area of the corresponding circular segment?",
+   "choices": [
+    "100π/6 - 25√3",
+    "100π/6 - 50√3",
+    "100π/3 - 25√3",
+    "100π/6 + 25√3"
+   ],
+   "answer": "100π/6 - 25√3",
+   "rationale": "The segment area equals the sector area (60/360 × π × 10² = 100π/6) minus the triangle area (½ × 10² × sin 60° = 25√3).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L241",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Two concentric circles have radii 8 cm and 5 cm. Find the area of the annular region between them.",
+   "choices": [
+    "39π square units",
+    "39π/2 square units",
+    "89π square units",
+    "11π square units"
+   ],
+   "answer": "39π square units",
+   "rationale": "Annulus area = π(R² − r²) = π(8² − 5²) = π(64 − 25) = 39π.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L241",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "A circle of radius 6 cm has a central angle of 120°. Determine the area of the circular segment.",
+   "choices": [
+    "12π - 9√3",
+    "12π - 18√3",
+    "24π - 9√3",
+    "12π + 9√3"
+   ],
+   "answer": "12π - 9√3",
+   "rationale": "Sector area = (120/360) × π × 6² = 12π. Triangle area = ½ × 6² × sin 120° = 9√3. Segment = 12π − 9√3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L241",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "The outer radius of a ring is 10 cm and the inner radius is 7 cm. What is the area of the ring?",
+   "choices": [
+    "51π square units",
+    "51π/2 square units",
+    "149π square units",
+    "3π square units"
+   ],
+   "answer": "51π square units",
+   "rationale": "Ring area = π(R² − r²) = π(10² − 7²) = π(100 − 49) = 51π.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L398",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "polynomials",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Two similar solids have a linear scale factor of 3. What is the ratio of their surface areas?",
+   "choices": [
+    "3",
+    "9",
+    "27",
+    "81"
+   ],
+   "answer": "9",
+   "rationale": "Surface area scales with the square of the linear scale factor: 3^2 = 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L398",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "polynomials",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "The linear dimensions of Solid A are twice those of Solid B. How many times larger is the volume of A compared to B?",
+   "choices": [
+    "2",
+    "4",
+    "8",
+    "16"
+   ],
+   "answer": "8",
+   "rationale": "Volume scales with the cube of the linear scale factor: 2^3 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L398",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "polynomials",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Two similar pyramids have surface areas 50 cm² and 200 cm². What is the linear scale factor from the smaller to the larger pyramid?",
+   "choices": [
+    "1.5",
+    "2",
+    "2.5",
+    "3"
+   ],
+   "answer": "2",
+   "rationale": "Surface‑area ratio is 200/50 = 4; the linear scale factor is the square root of 4, which is 2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L398",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "polynomials",
+   "level": 398,
+   "format": "multiple_choice",
+   "prompt": "Two similar spheres have volumes in the ratio 27 : 1. What is the ratio of their surface areas?",
+   "choices": [
+    "3",
+    "6",
+    "9",
+    "12"
+   ],
+   "answer": "9",
+   "rationale": "Volume ratio = k^3 = 27 ⇒ k = 3. Surface‑area ratio = k^2 = 3^2 = 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L209",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "After drawing the circle with diameter OP, the intersection points with the original circle are the points of tangency. Which theorem justifies that PT is tangent?",
+   "choices": [
+    "An angle inscribed in a semicircle is a right angle.",
+    "The two radii to the intersection points are congruent.",
+    "The triangles formed are congruent by side‑side‑side.",
+    "The distances from P to the intersections are equal."
+   ],
+   "answer": "An angle inscribed in a semicircle is a right angle.",
+   "rationale": "Because OP is a diameter of the auxiliary circle, any angle subtended by it (e.g., ∠OTP) is a right angle; a radius drawn to a point of tangency is perpendicular to the tangent, confirming PT is tangent.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "An angle inscribed in a semicircle is a right angle, so OT is perpendicular to PT and PT is tangent to the circle.",
+      "url": "https://en.wikipedia.org/wiki/Circle",
+      "quote": "An inscribed angle subtended by a diameter is a right angle (see Thales' theorem ).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L418",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "A standard geometry textbook is about 2 cm tall. Which estimate best matches its height?",
+   "choices": [
+    "20 mm",
+    "2 mm",
+    "200 mm",
+    "20 cm"
+   ],
+   "answer": "20 mm",
+   "rationale": "Since 1 cm equals 10 mm, 2 cm equals 20 mm, a reasonable textbook height.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L418",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "A rectangular patio measures 8 m by 12 m. Which estimate is closest to its area?",
+   "choices": [
+    "20 m²",
+    "80 m²",
+    "100 m²",
+    "200 m²"
+   ],
+   "answer": "100 m²",
+   "rationale": "The area is 8 × 12 = 96 m², so 100 m² is the closest estimate.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L418",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "A box measures 50 cm by 40 cm by 30 cm. About how many liters does it hold?",
+   "choices": [
+    "6 liters",
+    "60 liters",
+    "600 liters",
+    "6,000 liters"
+   ],
+   "answer": "60 liters",
+   "rationale": "Its volume is 60,000 cm³. Since 1 liter equals 1,000 cm³, the capacity is 60 liters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L418",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "A rectangle measures 9 cm by 4 cm. A student reports its area as 360 cm². Which check best identifies the error?",
+   "choices": [
+    "Multiply: 9 × 4 = 36, so 360 is ten times too large.",
+    "Add: 9 + 4 = 13, so 360 is much too large.",
+    "Multiply: 9 × 4 = 36, so 360 is ten times too small.",
+    "Add: 9 + 4 = 13, so 360 is close to correct."
+   ],
+   "answer": "Multiply: 9 × 4 = 36, so 360 is ten times too large.",
+   "rationale": "Rectangle area is base times height, so 9 × 4 = 36 cm²; the reported 360 cm² is ten times too large.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L314",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "Which point satisfies the circle equation (x − 2)² + (y + 1)² = 25?",
+   "choices": [
+    "(7, −1)",
+    "(6, 1)",
+    "(3, 4)",
+    "(−2, −2)"
+   ],
+   "answer": "(7, −1)",
+   "rationale": "For (7, −1), the equation gives 5² + 0² = 25, so the point lies on the circle. The other choices give 20, 26, and 17.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L314",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "A circle has center (−1, 3) and passes through (2, 7). Which equation represents this circle?",
+   "choices": [
+    "(x − 1)² + (y + 3)² = 25",
+    "(x + 1)² + (y − 3)² = 25",
+    "(x + 1)² + (y − 3)² = 16",
+    "(x − 1)² + (y − 3)² = 25"
+   ],
+   "answer": "(x + 1)² + (y − 3)² = 25",
+   "rationale": "The radius squared is (2 + 1)² + (7 − 3)² = 9 + 16 = 25. With center (−1, 3), the equation is (x + 1)² + (y − 3)² = 25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L314",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 314,
+   "format": "multiple_choice",
+   "prompt": "For A(0, 0), B(6, 0), C(5, 3), and D(1, 3), which calculation best disproves that ABCD is a rectangle?",
+   "choices": [
+    "AB · BC = −6, so adjacent sides are not perpendicular.",
+    "BC and AD have equal lengths of √10.",
+    "AB is parallel to CD.",
+    "The diagonals AC and BD have equal lengths of √34."
+   ],
+   "answer": "AB · BC = −6, so adjacent sides are not perpendicular.",
+   "rationale": "A rectangle must have perpendicular adjacent sides. Since AB = (6, 0) and BC = (−1, 3), their dot product is −6, not 0, so ABCD is not a rectangle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L440",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Among 80 students, 30 study math, 25 science, and 20 history. The pairwise overlap counts are 10 (math–science), 8 (math–history), and 5 (science–history), including students in all three. Exactly 3 study all three. How many study at least one subject?",
+   "choices": [
+    "50 students",
+    "55 students",
+    "58 students",
+    "62 students"
+   ],
+   "answer": "55 students",
+   "rationale": "Inclusion-exclusion gives 30 + 25 + 20 − 10 − 8 − 5 + 3 = 55 students.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L440",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "In a survey, 40 people use A, 30 use B, and 25 use C. The overlap counts are 10 for A∩B, 8 for A∩C, and 6 for B∩C; each includes the 3 people in all three sets. How many people use A only?",
+   "choices": [
+    "22 people",
+    "25 people",
+    "28 people",
+    "32 people"
+   ],
+   "answer": "25 people",
+   "rationale": "The number using A only is 40 − 10 − 8 + 3 = 25 people.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L440",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "Of 100 students, 60 play a sport, 45 join drama, and 30 join choir. The overlap counts are 18 sport–drama, 15 sport–choir, and 10 drama–choir, with 5 in all three groups. What is the probability that a randomly chosen student is in at least one group?",
+   "choices": [
+    "0.87",
+    "0.92",
+    "0.95",
+    "0.97"
+   ],
+   "answer": "0.97",
+   "rationale": "The union has 60 + 45 + 30 − 18 − 15 − 10 + 5 = 97 students, so the probability is 97/100 = 0.97.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L440",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 440,
+   "format": "multiple_choice",
+   "prompt": "In a class, 50 students read type A books, 40 type B, and 30 type C. Pairwise overlap counts are 12 for A–B, 10 for A–C, and 8 for B–C, including the 4 students who read all three. How many students read exactly two types?",
+   "choices": [
+    "14 students",
+    "16 students",
+    "18 students",
+    "22 students"
+   ],
+   "answer": "18 students",
+   "rationale": "Exactly two equals (12 − 4) + (10 − 4) + (8 − 4) = 18 students.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L157",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Find the area of a triangle with side lengths 5, 6, and 7 using Heron's formula.",
+   "choices": [
+    "14.70",
+    "12.25",
+    "18.00",
+    "10.39"
+   ],
+   "answer": "14.70",
+   "rationale": "s = (5+6+7)/2 = 9; Area = sqrt(9*4*3*2) = sqrt(216) ≈ 14.70.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L157",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "A triangle has sides 9, 12, 15. Heron's formula gives area 54. What must sin C be if the area is also computed as ½·9·12·sin C?",
+   "choices": [
+    "1.00",
+    "0.50",
+    "0.71",
+    "0.87"
+   ],
+   "answer": "1.00",
+   "rationale": "Set 54 = 0.5*9*12*sin C → sin C = 108/108 = 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L157",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Compute the area of a triangle with side lengths 8, 15, 17 using Heron's formula.",
+   "choices": [
+    "60.0",
+    "48.0",
+    "72.0",
+    "54.0"
+   ],
+   "answer": "60.0",
+   "rationale": "s = (8+15+17)/2 = 20; Area = sqrt(20*12*5*3) = sqrt(3600) = 60.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L135",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, sides a, b, and c are opposite A, B, and C. Which equation results from setting the three triangle-area formulas equal and simplifying?",
+   "choices": [
+    "a/sin A = b/sin B = c/sin C",
+    "a cos A = b cos B = c cos C",
+    "a tan A = b tan B = c tan C",
+    "a sin A = b sin B = c sin C"
+   ],
+   "answer": "a/sin A = b/sin B = c/sin C",
+   "rationale": "Equating the area formulas gives b sin A = a sin B and a sin C = c sin B, which simplifies to a/sin A = b/sin B = c/sin C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L135",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, angle A = 40°, angle B = 70°, and side a = 12. Which expression gives the length of side b using the Law of Sines?",
+   "choices": [
+    "b = 12 * sin 70° / sin 40°",
+    "b = 12 * sin 40° / sin 70°",
+    "b = 12 * sin 70° / sin 110°",
+    "b = 12 * sin 110° / sin 40°"
+   ],
+   "answer": "b = 12 * sin 70° / sin 40°",
+   "rationale": "The Law of Sines states a/sin A = b/sin B. Solving for b gives b = a * sin B / sin A = 12 * sin 70° / sin 40°.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L135",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 135,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, side a = 7, side b = 10, and angle B = 45°. What is the measure of angle A to the nearest degree?",
+   "choices": [
+    "30°",
+    "45°",
+    "60°",
+    "150°"
+   ],
+   "answer": "30°",
+   "rationale": "By the Law of Sines, sin A = a sin B / b = 7 * sin 45° / 10 ≈ 0.495, so A ≈ 30°. The supplement 150° would make A + B > 180°, which is impossible.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L388",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "Plane A: x + y + z = 1. Plane B: x − y = 0. Determine the relationship between A and B.",
+   "choices": [
+    "They are parallel",
+    "They intersect at 45°",
+    "They are perpendicular",
+    "They coincide"
+   ],
+   "answer": "They are perpendicular",
+   "rationale": "The normal vectors ⟨1,1,1⟩ and ⟨1,−1,0⟩ have a dot product of 0, indicating the planes are perpendicular.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Planes are perpendicular when their normal vectors are perpendicular.",
+      "url": "https://en.wikipedia.org/wiki/Perpendicular",
+      "quote": "Two planes in space are said to be perpendicular if the dihedral angle at which they meet is a right angle.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L388",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "Line L1: (x, y, z) = (1, 2, 3) + t(2, -1, 4). Line L2: (x, y, z) = (4, 0, -1) + s( -4, 2, -8). How are L1 and L2 related?",
+   "choices": [
+    "Parallel",
+    "Intersecting",
+    "Skew",
+    "Perpendicular"
+   ],
+   "answer": "Parallel",
+   "rationale": "L2's direction vector is -2 times L1's direction vector, so the lines have the same direction and are parallel (they are distinct because the points differ).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L503",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A student chooses one of 2 shirts, one of 3 pairs of pants, and one jacket. How many different outfits can be made?",
+   "choices": [
+    "5 ways",
+    "6 ways",
+    "7 ways",
+    "12 ways"
+   ],
+   "answer": "6 ways",
+   "rationale": "By the fundamental counting principle, multiply the independent choices: 2 × 3 × 1 = 6 outfits.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L503",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A shelf has 5 different books. In how many ways can a student select and arrange 3 books in a row?",
+   "choices": [
+    "10 ways",
+    "15 ways",
+    "60 ways",
+    "120 ways"
+   ],
+   "answer": "60 ways",
+   "rationale": "Since order matters, use permutations: 5 × 4 × 3 = 60 arrangements.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L503",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "In how many ways can a class of 7 students choose a committee of 3 students if order does not matter?",
+   "choices": [
+    "21 ways",
+    "30 ways",
+    "35 ways",
+    "42 ways"
+   ],
+   "answer": "35 ways",
+   "rationale": "Since order does not matter, use combinations: C(7,3) = 7!/(3!4!) = 35 committees.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L503",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A bag contains 4 red, 3 blue, and 2 green tiles. Two tiles are drawn without replacement. What is the probability that both are red?",
+   "choices": [
+    "1/6",
+    "2/9",
+    "1/3",
+    "4/9"
+   ],
+   "answer": "1/6",
+   "rationale": "There are C(4,2) = 6 ways to choose two red tiles and C(9,2) = 36 total pairs, so the probability is 6/36 = 1/6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L460",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "A bag contains 4 red, 6 blue, and 10 green marbles. One marble is drawn at random. What is the probability of drawing a red or blue marble?",
+   "choices": [
+    "1/5",
+    "1/2",
+    "3/5",
+    "7/10"
+   ],
+   "answer": "1/2",
+   "rationale": "Drawing red and drawing blue are mutually exclusive, so add their counts: (4+6)/20=1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L460",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "In a class of 30 students, 18 play chess, 15 play soccer, and 5 play both. What is the probability that a randomly chosen student plays chess or soccer?",
+   "choices": [
+    "1/6",
+    "11/15",
+    "23/30",
+    "14/15"
+   ],
+   "answer": "14/15",
+   "rationale": "The events overlap, so use P(C or S)=P(C)+P(S)-P(C and S)=(18+15-5)/30=14/15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L460",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "A spinner has 5 red, 3 blue, and 2 yellow sections. What is the probability that the spinner does not land on yellow?",
+   "choices": [
+    "1/5",
+    "4/5",
+    "3/5",
+    "2/5"
+   ],
+   "answer": "4/5",
+   "rationale": "Use the complement rule: 1-P(yellow)=1-2/10=8/10=4/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L460",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 460,
+   "format": "multiple_choice",
+   "prompt": "Counts are: 9th grade—club 12, no club 8; 10th grade—club 10, no club 10. If one of the 40 students is chosen, what is the probability that the student is in 10th grade or in a club?",
+   "choices": [
+    "1/4",
+    "1/2",
+    "3/4",
+    "4/5"
+   ],
+   "answer": "4/5",
+   "rationale": "There are 20 tenth graders and 22 club members, including 10 in both groups. Thus the union has 20+22-10=32 students, giving 32/40=4/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L493",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "A student has a 60% chance of attending class and, independently, an 80% chance of passing a quiz. What is the probability that the student both attends class and passes the quiz?",
+   "choices": [
+    "0.12",
+    "0.48",
+    "0.80",
+    "1.40"
+   ],
+   "answer": "0.48",
+   "rationale": "For independent events, multiply their probabilities: 0.60 × 0.80 = 0.48.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L493",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "For events A and B, P(A) = 0.30 and P(B given A) = 0.40. What is the probability that both A and B occur?",
+   "choices": [
+    "0.07",
+    "0.12",
+    "0.40",
+    "0.70"
+   ],
+   "answer": "0.12",
+   "rationale": "The general multiplication rule gives P(A and B) = P(A)P(B given A) = 0.30 × 0.40 = 0.12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L493",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "A bag contains 3 blue and 3 green tiles. Two tiles are drawn randomly without replacement. What is the probability of drawing blue first and green second?",
+   "choices": [
+    "1/4",
+    "3/10",
+    "1/2",
+    "9/25"
+   ],
+   "answer": "3/10",
+   "rationale": "After a blue tile is drawn, 3 of the 5 remaining tiles are green, so the probability is (3/6)(3/5) = 3/10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L493",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 493,
+   "format": "multiple_choice",
+   "prompt": "In a probability tree, P(A) = 0.20, P(B given A) = 0.50, and P(B given not A) = 0.30. What is the total probability that B occurs?",
+   "choices": [
+    "0.10",
+    "0.24",
+    "0.34",
+    "0.54"
+   ],
+   "answer": "0.34",
+   "rationale": "Add the probabilities of the two paths ending at B: (0.20)(0.50) + (0.80)(0.30) = 0.34.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L356",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "A rectangular prism has length 8 cm, width 5 cm, and height 3 cm. What is its total surface area?",
+   "choices": [
+    "158 cm²",
+    "78 cm²",
+    "118 cm²",
+    "80 cm²"
+   ],
+   "answer": "158 cm²",
+   "rationale": "Total surface area is 2(lw + lh + wh) = 2(40 + 24 + 15) = 158 cm².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L356",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 6 cm and height 4 cm. What is its lateral surface area, excluding both circular bases?",
+   "choices": [
+    "48π cm²",
+    "120π cm²",
+    "24π cm²",
+    "96π cm²"
+   ],
+   "answer": "48π cm²",
+   "rationale": "Lateral surface area is 2πrh = 2π(6)(4) = 48π cm².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L356",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "A square pyramid’s net consists of a square with side length 8 units and four congruent triangles, each with base 8 units and perpendicular height 6 units. What is its total surface area?",
+   "choices": [
+    "96 square units",
+    "160 square units",
+    "120 square units",
+    "64 square units"
+   ],
+   "answer": "160 square units",
+   "rationale": "The square has area 64, and each triangle has area 24. Thus, the total is 64 + 4(24) = 160 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L356",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 356,
+   "format": "multiple_choice",
+   "prompt": "A cone and a sphere each have radius 3 units. The cone’s slant height is 5 units. What is the difference between their total surface areas?",
+   "choices": [
+    "12π square units",
+    "60π square units",
+    "24π square units",
+    "36π square units"
+   ],
+   "answer": "12π square units",
+   "rationale": "The cone’s total area is π(3)(3 + 5) = 24π, while the sphere’s area is 4π(3²) = 36π. The difference is 12π square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L261",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Which point lies on the circle (x-4)^2 + (y+2)^2 = 9?",
+   "choices": [
+    "(7, -2)",
+    "(4, 2)",
+    "(1, 1)",
+    "(0, -2)"
+   ],
+   "answer": "(7, -2)",
+   "rationale": "The circle has center (4, -2) and radius 3. Point (7, -2) is 3 units right of the center, satisfying the equation; the other points are farther away.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L261",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "A circle has center (2, -3) and passes through (5, 1). Which equation represents this circle?",
+   "choices": [
+    "(x - 2)^2 + (y + 3)^2 = 25",
+    "(x + 2)^2 + (y - 3)^2 = 25",
+    "(x - 2)^2 + (y + 3)^2 = 13",
+    "(x + 2)^2 + (y - 3)^2 = 13"
+   ],
+   "answer": "(x - 2)^2 + (y + 3)^2 = 25",
+   "rationale": "The radius is the distance from (2, -3) to (5, 1), so r² = (5 - 2)² + (1 + 3)² = 25. Using the center gives (x - 2)² + (y + 3)² = 25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L261",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "After completing the square, what are the center and radius of x² - 6x + y² + 8y = 3?",
+   "choices": [
+    "Center (3, -4), radius 2√7",
+    "Center (-3, 4), radius 2√7",
+    "Center (3, -4), radius √13",
+    "Center (-3, 4), radius √13"
+   ],
+   "answer": "Center (3, -4), radius 2√7",
+   "rationale": "Completing the square gives (x - 3)² + (y + 4)² = 28. Thus the center is (3, -4), and the radius is √28 = 2√7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L261",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 261,
+   "format": "multiple_choice",
+   "prompt": "Which statement describes the graph of (x + 1)² + (y - 5)² = 16?",
+   "choices": [
+    "It is the set of points 4 units from (-1, 5).",
+    "It is the set of points 16 units from (-1, 5).",
+    "It is the set of points inside 4 units from (-1, 5).",
+    "It is the set of points 4 units from (1, -5)."
+   ],
+   "answer": "It is the set of points 4 units from (-1, 5).",
+   "rationale": "The equation has center (-1, 5) and radius √16 = 4. Its graph is the set of all points exactly 4 units from that center.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L525",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, D and E are the midpoints of AB and AC, so DE is parallel to BC. If the perimeter of ABC is 46 units and BC is 18 units, what is the perimeter of triangle ADE?",
+   "choices": [
+    "20 units",
+    "23 units",
+    "28 units",
+    "32 units"
+   ],
+   "answer": "23 units",
+   "rationale": "By the midpoint theorem, DE = 9 units, and AD + AE = (46 - 18)/2 = 14 units. Thus, the perimeter of ADE is 14 + 9 = 23 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L525",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "In triangle ABC, D lies on BC, and E is the midpoint of AC. The areas of triangles ABD and ADC are 18 and 30 square units. What is the area of triangle BDE?",
+   "choices": [
+    "6 square units",
+    "9 square units",
+    "12 square units",
+    "15 square units"
+   ],
+   "answer": "9 square units",
+   "rationale": "The total area is 48 square units, and BD is 3/8 of BC. Since E is the midpoint of AC, its height above BC is half A's height. Therefore, the area of BDE is (3/8)(1/2)(48) = 9 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L525",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "linear_eq",
+   "level": 525,
+   "format": "multiple_choice",
+   "prompt": "In trapezoid ABCD, AB is parallel to CD, with AB = 4 units and CD = 8 units. Diagonals AC and BD intersect at O. If triangle ABO has area 30 square units, what is the area of triangle CDO?",
+   "choices": [
+    "60 square units",
+    "90 square units",
+    "120 square units",
+    "150 square units"
+   ],
+   "answer": "120 square units",
+   "rationale": "Triangles ABO and CDO are similar with side ratio 4:8, or 1:2. Their area ratio is therefore 1:4, so the area of CDO is 4 times 30, giving 120 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L304",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "Find the area of the triangle with vertices (0,0), (4,0), and (0,3) using the shoelace formula.",
+   "choices": [
+    "6 square units",
+    "12 square units",
+    "3 square units",
+    "9 square units"
+   ],
+   "answer": "6 square units",
+   "rationale": "Shoelace sum = (0·0 + 4·3 + 0·0) − (0·4 + 0·0 + 3·0) = 12. Area = 12/2 = 6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L304",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "A rectangle has vertices (1, 2), (6, 2), (6, 5), and (1, 5), listed in order. What is its area using the shoelace formula?",
+   "choices": [
+    "12 square units",
+    "15 square units",
+    "20 square units",
+    "25 square units"
+   ],
+   "answer": "15 square units",
+   "rationale": "The shoelace formula gives one-half of |(1·2+6·5+6·5+1·2)−(2·6+2·6+5·1+5·1)| = 15 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L304",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "A polygon’s vertices are (0, 0), (0, 2), (2, 5), (5, 3), and (4, 0), listed clockwise. What area does the shoelace formula give?",
+   "choices": [
+    "15 square units",
+    "17.5 square units",
+    "18.5 square units",
+    "35 square units"
+   ],
+   "answer": "17.5 square units",
+   "rationale": "The two shoelace sums are 6 and 41, so the area is ½|6−41| = 17.5 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L304",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "slope_lines",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "A trapezoid has vertices (0, 0), (8, 0), (5, 3), and (0, 3). Using the shoelace formula and checking by decomposition, what is its area?",
+   "choices": [
+    "15 square units",
+    "18 square units",
+    "19.5 square units",
+    "21 square units"
+   ],
+   "answer": "19.5 square units",
+   "rationale": "Shoelace gives 19.5 square units. A 5-by-3 rectangle plus a triangle of base 3 and height 3 gives 15 + 4.5 = 19.5 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L555",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A bridge model has two supports 12 m apart. A cable connects the left support to a point 4 m above the right support. What is the acute angle between the cable and the horizontal?",
+   "choices": [
+    "About 18.4°",
+    "About 26.6°",
+    "About 33.7°",
+    "About 71.6°"
+   ],
+   "answer": "About 18.4°",
+   "rationale": "The tangent ratio is 4/12, so the angle is arctan(1/3) ≈ 18.4°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L555",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A roof-truss model spans 10 m from wall to wall, and its peak is 4 m above the wall plates. What is the length of the sloping rafter from a wall plate to the peak?",
+   "choices": [
+    "About 10.8 m",
+    "About 9.2 m",
+    "About 11.7 m",
+    "About 8.9 m"
+   ],
+   "answer": "About 10.8 m",
+   "rationale": "The rafter is the hypotenuse of a right triangle, so its length is √(10² + 4²) = √116 ≈ 10.8 m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L555",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A proposed bridge deck must have a slope no greater than 25°. The software model gives a horizontal run of 10 m and a vertical rise of 4 m. Does the model meet the requirement, and what is its slope angle?",
+   "choices": [
+    "Yes; the angle is about 21.8°.",
+    "No; the angle is about 21.8°.",
+    "Yes; the angle is about 30.0°.",
+    "No; the angle is about 68.2°."
+   ],
+   "answer": "Yes; the angle is about 21.8°.",
+   "rationale": "The slope angle is arctan(4/10) ≈ 21.8°, which is less than the 25° limit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L555",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "In a bridge model, moving one joint 0.6 m upward changes the relevant cable angle from 30° to 34°. What should the project report conclude about the design change?",
+   "choices": [
+    "The cable angle increased by 4°.",
+    "The cable angle decreased by 4°.",
+    "The cable angle stayed at 30°.",
+    "The cable angle increased by 0.6°."
+   ],
+   "answer": "The cable angle increased by 4°.",
+   "rationale": "The cable angle changed from 30° to 34°, so the reported change is an increase of 4°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L199",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Line l is tangent to circle O at point T. Which statement is always true?",
+   "choices": [
+    "OT is perpendicular to l.",
+    "OT bisects the line l.",
+    "OT equals the radius of l.",
+    "OT makes a 45° angle with l."
+   ],
+   "answer": "OT is perpendicular to l.",
+   "rationale": "A radius drawn to the point of tangency is perpendicular to the tangent line.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The radius drawn to a point of tangency is perpendicular to the tangent line.",
+      "url": "https://en.wikipedia.org/wiki/Tangent_lines_to_circles",
+      "quote": "Since the tangent line to a circle at a point P is perpendicular to the radius to that point, theorems involving tangent lines often involve radial lines and orthogonal circles.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "A radius drawn to a point of tangency is perpendicular to the tangent line.",
+      "url": "https://en.wiktionary.org/wiki/tangency",
+      "quote": "To be tangent to a circle or arc, a line must touch the circle or arc at only one point, and a line drawn from the center of the circle or arc must be perpendicular to the tangent line at the point of tangency .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L199",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "A line is tangent to circle O at point T, and radius OT meets the tangent at T. What is the measure of the angle formed by OT and the tangent?",
+   "choices": [
+    "0°",
+    "45°",
+    "90°",
+    "180°"
+   ],
+   "answer": "90°",
+   "rationale": "A radius drawn to a point of tangency is perpendicular to the tangent, so the angle measures 90°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L199",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Two secants from external point P intersect a circle at A, B and C, D, where A and C are nearer P. If arc BD measures 140° and arc AC measures 60°, what is m∠APC?",
+   "choices": [
+    "20°",
+    "30°",
+    "40°",
+    "50°"
+   ],
+   "answer": "40°",
+   "rationale": "For two secants intersecting outside a circle, the angle equals half the difference of the intercepted arcs: (140° − 60°) ÷ 2 = 40°.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L199",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "trig_basics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "From external point P, tangent PT touches a circle. A secant through P intersects the circle at A, then B. If PA = 6 and AB = 9, what is the length of PT?",
+   "choices": [
+    "3√5",
+    "3√6",
+    "3√10",
+    "3√15"
+   ],
+   "answer": "3√10",
+   "rationale": "The whole secant length is PB = 6 + 9 = 15. By the tangent-secant theorem, PT² = PA·PB = 6·15 = 90, so PT = 3√10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L545",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has legs 5 and 12 and hypotenuse 13. For the angle opposite the 5-unit side, a student writes sin θ = 5/12 and θ ≈ 24.6°. Which option correctly classifies and fixes the error?",
+   "choices": [
+    "Ratio-selection error; use sin θ = 5/13, so θ ≈ 22.6°.",
+    "Inverse-trig error; keep 5/12, so θ should still be 24.6°.",
+    "Arithmetic error; replace 5/12 with 5/13, giving θ ≈ 22.6°.",
+    "Unit error; keep 5/12, but change 24.6° to radians."
+   ],
+   "answer": "Ratio-selection error; use sin θ = 5/13, so θ ≈ 22.6°.",
+   "rationale": "Sine is opposite over hypotenuse, so sin θ = 5/13 and θ ≈ 22.6°. Using 5/12 selects the adjacent leg, making this a trigonometric-ratio error.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L545",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A circle has radius 6 cm. A student writes C = 2π(6)² = 72π cm for its circumference. Which option correctly classifies and fixes the error?",
+   "choices": [
+    "Substitution error; use C = 2π(3), giving 6π cm.",
+    "Formula error; use C = 2πr, giving 12π cm.",
+    "Formula error; use A = πr², giving 36π cm.",
+    "Arithmetic error; keep 2π(6)², but simplify to 12π cm."
+   ],
+   "answer": "Formula error; use C = 2πr, giving 12π cm.",
+   "rationale": "The circumference formula is C = 2πr. Squaring the radius incorrectly applies the area formula, so the correct circumference is 2π(6) = 12π cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L545",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 4 cm and height 10 cm. A student writes V = π(8)²(10) = 640π cm³, using 8 for the radius. Which option correctly classifies and fixes the error?",
+   "choices": [
+    "Formula error: use V = πr²h with r = 8, giving 640π cm³.",
+    "Radius-diameter error: use 4, so V = π(4)²(10) = 160π cm³.",
+    "Arithmetic error: use V = π(4)²(10), so V = 160π cm³.",
+    "Factor error: omit h, so V = π(4)² = 16π cm³."
+   ],
+   "answer": "Radius-diameter error: use 4, so V = π(4)²(10) = 160π cm³.",
+   "rationale": "The value 8 is the diameter, not the radius. Substituting the radius 4 gives V = π(4)²(10) = 160π cm³, so the error is confusing radius and diameter.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L545",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 545,
+   "format": "multiple_choice",
+   "prompt": "A cone has radius 3 cm and height 8 cm. A student writes V = π(3)²(8) = 72π cm³ for the cone’s volume. Which option correctly classifies and fixes the error?",
+   "choices": [
+    "Arithmetic error: retain π(3)²(8), but simplify to 24π cm³.",
+    "Radius-diameter error: use diameter 6, so V = 96π cm³.",
+    "Formula error: restore the factor 1/3, giving V = 24π cm³.",
+    "Substitution error: use r = 3 and h = 8, so V = 72π cm³."
+   ],
+   "answer": "Formula error: restore the factor 1/3, giving V = 24π cm³.",
+   "rationale": "The cone formula is V = (1/3)πr²h. The student omitted the factor 1/3, so the corrected volume is (1/3)π(3)²(8) = 24π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L535",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Triangles ABC and DEF have ∠A ≅ ∠D and ∠B ≅ ∠E. Which argument correctly proves they are similar?",
+   "choices": [
+    "AA applies because two pairs of angles are congruent.",
+    "SAS applies because one angle and two sides are congruent.",
+    "HL applies because the two given angles are right angles.",
+    "CPCTC applies because similar triangles have congruent angles."
+   ],
+   "answer": "AA applies because two pairs of angles are congruent.",
+   "rationale": "The AA Similarity Theorem states that two triangles are similar when two pairs of corresponding angles are congruent. The other choices misuse similarity or congruence theorems.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L535",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "Circle O has radius OP and tangent line ℓ at P. Which theorem proves OP ⟂ ℓ?",
+   "choices": [
+    "A tangent is perpendicular to every radius.",
+    "A chord is perpendicular to a tangent.",
+    "A radius is perpendicular to a tangent at tangency.",
+    "A diameter is perpendicular to every tangent."
+   ],
+   "answer": "A radius is perpendicular to a tangent at tangency.",
+   "rationale": "The radius–tangent theorem states that a radius drawn to the point of tangency is perpendicular to the tangent line.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L535",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 535,
+   "format": "multiple_choice",
+   "prompt": "A parallelogram has base b and height h. Which argument proves its area is bh?",
+   "choices": [
+    "Move a cut-off triangle to form a b-by-h rectangle.",
+    "Move a cut-off triangle to form a b-by-2h rectangle.",
+    "Double a cut-off triangle to form a b-by-h rectangle.",
+    "Move a cut-off triangle to form a 2b-by-h rectangle."
+   ],
+   "answer": "Move a cut-off triangle to form a b-by-h rectangle.",
+   "rationale": "Moving the triangular piece forms a rectangle with base b and height h. This preserves area, and the rectangle’s area is bh.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L324",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Every cross-section of a right prism parallel to its base has area 32 cm². The prism’s perpendicular height is 5 cm. What is its volume?",
+   "choices": [
+    "160 cm³",
+    "27 cm³",
+    "37 cm³",
+    "160 cm²"
+   ],
+   "answer": "160 cm³",
+   "rationale": "A prism’s volume equals its constant cross-sectional area times its perpendicular height: V = 32 × 5 = 160 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L324",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "A triangular prism and a cylinder have the same perpendicular height. At every level parallel to their bases, both cross-sections have area 45 cm². What does Cavalieri’s principle imply?",
+   "choices": [
+    "The prism has greater volume.",
+    "The cylinder has greater volume.",
+    "Their volumes are equal.",
+    "Their volumes cannot be compared."
+   ],
+   "answer": "Their volumes are equal.",
+   "rationale": "Cavalieri’s principle states that solids with equal cross-sectional areas at every height and equal heights have equal volumes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L324",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "A cylinder has radius 7 cm and height 10 cm. What is its volume?",
+   "choices": [
+    "140π cm³",
+    "490π cm³",
+    "70π cm³",
+    "245π cm³"
+   ],
+   "answer": "490π cm³",
+   "rationale": "The cylinder’s constant circular cross-sectional area is πr², so its volume is V = π(7²)(10) = 490π cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L324",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "A right prism has a rectangular base 8 cm by 5 cm and a volume of 280 cm³. What is its perpendicular height?",
+   "choices": [
+    "4 cm",
+    "13 cm",
+    "40 cm",
+    "7 cm"
+   ],
+   "answer": "7 cm",
+   "rationale": "The base area is 8 × 5 = 40 cm². Using V = Bh, the height is 280 ÷ 40 = 7 cm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L30",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "In a SAS dilation proof, after making one side pair equal, what guarantees congruence?",
+   "choices": [
+    "The included angles of the triangles are congruent.",
+    "The remaining pair of corresponding sides are proportional.",
+    "The dilation factor used is exactly one.",
+    "The triangles share the same orientation in plane."
+   ],
+   "answer": "The included angles of the triangles are congruent.",
+   "rationale": "After dilation makes one pair of sides equal, the given congruent included angle ensures the triangles are congruent by SAS, proving similarity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "SAS congruence requires two pairs of congruent corresponding sides and a congruent included angle.",
+      "url": "https://en.wikipedia.org/wiki/Congruence_(geometry)",
+      "quote": "SAS (side-angle-side): If two pairs of sides of two triangles are equal in length, and the included angles are equal in measurement, then the triangles are congruent.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L30",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Given ∠A ≅ ∠D and AB/DE = AC/DF, which criterion proves ΔABC ~ ΔDEF?",
+   "choices": [
+    "AA similarity criterion applies.",
+    "SAS similarity criterion applies.",
+    "SSS similarity criterion applies.",
+    "ASA similarity criterion applies."
+   ],
+   "answer": "SAS similarity criterion applies.",
+   "rationale": "The given information shows two sides proportional and the included angle congruent, which is the SAS similarity criterion.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Two pairs of proportional sides together with a congruent included angle establish SAS similarity.",
+      "url": "https://en.wikipedia.org/wiki/Similarity_(geometry)",
+      "quote": "Any two pairs of sides are proportional, and the angles included between these sides are congruent:",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L30",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "In ΔABC and ΔDEF, AB/DE = BC/EF = CA/FD = 2/3. A dilation with scale factor 3/2 makes a triangle whose corresponding side lengths are DE, EF, and FD. What conclusion is justified?",
+   "choices": [
+    "The triangles are similar by the SSS similarity criterion.",
+    "The triangles are congruent by the SAS congruence criterion.",
+    "The triangles are similar only if their areas are equal.",
+    "The triangles cannot be compared without corresponding angles."
+   ],
+   "answer": "The triangles are similar by the SSS similarity criterion.",
+   "rationale": "The dilation scales all three corresponding sides by 3/2, producing a triangle congruent to ΔDEF by SSS. Therefore, ΔABC and ΔDEF are similar by SSS.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L376",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 376,
+   "format": "multiple_choice",
+   "prompt": "A plane passes through the axis of a right circular cone. What shape is the cross section?",
+   "choices": [
+    "isosceles triangle",
+    "scalene triangle",
+    "rectangle",
+    "circle"
+   ],
+   "answer": "isosceles triangle",
+   "rationale": "The plane intersects the cone’s base in a diameter and its sloping surface in two equal-length segments, forming an isosceles triangle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L376",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 376,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is rotated 360° around one of its sides. Which solid is formed?",
+   "choices": [
+    "right circular cylinder",
+    "right circular cone",
+    "sphere",
+    "torus"
+   ],
+   "answer": "right circular cylinder",
+   "rationale": "Rotation around one side makes the rectangle sweep out a cylinder with two congruent circular bases.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L376",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 376,
+   "format": "multiple_choice",
+   "prompt": "A semicircle and its diameter are rotated 360° around the line containing the diameter. Which solid is formed?",
+   "choices": [
+    "sphere",
+    "cone",
+    "cylinder",
+    "torus"
+   ],
+   "answer": "sphere",
+   "rationale": "Rotating the semicircle around its diameter produces circular cross sections that combine to form a sphere.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L483",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A point is chosen uniformly on a square target with side length 10 cm. The favorable region is a centered square with side length 4 cm. What is the probability that the point lies in the favorable region?",
+   "choices": [
+    "4/25",
+    "1/5",
+    "1/4",
+    "2/25"
+   ],
+   "answer": "4/25",
+   "rationale": "The favorable area is 4² = 16 cm², and the total area is 10² = 100 cm². Thus, the probability is 16/100 = 4/25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L483",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A point is chosen uniformly on a 10 cm line segment. What is the probability that it lies between 2 cm and 5 cm from the left endpoint?",
+   "choices": [
+    "3/10",
+    "2/10",
+    "5/10",
+    "1/2"
+   ],
+   "answer": "3/10",
+   "rationale": "The favorable interval has length 5 − 2 = 3 cm. Dividing by the total length of 10 cm gives a probability of 3/10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L483",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A point is chosen uniformly in a 10 cm by 6 cm rectangle. The favorable region is a semicircle of radius 3 cm entirely inside the rectangle. What is the probability that the point lies in the semicircle?",
+   "choices": [
+    "3π/40",
+    "π/40",
+    "π/20",
+    "3π/20"
+   ],
+   "answer": "3π/40",
+   "rationale": "The semicircle’s area is (1/2)π(3²) = 9π/2 cm², while the rectangle’s area is 60 cm². The probability is (9π/2)/60 = 3π/40.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L483",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 483,
+   "format": "multiple_choice",
+   "prompt": "A point is chosen uniformly inside a rectangular prism measuring 4 cm by 5 cm by 6 cm. The favorable region is a corner box measuring 2 cm by 3 cm by 3 cm. What is the probability of landing in that box?",
+   "choices": [
+    "3/20",
+    "1/10",
+    "1/6",
+    "9/40"
+   ],
+   "answer": "3/20",
+   "rationale": "The favorable volume is 2 × 3 × 3 = 18 cm³, and the total volume is 4 × 5 × 6 = 120 cm³. Thus, the probability is 18/120 = 3/20.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L346",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "Unit cubes occupy (x,y,z): (0,0,0), (1,0,0), (1,1,0), and (1,1,1). x runs right, y back, and z upward. Which is the front view, looking toward the back?",
+   "choices": [
+    "Three squares: two on the bottom, one above the right.",
+    "Three squares in one horizontal row.",
+    "Three squares: two on the bottom, one above the left.",
+    "Four squares in a 2-by-2 block."
+   ],
+   "answer": "Three squares: two on the bottom, one above the right.",
+   "rationale": "Projecting the cubes onto the x-z plane gives squares at (0,0), (1,0), and (1,1), forming an L shape with the upper square on the right.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L346",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "An isometric drawing shows a bottom layer of 3 cubes in a row. On top, 2 cubes sit over the left two cubes, and 1 cube sits over the far-left cube. How many cubes does the solid contain?",
+   "choices": [
+    "4 cubes",
+    "5 cubes",
+    "6 cubes",
+    "7 cubes"
+   ],
+   "answer": "6 cubes",
+   "rationale": "The three layers contain 3, 2, and 1 cubes, so the solid contains 3 + 2 + 1 = 6 cubes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L346",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "A solid uses unit cubes at (0,0,0), (1,0,0), (0,1,0), (0,0,1), and (0,0,2). The axes are x right, y back, and z up. Which three (x,y) positions appear in its top view?",
+   "choices": [
+    "(0,0), (1,0), and (0,1)",
+    "(0,0), (1,0), and (1,1)",
+    "(0,0), (0,1), and (1,1)",
+    "(1,0), (0,1), and (1,1)"
+   ],
+   "answer": "(0,0), (1,0), and (0,1)",
+   "rationale": "Looking downward, a cube’s height does not affect its top-view position. The occupied (x,y) positions are (0,0), (1,0), and (0,1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L430",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Let S = {1,2,3,4,5,6}. Event A = {1,2,3} and event B = {3,4,5}. What is A ∪ B?",
+   "choices": [
+    "{1,2,3,4,5}",
+    "{3}",
+    "{1,2,4,5}",
+    "{1,2,3,4,5,6}"
+   ],
+   "answer": "{1,2,3,4,5}",
+   "rationale": "The union of A and B contains every element that appears in either set: 1,2,3 from A and 4,5 from B, giving {1,2,3,4,5}.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L430",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "In the sample space S = {a,b,c,d,e}, event E = {a,c,e}. Which set is the complement of E?",
+   "choices": [
+    "{b,d}",
+    "{a,c,e}",
+    "{a,b,c,d,e}",
+    "{b,c,d}"
+   ],
+   "answer": "{b,d}",
+   "rationale": "The complement of E consists of all elements in S that are not in E, which are b and d.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L430",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "data_stats",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "A bag has 3 red, 2 blue, and 5 green marbles. One marble is drawn at random. Let R be the event “red” and B be “blue”. What is P(R ∪ B)?",
+   "choices": [
+    "1/2",
+    "3/10",
+    "2/10",
+    "5/8"
+   ],
+   "answer": "1/2",
+   "rationale": "There are 10 marbles total; red or blue marbles total 5, so the probability is 5/10 = 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L470",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "Among 100 students, 30 join the sports club, 20 join the band, and 10 join both. What is the probability that a chosen student is in the band, given that the student is in the sports club?",
+   "choices": [
+    "1/3",
+    "1/2",
+    "2/3",
+    "1/10"
+   ],
+   "answer": "1/3",
+   "rationale": "Conditioning on sports club membership limits the sample to 30 students, of whom 10 are in both clubs. Therefore, P(Band | Sports) = 10/30 = 1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L470",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "A probability tree starts with blue (0.4) or red (0.6). After blue, success has probability 0.5; after red, success has probability 0.25. What is P(red | success)?",
+   "choices": [
+    "3/7",
+    "1/2",
+    "2/5",
+    "5/12"
+   ],
+   "answer": "3/7",
+   "rationale": "P(red and success) = 0.6(0.25) = 0.15, while P(success) = 0.4(0.5) + 0.6(0.25) = 0.35. Thus, P(red | success) = 0.15/0.35 = 3/7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L470",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "Two events A and B have P(A) = 0.4, P(B) = 0.5, and P(A and B) = 0.2. Based on these probabilities, what is the correct conclusion about A and B?",
+   "choices": [
+    "Independent; 0.2 = 0.4(0.5).",
+    "Dependent; 0.2 = 0.4(0.5).",
+    "Independent; 0.2 > 0.4(0.5).",
+    "Dependent; 0.2 < 0.4(0.5)."
+   ],
+   "answer": "Independent; 0.2 = 0.4(0.5).",
+   "rationale": "Events are independent when P(A and B) = P(A)P(B). Here, 0.4(0.5) = 0.2, so A and B are independent.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L470",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 470,
+   "format": "multiple_choice",
+   "prompt": "For 80 students, a table shows 10 in both music and athletics, 15 in athletics only, 20 in music only, and 35 in neither. Let M mean music and A mean athletics. Which comparison correctly tests independence?",
+   "choices": [
+    "Dependent: P(A|M)=1/3 ≠ P(A)=5/16.",
+    "Independent: P(A|M)=1/3 = P(A)=5/16.",
+    "Dependent: P(M|A)=2/5 = P(M)=3/8.",
+    "Independent: P(M|A)=2/5 ≠ P(M)=3/8."
+   ],
+   "answer": "Dependent: P(A|M)=1/3 ≠ P(A)=5/16.",
+   "rationale": "P(A|M) = 10/(10+20) = 1/3, but P(A) = (10+15)/80 = 5/16. Because the conditional probability differs from the overall probability, the events are dependent.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L251",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "A regular octagon has side length 2√2 cm. Which pair gives its perimeter and area?",
+   "choices": [
+    "16√2 cm; 16(1+√2) cm²",
+    "16√2 cm; 8(1+√2) cm²",
+    "8√2 cm; 16(1+√2) cm²",
+    "8√2 cm; 8(1+√2) cm²"
+   ],
+   "answer": "16√2 cm; 16(1+√2) cm²",
+   "rationale": "Its apothem is 2√2 ÷ [2tan(22.5°)] = 2+√2 cm. The perimeter is 16√2 cm, and the area is ½(16√2)(2+√2) = 16(1+√2) cm².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L281",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "quadratics",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Which construction produces the locus of all points equidistant from two distinct points A and B?",
+   "choices": [
+    "Perpendicular bisector of segment AB",
+    "Angle bisector of ∠AOB for any O",
+    "Circle with center at the midpoint of AB",
+    "Line through A parallel to AB"
+   ],
+   "answer": "Perpendicular bisector of segment AB",
+   "rationale": "The set of points equidistant from A and B is exactly the perpendicular bisector of segment AB.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "deepseek",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The locus of points equidistant from two distinct points is the perpendicular bisector of the segment joining them.",
+      "url": "https://en.wikipedia.org/wiki/Locus_of_points",
+      "quote": "The set of points equidistant from two points is a perpendicular bisector to the line segment connecting the two points.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L281",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "quadratics",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "The locus of points that are equidistant from a fixed point F and a fixed line ℓ (not passing through F) is which conic section?",
+   "choices": [
+    "Parabola with focus F and directrix ℓ",
+    "Circle centered at F",
+    "Ellipse with foci F and a point on ℓ",
+    "Hyperbola with asymptote ℓ"
+   ],
+   "answer": "Parabola with focus F and directrix ℓ",
+   "rationale": "By definition, a parabola is the set of points equidistant from a focus and a directrix line.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "deepseek",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A parabola is the locus of points equidistant from a fixed focus and a fixed directrix.",
+      "url": "https://en.wikipedia.org/wiki/Locus_of_points",
+      "quote": "Parabola : the set of points equidistant from a fixed point (the focus ) and a line (the directrix ).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L281",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "quadratics",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Which construction produces the set of all points equidistant from two intersecting lines ℓ₁ and ℓ₂?",
+   "choices": [
+    "The two angle bisectors of the four angles formed",
+    "A line perpendicular to ℓ₁ through the intersection",
+    "A circle centered at the intersection of ℓ₁ and ℓ₂",
+    "A parabola with focus at the intersection of ℓ₁ and ℓ₂"
+   ],
+   "answer": "The two angle bisectors of the four angles formed",
+   "rationale": "Points that are the same distance from two intersecting lines lie on the bisectors of the angles formed by those lines; each angle has a bisector, giving two lines.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "For two intersecting lines, the locus of points equidistant from them is the union of their two angle bisectors.",
+      "url": "https://en.wikipedia.org/wiki/Locus_of_points",
+      "quote": "The set of points equidistant from two intersecting lines is the union of their two angle bisectors.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L513",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "Three equally qualified students want one position on a team. Which method is fairest for choosing the student who gets the position?",
+   "choices": [
+    "Draw one of the three names uniformly at random from a hat.",
+    "Ask the teacher to select the student whom they prefer.",
+    "Select the student with the earliest date of birth.",
+    "Select the first student who volunteers to serve."
+   ],
+   "answer": "Draw one of the three names uniformly at random from a hat.",
+   "rationale": "A uniform random draw gives each equally qualified student the same probability, 1/3, of being selected. The other methods depend on preference, age, or willingness to volunteer.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L513",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "Two players toss a fair coin to decide who goes first. Heads means Player A goes first, and tails means Player B goes first. Why is this decision fair?",
+   "choices": [
+    "Each player has a 1/2 chance to go first.",
+    "Each player will go first exactly once.",
+    "The coin makes the two games identical.",
+    "Player A has a 1/4 chance to go first."
+   ],
+   "answer": "Each player has a 1/2 chance to go first.",
+   "rationale": "The decision is fair because the fair coin gives each player the same probability, 1/2, of going first.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L513",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "Before each round, Ava is chosen with probability 2/3 and Ben with probability 1/3. The chosen player is guaranteed to win. Who is favored, and how does the comparison show it?",
+   "choices": [
+    "Ava is favored, with twice Ben's chance.",
+    "Ava is favored, with three times Ben's chance.",
+    "Ben is favored, with twice Ava's chance.",
+    "Neither is favored; their chances are equal."
+   ],
+   "answer": "Ava is favored, with twice Ben's chance.",
+   "rationale": "Ava's probability of being chosen is 2/3, which is twice Ben's probability of 1/3, so the process favors Ava.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L450",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "Which set‑builder notation describes all real numbers x with x² < 9?",
+   "choices": [
+    "{x | -3 < x < 3}",
+    "{x | x < -3 or x > 3}",
+    "{x | x ≤ -3 or x ≥ 3}",
+    "{x | -3 ≤ x ≤ 3}"
+   ],
+   "answer": "{x | -3 < x < 3}",
+   "rationale": "x² < 9 means -3 < x < 3; the other options give the complement or include the endpoints.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L450",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "Which of the following subset relationships among standard number sets is true?",
+   "choices": [
+    "ℕ ⊂ ℤ",
+    "ℤ ⊂ ℕ",
+    "ℚ ⊂ ℤ",
+    "ℝ ⊂ ℚ"
+   ],
+   "answer": "ℕ ⊂ ℤ",
+   "rationale": "Every natural number is an integer, so ℕ is a proper subset of ℤ; the other statements are false.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The natural numbers form a proper subset of the integers.",
+      "url": "https://en.wikipedia.org/wiki/Integer",
+      "quote": "The integers form the smallest group and the smallest ring containing the natural numbers.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The set of natural numbers ℕ is a proper subset of the set of integers ℤ.",
+      "url": "https://en.wikipedia.org/wiki/Set_of_natural_numbers",
+      "quote": "If the difference of every two natural numbers is considered to be a number, the result is the integers , which include zero and negative numbers.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L450",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "Which set-builder notation describes the solution set of 3x − 7 > 5?",
+   "choices": [
+    "{x ∈ ℝ | x > 4}",
+    "{x ∈ ℝ | x < 4}",
+    "{x ∈ ℝ | x ≥ 4}",
+    "{x ∈ ℝ | x ≤ 4}"
+   ],
+   "answer": "{x ∈ ℝ | x > 4}",
+   "rationale": "Adding 7 and dividing by the positive number 3 gives 3x > 12, so x > 4. The correct set-builder notation includes all real numbers greater than 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L450",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "functions",
+   "level": 450,
+   "format": "multiple_choice",
+   "prompt": "Let U = {1, 2, 3, 4, 5, 6}, A = {2, 4, 6}, and B = {1, 2, 4}. Which set equals U ∩ (A ∪ B)ᶜ?",
+   "choices": [
+    "{1, 6}",
+    "{1, 3}",
+    "{3, 5}",
+    "{5, 6}"
+   ],
+   "answer": "{3, 5}",
+   "rationale": "The union A ∪ B is {1, 2, 4, 6}. Its complement in U is {3, 5}, and intersecting this with U leaves {3, 5}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L565",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "A sphere of radius 6 contains a right cylinder of height 8 and radius 4. A point is chosen uniformly inside the sphere. What is the probability the point lies inside the cylinder?",
+   "choices": [
+    "4/9",
+    "1/3",
+    "2/5",
+    "5/12"
+   ],
+   "answer": "4/9",
+   "rationale": "Sphere volume = 4/3π·6³ = 288π. Cylinder volume = π·4²·8 = 128π. Probability = 128π / 288π = 128/288 = 4/9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L565",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "A point on the unit circle at 30° is reflected across the x‑axis and then rotated 60° counterclockwise. What are its final coordinates?",
+   "choices": [
+    "(√3/2, 1/2)",
+    "(1/2, √3/2)",
+    "(-√3/2, 1/2)",
+    "(√3/2, -1/2)"
+   ],
+   "answer": "(√3/2, 1/2)",
+   "rationale": "Initial point (cos30°, sin30°) = (√3/2, 1/2). Reflection across the x‑axis yields (√3/2, –1/2). Rotating 60° CCW gives (√3/2, 1/2) again.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L565",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "A right triangle has legs 3 and 4. A similar right triangle has shorter leg 9. If θ is its angle opposite the shorter leg, what is sin θ, and what is the circumference of its circumcircle? Use π = 3.14.",
+   "choices": [
+    "sin θ = 0.6; circumference = 47.1",
+    "sin θ = 0.8; circumference = 47.1",
+    "sin θ = 0.6; circumference = 28.26",
+    "sin θ = 0.8; circumference = 28.26"
+   ],
+   "answer": "sin θ = 0.6; circumference = 47.1",
+   "rationale": "The scale factor is 9/3 = 3, so the larger triangle has legs 9 and 12 and hypotenuse 15. Thus sin θ = 9/15 = 0.6. The circumcircle’s diameter is 15, so its circumference is 3.14(15) = 47.1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L565",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "probability",
+   "level": 565,
+   "format": "multiple_choice",
+   "prompt": "A cube has side length 4. A dilation with scale factor 2, centered at one vertex, produces a larger cube. A point is chosen uniformly at random inside the larger cube. What is the probability that it lies inside the original cube?",
+   "choices": [
+    "1/8 (12.5%)",
+    "1/4 (25%)",
+    "1/2 (50%)",
+    "1/16 (6.25%)"
+   ],
+   "answer": "1/8 (12.5%)",
+   "rationale": "The larger cube has side length 8, so its volume is 8³ = 512, while the original cube’s volume is 4³ = 64. The probability is the volume ratio 64/512 = 1/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L408",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "A hollow cube has outer side length 12 cm and uniform wall thickness 1 cm. The material density is 2.5 g/cm³. What is the mass of the cube?",
+   "choices": [
+    "1820 g",
+    "2160 g",
+    "2500 g",
+    "4320 g"
+   ],
+   "answer": "1820 g",
+   "rationale": "The material volume is the outer volume minus the inner volume: 12³ − 10³ = 728 cm³. Multiplying by 2.5 g/cm³ gives 1820 g.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L408",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "When modeling the mass of a hollow cylindrical pipe, which assumption must be stated explicitly to compute the material volume?",
+   "choices": [
+    "Uniform wall thickness",
+    "Single material composition",
+    "Known pipe length",
+    "Known outer diameter"
+   ],
+   "answer": "Uniform wall thickness",
+   "rationale": "The material volume of a hollow cylinder is π(R²−r²)L, which requires the assumption that the wall thickness (R−r) is constant along the length.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L408",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "An open-top box is modeled with a square base of side x cm and height h cm. The available sheet has area 48 cm², and the model uses all sheet area, so x² + 4xh = 48. What is the maximum volume of the box?",
+   "choices": [
+    "24 cm³",
+    "28 cm³",
+    "32 cm³",
+    "36 cm³"
+   ],
+   "answer": "32 cm³",
+   "rationale": "From h = (48 − x²)/(4x), the volume is V = 12x − x³/4. Its maximum occurs at x = 4 cm, giving h = 2 cm and V = 32 cm³.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "geometry_part_b:L408",
+   "track_id": "math",
+   "grade_id": "geometry_part_b",
+   "skill_id": "geometry_area",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "A manufacturer requires a component’s mass to be at most 400 g. The component is modeled as solid, and its material has density 2.5 g/cm³. What is the greatest allowable material volume?",
+   "choices": [
+    "100 cm³",
+    "125 cm³",
+    "150 cm³",
+    "160 cm³"
+   ],
+   "answer": "160 cm³",
+   "rationale": "Using density = mass ÷ volume, the maximum volume is 400 g ÷ 2.5 g/cm³ = 160 cm³. The solid-component assumption means all modeled volume contributes mass.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

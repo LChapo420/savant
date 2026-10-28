@@ -1,0 +1,378 @@
+{
+ "subject": "basketball",
+ "doc": "Rule facts used by the staged basketball content and claimed in live lessons, each checked by code against the rulebook text (offline-sources/basketball, see its SOURCES.md and SHA256SUMS). A fact passes only if every regex matches the named source (whitespace normalised). Facts no downloaded source covers are listed as 'unverified_here' and go to the two free judges, then to a human check; they are NOT marked verified.",
+ "sources": {
+  "fiba": "fiba-2026/fiba2026.txt",
+  "nba1": "nba-rules/rule-no-1-court-dimensions-equipment.txt",
+  "nba2": "nba-rules/rule-no-2-duties-of-the-officials.txt",
+  "nba3": "nba-rules/rule-no-3-players-substitutes-and-coaches.txt",
+  "nba5": "nba-rules/rule-no-5-scoring-and-timing.txt",
+  "nba7": "nba-rules/rule-no-7-24-second-clock.txt",
+  "nba10": "nba-rules/rule-no-10-violations-and-penalties.txt",
+  "nba12": "nba-rules/rule-no-12-fouls-and-penalties.txt",
+  "youth": "nba-youth/youth.txt"
+ },
+ "facts": [
+  {
+   "id": "fiba-3pt",
+   "body": "FIBA",
+   "claim": "The three-point arc has a radius of 6.75 m.",
+   "source": "fiba",
+   "patterns": [
+    "arc of radius 6\\.75 m"
+   ],
+   "used_in": [
+    "progression BB4-5",
+    "B05:55"
+   ]
+  },
+  {
+   "id": "fiba-ft-line",
+   "body": "FIBA",
+   "claim": "The free-throw line's furthest edge is 5.80 m from the inner edge of the endline.",
+   "source": "fiba",
+   "patterns": [
+    "furthest\\s+edge 5\\.80 m from the inner edge of the endline"
+   ],
+   "used_in": [
+    "progression BB4-5"
+   ]
+  },
+  {
+   "id": "fiba-quarters",
+   "body": "FIBA",
+   "claim": "A game is 4 quarters of 10 minutes.",
+   "source": "fiba",
+   "patterns": [
+    "4 quarters of 10 minutes each"
+   ],
+   "used_in": [
+    "B05:55"
+   ]
+  },
+  {
+   "id": "fiba-overtime",
+   "body": "FIBA",
+   "claim": "Overtimes are 5 minutes, as many as needed to break the tie.",
+   "source": "fiba",
+   "patterns": [
+    "overtimes of 5 minutes each as necessary to break the tie"
+   ],
+   "used_in": [
+    "B05:59"
+   ]
+  },
+  {
+   "id": "fiba-shot-clock",
+   "body": "FIBA",
+   "claim": "A team must attempt a shot within 24 seconds.",
+   "source": "fiba",
+   "patterns": [
+    "attempt a shot for a goal within 24 seconds"
+   ],
+   "used_in": [
+    "B05:55",
+    "B06:96"
+   ]
+  },
+  {
+   "id": "fiba-14",
+   "body": "FIBA",
+   "claim": "The shot clock resets to 14 seconds in set frontcourt situations (e.g. a frontcourt throw-in after a foul or violation, or the same team regaining control after the ball touches the ring).",
+   "source": "fiba",
+   "patterns": [
+    "Frontcourt, the shot clock shall be reset to 14 seconds",
+    "14 seconds, if the team which regains control of the ball is the same team"
+   ],
+   "used_in": [
+    "B05:55",
+    "B06:69"
+   ]
+  },
+  {
+   "id": "fiba-8s",
+   "body": "FIBA",
+   "claim": "The ball must be brought into the frontcourt within 8 seconds.",
+   "source": "fiba",
+   "patterns": [
+    "into its frontcourt within 8 seconds"
+   ],
+   "used_in": [
+    "B04:37"
+   ]
+  },
+  {
+   "id": "fiba-3s",
+   "body": "FIBA",
+   "claim": "Three-second rule exists (Article 26).",
+   "source": "fiba",
+   "patterns": [
+    "Article 26 3 seconds"
+   ],
+   "used_in": [
+    "B04:37"
+   ]
+  },
+  {
+   "id": "fiba-5s-guarded",
+   "body": "FIBA",
+   "claim": "A closely guarded player must pass, shoot or dribble within 5 seconds.",
+   "source": "fiba",
+   "patterns": [
+    "closely guarded player must pass, shoot or dribble the ball within 5 seconds"
+   ],
+   "used_in": [
+    "B04:37"
+   ]
+  },
+  {
+   "id": "fiba-5s-throwin",
+   "body": "FIBA",
+   "claim": "A throw-in must be released within 5 seconds.",
+   "source": "fiba",
+   "patterns": [
+    "Take more than 5 seconds to release the ball"
+   ],
+   "used_in": [
+    "B04:66"
+   ]
+  },
+  {
+   "id": "fiba-5-fouls",
+   "body": "FIBA",
+   "claim": "A player with 5 fouls must leave the game.",
+   "source": "fiba",
+   "patterns": [
+    "A player who has committed 5 fouls shall be informed of it by a referee and must leave"
+   ],
+   "used_in": [
+    "progression",
+    "B05:55"
+   ]
+  },
+  {
+   "id": "fiba-team-fouls",
+   "body": "FIBA",
+   "claim": "A team is in the team foul penalty after 4 team fouls in a quarter (so the 5th brings free throws); overtime fouls count with the 4th quarter.",
+   "source": "fiba",
+   "patterns": [
+    "team foul penalty situation after it has\\s+committed 4 team fouls in a quarter",
+    "committed in each overtime shall be considered as being committed in"
+   ],
+   "used_in": [
+    "B05:59"
+   ]
+  },
+  {
+   "id": "fiba-same-foot",
+   "body": "FIBA",
+   "claim": "After ending a dribble a player may not touch the court consecutively with the same foot or both feet.",
+   "source": "fiba",
+   "patterns": [
+    "may not touch the court consecutively with the same foot or both\\s+feet after ending the dribble"
+   ],
+   "used_in": [
+    "B07:15"
+   ]
+  },
+  {
+   "id": "fiba-injury-15",
+   "body": "FIBA",
+   "claim": "An injured player who cannot continue immediately (within approximately 15 seconds) must be substituted.",
+   "source": "fiba",
+   "patterns": [
+    "cannot continue to play immediately \\(within approximately 15"
+   ],
+   "used_in": [
+    "B06:44"
+   ]
+  },
+  {
+   "id": "fiba-no-charge",
+   "body": "FIBA",
+   "claim": "The no-charge semi-circle is 1.30 m from the point under the centre of the basket to its OUTER edge (2026 text); the older wording '1.25 m' measured to the inner edge of a 5 cm line describes the same line.",
+   "source": "fiba",
+   "patterns": [
+    "radius of 1\\.30 m measured from the point on the court\\s+beneath the exact centre of the basket to the outer edge"
+   ],
+   "used_in": [
+    "B06:66"
+   ],
+   "note": "Lesson B06:66 says '1.25 metre FIBA ... semicircle'. Flag for the owner: say '1.25 m to the inner edge (1.30 m to the outer edge, FIBA 2026)'."
+  },
+  {
+   "id": "nba-3pt",
+   "body": "NBA",
+   "claim": "NBA arc 23 ft 9 in from the middle of the basket, with lines 3 ft from the sidelines in the corners.",
+   "source": "nba1",
+   "patterns": [
+    "parallel lines 3. from the sidelines",
+    "arc of 23.9. from the middle of the basket"
+   ],
+   "used_in": [
+    "B05:55",
+    "B06:66"
+   ]
+  },
+  {
+   "id": "nba-restricted",
+   "body": "NBA",
+   "claim": "The NBA restricted area is a half-circle 4 ft from the centre of the basket ring.",
+   "source": "nba1",
+   "patterns": [
+    "Restricted Area shall be marked with a half-circle 4. from the center of the basket ring"
+   ],
+   "used_in": [
+    "B06:66"
+   ]
+  },
+  {
+   "id": "nba-quarters",
+   "body": "NBA",
+   "claim": "NBA periods are twelve minutes; overtimes five minutes.",
+   "source": "nba5",
+   "patterns": [
+    "regulation play in the NBA will be twelve minutes",
+    "overtime periods of play will be five minutes"
+   ],
+   "used_in": [
+    "B05:55"
+   ]
+  },
+  {
+   "id": "nba-14",
+   "body": "NBA",
+   "claim": "The NBA shot clock resets to 14 seconds in set situations.",
+   "source": "nba7",
+   "patterns": [
+    "reset to 14 seconds"
+   ],
+   "used_in": [
+    "B05:55"
+   ]
+  },
+  {
+   "id": "nba-6-fouls",
+   "body": "NBA",
+   "claim": "An NBA player is disqualified on the sixth personal foul.",
+   "source": "nba3",
+   "patterns": [
+    "disqualified from the game when he receives his sixth personal foul"
+   ],
+   "used_in": [
+    "progression"
+   ]
+  },
+  {
+   "id": "nba-ot-penalty",
+   "body": "NBA",
+   "claim": "In NBA overtime, common team fouls in excess of three are penalised with free throws.",
+   "source": "nba12",
+   "patterns": [
+    "During any overtime period, common fouls charged as team fouls in excess of three"
+   ],
+   "used_in": [
+    "B05:59"
+   ]
+  },
+  {
+   "id": "nba-5s-back",
+   "body": "NBA",
+   "claim": "Below the free-throw line extended an offensive player may not dribble with back or side to the basket for more than five seconds.",
+   "source": "nba10",
+   "patterns": [
+    "below the free throw line extended shall not be permitted to dribble with his back or side to the basket for more than five seconds"
+   ],
+   "used_in": [
+    "B07:34"
+   ]
+  },
+  {
+   "id": "nba-def-3s",
+   "body": "NBA",
+   "claim": "The NBA has a defensive three-second rule.",
+   "source": "nba10",
+   "patterns": [
+    "Defensive Three-Second Rule"
+   ],
+   "used_in": [
+    "B06:66"
+   ]
+  },
+  {
+   "id": "youth-max-hours",
+   "body": "NBA/USA Basketball youth guidelines",
+   "claim": "Maximum organised basketball per week: 3 h (7-8), 5 h (9-11), 10 h (12-14), 14 h (grades 9-12).",
+   "source": "youth",
+   "patterns": [
+    "Ages 7-8 1 3 hours Ages 9-11 2\\* 5 hours Ages 12-14 2\\* 10 hours\\*\\* Grades 9-12 2\\* 14 hours"
+   ],
+   "used_in": [
+    "progression load rules"
+   ]
+  },
+  {
+   "id": "youth-rest",
+   "body": "NBA/USA Basketball youth guidelines",
+   "claim": "Minimum rest days per week: 2 (7-8), 2 (9-11), 1 (12-14), 1 (grades 9-12).",
+   "source": "youth",
+   "patterns": [
+    "Ages 7-8 2 4 months 9-12 hours Ages 9-11 2 5 months 9-12 hours Ages 12-14 1 7 months 8-10 hours\\* Grades 9-12 1 9-10 months"
+   ],
+   "used_in": [
+    "progression load rules"
+   ]
+  },
+  {
+   "id": "youth-specialise",
+   "body": "NBA/USA Basketball youth guidelines",
+   "claim": "Delay specialisation in basketball until at least age 14.",
+   "source": "youth",
+   "patterns": [
+    "Delay specialization in basketball until at least age 14"
+   ],
+   "used_in": [
+    "progression"
+   ]
+  },
+  {
+   "id": "youth-practice-7-8",
+   "body": "NBA/USA Basketball youth guidelines",
+   "claim": "Ages 7-8: 1 practice a week of 30-60 minutes recommended.",
+   "source": "youth",
+   "patterns": [
+    "Ages 7-8 20-28 min 1 30-60 min 1"
+   ],
+   "used_in": [
+    "progression BB1"
+   ]
+  }
+ ],
+ "unverified_here": [
+  {
+   "id": "ncaa-10s",
+   "claim": "NCAA allows ten seconds to cross half court (lesson B04:37).",
+   "why": "no NCAA rulebook downloaded"
+  },
+  {
+   "id": "nfhs-quarters-arc",
+   "claim": "NFHS: eight-minute quarters, a 19 ft 9 in arc, shot clocks only in adopting states (lesson B05:63).",
+   "why": "NFHS rules are not free to download"
+  },
+  {
+   "id": "nfhs-bonus",
+   "claim": "NFHS two shots from the fifth team foul each quarter; NCAA men's one-and-one; NBA last-two-minute penalty (lesson B05:58).",
+   "why": "NFHS/NCAA not downloaded; the NBA part matches nba12's 'last two minutes' quota text"
+  },
+  {
+   "id": "nba-take-foul",
+   "claim": "NBA transition take foul: one free throw plus possession outside the last two minutes (lesson B07:53).",
+   "why": "not found in the downloaded rule pages (may sit in Rule 12 comments)"
+  },
+  {
+   "id": "fiba-ring-height",
+   "claim": "Rings are 3.05 m high (10 ft).",
+   "why": "the ring height is in FIBA's separate Basketball Equipment document, not in the rules text"
+  }
+ ]
+}

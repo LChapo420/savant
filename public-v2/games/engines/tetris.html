@@ -1,0 +1,378 @@
+<style>
+  /* Self-contained: all styles stay inside the game fragment. */
+  #game-root { --tet-bg:#10142b; --tet-panel:#1a2044; --tet-border:#394675; --tet-text:#eef1ff; --tet-muted:#b5bfdf; --tet-accent:#a5b4fc; color:var(--tet-text); font-family:system-ui,sans-serif; }
+  #game-root * { box-sizing:border-box; }
+  #game-root [hidden] { display:none !important; }
+  #game-root .tet-wrap { position:relative; max-width:940px; margin:auto; padding:20px; border:1px solid var(--tet-border); border-radius:16px; background:var(--tet-bg); }
+  #game-root .tet-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  #game-root .tet-title { margin:0; font-size:1.4rem; }
+  #game-root .tet-topic { display:block; margin-top:4px; color:var(--tet-muted); font-size:.85rem; font-weight:400; overflow-wrap:anywhere; }
+  #game-root .tet-status { min-height:2.8em; color:var(--tet-accent); margin:10px 0; line-height:1.4; }
+  #game-root .tet-layout { display:grid; grid-template-columns:minmax(240px,320px) minmax(0,1fr); gap:20px; }
+  #game-root .tet-panel { min-width:0; padding:16px; border:1px solid var(--tet-border); border-radius:12px; background:var(--tet-panel); }
+  #game-root .tet-board { display:grid; grid-template-columns:repeat(10,1fr); gap:1px; padding:4px; border:2px solid var(--tet-border); background:#080c1c; width:100%; aspect-ratio:1/2; outline-offset:4px; }
+  #game-root .tet-cell { min-width:0; min-height:0; background:#151d35; border:1px solid #202c47; border-radius:2px; }
+  #game-root .tet-cell[data-piece="I"] { --piece:#22d3ee; }
+  #game-root .tet-cell[data-piece="O"] { --piece:#fde047; }
+  #game-root .tet-cell[data-piece="T"] { --piece:#c084fc; }
+  #game-root .tet-cell[data-piece="S"] { --piece:#4ade80; }
+  #game-root .tet-cell[data-piece="Z"] { --piece:#fb7185; }
+  #game-root .tet-cell[data-piece="J"] { --piece:#60a5fa; }
+  #game-root .tet-cell[data-piece="L"] { --piece:#fb923c; }
+  #game-root .tet-cell[data-piece] { background:var(--piece); border-color:rgba(255,255,255,.5); box-shadow:inset 2px 2px 0 rgba(255,255,255,.25),inset -2px -2px 0 rgba(0,0,0,.2); }
+  #game-root .tet-cell.tet-ghost { background:transparent; border:2px solid var(--piece); box-shadow:none; opacity:.55; }
+  #game-root .tet-side { display:grid; gap:12px; align-content:start; }
+  #game-root .tet-tally { display:flex; flex-wrap:wrap; gap:18px; margin:0; }
+  #game-root .tet-tally div { display:grid; gap:4px; }
+  #game-root .tet-tally dt { color:var(--tet-muted); font-size:.8rem; }
+  #game-root .tet-tally dd { margin:0; font-size:1.4rem; font-weight:700; }
+  #game-root .tet-next { display:grid; grid-template-columns:repeat(4,20px); grid-template-rows:repeat(4,20px); gap:2px; margin-top:8px; }
+  #game-root .tet-label { color:var(--tet-muted); font-size:.85rem; font-weight:600; margin:0 0 10px; }
+  #game-root .tet-prompt { white-space:pre-wrap; overflow-wrap:anywhere; font-size:1.1rem; line-height:1.5; margin:12px 0; }
+  #game-root .tet-choices { display:grid; gap:8px; }
+  #game-root button, #game-root .tet-link { font:inherit; border:1px solid var(--tet-border); border-radius:8px; padding:10px 12px; background:#28345c; color:var(--tet-text); cursor:pointer; touch-action:manipulation; }
+  #game-root button:hover:not(:disabled), #game-root .tet-link:hover { border-color:var(--tet-accent); background:#354475; }
+  #game-root button:disabled { opacity:.5; cursor:default; }
+  #game-root button:focus-visible, #game-root a:focus-visible, #game-root .tet-board:focus-visible { outline:3px solid var(--tet-accent); outline-offset:3px; }
+  #game-root .tet-choice { text-align:left; overflow-wrap:anywhere; line-height:1.4; }
+  #game-root .tet-choice--right { border-color:#4ade80; background:#164c39; }
+  #game-root .tet-choice--wrong { border-color:#fb7185; background:#58293a; }
+  #game-root .tet-verdict { margin:12px 0; line-height:1.5; white-space:pre-wrap; overflow-wrap:anywhere; }
+  #game-root .tet-controls { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  #game-root .tet-help { color:var(--tet-muted); font-size:.85rem; line-height:1.5; }
+  #game-root .tet-modal { position:absolute; inset:0; z-index:10; background:rgba(8,12,28,.94); display:none; align-items:center; justify-content:center; padding:20px; border-radius:16px; }
+  #game-root .tet-modal[data-open="true"] { display:flex; }
+  #game-root .tet-card { max-width:440px; padding:24px; background:var(--tet-panel); border:1px solid var(--tet-border); border-radius:12px; text-align:center; }
+  #game-root .tet-result { margin-top:0; font-size:1.5rem; }
+  #game-root .tet-link { display:inline-block; text-decoration:none; }
+  @media (max-width:620px) { #game-root .tet-layout { grid-template-columns:1fr; } #game-root .tet-playfield { width:100%; max-width:300px; margin:auto; } #game-root .tet-wrap { padding:12px; } }
+</style>
+<div id="game-root">
+  <div class="tet-wrap">
+    <div class="tet-head"><h2 class="tet-title">Tetris<span class="tet-topic" data-game-topic></span></h2><span data-game-counter>Clear a line to get a question</span></div>
+    <div class="tet-status" data-game-status role="status" aria-live="polite"></div>
+    <div class="tet-layout" data-game-play-area>
+      <div class="tet-playfield">
+        <div class="tet-board" data-game-board tabindex="0" role="group" aria-label="Tetris board. Arrow keys move, Up rotates, Space drops, P pauses."></div>
+        <div class="tet-controls" aria-label="Piece controls">
+          <button type="button" data-tet-control="left" aria-label="Move left">←</button>
+          <button type="button" data-tet-control="right" aria-label="Move right">→</button>
+          <button type="button" data-tet-control="rotate" aria-label="Rotate clockwise">Rotate ↻</button>
+          <button type="button" data-tet-control="soft" aria-label="Soft drop">↓</button>
+          <button type="button" data-tet-control="drop" data-game-drop data-game-action>Drop</button>
+        </div>
+      </div>
+      <div class="tet-side">
+        <div class="tet-panel">
+          <dl class="tet-tally"><div><dt>Cleared / goal</dt><dd><span data-game-cleared>0</span> / 5</dd></div><div><dt>Banked</dt><dd data-game-banked>0</dd></div><div><dt>Points</dt><dd data-game-points>0</dd></div></dl>
+          <p class="tet-label" style="margin-top:16px">Next piece</p><div class="tet-next" data-game-preview aria-label="Next piece"></div>
+          <div class="tet-controls"><button type="button" data-game-pause>Pause</button><button type="button" data-game-end>Finish</button></div>
+        </div>
+        <div class="tet-panel">
+          <p class="tet-label">Clear rows, then answer to bank their points</p>
+          <p class="tet-prompt" data-game-prompt>Stack the pieces to fill a horizontal row. The game pauses for each question.</p>
+          <div class="tet-choices" data-game-choices></div>
+          <div class="tet-verdict" data-game-verdict role="status" hidden></div>
+          <button type="button" data-game-continue data-game-action hidden>Continue</button>
+        </div>
+        <div class="tet-help">← → move · ↓ soft drop · ↑ / X rotate · Z rotate back · Space hard drop · P pause.<br>Touch controls work too. Each cleared row earns 100 points only if its question is correct. Finish five clears to complete a round; reaching the top ends it early. Play again continues the question pool.</div>
+      </div>
+    </div>
+    <div class="tet-modal" data-game-modal data-open="false" role="dialog" aria-modal="true" aria-labelledby="tet-result-line" hidden>
+      <div class="tet-card"><h3 class="tet-result" id="tet-result-line" data-game-result></h3><p data-game-endstats></p><div class="tet-controls"><button type="button" data-game-restart>Play again</button><a class="tet-link" data-game-next href="#" hidden>Next level</a></div></div>
+    </div>
+  </div>
+</div>
+<script>
+  window.GAME_ID = 'tetris';
+  window.GAME_DATA = [/* __DATA_INJECTION__ */][0];
+
+  (function () {
+    'use strict';
+    var WIDTH = 10, HEIGHT = 20, TARGET = 5;
+    var SHAPES = {
+      I: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
+      O: [[1,1],[1,1]],
+      T: [[0,1,0],[1,1,1],[0,0,0]],
+      S: [[0,1,1],[1,1,0],[0,0,0]],
+      Z: [[1,1,0],[0,1,1],[0,0,0]],
+      J: [[1,0,0],[1,1,1],[0,0,0]],
+      L: [[0,0,1],[1,1,1],[0,0,0]]
+    };
+    function emptyBoard() { return Array.from({ length: HEIGHT }, function () { return Array(WIDTH).fill(null); }); }
+    function copy(shape) { return shape.map(function (row) { return row.slice(); }); }
+    function cells(piece, visit) {
+      piece.shape.forEach(function (row, y) { row.forEach(function (value, x) { if (value) visit(piece.x + x, piece.y + y); }); });
+    }
+    function collides(board, piece) {
+      var blocked = false;
+      cells(piece, function (x, y) { if (x < 0 || x >= WIDTH || y >= HEIGHT || (y >= 0 && board[y][x])) blocked = true; });
+      return blocked;
+    }
+    function createModel(random) {
+      random = random || Math.random;
+      var bag = [];
+      function take() {
+        if (!bag.length) {
+          bag = Object.keys(SHAPES);
+          for (var i = bag.length - 1; i > 0; i--) { var j = Math.floor(random() * (i + 1)); var t = bag[i]; bag[i] = bag[j]; bag[j] = t; }
+        }
+        return bag.pop();
+      }
+      var model = { board: emptyBoard(), active: null, next: take(), cleared: 0, over: false };
+      model.spawn = function () {
+        var type = model.next;
+        model.next = take();
+        model.active = { type: type, shape: copy(SHAPES[type]), x: Math.floor((WIDTH - SHAPES[type].length) / 2), y: 0 };
+        if (collides(model.board, model.active)) { model.over = true; model.active = null; return false; }
+        return true;
+      };
+      model.move = function (dx, dy) {
+        if (!model.active || model.over) return false;
+        var candidate = Object.assign({}, model.active, { x: model.active.x + dx, y: model.active.y + dy });
+        if (collides(model.board, candidate)) return false;
+        model.active = candidate;
+        return true;
+      };
+      model.rotate = function (direction) {
+        if (!model.active || model.over || model.active.type === 'O') return false;
+        var old = model.active, n = old.shape.length;
+        var shape = old.shape.map(function (row, y) { return row.map(function (_, x) { return direction < 0 ? old.shape[x][n - 1 - y] : old.shape[n - 1 - x][y]; }); });
+        // Small wall/floor kicks keep a legal rotation from getting stuck at an edge.
+        var kicks = [[0,0],[-1,0],[1,0],[-2,0],[2,0],[0,-1],[-1,-1],[1,-1],[0,-2]];
+        for (var i = 0; i < kicks.length; i++) {
+          var candidate = { type: old.type, shape: shape, x: old.x + kicks[i][0], y: old.y + kicks[i][1] };
+          if (!collides(model.board, candidate)) { model.active = candidate; return true; }
+        }
+        return false;
+      };
+      model.ghost = function () {
+        if (!model.active) return null;
+        var ghost = Object.assign({}, model.active);
+        while (!collides(model.board, Object.assign({}, ghost, { y: ghost.y + 1 }))) ghost.y++;
+        return ghost;
+      };
+      model.lock = function () {
+        if (!model.active || model.over) return 0;
+        var above = false;
+        cells(model.active, function (_, y) { if (y < 0) above = true; });
+        if (above) { model.over = true; model.active = null; return 0; }
+        cells(model.active, function (x, y) { model.board[y][x] = model.active.type; });
+        model.active = null;
+        var kept = model.board.filter(function (row) { return row.some(function (value) { return !value; }); });
+        var cleared = HEIGHT - kept.length;
+        while (kept.length < HEIGHT) kept.unshift(Array(WIDTH).fill(null));
+        model.board = kept;
+        model.cleared += cleared;
+        return cleared;
+      };
+      model.hardDrop = function () {
+        if (!model.active || model.over) return 0;
+        model.active = model.ghost();
+        return model.lock();
+      };
+      return model;
+    }
+    // Pure game model shared with regression tests. No curriculum in this layer.
+    window.PolymathTetris = { createModel: createModel };
+    var fallbackCursor = { at: 0, next: function (total) { var index = this.at % total; var wrapped = this.at > 0 && index === 0; this.at++; return { index: index, wrapped: wrapped }; } };
+    var dispose = function () {};
+
+    window.initGame = function (payload) {
+      dispose();
+      var root = document.getElementById('game-root');
+      if (!root) return;
+      var q = function (name) { return root.querySelector('[data-game-' + name + ']'); };
+      var el = {};
+      ['topic','counter','status','board','preview','prompt','choices','verdict','continue','pause','end','banked','cleared','points','modal','result','endstats','restart','next','play-area'].forEach(function (name) { el[name] = q(name); });
+      var controls = Array.from(root.querySelectorAll('[data-tet-control]'));
+      var questions = payload && payload.questions;
+      var valid = Array.isArray(questions) && questions.length && questions.every(function (item) {
+        return item && typeof item.prompt === 'string' && item.prompt.trim() && Array.isArray(item.choices) && item.choices.length === 4
+          && item.choices.every(function (choice) { return typeof choice === 'string'; }) && Number.isInteger(item.answerIndex) && item.answerIndex >= 0 && item.answerIndex < 4;
+      });
+      el.modal.hidden = true;
+      el.modal.dataset.open = 'false';
+      el['play-area'].removeAttribute('inert');
+      el.choices.replaceChildren();
+      el.verdict.hidden = true;
+      el.continue.hidden = true;
+      controls.forEach(function (button) { button.disabled = true; });
+      el.pause.disabled = !valid;
+      el.end.disabled = !valid;
+      if (!valid) { el.status.textContent = 'This game needs a valid question set with four choices per question.'; el.prompt.textContent = ''; return; }
+
+      var feedback = payload.feedback || {}, shell = window.PolymathGame || {};
+      var cursor = shell.cursor || fallbackCursor;
+      var model = window.PolymathTetris.createModel();
+      var phase = 'playing', pending = 0, correct = 0, wrong = 0, used = 0, points = 0;
+      var question = null, questionIndex = null, started = 0;
+      var timer = null, lockTimer = null, disposed = false, lockResets = 0;
+      var listeners = [];
+      function listen(target, name, fn) { target.addEventListener(name, fn); listeners.push(function () { target.removeEventListener(name, fn); }); }
+      function stop() { window.clearInterval(timer); window.clearTimeout(lockTimer); timer = null; lockTimer = null; }
+      dispose = function () { disposed = true; stop(); listeners.forEach(function (remove) { remove(); }); };
+      function emit(name, detail) { window.dispatchEvent(new CustomEvent('game:' + name, { detail: Object.assign({ source:'tetris', engineId:'tetris' }, detail) })); }
+      function setStatus(text) { el.status.textContent = text; }
+      var tiles = Array.from({ length: WIDTH * HEIGHT }, function () { var tile = document.createElement('div'); tile.className = 'tet-cell'; tile.setAttribute('aria-hidden','true'); return tile; });
+      el.board.replaceChildren.apply(el.board, tiles);
+      function paint(tile, type, ghost) {
+        tile.className = 'tet-cell' + (ghost ? ' tet-ghost' : '');
+        if (type) tile.dataset.piece = type; else tile.removeAttribute('data-piece');
+      }
+      function render() {
+        model.board.forEach(function (row, y) { row.forEach(function (type, x) { paint(tiles[y * WIDTH + x], type, false); }); });
+        function draw(piece, ghost) { if (piece) cells(piece, function (x,y) { if (y >= 0 && y < HEIGHT && x >= 0 && x < WIDTH) paint(tiles[y * WIDTH + x], piece.type, ghost); }); }
+        draw(model.ghost(), true); draw(model.active, false);
+        el.preview.replaceChildren();
+        for (var y = 0; y < 4; y++) for (var x = 0; x < 4; x++) {
+          var tile = document.createElement('div');
+          paint(tile, SHAPES[model.next][y] && SHAPES[model.next][y][x] ? model.next : null, false);
+          el.preview.appendChild(tile);
+        }
+        el.preview.setAttribute('aria-label', 'Next piece: ' + model.next);
+        el.cleared.textContent = String(model.cleared);
+        el.banked.textContent = String(correct);
+        el.points.textContent = String(points);
+        controls.forEach(function (button) { button.disabled = phase !== 'playing'; });
+        el.pause.disabled = phase !== 'playing' && phase !== 'paused';
+        el.pause.textContent = phase === 'paused' ? 'Resume' : 'Pause';
+      }
+      function end(result) {
+        if (phase === 'over') return;
+        stop(); phase = 'over'; render();
+        el.end.disabled = true; el.continue.hidden = true;
+        Array.from(el.choices.children).forEach(function (button) { button.disabled = true; });
+        var message = feedback[result] || (result === 'win' ? 'Round complete!' : result === 'lose' ? 'The stack reached the top.' : 'Round finished.');
+        setStatus(message); el.result.textContent = message;
+        el.endstats.textContent = model.cleared + ' rows cleared · ' + correct + ' banked · ' + points + ' points. ' + correct + ' correct and ' + wrong + ' incorrect answers.';
+        el['play-area'].setAttribute('inert','');
+        el.modal.hidden = false; el.modal.dataset.open = 'true';
+        emit(result, { result:result, correct:correct, wrong:wrong, questionsUsed:used, linesCleared:model.cleared, points:points });
+        el.restart.focus();
+      }
+      function grounded() { return model.active && collides(model.board, Object.assign({}, model.active, { y:model.active.y + 1 })); }
+      function scheduleLock(reset) {
+        if (!grounded()) { window.clearTimeout(lockTimer); lockTimer = null; return; }
+        if (lockTimer && (!reset || lockResets >= 15)) return;
+        if (lockTimer) { window.clearTimeout(lockTimer); lockResets++; }
+        lockTimer = window.setTimeout(function () { lockTimer = null; if (phase === 'playing') settle(false); }, 500);
+      }
+      function run() {
+        stop();
+        timer = window.setInterval(function () {
+          if (disposed || !root.isConnected) { dispose(); return; }
+          if (phase !== 'playing') return;
+          model.move(0,1); scheduleLock(false); render();
+        }, Math.max(350, 800 - model.cleared * 50));
+        scheduleLock(false);
+      }
+      function spawn() {
+        if (!model.spawn()) { end('lose'); return; }
+        lockResets = 0; phase = 'playing'; run(); render();
+      }
+      function ask() {
+        stop(); phase = 'question';
+        var next = cursor.next(questions.length);
+        questionIndex = next.index; question = questions[questionIndex]; started = Date.now();
+        el.counter.textContent = 'Question ' + (questionIndex + 1) + ' of ' + questions.length;
+        el.prompt.textContent = question.prompt;
+        el.choices.replaceChildren(); el.verdict.hidden = true; el.continue.hidden = true;
+        question.choices.forEach(function (choice, i) {
+          var button = document.createElement('button'); button.type = 'button'; button.className = 'tet-choice'; button.dataset.gameChoice = String(i);
+          button.textContent = String.fromCharCode(65 + i) + '. ' + choice; el.choices.appendChild(button);
+        });
+        setStatus((next.wrapped ? (feedback.outOfQuestions || 'Question pool complete — starting it again.') + ' ' : '') + 'Game paused: answer to bank this row’s 100 points.');
+        render(); el.choices.firstChild.focus();
+      }
+      function settle(hard) {
+        window.clearTimeout(lockTimer); lockTimer = null;
+        var cleared = hard ? model.hardDrop() : model.lock();
+        if (model.over) { end('lose'); return; }
+        if (cleared) { pending = cleared; ask(); } else spawn();
+      }
+      function answer(index) {
+        if (phase !== 'question' || !Number.isInteger(index) || index < 0 || index >= 4) return;
+        // Set the phase first: double clicks and reentrant events cannot score twice.
+        phase = 'feedback'; used++; pending--;
+        var right = index === question.answerIndex;
+        if (right) { correct++; points += 100; } else wrong++;
+        Array.from(el.choices.children).forEach(function (button, i) {
+          button.disabled = true;
+          if (i === question.answerIndex) button.classList.add('tet-choice--right');
+          else if (i === index) button.classList.add('tet-choice--wrong');
+        });
+        el.verdict.hidden = false;
+        el.verdict.textContent = (right ? (feedback.correct || 'Correct — 100 points banked.') : (feedback.incorrect || 'Incorrect — the row stays cleared, but no points are banked.') + '\nAnswer: ' + question.choices[question.answerIndex])
+          + (question.explanation ? '\n' + question.explanation : '');
+        el.continue.hidden = false;
+        el.continue.textContent = pending ? 'Next row’s question' : model.cleared >= TARGET ? 'See results' : 'Resume game';
+        setStatus(right ? '100 points banked. Read the explanation, then continue.' : 'No points banked. Read the explanation, then continue.');
+        render();
+        emit('answer', { questionId:question.id || 'q' + (questionIndex + 1), questionIndex:questionIndex, correct:right, chosen:question.choices[index], ms:Math.max(0,Date.now() - started) });
+        el.continue.focus();
+      }
+      function proceed() {
+        if (phase !== 'feedback') return;
+        if (pending) { ask(); return; }
+        if (model.cleared >= TARGET) { end('win'); return; }
+        el.continue.hidden = true; el.choices.replaceChildren(); el.verdict.hidden = true;
+        el.prompt.textContent = 'Keep stacking. The next cleared row brings the next question.';
+        setStatus('Fill a horizontal row. The outlined piece shows where a hard drop will land.');
+        spawn(); el.board.focus();
+      }
+      function pause() {
+        if (phase === 'playing') { phase = 'paused'; stop(); setStatus('Paused. Resume when you are ready.'); }
+        else if (phase === 'paused') { phase = 'playing'; run(); setStatus('Fill a horizontal row to earn a question.'); }
+        render();
+      }
+      function action(name) {
+        if (phase !== 'playing') return;
+        if (name === 'drop') { settle(true); return; }
+        var moved = name === 'rotate' ? model.rotate(1) : name === 'back' ? model.rotate(-1) : model.move(name === 'left' ? -1 : name === 'right' ? 1 : 0, name === 'soft' ? 1 : 0);
+        scheduleLock(moved && name !== 'soft'); render();
+      }
+      listen(root,'click',function (event) {
+        var button = event.target.closest('button');
+        if (!button || !root.contains(button) || button.disabled) return;
+        if (button.hasAttribute('data-game-choice')) answer(Number(button.dataset.gameChoice));
+        else if (button.hasAttribute('data-tet-control')) action(button.dataset.tetControl);
+        else if (button === el.continue) proceed();
+        else if (button === el.pause) pause();
+        else if (button === el.end) end('draw');
+        else if (button === el.restart) window.initGame(payload);
+      });
+      listen(root,'keydown',function (event) {
+        if (phase === 'over') {
+          if (event.key === 'Tab') {
+            var targets = el.next.hidden ? [el.restart] : [el.restart,el.next];
+            var index = targets.indexOf(document.activeElement);
+            event.preventDefault(); targets[(index + (event.shiftKey ? -1 : 1) + targets.length) % targets.length].focus();
+          }
+          return;
+        }
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName) || event.target.isContentEditable) return;
+        var key = event.key.toLowerCase();
+        if (key === 'p' || key === 'escape') { if (!event.repeat && (phase === 'playing' || phase === 'paused')) { event.preventDefault(); pause(); } return; }
+        var names = { arrowleft:'left', arrowright:'right', arrowdown:'soft', arrowup:'rotate', x:'rotate', z:'back', ' ':'drop' };
+        if (phase === 'playing' && names[key]) {
+          event.preventDefault();
+          if (event.repeat && ['drop','rotate','back'].includes(names[key])) return;
+          action(names[key]);
+        }
+      });
+      listen(document,'visibilitychange',function () { if (document.hidden && phase === 'playing') pause(); });
+      listen(window,'blur',function () { if (phase === 'playing') pause(); });
+      listen(window,'pagehide',dispose);
+      el.topic.textContent = String((payload.meta || {}).topic || '');
+      el.counter.textContent = 'Clear a line to get a question';
+      el.prompt.textContent = 'Stack the pieces to fill a horizontal row. The game pauses for each question.';
+      el.banked.textContent = '0'; el.points.textContent = '0';
+      el.next.hidden = !shell.nextLevelUrl;
+      el.next.setAttribute('href',shell.nextLevelUrl || '#');
+      setStatus('Fill a horizontal row. Click the board to use keyboard controls.');
+      spawn(); emit('start', {});
+    };
+    if (window.GAME_DATA) window.initGame(window.GAME_DATA);
+  }());
+</script>

@@ -1,0 +1,39 @@
+{
+ "note": "STAGED. Merge revisions into content/placement-revisions/math.json (same shape) and the calibration points into content/placement-calibration/math.json .points. Both keys were wrong; both confirmed by working the question.",
+ "revisions": {
+  "numbers_to_20_and_teen_numbers": {
+   "0": {
+    "round": "reval-2026-10-24",
+    "topic": "teen numbers and ten-frames",
+    "prompt": "Two ten-frames have dots in them. The first ten-frame has all 10 of its boxes filled. The second ten-frame has 2 of its boxes filled. What number do the two ten-frames show together?",
+    "answer": "12",
+    "choices": [
+     "12",
+     "15",
+     "20",
+     "7"
+    ],
+    "why": "Key wrong: the old prompt described ONE ten-frame with 5 + 2 = 7 boxes filled but keyed 12. Found by the third judge (Nemotron), confirmed by counting; the prompt now describes the 10 + 2 the key and rationale intended."
+   }
+  },
+  "calculus_i": {
+   "5": {
+    "round": "reval-2026-10-24",
+    "topic": "related rates",
+    "prompt": "A spherical balloon is being inflated so that air is pumped in at a constant rate of 3 cubic centimeters per second. At the instant when the radius of the balloon is 4 centimeters, at what rate is the radius increasing?",
+    "answer": "3/(64π) centimeters per second",
+    "choices": [
+     "3/(64π) centimeters per second",
+     "3/(16π) centimeters per second",
+     "3/(4π) centimeters per second",
+     "12π centimeters per second"
+    ],
+    "why": "Key wrong: dV/dt = 4πr²·dr/dt gives 3 = 64π·dr/dt, dr/dt = 3/(64π); the key said 3/(16π) and the right value was not an option (the stored rationale itself says 64π). Found by the third judge (Nemotron), confirmed by working it."
+   }
+  }
+ },
+ "calibration": {
+  "0a46e8ffcd2d05ed": 3.1,
+  "0736b98afad0a1a5": 28.542
+ }
+}

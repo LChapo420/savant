@@ -1,0 +1,62 @@
+--- a/config/curriculum.js	2026-10-23 22:19:09.535414400 -0500
++++ b/config/curriculum.js	2026-10-23 22:19:09.634995900 -0500
+@@ -720,12 +720,41 @@
+  * Difficulty 1–10 for a level on a path. Linear is the honest choice for v1:
+  * item statistics in Phase 8 replace it with a curve fitted to real p-values.
+  */
+-function difficultyForLevel(level, pathLength) {
++function difficultyForLevel(level, pathLength, grade = null) {
+   const t = (Math.max(1, level) - 1) / Math.max(1, pathLength - 1);
++  const band = grade ? gradeBand(grade) : null;
++  if (band) return Math.max(1, Math.min(10, band.lo + t * (band.hi - band.lo)));
+   return Math.max(1, Math.min(10, 1 + t * 9));
+ }
+ 
+ /**
++ * The part of the bank's 1-10 scale a grade is served from (GRADE_BANDS=on).
++ *
++ * The bank's scale is subject-wide: 1 is a first lesson in the subject and 10 the
++ * hardest material it has. Without a band every grade runs the whole scale, so a
++ * Kindergarten math grade ends on difficulty-10 algebra and a doctoral grade opens
++ * on "3 + 4" (subjects audit, 2026-10-24). With it, a grade's levels climb across
++ * its own slice of the scale, placed by the grade's position in its track: the
++ * slice is centred on that position and at least GRADE_BAND_WIDTH wide (default 2),
++ * so a grade still gets harder from its first level to its Final.
++ * Placement keeps its own scale (services/placement.js inverts the unbanded one).
++ */
++function gradeBand(grade) {
++  if (String(process.env.GRADE_BANDS || 'off').toLowerCase() !== 'on' || !grade || !grade.trackId) return null;
++  const track = TRACKS.find((t) => t.id === grade.trackId);
++  const index = track ? track.grades.findIndex((g) => g.id === grade.id) : -1;
++  if (!track || index < 0 || track.grades.length < 2) return null;
++  const n = track.grades.length;
++  const width = Math.min(9, Math.max(Number(process.env.GRADE_BAND_WIDTH || 2), 9 / n));
++  const centre = 1 + (9 * (index + 0.5)) / n;
++  let lo = centre - width / 2;
++  let hi = centre + width / 2;
++  if (lo < 1) { hi += 1 - lo; lo = 1; }
++  if (hi > 10) { lo -= hi - 10; hi = 10; }
++  return { lo: Math.max(1, lo), hi: Math.min(10, hi) };
++}
++
++/**
+  * The skill a level focuses on, plus the skills already introduced by then.
+  *
+  * The focus is normally the skill whose band the level sits in. On a lesson level
+@@ -782,7 +811,7 @@
+     // A skill whose topics are already behind the learner stays in review, which
+     // is what keeps level 200 from forgetting level 3.
+     introduced: skills.slice(0, introducedThrough + 1),
+-    difficulty: difficultyForLevel(level, grade.pathLength),
++    difficulty: difficultyForLevel(level, grade.pathLength, grade),
+     // The checkpoint a learner is standing on, if this level is one.
+     checkpoint: isCheckpoint(kind) ? kind : null,
+   };
+@@ -881,6 +910,7 @@
+   skillFormats,
+   placementLength,
+   difficultyForLevel,
++  gradeBand,
+   levelPlan,
+   allUsedSkills,
+   catalogue,

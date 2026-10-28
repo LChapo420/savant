@@ -1,0 +1,4483 @@
+{
+ "track_id": "math",
+ "grade_id": "abstract_algebra_i",
+ "generated_at": "2026-10-26T03:38:11.807Z",
+ "items": [
+  {
+   "objective_id": "abstract_algebra_i:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which symmetry of a square has order 4, meaning that repeating it four times returns every point to its starting position?",
+   "choices": [
+    "90° clockwise rotation",
+    "180° clockwise rotation",
+    "vertical-axis reflection",
+    "horizontal-axis reflection"
+   ],
+   "answer": "90° clockwise rotation",
+   "rationale": "A 90° rotation cycles a square through four distinct orientations before returning to the starting orientation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Starting at 0 and repeatedly adding 3 modulo 7, which sequence lists the residues until 0 returns?",
+   "choices": [
+    "0, 2, 4, 6, 1, 3, 5, 0",
+    "0, 3, 6, 1, 4, 7, 2, 0",
+    "0, 3, 6, 2, 5, 1, 4, 0",
+    "0, 3, 6, 0, 3, 6, 0, 3"
+   ],
+   "answer": "0, 3, 6, 2, 5, 1, 4, 0",
+   "rationale": "Adding 3 modulo 7 gives 0, 3, 6, 2, 5, 1, 4, and then 0 again, so every residue occurs once.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which description gives the complete set of plane symmetries of a non-square rectangle?",
+   "choices": [
+    "Four: identity, half-turn, and two reflections",
+    "Four: identity, quarter-turn, and two reflections",
+    "Six: identity, two quarter-turns, and reflections",
+    "Eight: identity, two quarter-turns, half-turn, reflections"
+   ],
+   "answer": "Four: identity, half-turn, and two reflections",
+   "rationale": "A non-square rectangle has an identity, a 180° rotation, and reflections across its horizontal and vertical symmetry axes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "For a square centered at the origin with sides parallel to the axes, a 90° counterclockwise rotation is followed by reflection across the vertical axis. Which transformation gives the same result?",
+   "choices": [
+    "Reflection across the diagonal y=x",
+    "Reflection across the diagonal y=-x",
+    "Rotation by 180° about the center",
+    "Rotation by 90° about the center"
+   ],
+   "answer": "Reflection across the diagonal y=x",
+   "rationale": "The combined transformation sends each point (x,y) to (y,x), which is reflection across the diagonal y=x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L147",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let H = {e, (1234), (13)(24), (1432)} ≤ S₄. Which map from ℤ₄ onto H is an isomorphism?",
+   "choices": [
+    "f([k]₄) = (1234)^k",
+    "f([k]₄) = (13)^k",
+    "f([k]₄) = (124)^k",
+    "f([k]₄) = (1234)^(2k)"
+   ],
+   "answer": "f([k]₄) = (1234)^k",
+   "rationale": "The element (1234) has order 4 and generates H. Sending [k]₄ to (1234)^k respects addition, is well-defined, and is bijective. The other maps are not well-defined or are not bijective onto H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L147",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Both C₆ and S₃ have order 6. Which comparison proves that they are not isomorphic?",
+   "choices": [
+    "C₆ has one element of order 2; S₃ has three.",
+    "Both groups have two elements of order 3.",
+    "Both groups have five nonidentity elements.",
+    "C₆ has three elements of order 2; S₃ has one."
+   ],
+   "answer": "C₆ has one element of order 2; S₃ has three.",
+   "rationale": "Isomorphisms preserve element orders. C₆ has one element of order 2, whereas S₃ has three, so the groups cannot be isomorphic. The number of elements of order 3 and the total group order do not distinguish them.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L147",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let G be a group and define λ_g(x) = gx. Which argument proves that g ↦ λ_g is an injective homomorphism?",
+   "choices": [
+    "λ_g ∘ λ_h = λ_gh; if λ_g = λ_h, then evaluating at e gives g = h.",
+    "λ_g ∘ λ_h = λ_hg; if λ_g = λ_h, then evaluating at e gives g = h.",
+    "λ_g ∘ λ_h = λ_gh; if λ_g = λ_h, then evaluating at e gives g = h⁻¹.",
+    "λ_g ∘ λ_h = λ_gh; if λ_g = λ_h, then evaluating at e gives gh = hg."
+   ],
+   "answer": "λ_g ∘ λ_h = λ_gh; if λ_g = λ_h, then evaluating at e gives g = h.",
+   "rationale": "For every x, (λ_g ∘ λ_h)(x) = g(hx) = (gh)x = λ_gh(x), so composition corresponds to group multiplication. Also, λ_g = λ_h implies ge = he, hence g = h. Thus the map is an injective homomorphism.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L147",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "In the regular left-translation construction for a finite group G of order n, which group contains the resulting subgroup?",
+   "choices": [
+    "Sₙ",
+    "Sₙ₋₁",
+    "Sₙ!",
+    "S₂ₙ"
+   ],
+   "answer": "Sₙ",
+   "rationale": "The left translations are permutations of the n-element set G, so they form a subgroup of Sₙ. The injective map g ↦ λ_g identifies this subgroup with G, yielding Cayley’s Theorem.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly classifies ℤ₈ under addition?",
+   "choices": [
+    "It is cyclic because 1 has order 8.",
+    "It is cyclic because every element has order 8.",
+    "It is not cyclic because it has eight elements.",
+    "It is not cyclic because 8 is not prime."
+   ],
+   "answer": "It is cyclic because 1 has order 8.",
+   "rationale": "The element 1 in ℤ₈ has additive order 8, so it generates the entire group. Therefore ℤ₈ is cyclic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "How many generators does the cyclic group ℤ₁₂ have?",
+   "choices": [
+    "2",
+    "4",
+    "6",
+    "8"
+   ],
+   "answer": "4",
+   "rationale": "A cyclic group of order n has φ(n) generators. Since φ(12) = 12(1−1/2)(1−1/3) = 4, ℤ₁₂ has four generators.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "In ℤ₁₅ under addition, what is the order of the subgroup generated by 3?",
+   "choices": [
+    "3",
+    "5",
+    "15",
+    "30"
+   ],
+   "answer": "5",
+   "rationale": "The order of 3 in ℤ₁₅ is 15/gcd(15,3) = 5. Thus the subgroup generated by 3 also has order 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which group is not isomorphic to a cyclic group ℤₙ?",
+   "choices": [
+    "ℤ₄ under addition",
+    "ℤ₉ under addition",
+    "ℤ₂ × ℤ₂ under addition",
+    "ℤ₆ under addition"
+   ],
+   "answer": "ℤ₂ × ℤ₂ under addition",
+   "rationale": "In ℤ₂ × ℤ₂, every nonidentity element has order 2, so no element generates all four elements. The other groups are cyclic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L82",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Let r be rotation by 2π/n and s a reflection of a regular n-gon. Which relations correctly describe its symmetry group?",
+   "choices": [
+    "r^n=e, s^2=e, and srs=r^{-1}",
+    "r^n=e, s^2=e, and srs=r",
+    "r^n=e, s^2=r, and srs=r^{-1}",
+    "r^{n-1}=e, s^2=e, and srs=r^{-1}"
+   ],
+   "answer": "r^n=e, s^2=e, and srs=r^{-1}",
+   "rationale": "The rotation has order n, every reflection has order 2, and conjugation by a reflection reverses the rotation: srs=r^{-1}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L82",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "In D_6, the symmetry group of a regular hexagon, let r be rotation by 60° and s a reflection. What is the order of r^2s?",
+   "choices": [
+    "2",
+    "3",
+    "6",
+    "12"
+   ],
+   "answer": "2",
+   "rationale": "Using sr^2=r^{-2}s, we get (r^2s)^2=r^2r^{-2}=e. Since r^2s is a reflection, it is not the identity and has order 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L82",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "In D_8, let r be rotation by 45° and s a reflection. With composition read right to left, simplify r^3sr.",
+   "choices": [
+    "r^2s",
+    "r^4s",
+    "r^6s",
+    "rs"
+   ],
+   "answer": "r^2s",
+   "rationale": "The relation sr=r^{-1}s gives r^3sr=r^3r^{-1}s=r^2s.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L82",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "In D_12, let r be rotation by 30° and s a reflection. Using right-to-left composition, which rotation is represented by s(r^3s)?",
+   "choices": [
+    "r^3",
+    "r^6",
+    "r^9",
+    "r^12"
+   ],
+   "answer": "r^9",
+   "rationale": "Since sr^3=r^{-3}s, the product s(r^3s)=sr^3s=r^{-3}=r^9, corresponding to a 270° rotation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "For the permutation σ = (1 4 2 3)(5 7 6) in S₇, what is the order of σ?",
+   "choices": [
+    "6",
+    "12",
+    "7",
+    "24"
+   ],
+   "answer": "12",
+   "rationale": "The order is the least common multiple of the disjoint cycle lengths, so ord(σ) = lcm(4, 3) = 12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Let σ = (1 2 3) and τ = (1 2). Using right-to-left composition, which choice equals στ?",
+   "choices": [
+    "(1 3)",
+    "(1 2)",
+    "(1 2 3)",
+    "(1 3 2)"
+   ],
+   "answer": "(1 3)",
+   "rationale": "Applying τ first and σ second sends 1 to 3, sends 3 to 1, and fixes 2, giving (1 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Let σ = (1 2 3) and τ = (3 4). Using right-to-left composition, what is στ, written as a single cycle?",
+   "choices": [
+    "(1 2 3 4)",
+    "(1 2 4 3)",
+    "(1 3 2 4)",
+    "(1 4 3 2)"
+   ],
+   "answer": "(1 2 3 4)",
+   "rationale": "Applying τ first and σ second gives 1→2, 2→3, 3→4, and 4→1, so στ = (1 2 3 4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L157",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let G = Z_12 and H = {0, 3, 6, 9}. Which set is the left coset 1 + H?",
+   "choices": [
+    "{1, 4, 7, 10}",
+    "{1, 3, 6, 9}",
+    "{0, 3, 6, 9}",
+    "{2, 5, 8, 11}"
+   ],
+   "answer": "{1, 4, 7, 10}",
+   "rationale": "The left coset 1 + H contains 1 + h for every h in H, giving {1, 4, 7, 10}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L157",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let G = Z_6 and H = {0, 2, 4}. Which pair of sets is the partition of G into distinct left cosets of H?",
+   "choices": [
+    "{0, 2, 4}, {1, 3, 6}",
+    "{0, 2, 3}, {1, 4, 5}",
+    "{0, 2, 4}, {1, 3, 5}",
+    "{0, 1, 2}, {3, 4, 5}"
+   ],
+   "answer": "{0, 2, 4}, {1, 3, 5}",
+   "rationale": "The distinct left cosets are 0 + H = {0, 2, 4} and 1 + H = {1, 3, 5}, which partition Z_6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L157",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let G be a finite group of order 24, and let H be a subgroup of order 6. What must be true about the left cosets of H?",
+   "choices": [
+    "Each left coset has 3 elements, and there are 8 cosets.",
+    "Each left coset has 4 elements, and there are 6 cosets.",
+    "Each left coset has 12 elements, and there are 2 cosets.",
+    "Each left coset has 6 elements, and there are 4 cosets."
+   ],
+   "answer": "Each left coset has 6 elements, and there are 4 cosets.",
+   "rationale": "Every left coset has |H| = 6 elements, and Lagrange's theorem gives the number of cosets as 24/6 = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L157",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let H be a subgroup of a finite group G, partitioned into k distinct left cosets. Which counting argument proves that |H| divides |G|?",
+   "choices": [
+    "Each left coset has k elements, so |G| = k^2.",
+    "Each left coset has |H| elements, so |G| = k|H|.",
+    "Each left coset has |H| elements, so |G| = k + |H|.",
+    "Each left coset has k|H| elements, so |G| = k|H|."
+   ],
+   "answer": "Each left coset has |H| elements, so |G| = k|H|.",
+   "rationale": "The map h to gh is a bijection from H to each coset gH, so each coset has |H| elements. Their disjoint union has k|H| elements.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L20",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Let * be defined on the set {a, b, c} by the table: a*a=a, a*b=b, a*c=c, b*a=b, b*b=a, b*c=a, c*a=c, c*b=a, c*c=a. Which axiom fails?",
+   "choices": [
+    "Closure fails",
+    "Associativity fails",
+    "Identity fails",
+    "Inverses fail"
+   ],
+   "answer": "Associativity fails",
+   "rationale": "The operation is closed and has an identity (a), and each element has an inverse, but (b*b)*c = a*c = c while b*(b*c) = b*a = b, so associativity fails.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L20",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which list gives precisely the four group axioms for a nonempty set with a binary operation?",
+   "choices": [
+    "Closure, associativity, a two-sided identity, and two-sided inverses",
+    "Closure, associativity, a right identity, and right inverses",
+    "Closure, commutativity, a two-sided identity, and two-sided inverses",
+    "Closure, associativity, a two-sided identity, and inverses only when they exist"
+   ],
+   "answer": "Closure, associativity, a two-sided identity, and two-sided inverses",
+   "rationale": "A group requires closure, associativity, a two-sided identity, and a two-sided inverse for every element. Commutativity is not required, and one-sided identities or inverses are insufficient.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L209",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Let G be a group, N◁G, and N≤H≤G. Which map establishes the second isomorphism theorem H/(H∩N)≅HN/N?",
+   "choices": [
+    "g(H∩N)↦gN, from H/(H∩N) to HN/N.",
+    "g(H∩N)↦gN, from H/(H∩N) to G/N.",
+    "gN↦g(H∩N), from G/N to H/(H∩N).",
+    "gN↦g(H∩N), from HN/N to H/(H∩N)."
+   ],
+   "answer": "g(H∩N)↦gN, from H/(H∩N) to HN/N.",
+   "rationale": "The map is well-defined, injective, and surjective because changing g by an element of H∩N does not change gN, while every element of HN/N is hN for some h∈H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L209",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Let G be a group, N◁G, and N≤K◁G. Which map gives the canonical isomorphism (G/N)/(K/N)≅G/K?",
+   "choices": [
+    "(gN)(K/N)↦gK.",
+    "(gN)(K/N)↦gN.",
+    "(gN)(K/N)↦gKN.",
+    "(gN)(K/N)↦g(K∩N)."
+   ],
+   "answer": "(gN)(K/N)↦gK.",
+   "rationale": "Multiplying g by an element of N or K does not change gK, so the map is well-defined. It is injective because gK is the identity exactly when g∈K, and it is surjective because every coset has the form gK.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L209",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "For π:G→G/N, where K≤G/N and N≤H≤G, which pairing correctly describes the subgroup correspondence?",
+   "choices": [
+    "K corresponds to π⁻¹(K), and H corresponds to π(H).",
+    "K corresponds to π⁻¹(H), and H corresponds to π(K).",
+    "K corresponds to π(H), and every H corresponds to π⁻¹(K).",
+    "K corresponds to π(K), and H corresponds to π⁻¹(H)."
+   ],
+   "answer": "K corresponds to π⁻¹(K), and H corresponds to π(H).",
+   "rationale": "The inverse-image map sends each subgroup K of G/N to a subgroup containing N. Conversely, π(H) is a subgroup of G/N when H contains N, and π⁻¹(π(H))=H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L209",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Let π:G→G/N and K≤G/N. Which argument proves that π⁻¹(K) is a subgroup containing N?",
+   "choices": [
+    "x,y∈π⁻¹(K)⇒π(xy⁻¹)∈K, and N=kerπ⊆π⁻¹(K).",
+    "x,y∈π⁻¹(K)⇒π(xy)∉K generally, and N⊆π⁻¹(K).",
+    "x∈π⁻¹(K)⇒π(x⁻¹)∉K generally, and N⊆π⁻¹(K).",
+    "The preimage is nonempty and contains N=kerπ, so it is a subgroup."
+   ],
+   "answer": "x,y∈π⁻¹(K)⇒π(xy⁻¹)∈K, and N=kerπ⊆π⁻¹(K).",
+   "rationale": "Because K is a subgroup, π(x)π(y)⁻¹ lies in K. Thus the preimage is closed under xy⁻¹, and it contains the identity because it contains the kernel N.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L105",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Suppose a permutation σ has one factorization into r transpositions and another into s transpositions. What must hold for “even” and “odd” to be well-defined?",
+   "choices": [
+    "The integers r and s have the same parity.",
+    "The integers r and s are necessarily equal.",
+    "The integers r and s have opposite parity.",
+    "The sum r+s is necessarily odd."
+   ],
+   "answer": "The integers r and s have the same parity.",
+   "rationale": "Any two transposition factorizations of the same permutation differ in length by an even number. Thus the parity of the number of factors is independent of the chosen factorization.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L105",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "For n≥2, which description of the alternating group A_n is correct?",
+   "choices": [
+    "It is a subgroup of S_n with n!/2 elements, but it is not normal.",
+    "It is a normal subgroup of S_n with n!/2 elements.",
+    "It is a normal subgroup of S_n with n! elements.",
+    "It is not a subgroup of S_n, although it has n!/2 elements."
+   ],
+   "answer": "It is a normal subgroup of S_n with n!/2 elements.",
+   "rationale": "The sign homomorphism from S_n to {1,−1} has kernel A_n, so A_n is normal. Since exactly half the permutations are even, its order is n!/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L105",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "For n≥3, which statement correctly explains why 3-cycles can be used to generate A_n?",
+   "choices": [
+    "The 3-cycles are odd, so they cannot generate A_n.",
+    "The transpositions are even, so they generate exactly A_n.",
+    "The 4-cycles are odd, so they generate exactly A_n.",
+    "The 3-cycles generate A_n by rewriting pairs of transpositions."
+   ],
+   "answer": "The 3-cycles generate A_n by rewriting pairs of transpositions.",
+   "rationale": "Every even permutation is a product of an even number of transpositions. Grouping them into pairs and rewriting each pair as a product of 3-cycles expresses it using 3-cycles.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L241",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Let G = ⟨t,x,y,z | 2x=0, 4y=0, 8z=0⟩. What are the free rank and the invariant factors of the torsion subgroup?",
+   "choices": [
+    "Free rank 1; factors 2, 4, 8",
+    "Free rank 0; factors 2, 4, 8",
+    "Free rank 1; factors 2, 4, 16",
+    "Free rank 2; factors 2, 4, 8"
+   ],
+   "answer": "Free rank 1; factors 2, 4, 8",
+   "rationale": "The generator t has no relation, so the free rank is 1. The remaining generators have orders 2, 4, and 8, which already satisfy 2 | 4 | 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L241",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Let G = ℤ³/Aℤ³, where A = diag(6,10,15). Which invariant-factor decomposition gives G?",
+   "choices": [
+    "ℤ/15ℤ ⊕ ℤ/60ℤ",
+    "ℤ/30ℤ ⊕ ℤ/30ℤ",
+    "ℤ/10ℤ ⊕ ℤ/90ℤ",
+    "ℤ/6ℤ ⊕ ℤ/150ℤ"
+   ],
+   "answer": "ℤ/30ℤ ⊕ ℤ/30ℤ",
+   "rationale": "For A, the determinantal divisors are Δ₁ = 1, Δ₂ = 30, and Δ₃ = 900. Thus the Smith factors are 1, 30, and 30, giving G ≅ ℤ/30ℤ ⊕ ℤ/30ℤ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L241",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "For A = [[2,1,0],[0,2,1],[0,0,2]], which diagonal matrix is the Smith normal form of A?",
+   "choices": [
+    "diag(1,1,8)",
+    "diag(1,2,4)",
+    "diag(2,2,2)",
+    "diag(1,4,2)"
+   ],
+   "answer": "diag(1,1,8)",
+   "rationale": "The gcd of all entries is 1, and some 2-by-2 minor equals 1. The determinant is 8, so the Smith factors are 1, 1, and 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L241",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Which invariant-factor decomposition is isomorphic to G = ℤ/2ℤ ⊕ ℤ/8ℤ ⊕ ℤ/3ℤ?",
+   "choices": [
+    "ℤ/2ℤ ⊕ ℤ/24ℤ",
+    "ℤ/4ℤ ⊕ ℤ/12ℤ",
+    "ℤ/6ℤ ⊕ ℤ/8ℤ",
+    "ℤ/3ℤ ⊕ ℤ/16ℤ"
+   ],
+   "answer": "ℤ/2ℤ ⊕ ℤ/24ℤ",
+   "rationale": "Since ℤ/24ℤ ≅ ℤ/8ℤ ⊕ ℤ/3ℤ, the group is isomorphic to ℤ/2ℤ ⊕ ℤ/24ℤ. The factors 2 and 24 also satisfy the required divisibility order.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L264",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Let G act on a finite set X, and choose x ∈ X. If |G| = 120 and the orbit of x has 6 elements, what is the size of the stabilizer of x?",
+   "choices": [
+    "15",
+    "20",
+    "24",
+    "30"
+   ],
+   "answer": "20",
+   "rationale": "The orbit-stabilizer theorem gives |Orb(x)|·|Stab(x)| = |G|, so |Stab(x)| = 120/6 = 20.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L264",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Which argument proves orbit-stabilizer for a finite group action?",
+   "choices": [
+    "Fibers of g↦g·x partition G into stabilizer cosets, indexed by orbit points.",
+    "Fibers of g↦g·x partition G into orbit-sized sets, indexed by stabilizer points.",
+    "Fibers of g↦g·x partition X into stabilizer cosets, indexed by group elements.",
+    "Fibers of g↦g·x partition X into group-sized sets, indexed by orbit points."
+   ],
+   "answer": "Fibers of g↦g·x partition G into stabilizer cosets, indexed by orbit points.",
+   "rationale": "The fibers of g↦g·x partition G. Each fiber is a coset of Stab(x), and the number of fibers is |Orb(x)|, proving the product formula.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L264",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Let G be the eight-element symmetry group of a square, acting on its four vertices. For a fixed vertex v, what is the size of the stabilizer of v?",
+   "choices": [
+    "1",
+    "2",
+    "4",
+    "8"
+   ],
+   "answer": "2",
+   "rationale": "The orbit of v contains all four vertices, so orbit-stabilizer gives |Stab(v)| = 8/4 = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L264",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Let G be the 24-element rotation group of a cube, acting on its six faces. For a fixed face F, how many rotations send F to a specified opposite face?",
+   "choices": [
+    "2",
+    "3",
+    "4",
+    "6"
+   ],
+   "answer": "4",
+   "rationale": "The orbit of F has six faces, so its stabilizer has size 24/6 = 4. Exactly four rotations send F to any specified face in its orbit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L274",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "Let a finite group G act on a finite set X. Which counting argument proves Burnside’s lemma?",
+   "choices": [
+    "Count fixed pairs (x,g), grouping them first by x and then by orbit.",
+    "Count all ordered pairs (x,g), grouping them first by subgroup and then by element.",
+    "Count group elements by action, considering only fixed points of nonidentity elements.",
+    "Count invariant subsets of X, then divide their number by the number of orbits."
+   ],
+   "answer": "Count fixed pairs (x,g), grouping them first by x and then by orbit.",
+   "rationale": "Counting pairs with g·x=x by x gives the sum of stabilizer sizes. Each orbit contributes |G| to this sum, so dividing the total by |G| gives the number of orbits.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L274",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "How many necklaces of six beads, each independently one of three colors, are distinct only up to rotation?",
+   "choices": [
+    "128",
+    "129",
+    "130",
+    "132"
+   ],
+   "answer": "130",
+   "rationale": "The six rotations fix respectively 729, 3, 9, 27, 9, and 3 colorings. Burnside’s lemma gives (729+3+9+27+9+3)/6 = 130.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L274",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "How many ways can the six faces of a cube be colored with two colors, counting rotations as the same but not reflections?",
+   "choices": [
+    "8",
+    "10",
+    "12",
+    "16"
+   ],
+   "answer": "10",
+   "rationale": "The 24 rotations have fixed-coloring counts 64, 8, 16, 4, and 8 according to their conjugacy types. Their weighted sum is 240, so Burnside’s lemma gives 240/24 = 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L274",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "How many inequivalent proper vertex colorings of a 4-cycle use colors from {1,2,3}, when rotations and reflections of the cycle are identified?",
+   "choices": [
+    "4",
+    "5",
+    "6",
+    "8"
+   ],
+   "answer": "6",
+   "rationale": "The identity fixes 18 proper colorings; the half-turn fixes 6; each of two vertex-axis reflections fixes 12; all other symmetries fix none. Thus Burnside’s lemma gives 48/8 = 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "In the additive group ℤ₁₂, what is the order of the element 8?",
+   "choices": [
+    "3",
+    "4",
+    "6",
+    "12"
+   ],
+   "answer": "3",
+   "rationale": "The order of an element a in ℤₙ is n / gcd(a, n). Here n = 12 and gcd(8,12) = 4, so the order is 12/4 = 3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Let σ = (1 2 3)(4 5) in the symmetric group S₅. What is the order of σ?",
+   "choices": [
+    "3",
+    "5",
+    "6",
+    "15"
+   ],
+   "answer": "6",
+   "rationale": "The order of a permutation equals the least common multiple of the lengths of its disjoint cycles. σ consists of a 3‑cycle and a 2‑cycle, so its order is lcm(3,2) = 6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The order of a permutation is the least common multiple of the lengths of its disjoint cycles.",
+      "url": "https://en.wikipedia.org/wiki/Permutation",
+      "quote": "It is the least common multiple of the lengths of its cycles.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Let G be a group of order 12 and let x ∈ G have order 6. How many elements does the subgroup ⟨x⟩ contain?",
+   "choices": [
+    "6",
+    "12",
+    "3",
+    "2"
+   ],
+   "answer": "6",
+   "rationale": "The subgroup generated by an element has exactly as many elements as the order of that element. Since ord(x)=6, ⟨x⟩ has 6 elements.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The subgroup generated by an element of order 6 contains exactly 6 elements.",
+      "url": "https://en.wikipedia.org/wiki/Order_of_a_group_element",
+      "quote": "The order of an element of a group (also called period length or period ) is the order of the subgroup generated by the element.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Let G be a cyclic group of order 30 with generator g. What is the order of g¹²?",
+   "choices": [
+    "5",
+    "6",
+    "10",
+    "15"
+   ],
+   "answer": "5",
+   "rationale": "In a cyclic group, ord(g^k) = ord(g) / gcd(ord(g), k). Here ord(g)=30 and gcd(30,12)=6, so the order is 30/6 = 5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In a cyclic group, the order of g^k is n/gcd(n,k), where n is the order of g.",
+      "url": "https://en.wikipedia.org/wiki/Cyclic_group",
+      "quote": "The order of an element m in Z / n Z is n / gcd ( n , m ).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Let G and H be groups. Which condition defines a group homomorphism f:G→H?",
+   "choices": [
+    "f(xy)=f(x)f(y) for all x,y∈G",
+    "f(xy)=f(x)+f(y) for all x,y∈G",
+    "f(xy)=f(y)f(x) for all x,y∈G",
+    "f(xy)=f(x)−f(y) for all x,y∈G"
+   ],
+   "answer": "f(xy)=f(x)f(y) for all x,y∈G",
+   "rationale": "A group homomorphism preserves the group operation: f(xy)=f(x)f(y) for every x,y∈G.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Let f:G→H be a homomorphism. Which calculation proves f(e_G)=e_H?",
+   "choices": [
+    "f(e_Ge_G)=f(e_G)=f(e_G)^2; multiply by f(e_G)^{-1}",
+    "f(e_Ge_G)=f(e_G)=e_H; multiply by f(e_G)^{-1}",
+    "f(e_Ge_H)=f(e_G)=e_H; multiply by f(e_G)^{-1}",
+    "f(e_He_G)=f(e_G)=f(e_H); multiply by f(e_G)^{-1}"
+   ],
+   "answer": "f(e_Ge_G)=f(e_G)=f(e_G)^2; multiply by f(e_G)^{-1}",
+   "rationale": "Since e_Ge_G=e_G, the homomorphism property gives f(e_G)=f(e_G)^2. Multiplying by f(e_G)^{-1} yields f(e_G)=e_H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Let f:G→H be a group homomorphism. What must be true for every g∈G?",
+   "choices": [
+    "f(g⁻¹)=(f(g))⁻¹",
+    "f(g⁻¹)=f(g)",
+    "f(g⁻¹)=(f(g⁻¹))⁻¹",
+    "f(g⁻¹)=f(e_G)"
+   ],
+   "answer": "f(g⁻¹)=(f(g))⁻¹",
+   "rationale": "Since f(g)f(g⁻¹)=f(e_G)=e_H, the uniqueness of inverses in H implies that f(g⁻¹)=(f(g))⁻¹.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "For f:ℤ₆→ℤ₃ defined by f([a]₆)=[a]₃, which pair gives ker f and im f?",
+   "choices": [
+    "ker f={[0]₆,[3]₆}; im f=ℤ₃",
+    "ker f={[0]₃}; im f=ℤ₆",
+    "ker f={[0]₆,[2]₆,[4]₆}; im f=ℤ₃",
+    "ker f={[0]₆,[3]₆}; im f=ℤ₆"
+   ],
+   "answer": "ker f={[0]₆,[3]₆}; im f=ℤ₃",
+   "rationale": "An element [a]₆ is in the kernel exactly when a is divisible by 3, giving 0 and 3. Every class in ℤ₃ occurs as an image.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L40",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let a and b be elements of a group G satisfying a²=b²=e and ab=e. Which chain correctly proves that a=b?",
+   "choices": [
+    "a=ae=abb=(ab)b=eb=b",
+    "a=ae=aab=(ab)a=eb=b",
+    "a=ae=abb=(ba)b=eb=b",
+    "a=ae=bbb=(bb)b=eb=b"
+   ],
+   "answer": "a=ae=abb=(ab)b=eb=b",
+   "rationale": "Since bb=e, ae=abb. Associativity and ab=e then give a=ae=abb=(ab)b=eb=b, which is the socks-and-shoes rule.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L40",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Suppose e and f are both two-sided identities in a group G. Which chain gives a clean proof that the identity is unique?",
+   "choices": [
+    "e = ef = f, because f is a right identity and e is a left identity.",
+    "e = ef = e, because f is a right identity and e is a left identity.",
+    "e = fe = e, because f is a left identity and e is a right identity.",
+    "f = ef = f, because f is a right identity and e is a left identity."
+   ],
+   "answer": "e = ef = f, because f is a right identity and e is a left identity.",
+   "rationale": "Because f is a right identity, ef = e; because e is a left identity, ef = f. Therefore e = ef = f, proving uniqueness.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L40",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Let a, b, and c lie in a group with ab = e and ac = e, and let a⁻¹ be the designated inverse of a. Which calculation proves b = c?",
+   "choices": [
+    "b = a⁻¹(ab) = a⁻¹e = a⁻¹(ac) = c.",
+    "b = a⁻¹(ab) = a⁻¹e = a⁻¹(ca) = c.",
+    "b = a⁻¹(ba) = a⁻¹e = a⁻¹(ac) = c.",
+    "b = a⁻¹(ab) = a⁻¹a = a⁻¹(ac) = c."
+   ],
+   "answer": "b = a⁻¹(ab) = a⁻¹e = a⁻¹(ac) = c.",
+   "rationale": "Associativity and a⁻¹a = e give a⁻¹(ab) = b and a⁻¹(ac) = c. Since ab = ac = e, the middle terms agree, so b = c.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L40",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "In a group G, assume a and b commute. Which calculation proves that a also commutes with b⁻¹?",
+   "choices": [
+    "ab = ba ⇒ a = bab⁻¹ ⇒ b⁻¹a = ab⁻¹.",
+    "ab = ba ⇒ b = a⁻¹ba ⇒ ba⁻¹ = a⁻¹b.",
+    "ab = ba ⇒ b⁻¹a⁻¹ = a⁻¹b⁻¹ ⇒ ab⁻¹ = b⁻¹a.",
+    "ab = ba ⇒ b = aba⁻¹ ⇒ a⁻¹b = ba⁻¹."
+   ],
+   "answer": "ab = ba ⇒ a = bab⁻¹ ⇒ b⁻¹a = ab⁻¹.",
+   "rationale": "Right-multiplication by b⁻¹ gives a = bab⁻¹. Left-multiplication by b⁻¹ then gives b⁻¹a = ab⁻¹, which is the required commutation relation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L316",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "In a finite group G, which statement gives the definition of a Sylow p-subgroup?",
+   "choices": [
+    "A subgroup of G whose order is a power of p.",
+    "A p-subgroup of G that is maximal under inclusion.",
+    "A normal subgroup of G whose order is a power of p.",
+    "A subgroup of G whose index is a power of p."
+   ],
+   "answer": "A p-subgroup of G that is maximal under inclusion.",
+   "rationale": "A Sylow p-subgroup is a p-subgroup maximal under inclusion. In a finite group, it has order equal to the largest power of p dividing the order of the group.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L316",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Let P be a p-subgroup of G. In the action of P on the left cosets G/P by left multiplication, how many fixed cosets are there?",
+   "choices": [
+    "The index |N_G(P):P|.",
+    "The index |C_G(P):P|.",
+    "The index |G:P|.",
+    "The index |P:C_G(P)|."
+   ],
+   "answer": "The index |N_G(P):P|.",
+   "rationale": "A coset xP is fixed precisely when x⁻¹Px equals P, which is equivalent to x belonging to N_G(P). Thus the fixed cosets correspond exactly to the cosets of P in N_G(P).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L316",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "For a prime p and an integer n ≥ 1, what is the p-adic valuation of the binomial coefficient C(pⁿ, pⁿ⁻¹)?",
+   "choices": [
+    "0",
+    "1",
+    "n − 1",
+    "n"
+   ],
+   "answer": "1",
+   "rationale": "The coefficient C(pⁿ, pⁿ⁻¹) is divisible by p, but not by p². Therefore its p-adic valuation is exactly 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L316",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Let |G| = pᵃm, where p does not divide m, and let P be a maximal p-subgroup of order pᵇ. Why is b < a impossible?",
+   "choices": [
+    "Orbit counting makes p divide |N_G(P):P|, producing a p-subgroup larger than P.",
+    "Orbit counting makes every coset fixed, forcing P to be normal in G.",
+    "The quotient G/P has order prime to p, so no coset can be fixed.",
+    "The number of conjugates of P would have to divide pᵃ, which is impossible."
+   ],
+   "answer": "Orbit counting makes p divide |N_G(P):P|, producing a p-subgroup larger than P.",
+   "rationale": "If b < a, then p divides |G:P|. Orbit counting for P acting on G/P implies that p divides the number |N_G(P):P| of fixed cosets. By Cauchy's theorem, N_G(P)/P then has a subgroup of order p, whose inverse image is a p-subgroup larger than P, contradicting maximality.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "The two‑step subgroup test for a nonempty subset H of a group G requires which two conditions?",
+   "choices": [
+    "H is closed under product and inverses",
+    "H is closed under product and contains the identity",
+    "H is closed under inverses and contains the identity",
+    "H is closed under product and under conjugation"
+   ],
+   "answer": "H is closed under product and inverses",
+   "rationale": "The two‑step test demands closure under the group operation and closure under taking inverses; identity follows automatically.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A nonempty subset of a group that is closed under products and inverses is a subgroup.",
+      "url": "https://en.wikipedia.org/wiki/Subgroup",
+      "quote": "Then H is a subgroup of G if and only if H is nonempty and closed under products and inverses.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In the dihedral group D4 (order 8), the center Z(D4) equals which set?",
+   "choices": [
+    "the set {e, r, r^2, r^3}",
+    "the set {e, r^2}",
+    "the set {e, s, r^2, sr^2}",
+    "the set {e, sr}"
+   ],
+   "answer": "the set {e, r^2}",
+   "rationale": "In D4 the only elements commuting with every rotation and reflection are the identity and the 180° rotation r^2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In the standard presentation of D4, r is the rotation by 90 degrees, s is a reflection, and the center is {e,r^2}.",
+      "url": "https://en.wikipedia.org/wiki/Dihedral_group",
+      "quote": "For n even, the rotation by 180° (reflection through the origin) is the non-trivial element of the center.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Let H be a nonempty subset of a group G. Which condition is sufficient to prove that H is a subgroup of G?",
+   "choices": [
+    "For every x,y in H, xy⁻¹ is also in H.",
+    "For every x,y in H, xy is also in H.",
+    "For every x in H, x⁻¹ is also in H.",
+    "For every x in H, x² is also in H."
+   ],
+   "answer": "For every x,y in H, xy⁻¹ is also in H.",
+   "rationale": "The one-step subgroup test states that a nonempty subset H is a subgroup if it is closed under the operation xy⁻¹. The other conditions alone do not establish closure under group operations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In S₃, what is the centralizer of the permutation (12), using cycle notation?",
+   "choices": [
+    "{e, (12)}",
+    "{e, (13)}",
+    "{e, (23)}",
+    "{e, (12), (13)}"
+   ],
+   "answer": "{e, (12)}",
+   "rationale": "A permutation commuting with (12) must preserve its fixed point 3 and may either fix or interchange 1 and 2. Thus only the identity and (12) commute with (12).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L284",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "In S5, how many elements are conjugate to the 3‑cycle (1 2 3)?",
+   "choices": [
+    "20",
+    "30",
+    "40",
+    "10"
+   ],
+   "answer": "20",
+   "rationale": "A 3‑cycle in S5 has cycle type (3,1,1); the number of such cycles is 5·4·3/3 = 20.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L284",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "For a finite group G, the size of the conjugacy class of an element g equals:",
+   "choices": [
+    "|G| / |C_G(g)|",
+    "|C_G(g)| / |G|",
+    "|Z(G)|·|C_G(g)|",
+    "|G|·|C_G(g)|"
+   ],
+   "answer": "|G| / |C_G(g)|",
+   "rationale": "By the orbit‑stabilizer theorem, the conjugacy class of g is the orbit of g under conjugation, whose size is |G| divided by the centralizer order.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L284",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "The class equation of D8 (the dihedral group of order 8) is:",
+   "choices": [
+    "8 = 1 + 1 + 2 + 2 + 2",
+    "8 = 1 + 1 + 1 + 1 + 4",
+    "8 = 2 + 2 + 2 + 2",
+    "8 = 1 + 2 + 5"
+   ],
+   "answer": "8 = 1 + 1 + 2 + 2 + 2",
+   "rationale": "D8 has center {1, r^2} (size 2) and three non‑central classes each of size 2, giving 8 = 1+1+2+2+2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Over F₂, let A = [[1,1],[0,1]] and B = [[1,0],[1,1]], with entries reduced modulo 2. Which calculation of AB and BA is correct?",
+   "choices": [
+    "AB = [[0,1],[1,1]] and BA = [[1,1],[1,0]], so they do not commute.",
+    "AB = [[1,1],[1,1]] and BA = [[1,1],[1,1]], so they commute.",
+    "AB = [[0,1],[1,1]] and BA = [[0,1],[1,1]], so they commute.",
+    "AB = [[1,1],[1,0]] and BA = [[0,1],[1,1]], so they do not commute."
+   ],
+   "answer": "AB = [[0,1],[1,1]] and BA = [[1,1],[1,0]], so they do not commute.",
+   "rationale": "Direct multiplication over F₂ gives AB = [[0,1],[1,1]] and BA = [[1,1],[1,0]]. Since the products differ, A and B do not commute.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which choice correctly describes the additive group ℤ₈, whose elements are the residue classes modulo 8?",
+   "choices": [
+    "It is a noncyclic abelian group with eight elements.",
+    "It is a cyclic abelian group with eight elements.",
+    "It is a cyclic nonabelian group with eight elements.",
+    "It is a cyclic abelian group with seven elements."
+   ],
+   "answer": "It is a cyclic abelian group with eight elements.",
+   "rationale": "ℤ₈ contains eight residue classes. It is cyclic because the class of 1 generates it, and it is abelian because addition modulo 8 is commutative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "ℤ₈ is a cyclic group of order 8",
+      "url": "https://en.wikipedia.org/wiki/Cyclic_group",
+      "quote": "Every finite cyclic group of order n is isomorphic to the additive group of Z / n Z , the integers modulo n.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Under multiplication modulo 12, which set is the group of units U(12)?",
+   "choices": [
+    "{1, 2, 3, 4}",
+    "{1, 3, 7, 9}",
+    "{1, 5, 7, 11}",
+    "{2, 4, 6, 8}"
+   ],
+   "answer": "{1, 5, 7, 11}",
+   "rationale": "The units modulo 12 are precisely the residue classes relatively prime to 12: 1, 5, 7, and 11.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L251",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Let G act on itself by left multiplication: g·x = gx. What is the orbit of an element a ∈ G?",
+   "choices": [
+    "The whole group G",
+    "The singleton {a}",
+    "The stabilizer of a",
+    "The left coset aH for some subgroup H"
+   ],
+   "answer": "The whole group G",
+   "rationale": "Left multiplication is transitive: for any b∈G, b = (ba^{-1})·a, so every element lies in the orbit of a.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L251",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Which conditions define a left action of a group G on a set X?",
+   "choices": [
+    "A map G×X→X satisfies 1·x=x and g·(h·x)=(gh)·x for all entries.",
+    "A map G×X→X satisfies 0·x=x and g·(h·x)=(gh)·x for all entries.",
+    "A map G×X→X satisfies 1·x=x and g·(h·x)=(hg)·x for all entries.",
+    "A map G×X→X satisfies g·x=x and g·(h·x)=(gh)·x for all entries."
+   ],
+   "answer": "A map G×X→X satisfies 1·x=x and g·(h·x)=(gh)·x for all entries.",
+   "rationale": "A group action must preserve the identity and multiplication: the identity acts trivially, and applying h and then g has the same effect as applying gh.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L251",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "For the conjugation action g·x=gxg⁻¹, which subgroup consists exactly of the elements that fix x?",
+   "choices": [
+    "The centralizer C_G(x) in G",
+    "The normalizer N_G(⟨x⟩) in G",
+    "The center Z(G) of G",
+    "The cyclic subgroup ⟨x⟩ in G"
+   ],
+   "answer": "The centralizer C_G(x) in G",
+   "rationale": "An element g fixes x under conjugation precisely when gxg⁻¹=x, which is equivalent to gx=xg. Thus the stabilizer is the centralizer of x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L251",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Let G act on the left cosets G/H by g·(aH)=gaH. What is the kernel of the induced homomorphism G→Sym(G/H)?",
+   "choices": [
+    "The core of H in G",
+    "The subgroup H itself",
+    "The normalizer of H in G",
+    "The center of G"
+   ],
+   "answer": "The core of H in G",
+   "rationale": "The kernel consists of elements g such that gaH=aH for every a∈G, equivalently g belongs to every conjugate aHa⁻¹. This intersection is the core of H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L443",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "How many invertible 2 × 2 matrices are there over the finite field F₂?",
+   "choices": [
+    "3",
+    "6",
+    "8",
+    "12"
+   ],
+   "answer": "6",
+   "rationale": "The first column has 2² − 1 = 3 possible nonzero values. The second column has 2² − 2 = 2 choices outside the first column’s span, giving 3 × 2 = 6 matrices.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L443",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "How many elements are in SL(2, F₃)?",
+   "choices": [
+    "12",
+    "16",
+    "24",
+    "48"
+   ],
+   "answer": "24",
+   "rationale": "There are (9 − 1)(9 − 3) = 48 invertible 2 × 2 matrices over F₃. Exactly half have determinant 1, so |SL(2, F₃)| = 24.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L443",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "Which statement is true for every matrix A in the orthogonal group O(2, R)?",
+   "choices": [
+    "A⁻¹ = Aᵀ",
+    "det(A) = 1",
+    "A² = I",
+    "Aᵀ = A"
+   ],
+   "answer": "A⁻¹ = Aᵀ",
+   "rationale": "Membership in O(2, R) means AᵀA = I. Multiplying by A⁻¹ gives A⁻¹ = Aᵀ. Such a matrix may have determinant 1 or −1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L231",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "How many abelian groups of order 12 are there up to isomorphism?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "2",
+   "rationale": "Since 12 = 2^2·3, the number is p(2)p(1) = 2·1 = 2. The groups are C12 and C6×C2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The finite abelian groups of order 12 are isomorphic to Z12 and Z6×Z2; thus there are exactly two up to isomorphism.",
+      "url": "https://en.wikipedia.org/wiki/Classification_of_finite_Abelian_groups",
+      "quote": "there are (up to isomorphism) exactly two groups of order",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L231",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "For a prime p, which list gives exactly the abelian groups of order p^2 up to isomorphism?",
+   "choices": [
+    "The single group Z_{p^2}, with no other possibilities",
+    "The groups Z_{p^2} and Z_p × Z_p",
+    "The groups Z_p and Z_p × Z_p × Z_p",
+    "The groups Z_{p^2} and Z_{p^2} × Z_p"
+   ],
+   "answer": "The groups Z_{p^2} and Z_p × Z_p",
+   "rationale": "The partitions of 2 are 2 and 1+1. These yield Z_{p^2} and Z_p × Z_p, respectively.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Let φ:G→K be a homomorphism and N=ker φ. Which calculation proves that N is normal?",
+   "choices": [
+    "For g∈G,n∈N, φ(gng⁻¹)=φ(g)eφ(g)⁻¹=e; hence gng⁻¹∈N.",
+    "For g∈G,n∈N, φ(gng⁻¹)=φ(g)eφ(g)=e; hence gng⁻¹∈N.",
+    "For g∈G,n∈N, φ(gng⁻¹)=φ(g)φ(n)g⁻¹=e; hence gng⁻¹∈N.",
+    "For g∈G,n∈N, gng⁻¹=e since φ(gng⁻¹)=φ(g)eφ(g)⁻¹=e."
+   ],
+   "answer": "For g∈G,n∈N, φ(gng⁻¹)=φ(g)eφ(g)⁻¹=e; hence gng⁻¹∈N.",
+   "rationale": "Because n∈ker φ, φ(n)=e. The homomorphism property gives φ(gng⁻¹)=φ(g)eφ(g)⁻¹=e, so every conjugate gng⁻¹ lies in N. An image of e does not imply the element itself is e.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Let H={e,(12)} be a subgroup of S₃. Which statement shows H is not normal?",
+   "choices": [
+    "(123)H(123)⁻¹ contains (23), so it differs from H.",
+    "(123)H(123)⁻¹ contains (12), so it equals H.",
+    "Every conjugate of (12) is either e or (12), so H is normal.",
+    "Conjugation by (123) fixes (12), so every conjugate stays in H."
+   ],
+   "answer": "(123)H(123)⁻¹ contains (23), so it differs from H.",
+   "rationale": "Conjugation by (123) sends (12) to (23), which is not in H. Thus (123)H(123)⁻¹ differs from H, so H is not normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Let N be a subgroup of G. Which condition is equivalent to N being normal?",
+   "choices": [
+    "gN=Ng for at least one g∈G.",
+    "gN∩Ng={e} for every g∈G.",
+    "gN=Ng for every g∈G.",
+    "gN={e} for every g∈G."
+   ],
+   "answer": "gN=Ng for every g∈G.",
+   "rationale": "A subgroup N is normal exactly when each left coset gN equals the corresponding right coset Ng for every g∈G.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "For sgn:S₃→C₂, which statement correctly identifies the kernel and its normality?",
+   "choices": [
+    "ker(sgn)={e}, and conjugation sends every 3-cycle to e.",
+    "ker(sgn)=A₃, and conjugation preserves membership in A₃.",
+    "ker(sgn)={e,(12)}, and conjugation fixes (12).",
+    "ker(sgn)=S₃, and conjugation preserves each conjugacy class."
+   ],
+   "answer": "ker(sgn)=A₃, and conjugation preserves membership in A₃.",
+   "rationale": "The sign map sends even permutations to the identity, so its kernel is A₃. Since sign(gag⁻¹)=sign(a), conjugation preserves A₃, making it normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L420",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Which description defines the free group on generators a and b?",
+   "choices": [
+    "All reduced words in a and b and their inverses",
+    "All finite words in a and b and their inverses",
+    "Words in a and b satisfying the relation ab = ba",
+    "Words in a and b with no repeated letters"
+   ],
+   "answer": "All reduced words in a and b and their inverses",
+   "rationale": "The free group F(a,b) consists of all reduced words formed from a, b, a⁻¹, and b⁻¹, with adjacent inverse pairs cancelled.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L420",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Which word is already reduced in the free group F(a,b)?",
+   "choices": [
+    "a b⁻¹ a⁻¹ b a",
+    "a b b⁻¹ a",
+    "a⁻¹ a b a",
+    "b a a⁻¹ b⁻¹"
+   ],
+   "answer": "a b⁻¹ a⁻¹ b a",
+   "rationale": "A reduced word has no adjacent pair in which a letter is immediately followed by its inverse. Only the first choice satisfies this condition.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L420",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Reduce the word a b a⁻¹ a b⁻¹ in F(a,b) by cancelling adjacent inverse pairs.",
+   "choices": [
+    "a",
+    "a b",
+    "a b⁻¹",
+    "a⁻¹"
+   ],
+   "answer": "a",
+   "rationale": "Cancelling a⁻¹a gives a b b⁻¹, and cancelling b b⁻¹ then leaves the reduced word a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L420",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "In G = ⟨a,b | a² = 1, b³ = 1, a⁻¹ba = b⁻¹⟩, simplify a⁻¹b²a.",
+   "choices": [
+    "b",
+    "b⁻¹",
+    "b²",
+    "1"
+   ],
+   "answer": "b",
+   "rationale": "Since a⁻¹b²a = (a⁻¹ba)² = b⁻² and b³ = 1, the element b⁻² equals b.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L326",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "If P and Q are Sylow p-subgroups of a finite group G, Sylow's second theorem guarantees the existence of an element g ∈ G such that",
+   "choices": [
+    "gPg^{-1} = Q",
+    "P = Q",
+    "gPg^{-1} is a proper subset of Q",
+    "P and Q are normal in G"
+   ],
+   "answer": "gPg^{-1} = Q",
+   "rationale": "Sylow's second theorem asserts that any two Sylow p-subgroups are conjugate; i.e., there exists g with gPg^{-1}=Q.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L326",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "For a group of order 168 = 2^3·3·7, let n_7 denote the number of Sylow 7-subgroups. What must n_7 satisfy according to Sylow's third theorem?",
+   "choices": [
+    "n_7 = 1",
+    "n_7 divides 24 and n_7 ≡ 1 (mod 7)",
+    "n_7 = 8",
+    "n_7 divides 7 and n_7 ≡ 1 (mod 24)"
+   ],
+   "answer": "n_7 divides 24 and n_7 ≡ 1 (mod 7)",
+   "rationale": "Sylow's third theorem gives n_7 ≡ 1 (mod 7) and n_7 | 168/7 = 24.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L326",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "A group G of order 60 has exactly six Sylow 5-subgroups. By Sylow's third theorem, what is the index of the normalizer N_G(P) of a Sylow 5-subgroup P?",
+   "choices": [
+    "[G : N_G(P)] = 6",
+    "[G : N_G(P)] = 5",
+    "[G : N_G(P)] = 12",
+    "[G : N_G(P)] = 1"
+   ],
+   "answer": "[G : N_G(P)] = 6",
+   "rationale": "The number of Sylow 5-subgroups equals the index of the normalizer of any one of them, so n_5 = [G : N_G(P)] = 6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L326",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "Given a finite group G of order 180 = 2^2·3^2·5, let n_5 be the number of Sylow 5-subgroups. Which condition on n_5 follows from Sylow's third theorem?",
+   "choices": [
+    "n_5 = 1",
+    "n_5 divides 36 and n_5 ≡ 1 (mod 5)",
+    "n_5 = 6",
+    "n_5 divides 5 and n_5 ≡ 1 (mod 36)"
+   ],
+   "answer": "n_5 divides 36 and n_5 ≡ 1 (mod 5)",
+   "rationale": "Sylow's third theorem states that n_p ≡ 1 (mod p) and n_p divides |G|/p^a. Here |G|/5^1 = 36, so n_5 divides 36 and n_5 ≡ 1 mod 5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Sylow's third theorem states that the number of Sylow p-subgroups divides the p-prime part of the group's order and is congruent to 1 modulo p.",
+      "url": "https://en.wikipedia.org/wiki/Sylow's_third_theorem",
+      "quote": "Theorem (3) — Let q denote the order of any Sylow p -subgroup P of a finite group G . Let n p denote the number of Sylow p -subgroups of G . Then (a) n p = [ G : N G ( P )] (where N G ( P ) is the normalizer of P ), (b) n p divides | G |/ q , and (c) n p ≡ 1 (mod p ) .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L189",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "In Z_8, let H=⟨2⟩={0,2,4,6}. Which set is the coset [1]+H?",
+   "choices": [
+    "{1,3,5,7}",
+    "{0,2,4,6}",
+    "{1,2,5,6}",
+    "{2,3,6,7}"
+   ],
+   "answer": "{1,3,5,7}",
+   "rationale": "Adding 1 to each element of H gives {1,3,5,7}. This is the coset containing the odd residues in Z_8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L189",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "In Z_8, let H={0,4}. What is the order of the coset [1]+H in the quotient group Z_8/H?",
+   "choices": [
+    "Order 1",
+    "Order 2",
+    "Order 4",
+    "Order 8"
+   ],
+   "answer": "Order 4",
+   "rationale": "The successive powers of [1]+H are {1,5}, {2,6}, {3,7}, and {0,4}=H. Thus the coset first equals the identity at the fourth power.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L189",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "In Z_8, let H={0,4}. Compute ([1]+H)+([2]+H) using coset addition.",
+   "choices": [
+    "{0,4}",
+    "{1,5}",
+    "{2,6}",
+    "{3,7}"
+   ],
+   "answer": "{3,7}",
+   "rationale": "The cosets are [1]+H={1,5} and [2]+H={2,6}. Their sum is [3]+H={3,7}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L189",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "Let D₄=⟨r,s | r⁴=e, s²=e, srs=r⁻¹⟩ and H=⟨r⟩ be the rotation subgroup. Which group is D₄/H?",
+   "choices": [
+    "a cyclic group of order 2",
+    "a cyclic group of order 4",
+    "a noncyclic group of order 4",
+    "the trivial group"
+   ],
+   "answer": "a cyclic group of order 2",
+   "rationale": "D₄ has 8 elements and H has 4, so the quotient has two elements. The nonidentity coset has order 2, making the quotient cyclic of order 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L115",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "C₄ = {e, a, a², a³}, with a⁴ = e, has this multiplication table:\n⋆ | e | a | a² | a³\ne | e | a | a² | a³\na | a | a² | a³ | e\na² | a² | a³ | e | a\na³ | a³ | e | a | a²\nWhich element is the inverse of a²?",
+   "choices": [
+    "The element e",
+    "The element a",
+    "The element a²",
+    "The element a³"
+   ],
+   "answer": "The element a²",
+   "rationale": "Since a² · a² = a⁴ = e, the element a² is its own inverse.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L115",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "The addition table for ℤ₇ gives the row for 2 as 2, 4, 6, 1, 3, 5, 0 in columns 0 through 6. What is the order of 2?",
+   "choices": [
+    "Order 2",
+    "Order 3",
+    "Order 6",
+    "Order 7"
+   ],
+   "answer": "Order 7",
+   "rationale": "Adding 2 repeatedly modulo 7 first returns 2 to 0 when 2·7 ≡ 0 (mod 7), so the order is 7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L505",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "Which argument proves the coset partition and equal-size claims for a subgroup H≤G?",
+   "choices": [
+    "b⁻¹a∈H iff aH=bH; distinct cosets are disjoint; h↦ah is constant.",
+    "aH=bH iff a=b; distinct cosets are disjoint; h↦ah is bijective.",
+    "b⁻¹a∈H iff aH=bH; distinct cosets are disjoint; h↦ah is bijective.",
+    "b⁻¹a∈H iff aH=bH; distinct cosets overlap; h↦ah is bijective."
+   ],
+   "answer": "b⁻¹a∈H iff aH=bH; distinct cosets are disjoint; h↦ah is bijective.",
+   "rationale": "For left cosets, aH=bH exactly when b⁻¹a∈H. Thus two cosets either coincide or are disjoint. Left multiplication by a is a bijection H→aH, so every coset has |H| elements.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L505",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "For cyclic G=<g> of order n, where d divides n, which argument proves the unique order-d subgroup?",
+   "choices": [
+    "order(g^(n/d))=n; writing K=<g^k> of order d gives n/gcd(n,k)=d and K=<g^(n/d)>.",
+    "order(g^(n/d))=d; writing K=<g^k> of order d gives n/gcd(n,k)=d and K=<g^(n/d)>.",
+    "order(g^(n/d))=n/d; writing K=<g^k> of order d gives n/gcd(n,k)=d and K=<g^(n/d)>.",
+    "order(g^(n/d))=d; writing K=<g^k> of order d gives n/gcd(n,k)=n and K=<g^(n/d)>."
+   ],
+   "answer": "order(g^(n/d))=d; writing K=<g^k> of order d gives n/gcd(n,k)=d and K=<g^(n/d)>.",
+   "rationale": "The element g^(n/d) has order d. Every subgroup K=<g^k> of order d satisfies d=n/gcd(n,k), so gcd(n,k)=n/d and K=<g^(n/d)>. This proves existence and uniqueness.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L505",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "Let φ:G→K be surjective. Which argument correctly proves that G/ker φ is isomorphic to K?",
+   "choices": [
+    "Map gN to φ(g); surjectivity makes it well-defined, and the kernel makes it bijective.",
+    "Map gN to φ(g); injectivity of φ makes it well-defined, and surjectivity makes it bijective.",
+    "Map gN to φ(g); neither surjectivity nor the kernel guarantees well-definedness.",
+    "Map gN to φ(g); the kernel makes it well-defined, and surjectivity plus equal fibers makes it bijective."
+   ],
+   "answer": "Map gN to φ(g); the kernel makes it well-defined, and surjectivity plus equal fibers makes it bijective.",
+   "rationale": "Defining φ̄(gN)=φ(g) is well-defined because gN=hN exactly when φ(g)=φ(h). The map is a homomorphism, is surjective because φ is, and is injective because equal images give equal cosets.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L505",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "Which argument proves both Sylow claims for n_p when |G|=p^a m and p does not divide m?",
+   "choices": [
+    "Conjugation: n_p=[G:N_G(P)] divides m; exactly one P-fixed point gives n_p≡1 mod p.",
+    "Conjugation: n_p=[G:N_G(P)] divides p^a; exactly one P-fixed point gives n_p≡1 mod p.",
+    "Cauchy: n_p=[G:N_G(P)] divides m; exactly one P-fixed point gives n_p≡1 mod p.",
+    "Conjugation: n_p=[G:N_G(P)] divides m; p P-fixed points give n_p≡1 mod p."
+   ],
+   "answer": "Conjugation: n_p=[G:N_G(P)] divides m; exactly one P-fixed point gives n_p≡1 mod p.",
+   "rationale": "Conjugation on Sylow subgroups is transitive with stabilizer N_G(P), so n_p=[G:N_G(P)], which divides m. In the action of P, only P is fixed; all other orbit sizes are divisible by p, so n_p≡1 mod p.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L400",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "According to the Jordan–Hölder theorem, any two composition series of a finite group have composition factors that are:",
+   "choices": [
+    "identical as groups and in the same order",
+    "isomorphic up to permutation",
+    "equal as sets but not necessarily isomorphic",
+    "possibly non‑isomorphic simple groups"
+   ],
+   "answer": "isomorphic up to permutation",
+   "rationale": "The Jordan–Hölder theorem states that the multiset of composition factors is uniquely determined up to isomorphism and order; i.e., the factors are pairwise isomorphic after a suitable permutation. They need not appear in the same order, nor are they merely equal as sets without isomorphism.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The Jordan–Hölder theorem states that the composition factors of a finite group are unique up to isomorphism and order.",
+      "url": "https://en.wikipedia.org/wiki/Composition_series",
+      "quote": "That is, they have the same composition length and the same composition factors, up to permutation and isomorphism .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L400",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "The uniqueness of composition factors in the Jordan–Hölder theorem is analogous to the uniqueness of what in integers?",
+   "choices": [
+    "prime factorization up to order",
+    "divisor lists",
+    "representation as sum of primes",
+    "factorization into powers of two"
+   ],
+   "answer": "prime factorization up to order",
+   "rationale": "Just as every integer >1 factors uniquely into primes up to ordering, every finite group has a unique multiset of simple composition factors up to isomorphism and permutation. The other options describe non‑unique or unrelated arithmetic concepts.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Every integer greater than 1 has a unique prime factorization up to order.",
+      "url": "https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic",
+      "quote": "In mathematics , the fundamental theorem of arithmetic , also called the unique factorization theorem and prime factorization theorem , states that every integer greater than 1 is either prime or can be represented uniquely as a product of prime numbers , up to the order of the factors.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L400",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "Which of the following is a composition series for the symmetric group S₃?",
+   "choices": [
+    "{e} ⊲ C₃ ⊲ S₃",
+    "{e} ⊲ C₂ ⊲ S₃",
+    "{e} ⊲ V₄ ⊲ S₃",
+    "{e} ⊲ S₃"
+   ],
+   "answer": "{e} ⊲ C₃ ⊲ S₃",
+   "rationale": "A composition series requires each subgroup to be normal in the next with simple factors. In S₃, the only non‑trivial normal subgroup is A₃ ≅ C₃, giving factors C₃ and C₂, both simple. The other listed chains either use a non‑normal subgroup (C₂) or a subgroup not contained in S₃ (V₄), or leave a non‑simple factor S₃.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A₃ is a normal cyclic subgroup of order 3 in S₃, and the factors A₃/{e} ≅ C₃ and S₃/A₃ ≅ C₂ are simple.",
+      "url": "https://en.wikipedia.org/wiki/Composition_series",
+      "quote": "Equivalently, a composition series is a subnormal series such that each factor group H i +1 / H i is simple . The factor groups are called composition factors .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L475",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 475,
+   "format": "multiple_choice",
+   "prompt": "For a group G of order 24, which strategy is most direct for narrowing the possible numbers n₃ of Sylow 3-subgroups?",
+   "choices": [
+    "Apply Sylow divisibility and congruence conditions to n₃.",
+    "Apply orbit–stabilizer to a conjugation action on G.",
+    "Analyze the quotient by a subgroup of order eight.",
+    "Classify G by its center and element orders."
+   ],
+   "answer": "Apply Sylow divisibility and congruence conditions to n₃.",
+   "rationale": "Sylow’s third theorem gives n₃ | 8 and n₃ ≡ 1 (mod 3), so n₃ is either 1 or 4. This is a direct counting argument.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L475",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 475,
+   "format": "multiple_choice",
+   "prompt": "A finite group G acts on a set X, and the fixed points of every g ∈ G are known. Which strategy is most direct for counting the orbits of X?",
+   "choices": [
+    "Apply Burnside’s lemma by averaging fixed-point counts.",
+    "Count only fixed points of the identity permutation.",
+    "Use Sylow’s theorems to count the possible orbits.",
+    "Identify X with a quotient group G/N."
+   ],
+   "answer": "Apply Burnside’s lemma by averaging fixed-point counts.",
+   "rationale": "Burnside’s lemma gives the number of orbits as the average number of fixed points over all elements of G, so it directly uses the given information.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L475",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 475,
+   "format": "multiple_choice",
+   "prompt": "A normal subgroup N of G is given, and a surjective homomorphism φ:G→H has kernel N. Which strategy is most direct for identifying G/N with H?",
+   "choices": [
+    "Apply the first isomorphism theorem to the given homomorphism.",
+    "Count the Sylow subgroups of G using divisibility.",
+    "Let G act on X and use orbit–stabilizer.",
+    "Classify G by its center and element orders."
+   ],
+   "answer": "Apply the first isomorphism theorem to the given homomorphism.",
+   "rationale": "The first isomorphism theorem states that G/ker φ is isomorphic to im φ. Since φ is surjective, im φ = H, so G/N ≅ H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L378",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly defines a simple group?",
+   "choices": [
+    "A group whose only normal subgroups are the trivial subgroup and the group itself.",
+    "A group that has no proper nontrivial subgroups at all.",
+    "A group that is abelian and has no proper nontrivial normal subgroups.",
+    "A group in which every element generates the whole group."
+   ],
+   "answer": "A group whose only normal subgroups are the trivial subgroup and the group itself.",
+   "rationale": "A simple group is defined precisely as a non‑trivial group whose only normal subgroups are {e} and the group itself. The other options describe stronger or unrelated properties.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A simple group is a nontrivial group whose only normal subgroups are the trivial subgroup and the whole group.",
+      "url": "https://en.wikipedia.org/wiki/Simple_group",
+      "quote": "In mathematics , a simple group is a nontrivial group whose only normal subgroups are the trivial group and the group itself.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "Let G = ℤ₃ × ℤ₄. What is the order of G?",
+   "choices": [
+    "6",
+    "7",
+    "12",
+    "24"
+   ],
+   "answer": "12",
+   "rationale": "The order of a direct product is the product of the factor orders: |ℤ₃ × ℤ₄| = 3 · 4 = 12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "In G = ℤ₅ × ℤ₄, what is the order of the element (1, 1)?",
+   "choices": [
+    "4",
+    "5",
+    "10",
+    "20"
+   ],
+   "answer": "20",
+   "rationale": "The element has order lcm(5, 4) = 20 because 5 and 4 are relatively prime.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "How many elements of order exactly 2 are in G = ℤ₄ × ℤ₂?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "3",
+   "rationale": "The elements of order at most 2 are (0,0), (2,0), (0,1), and (2,1). Excluding the identity leaves 3 elements of order 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "In the additive group ℤ₁₂, which pair of subgroups H and K makes ℤ₁₂ = H ⊕ K?",
+   "choices": [
+    "〈4〉 and 〈3〉",
+    "〈2〉 and 〈3〉",
+    "〈4〉 and 〈6〉",
+    "〈2〉 and 〈5〉"
+   ],
+   "answer": "〈4〉 and 〈3〉",
+   "rationale": "〈4〉 has order 3, 〈3〉 has order 4, their intersection is {0}, and together they generate all of ℤ₁₂, so they form an internal direct product.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L453",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "For a regular tetrahedron, how does a 120° rotation about a vertex-to-opposite-face axis permute the vertices?",
+   "choices": [
+    "a 3-cycle and one fixed vertex",
+    "two disjoint 2-cycles on vertices",
+    "a 2-cycle and two fixed vertices",
+    "four 1-cycles on the vertices"
+   ],
+   "answer": "a 3-cycle and one fixed vertex",
+   "rationale": "Such a rotation fixes the vertex on the axis and cycles the three vertices of the opposite face.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L453",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "The rotational symmetry group of a cube acts on its four body diagonals. What is the kernel of this action?",
+   "choices": [
+    "The identity rotation is the only kernel element.",
+    "Each 180° edge-axis rotation lies in the kernel.",
+    "The 90° face-axis rotations form the kernel.",
+    "All four body diagonals are fixed individually."
+   ],
+   "answer": "The identity rotation is the only kernel element.",
+   "rationale": "The action on the four body diagonals is faithful, so only the identity rotation fixes every diagonal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L453",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "A wallpaper pattern has a hexagonal translation lattice, rotations of orders 3 and 6, and no reflection or glide symmetry. What is the order of its point group G/T?",
+   "choices": [
+    "3",
+    "6",
+    "12",
+    "24"
+   ],
+   "answer": "6",
+   "rationale": "These patterns belong to wallpaper group p6, whose point group is cyclic of order 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A hexagonal wallpaper has point group C6.",
+      "url": "https://en.wikipedia.org/wiki/Wallpaper_group",
+      "quote": "A pattern with this symmetry can be looked upon as a tessellation of the plane with equal triangular tiles with C 3 symmetry, or equivalently, a tessellation of the plane with equal hexagonal tiles with C 6 symmetry (with the edges of the tiles not necessarily part of the pattern).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L410",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 410,
+   "format": "multiple_choice",
+   "prompt": "Which condition characterizes solvability of a group G using its derived series?",
+   "choices": [
+    "The derived series reaches the trivial subgroup after finitely many steps.",
+    "The derived series first reaches the center of the group.",
+    "The commutator subgroup is trivial at the first step.",
+    "The group has a normal series whose factors are nonabelian."
+   ],
+   "answer": "The derived series reaches the trivial subgroup after finitely many steps.",
+   "rationale": "The derived series is defined by G^(0)=G and G^(k+1)=[G^(k),G^(k)]. A group is solvable exactly when this series reaches the identity after finitely many steps.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L410",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 410,
+   "format": "multiple_choice",
+   "prompt": "Which structural fact supports the induction proof that every finite p-group is solvable?",
+   "choices": [
+    "Every nontrivial finite p-group has a trivial center.",
+    "Every nontrivial finite p-group has no abelian normal subgroup.",
+    "Every nontrivial finite p-group has a nontrivial center.",
+    "Every nontrivial finite p-group has a cyclic commutator subgroup."
+   ],
+   "answer": "Every nontrivial finite p-group has a nontrivial center.",
+   "rationale": "By the class equation, every nontrivial finite p-group has a nontrivial center. This provides an abelian normal factor and allows induction on the group's order through a smaller p-group quotient.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L410",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 410,
+   "format": "multiple_choice",
+   "prompt": "Which sequence correctly lists the successive commutator subgroups of S4?",
+   "choices": [
+    "S4 ▹ A4 ▹ {e} ▹ {e}",
+    "S4 ▹ A4 ▹ V4 ▹ {e}",
+    "S4 ▹ A4 ▹ C4 ▹ {e}",
+    "S4 ▹ A4 ▹ V4 ▹ C2"
+   ],
+   "answer": "S4 ▹ A4 ▹ V4 ▹ {e}",
+   "rationale": "The commutator subgroup of S4 is A4, the commutator subgroup of A4 is the Klein four group V4, and V4 is abelian, so its commutator subgroup is the identity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L336",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Let |G|=45=3²·5. What does Sylow counting guarantee about the Sylow subgroups of G?",
+   "choices": [
+    "Only the Sylow 3-subgroup is normal.",
+    "Only the Sylow 5-subgroup is normal.",
+    "Both the Sylow 3- and 5-subgroups are normal.",
+    "Neither Sylow subgroup is necessarily normal."
+   ],
+   "answer": "Both the Sylow 3- and 5-subgroups are normal.",
+   "rationale": "For the Sylow 3-subgroup, n₃|5 and n₃≡1 (mod 3), forcing n₃=1. For the Sylow 5-subgroup, n₅|9 and n₅≡1 (mod 5), forcing n₅=1. Thus both are normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "In a group of order 45, both Sylow 3- and Sylow 5-subgroups are unique and therefore normal.",
+      "url": "https://en.wikipedia.org/wiki/Sylow_theorems",
+      "quote": "The only value satisfying these constraints is 1; therefore, there is only one subgroup of order 3, and it must be normal (since it has no distinct conjugates). Similarly, n 5 must divide 3, and n 5 must equal 1 (mod 5); thus it must also have a single normal subgroup of order 5.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L336",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Let |G|=15=3·5, and let n₅ be the number of Sylow 5-subgroups. Which statement follows from Sylow counting?",
+   "choices": [
+    "n₅=1; the subgroup is normal.",
+    "n₅=3; the subgroup is normal.",
+    "n₅=5; the subgroup is not normal.",
+    "n₅=15; the subgroup is not normal."
+   ],
+   "answer": "n₅=1; the subgroup is normal.",
+   "rationale": "Sylow counting gives n₅|3 and n₅≡1 (mod 5). The only possible value is n₅=1, and a unique Sylow subgroup is normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Sylow 5-subgroups of a group of order 15 are unique and thus normal.",
+      "url": "https://en.wikipedia.org/wiki/Sylow_theorems",
+      "quote": "Similarly, n 5 must divide 3, and n 5 must equal 1 (mod 5); thus it must also have a single normal subgroup of order 5.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L336",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Let G be a group of order 21 = 3·7, and let n₇ be the number of Sylow 7-subgroups. Which conclusion is forced by the Sylow theorems?",
+   "choices": [
+    "n₇ = 1, and the Sylow 7-subgroup is normal.",
+    "n₇ = 3, and the Sylow 7-subgroup is normal.",
+    "n₇ = 7, and the Sylow 7-subgroup is normal.",
+    "n₇ = 21, and the Sylow 7-subgroup is normal."
+   ],
+   "answer": "n₇ = 1, and the Sylow 7-subgroup is normal.",
+   "rationale": "Sylow counting gives n₇ | 3 and n₇ ≡ 1 (mod 7). The only possibility is n₇ = 1, and a unique Sylow subgroup is normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L306",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "Let p be a prime dividing |G|. Which action makes elements satisfying a^p = 1 appear as fixed tuples?",
+   "choices": [
+    "Ω = {(a₁,…,aₚ): a₁⋯aₚ = 1}; Cₚ acts by cyclic rotation.",
+    "Ω = {(a₁,…,aₚ): a₁⋯aₚ = 1}; Cₚ acts by right-multiplying every coordinate.",
+    "Ω = {(a₁,…,aₚ): a₁⋯aₚ = 1}; Cₚ acts by adding 1 to every coordinate.",
+    "Ω = {(a₁,…,aₚ): a₁⋯aₚ = 1}; Cₚ acts by reversing the coordinates."
+   ],
+   "answer": "Ω = {(a₁,…,aₚ): a₁⋯aₚ = 1}; Cₚ acts by cyclic rotation.",
+   "rationale": "Cyclic rotation preserves the product condition and fixes exactly the constant tuples (a,…,a). The product condition then gives a^p = 1, connecting fixed tuples to possible elements of order p.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L306",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "For the cyclic-rotation action on Ω = {(a₁,…,aₚ): a₁⋯aₚ = 1}, what are the fixed tuples?",
+   "choices": [
+    "(a,…,a), where a^p = 1",
+    "(a,1,…,1), where a^p = 1",
+    "(a,a⁻¹,1,…,1), in any order",
+    "(a,…,a), where a^(p−1) = 1"
+   ],
+   "answer": "(a,…,a), where a^p = 1",
+   "rationale": "A tuple fixed by a one-step rotation has all coordinates equal. Writing that common value as a, the condition a₁⋯aₚ = 1 becomes a^p = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L306",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "In the tuple action, |Ω| = |G|^(p−1), and every nonfixed Cₚ-orbit has size p. If F is the number of fixed tuples, what does orbit counting imply?",
+   "choices": [
+    "F is divisible by p.",
+    "F is congruent to 1 modulo p.",
+    "F equals |G|^(p−1).",
+    "F is divisible by |G|."
+   ],
+   "answer": "F is divisible by p.",
+   "rationale": "Since p divides |G|, it also divides |Ω| = |G|^(p−1). Thus |Ω| − F is divisible by p, so F is divisible by p.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L306",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "analysis",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "The fixed-point count F is divisible by p, and the identity tuple is one fixed tuple. Which deduction completes the proof of Cauchy’s Theorem?",
+   "choices": [
+    "Another fixed tuple gives a ≠ 1 with a^p = 1; since p is prime, ord(a) = p.",
+    "Another fixed tuple gives a ≠ 1 with a^p = 1; since p is prime, ord(a) may be 1.",
+    "Another fixed tuple gives a ≠ 1 with a^p = 1; since p is prime, ord(a) is a proper divisor of p.",
+    "Another fixed tuple gives a ≠ 1 with a^p = 1; since p is prime, ord(a) may be any divisor of |G|."
+   ],
+   "answer": "Another fixed tuple gives a ≠ 1 with a^p = 1; since p is prime, ord(a) = p.",
+   "rationale": "Because F is a positive multiple of p, it contains a fixed tuple other than the identity. Its repeated coordinate a satisfies a^p = 1 and is nonidentity, so its order is the prime p.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L368",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "Which list gives all isomorphism classes of groups of order 8? Here D8 is the dihedral group of order 8, and Q8 is the quaternion group.",
+   "choices": [
+    "C8; C4 x C2; C2 x C2 x C2; D8; Q8",
+    "C8; C4 x C2; C2 x C2 x C2; D8; C4 x C4",
+    "C8; C4 x C2; C2 x C2 x C2; C8 x C2; Q8",
+    "C8; C4 x C2; C2 x C2 x C2; D8; A4"
+   ],
+   "answer": "C8; C4 x C2; C2 x C2 x C2; D8; Q8",
+   "rationale": "There are three abelian groups of order 8 and two nonabelian groups, D8 and Q8, giving exactly five isomorphism classes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L368",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "Which list gives all isomorphism classes of groups of order 12? Here D12 is the symmetry group of a regular hexagon, and Dic3 is the dicyclic group of order 12.",
+   "choices": [
+    "C12; C3 x C2 x C2; D12; A4; Dic3",
+    "C12; C3 x C2 x C2; D12; A4; Q8",
+    "C12; C3 x C2 x C2; C4 x C3; A4; Dic3",
+    "C12; C3 x C2 x C2; D12; S4; Dic3"
+   ],
+   "answer": "C12; C3 x C2 x C2; D12; A4; Dic3",
+   "rationale": "The two abelian classes are C12 and C3 x C2 x C2. The three nonabelian classes are D12, A4, and Dic3, so there are five classes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L368",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "Which classification of groups of order 15 is correct?",
+   "choices": [
+    "There are two: C15 and the dihedral group of order 15.",
+    "There are four: C15 and three nonabelian semidirect products.",
+    "There is one: C15, the cyclic group of order 15.",
+    "There are three: C15 and two nonabelian semidirect products."
+   ],
+   "answer": "There is one: C15, the cyclic group of order 15.",
+   "rationale": "Sylow's theorems force both the Sylow 5-subgroup and the Sylow 3-subgroup to be normal. Their direct product is C5 x C3, which is cyclic of order 15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L368",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "How many isomorphism classes of finite groups have order at most 15?",
+   "choices": [
+    "26",
+    "27",
+    "28",
+    "30"
+   ],
+   "answer": "28",
+   "rationale": "For orders 1 through 15, the numbers of classes are 1, 1, 1, 2, 1, 2, 1, 5, 2, 2, 1, 5, 1, 2, 1. Their sum is 28.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L167",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Let p be prime and p not divide a. The class of a belongs to the multiplicative group of nonzero residues modulo p. Applying Lagrange’s Theorem gives which congruence?",
+   "choices": [
+    "a^(p-1) ≡ 1 (mod p)",
+    "a^(p-1) ≡ -1 (mod p)",
+    "a^(p-2) ≡ 1 (mod p)",
+    "a^p ≡ 0 (mod p)"
+   ],
+   "answer": "a^(p-1) ≡ 1 (mod p)",
+   "rationale": "That group has p-1 elements, so the order of a divides p-1. Therefore a^(p-1) is congruent to 1 modulo p.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L167",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "For gcd(a,n)=1, which argument derives Euler’s theorem from Lagrange’s Theorem?",
+   "choices": [
+    "Units modulo n have order φ(n), so Lagrange gives a^φ(n)≡1.",
+    "Units modulo n have order n, so Lagrange gives a^n≡1.",
+    "Nonzero residues have order φ(n), so Lagrange gives a^φ(n)≡1.",
+    "Units modulo n have φ(n) cosets, so a^φ(n) is the identity."
+   ],
+   "answer": "Units modulo n have order φ(n), so Lagrange gives a^φ(n)≡1.",
+   "rationale": "The units modulo n form a group with φ(n) elements. Since a is a unit, its order divides φ(n), so a^φ(n)≡1 mod n.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L167",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "What does Lagrange’s Theorem imply for a group G of prime order q?",
+   "choices": [
+    "G≅Z_q, and every nonidentity element has order q.",
+    "G≅Z_q, and every nonidentity element has order q−1.",
+    "G is noncyclic, but every nonidentity element has order q.",
+    "G has a proper subgroup of order q−1 and is abelian."
+   ],
+   "answer": "G≅Z_q, and every nonidentity element has order q.",
+   "rationale": "Each nonidentity element has order dividing the prime q, so its order must be q. Therefore any nonidentity element generates G, making G cyclic and isomorphic to Z_q.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L485",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A student claims: “Z(G) is normal, so G/Z(G) is abelian, and therefore G is abelian.” Where is the error?",
+   "choices": [
+    "The center need not be normal in G.",
+    "An abelian quotient does not imply that G is abelian.",
+    "The quotient is abelian only when Z(G) is trivial.",
+    "Normality of the center requires G to be abelian."
+   ],
+   "answer": "An abelian quotient does not imply that G is abelian.",
+   "rationale": "The center is always normal, and G/Z(G) is always abelian. However, an abelian quotient does not force the original group to be abelian; for example, S3/Z(S3) ≅ S3 is nonabelian.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L485",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "Let N⊲G. A student defines F(gN)=g on G/N. Which statement correctly checks whether F is well-defined?",
+   "choices": [
+    "It is well-defined because N contains the identity element.",
+    "It is well-defined because every coset has a unique representative.",
+    "It is not generally well-defined; another representative may change its value.",
+    "It is well-defined exactly when G is abelian."
+   ],
+   "answer": "It is not generally well-defined; another representative may change its value.",
+   "rationale": "A well-defined function on G/N must give the same value for all representatives of each coset. If gN=hN but g≠h, then F(gN) and F(hN) differ, so the proposed F is not generally well-defined.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L485",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "Let φ:G→H be a homomorphism and N=ker φ. To prove ψ(gN)=φ(g) is well-defined, what must be shown?",
+   "choices": [
+    "Whenever gN=hN, one must have φ(g)=φ(h).",
+    "Whenever φ(g)=φ(h), one must have g=h.",
+    "Every coset of N must contain exactly one element.",
+    "The groups G and H must have the same order."
+   ],
+   "answer": "Whenever gN=hN, one must have φ(g)=φ(h).",
+   "rationale": "If gN=hN, then g⁻¹h∈N=ker φ. Hence φ(g)=φ(h), so the value assigned to the coset is independent of its representative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L358",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Let G=C3 be additive and H=C2=<b>. Represent elements as (x,b^i). If b acts on G by inversion, which formula gives multiplication in G⋊H? All coordinates are taken modulo 3 or 2.",
+   "choices": [
+    "(x+(-1)^i y, b^{i+j})",
+    "(x+(-1)^j y, b^{i+j})",
+    "(x+y, b^{i+j})",
+    "(x+iy, b^{i+j})"
+   ],
+   "answer": "(x+(-1)^i y, b^{i+j})",
+   "rationale": "Inversion changes y to -y when b^i acts, so the first coordinate is x+(-1)^i y, while the C2 coordinate is i+j.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L358",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Which condition on φ:H→Aut(N) is required for φ to define an action of H on N and hence a semidirect product N⋊H?",
+   "choices": [
+    "φ(h₁h₂)=φ(h₁)∘φ(h₂) for all h₁,h₂∈H",
+    "φ(h₁h₂)=φ(h₂)∘φ(h₁) for all h₁,h₂∈H",
+    "φ(h₁)φ(h₂)=h₁h₂ for all h₁,h₂∈H",
+    "φ(h)=h for every h∈H, with H embedded in Aut(N)"
+   ],
+   "answer": "φ(h₁h₂)=φ(h₁)∘φ(h₂) for all h₁,h₂∈H",
+   "rationale": "A group action by automorphisms requires φ(h₁h₂)=φ(h₁)∘φ(h₂). This homomorphism property ensures the action law holds and therefore defines the semidirect product.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L358",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Let a generate C4, and let t generate C2 act by tat⁻¹=a⁻¹ in C4⋊C2. What is the order of the element at?",
+   "choices": [
+    "The element at has order 1.",
+    "The element at has order 2.",
+    "The element at has order 4.",
+    "The element at has order 8."
+   ],
+   "answer": "The element at has order 2.",
+   "rationale": "Using tat⁻¹=a⁻¹ and t²=1, we get (at)²=a(tat⁻¹)t²=aa⁻¹=1. Since at is not the identity, it has order 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L358",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Which pair gives all semidirect products of the form C3⋊C2?",
+   "choices": [
+    "Only C6 and S3, one abelian and one nonabelian",
+    "Only C6 and C3×C3, both abelian groups",
+    "Only C2×C2 and S3, one abelian and one nonabelian",
+    "Only C3×C2 and C2×C2, both abelian groups"
+   ],
+   "answer": "Only C6 and S3, one abelian and one nonabelian",
+   "rationale": "Aut(C3) has two elements: the identity and inversion. The trivial action gives C3×C2≅C6, while the inversion action gives the nonabelian group S3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L433",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 433,
+   "format": "multiple_choice",
+   "prompt": "For the symmetric group S3, which statement correctly describes its automorphism and inner automorphism groups?",
+   "choices": [
+    "Aut(S3) ≅ S3; Inn(S3) ≅ S3; Out(S3) is trivial.",
+    "Aut(S3) ≅ S3; Inn(S3) ≅ C3; Out(S3) ≅ C2.",
+    "Aut(S3) ≅ C6; Inn(S3) ≅ C6; Out(S3) is trivial.",
+    "Aut(S3) ≅ C6; Inn(S3) ≅ S3; Out(S3) ≅ C2."
+   ],
+   "answer": "Aut(S3) ≅ S3; Inn(S3) ≅ S3; Out(S3) is trivial.",
+   "rationale": "The center of S3 is trivial, so Inn(S3) ≅ S3. Every automorphism permutes its three transpositions, giving Aut(S3) ≅ S3; therefore the outer automorphism group is trivial.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L433",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 433,
+   "format": "multiple_choice",
+   "prompt": "For the cyclic group C6, which statement correctly describes its inner and outer automorphism groups?",
+   "choices": [
+    "Inn(C6) is trivial; Out(C6) ≅ C2.",
+    "Inn(C6) ≅ C2; Out(C6) is trivial.",
+    "Inn(C6) is trivial; Out(C6) ≅ C6.",
+    "Inn(C6) ≅ C6; Out(C6) ≅ C2."
+   ],
+   "answer": "Inn(C6) is trivial; Out(C6) ≅ C2.",
+   "rationale": "A cyclic group is abelian, so all inner automorphisms are trivial. Also, Aut(C6) ≅ (ℤ/6ℤ)× ≅ C2, and consequently Out(C6) ≅ C2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L463",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "A wallpaper pattern has a square translation lattice and reflections in all lines parallel to either lattice-axis direction, but no rotations beyond half-turns. Which wallpaper group is it?",
+   "choices": [
+    "p1: translations only",
+    "p2: half-turns only",
+    "pmm: perpendicular mirror directions",
+    "p4m: fourfold rotations and mirrors"
+   ],
+   "answer": "pmm: perpendicular mirror directions",
+   "rationale": "The pmm group has translation symmetry and mirror lines in two perpendicular directions; their products give half-turns but no fourfold rotations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The wallpaper group with square lattice and mirrors along both axes is pmm.",
+      "url": "https://en.wikipedia.org/wiki/Wallpaper_group",
+      "quote": "rectangular lattice, itself pmm",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L463",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "A square-planar complex has four ligand positions, each occupied by ligand A or B. Under all eight symmetries of the square, how many distinct colorings are possible?",
+   "choices": [
+    "4 colorings",
+    "6 colorings",
+    "8 colorings",
+    "10 colorings"
+   ],
+   "answer": "6 colorings",
+   "rationale": "The fixed-coloring counts are 16, 2, 4, 2, 8, 8, 4, and 4. Burnside’s lemma gives their average, 48/8 = 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L348",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 348,
+   "format": "multiple_choice",
+   "prompt": "In a nonabelian group G of order pq with p < q, which structural statement is correct?",
+   "choices": [
+    "The subgroup of order q is normal, and Cp acts nontrivially on it.",
+    "The subgroup of order p is normal, and Cq acts nontrivially on it.",
+    "Both subgroups are normal, and their conjugation action is trivial.",
+    "Neither subgroup is normal, so no semidirect product is possible."
+   ],
+   "answer": "The subgroup of order q is normal, and Cp acts nontrivially on it.",
+   "rationale": "The Sylow q-subgroup is normal, so G ≅ Cq ⋊ Cp. Because G is nonabelian, the conjugation action of Cp on Cq must be nontrivial.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "In a nonabelian group of order pq with p<q, the subgroup of order q is normal while the subgroup of order p is not.",
+      "url": "https://en.wikipedia.org/wiki/Nonabelian_group_of_order_6",
+      "quote": "Thus A 3 is normal , and the other three non-trivial subgroups are not.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_i:L348",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_i",
+   "skill_id": "abstract_algebra",
+   "level": 348,
+   "format": "multiple_choice",
+   "prompt": "Let p < q be primes. Under what condition must every group of order pq be cyclic?",
+   "choices": [
+    "p does not divide q − 1",
+    "p divides q − 1",
+    "p equals q − 1",
+    "q does not divide p − 1"
+   ],
+   "answer": "p does not divide q − 1",
+   "rationale": "When p does not divide q − 1, every Sylow subgroup is normal, so the group is a direct product of cyclic groups of orders p and q and is therefore cyclic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "If p < q prime and p does not divide q−1, then every group of order pq is cyclic.",
+      "url": "https://en.wikipedia.org/wiki/Sylow_theorems",
+      "quote": "More generally, one can show with a similar argument that if n = pq , where p and q are distinct prime numbers such that p does not divide q-1 , then every group of order n is cyclic.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

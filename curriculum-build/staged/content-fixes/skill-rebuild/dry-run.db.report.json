@@ -1,0 +1,100 @@
+{
+  "db": "data/db.json",
+  "md5_before": "cc525e73f3b1975648b10924b88532d6",
+  "md5_after": "fa9320e5529fb6fca69b17b5146df564",
+  "wrote": false,
+  "stamp": "skill-rebuild-2026-10-24",
+  "content_live": {
+    "content/basketball-grades.js": {
+      "now": "5f7e2adad583e4db0bf3ea0d5fba66be",
+      "expected_new": "5f7e2adad583e4db0bf3ea0d5fba66be",
+      "is_new": true,
+      "is_old": false
+    },
+    "content/piano-grades.js": {
+      "now": "d0c772cea06b86d1d35624b948c9835f",
+      "expected_new": "d0c772cea06b86d1d35624b948c9835f",
+      "is_new": true,
+      "is_old": false
+    }
+  },
+  "rows_changed": 2,
+  "fields_changed": 5,
+  "by_table": {
+    "block_plans": 1,
+    "fact_pools": 1
+  },
+  "by_class": {
+    "exact": 5
+  },
+  "approx": [],
+  "refused": [],
+  "already_stamped": [],
+  "unknown": [],
+  "text_mentions_left": [],
+  "changes": [
+    {
+      "table": "block_plans",
+      "id": 108,
+      "user_id": null,
+      "track_id": "basketball",
+      "grade_id": "basketball_junior_club_player",
+      "changes": [
+        {
+          "path": "level",
+          "from": 696,
+          "to": 706,
+          "cls": "exact",
+          "type": "Lesson",
+          "title": "Drive and Kick to the Open Spot"
+        }
+      ]
+    },
+    {
+      "table": "fact_pools",
+      "id": 3,
+      "user_id": null,
+      "track_id": "basketball",
+      "grade_id": "basketball_junior_club_player",
+      "changes": [
+        {
+          "path": "key",
+          "from": "basketball:basketball_junior_club_player:686",
+          "to": "basketball:basketball_junior_club_player:696",
+          "cls": "exact"
+        },
+        {
+          "path": "start",
+          "from": 686,
+          "to": 696,
+          "cls": "exact"
+        },
+        {
+          "path": "end",
+          "from": 740,
+          "to": 750,
+          "cls": "exact"
+        },
+        {
+          "path": "lessons",
+          "from": [
+            686,
+            696,
+            706,
+            719,
+            729
+          ],
+          "to": [
+            696,
+            706,
+            716,
+            729,
+            739
+          ],
+          "cls": "exact"
+        }
+      ]
+    }
+  ],
+  "blockers": []
+}

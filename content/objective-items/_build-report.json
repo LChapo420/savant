@@ -1,0 +1,518 @@
+{
+ "built_at": "2026-10-24T12:51:18.157Z",
+ "rule": "kept by the factory (code checks + two blind judges from different families agreeing) AND the app checks re-run here AND not a duplicate",
+ "sources": [
+  "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+  "curriculum-build/staged/adaptation/objective-items.english.intermediate.json",
+  "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+  "curriculum-build/staged/adaptation/objective-items-night/results.jsonl",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.basics.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.grammar.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.counting_and_comparing.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.sense_of_quantity.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.reading.early_decoder.json",
+  "curriculum-build/staged/adaptation/objective-items-night/objective-items.reading.foundations.json"
+ ],
+ "counts": {
+  "read": 2165,
+  "kept": 1013,
+  "duplicates": 1080,
+  "dropped": 72
+ },
+ "objectives_with_items": 295,
+ "bySubject": {
+  "english": {
+   "grades": 3,
+   "objectives_with_items": 129,
+   "items": 396
+  },
+  "math": {
+   "grades": 3,
+   "objectives_with_items": 103,
+   "items": 385
+  },
+  "reading": {
+   "grades": 2,
+   "objectives_with_items": 63,
+   "items": 232
+  }
+ },
+ "grades": {
+  "english.basics": {
+   "objectives_total": 33,
+   "objectives_with_items": 32,
+   "items": 116
+  },
+  "english.grammar": {
+   "objectives_total": 45,
+   "objectives_with_items": 43,
+   "items": 155
+  },
+  "english.intermediate": {
+   "objectives_total": 57,
+   "objectives_with_items": 54,
+   "items": 125
+  },
+  "math.counting_and_comparing": {
+   "objectives_total": 35,
+   "objectives_with_items": 35,
+   "items": 133
+  },
+  "math.sense_of_quantity": {
+   "objectives_total": 28,
+   "objectives_with_items": 28,
+   "items": 105
+  },
+  "math.volume_coordinates_and_expressions": {
+   "objectives_total": 41,
+   "objectives_with_items": 40,
+   "items": 147
+  },
+  "reading.early_decoder": {
+   "objectives_total": 41,
+   "objectives_with_items": 26,
+   "items": 93
+  },
+  "reading.foundations": {
+   "objectives_total": 40,
+   "objectives_with_items": 37,
+   "items": 139
+  }
+ },
+ "dropped": [
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L52",
+   "prompt": "Two rectangular prisms have dimensions 6 cm by 4 cm by 2 cm and 5 cm by 3 cm by 2 cm. Which calculation gives the total ",
+   "reason": "checks: math-claims: 5 × 3 × 2 is 30, not 36"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L179",
+   "prompt": "Rule A starts at 6 and adds 4 each time. Rule B starts at 6 and doubles each time. The first three corresponding pairs a",
+   "reason": "checks: math-claims: 6 + 4 is 10, not 18"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L191",
+   "prompt": "Pattern X is 5, 10, 15, 20, … Pattern Y is 10, 20, 30, 40, … Which explanation correctly describes their relationship?",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 3.00) more than the keyed option 1 (score 1.17))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L276",
+   "prompt": "A quadrilateral has four right angles and four equal sides. What is its most specific classification?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L276",
+   "prompt": "If a quadrilateral is both a rectangle and a rhombus, which conclusion must be true?",
+   "reason": "checks: rationale points to another option (the explanation describes option 3 (score 2.00) more than the keyed option 1 (score 0.50))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L373",
+   "prompt": "Which purchase should be classified as a need rather than a want?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L435",
+   "prompt": "A delivery van starts at (2, -1) on a grid map. It travels 6 units left and 5 up to a home, then 4 units right and 2 dow",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 2.00) more than the keyed option 1 (score 0.33)); math-claims: 18 1/2 − 2(5 1/4) is -2, not 8"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L435",
+   "prompt": "On a grid map, a van starts at (-5, 2) and travels 8 units right and 3 units down to a warehouse. Its tank holds 6 1/2 l",
+   "reason": "checks: rationale points to another option (the explanation describes option 1 (score 1.00) more than the keyed option 2 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L20",
+   "prompt": "Where should the comma go in “The rain stopped yet the puddles remained deep”?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L117",
+   "prompt": "At the bus stop, one seat is empty and Kim has a ticket. Which sentence best shows that it is possible for Kim to take t",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L161",
+   "prompt": "Lena’s brainstorm is about the ways people use libraries. Which research question is best focused for a short report?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L171",
+   "prompt": "A paragraph explains why students should read for pleasure. Which sentence should come first to state the paragraph’s ma",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L171",
+   "prompt": "Which detail best supports the topic sentence: “Reading for pleasure helps students build stronger vocabulary and compre",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L171",
+   "prompt": "Which sentence best concludes a paragraph about giving students more quiet activities during recess?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "volume_coordinates_and_expressions:L201",
+   "prompt": "A point is in the first quadrant. What are the signs of its x-coordinate and y-coordinate?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L268",
+   "prompt": "A camper rested on the grassy edge beside a river. Which meaning of the homograph “bank” fits?",
+   "reason": "checks: rationale points to another option (the explanation quotes option 2, not the keyed option 1)"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L290",
+   "prompt": "Kai is writing about exercise and student focus. Which is the strongest thesis for a five-paragraph essay?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L290",
+   "prompt": "Ravi's thesis: 'A class garden provides vegetables, attracts bees, and teaches teamwork.' His body paragraphs explain th",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L409",
+   "prompt": "Which plan provides both a descriptive setting and dialogue for an imagined story?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L429",
+   "prompt": "Which sentence is the best topic sentence for an informational paragraph about how recycling helps the environment?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L429",
+   "prompt": "A writer is explaining how rain gardens help keep streets from flooding. Which detail is a relevant example?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L442",
+   "prompt": "Which sentence gives an accurate definition of habitat and adds a concrete example?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L462",
+   "prompt": "Which choice has a clear opinion, reason, and evidence?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L462",
+   "prompt": "Which paragraph includes a claim, a reason, and evidence?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L462",
+   "prompt": "A student claims that daily reading improves writing. Which detail is the strongest evidence?",
+   "reason": "checks: length cue: the key stands out by length; rationale points to another option (the explanation describes option 1 (score 1.00) more than the keyed option 4 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L474",
+   "prompt": "After a storm, branches blocked three roads. Volunteers cleared all three roads in two hours. Which detail is the strong",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 1.00) more than the keyed option 2 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L516",
+   "prompt": "A student is taking notes about the life cycle of monarchs. Which note is most useful for a report?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L528",
+   "prompt": "Mia is researching a solar eclipse. Which source should she trust most?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L548",
+   "prompt": "Which action best helps classmates hear a short presentation clearly?",
+   "reason": "checks: length cue: the key stands out by length; rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L571",
+   "prompt": "Leo says, “The class play should be a comedy because it will make everyone laugh.” Sara prefers a mystery. How can Sara ",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L571",
+   "prompt": "Jon says, “We could collect old bottles for the garden project,” but his explanation is hard to follow. What is the best",
+   "reason": "checks: rationale points to another option (the explanation describes option 3 (score 1.50) more than the keyed option 1 (score 0.50))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L613",
+   "prompt": "A student writes a word clearly but uses abrupt, backward motions at each letter join. Which correction will most improv",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.cache.jsonl",
+   "objective_id": "intermediate:L613",
+   "prompt": "When writing “we can” in connected cursive, which movement correctly handles the space between the two words?",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L52",
+   "prompt": "Two rectangular prisms have dimensions 6 cm by 4 cm by 2 cm and 5 cm by 3 cm by 2 cm. Which calculation gives the total ",
+   "reason": "checks: math-claims: 5 × 3 × 2 is 30, not 36"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L179",
+   "prompt": "Rule A starts at 6 and adds 4 each time. Rule B starts at 6 and doubles each time. The first three corresponding pairs a",
+   "reason": "checks: math-claims: 6 + 4 is 10, not 18"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L191",
+   "prompt": "Pattern X is 5, 10, 15, 20, … Pattern Y is 10, 20, 30, 40, … Which explanation correctly describes their relationship?",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 3.00) more than the keyed option 1 (score 1.17))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L276",
+   "prompt": "A quadrilateral has four right angles and four equal sides. What is its most specific classification?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L276",
+   "prompt": "If a quadrilateral is both a rectangle and a rhombus, which conclusion must be true?",
+   "reason": "checks: rationale points to another option (the explanation describes option 3 (score 2.00) more than the keyed option 1 (score 0.50))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L373",
+   "prompt": "Which purchase should be classified as a need rather than a want?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L435",
+   "prompt": "A delivery van starts at (2, -1) on a grid map. It travels 6 units left and 5 up to a home, then 4 units right and 2 dow",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 2.00) more than the keyed option 1 (score 0.33)); math-claims: 18 1/2 − 2(5 1/4) is -2, not 8"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L435",
+   "prompt": "On a grid map, a van starts at (-5, 2) and travels 8 units right and 3 units down to a warehouse. Its tank holds 6 1/2 l",
+   "reason": "checks: rationale points to another option (the explanation describes option 1 (score 1.00) more than the keyed option 2 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L20",
+   "prompt": "Where should the comma go in “The rain stopped yet the puddles remained deep”?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L117",
+   "prompt": "At the bus stop, one seat is empty and Kim has a ticket. Which sentence best shows that it is possible for Kim to take t",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L161",
+   "prompt": "Lena’s brainstorm is about the ways people use libraries. Which research question is best focused for a short report?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L171",
+   "prompt": "A paragraph explains why students should read for pleasure. Which sentence should come first to state the paragraph’s ma",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L171",
+   "prompt": "Which detail best supports the topic sentence: “Reading for pleasure helps students build stronger vocabulary and compre",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L171",
+   "prompt": "Which sentence best concludes a paragraph about giving students more quiet activities during recess?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L268",
+   "prompt": "A camper rested on the grassy edge beside a river. Which meaning of the homograph “bank” fits?",
+   "reason": "checks: rationale points to another option (the explanation quotes option 2, not the keyed option 1)"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L290",
+   "prompt": "Kai is writing about exercise and student focus. Which is the strongest thesis for a five-paragraph essay?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L290",
+   "prompt": "Ravi's thesis: 'A class garden provides vegetables, attracts bees, and teaches teamwork.' His body paragraphs explain th",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L409",
+   "prompt": "Which plan provides both a descriptive setting and dialogue for an imagined story?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L429",
+   "prompt": "Which sentence is the best topic sentence for an informational paragraph about how recycling helps the environment?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L429",
+   "prompt": "A writer is explaining how rain gardens help keep streets from flooding. Which detail is a relevant example?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L442",
+   "prompt": "Which sentence gives an accurate definition of habitat and adds a concrete example?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L462",
+   "prompt": "Which choice has a clear opinion, reason, and evidence?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L462",
+   "prompt": "Which paragraph includes a claim, a reason, and evidence?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L462",
+   "prompt": "A student claims that daily reading improves writing. Which detail is the strongest evidence?",
+   "reason": "checks: length cue: the key stands out by length; rationale points to another option (the explanation describes option 1 (score 1.00) more than the keyed option 4 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L474",
+   "prompt": "After a storm, branches blocked three roads. Volunteers cleared all three roads in two hours. Which detail is the strong",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 1.00) more than the keyed option 2 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L516",
+   "prompt": "A student is taking notes about the life cycle of monarchs. Which note is most useful for a report?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L528",
+   "prompt": "Mia is researching a solar eclipse. Which source should she trust most?",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L548",
+   "prompt": "Which action best helps classmates hear a short presentation clearly?",
+   "reason": "checks: length cue: the key stands out by length; rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L571",
+   "prompt": "Leo says, “The class play should be a comedy because it will make everyone laugh.” Sara prefers a mystery. How can Sara ",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L571",
+   "prompt": "Jon says, “We could collect old bottles for the garden project,” but his explanation is hard to follow. What is the best",
+   "reason": "checks: rationale points to another option (the explanation describes option 3 (score 1.50) more than the keyed option 1 (score 0.50))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L613",
+   "prompt": "A student writes a word clearly but uses abrupt, backward motions at each letter join. Which correction will most improv",
+   "reason": "checks: length cue: the key stands out by length"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.english.intermediate.json",
+   "objective_id": "intermediate:L613",
+   "prompt": "When writing “we can” in connected cursive, which movement correctly handles the space between the two words?",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L52",
+   "prompt": "Two rectangular prisms have dimensions 6 cm by 4 cm by 2 cm and 5 cm by 3 cm by 2 cm. Which calculation gives the total ",
+   "reason": "checks: math-claims: 5 × 3 × 2 is 30, not 36"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L179",
+   "prompt": "Rule A starts at 6 and adds 4 each time. Rule B starts at 6 and doubles each time. The first three corresponding pairs a",
+   "reason": "checks: math-claims: 6 + 4 is 10, not 18"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L191",
+   "prompt": "Pattern X is 5, 10, 15, 20, … Pattern Y is 10, 20, 30, 40, … Which explanation correctly describes their relationship?",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 3.00) more than the keyed option 1 (score 1.17))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L201",
+   "prompt": "A point is in the first quadrant. What are the signs of its x-coordinate and y-coordinate?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L373",
+   "prompt": "Which purchase should be classified as a need rather than a want?",
+   "reason": "checks: rationale points to another option (the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00))"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L435",
+   "prompt": "A delivery van starts at (2, -1) on a grid map. It travels 6 units left and 5 up to a home, then 4 units right and 2 dow",
+   "reason": "checks: rationale points to another option (the explanation describes option 4 (score 2.00) more than the keyed option 1 (score 0.33)); math-claims: 18 1/2 − 2(5 1/4) is -2, not 8"
+  },
+  {
+   "source": "curriculum-build/staged/adaptation/objective-items-night/objective-items.math.volume_coordinates_and_expressions.json",
+   "objective_id": "volume_coordinates_and_expressions:L435",
+   "prompt": "On a grid map, a van starts at (-5, 2) and travels 8 units right and 3 units down to a warehouse. Its tank holds 6 1/2 l",
+   "reason": "checks: rationale points to another option (the explanation describes option 1 (score 1.00) more than the keyed option 2 (score 0.00))"
+  }
+ ]
+}

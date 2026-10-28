@@ -1,0 +1,881 @@
+{
+ "run_at": "2026-10-23T06:45:51.798Z",
+ "host": "Ryzen 9 6900HS, 31 GB RAM, RTX 3050 Laptop 4 GB",
+ "tasks": {
+  "grading": {
+   "base": "grading",
+   "cases": 48,
+   "config": [
+    "grade_free_response"
+   ],
+   "scores": {
+    "local:qwen3.5-4b@off": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 41,
+     "accuracy": 0.854,
+     "median_ms": 2432,
+     "tok_s": 25.7,
+     "false_accepts": 0,
+     "false_rejects": 7,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "local:qwen3.5-9b@off": {
+     "n": 48,
+     "answered": 12,
+     "failed_calls": 0,
+     "correct": 11,
+     "accuracy": 0.917,
+     "median_ms": 19365,
+     "tok_s": 4.1,
+     "false_accepts": 0,
+     "false_rejects": 1,
+     "wrong_answers": 8,
+     "acceptable": 4
+    },
+    "local:nemotron-nano-4b@off": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 43,
+     "accuracy": 0.896,
+     "median_ms": 1908,
+     "tok_s": 32.2,
+     "false_accepts": 5,
+     "false_rejects": 0,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "local:gemma4-e4b@off": {
+     "n": 48,
+     "answered": 5,
+     "failed_calls": 0,
+     "correct": 5,
+     "accuracy": 1,
+     "median_ms": 14759,
+     "tok_s": 4.1,
+     "false_accepts": 0,
+     "false_rejects": 0,
+     "wrong_answers": 3,
+     "acceptable": 2
+    },
+    "nvidia:lightning@off": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 1,
+     "correct": 44,
+     "accuracy": 0.917,
+     "median_ms": 2206,
+     "false_accepts": 1,
+     "false_rejects": 2,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "nvidia:ultra@medium": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 44,
+     "accuracy": 0.917,
+     "median_ms": 12481,
+     "false_accepts": 0,
+     "false_rejects": 4,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "nvidia:glm-flash@high": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 44,
+     "accuracy": 0.917,
+     "median_ms": 61013,
+     "false_accepts": 0,
+     "false_rejects": 4,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "nvidia:ds-flash@high": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 7,
+     "correct": 37,
+     "accuracy": 0.771,
+     "median_ms": 82563,
+     "false_accepts": 0,
+     "false_rejects": 4,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 45,
+     "accuracy": 0.938,
+     "median_ms": 71336,
+     "false_accepts": 0,
+     "false_rejects": 3,
+     "wrong_answers": 34,
+     "acceptable": 14
+    },
+    "nvidia:ds-flash@max": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 8,
+     "correct": 37,
+     "accuracy": 0.771,
+     "median_ms": 76860,
+     "false_accepts": 0,
+     "false_rejects": 3,
+     "wrong_answers": 34,
+     "acceptable": 14
+    }
+   },
+   "ranking": [
+    "local:gemma4-e4b@off",
+    "nvidia:glm-5.3@max",
+    "nvidia:lightning@off",
+    "nvidia:ultra@medium",
+    "local:qwen3.5-9b@off",
+    "nvidia:glm-flash@high",
+    "local:nemotron-nano-4b@off",
+    "local:qwen3.5-4b@off",
+    "nvidia:ds-flash@max",
+    "nvidia:ds-flash@high"
+   ]
+  },
+  "blind": {
+   "base": "blind",
+   "cases": 48,
+   "config": [
+    "blind_mc"
+   ],
+   "scores": {
+    "local:qwen3.5-4b@off": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 36,
+     "accuracy": 0.75,
+     "median_ms": 1563,
+     "tok_s": 25.9,
+     "by_group": {
+      "reading": "12/12",
+      "english": "10/12",
+      "spanish": "7/12",
+      "math": "7/12"
+     },
+     "false_flags": 12
+    },
+    "local:qwen3.5-9b@off": {
+     "n": 48,
+     "answered": 12,
+     "failed_calls": 0,
+     "correct": 11,
+     "accuracy": 0.917,
+     "median_ms": 8959,
+     "tok_s": 3.9,
+     "by_group": {
+      "reading": "3/3",
+      "english": "3/3",
+      "spanish": "2/3",
+      "math": "3/3"
+     },
+     "false_flags": 1
+    },
+    "local:nemotron-nano-4b@off": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.438,
+     "median_ms": 2043,
+     "tok_s": 31.7,
+     "by_group": {
+      "reading": "10/12",
+      "english": "6/12",
+      "spanish": "1/12",
+      "math": "4/12"
+     },
+     "false_flags": 27
+    },
+    "nvidia:lightning@off": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 2,
+     "correct": 40,
+     "accuracy": 0.833,
+     "median_ms": 2528,
+     "by_group": {
+      "reading": "11/12",
+      "english": "10/12",
+      "spanish": "9/12",
+      "math": "10/12"
+     },
+     "false_flags": 8
+    },
+    "nvidia:ultra@medium": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 48,
+     "accuracy": 1,
+     "median_ms": 10506,
+     "by_group": {
+      "reading": "12/12",
+      "english": "12/12",
+      "spanish": "12/12",
+      "math": "12/12"
+     },
+     "false_flags": 0
+    },
+    "nvidia:glm-flash@high": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 47,
+     "accuracy": 0.979,
+     "median_ms": 43091,
+     "by_group": {
+      "reading": "12/12",
+      "english": "12/12",
+      "spanish": "12/12",
+      "math": "11/12"
+     },
+     "false_flags": 1
+    },
+    "nvidia:ds-flash@high": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 6,
+     "correct": 42,
+     "accuracy": 0.875,
+     "median_ms": 94496,
+     "by_group": {
+      "reading": "12/12",
+      "english": "9/12",
+      "spanish": "11/12",
+      "math": "10/12"
+     },
+     "false_flags": 6
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 0,
+     "correct": 48,
+     "accuracy": 1,
+     "median_ms": 51057,
+     "by_group": {
+      "reading": "12/12",
+      "english": "12/12",
+      "spanish": "12/12",
+      "math": "12/12"
+     },
+     "false_flags": 0
+    },
+    "nvidia:ds-flash@max": {
+     "n": 48,
+     "answered": 48,
+     "failed_calls": 8,
+     "correct": 39,
+     "accuracy": 0.813,
+     "median_ms": 89675,
+     "by_group": {
+      "reading": "8/12",
+      "english": "9/12",
+      "spanish": "11/12",
+      "math": "11/12"
+     },
+     "false_flags": 9
+    }
+   },
+   "ranking": [
+    "nvidia:ultra@medium",
+    "nvidia:glm-5.3@max",
+    "nvidia:glm-flash@high",
+    "local:qwen3.5-9b@off",
+    "nvidia:ds-flash@high",
+    "nvidia:lightning@off",
+    "nvidia:ds-flash@max",
+    "local:qwen3.5-4b@off",
+    "local:nemotron-nano-4b@off"
+   ]
+  },
+  "keys": {
+   "base": "keys",
+   "cases": 40,
+   "config": [
+    "placement_key_judge"
+   ],
+   "scores": {
+    "local:qwen3.5-4b@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 40,
+     "accuracy": 1,
+     "median_ms": 8693,
+     "tok_s": 25.2,
+     "bad_keys_caught": "20/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 1
+    },
+    "local:qwen3.5-9b@off": {
+     "n": 40,
+     "answered": 12,
+     "failed_calls": 0,
+     "correct": 10,
+     "accuracy": 0.833,
+     "median_ms": 25741,
+     "tok_s": 3.3,
+     "bad_keys_caught": "5/6",
+     "false_flags": "1/6",
+     "balanced_accuracy": 0.833
+    },
+    "local:nemotron-nano-4b@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 34,
+     "accuracy": 0.85,
+     "median_ms": 3315,
+     "tok_s": 30.5,
+     "bad_keys_caught": "17/20",
+     "false_flags": "3/20",
+     "balanced_accuracy": 0.85
+    },
+    "nvidia:lightning@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 39,
+     "accuracy": 0.975,
+     "median_ms": 2385,
+     "bad_keys_caught": "19/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 0.975
+    },
+    "nvidia:ultra@medium": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 40,
+     "accuracy": 1,
+     "median_ms": 7614,
+     "bad_keys_caught": "20/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 1
+    },
+    "nvidia:glm-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 40,
+     "accuracy": 1,
+     "median_ms": 70548,
+     "bad_keys_caught": "20/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 1
+    },
+    "nvidia:ds-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 22,
+     "correct": 18,
+     "accuracy": 0.45,
+     "median_ms": 88904,
+     "bad_keys_caught": "0/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 0.5
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 1,
+     "correct": 39,
+     "accuracy": 0.975,
+     "median_ms": 81045,
+     "bad_keys_caught": "19/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 0.975
+    },
+    "nvidia:ds-flash@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 22,
+     "correct": 18,
+     "accuracy": 0.45,
+     "median_ms": 87451,
+     "bad_keys_caught": "0/20",
+     "false_flags": "0/20",
+     "balanced_accuracy": 0.5
+    }
+   },
+   "ranking": [
+    "nvidia:ultra@medium",
+    "local:qwen3.5-4b@off",
+    "nvidia:glm-flash@high",
+    "nvidia:lightning@off",
+    "nvidia:glm-5.3@max",
+    "local:nemotron-nano-4b@off",
+    "local:qwen3.5-9b@off",
+    "nvidia:ds-flash@max",
+    "nvidia:ds-flash@high"
+   ]
+  },
+  "units": {
+   "base": "units",
+   "cases": 30,
+   "config": [
+    "placement_unit_judge"
+   ],
+   "scores": {
+    "local:qwen3.5-4b@off": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 0,
+     "correct": 24,
+     "accuracy": 0.8,
+     "median_ms": 6147,
+     "tok_s": 25.1,
+     "within_1": 0.833,
+     "mae": 0.88,
+     "writer_baseline_exact": 0.933
+    },
+    "local:qwen3.5-9b@off": {
+     "n": 30,
+     "answered": 12,
+     "failed_calls": 0,
+     "correct": 11,
+     "accuracy": 0.917,
+     "median_ms": 52572,
+     "tok_s": 3.5,
+     "within_1": 0.917,
+     "mae": 0.33,
+     "writer_baseline_exact": 0.917
+    },
+    "local:nemotron-nano-4b@off": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 0,
+     "correct": 16,
+     "accuracy": 0.533,
+     "median_ms": 5640,
+     "tok_s": 29.9,
+     "within_1": 0.567,
+     "mae": 2.15,
+     "writer_baseline_exact": 0.933
+    },
+    "nvidia:lightning@off": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 2,
+     "correct": 12,
+     "accuracy": 0.4,
+     "median_ms": 4258,
+     "within_1": 0.567,
+     "mae": 2.2,
+     "writer_baseline_exact": 0.933
+    },
+    "nvidia:ultra@medium": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 0,
+     "correct": 27,
+     "accuracy": 0.9,
+     "median_ms": 20501,
+     "within_1": 0.967,
+     "mae": 0.22,
+     "writer_baseline_exact": 0.933
+    },
+    "nvidia:glm-flash@high": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 0,
+     "correct": 27,
+     "accuracy": 0.9,
+     "median_ms": 51887,
+     "within_1": 0.967,
+     "mae": 0.22,
+     "writer_baseline_exact": 0.933
+    },
+    "nvidia:ds-flash@high": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 4,
+     "correct": 24,
+     "accuracy": 0.8,
+     "median_ms": 71994,
+     "within_1": 0.867,
+     "mae": 0.1,
+     "writer_baseline_exact": 0.933
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 0,
+     "correct": 23,
+     "accuracy": 0.767,
+     "median_ms": 112902,
+     "within_1": 0.867,
+     "mae": 0.58,
+     "writer_baseline_exact": 0.933
+    },
+    "nvidia:ds-flash@max": {
+     "n": 30,
+     "answered": 30,
+     "failed_calls": 3,
+     "correct": 25,
+     "accuracy": 0.833,
+     "median_ms": 78312,
+     "within_1": 0.867,
+     "mae": 0.2,
+     "writer_baseline_exact": 0.933
+    }
+   },
+   "ranking": [
+    "local:qwen3.5-9b@off",
+    "nvidia:ultra@medium",
+    "nvidia:glm-flash@high",
+    "nvidia:ds-flash@max",
+    "local:qwen3.5-4b@off",
+    "nvidia:ds-flash@high",
+    "nvidia:glm-5.3@max",
+    "local:nemotron-nano-4b@off",
+    "nvidia:lightning@off"
+   ]
+  },
+  "facts": {
+   "base": "facts",
+   "cases": 40,
+   "config": [
+    "fact_verify",
+    "fact_read"
+   ],
+   "scores": {
+    "local:qwen3.5-4b@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 20,
+     "accuracy": 0.5,
+     "median_ms": 2944,
+     "tok_s": 23.9,
+     "errors_caught": "14/20",
+     "false_alarms": "14/20",
+     "balanced_accuracy": 0.5
+    },
+    "local:qwen3.5-9b@off": {
+     "n": 40,
+     "answered": 12,
+     "failed_calls": 0,
+     "correct": 5,
+     "accuracy": 0.417,
+     "median_ms": 37859,
+     "tok_s": 3.6,
+     "errors_caught": "3/6",
+     "false_alarms": "4/6",
+     "balanced_accuracy": 0.417
+    },
+    "local:nemotron-nano-4b@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 17,
+     "accuracy": 0.425,
+     "median_ms": 2421,
+     "tok_s": 30.4,
+     "errors_caught": "13/20",
+     "false_alarms": "16/20",
+     "balanced_accuracy": 0.425
+    },
+    "nvidia:lightning@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 2083,
+     "errors_caught": "9/20",
+     "false_alarms": "8/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:ultra@medium": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 22,
+     "accuracy": 0.55,
+     "median_ms": 13072,
+     "errors_caught": "13/20",
+     "false_alarms": "11/20",
+     "balanced_accuracy": 0.55
+    },
+    "nvidia:glm-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 60957,
+     "errors_caught": "7/20",
+     "false_alarms": "6/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:ds-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 10,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 111584,
+     "errors_caught": "8/20",
+     "false_alarms": "4/20",
+     "balanced_accuracy": 0.6
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 4,
+     "correct": 22,
+     "accuracy": 0.55,
+     "median_ms": 125561,
+     "errors_caught": "7/20",
+     "false_alarms": "4/20",
+     "balanced_accuracy": 0.575
+    },
+    "nvidia:ds-flash@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 11,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 125120,
+     "errors_caught": "6/20",
+     "false_alarms": "3/20",
+     "balanced_accuracy": 0.575
+    }
+   },
+   "ranking": [
+    "nvidia:ds-flash@high",
+    "nvidia:ds-flash@max",
+    "nvidia:glm-5.3@max",
+    "nvidia:ultra@medium",
+    "nvidia:lightning@off",
+    "nvidia:glm-flash@high",
+    "local:qwen3.5-4b@off",
+    "local:nemotron-nano-4b@off",
+    "local:qwen3.5-9b@off"
+   ]
+  },
+  "facts_rag": {
+   "base": "facts",
+   "cases": 40,
+   "config": [
+    "fact_verify_grounded"
+   ],
+   "scores": {
+    "local:qwen3.5-4b@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 7559,
+     "tok_s": 14.2,
+     "errors_caught": "19/20",
+     "false_alarms": "20/20",
+     "balanced_accuracy": 0.475
+    },
+    "local:nemotron-nano-4b@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 18,
+     "accuracy": 0.45,
+     "median_ms": 3528,
+     "tok_s": 30.5,
+     "errors_caught": "13/20",
+     "false_alarms": "15/20",
+     "balanced_accuracy": 0.45
+    },
+    "nvidia:lightning@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 2083,
+     "errors_caught": "9/20",
+     "false_alarms": "8/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:ultra@medium": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 22,
+     "accuracy": 0.55,
+     "median_ms": 13072,
+     "errors_caught": "13/20",
+     "false_alarms": "11/20",
+     "balanced_accuracy": 0.55
+    },
+    "nvidia:glm-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 60957,
+     "errors_caught": "7/20",
+     "false_alarms": "6/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:ds-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 10,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 111584,
+     "errors_caught": "8/20",
+     "false_alarms": "4/20",
+     "balanced_accuracy": 0.6
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 4,
+     "correct": 22,
+     "accuracy": 0.55,
+     "median_ms": 125561,
+     "errors_caught": "7/20",
+     "false_alarms": "4/20",
+     "balanced_accuracy": 0.575
+    },
+    "nvidia:ds-flash@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 11,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 125120,
+     "errors_caught": "6/20",
+     "false_alarms": "3/20",
+     "balanced_accuracy": 0.575
+    }
+   },
+   "ranking": [
+    "nvidia:ds-flash@high",
+    "nvidia:ds-flash@max",
+    "nvidia:glm-5.3@max",
+    "nvidia:ultra@medium",
+    "nvidia:lightning@off",
+    "nvidia:glm-flash@high",
+    "local:qwen3.5-4b@off",
+    "local:nemotron-nano-4b@off"
+   ]
+  },
+  "facts_nli": {
+   "base": "facts",
+   "cases": 40,
+   "config": [
+    "fact_verify",
+    "fact_read"
+   ],
+   "scores": {
+    "local:factcg+minicheck": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 765,
+     "errors_caught": "20/20",
+     "false_alarms": "19/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:lightning@off": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 2083,
+     "errors_caught": "9/20",
+     "false_alarms": "8/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:ultra@medium": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 22,
+     "accuracy": 0.55,
+     "median_ms": 13072,
+     "errors_caught": "13/20",
+     "false_alarms": "11/20",
+     "balanced_accuracy": 0.55
+    },
+    "nvidia:glm-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 0,
+     "correct": 21,
+     "accuracy": 0.525,
+     "median_ms": 60957,
+     "errors_caught": "7/20",
+     "false_alarms": "6/20",
+     "balanced_accuracy": 0.525
+    },
+    "nvidia:ds-flash@high": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 10,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 111584,
+     "errors_caught": "8/20",
+     "false_alarms": "4/20",
+     "balanced_accuracy": 0.6
+    },
+    "nvidia:glm-5.3@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 4,
+     "correct": 22,
+     "accuracy": 0.55,
+     "median_ms": 125561,
+     "errors_caught": "7/20",
+     "false_alarms": "4/20",
+     "balanced_accuracy": 0.575
+    },
+    "nvidia:ds-flash@max": {
+     "n": 40,
+     "answered": 40,
+     "failed_calls": 11,
+     "correct": 19,
+     "accuracy": 0.475,
+     "median_ms": 125120,
+     "errors_caught": "6/20",
+     "false_alarms": "3/20",
+     "balanced_accuracy": 0.575
+    }
+   },
+   "ranking": [
+    "nvidia:ds-flash@high",
+    "nvidia:ds-flash@max",
+    "nvidia:glm-5.3@max",
+    "nvidia:ultra@medium",
+    "local:factcg+minicheck",
+    "nvidia:lightning@off",
+    "nvidia:glm-flash@high"
+   ]
+  }
+ }
+}

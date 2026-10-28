@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Polymath — learn anything, at your actual level</title>
+  <meta name="description" content="An adaptive tutor that places you at your real level, then teaches you from there: math, English, reasoning, ACT prep, and Spanish, with Master quizzes every 25 levels.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f8f5ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..800;1,400..600&family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="header"></header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <p class="eyebrow">An adaptive tutor</p>
+        <h1>Start where you <mark>actually are.</mark></h1>
+        <p class="lede">
+          A placement quiz finds out what you really know. A level path teaches you from
+          exactly there. After every session the tutor reads what you did, works out how
+          you learn, and rebuilds the next one around it.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="/register">Take a free placement quiz</a>
+          <a class="btn btn-lg" href="#how">See how it works</a>
+        </div>
+        <p class="small muted hero-note">No card, no trial timer. Five subjects in this preview, more on the way.</p>
+      </div>
+
+      <div class="demo" aria-hidden="true">
+        <div class="demo-card">
+          <div class="demo-top">
+            <span class="role-tag">Check</span>
+            <div class="meter"><span style="width:60%"></span></div>
+            <span class="small muted">3 of 5</span>
+          </div>
+          <div class="prompt">Which is larger: 3/5 or 2/3?</div>
+          <div class="choices">
+            <div class="choice"><span class="key">A</span><span>3/5</span></div>
+            <div class="choice correct selected"><span class="key">B</span><span>2/3</span></div>
+            <div class="choice"><span class="key">C</span><span>They are equal</span></div>
+          </div>
+          <div class="verdict verdict-correct">
+            <h4><svg class="icon"><use href="#ic-check-circle"></use></svg>Correct</h4>
+            <div class="rationale">Over fifteenths, 3/5 is 9/15 and 2/3 is 10/15.</div>
+          </div>
+        </div>
+        <div class="demo-path">
+          <div class="demo-step is-done"><span class="dot"><svg class="icon"><use href="#ic-check"></use></svg></span>Placed at level 10</div>
+          <div class="demo-step is-now"><span class="dot"><svg class="icon"><use href="#ic-arrow-right"></use></svg></span>Lesson: comparing fractions</div>
+          <div class="demo-step is-check"><span class="dot"><svg class="icon"><use href="#ic-flag"></use></svg></span>Master quiz at level 25</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap landing-section" id="how">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Measured first, then taught.</h2>
+        <p>Most study apps start you at level one or take your word for it. This one measures, so you never grind through what you already know or drown in what you are not ready for.</p>
+      </div>
+      <ol class="steps" role="list">
+        <li class="step"><span class="num">01</span>
+          <h3>Placement</h3>
+          <p>20 to 50 questions, easiest first, ending just above the level you picked. You get a level and a map of what is missing.</p>
+        </li>
+        <li class="step"><span class="num">02</span>
+          <h3>Learning style</h3>
+          <p>Optional: twenty forced choices about how you actually study. It changes session length, question format and how much explanation you get.</p>
+        </li>
+        <li class="step"><span class="num">03</span>
+          <h3>Sessions</h3>
+          <p>Short and mixed: review of what is due, work at your level, and a stretch above it. Press Finish and the tutor analyzes the sitting.</p>
+        </li>
+        <li class="step"><span class="num">04</span>
+          <h3>Checkpoints</h3>
+          <p>A Master quiz every 25 levels, a Grand Master every 100, and a Graduation exam that certifies the whole track.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="wrap landing-section">
+      <div class="pillars">
+        <div class="pillar">
+          <h3><svg class="icon"><use href="#ic-target"></use></svg>Placement, not guesswork</h3>
+          <p>Your starting point is measured from your answers, so the first lesson is the one you need.</p>
+        </div>
+        <div class="pillar">
+          <h3><svg class="icon"><use href="#ic-brain"></use></svg>It learns how you learn</h3>
+          <p>Every answer records what you got right, how long it took and where the reasoning broke. After a few sessions, pacing and formats are chosen for you.</p>
+        </div>
+        <div class="pillar">
+          <h3><svg class="icon"><use href="#ic-clock"></use></svg>Review timed to forgetting</h3>
+          <p>Each skill has its own schedule. Something you nearly lost comes back tomorrow; something solid comes back in five weeks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap landing-section" id="subjects">
+      <div class="section-head">
+        <p class="eyebrow">Subjects</p>
+        <h2>In this preview</h2>
+        <p>Next up: physics, chemistry, biology, history, geography, SAT, finance, philosophy, more languages, and the professional tracks. Every new track ships with its own graduation standard.</p>
+      </div>
+      <div class="grid grid-3" id="tracks">
+        <div class="loading"><span class="spinner"></span>Loading subjects</div>
+      </div>
+
+      <div class="cta-band">
+        <div>
+          <h2>Find out where you actually stand.</h2>
+          <p>The placement quiz takes about ten minutes per subject.</p>
+        </div>
+        <a class="btn btn-primary btn-lg" href="/register">Create an account</a>
+      </div>
+    </section>
+
+    <footer class="wrap site-footer">Polymath &middot; a learning preview</footer>
+  </main>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/landing.js"></script>
+</body>
+</html>

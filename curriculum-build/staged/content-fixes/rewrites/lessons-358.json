@@ -1,0 +1,154 @@
+{
+ "collection": "lessons",
+ "row_id": 358,
+ "shared": false,
+ "user_id": 708,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P33",
+   "wrong": "Doing the divide before the subtract in 5x + 2 = 27, which gives x + 2 = 5.4 and then x = 3.4.",
+   "correct": "Dividing both sides of 5x + 2 = 27 by 5 first gives x + 0.4 = 5.4, so x = 5; dividing first does not give x + 2 = 5.4 or x = 3.4.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Doing the divide before the subtract in 5x + 2 = 27, which gives x + 2 = 5.4 and then x = 3.4. The correct order gives x = 5.",
+   "replace": "Dividing only the 5x term in 5x + 2 = 27 is the mistake: it gives x + 2 = 5.4 and then x = 3.4. Dividing both sides by 5 first gives x + 0.4 = 5.4, so x = 5.",
+   "fixes": [
+    "P33"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[3]",
+   "before": "Doing the divide before the subtract in 5x + 2 = 27, which gives x + 2 = 5.4 and then x = 3.4. The correct order gives x = 5.",
+   "after": "Dividing only the 5x term in 5x + 2 = 27 is the mistake: it gives x + 2 = 5.4 and then x = 3.4. Dividing both sides by 5 first gives x + 0.4 = 5.4, so x = 5.",
+   "fixes": [
+    "P33"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving Linear Equations: Keeping the Balance",
+  "intro": "A linear equation says an expression equals a number, like x + 5 = 12. To solve it, you find the value of x that makes it true. The whole method rests on one rule, and you will use it three times today.",
+  "sections": [
+   {
+    "heading": "The balance rule",
+    "body": "Rule: an equation is like a balanced scale. Whatever you do to one side, you must do to the other side.\n\nLook at x + 5 = 12. To get x alone, undo the + 5 by subtracting 5 from both sides. Left side: x + 5 - 5 = x. Right side: 12 - 5 = 7. So x = 7. Check it: 7 + 5 = 12, which is true.",
+    "example": "Solve x + 9 = 14.\nSubtract 9 from both sides: x + 9 - 9 = 14 - 9.\nSo x = 5. Check: 5 + 9 = 14."
+   },
+   {
+    "heading": "Undoing multiplication",
+    "body": "Rule: if x is multiplied by a number, undo it by dividing both sides by that number.\n\nLook at 4x = 20. The 4 is multiplying x, so divide both sides by 4. Left side: 4x / 4 = x. Right side: 20 / 4 = 5. So x = 5. Check it: 4 times 5 is 20, which is true.",
+    "example": "Solve 6x = 42.\nDivide both sides by 6: 6x / 6 = 42 / 6.\nSo x = 7. Check: 6 times 7 is 42."
+   },
+   {
+    "heading": "Two steps: undo addition first",
+    "body": "Rule: when x is both multiplied and shifted, undo the addition or subtraction first, then undo the multiplication.\n\nLook at 2x + 3 = 11. First subtract 3 from both sides, giving 2x = 8. Then divide both sides by 2, giving x = 4. Check it: 2 times 4 plus 3 is 8 + 3 = 11, which is true.",
+    "example": "Solve 5x + 2 = 27.\nSubtract 2 from both sides: 5x = 25.\nDivide both sides by 5: x = 5.\nCheck: 5 times 5 plus 2 is 25 + 2 = 27."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 3x + 4 = 19.",
+   "steps": [
+    "Write the equation: 3x + 4 = 19. The 4 is added to the 3x, so that goes first.",
+    "Subtract 4 from both sides to keep the balance: 3x + 4 - 4 = 19 - 4.",
+    "Simplify both sides: left becomes 3x, right becomes 15, so 3x = 15.",
+    "The 3 multiplies x, so undo it by dividing both sides by 3: 3x / 3 = 15 / 3.",
+    "Simplify both sides: x = 5.",
+    "Check by substituting back: 3 times 5 plus 4 is 15 + 4 = 19. True, so x = 5 is correct."
+   ],
+   "answer": "x = 5"
+  },
+  "common_mistakes": [
+   "Subtracting 4 from only one side in 3x + 4 = 19 and writing 3x = 19 - 4 as if it were fine while leaving the left side untouched. That break in the balance gives a wrong value, so always write the operation on both sides.",
+   "Dividing only the x term by the coefficient in 3x + 4 = 19 to get x + 4 = 6.33. That changes one side only and produces a wrong answer; subtract first, then divide.",
+   "Adding the constant instead of subtracting it in 2x + 3 = 11, which gives 2x = 14 and then x = 7. The check fails: 2 times 7 plus 3 is 17, not 11.",
+   "Dividing only the 5x term in 5x + 2 = 27 is the mistake: it gives x + 2 = 5.4 and then x = 3.4. Dividing both sides by 5 first gives x + 0.4 = 5.4, so x = 5."
+  ],
+  "summary": "An equation is a balanced scale: whatever you do to one side, do to the other. Undo addition or subtraction first, then undo multiplication by dividing both sides. Always check your answer by substituting it back into the original equation.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x + 7 = 12.",
+    "answer": "x = 5",
+    "rationale": "Subtract 7 from both sides: x = 12 - 7 = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "To solve 4x = 20, which move undoes the multiplication?",
+    "answer": "Divide both sides by 4",
+    "rationale": "The 4 multiplies x, so dividing both sides by 4 leaves x alone: x = 20 / 4 = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Divide both sides by 4",
+     "Subtract 4 from both sides",
+     "Multiply both sides by 4",
+     "Divide only the 4x side by 4"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve 3x + 1 = 13.",
+    "answer": "x = 4",
+    "rationale": "Subtract 1 from both sides to get 3x = 12, then divide both sides by 3 to get x = 4.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "In solving 2x + 3 = 11, which first step is correct?",
+    "answer": "Subtract 3 from both sides",
+    "rationale": "Undo the addition first: 2x + 3 - 3 = 11 - 3 gives 2x = 8, and then dividing by 2 gives x = 4.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Divide both sides by 2",
+     "Subtract 3 from both sides",
+     "Add 3 to both sides",
+     "Write x + 3 = 11"
+    ]
+   }
+  ]
+ }
+}

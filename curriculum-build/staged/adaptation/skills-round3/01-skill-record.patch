@@ -1,0 +1,2673 @@
+diff --git a/config/db.js b/config/db.js
+index 762d686..653944a 100644
+--- a/config/db.js
++++ b/config/db.js
+@@ -52,6 +52,7 @@ const COLLECTIONS = [
+   'piano_song_results',      // piano song path: one per learner per song, best stars and recent takes, scored on the server
+   'parents',                 // parent/guardian accounts: sign in to review, revoke and delete a linked child's account (routes/consent.js)
+   'parental_consents',       // one per child account under its country's consent age: status, method, notice version, opt-ins, history (routes/consent.js)
++  'skill_records',           // chess, piano, basketball: one per learner per exit-battery metric, every sitting (cold/warm, day, source, confirmed) and practice set (services/skill-record.js)
+ ];
+ 
+ function emptyStore() {
+diff --git a/routes/consent.js b/routes/consent.js
+index bb38ce9..097f189 100644
+--- a/routes/consent.js
++++ b/routes/consent.js
+@@ -373,6 +373,7 @@ const KNOWN_COLLECTIONS = [
+     'level_signals', 'learner_records', 'level_debriefs', 'placement_question_sets', 'subject_placements',
+     'game_payloads', 'block_plans', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
+   'chess_rush_runs', 'chess_drill_cards', 'chess_drill_runs', 'fact_pools', 'piano_song_results', 'parents', 'parental_consents',
++  'skill_records',
+ ];
+ function collectionNames() {
+   return KNOWN_COLLECTIONS.filter((name) => {
+diff --git a/server.js b/server.js
+index 0baa2b0..5128a0a 100644
+--- a/server.js
++++ b/server.js
+@@ -122,6 +122,9 @@ app.use('/api', require('./routes/base-lessons'));
+ app.use('/api/chess', require('./routes/chess'));
+ // The piano song library and song path (stars per learner), scored on the server.
+ app.use('/api/piano', require('./routes/piano-songs'));
++// Chess, piano and basketball: the skill record and its staged parts (skills
++// round 3; SKILL_RECORD=on, every /api/skills route answers 404 while off).
++app.use('/api', require('./routes/skills'));
+ // Every learner's scorecard and details, for the accounts in ADMIN_EMAILS.
+ app.use('/api/admin', require('./routes/admin'));
+ app.use(require('./routes/game-lab'));
+diff --git a/public/path.html b/public/path.html
+index ca4592e..3349204 100644
+--- a/public/path.html
++++ b/public/path.html
+@@ -9,6 +9,7 @@
+   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+   <link rel="stylesheet" href="/fonts/fonts.css">
+   <link rel="stylesheet" href="/css/style.css">
++  <link rel="stylesheet" href="/css/skills.css">
+ </head>
+ <body>
+   <header class="site-header" id="header"></header>
+diff --git a/public/js/path.js b/public/js/path.js
+index dd26ad1..770cf41 100644
+--- a/public/js/path.js
++++ b/public/js/path.js
+@@ -24,6 +24,10 @@ App.mount(async () => {
+   // grade is the end of) and whether this grade's placement can be retaken.
+   const catchRoute = (planReply && planReply.catch_up_route) || null;
+   const placementInfo = (planReply && planReply.placement) || null;
++  // Chess, piano and basketball: this stage's rows (staged skills round 3,
++  // SKILL_RECORD and its parts), asked for beside the path. While it is off the
++  // route answers 404 and the path is drawn as before.
++  const skillReply = App.api.get(`/api/skills/path/${enrollmentId}`).catch(() => null);
+   const { enrollment, track, grade, progress, nodes, skills, params, checkpoints } = data;
+   const units = planUnits(plan, nodes);
+   // The lessons' own titles, so an activity's " - <lesson>" tail can be
+@@ -204,6 +208,31 @@ App.mount(async () => {
+    * with a way in for anyone who wants to look anyway. Units still to learn, and
+    * units nobody has asked about yet, are drawn as ordinary levels.
+    */
++  /**
++   * A skill subject's stage (staged skills round 3): the rows its parts send,
++   * such as the stage check when its exit battery is due, what is left before
++   * the stage can be left, and today's practice. Nothing when there are none.
++   */
++  function skillStage(reply) {
++    const rows = (reply && reply.nodes) || [];
++    if (!rows.length) return '';
++    const esc = App.escapeHtml;
++    return `
++    <h2 class="section-title">${esc(reply.stage ? `This stage: ${reply.stage.name}` : 'This stage')}</h2>
++    <div class="path skill-stage">
++      ${rows.map((n) => `
++      <div class="node node-skill${n.next ? ' is-next' : ''}${n.done ? ' node-done' : ''}${n.held ? ' node-skill-held' : ''}" data-subject="${esc(track.id)}">
++        <span class="badge">${n.done ? window.mark('tick', 'mark-plain') : esc(n.badge || '')}</span>
++        <span>
++          <span class="title">${esc(n.title)}${n.kind_label ? `<span class="kind">${esc(n.kind_label)}</span>` : ''}</span>
++          ${n.detail ? `<span class="skill-detail">${esc(n.detail)}</span>` : ''}
++        </span>
++        <span class="spacer"></span>
++        <span class="row-wrap">${n.href ? `<a class="btn btn-sm" href="${esc(n.href)}">${esc(n.action || 'Open')}<span class="visually-hidden">: ${esc(n.title)}</span></a>` : ''}</span>
++      </div>`).join('')}
++    </div>`;
++  }
++
+   function planUnits(summary, rows) {
+     const list = [];
+     const fromPlan = Array.isArray(summary && summary.units) ? summary.units : [];
+@@ -642,6 +671,8 @@ App.mount(async () => {
+ 
+     ${planHtml.trim() ? `<div class="section">${planHtml}</div>` : ''}
+ 
++    ${skillStage(await skillReply)}
++
+     ${skip.offered ? `
+       <div class="card" style="margin-top:24px">
+         <div class="row-between" style="align-items:flex-start; gap:14px; flex-wrap:wrap">
+diff --git a/content/skill-progressions/chess.json b/content/skill-progressions/chess.json
+new file mode 100644
+index 0000000..a9e722f
+--- /dev/null
++++ b/content/skill-progressions/chess.json
+@@ -0,0 +1,311 @@
++{
++  "subject": "chess",
++  "version": 1,
++  "status": "STAGED, not live. Owner approval needed (see curriculum-build/SKILL-CURRICULA.md, section 9).",
++  "doc": "Novice-to-elite progression for the playing path C01-C13, with the professional (C14-C16) and frontier (C17-C19) tracks open alongside at any playing level. Each stage maps onto existing grades (ids from content/chess-grades.js) and says what the learner can DO at the end, how that is PROVED, how practice is built, how feedback is given and what the app senses. Gate numbers marked [R] are design values to be normed on real learners; no gate may be passed by self-report alone.",
++  "evidence_tags": {
++    "V": "page or text opened and read (this session or the subject's research files)",
++    "S": "search-result summary only",
++    "P": "from Savant's earlier research files (curriculum-build/chess/research/*.md), which carry their own sources",
++    "L": "computed by code in this folder (verify-skill-curricula.js)",
++    "R": "our design inference or recommendation"
++  },
++  "sources": {
++    "charness2005": { "cite": "Charness, Tuffiash, Krampe, Reingold & Vasyukova (2005): serious solo study the strongest predictor of rating; GMs ~5,000 h solo study in first decade", "tag": "P" },
++    "burgoyne2019": { "cite": "Burgoyne et al. (2019), N=377: study+instruction+starting age explain 63% of peak-rating variance; tournament play adds R2 .006", "tag": "P" },
++    "gobet2007": { "cite": "Gobet & Campitelli (2007): practice necessary not sufficient; 8x spread in practice needed to reach master", "tag": "P" },
++    "gobetsimon1996": { "cite": "Gobet & Simon (1996) templates in chess memory", "tag": "P" },
++    "debruin2007": { "cite": "de Bruin, Rikers & Schmidt (2007): predict + self-explain beat predict alone and observe for KR v K learners", "tag": "P" },
++    "bilalic2008": { "cite": "Bilalic, McLeod & Gobet (2008) Einstellung: familiar non-optimal solution drops experts ~3 SD", "tag": "P" },
++    "rowland2014": { "cite": "Rowland (2014) testing-effect meta-analysis: recall > recognition (0.61 v 0.29), feedback raises effect", "tag": "P" },
++    "cepeda2006": { "cite": "Cepeda et al. (2006) distributed-practice meta-analysis", "tag": "P" },
++    "chessable": { "cite": "Chessable MoveTrainer intervals 4h,1d,3d,1w,2w,1mo,3mo,6mo; a timer per move (support.chess.com/en/articles/10319322)", "tag": "V" },
++    "act2005": { "cite": "van der Maas & Wagenmakers (2005) A psychometric analysis of chess expertise, Am J Psychol 118(1): the Amsterdam Chess Test (choose-a-move, predict-a-move, recall, verbal knowledge); reliable, high predictive validity against Elo; response times add validity on easy items. https://dare.uva.nl/id/44227bd6-730b-4f8d-885d-6c7d08d1eebf", "tag": "S" },
++    "regan2011": { "cite": "Regan & Haworth (2011) Intrinsic Performance Ratings: move quality over many moves tracks Elo", "tag": "P" },
++    "glicko": { "cite": "Glickman: Glicko/Glicko-2, rating deviation (glicko.net)", "tag": "P" },
++    "kalyuga2005": { "cite": "Kalyuga & Sweller (2005) Rapid dynamic assessment of expertise to improve the efficiency of adaptive e-learning, ETR&D 53, 83-93 (first-step / rapid verification diagnosis of expertise)", "tag": "S" },
++    "tetzlaff2025": { "cite": "Tetzlaff et al. (2025) expertise reversal meta-analysis (60 experiments), as used in docs/SCORECARD.md 'Reach'", "tag": "P" },
++    "guadagnoli2004": { "cite": "Guadagnoli & Lee (2004) Challenge point framework, J Motor Behav 36(2) 212-224: the optimal difficulty depends on the learner's skill (functional vs nominal difficulty)", "tag": "S" },
++    "lichessdata": { "cite": "1500-1700 Lichess players: more daily games inversely related to rating gain (emerginginvestigators.org/articles/25-024); puzzle ratings run above game ratings", "tag": "P" },
++    "pert": { "cite": "Pert's error lists by band 1600-2000 (curriculum-build/chess/research/03 section 3)", "tag": "P" },
++    "steps": { "cite": "Steps Method: mating postponed until play is fluent (chess.co.uk Step 1)", "tag": "P" },
++    "tables": { "cite": "Our own retrograde tables (lib/endgame-tables.js): KQK max distance-to-mate 10, KRK 16, every white-to-move position won; KPK win/draw for every position", "tag": "L" }
++  },
++  "competence_model": {
++    "doc": "What a chess learner IS, as the app tracks it. Each component has its own evidence and its own gate; none stands in for another.",
++    "components": [
++      { "id": "rules_fluency", "what": "Legal moves and rules without hesitation", "evidence": "board answers (tap/drag), timed; chess_moves, chess_board items", "source": "board" },
++      { "id": "pattern_library", "what": "Tactical motifs, mating patterns, endgame positions recognised fast", "evidence": "Glicko-2 puzzle rating per theme family with RD (content/chess-trainer.js); per-move SRS cards (content/chess-srs.js)", "source": "board" },
++      { "id": "calculation", "what": "Forcing lines seen to the end, opponent replies included", "evidence": "multi-move puzzles where every learner move is graded; visualisation drills (pieces hidden)", "source": "board" },
++      { "id": "noticing", "what": "Finding that a tactic exists (or does not) in unlabelled positions; the move-checking habit", "evidence": "unannounced positions with 'nothing works' items; blunder rate in own games", "source": "board + games" },
++      { "id": "technique", "what": "Winning won endings and holding drawn ones against best defence", "evidence": "play-outs against perfect defence (tables), scored against distance to mate", "source": "board" },
++      { "id": "judgement", "what": "Evaluation and plans in quiet positions", "evidence": "choose-a-move items accepted within an engine threshold plus a reason; guess-the-move through annotated games", "source": "board + text" },
++      { "id": "game_performance", "what": "Results and move quality in real games", "evidence": "rapid games against calibrated bots (Maia-2 bands where installed): performance rating with its standard error, blunder count by win-probability loss", "source": "games" },
++      { "id": "knowledge", "what": "Rules details, notation, history, professional knowledge", "evidence": "unit bank items through learnerPath.unitBelief", "source": "items" }
++    ]
++  },
++  "gate_rules": {
++    "proof_only": "A stage, unit or lesson is skipped or passed only on measured evidence: board answers, rated puzzles, play-outs and games. Self-report, time spent and the after-level model read never prove anything (same rule as GAP-PATHS-SPEC 'nothing may be marked known without evidence').",
++    "cold": "Performance gates count only cold attempts: the first attempt of a day, at least 20 hours after the skill was last practised (retention, not warm-up performance; research/02 section 7).",
++    "two_days": "Every performance gate needs passes on two different days.",
++    "unannounced": "Tactics gates are sat in unannounced mode (no theme given; some positions have nothing) because themed puzzles inflate success (lichessdata).",
++    "rating_with_uncertainty": "A rating gate needs rating >= target AND RD <= 80 (about +/-160 at 95%).",
++    "game_gate_size": "A game-performance gate needs at least 12 rated rapid games: the standard error of a performance rating over n games near a 50% score is about 347/sqrt(n) Elo (L: 100 Elo at 12 games), so games are only one of several signals and never the only one.",
++    "unit_belief": "Knowledge units use the live learnerPath.unitBelief (services/learner-path.js, current knobs HOLE_PRIOR 0.15, ISLAND_PRIOR 0.65, SLIP 0.15, LUCK 0.15, KNOWN_AT 0.965). A board answer is graded as one of ~30 legal moves, so its guess rate is far lower than 4-option multiple choice and fewer right answers prove a unit (L, computed with the live function: 2 right board answers v 3 multiple-choice for a 'past' unit; 2 v 4 for an 'island' unit). Board-answer unit banks therefore make placement and test-outs shorter for the same safety.",
++    "norming": "Thresholds marked [R] are provisional. After 200 learners have sat a stage's battery, cuts are re-set from the data (the score separating learners who then pass the next stage's game gate from those who do not), and the change is logged."
++  },
++  "stages": [
++    {
++      "id": "CH0", "name": "Board explorer", "grades": ["chess_board_explorer"], "draft": "C01",
++      "who": "Never seen a board; age 4+ (voice-led) or an adult on day one",
++      "objectives": [
++        "Moves each piece legally from any square, including blocked lines and the pawn's move-versus-capture asymmetry",
++        "Captures and protects in mini-games (pawn wars, capture-the-pawns) without moving into danger more than rarely",
++        "Sets up the starting position from memory with the light square on the right"
++      ],
++      "exit": {
++        "knowledge": "C01 units proved by board answers (unit_belief)",
++        "performance": [
++          { "metric": "legal_move_accuracy", "test": "tap every square a piece can reach, 6 pieces x 3 random positions", "threshold": ">= 95% squares right, no illegal square tapped twice", "n_min": 18, "source": "board", "tag": "R" },
++          { "metric": "star_maze_par", "test": "collect-the-stars mazes for rook, bishop, queen, knight within the move par", "threshold": "3 of 4 pieces at par on a cold day", "source": "board", "tag": "R" },
++          { "metric": "setup_from_memory", "test": "place all 32 pieces", "threshold": "100% on two days", "source": "board", "tag": "R" }
++        ],
++        "retention": "Pass again after 7+ days (spaced queue)"
++      },
++      "practice": { "session_minutes": "5-15 (ages 4-7), 15-20 adults", "mix": { "mini_games_and_play": 0.5, "piece_drills": 0.4, "review": 0.1 }, "difficulty_target": "about 80% first-try success", "games": "mini-games only; no full games yet (Steps method)" },
++      "feedback": ["Immediate, voice-led, show the legal squares after any wrong tap", "Stars against a move par (Lichess Learn pattern)", "No text needed; no notation"],
++      "sensing": ["board taps/drags (exact)", "voice prompts out; no camera or mic needed"],
++      "evidence": ["steps", "rowland2014"]
++    },
++    {
++      "id": "CH1", "name": "Rules learner", "grades": ["chess_rules_learner"], "draft": "C02",
++      "who": "Plays a full legal game; online 100-400",
++      "objectives": [
++        "Plays a complete legal game: check, three ways out of check, castling conditions, promotion, en passant, draw rules",
++        "Tells checkmate from stalemate and check on sight",
++        "Finds mate in one in unlabelled positions",
++        "Mates with K+Q v K and two rooks against perfect defence"
++      ],
++      "exit": {
++        "knowledge": "C02 units proved (rules items are computed by content/chess-board.js; perft-checked)",
++        "performance": [
++          { "metric": "check_mate_stalemate_id", "test": "20 mixed positions: check, mate, stalemate or none", "threshold": ">= 18/20", "source": "board", "tag": "R" },
++          { "metric": "mate_in_1_unannounced", "test": "15 positions, mate in one present in 10, absent in 5 ('no mate' is an answer)", "threshold": ">= 13/15", "source": "board", "tag": "R" },
++          { "metric": "kqk_playout", "test": "5 random won K+Q v K starts against perfect defence (tables)", "threshold": "mate in every start within DTM+6 moves and never stalemate", "source": "board", "tag": "R+L" },
++          { "metric": "legal_game", "test": "2 full games against the lowest bot", "threshold": "no illegal-move attempt that the learner did not correct, game recorded", "source": "games", "tag": "R" }
++        ],
++        "retention": "KQK play-out repeated after 7+ days"
++      },
++      "practice": { "session_minutes": "10-20", "mix": { "play_vs_bot_or_minigames": 0.4, "puzzles": 0.3, "lessons": 0.25, "basic_mates": 0.05 }, "difficulty_target": "70-85% first-try success on puzzles (expected score 0.75: puzzle rating about 190 below the learner's)", "games": "untimed or 15+10 against a friendly bot" },
++      "feedback": ["Immediate on puzzles, with the refutation of a wrong move played on the board", "Stalemate warning replayed when it happens in a play-out"],
++      "sensing": ["board"],
++      "evidence": ["rowland2014", "tables", "steps"]
++    },
++    {
++      "id": "CH2", "name": "Beginner tactician", "grades": ["chess_beginner_tactician"], "draft": "C03",
++      "who": "400-800: hangs pieces, misses one-move tactics",
++      "objectives": [
++        "Runs the checks-captures-threats scan for both sides before every move",
++        "Wins hanging pieces and stops hanging own pieces",
++        "Recognises forks, pins, skewers, discovered attacks and removing the defender",
++        "Mates with K+R v K against perfect defence; wins simple pawn races"
++      ],
++      "exit": {
++        "knowledge": "C03 units proved",
++        "performance": [
++          { "metric": "tactics_unannounced", "test": "fixed-form set of 30 positions rated about 600-1000 on our puzzle scale, mixed motifs, 5 with no tactic", "threshold": ">= 80% right", "source": "board", "tag": "R" },
++          { "metric": "krk_playout", "test": "5 random won K+R v K starts against perfect defence", "threshold": "mate in all within DTM+8, no stalemate, within the 50-move rule", "source": "board", "tag": "R+L" },
++          { "metric": "hung_pieces_per_game", "test": "12 rapid games (15+10) against the 600-800 bot band", "threshold": "median <= 1 piece left en prise per game AND score >= 40%", "source": "games", "tag": "R" }
++        ],
++        "retention": "Tactics set repeated with new positions after 7+ days"
++      },
++      "practice": { "session_minutes": "15-30", "mix": { "play": 0.35, "puzzles": 0.35, "lessons": 0.1, "endgames": 0.1, "openings_principles": 0.05, "own_game_review": 0.05 }, "difficulty_target": "70-85%", "games": "10-15 minute games; blitz is a labelled fun mode, not practice" },
++      "feedback": ["Puzzles immediate; games delayed: learner marks their 'oops' and 'best' moves before any engine view", "Each own blunder becomes a 'find the better move' card on the SRS queue"],
++      "sensing": ["board", "game records"],
++      "evidence": ["charness2005", "lichessdata", "rowland2014"]
++    },
++    {
++      "id": "CH3", "name": "Novice club player", "grades": ["chess_novice_club_player"], "draft": "C04",
++      "who": "800-1100",
++      "objectives": [
++        "Uses double check, overloading, trapped pieces, x-ray and desperado in combinations",
++        "Knows opposition, the square of the pawn and K+P v K wins and draws",
++        "Plays one opening system per colour from principles, with its plans",
++        "Annotates own slow games before the engine"
++      ],
++      "exit": {
++        "knowledge": "C04 units proved",
++        "performance": [
++          { "metric": "tactics_unannounced", "test": "30 positions about 900-1300 on our scale, 6 with nothing", "threshold": ">= 80%", "source": "board", "tag": "R" },
++          { "metric": "kpk_judgement", "test": "20 K+P v K positions: win or draw with the side to move", "threshold": ">= 18/20 (answers proved by the KPK table)", "source": "board", "tag": "R+L" },
++          { "metric": "kpk_playout", "test": "4 won K+P v K positions against perfect defence; 2 drawn positions defended as Black", "threshold": "all converted or held", "source": "board", "tag": "R+L" },
++          { "metric": "games", "test": "12 rapid games against the 900-1100 bot band", "threshold": "score >= 50% with median blunders (win-probability loss >= 0.20) <= 1 per game", "source": "games", "tag": "R" }
++        ],
++        "retention": "Endgame play-outs again after 7+ days"
++      },
++      "practice": { "session_minutes": "20-40", "mix": { "play": 0.35, "puzzles": 0.35, "lessons": 0.1, "endgames": 0.1, "openings": 0.05, "own_game_review": 0.05 }, "difficulty_target": "70-85%", "games": "15+10 or slower" },
++      "feedback": ["Hint ladder on puzzles (theme, then piece, then square) costs stars", "Game review: learner's annotations first, then the coach names the pattern from the curriculum"],
++      "sensing": ["board", "game records"],
++      "evidence": ["debruin2007", "rowland2014", "tables"]
++    },
++    {
++      "id": "CH4", "name": "Club player", "grades": ["chess_club_player"], "draft": "C05",
++      "who": "1100-1400",
++      "objectives": [
++        "Calculates forcing lines 3-4 moves deep including the opponent's best replies",
++        "Uses deflection, decoy, interference and clearance; re-checks the final position of a line",
++        "Plays key squares and basic rook endings; converts extra material",
++        "Recognises weak pawns, holes and outposts and makes a plan from them"
++      ],
++      "exit": {
++        "knowledge": "C05 units proved",
++        "performance": [
++          { "metric": "tactics_rating", "test": "rated puzzles in unannounced mode", "threshold": "rating at or above the stage cut with RD <= 80 (provisional cut: 80% success on a 30-item set at 1200-1500)", "source": "board", "tag": "R" },
++          { "metric": "calculation", "test": "10 positions where the full line (3+ learner moves, every reply) must be entered", "threshold": ">= 7/10", "source": "board", "tag": "R" },
++          { "metric": "games", "test": "12 rapid games against the 1200-1400 band (Maia-2 1200-1400 where installed)", "threshold": "performance >= 1250 with median blunders <= 1", "source": "games", "tag": "R" }
++        ],
++        "retention": "Repeat a parallel calculation set after 7+ days"
++      },
++      "practice": { "session_minutes": "30-60", "mix": { "play": 0.3, "puzzles": 0.3, "lessons": 0.1, "endgames": 0.1, "openings": 0.05, "own_game_review": 0.15 }, "difficulty_target": "70-85% on single-move sets; about 60% on full-line calculation (challenge point rises with skill)", "games": "15+10 or slower, at most about 3 a day (anti-volume)" },
++      "feedback": ["Wrong calculation shows the refutation line move by move", "Every game reviewed: 3 critical moments marked by the learner first"],
++      "sensing": ["board", "game records"],
++      "evidence": ["lichessdata", "guadagnoli2004", "pert"]
++    },
++    {
++      "id": "CH5", "name": "Intermediate", "grades": ["chess_intermediate"], "draft": "C06",
++      "who": "1400-1600",
++      "objectives": [
++        "Lists candidate moves before calculating; defends against the opponent's tactics",
++        "Plays Lucena and Philidor, queen v pawn, wrong-bishop and fortress draws",
++        "Knows zugzwang and uses it in pawn endings",
++        "Simplifies when ahead"
++      ],
++      "exit": {
++        "knowledge": "C06 units proved",
++        "performance": [
++          { "metric": "tactics_rating", "test": "unannounced rated puzzles incl. defensive positions", "threshold": "stage cut, RD <= 80 (provisional: 80% on 1400-1700 set)", "source": "board", "tag": "R" },
++          { "metric": "rook_endgame_playouts", "test": "Lucena win and Philidor hold against an engine/tablebase", "threshold": "both, twice on different days", "source": "board", "tag": "R" },
++          { "metric": "games", "test": "12 rapid games, 1400-1600 band", "threshold": "performance >= 1450", "source": "games", "tag": "R" }
++        ],
++        "retention": "Endgame play-outs again after 14+ days"
++      },
++      "practice": { "session_minutes": "30-60, with 2-4 deep sessions a week of 45-90 min (a slow game plus analysis)", "mix": { "play": 0.3, "puzzles": 0.3, "lessons": 0.1, "endgames": 0.1, "openings": 0.05, "own_game_review": 0.15 }, "difficulty_target": "70-85% single-move; ~60% calculation" },
++      "feedback": ["Defensive puzzles: a wrong move shows the opponent's winning reply", "Endgame play-outs scored against the best result, not the engine number"],
++      "sensing": ["board", "game records", "engine (server, Stockfish/Leorik) for review where installed"],
++      "evidence": ["pert", "debruin2007"]
++    },
++    {
++      "id": "CH6", "name": "Strong club player", "grades": ["chess_strong_club_player"], "draft": "C07",
++      "who": "1600-1800 (Class B)",
++      "objectives": [
++        "Calculates 4+ move lines and compares candidates by their final positions; blunder-checks the quiet move",
++        "Uses a repertoire learned as plans first, then drilled on the move trainer",
++        "Plays IQP and hanging-pawn structures, minority attacks, triangulation, K+B+N v K",
++        "Attacks the castled king when the conditions are met (Greek gift)"
++      ],
++      "exit": {
++        "knowledge": "C07 units proved",
++        "performance": [
++          { "metric": "tactics_rating", "test": "unannounced rated puzzles", "threshold": "stage cut, RD <= 80", "source": "board", "tag": "R" },
++          { "metric": "repertoire_srs", "test": "move-trainer cards for own repertoire", "threshold": ">= 90% of due cards right on first try over 2 weeks, every card has its reason", "source": "board", "tag": "R" },
++          { "metric": "games", "test": "12 rapid/classical games, 1600-1800 band (Maia-2 where installed)", "threshold": "performance >= 1650", "source": "games", "tag": "R" }
++        ],
++        "retention": "SRS continues; endgame and structure checks after 14+ days"
++      },
++      "practice": { "mix": { "play": 0.3, "calculation": 0.2, "lessons": 0.1, "endgames": 0.15, "openings": 0.1, "own_game_review": 0.15 }, "difficulty_target": "about 60-70% on calculation sets" },
++      "feedback": ["Repertoire: a deviation shows the plan, not only the move", "Guess-the-move through annotated master games"],
++      "sensing": ["board", "games", "engine for review"],
++      "evidence": ["chessable", "pert", "charness2005"]
++    },
++    {
++      "id": "CH7", "name": "Advanced club player", "grades": ["chess_advanced_club_player"], "draft": "C08",
++      "who": "1800-2000 (Class A)",
++      "objectives": [
++        "Prophylaxis: names the opponent's plan before choosing a move",
++        "Converts advantages and decides exchanges well",
++        "Rook-ending theory (Vancura, short side) and corresponding squares",
++        "Manages the clock under pressure"
++      ],
++      "exit": {
++        "knowledge": "C08 units proved",
++        "performance": [
++          { "metric": "choose_a_move", "test": "ACT-style choose-a-move set (tactical, positional, endgame thirds), timed", "threshold": "stage cut [R], accepted within an engine threshold of 0.3 pawns plus the stated reason", "source": "board", "tag": "R" },
++          { "metric": "conversion_playouts", "test": "5 '+3' positions converted and 3 worse positions held against an engine", "threshold": ">= 4/5 and >= 2/3", "source": "board", "tag": "R" },
++          { "metric": "games", "test": "12 games, 1800-2000 band", "threshold": "performance >= 1850", "source": "games", "tag": "R" }
++        ]
++      },
++      "practice": { "mix": { "play": 0.3, "calculation": 0.2, "lessons": 0.1, "endgames": 0.15, "openings": 0.1, "own_game_review": 0.15 } },
++      "feedback": ["Annotation first; the engine is a check on the learner's analysis, not a substitute"],
++      "sensing": ["board", "games", "engine"],
++      "evidence": ["act2005", "pert"]
++    },
++    {
++      "id": "CH8", "name": "Expert", "grades": ["chess_expert"], "draft": "C09",
++      "who": "2000-2199",
++      "objectives": ["Deeper calculation (5 plies blind), opponent's candidates, repertoire with model games, Einstellung checks"],
++      "exit": {
++        "knowledge": "C09 units proved",
++        "performance": [
++          { "metric": "choose_a_move", "test": "ACT-style set at expert level", "threshold": "stage cut [R]", "source": "board", "tag": "R" },
++          { "metric": "games", "test": "Maia-2 tops out at its 2000+ band, so games against it cannot certify 2000+; use the strongest engine level calibrated against Maia-2 2000+ plus an imported FIDE/national/online rating as a discounted prior", "threshold": "performance >= 2000 on the calibrated scale OR an external rating >= 2000 with RD/k-factor known", "source": "games + import", "tag": "R" },
++          { "metric": "own_game_quality", "test": "Intrinsic-performance-style estimate from 20+ of the learner's own slow games (engine move quality, server side)", "threshold": "shown as an estimate with its error; not a gate on its own", "source": "engine", "tag": "R" }
++        ]
++      },
++      "practice": { "mix": { "play": 0.3, "calculation": 0.15, "model_games": 0.1, "endgames": 0.15, "openings": 0.15, "own_game_review": 0.15 } },
++      "feedback": ["Exercises built from the learner's own critical positions (Dvoretsky style), multi-solution, graded by engine threshold"],
++      "sensing": ["board", "games", "engine", "external rating import"],
++      "evidence": ["regan2011", "act2005"]
++    },
++    {
++      "id": "CH9-12", "name": "Master to elite (taught as understanding and doing what such players do)", "grades": ["chess_master", "chess_international_master", "chess_grandmaster", "chess_elite_and_world_class"], "draft": "C10-C13",
++      "who": "2200+",
++      "objectives": ["The tasks those players face: preparing for a named opponent, converting a technical ending at their level, calculating long forcing lines, building and maintaining a repertoire with engines"],
++      "exit": {
++        "knowledge": "Units proved",
++        "performance": [
++          { "metric": "tasks", "test": "capstone tasks graded against engine analysis and a rubric (preparation file, annotated game, technical conversion)", "threshold": "rubric pass, engine-checked", "source": "board + engine", "tag": "R" },
++          { "metric": "external", "test": "FIDE or national rating import", "threshold": "shown, never required", "source": "import", "tag": "R" }
++        ]
++      },
++      "honesty": "The app does not certify a title or a 2200+ rating; no bot it has is a calibrated 2400 opponent. These grades say 'you can do what players at this level do', measured by tasks.",
++      "practice": { "mix": { "play_classical": 0.3, "own_game_analysis": 0.2, "openings_prep": 0.15, "endgames": 0.15, "calculation": 0.1, "model_games": 0.1 } },
++      "evidence": ["charness2005", "burgoyne2019"]
++    }
++  ],
++  "tracks_any_level": {
++    "grades": ["chess_professional_foundations", "chess_professional_practitioner", "chess_professional_authority", "chess_frontier_literacy", "chess_frontier_research", "chess_frontier_contribution"],
++    "doc": "Knowledge tracks (coaching, arbiting, problems, history, engines, theory). Gated by unit_belief on items plus applied tasks; open at any playing level, except that solving/composition and engine-research grades recommend (never force) CH6+ tactics for comprehension."
++  },
++  "practice_engine": {
++    "puzzle_selection": "Pick puzzles with expected score 0.75 for the learner: puzzle rating = learner rating - 400*log10(0.75/0.25) = learner rating - 191 (L). For calculation sets from CH4 on, expected score 0.6 (rating - 70).",
++    "interleaving": "A motif is practised blocked inside its lesson, then appears only in mixed, unannounced sets from the next lesson on (research/02 section 7; interleaving helps most for similar-looking categories).",
++    "variation": "Every motif is met in 3+ board locations, both colours and mirrored (chunks are location-specific; gobetsimon1996).",
++    "srs": "One per-move queue (content/chess-srs.js) for mating patterns, endgame technique, own-game mistakes and, from CH6, repertoire. A 'why' is shown before each new opening move (understanding before memorising).",
++    "own_games": "From CH2: every rated game gets the learner's own annotation of 3 critical moments before any engine view; each mistake (win-probability loss >= 0.10) becomes a 'find the better move' SRS card.",
++    "anti_volume": "Learning games are 15+10 or slower; more than about 3 games a day without review gets a nudge to review instead (lichessdata). Blitz is a labelled fun mode."
++  },
++  "adaptation": {
++    "doc": "How each learner's path changes. Every lever changes HOW and HOW MUCH is practised; none removes an objective that is not proved.",
++    "levers": [
++      { "id": "entry", "rule": "Subject placement plus an in-grade unit placement on board answers; skill batteries (tactics set, a play-out, an optional bot game, an optional imported rating as a discounted prior) set the starting stage. Units before the placed one are 'past' (prior 0.85); a unit is known only by unit_belief.", "signals": ["placement", "unit_belief"] },
++      { "id": "probe_first", "rule": "Each lesson opens with one independent item and one transfer item (the first-step check). Both right on the first try, cold, moves the lesson to 'provisional'; it becomes 'known' only after a cold spaced check 1+ day later. One miss: the full worked -> faded -> independent ladder runs.", "signals": ["first attempt", "spaced check"], "evidence": ["kalyuga2005", "tetzlaff2025"] },
++      { "id": "dose", "rule": "Worked and faded examples (A1-A2) shrink when the scorecard's per-subject reach is high (items well within reach) and grow when it is low; A4 stops early once two clean solves are followed by a clean transfer item.", "signals": ["scorecard reach (scaffolding fade)", "A4 streak"], "evidence": ["tetzlaff2025"] },
++      { "id": "difficulty", "rule": "Puzzle ratings chosen for expected score 0.75 (0.6 for calculation); after 3 misses in a row the next item is 150 points easier; frustration directive from the scorecard lowers it further.", "signals": ["Glicko rating", "scorecard frustration"], "evidence": ["guadagnoli2004"] },
++      { "id": "weak_theme_focus", "rule": "Theme families whose per-theme rating is 150+ below the overall rating get 2x the share of the mixed sets until the gap closes; never more than half of a set, so interleaving survives.", "signals": ["per-theme Glicko"] },
++      { "id": "review_timing", "rule": "Per-move SRS intervals; when the forgetting model is fitted (20+ learners), review when predicted recall < 85% (SCORECARD.md 'review-pick=model').", "signals": ["SRS", "forgetting model"] },
++      { "id": "remediation", "rule": "Own-game errors are tagged by curriculum pattern; a pattern missed in 2+ games re-opens its lesson's practice items (not the whole grade).", "signals": ["game review tags"] },
++      { "id": "preferences", "rule": "Learner chooses opening repertoire (from the curriculum's systems), bot personality, session length and kid/adult voice; choices never change gate content.", "signals": ["choices", "feedback taps"] },
++      { "id": "age", "rule": "Ages 4-7: voice-led, 5-15 min sessions, mate postponed to C02, no clocks; the scorecard's attention-runway and fatigue stats shorten sessions further when confident.", "signals": ["age", "scorecard"] }
++    ],
++    "never": [
++      "Never skip a unit without unit_belief proof or a passed stage battery",
++      "Never pass a performance gate on warm (same-session) attempts only",
++      "Never certify a rating or title; show ratings with their uncertainty",
++      "Never let a themed-puzzle success rate stand in for unannounced success"
++    ]
++  },
++  "needs_from_other_builds": [
++    { "from": "chess engine / puzzles agent (services/chess-engine.js, content/chess-trainer.js, chess-srs.js)", "need": "per-theme Glicko sub-ratings; an 'unannounced' trainer mode that mixes in no-tactic positions (verified by engine: no move gains >= 1.5 pawns); a play-out mode against our KQK/KRK/KPK tables (staged here in lib/endgame-tables.js) and later 5-man tablebases; a 'performance rating with SE' for bot games" },
++    { "from": "Maia-2 (services/chess-maia.js)", "need": "bands 1100-2000 used as calibrated opponents for CH4-CH7 game gates; below 1000 the app bot" }
++  ]
++}
+diff --git a/content/skill-progressions/piano.json b/content/skill-progressions/piano.json
+new file mode 100644
+index 0000000..9343f06
+--- /dev/null
++++ b/content/skill-progressions/piano.json
+@@ -0,0 +1,709 @@
++{
++ "subject": "piano",
++ "version": 1,
++ "status": "STAGED, not live. Owner approval needed (see curriculum-build/SKILL-CURRICULA.md, section 9).",
++ "doc": "Novice-to-elite progression for the playing path P01-P11, the professional path P12-P17 and the frontier P18-P19. Each stage maps onto existing grades (content/piano-grades.js) and says what the learner can PLAY, HEAR, READ and KNOW at its end, how that is proved on the device (MIDI exact, microphone estimated), how practice is built and how feedback fades. Numbers marked [R] are design values to be normed; exam-board tempo tables were NOT verified this session, so tempo targets are per piece and per grade as set in each lesson, checked by a teacher before release.",
++ "evidence_tags": {
++  "V": "opened and read",
++  "S": "search summary only",
++  "P": "Savant's earlier research (curriculum-build/piano/research)",
++  "L": "computed by code in this folder",
++  "R": "design inference"
++ },
++ "sources": {
++  "duke2009": {
++   "cite": "Duke, Simmons & Cash (2009) 'It's not how much; it's how': next-day performance predicted by the share of correct trials and error handling, not time or repetitions; 8 strategies of the best practisers",
++   "tag": "P"
++  },
++  "hallam2012": {
++   "cite": "Hallam et al. (2012), 3,325 learners: strategy use rises with expertise; beginners default to play-through",
++   "tag": "P"
++  },
++  "abushanab2013": {
++   "cite": "Abushanab & Bishara (2013) Memory & Cognition: random-order melody practice retained better at 2 days; learners' judgments of learning predicted the reverse",
++   "tag": "P"
++  },
++  "verwey2021": {
++   "cite": "Verwey, Wright & Immink (2021): random-practice benefit only for short sequences early in practice",
++   "tag": "P"
++  },
++  "wiseheart2017": {
++   "cite": "Wiseheart, D'Souza & Chae (2017) PLoS ONE, 100 piano novices: no spacing effect at 0-15 min gaps (no forgetting)",
++   "tag": "P"
++  },
++  "allen2013": {
++   "cite": "Allen (2013): a second similar melody learned straight after the first cancelled the overnight gain",
++   "tag": "P"
++  },
++  "furuya": {
++   "cite": "Furuya et al.: submaximal-tempo training doubled max speed with no accuracy loss (n=6+6)",
++   "tag": "P"
++  },
++  "bernardi2013": {
++   "cite": "Bernardi et al. (2013): mental practice ~63% recall v 84% physical; mental + 10 min physical ~= physical",
++   "tag": "P"
++  },
++  "kopiez2008": {
++   "cite": "Kopiez & Lee (2008): trilling speed, sight-reading experience to age 15, mental speed and inner hearing explain 59.6% of sight-reading variance",
++   "tag": "P"
++  },
++  "mishra2014": {
++   "cite": "Mishra (2014) meta-analyses: aural training largest sight-reading intervention effect; rhythm training helps; altered notation does not",
++   "tag": "P"
++  },
++  "chaffin2002": {
++   "cite": "Chaffin & Imreh (2002) performance cues as retrieval scheme for memorised performance",
++   "tag": "P"
++  },
++  "guidance": {
++   "cite": "Salmoni, Schmidt & Walter (1984) guidance hypothesis; bandwidth KR (mixed replication)",
++   "tag": "P"
++  },
++  "wulf2016": {
++   "cite": "Wulf & Lewthwaite (2016) OPTIMAL theory; Duke, Cash & Allen (2011) focus on the sound",
++   "tag": "P"
++  },
++  "jabusch": {
++   "cite": "Jabusch, Vauth & Altenmuller (2004) MIDI-based scale-evenness quantification; Van Vugt, Jabusch & Altenmuller (2012, 2013 Front Psychol) timing variability in C-major scales on a MIDI keyboard (https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2013.00134/full)",
++   "tag": "S"
++  },
++  "pianomarvel": {
++   "cite": "Piano Marvel: mic mode is for basic note detection; 'Use MIDI keyboard for accurate scoring'; SASR adaptive sight-reading (>=80% harder, 3 strikes)",
++   "tag": "P"
++  },
++  "apparev": {
++   "cite": "2022 review: automatic piano performance assessment not ready for classroom (accuracy, data, bias)",
++   "tag": "P"
++  },
++  "injury": {
++   "cite": "PRMD prevalence 26-93% in pianists (Bragge 2006); risk from sudden increases and long sessions without breaks",
++   "tag": "P"
++  },
++  "guadagnoli2004": {
++   "cite": "Guadagnoli & Lee (2004) challenge point framework",
++   "tag": "S"
++  },
++  "kalyuga2005": {
++   "cite": "Kalyuga & Sweller (2005) rapid dynamic assessment of expertise (first-step diagnosis)",
++   "tag": "S"
++  },
++  "mechanics": {
++   "cite": "curriculum-build/SKILL-APPS-MECHANICS.md: YIN single-note mic, chord bug, expected-notes verifier 50/50 synthetic, MIDI exact",
++   "tag": "L"
++  }
++ },
++ "competence_model": {
++  "components": [
++   {
++    "id": "technique",
++    "what": "Scales, arpeggios, chords, hand shapes at tempo, evenly, without tension",
++    "evidence": "played takes scored by piano-core scorePerformance: noteAccuracy, timing.onBeatShare, timing.meanAbsMs, evenness.cv, dynamics (MIDI)",
++    "source": "midi | mic"
++   },
++   {
++    "id": "repertoire",
++    "what": "Pieces learned, kept and performed",
++    "evidence": "cold takes (first take of a day, day 2+), stops/restarts, then a recorded performance with self-rating against a rubric",
++    "source": "midi | mic + self + optional teacher"
++   },
++   {
++    "id": "reading",
++    "what": "Notation to keys, and sight-reading new music at a steady pulse",
++    "evidence": "staff items (bank) and a sight-reading staircase scored on pitch and rhythm separately",
++    "source": "midi | mic | on-screen keys"
++   },
++   {
++    "id": "aural",
++    "what": "Hearing intervals, chords, rhythms; playing back by ear; inner hearing",
++    "evidence": "ear items, echo-play (Piano_EarEcho) scored as pitch-and-rhythm match",
++    "source": "midi | mic"
++   },
++   {
++    "id": "theory_harmony",
++    "what": "Keys, scales, chords, cadences, form, lead sheets",
++    "evidence": "computed bank (content/piano-theory.js) through unit_belief; chord-symbol realisations played",
++    "source": "items + played"
++   },
++   {
++    "id": "creative",
++    "what": "Improvising and composing in a style",
++    "evidence": "rubric self-assessment and optional review; machine proxies (stays in key/chord, steady pulse) shown as information only",
++    "source": "self + proxies"
++   },
++   {
++    "id": "practice_skill",
++    "what": "Practising well: locate, slow, fix, rejoin; self-assessment calibration",
++    "evidence": "practice logs, hotspot-loop use, calibration of self-rating vs measured score (scorecard confidence_calibration)",
++    "source": "behaviour"
++   },
++   {
++    "id": "musicality",
++    "what": "Phrasing, tone, character",
++    "evidence": "never auto-graded (apparev); rubric self-assessment against model recordings; optional teacher/peer review; MIDI proxies (dynamic range, voicing) shown as information",
++    "source": "self + human"
++   }
++  ]
++ },
++ "gate_rules": {
++  "proof_only": "Skipping or passing needs measured evidence. A self-rating never proves a gate; it is compared with the measured score to train calibration.",
++  "cold": "Technique and repertoire gates count only cold takes: the first take of a day, 20+ hours after that item was last practised (the two-day lesson's day-2 take; research/02 rule 'two-day lessons').",
++  "two_days": "Every performance gate needs passes on two different days.",
++  "source_honesty": "MIDI results are exact. Microphone results are estimates: single-line gates accept mic takes with confidence >= 0.8; any gate that includes chords needs MIDI, the on-screen keys, the expected-notes verifier (piano agent, tonight) with a second take, or a listener's confirmation, and is labelled 'estimated' (mechanics: YIN reads a C-major triad as C2).",
++  "musicality": "Musicality is never auto-graded or gated by the machine; recital gates use a rubric and the learner's self-rating, with optional teacher review.",
++  "unit_belief": "Theory and knowledge units use learnerPath.unitBelief exactly as other subjects."
++ },
++ "performance_metrics": {
++  "doc": "Thresholds used by the stages below, all from scorePerformance outputs. [R] until normed.",
++  "note_accuracy_midi": ">= 0.97 (at most 1 slip in ~35 notes)",
++  "note_accuracy_mic_single_line": ">= 0.95 with confidence >= 0.8",
++  "on_beat_share": ">= 0.90 (tolerance: max(80 ms, 15% of a beat), as piano-core uses)",
++  "evenness_cv_scales": "P04-P05 <= 0.12, P06-P08 <= 0.09, P09-P11 <= 0.06 (provisional, MIDI only; norm against learners and the Jabusch method)",
++  "tempo": ">= 100% of the lesson's target tempo; the ladder below it is practice, not a gate",
++  "no_stops": "repertoire cold take with no restart (a slip played through is fine: 'keep going' norm)"
++ },
++ "stages": [
++  {
++   "id": "PI0",
++   "name": "Keyboard explorer",
++   "grades": [
++    "piano_keyboard_explorer"
++   ],
++   "draft": "P01",
++   "who": "Age 4+ or adult day one; no reading",
++   "objectives": [
++    "Finds black-key groups, C and D anywhere; high/low; loud/soft",
++    "Plays rote black-key songs with a steady beat",
++    "Echoes 2-3 note patterns by ear",
++    "Sits well; stops when something hurts"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "find_keys",
++      "test": "find 10 named landmark keys",
++      "threshold": ">= 9/10, two days",
++      "source": "midi | mic | on-screen"
++     },
++     {
++      "metric": "steady_beat",
++      "test": "tap or play along with a 70-90 bpm beat for 16 beats",
++      "threshold": "on_beat_share >= 0.75",
++      "source": "midi | mic | tap",
++      "tag": "R"
++     },
++     {
++      "metric": "echo",
++      "test": "echo 5 two- or three-note patterns",
++      "threshold": ">= 4/5 pitches right",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "rote_song",
++      "test": "a black-key song from memory, cold",
++      "threshold": "completes; noteAccuracy >= 0.85",
++      "source": "midi | mic",
++      "tag": "R"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "5-10 (age 4-6), 10-15 older",
++    "days": "daily short",
++    "mix": {
++     "games_and_songs": 0.6,
++     "ear": 0.25,
++     "technique_play": 0.15
++    }
++   },
++   "feedback": [
++    "Real-time key highlights, voice-led",
++    "Stars, never red marks"
++   ],
++   "evidence": [
++    "wulf2016",
++    "injury"
++   ]
++  },
++  {
++   "id": "PI1",
++   "name": "Pre-reader",
++   "grades": [
++    "piano_pre_reader"
++   ],
++   "draft": "P02",
++   "objectives": [
++    "Reads off-staff letter and finger notation; C five-finger patterns each hand",
++    "Keeps a steady pulse with quarter/half/whole notes",
++    "Plays by ear simple tunes; hears high/low and step/skip",
++    "Meets treble and bass clef and the grand staff"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "five_finger",
++      "test": "C five-finger pattern RH and LH at 60-80 bpm",
++      "threshold": "noteAccuracy 1.0, on_beat_share >= 0.8, two cold days",
++      "source": "midi | mic",
++      "tag": "R"
++     },
++     {
++      "metric": "piece",
++      "test": "2 pieces from the grade (one by ear/rote, one read)",
++      "threshold": "cold take noteAccuracy >= 0.9, no stops",
++      "source": "midi | mic",
++      "tag": "R"
++     },
++     {
++      "metric": "ear_by_ear",
++      "test": "find a 5-note tune by ear",
++      "threshold": "plays it correctly within 3 tries",
++      "source": "midi | mic"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "10-15 (children), 15-20 (adults)",
++    "mix": {
++     "repertoire": 0.25,
++     "reading_rhythm": 0.3,
++     "ear_improv": 0.2,
++     "technique": 0.15,
++     "theory": 0.1
++    }
++   },
++   "feedback": [
++    "Real-time in guided stages (wait mode), then end-of-take summary"
++   ],
++   "evidence": [
++    "guidance",
++    "mishra2014"
++   ]
++  },
++  {
++   "id": "PI2",
++   "name": "First reader",
++   "grades": [
++    "piano_first_reader"
++   ],
++   "draft": "P03",
++   "objectives": [
++    "Reads the grand staff with landmark and interval reading in several five-finger positions",
++    "Hands together in parallel and contrary motion",
++    "Sight-reads 4-bar pieces keeping the pulse past slips",
++    "C major scale one octave with thumb under; first triads"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "c_scale",
++      "test": "C major one octave hands separately at the lesson target",
++      "threshold": "MIDI: note_accuracy_midi and on_beat_share; mic: single-line rule",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "pieces",
++      "test": "3 grade pieces cold",
++      "threshold": "noteAccuracy >= 0.95 MIDI (0.93 mic), on_beat_share >= 0.85, no stops",
++      "source": "midi | mic",
++      "tag": "R"
++     },
++     {
++      "metric": "sight_reading_level",
++      "test": "sight-reading staircase",
++      "threshold": "level >= SR2 at >= 80%",
++      "source": "midi | mic | on-screen"
++     },
++     {
++      "metric": "aural",
++      "test": "major or minor chord by ear, 10 items",
++      "threshold": ">= 9/10",
++      "source": "tap"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "15-20",
++    "mix": {
++     "repertoire": 0.25,
++     "reading_sightreading_rhythm": 0.3,
++     "ear_improv_composition": 0.15,
++     "technique": 0.15,
++     "theory_chords": 0.1,
++     "practice_skills": 0.05
++    }
++   },
++   "feedback": [
++    "Feedback fades within each lesson: highlights -> summary -> errors only -> self-rate first"
++   ],
++   "evidence": [
++    "guidance",
++    "kopiez2008"
++   ]
++  },
++  {
++   "id": "PI3",
++   "name": "Elementary 1 (about ABRSM Grade 1 / RCM Level 1)",
++   "grades": [
++    "piano_elementary_1"
++   ],
++   "draft": "P04",
++   "objectives": [
++    "Major scales C, G, D, F and natural/harmonic minors from tones and semitones, hands together",
++    "Eighth notes, dotted rhythms, simple key signatures",
++    "Tempo ladder and hard-spot practice",
++    "Chord symbols C, F, G, Am, Dm, Em with LH"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "scales",
++      "test": "the grade's scales, random order, hands together",
++      "threshold": "note_accuracy_midi, on_beat_share, evenness_cv_scales <= 0.12 at target",
++      "source": "midi | mic(single-line, HS only)"
++     },
++     {
++      "metric": "pieces",
++      "test": "3 pieces cold on two days",
++      "threshold": "noteAccuracy >= 0.97 MIDI / 0.95 mic, on_beat_share >= 0.9, no stops",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "sight_reading_level",
++      "test": "staircase",
++      "threshold": ">= SR3",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "recital",
++      "test": "record and self-assess one piece with the rubric",
++      "threshold": "completed; self-rating compared with score (calibration, not a gate)",
++      "source": "self"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "15-30",
++    "mix": {
++     "repertoire": 0.25,
++     "reading_sightreading_rhythm": 0.25,
++     "ear_improv_composition": 0.15,
++     "technique": 0.15,
++     "theory_chords": 0.1,
++     "practice_performance_wellbeing": 0.1
++    }
++   },
++   "feedback": [
++    "Bandwidth feedback in the independent take: only wrong notes and timing beyond tolerance are flagged"
++   ],
++   "evidence": [
++    "duke2009",
++    "furuya",
++    "abushanab2013"
++   ]
++  },
++  {
++   "id": "PI4",
++   "name": "Elementary 2 (about Grade 2 / Level 2)",
++   "grades": [
++    "piano_elementary_2"
++   ],
++   "draft": "P05",
++   "objectives": [
++    "More keys; triplets, cut time; I-IV-V7-I and inversions",
++    "Diagnoses why a mistake happens; chunk-and-link practice",
++    "Daily sight-reading below level",
++    "Warm-up and pain rules as sessions grow"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "scales_arps",
++      "test": "grade's scales and arpeggios",
++      "threshold": "as PI3 at the new targets",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "cadence",
++      "test": "I-IV-V7-I in the grade's keys",
++      "threshold": "right chords (MIDI / on-screen / verifier+confirm)",
++      "source": "midi | on-screen | mic-verifier"
++     },
++     {
++      "metric": "pieces",
++      "test": "3 pieces cold",
++      "threshold": "as PI3",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "sight_reading_level",
++      "test": "staircase",
++      "threshold": ">= SR4",
++      "source": "midi | mic"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "20-30",
++    "mix": {
++     "repertoire": 0.28,
++     "technique": 0.15,
++     "reading_sightreading_rhythm": 0.17,
++     "ear_improv_composition": 0.12,
++     "theory_chords": 0.15,
++     "practice_performance_wellbeing": 0.13
++    }
++   },
++   "evidence": [
++    "duke2009",
++    "hallam2012"
++   ]
++  },
++  {
++   "id": "PI5-7",
++   "name": "Lower intermediate to upper intermediate (about Grades 3-5)",
++   "grades": [
++    "piano_lower_intermediate",
++    "piano_intermediate",
++    "piano_upper_intermediate"
++   ],
++   "draft": "P06-P08",
++   "objectives": [
++    "All keys round the circle of fifths; seventh chords; modulation awareness",
++    "Memorise by structure with performance cues; start from any entry point",
++    "Read ahead; sight-read with hairpins and compound time",
++    "Lead sheets realised at sight; improvise over progressions"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "technique",
++      "test": "the grade's scales/arpeggios at target",
++      "threshold": "evenness_cv_scales <= 0.09; note_accuracy_midi; on_beat_share",
++      "source": "midi (mic HS only)"
++     },
++     {
++      "metric": "repertoire",
++      "test": "3-4 pieces, one memorised, started from 3 random entry points",
++      "threshold": "cold takes as PI3; memorised piece restarts at each cue",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "sight_reading_level",
++      "test": "staircase",
++      "threshold": ">= stage grade minus 2 levels (SR5-SR7)",
++      "source": "midi | mic"
++     },
++     {
++      "metric": "dynamics_midi",
++      "test": "a passage marked p and f",
++      "threshold": "median velocity of f notes > median of p notes by >= 15 (MIDI only; shown as information if mic)",
++      "source": "midi",
++      "tag": "R"
++     },
++     {
++      "metric": "recital",
++      "test": "recorded performance, rubric self-assessment, optional teacher/peer review",
++      "threshold": "completed; musicality never machine-graded",
++      "source": "self + human"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "30-45 with a break after ~20",
++    "mix": {
++     "repertoire": 0.28,
++     "technique": 0.15,
++     "reading_sightreading_rhythm": 0.17,
++     "ear_improv_composition": 0.12,
++     "theory_chords": 0.15,
++     "practice_performance_wellbeing": 0.13
++    }
++   },
++   "evidence": [
++    "chaffin2002",
++    "kopiez2008",
++    "jabusch"
++   ]
++  },
++  {
++   "id": "PI8-10",
++   "name": "Early advanced to pre-professional (about Grades 6-8)",
++   "grades": [
++    "piano_early_advanced",
++    "piano_advanced",
++    "piano_pre_professional"
++   ],
++   "draft": "P09-P11",
++   "objectives": [
++    "Full technical requirements at speed, evenly and without tension",
++    "Programme of contrasting periods, memorised, performed under simulated pressure",
++    "Sight-reads full pages, chorales, changing metres",
++    "Learns a new piece independently"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "technique",
++      "test": "requirements at target",
++      "threshold": "evenness_cv_scales <= 0.06; note_accuracy_midi; on_beat_share",
++      "source": "midi"
++     },
++     {
++      "metric": "programme",
++      "test": "recorded performance of the programme",
++      "threshold": "cold, from memory where set; rubric; teacher review strongly recommended",
++      "source": "midi/mic + human"
++     },
++     {
++      "metric": "pedal_midi",
++      "test": "legato pedalling across chord changes",
++      "threshold": "CC64 lifted within 150 ms after each chord change and re-pressed after the new chord's onset in >= 90% of changes",
++      "source": "midi",
++      "tag": "R"
++     },
++     {
++      "metric": "independent_learning",
++      "test": "a new piece learned from score in 2 weeks with a practice log",
++      "threshold": "cold take passes PI3 rules",
++      "source": "midi | mic"
++     }
++    ]
++   },
++   "practice": {
++    "session_minutes": "45-120 in blocks of 25-50 with breaks; weekly minutes raised gradually",
++    "mix": {
++     "repertoire": 0.33,
++     "technique": 0.15,
++     "reading_sightreading": 0.1,
++     "ear_improv": 0.1,
++     "theory_chords": 0.15,
++     "practice_performance_wellbeing": 0.17
++    }
++   },
++   "evidence": [
++    "duke2009",
++    "injury"
++   ]
++  },
++  {
++   "id": "PI11-16",
++   "name": "Diploma to master (taught as what such artists know and do)",
++   "grades": [
++    "piano_diploma",
++    "piano_licentiate",
++    "piano_fellowship",
++    "piano_professional",
++    "piano_concert_artist",
++    "piano_master"
++   ],
++   "draft": "P12-P17",
++   "objectives": [
++    "Programmes, interpretation, collaboration, pedagogy, jazz/commercial, technology and health tracks"
++   ],
++   "exit": {
++    "performance": [
++     {
++      "metric": "capstones",
++      "test": "recorded recitals and applied tasks (teach a lesson, prepare a competition programme, accompany)",
++      "threshold": "rubric + human review; machine proxies as information",
++      "source": "human"
++     }
++    ]
++   },
++   "honesty": "The app does not award diplomas, prizes or careers; it builds and records the skills, and points to real exams and teachers for certification."
++  }
++ ],
++ "sight_reading_staircase": "Defined in piano/drills.json (levels SR1-SR10 with keys, metres, note values, range and length, all checked by verify-skill-curricula.js). Rule: >= 80% (pitch and rhythm each scored) moves up a level; 3 failed excerpts at a level move down (SASR rule, pianomarvel). New, never-seen excerpts only.",
++ "practice_engine": {
++  "two_day_lessons": "Day 1: model, guided, faded, hinted, independent, free recall. Day 2: cold take first (the learning score), then transfer and spot-the-error.",
++  "tempo_ladder": "New material starts at 60-70% of target; +10% after 2 clean takes in a row (noteAccuracy 1.0, on_beat_share >= 0.9); back one step after 2 failed takes. Steps are listed in piano/drills.json and checked.",
++  "hotspot_loop": "align() errors per bar -> the 1-2 worst bars -> loop at 65% -> +10% per clean pass -> rejoin with one bar either side (mechanics P2).",
++  "interleaving": "Short units (scales, chord changes, 1-4 bar figures) are interleaved only after each has had one correct run; long pieces are practised by section, not shuffled (verwey2021). The app shows learners their own day-2 results, because their own sense of learning points the wrong way (abushanab2013).",
++  "spacing": "Reviews by days (1, 3, 7, 14+), never minutes (wiseheart2017); a piece enters the review queue once learned.",
++  "interference": "Two similar new passages are never taught back to back without replaying the first (allen2013).",
++  "away_from_piano": "Score study and inner hearing are real practice on phone-only days, always followed by playing (bernardi2013).",
++  "safety": "Session caps by age; weekly minutes rise gradually; a break prompt every ~25 minutes; pain = stop, logged."
++ },
++ "feedback_rules": [
++  "Fade within a lesson: real-time key highlights (guided) -> end-of-take summary -> bandwidth (only wrong notes and timing beyond tolerance) -> self-rate first, then the score (guidance)",
++  "Cue the sound, not the body (except posture and injury lessons) (wulf2016)",
++  "Mic results always say 'estimated' and show confidence; when unsure the app asks for the bar again rather than marking a mistake",
++  "Musicality: rubric and model recordings, never a machine score"
++ ],
++ "adaptation": {
++  "levers": [
++   {
++    "id": "entry",
++    "rule": "Subject and in-grade placement (theory items through unit_belief) plus a played baseline: a scale, a piece of the learner's choice at their level and a sight-reading staircase run. A played baseline can place a learner later but each skipped unit still needs unit_belief proof (theory) or a cold played pass (technique/repertoire objectives)."
++   },
++   {
++    "id": "probe_first",
++    "rule": "Each lesson opens with the independent take (P5) as a probe; clean and cold -> provisional; known after a cold day-2 take. Otherwise the full ladder runs.",
++    "evidence": [
++     "kalyuga2005"
++    ]
++   },
++   {
++    "id": "tempo_and_load",
++    "rule": "Tempo ladder start and step size come from the learner's measured history (fast climbers start at 70%, slow at 60%); repeated failures shrink the step to +5%. Challenge point: aim for ~70-80% clean takes in practice.",
++    "evidence": [
++     "guadagnoli2004",
++     "furuya"
++    ]
++   },
++   {
++    "id": "feedback_fade_speed",
++    "rule": "Learners whose accuracy holds when highlights are removed fade faster; those who collapse get one more guided round. Hint dependency from the scorecard slows the fade.",
++    "evidence": [
++     "guidance"
++    ]
++   },
++   {
++    "id": "reading_route",
++    "rule": "Notation fade (falling notes -> ghost notes -> staff) set by measured reading accuracy, never by preference alone."
++   },
++   {
++    "id": "repertoire_choice",
++    "rule": "Learners choose pieces from a set for each objective (same skill, different music); choice never removes a technical objective.",
++    "evidence": [
++     "wulf2016"
++    ]
++   },
++   {
++    "id": "hotspots",
++    "rule": "Bars with repeated errors across takes get the hotspot loop automatically."
++   },
++   {
++    "id": "review_timing",
++    "rule": "Pieces and technique items re-surface by the forgetting model once fitted; cold takes falling below threshold re-open the item."
++   },
++   {
++    "id": "device",
++    "rule": "With MIDI the app grades notes, timing, dynamics and pedal; with mic only it grades single lines and verifies expected chords, and routes chord gates to a confirmation path."
++   }
++  ],
++  "never": [
++   "Never pass a gate on a warm take",
++   "Never machine-grade musicality",
++   "Never treat a mic chord as proof without the verifier and a confirmation",
++   "Never raise weekly practice minutes sharply (no streak that rewards it)"
++  ]
++ },
++ "needs_from_other_builds": [
++  {
++   "from": "piano chord-detection agent (public/engine/piano/piano-core.js hearNotes, piano-io)",
++   "need": "per-take confidence for chord frames and an 'expected chord verified' flag the gates can read; AudioWorklet onset times for the timing metrics"
++  },
++  {
++   "from": "piano-checks (services/piano-checks.js)",
++   "need": "server grading of the same scorePerformance outputs for gate takes, with the take's day stamp so 'cold' can be enforced"
++  }
++ ],
++ "tracks_any_level": {
++  "grades": [
++   "piano_frontier_foundations",
++   "piano_frontier_research"
++  ],
++  "doc": "Frontier knowledge grades (performance science, cognition, acoustics, tuning, AI): gated by unit_belief on items plus applied research tasks; open at any playing level."
++ }
++}
+\ No newline at end of file
+diff --git a/content/skill-progressions/basketball.json b/content/skill-progressions/basketball.json
+new file mode 100644
+index 0000000..02c1dab
+--- /dev/null
++++ b/content/skill-progressions/basketball.json
+@@ -0,0 +1,148 @@
++{
++  "subject": "basketball",
++  "version": 1,
++  "status": "STAGED, not live. Owner approval needed (see curriculum-build/SKILL-CURRICULA.md, section 9).",
++  "doc": "Novice-to-elite progression for the playing path B01-B08, the high-level path B09-B13 (with coaching, officiating, analytics and front-office tracks) and B14-B15. Each stage maps onto existing grades (content/basketball-grades.js). Basketball is learned on the court: the app proves what it can measure (decisions on clips, knowledge, counted makes and dribbles the learner confirms, filmed sets), compares physical numbers only with the learner's own baseline, and never gates a child on athletic measures. Ruleset: FIBA Official Basketball Rules 2026 v1.0 is the default (worldwide, mini to Olympic); NBA, WNBA, NCAA and NFHS differences are named where taught. Numbers marked [R] are design values to be normed.",
++  "evidence_tags": { "V": "opened and read", "S": "search summary only", "P": "Savant's earlier research (curriculum-build/basketball/research)", "L": "computed or checked by code in this folder (rulebook text, binomial power)", "R": "design inference" },
++  "sources": {
++    "fiba2026": { "cite": "FIBA Official Basketball Rules 2026 v1.0 (assets.fiba.basketball ... official-rules-2026-v1-0.pdf), text checked by code", "tag": "L" },
++    "nbarules": { "cite": "NBA Official Rulebook 2025-26, official.nba.com rule pages 1, 5, 7, 12, text checked by code", "tag": "L" },
++    "nbayouth": { "cite": "NBA & USA Basketball Youth Guidelines (youthguidelines.nba.com): weekly maxima 3/5/10/14 h, rest days 2/2/1/1, specialisation not before 14", "tag": "L" },
++    "chua2021": { "cite": "Chua, Jimenez-Diaz, Lewthwaite, Kim & Wulf (2021) Psych Bull: external focus beats internal for retention g=0.58 and transfer g=0.58", "tag": "P" },
++    "shamshiri2025": { "cite": "Shamshiri et al. (2025) jump shot, novices: blocked best in acquisition, differential learning best transfer", "tag": "P" },
++    "increasing_ci": { "cite": "9-week RCT, 106 novices: increasing schedule (blocked -> serial -> random) best for basketball skills", "tag": "P" },
++    "rojas2000": { "cite": "Rojas et al. (2000) Ergonomics: a defender changes jump-shot kinematics", "tag": "P" },
++    "abad2020": { "cite": "Abad Robles et al. (2020) meta-analysis: game-based approaches improve decision making (ES 0.89) not execution", "tag": "P" },
++    "zhu2024": { "cite": "Zhu et al. (2024): perceptual-cognitive training lab ES 1.51 v game transfer 0.65; sport-specific stimuli", "tag": "P" },
++    "rosch2021": { "cite": "Rosch, Schultz & Honer (2021) IJERPH 18(5):2331, video-based 4v4 passing-decision test: split-half reliability accuracy r=0.92, RT r=0.84; German U16 national team 84.0% v sports-class 57.4%; 10% more accuracy tripled the odds of elite status (https://pmc.ncbi.nlm.nih.gov/articles/PMC7967709)", "tag": "V" },
++    "tran2008": { "cite": "Tran & Silverberg (2008) J Sports Sci 26(11) 1147-1155: simulated free throws, launch ~52 deg, up to 3 Hz backspin, aim toward the back of the ring, release as high as consistency allows (model: 70% shooter, 2.134 m release)", "tag": "V" },
++    "li2025ssg": { "cite": "Li et al. (2025) Biol Sport: 1v1 and 2v2 give more technical actions than 3v3/4v4", "tag": "P" },
++    "mckay2021": { "cite": "McKay et al. (2021): reduced feedback frequency has no robust effect; self-controlled feedback helps retention (Wang 2025)", "tag": "P" },
++    "schussler2024": { "cite": "Schussler et al. (2024): self + expert video beats either alone", "tag": "P" },
++    "longo2012": { "cite": "Longo et al. (2012) FIFA 11+ in basketball: injuries 0.95 v 2.16 per 1,000 exposures", "tag": "P" },
++    "rae": { "cite": "Relative-age effect in youth basketball selection (Deng 2025, Bilgic 2025, Irid 2026)", "tag": "P" },
++    "gullich2022": { "cite": "Gullich, Macnamara & Hambrick (2022): world-class adults did more childhood multisport practice", "tag": "P" },
++    "guadagnoli2004": { "cite": "Guadagnoli & Lee (2004) challenge point framework", "tag": "S" },
++    "posecv": { "cite": "2D pose angle errors ~6-7 deg at best and strongly view-dependent (Duvelek 2026; Oliosi 2026; Edriss 2025)", "tag": "P" }
++  },
++  "competence_model": {
++    "components": [
++      { "id": "movement", "what": "Run, stop, jump, land, change direction with control", "evidence": "coach/parent/learner checklist on clips; camera pose 'estimated' flags (never a gate for minors)", "source": "self + camera(estimated)" },
++      { "id": "ball_skills", "what": "Handling, passing, shooting, finishing with both hands", "evidence": "counted sets (makes/attempts by zone and hand, dribbles in 30 s), learner-confirmed; camera make/miss and dribble counts as estimates the learner can correct", "source": "tap + camera(estimated) + audio(estimated)" },
++      { "id": "shooting_form", "what": "Balance, set point, release, follow-through", "evidence": "side-on filmed set from a prescribed spot; pose metrics compared only with the learner's own earlier takes from the same spot", "source": "camera(estimated) + self" },
++      { "id": "decisions", "what": "Reads and choices in game situations", "evidence": "decision clips (pause, predict, choose; Basketball_Play / Check_Play), accuracy and response time; then the same cue in a small-sided game, logged", "source": "screen" },
++      { "id": "defence_team", "what": "On-ball and team defence, spacing, transition", "evidence": "clip reads plus film self-review with anchor clips; optional coach/teammate confirmation; NOT machine-graded in live play", "source": "screen + self + human" },
++      { "id": "knowledge", "what": "Rules (named ruleset), concepts, analytics, history", "evidence": "unit bank through unit_belief", "source": "items" },
++      { "id": "health_load", "what": "Warm-up, landing, load, sleep, pain and concussion rules", "evidence": "session logs: warm-up done, sRPE x minutes same day, pain check; weekly totals against the age caps", "source": "self-log" }
++    ]
++  },
++  "gate_rules": {
++    "proof_only": "Skips and passes need measured evidence. Counts the learner confirms are evidence; a bare 'I can do it' is not.",
++    "cold": "Skill gates use the first scored set after the warm-up on a day 20+ hours after that skill's last practice (day-2 cold test; research/02 'two-day cadence').",
++    "two_sessions": "Every counted gate is spread over at least two sessions on different days.",
++    "proportion_gate": "A make-rate gate passes when the Beta(1+makes, 1+misses) posterior gives P(true rate >= threshold) >= the gate confidence (0.9 for 20-attempt gates, 0.8 for longer ones) with at least n_min attempts, re-checked after every cold set of 10. verify-skill-curricula.js computes, for every gate, the makes needed and simulates the sequential checking: a shooter 10 points below the threshold passes by luck in about 3% or fewer of cases, one 10 points above passes in about 97-99% (L; basketball/drills.json). The per-gate numbers below are shorthand for this rule.",
++    "own_baseline": "Athletic numbers (jump, sprint, agility) are never gates and never ranked against others; growth against the learner's own baseline only (rae).",
++    "camera_honesty": "Camera and pose outputs are labelled 'estimated', editable, and never the only evidence for a gate (posecv). Defence and live decisions are never machine-graded.",
++    "ruleset": "Rules items name the body. The default is FIBA 2026; a learner who sets their league (NBA/WNBA, NCAA, NFHS) gets that body's items and a 'differences' unit."
++  },
++  "stages": [
++    { "id": "BB0", "name": "Ball explorer", "grades": ["basketball_ball_explorer"], "draft": "B01", "who": "Ages 3-6 or adult day one",
++      "objectives": ["Runs, stops, jumps and lands softly; balances on one foot", "Throws, catches and bounces a soft ball with either hand", "Scores into a low target; knows our basket and theirs", "Stops and tells a grown-up when something hurts or after a head bump"],
++      "exit": { "performance": [
++        { "metric": "catch_and_bounce", "test": "10 catches from a soft toss; 10 bounces each hand", "threshold": "growth from own baseline; shown, not gated", "source": "self/parent count" },
++        { "metric": "low_target", "test": "throws into a low ring/bucket from 1 step", "threshold": "logged; no gate", "source": "count" },
++        { "metric": "safety_rule", "test": "says or shows what to do when it hurts", "threshold": "right on two days (voice/tap)", "source": "tap" } ] },
++      "practice": { "session_minutes": "10-20 play, parent present", "mix": { "movement_games": 0.4, "ball_games": 0.45, "safety_and_fun": 0.15 } },
++      "feedback": ["Voice-led, praise effort and specific success, external cues ('make the ball land in the bucket')"],
++      "evidence": ["chua2021", "gullich2022"] },
++    { "id": "BB1", "name": "Mini starter", "grades": ["basketball_mini_starter"], "draft": "B02", "who": "Ages 6-8 mini-basketball, low ring, small ball",
++      "objectives": ["Jump stop, stride stop, pivots and triple threat", "Dribbles with either hand while looking up; chest and bounce passes", "Lay-up from one and two steps; one-hand form shooting at a low ring", "2v1 choices: pass, shoot or dribble; travel and double dribble"],
++      "exit": { "performance": [
++        { "metric": "layup_both_hands", "test": "lay-ups at a low ring, 10 per hand over 2 sessions", "threshold": "P(rate >= 0.5) >= 0.9 for EACH hand, n >= 20 per hand", "source": "count (camera estimate optional)", "tag": "R" },
++        { "metric": "dribble_look_up", "test": "30 s dribble each hand while calling out a held-up number", "threshold": "weak hand count >= 70% of strong hand (own ratio, not absolute)", "source": "count / audio estimate", "tag": "R" },
++        { "metric": "decisions_2v1", "test": "10 clips/diagrams: pass, shoot or dribble", "threshold": ">= 8/10", "source": "screen", "tag": "R" },
++        { "metric": "rules_basics", "test": "travel, double dribble, out of bounds items", "threshold": "unit_belief", "source": "items" } ] },
++      "practice": { "session_minutes": "30-60, 1-2 a week (NBA youth: ages 7-8 1 practice of 30-60 min, max 3 h/week, 2 rest days)", "mix": { "movement_footwork_athletic": 0.33, "ball_skills": 0.37, "defence": 0.08, "small_games_decisions": 0.08, "rules": 0.05, "health_mental": 0.09 } },
++      "feedback": ["Summary after each set; learner may ask for a video replay", "One external cue per skill"],
++      "evidence": ["nbayouth", "chua2021", "li2025ssg"] },
++    { "id": "BB2", "name": "Mini player", "grades": ["basketball_mini_player"], "draft": "B03", "who": "Ages 8-10, 3v3 and 4v4",
++      "objectives": ["One-hand form shots from 1 m with a guide hand", "Give-and-go, cut and fill, 2v1 and 3v2 fast breaks", "Keep a gap and slide to stay in front; everyone guards their own player", "Neuromuscular warm-up and the pain/head-knock rule every session"],
++      "exit": { "performance": [
++        { "metric": "form_shots_1m", "test": "one-hand form shots from 1 m at the age's ring, 2 sessions", "threshold": "P(rate >= 0.6) >= 0.8, n >= 40", "source": "count", "tag": "R" },
++        { "metric": "layups_both_hands_full_ring_or_age_ring", "test": "lay-ups off a dribble, each hand", "threshold": "P(rate >= 0.6) >= 0.9 per hand, n >= 20 per hand", "source": "count", "tag": "R" },
++        { "metric": "decision_clips", "test": "3v3 reads (open teammate, cut, fill)", "threshold": ">= 80% on 15 clips", "source": "screen", "tag": "R" },
++        { "metric": "warmup_habit", "test": "warm-up logged before court sessions", "threshold": ">= 90% of sessions over 4 weeks (habit, not skill; shown not gated)", "source": "log" } ] },
++      "practice": { "session_minutes": "45-75, 2 a week max 5 h (ages 9-11), 2 rest days", "mix": { "movement_footwork_athletic": 0.3, "ball_skills": 0.38, "defence": 0.1, "small_games_decisions": 0.1, "rules": 0.05, "health_mental": 0.07 }, "schedule": "increasing contextual interference: blocked until a set's success >= 70%, then serial, then random (spots, hands, passes)" },
++      "evidence": ["increasing_ci", "longo2012", "nbayouth"] },
++    { "id": "BB3", "name": "Junior club player", "grades": ["basketball_junior_club_player"], "draft": "B04", "who": "Ages 10-12, first 5v5 man-to-man",
++      "objectives": ["Crossover and first-step moves; Mikan drill; full-speed lay-ups both sides", "Free-throw routine; closeouts; box out", "Spacing and drive-and-kick; block v charge", "Box score and shooting percentages from own games"],
++      "exit": { "performance": [
++        { "metric": "free_throws", "test": "free throws at the age's line and ring, routine every shot, 3 sessions", "threshold": "P(rate >= 0.5) >= 0.8, n >= 60", "source": "count", "tag": "R" },
++        { "metric": "mikan_30s", "test": "Mikan drill makes in 30 s", "threshold": "growth over own baseline >= 20% (shown); the gate is lay-ups both hands as BB2 at full speed", "source": "count", "tag": "R" },
++        { "metric": "decision_clips", "test": "drive-and-kick, help, closeout reads (Rosch-style 4v4 first-person clips)", "threshold": ">= 80% on 18 clips, response time within the learner's band", "source": "screen", "tag": "R" },
++        { "metric": "film_it", "test": "filmed set rated against anchor clips (form, footwork)", "threshold": "completed with self-rating; optional coach confirmation", "source": "camera + self" } ] },
++      "practice": { "session_minutes": "60-90, 2-4 a week, max 10 h/week (ages 12-14 bands), 1 rest day", "mix": { "movement_footwork_athletic": 0.15, "ball_skills": 0.33, "defence": 0.15, "team_decisions": 0.18, "rules": 0.05, "health_mental": 0.1, "knowledge": 0.04 } },
++      "evidence": ["rosch2021", "abad2020", "rojas2000"] },
++    { "id": "BB4-5", "name": "Youth team player to youth advanced", "grades": ["basketball_youth_team_player", "basketball_youth_advanced"], "draft": "B05-B06",
++      "who": "Ages 12-16, full-size ring",
++      "objectives": ["Jump shot from set shot; catch-and-shoot off cuts; shoot off screens and hand-offs", "Ball screens as handler and screener; read help and second line", "Help-side defence, ball-screen coverage, zones", "Shot clocks and game rules by league; eFG% and TS% from own log"],
++      "exit": { "performance": [
++        { "metric": "spot_shooting_by_zone", "test": "5 spots, catch-and-shoot, 3 sessions; the zone's own threshold (mid-range, then 3-point once the age's line is reached)", "threshold": "P(rate >= zone threshold) >= 0.8, n >= 50 per zone; thresholds normed by age band [R]", "source": "count (+ camera shot chart as estimate)", "tag": "R" },
++        { "metric": "free_throws", "test": "FIBA line (5.80 m from the inner edge of the endline)", "threshold": "P(rate >= 0.65) >= 0.8, n >= 100", "source": "count", "tag": "R" },
++        { "metric": "decision_clips", "test": "ball-screen, help and transition reads", "threshold": ">= 80% on 24 clips", "source": "screen", "tag": "R" },
++        { "metric": "game_showcase", "test": "a logged game with film self-review against the rubric", "threshold": "completed; reads rated; coach confirmation optional", "source": "film + self" } ] },
++      "practice": { "mix": { "movement_footwork_athletic": 0.15, "ball_skills": 0.32, "defence": 0.15, "team_decisions": 0.18, "rules": 0.05, "health_mental": 0.1, "knowledge": 0.05 }, "schedule": "varied practice from the start for experienced learners; each technique ends under a defender, decision or fatigue constraint" },
++      "evidence": ["rojas2000", "tran2008", "rosch2021"] },
++    { "id": "BB6-7", "name": "Varsity to elite junior", "grades": ["basketball_varsity", "basketball_elite_junior"], "draft": "B07-B08",
++      "objectives": ["Shot diet toward rim, free throws and corner threes", "Full ball-screen and off-ball systems; recognition of man, zone, press, junk", "Imagery, routines, return-to-play steps", "Self-scouting with shot charts"],
++      "exit": { "performance": [
++        { "metric": "shooting_profile", "test": "logged game and practice shots by zone over 4+ weeks", "threshold": "posterior zone rates shown with intervals; gates as BB4-5 at varsity thresholds [R]", "source": "count + camera estimate" },
++        { "metric": "decision_clips", "test": "varsity-level clips", "threshold": ">= 80% on 30 clips", "source": "screen" },
++        { "metric": "film_review", "test": "own game film reviewed against anchor clips; 5 reads tagged with the curriculum's names", "threshold": "completed; coach confirmation recommended", "source": "film + human" } ] },
++      "evidence": ["zhu2024", "schussler2024"] },
++    { "id": "BB8-12", "name": "Collegiate to All-Star and Olympic (taught as what such players, coaches, referees and executives know and do)", "grades": ["basketball_collegiate", "basketball_high_major", "basketball_professional", "basketball_elite_professional", "basketball_all_star_and_olympic"], "draft": "B09-B13",
++      "objectives": ["Systems, scouting, analytics, officiating, coaching and front-office tasks at that level"],
++      "exit": { "performance": [
++        { "metric": "applied_tasks", "test": "scouting report, game plan, officiating clip test, analytics project", "threshold": "rubric + verifiable computations", "source": "screen" },
++        { "metric": "external_stats", "test": "imported game stats (if the learner plays)", "threshold": "shown, never required", "source": "import" } ] },
++      "honesty": "No selection, scholarship or pro claims (NCAA: 3.6% of US high-school boys' players play NCAA; ~1% of NCAA men are drafted, research/02 section 4)." }
++  ],
++  "decision_clip_test_design": {
++    "doc": "Every decision clip set follows the validated format of rosch2021 where it can: first-person view, pause at the moment of decision, 4 options (right/left, inside/outside or pass/shoot/drive/reset), each clip shown twice in random blocks, accuracy primary, response time secondary. Without licensed real clips, the app's SVG court (Basketball_Play) renders the situations; transfer from screen to court is smaller than in-app scores (zhu2024), so each decision lesson ends with a small-sided game on court that uses the same cue, logged.",
++    "reliability_target": "split-half (Spearman-Brown) >= 0.8 for any clip set used as a gate, measured after 100 learners; sets that miss it are practice only [R]"
++  },
++  "practice_engine": {
++    "two_day_lessons": "Day A: 5-8 min screen (model clip, ONE external cue, why/when) -> warm-up -> court session card -> log. Day B: warm-up -> cold first scored set (the retention score) -> clip recall.",
++    "contextual_interference": "Novices: blocked until a set's success reaches ~70%, then serial, then random (spots, hands, passes); experienced learners varied from the start (increasing_ci, shamshiri2025).",
++    "challenge_point": "Shooting distance, defender pressure and time limits are set so practice success sits around 50-70%; in-practice percentages are never used as gates (guadagnoli2004).",
++    "representative": "Every technique lesson ends under a defender, a decision or fatigue (rojas2000).",
++    "small_sided": "1v1-3v3 games are the default transfer activity (li2025ssg).",
++    "aim_cue": "Shooting cues name a target outside the body. Aim language follows tran2008: the ball should drop past the front of the rim toward the middle-to-back of the ring, not 'just over the front rim' (see lesson-changes.json).",
++    "load": "Weekly organised hours capped by age (3/5/10/14 h for 7-8/9-11/12-14/high school), minimum rest days 2/2/1/1, sRPE x minutes logged the same day (nbayouth). Other sports count toward load and earn credit under 14.",
++    "safety": "Mandatory 10-15 min 11+-style warm-up before court work; pain that changes movement = stop; head knock with any symptom = out for the day and clinician clearance."
++  },
++  "feedback_rules": [
++    "Summary after a set, not after every rep; the learner can request a video review at any time (mckay2021)",
++    "One external, preferably distal cue at a time ('swish toward the back of the rim', 'push the floor away') (chua2021)",
++    "Self + model video side by side, reused across the grade (schussler2024)",
++    "Camera numbers say 'estimated' and can be corrected; unsure shots are asked about, not guessed"
++  ],
++  "adaptation": {
++    "levers": [
++      { "id": "entry", "rule": "Placement mixes 3 decision-clip checks, 2 knowledge checks, 3 court baselines (form-shot set, 30 s dribble count each hand, lay-ups both hands) and a readiness/health screen. Court baselines become the 'before' numbers; a high baseline can place later, but each skipped unit still needs knowledge proof and the stage's counted gates." },
++      { "id": "probe_first", "rule": "Each motor lesson opens with the day-B style cold set as a probe (e.g., 10 shots from the lesson's spot); passing the lesson's proportion gate over two sessions marks it known; otherwise the full lesson runs." },
++      { "id": "difficulty", "rule": "Distance, defender and time pressure step up when a set's success > 70% and down when < 40% (challenge point)." },
++      { "id": "miss_pattern", "rule": "Logged miss directions (short/long/left/right, from the learner's tap or the camera estimate) route to the matching fix drill: short -> legs/arc, long -> softer touch/arc, left/right -> alignment; one cue at a time." },
++      { "id": "weak_hand", "rule": "When weak-hand counts are below 70% of strong-hand counts, weak-hand reps get 2:1 priority in ball-handling and finishing sets until the ratio closes." },
++      { "id": "access", "rule": "No hoop, no partner, indoor only, limited time: the session card swaps to equivalent drills (wall passes, tape targets, ghost drills, imagery) without removing any objective; objectives that need a hoop wait in the queue and are flagged." },
++      { "id": "load_and_age", "rule": "Age caps and rest days override every other lever; streaks count rest, imagery and clip days." },
++      { "id": "role_preference", "rule": "From B05 the learner can weight guard, wing or post skills in electives; core objectives stay." },
++      { "id": "ruleset", "rule": "Rules items follow the learner's league (default FIBA)." }
++    ],
++    "never": ["Never gate or rank a child on athletic numbers", "Never treat a camera estimate as the only proof", "Never exceed the age's weekly cap or skip rest days", "Never machine-grade defence or live decisions"]
++  },
++  "needs_from_other_builds": [
++    { "from": "basketball pose agent (MediaPipe in public/engine/basketball, services/basketball-checks.js)", "need": "the event shape {t, kind: shot|dribble|hit, x, y, made?, confidence, source} per SKILL-APPS-MECHANICS 4, so gates can read confirmed counts and keep camera estimates separate; release-frame and miss-direction estimates for the miss_pattern lever" },
++    { "from": "content owner", "need": "licensed or self-filmed decision clips; until then SVG court scenes" }
++  ]
++}
+diff --git a/services/skill-coverage.js b/services/skill-coverage.js
+new file mode 100644
+index 0000000..1dea275
+--- /dev/null
++++ b/services/skill-coverage.js
+@@ -0,0 +1,374 @@
++/**
++ * Skill coverage: chess, piano and basketball in the same coverage model as
++ * every other subject (services/coverage.js), per learner. Brought into the
++ * app by the staged patch skills-round3/01-skill-record from
++ * curriculum-build/staged/adaptation/skills/skill-coverage.js (the rules are
++ * unchanged); the stages and batteries are content/skill-progressions/*.json,
++ * copies of curriculum-build/staged/skills/<subject>/progression.json.
++ * curriculum-build/ADAPTIVE-COVERAGE.md section 6; SKILL-CURRICULA.md.
++ *
++ * WHAT a stage must cover is fixed, in two parts:
++ *   knowledge    the stage's grades' lesson objectives, exactly as for every
++ *                other subject: coverage.modelFor(subject, grade), proven and
++ *                kept by coverage.gate. Nothing new here.
++ *   performance  the stage's exit battery (progression.json stages[].exit
++ *                .performance): one metric per test, each with its own pass
++ *                rule (counts, Beta posterior, rating with RD, play-outs)
++ *                applied by the drill that runs the sitting. A stage that names
++ *                a retention test ("again after 7+ days") also needs that.
++ *
++ * The per-learner skill record, per metric: every sitting of its test as
++ * {at, pass, cold, source, confirmed}. The rules of SKILL-CURRICULA.md section 2,
++ * as code:
++ *   - Proof only: a metric is proven only by sittings of its test. Time spent,
++ *     lessons done and self-ratings never prove it.
++ *   - Cold only: a sitting counts when it is cold: the first sitting of that
++ *     metric on its day, at least COLD_HOURS (20) after that metric was last
++ *     practised or sat.
++ *   - Two days: proven needs cold passes on two different days, and the latest
++ *     cold sitting a pass.
++ *   - Source honesty: exact sources (board, MIDI, on-screen keys, taps, screen
++ *     answers, confirmed counts, recorded games, the engine) count. Estimates
++ *     (microphone, camera) count only when confirmed (a second take, the
++ *     verifier, a listener), so an estimate is never the only evidence.
++ *     Self-report, film for a person to review, and imported ratings never
++ *     prove; a metric whose only sources are those is `attest`: it is
++ *     recorded and shown, never machine-proven, and the stage lists it.
++ *   - Kept: a stage with a retention test needs a cold pass at least that many
++ *     days after the proof. Two cold misses in a row after the proof lapse the
++ *     metric: it must be proven again.
++ *
++ * The stage gate (stageGate) holds a stage complete, or skipped by placement,
++ * until every knowledge objective is kept (coverage.gate) and every provable
++ * metric is proven (and kept, where the stage names a retention test). The
++ * same rule decides a skip: placement can only skip a stage by proving it.
++ *
++ * Pure: no database. services/skill-record.js keeps the record.
++ */
++'use strict';
++
++const fs = require('fs');
++const path = require('path');
++
++const SKILLS_DIR = path.join(__dirname, '..', 'content', 'skill-progressions');
++const HOUR = 3600 * 1000;
++const DAY = 24 * HOUR;
++const SUBJECTS = ['chess', 'piano', 'basketball'];
++
++function knobs() {
++  const num = (name, fallback) => {
++    const v = Number(process.env[name]);
++    return process.env[name] !== undefined && process.env[name] !== '' && Number.isFinite(v) ? v : fallback;
++  };
++  return {
++    COLD_HOURS: num('SKILL_COLD_HOURS', 20),
++    PROOF_DAYS: num('SKILL_PROOF_DAYS', 2),
++    LAPSE_MISSES: num('SKILL_LAPSE_MISSES', 2),
++    PRIOR: num('SKILL_PRIOR', 0.5),
++    PASS_IF_AT: num('SKILL_PASS_IF_AT', 0.85),
++    LUCK: num('SKILL_LUCK', 0.15),
++    PROVEN_AT: num('SKILL_PROVEN_AT', 0.95),
++    // The battery must stand at exit: a metric whose last cold pass is older
++    // than this needs a fresh cold sitting before the stage completes.
++    STALE_DAYS: num('SKILL_STALE_DAYS', 7),
++    DEFAULT_RETAIN_DAYS: num('SKILL_DEFAULT_RETAIN_DAYS', 0),
++  };
++}
++
++// ── sources ────────────────────────────────────────────────────────────────
++
++/** One source word's class. */
++function sourceClass(word) {
++  const w = String(word || '').toLowerCase().trim();
++  if (!w) return null;
++  if (/count/.test(w)) return 'exact'; // confirmed counts (a parent's count too)
++  if (/^(board|midi|on-screen|tap|screen|items|games|engine)$/.test(w)) return 'exact';
++  if (/verifier/.test(w)) return 'estimate';
++  if (/mic|camera|audio|estimate/.test(w)) return 'estimate';
++  if (/import|external/.test(w)) return 'external';
++  if (/human|teacher|listener|film/.test(w)) return 'human';
++  if (/self|log/.test(w)) return 'self';
++  return 'unknown';
++}
++
++/**
++ * A metric's source string ("midi | mic", "count + camera estimate",
++ * "film + self", "games + import") read as what can prove it.
++ *   provable  some required part is exact and no required part needs a person
++ *             or self-report;
++ *   exact     an exact source exists;
++ *   estimate  an estimate source exists (counts only when confirmed);
++ *   attest    not machine-provable: recorded and listed, never proven here.
++ */
++function readSource(source) {
++  const raw = String(source || '').replace(/\([^)]*\)/g, ' ');
++  // "a + b": both parts take part; within a part "x | y" or "x / y" are
++  // alternatives. An estimate or import part added to an exact one is
++  // supplementary (never the only evidence, never required).
++  const parts = raw.split('+').map((p) => p.split(/[|/]/).map((x) => sourceClass(x)).filter(Boolean)).filter((p) => p.length);
++  const classes = new Set(parts.flat());
++  const partClass = (alts) => (alts.includes('exact') ? 'exact' : alts.includes('estimate') ? 'estimate' : alts.includes('external') ? 'external' : alts.includes('human') ? 'human' : alts.includes('self') ? 'self' : 'unknown');
++  const kinds = parts.map(partClass);
++  const needsPerson = kinds.some((c) => c === 'human' || c === 'self');
++  const exact = kinds.includes('exact');
++  const provable = exact && !needsPerson;
++  return { provable, exact, estimate: classes.has('estimate'), attest: !provable, kinds, raw: String(source || '') };
++}
++
++// ── stages ─────────────────────────────────────────────────────────────────
++
++const cache = new Map();
++
++/** The stages of one skill subject, from its staged progression. */
++function stagesFor(subject) {
++  if (cache.has(subject)) return cache.get(subject);
++  const file = path.join(SKILLS_DIR, `${subject}.json`);
++  const prog = JSON.parse(fs.readFileSync(file, 'utf8'));
++  const stages = prog.stages.map((st, index) => {
++    const retentionText = (st.exit && st.exit.retention) || '';
++    const m = /(\d+)\s*\+?\s*days/.exec(retentionText);
++    const metrics = ((st.exit && st.exit.performance) || []).map((p) => ({
++      id: `${st.id}:${p.metric}`,
++      metric: p.metric,
++      test: p.test || '',
++      threshold: p.threshold || '',
++      source: readSource(p.source),
++      tag: p.tag || '',
++    }));
++    return {
++      subject,
++      index,
++      id: st.id,
++      name: st.name,
++      grades: st.grades || [],
++      objectives: st.objectives || [],
++      knowledge: (st.exit && st.exit.knowledge) || '',
++      metrics,
++      // A stage that names no retention test gets the default one (a cold
++      // pass DEFAULT_RETAIN_DAYS after the proof), as every coverage objective
++      // must be kept after it is proven. 0 turns the default off.
++      retention_days: m ? Number(m[1]) : (knobs().DEFAULT_RETAIN_DAYS || null),
++      retention_default: !m,
++      retention_text: retentionText,
++      session_minutes: (st.practice && st.practice.session_minutes) || null,
++    };
++  });
++  cache.set(subject, stages);
++  return stages;
++}
++
++/**
++ * Machine checks of every stage: every metric has a test, a pass rule and a
++ * source; the stage's grades exist in the app and have knowledge objectives
++ * (coverage.modelFor); a stage with no provable metric is listed (it can only
++ * be attested, so its performance part cannot gate).
++ */
++function validate(subject, { coverage = null } = {}) {
++  const problems = [];
++  const notes = [];
++  let metrics = 0;
++  let provable = 0;
++  let knowledgeObjectives = 0;
++  for (const st of stagesFor(subject)) {
++    if (!st.objectives.length) problems.push(`${st.id}: no objectives`);
++    if (!st.metrics.length) problems.push(`${st.id}: no exit battery`);
++    for (const mt of st.metrics) {
++      metrics += 1;
++      if (!mt.test) problems.push(`${mt.id}: no test`);
++      if (!mt.threshold) problems.push(`${mt.id}: no pass rule`);
++      if (!mt.source.raw) problems.push(`${mt.id}: no source`);
++      if (mt.source.kinds.includes('unknown')) problems.push(`${mt.id}: unknown source "${mt.source.raw}"`);
++      if (mt.source.provable) provable += 1;
++    }
++    if (!st.metrics.some((x) => x.source.provable)) notes.push(`${st.id}: no machine-provable metric (${st.metrics.map((x) => `${x.metric}[${x.source.raw}]`).join(', ')}); its performance part is attested, not gated`);
++    if (coverage) {
++      for (const g of st.grades) {
++        const model = coverage.modelFor(subject, g);
++        if (!model) problems.push(`${st.id}: grade ${g} has no coverage model`);
++        else knowledgeObjectives += model.objectives.length;
++      }
++    }
++  }
++  return { ok: !problems.length, problems, notes, stats: { stages: stagesFor(subject).length, metrics, provable, knowledge_objectives: knowledgeObjectives } };
++}
++
++// ── the record ─────────────────────────────────────────────────────────────
++
++function blankMetric() {
++  return {
++    status: 'unproven', // unproven | proven | retained | lapsed
++    sittings: [],
++    last_practice_at: null,
++    last_sat_at: null,
++    proof_days: [],
++    proven_at: null,
++    retained_at: null,
++    cold_misses_after: 0,
++    lapses: 0,
++    B: knobs().PRIOR,
++  };
++}
++
++function blankRecord(subject) {
++  const rec = { subject, metrics: {} };
++  for (const st of stagesFor(subject)) for (const mt of st.metrics) rec.metrics[mt.id] = blankMetric();
++  return rec;
++}
++
++const dayOf = (t) => Math.floor(t / DAY);
++
++/** Practice on a metric (warm work): only its time matters to coldness. */
++function practise(rec, metricId, at) {
++  const m = rec.metrics[metricId];
++  if (m) m.last_practice_at = at;
++}
++
++/**
++ * Is a sitting at `at` cold? The first sitting of the metric on its day, and
++ * COLD_HOURS or more since it was last practised or sat.
++ */
++function isCold(m, at, k = knobs()) {
++  const last = Math.max(m.last_practice_at === null ? -Infinity : m.last_practice_at, m.last_sat_at === null ? -Infinity : m.last_sat_at);
++  if (m.sittings.some((s) => dayOf(s.at) === dayOf(at))) return false;
++  return at - last >= k.COLD_HOURS * HOUR;
++}
++
++/**
++ * Fold one sitting of a metric's test: {at, pass, source: 'exact'|'estimate'|
++ * 'self'|'human'|'external', confirmed}. Returns the metric's state.
++ */
++function sit(rec, stage, metricId, sitting, k = knobs()) {
++  const mt = stage.metrics.find((x) => x.id === metricId);
++  const m = rec.metrics[metricId];
++  if (!mt || !m) throw new Error(`unknown metric ${metricId}`);
++  const cold = isCold(m, sitting.at, k);
++  const counts = cold && mt.source.provable
++    && (sitting.source === 'exact' || (sitting.source === 'estimate' && sitting.confirmed === true));
++  m.sittings.push({ at: sitting.at, pass: !!sitting.pass, cold, source: sitting.source, confirmed: sitting.confirmed === true, counts });
++  m.last_sat_at = sitting.at;
++  if (!counts) return m;
++  const d = dayOf(sitting.at);
++  // The belief that the learner is at the gate's threshold, from every
++  // counting sitting: a pass is PASS_IF_AT likely at the threshold and LUCK
++  // likely below it (about the staged gates' own simulated error rates). Two
++  // passes from the even prior prove a metric, as the two-day rule says; each
++  // miss in between needs another pass, so retaking until two lucky passes
++  // come cannot prove it (sequential testing).
++  const yes = sitting.pass ? k.PASS_IF_AT : 1 - k.PASS_IF_AT;
++  const no = sitting.pass ? k.LUCK : 1 - k.LUCK;
++  m.B = (m.B * yes) / (m.B * yes + (1 - m.B) * no);
++  if (m.status === 'unproven' || m.status === 'lapsed') {
++    if (sitting.pass) {
++      if (!m.proof_days.some((x) => x.day === d)) m.proof_days.push({ day: d, source: sitting.source });
++      // An estimate counted only with its confirmation (a second take, the
++      // verifier, a listener), so it is never the only evidence.
++      if (m.proof_days.length >= k.PROOF_DAYS && m.B >= k.PROVEN_AT) {
++        m.status = stage.retention_days ? 'proven' : 'retained';
++        m.proven_at = sitting.at;
++        m.retained_at = stage.retention_days ? null : sitting.at;
++        m.cold_misses_after = 0;
++      }
++    }
++    return m;
++  }
++  // Proven or retained: a retention check, or a lapse.
++  if (sitting.pass) {
++    m.cold_misses_after = 0;
++    if (m.status === 'proven' && stage.retention_days && sitting.at - m.proven_at >= stage.retention_days * DAY) {
++      m.status = 'retained';
++      m.retained_at = sitting.at;
++    }
++  } else {
++    m.cold_misses_after += 1;
++    if (m.cold_misses_after >= k.LAPSE_MISSES || m.B < 0.5) {
++      m.B = Math.min(m.B, k.PRIOR);
++      m.status = 'lapsed';
++      m.lapses += 1;
++      m.proof_days = [];
++      m.proven_at = null;
++      m.retained_at = null;
++      m.cold_misses_after = 0;
++    }
++  }
++  return m;
++}
++
++/**
++ * The stage gate. With `now`, a proven metric whose last cold pass is more
++ * than STALE_DAYS old is `stale` and holds the stage until a fresh cold
++ * sitting passes: the battery must stand when the stage is left. `knowledge` is {gradeId: {complete: boolean}} from
++ * coverage.gate for each of the stage's grades (or a function of gradeId);
++ * missing means not complete. Attest-only metrics are listed and never block
++ * or prove (owner decision 6b in ADAPTIVE-COVERAGE.md: whether a person's
++ * sign-off should be required for them).
++ *
++ * @returns {{complete, knowledge_ok, missing: string[], unkept: string[], attest: string[], knowledge_missing: string[]}}
++ */
++function stageGate(rec, stage, knowledge = {}, now = null, k = knobs()) {
++  const missing = [];
++  const unkept = [];
++  const attest = [];
++  const stale = [];
++  for (const mt of stage.metrics) {
++    if (!mt.source.provable) { attest.push(mt.id); continue; }
++    const m = rec.metrics[mt.id];
++    if (!m || m.status === 'unproven' || m.status === 'lapsed') missing.push(mt.id);
++    else if (m.status === 'proven') unkept.push(mt.id);
++    else if (now !== null && now - lastCountingPass(m) > k.STALE_DAYS * DAY) stale.push(mt.id);
++  }
++  const knowledgeMissing = stage.grades.filter((g) => {
++    const v = typeof knowledge === 'function' ? knowledge(g) : knowledge[g];
++    return !(v && v.complete);
++  });
++  const knowledgeOk = !knowledgeMissing.length;
++  return { complete: knowledgeOk && !missing.length && !unkept.length && !stale.length, knowledge_ok: knowledgeOk, missing, unkept, stale, attest, knowledge_missing: knowledgeMissing };
++}
++
++/** When the metric last passed a counting (cold) sitting. */
++function lastCountingPass(m) {
++  for (let j = m.sittings.length - 1; j >= 0; j--) if (m.sittings[j].counts && m.sittings[j].pass) return m.sittings[j].at;
++  return -Infinity;
++}
++
++/**
++ * The proof behind a metric marked proven, re-derived from its sittings: at
++ * least PROOF_DAYS distinct days with a counting cold pass, the last counting
++ * sitting before the proof a pass, and an exact one among them when the
++ * metric has an exact source. The audit runs this on every stage a learner
++ * completed or skipped.
++ */
++function proofHolds(stage, m, metricId, k = knobs()) {
++  const mt = stage.metrics.find((x) => x.id === metricId);
++  if (!mt || !mt.source.provable) return { ok: false, why: 'not machine-provable' };
++  if (m.status !== 'proven' && m.status !== 'retained') return { ok: false, why: `status ${m.status}` };
++  const counting = m.sittings.filter((s) => s.counts && s.at <= m.proven_at);
++  const passDays = new Set(counting.filter((s) => s.pass).map((s) => dayOf(s.at)));
++  if (passDays.size < k.PROOF_DAYS) return { ok: false, why: `cold passes on ${passDays.size} day(s)` };
++  if (!counting.length || !counting[counting.length - 1].pass) return { ok: false, why: 'last counting sitting before the proof was not a pass' };
++  if (counting.some((s) => !(s.source === 'exact' || (s.source === 'estimate' && s.confirmed)))) return { ok: false, why: 'an unconfirmed estimate, self-report, person or import counted' };
++  if (counting.some((s) => !s.cold)) return { ok: false, why: 'a warm sitting counted' };
++  if (stage.retention_days && m.status === 'retained') {
++    const later = m.sittings.filter((s) => s.counts && s.pass && s.at - m.proven_at >= stage.retention_days * DAY);
++    if (!later.length) return { ok: false, why: 'retained without a retention sitting' };
++  }
++  return { ok: true };
++}
++
++module.exports = {
++  SUBJECTS,
++  DAY,
++  HOUR,
++  knobs,
++  sourceClass,
++  readSource,
++  stagesFor,
++  validate,
++  blankRecord,
++  blankMetric,
++  practise,
++  isCold,
++  sit,
++  stageGate,
++  lastCountingPass,
++  proofHolds,
++};
+diff --git a/services/skill-record.js b/services/skill-record.js
+new file mode 100644
+index 0000000..69855b2
+--- /dev/null
++++ b/services/skill-record.js
+@@ -0,0 +1,308 @@
++/**
++ * The skill record store (staged patch skills-round3/01-skill-record;
++ * SKILL_RECORD=on). Chess, piano and basketball: one row per learner per
++ * exit-battery metric in `skill_records`, holding every sitting of that
++ * metric's stage test and its warm practice sets, folded by the rules in
++ * services/skill-coverage.js (SKILL-CURRICULA.md section 2):
++ *
++ *   - cold or warm: a sitting is cold when it is the metric's first of the
++ *     day and 20+ hours after the metric was last practised or sat;
++ *   - day: proof needs cold passes on two different days;
++ *   - source and confirmation: board, MIDI, on-screen keys, taps, screen
++ *     answers and counts are exact; a microphone or camera result is an
++ *     estimate and counts only when confirmed; a source the metric does not
++ *     list never counts;
++ *   - a Bayes belief over the counting sittings, so retaking until two lucky
++ *     passes come cannot prove a metric.
++ *
++ * Rows hold times as epoch milliseconds (the rule functions do arithmetic on
++ * them) and each sitting also carries its ISO time and UTC day. Nothing here
++ * decides a stage on its own: services that read the record (the stage
++ * checks, the stage gate, the practice plan: patches 02-04) do.
++ *
++ * Camera and microphone stay on the learner's device: only a sitting's result
++ * (pass or fail, a score, a count) and, for piano, the played note events
++ * reach this store, never a picture, a clip or sound.
++ */
++'use strict';
++
++const db = require('../config/db');
++const sc = require('./skill-coverage');
++
++const COLLECTION = 'skill_records';
++const KINDS = ['stage_test', 'retention_test', 'stands_test', 'placement', 'check'];
++
++function enabled() {
++  return String(process.env.SKILL_RECORD || 'off').toLowerCase() === 'on';
++}
++
++function isSkillTrack(trackId) {
++  return sc.SUBJECTS.includes(trackId);
++}
++
++/** The stage a grade belongs to, or null. */
++function stageFor(subject, gradeId) {
++  if (!isSkillTrack(subject)) return null;
++  return sc.stagesFor(subject).find((st) => st.grades.includes(gradeId)) || null;
++}
++
++/** A metric and its stage, by id ("CH1:kqk_playout"). */
++function metricDef(subject, metricId) {
++  if (!isSkillTrack(subject)) return null;
++  for (const st of sc.stagesFor(subject)) {
++    const mt = st.metrics.find((x) => x.id === metricId);
++    if (mt) return { stage: st, metric: mt };
++  }
++  return null;
++}
++
++// ── sources ────────────────────────────────────────────────────────────────
++
++const WORDS = ['board', 'midi', 'mic', 'on-screen', 'tap', 'screen', 'items', 'games', 'engine', 'count', 'camera', 'audio', 'verifier', 'self', 'log', 'film', 'human', 'import'];
++
++/** The source words a metric lists, parenthesised options included ("count (camera estimate optional)"). */
++function listedWords(mt) {
++  const raw = String((mt.source && mt.source.raw) || '').toLowerCase();
++  return WORDS.filter((w) => new RegExp(`(^|[^a-z-])${w.replace('-', '\\-')}([^a-z-]|$)`).test(raw)
++    || (w === 'mic' && /mic-verifier/.test(raw)) || (w === 'on-screen' && /on-screen/.test(raw)));
++}
++
++/**
++ * How a sitting's source counts for this metric: {word, cls, accepted, why}.
++ * The class is skill-coverage's (exact | estimate | self | human | external);
++ * a word the metric does not list is recorded but never counts.
++ */
++function readSitSource(mt, word) {
++  const w = String(word || '').toLowerCase().trim();
++  const cls = sc.sourceClass(w === 'on-screen' || w === 'screen-keys' ? 'on-screen' : w) || 'unknown';
++  const listed = listedWords(mt);
++  const accepted = !!w && listed.includes(w) && (cls === 'exact' || cls === 'estimate') && mt.source.provable;
++  let why = null;
++  if (!mt.source.provable) why = 'this metric is attested only: a machine never proves it';
++  else if (!listed.includes(w)) why = `"${w || 'unknown'}" is not a source this metric lists (${mt.source.raw})`;
++  else if (!(cls === 'exact' || cls === 'estimate')) why = `${w} never proves a metric`;
++  return { word: w, cls, accepted, why };
++}
++
++// ── rows ───────────────────────────────────────────────────────────────────
++
++function blankRow(userId, subject, stage, mt) {
++  return {
++    user_id: userId,
++    subject,
++    stage_id: stage.id,
++    metric_id: mt.id,
++    metric: mt.metric,
++    ...sc.blankMetric(),
++    warm: [],
++    sets: 0,
++    sets_at_proof: null,
++    open: null,
++  };
++}
++
++function rowFor(userId, subject, metricId) {
++  return db.findOne(COLLECTION, (r) => r.user_id === userId && r.subject === subject && r.metric_id === metricId);
++}
++
++function ensureRow(userId, subject, metricId) {
++  const def = metricDef(subject, metricId);
++  if (!def) return null;
++  return rowFor(userId, subject, metricId) || db.insert(COLLECTION, blankRow(userId, subject, def.stage, def.metric));
++}
++
++/** Save a row mutated in place (the rule functions write to it directly). */
++function save(row) {
++  const { id, ...rest } = row;
++  return db.update(COLLECTION, id, rest);
++}
++
++/**
++ * The learner's record for one subject, in the shape skill-coverage reads:
++ * {subject, metrics: {metricId: row}}. Metrics never sat are blank (and not
++ * stored).
++ */
++function recordFor(userId, subject) {
++  const rec = { subject, metrics: {} };
++  for (const st of sc.stagesFor(subject)) {
++    for (const mt of st.metrics) rec.metrics[mt.id] = blankRow(userId, subject, st, mt);
++  }
++  for (const row of db.find(COLLECTION, (r) => r.user_id === userId && r.subject === subject)) {
++    if (rec.metrics[row.metric_id]) rec.metrics[row.metric_id] = row;
++  }
++  return rec;
++}
++
++const dayIso = (t) => new Date(t).toISOString().slice(0, 10);
++
++/**
++ * Record one sitting of a metric's stage test and fold it into the proof.
++ *
++ * @param {number} userId
++ * @param {object} s {subject, metricId, pass, source (word), confirmed, kind, score, n, detail, at}
++ * @returns {{row, sitting, counted: boolean, why: string|null, proved: boolean}|{error}}
++ */
++function sit(userId, s) {
++  const def = metricDef(s.subject, s.metricId);
++  if (!def) return { error: 'No such skill check.' };
++  const { stage, metric: mt } = def;
++  const at = Number.isFinite(s.at) ? s.at : Date.now();
++  const src = readSitSource(mt, s.source);
++  const row = ensureRow(userId, s.subject, s.metricId);
++  const before = row.status;
++  // A source the metric does not list is recorded with a class that cannot
++  // count; skill-coverage.sit then marks it cold or warm as usual.
++  const cls = src.accepted ? src.cls : 'unlisted';
++  sc.sit({ metrics: { [mt.id]: row } }, stage, mt.id, { at, pass: !!s.pass, source: cls, confirmed: s.confirmed === true });
++  const sitting = row.sittings[row.sittings.length - 1];
++  Object.assign(sitting, {
++    at_iso: new Date(at).toISOString(),
++    day: dayIso(at),
++    kind: KINDS.includes(s.kind) ? s.kind : 'stage_test',
++    source_word: src.word,
++    score: s.score === undefined ? null : s.score,
++    n: s.n === undefined ? null : s.n,
++    detail: s.detail || null,
++  });
++  if (!sitting.counts) {
++    sitting.why_not = src.why
++      || (!sitting.cold ? 'warm: not the first sitting of the day, or less than 20 hours after practising it' : null)
++      || (src.cls === 'estimate' && s.confirmed !== true ? 'an estimate counts only when it is confirmed' : null);
++  }
++  if ((row.status === 'unproven' || row.status === 'lapsed') && before !== row.status) row.sets_at_proof = null;
++  save(row);
++  const proved = (before === 'unproven' || before === 'lapsed') && (row.status === 'proven' || row.status === 'retained');
++  return { row, sitting, counted: !!sitting.counts, why: sitting.why_not || null, proved };
++}
++
++/**
++ * One warm practice set on a metric: its time (it makes the next sitting warm
++ * for 20 hours) and whether it was at the target. Counted for the practice
++ * plan's over-learning dose (patch 04).
++ */
++function practise(userId, { subject, metricId, atTarget, at = Date.now() }) {
++  const row = ensureRow(userId, subject, metricId);
++  if (!row) return null;
++  const proven = row.status === 'proven' || row.status === 'retained';
++  row.last_practice_at = at;
++  row.sets = (row.sets || 0) + 1;
++  if (!proven) row.sets_at_proof = null;
++  else if (row.sets_at_proof === null || row.sets_at_proof === undefined) row.sets_at_proof = row.sets - 1;
++  row.warm = [...(row.warm || []), { at, atTarget: !!atTarget, day: dayIso(at) }].slice(-12);
++  save(row);
++  return row;
++}
++
++/** When the next sitting of a metric would be cold (ms), given `now`. */
++function coldAt(row, now = Date.now(), k = sc.knobs()) {
++  if (sc.isCold(row, now, k)) return now;
++  const last = Math.max(row.last_practice_at || 0, row.last_sat_at || 0);
++  const byHours = last + k.COLD_HOURS * sc.HOUR;
++  const tomorrow = (Math.floor(now / sc.DAY) + 1) * sc.DAY;
++  const satToday = (row.sittings || []).some((s) => Math.floor(s.at / sc.DAY) === Math.floor(now / sc.DAY));
++  return Math.max(byHours, satToday ? tomorrow : 0, now);
++}
++
++/**
++ * The knowledge side of a stage: each of its grades' coverage gate
++ * (services/coverage.js) for this learner. A grade already graduated counts as
++ * complete; a grade not enrolled does not.
++ */
++function knowledgeFor(userId, subject) {
++  // eslint-disable-next-line global-require
++  const coverage = require('./coverage');
++  return (gradeId) => {
++    const e = db.findOne('enrollments', (x) => x.user_id === userId && x.track_id === subject && x.grade_id === gradeId);
++    if (!e) return { complete: false, why: 'not enrolled' };
++    if (e.status === 'graduated') return { complete: true, why: 'graduated' };
++    try {
++      const cover = coverage.forEnrollment(userId, e);
++      if (!cover) return { complete: true, why: 'no objective record for this grade' };
++      return { complete: !!cover.gate.complete, why: `${cover.gate.total - cover.gate.blocking.length} of ${cover.gate.total} objectives proven and kept`, total: cover.gate.total, blocking: cover.gate.blocking.length };
++    } catch (err) {
++      return { complete: false, why: `coverage unavailable: ${err.message}` };
++    }
++  };
++}
++
++/**
++ * The learner's current stage on an enrollment, as the pages show it: each
++ * metric's status, its sittings and when it can next be sat cold, and the
++ * stage gate (skill-coverage.stageGate) with the knowledge side.
++ */
++function stageView(userId, enrollment, now = Date.now()) {
++  const stage = stageFor(enrollment.track_id, enrollment.grade_id);
++  if (!stage) return null;
++  const k = sc.knobs();
++  const rec = recordFor(userId, enrollment.track_id);
++  const knowledge = knowledgeFor(userId, enrollment.track_id);
++  const gate = sc.stageGate(rec, stage, (g) => knowledge(g), now, k);
++  const metrics = stage.metrics.map((mt) => {
++    const row = rec.metrics[mt.id];
++    const last = row.sittings.length ? row.sittings[row.sittings.length - 1] : null;
++    const lastPass = sc.lastCountingPass(row);
++    const retentionDue = row.status === 'proven' && stage.retention_days ? row.proven_at + stage.retention_days * sc.DAY : null;
++    const stale = row.status === 'retained' && now - lastPass > k.STALE_DAYS * sc.DAY;
++    return {
++      id: mt.id,
++      metric: mt.metric,
++      test: mt.test,
++      threshold: mt.threshold,
++      source: mt.source.raw,
++      provable: mt.source.provable,
++      estimate: mt.source.estimate,
++      status: mt.source.provable ? row.status : 'attest',
++      belief: Number((row.B || 0).toFixed(3)),
++      proof_days: (row.proof_days || []).length,
++      proven_at: row.proven_at ? new Date(row.proven_at).toISOString() : null,
++      retained_at: row.retained_at ? new Date(row.retained_at).toISOString() : null,
++      retention_due_at: retentionDue ? new Date(retentionDue).toISOString() : null,
++      stale,
++      sittings: row.sittings.length,
++      counting: row.sittings.filter((s) => s.counts).length,
++      last: last ? { at: last.at_iso || new Date(last.at).toISOString(), pass: last.pass, counts: last.counts, cold: last.cold, source: last.source_word || last.source, confirmed: last.confirmed, why_not: last.why_not || null, score: last.score === undefined ? null : last.score } : null,
++      cold_now: sc.isCold(row, now, k),
++      cold_at: new Date(coldAt(row, now, k)).toISOString(),
++      warm_sets: (row.warm || []).length,
++    };
++  });
++  const grades = stage.grades.map((g) => ({ id: g, ...knowledge(g) }));
++  return {
++    subject: enrollment.track_id,
++    stage: { id: stage.id, name: stage.name, grades: stage.grades, retention_days: stage.retention_days, retention_text: stage.retention_text, session_minutes: stage.session_minutes, knowledge: stage.knowledge },
++    metrics,
++    knowledge: grades,
++    gate: { ...gate, provable: stage.metrics.filter((m) => m.source.provable).length, proven: metrics.filter((m) => m.provable && (m.status === 'proven' || m.status === 'retained')).length },
++  };
++}
++
++/** Re-derive every proof on a stage from its sittings (skill-coverage.proofHolds). */
++function auditStage(userId, subject, stageId) {
++  const stage = sc.stagesFor(subject).find((s) => s.id === stageId);
++  if (!stage) return null;
++  const rec = recordFor(userId, subject);
++  return stage.metrics.filter((m) => m.source.provable).map((mt) => {
++    const row = rec.metrics[mt.id];
++    const proven = row.status === 'proven' || row.status === 'retained';
++    return { id: mt.id, status: row.status, holds: proven ? sc.proofHolds(stage, row, mt.id) : null };
++  });
++}
++
++module.exports = {
++  COLLECTION,
++  enabled,
++  isSkillTrack,
++  stageFor,
++  metricDef,
++  listedWords,
++  readSitSource,
++  rowFor,
++  ensureRow,
++  recordFor,
++  sit,
++  practise,
++  coldAt,
++  knowledgeFor,
++  stageView,
++  auditStage,
++};
+diff --git a/routes/skills.js b/routes/skills.js
+new file mode 100644
+index 0000000..6ce12b6
+--- /dev/null
++++ b/routes/skills.js
+@@ -0,0 +1,85 @@
++/**
++ * Chess, piano and basketball: the skill record (services/skill-record.js;
++ * staged patch skills-round3/01-skill-record). Off unless SKILL_RECORD=on:
++ * every route under /api/skills then answers 404, the same as before.
++ *
++ *   GET /api/skills/record/:enrollmentId   the current stage: each metric's status and sittings, the gate
++ *   GET /api/skills/path/:enrollmentId     the rows the path shows for this stage (from the parts below)
++ *
++ * The other staged parts mount here when their patch is applied, each behind
++ * its own flag: routes/skill-checks.js (02, SKILL_STAGE_TESTS), routes/skill-gate.js
++ * (03, SKILL_STAGE_GATE) and routes/skill-dose.js (04, SKILL_DOSE). Each exports
++ * its router and a `pathNode(userId, enrollment, view)` for the path.
++ */
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const record = require('../services/skill-record');
++const { requireAuth } = require('../middleware/auth');
++
++const router = express.Router();
++
++/** A staged part, when its patch has been applied; null when it has not. */
++function part(name) {
++  try {
++    // eslint-disable-next-line global-require, import/no-dynamic-require
++    return require(`./${name}`);
++  } catch (err) {
++    if (err && err.code === 'MODULE_NOT_FOUND' && String(err.message).includes(name)) return null;
++    throw err;
++  }
++}
++const PARTS = ['skill-checks', 'skill-gate', 'skill-dose'].map((name) => ({ name, mod: part(name) })).filter((p) => p.mod);
++
++router.use('/skills', (req, res, next) => {
++  if (!record.enabled()) return res.status(404).json({ error: 'No such endpoint.' });
++  next();
++});
++
++/** The signed-in learner's own skill-subject enrollment, or a reason it is not. */
++function skillEnrollment(req) {
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return { status: 404, error: 'Enrollment not found.' };
++  if (!record.isSkillTrack(enrollment.track_id)) return { status: 404, error: 'This subject has no skill record.' };
++  if (!record.stageFor(enrollment.track_id, enrollment.grade_id)) return { status: 404, error: 'This grade is in no skill stage.' };
++  return { enrollment };
++}
++
++function heading(enrollment) {
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const track = curriculum.getTrack(enrollment.track_id);
++  return {
++    enrollment: { id: enrollment.id, status: enrollment.status, current_level: enrollment.current_level, path_length: grade ? grade.pathLength : null },
++    track: track ? { id: track.id, name: track.name } : { id: enrollment.track_id, name: enrollment.track_id },
++    grade: grade ? { id: grade.id, name: grade.name } : { id: enrollment.grade_id, name: enrollment.grade_id },
++  };
++}
++
++router.get('/skills/record/:enrollmentId', requireAuth, (req, res) => {
++  const { enrollment, status, error } = skillEnrollment(req);
++  if (!enrollment) return res.status(status).json({ error });
++  res.json({ ...heading(enrollment), record: record.stageView(req.user.id, enrollment) });
++});
++
++router.get('/skills/path/:enrollmentId', requireAuth, (req, res) => {
++  const { enrollment } = skillEnrollment(req);
++  if (!enrollment) return res.json({ nodes: [] });
++  const view = record.stageView(req.user.id, enrollment);
++  const nodes = [];
++  for (const p of PARTS) {
++    if (typeof p.mod.pathNode !== 'function') continue;
++    try {
++      const node = p.mod.pathNode(req.user.id, enrollment, view);
++      if (node) nodes.push(...[].concat(node));
++    } catch (err) {
++      console.error(`[skills] ${p.name} path row failed: ${err.message}`);
++    }
++  }
++  res.json({ stage: view ? { id: view.stage.id, name: view.stage.name } : null, nodes });
++});
++
++for (const p of PARTS) if (p.mod.router || typeof p.mod === 'function') router.use(p.mod.router || p.mod);
++
++module.exports = router;
++module.exports.heading = heading;
++module.exports.skillEnrollment = skillEnrollment;
+diff --git a/public/js/skill-kit.js b/public/js/skill-kit.js
+new file mode 100644
+index 0000000..4b1ac91
+--- /dev/null
++++ b/public/js/skill-kit.js
+@@ -0,0 +1,275 @@
++/* The measuring kit for chess, piano and basketball checks (staged skills
++ * round 3, patch 01): the runners the stage check page (patch 02) and the
++ * practice page (patch 04) share.
++ *
++ *   SkillKit.items(host, { items, subject, feedback, onAnswer, onDone })
++ *       one question at a time: choices, typed answers, a move on the board,
++ *       a key found on the piano, an echo or a chord heard and answered.
++ *   SkillKit.takes(host, { parts, onTake(part, played, origin), onDone, practice })
++ *       piano: a count-in, then the learner plays; the notes (key numbers and
++ *       times only) go to the server, which scores them with piano-core.
++ *   SkillKit.count(host, { fields, hands, cameraOk, onSubmit })
++ *       basketball: makes and attempts typed in, or the camera tracker's count
++ *       confirmed by the learner.
++ *
++ * Camera and microphone stay on this device. The microphone is heard only
++ * through the piano engine (PolymathPianoIO), which turns sound into note
++ * events here; nothing records or sends sound or pictures. The only network
++ * calls are the callbacks the page passes in, which post answers, note events
++ * and counts to /api/skills.
++ */
++(function (global) {
++  const esc = (s) => (global.App ? global.App.escapeHtml(s) : String(s == null ? '' : s));
++  const IO = () => global.PolymathPianoIO || null;
++  const now = () => (global.performance && performance.now ? performance.now() : Date.now());
++
++  // ── one input for the piano: MIDI when there is a keyboard, else the on-screen keys; the microphone on request ──
++  function pianoInput(host, { onNote, from = 48, to = 84, allowMic = true }) {
++    const io = IO();
++    const wrap = document.createElement('div');
++    wrap.className = 'skill-input';
++    wrap.innerHTML = `
++      <div class="skill-input-row">
++        <span class="tiny muted" data-src>On-screen keys</span>
++        ${io && io.midi.supported() ? '<button class="btn btn-sm" type="button" data-midi>Use a MIDI keyboard</button>' : ''}
++        ${allowMic && io && io.mic.supported() ? '<button class="btn btn-sm" type="button" data-mic>Use the microphone</button>' : ''}
++      </div>
++      <div class="skill-keys"></div>`;
++    host.appendChild(wrap);
++    let stopMidi = null;
++    let stopMic = null;
++    const label = wrap.querySelector('[data-src]');
++    const kb = io ? io.keyboard(wrap.querySelector('.skill-keys'), { from, to, onPress: (e) => onNote({ ...e, source: 'screen' }) }) : null;
++    const midiBtn = wrap.querySelector('[data-midi]');
++    if (midiBtn) midiBtn.addEventListener('click', async () => {
++      try {
++        const c = await io.midi.connect((e) => onNote(e));
++        stopMidi = c.stop;
++        label.textContent = c.devices && c.devices.length ? `MIDI: ${c.devices.join(', ')}` : 'MIDI: waiting for a keyboard';
++        midiBtn.disabled = true;
++      } catch (err) { global.App.toast(err.message, 'error'); }
++    });
++    const micBtn = wrap.querySelector('[data-mic]');
++    if (micBtn) micBtn.addEventListener('click', async () => {
++      try {
++        const m = await io.mic.start((e) => onNote({ ...e, source: 'mic' }), {});
++        stopMic = m.stop;
++        label.textContent = 'Microphone: heard on this device only (an estimate; a second take confirms it)';
++        micBtn.disabled = true;
++      } catch (err) { global.App.toast(err.message, 'error'); }
++    });
++    return {
++      keyboard: kb,
++      stop() { try { if (stopMidi) stopMidi(); } catch (e) { /* gone */ } try { if (stopMic) stopMic(); } catch (e) { /* gone */ } if (kb) kb.destroy(); },
++    };
++  }
++
++  // ── items ─────────────────────────────────────────────────────────────────
++  function items(host, o) {
++    const list = o.items;
++    let index = (o.answered || []).findIndex((x) => !x);
++    if (index < 0) index = o.answered && o.answered.length ? list.length : 0;
++    let input = null;
++    let board = null;
++
++    function cleanup() {
++      if (input) { input.stop(); input = null; }
++      board = null;
++    }
++
++    async function submit(answer, source) {
++      host.querySelectorAll('button, input').forEach((b) => { b.disabled = true; });
++      let res;
++      try { res = await o.onAnswer(index, answer, source); } catch (err) {
++        global.App.toast(err.message, 'error');
++        host.querySelectorAll('button, input').forEach((b) => { b.disabled = false; });
++        return;
++      }
++      cleanup();
++      if (o.feedback && res) {
++        const v = host.querySelector('[data-verdict]');
++        v.innerHTML = `<p class="skill-verdict ${res.correct ? 'is-right' : 'is-wrong'}">${global.mark(res.correct ? 'tick' : 'cross')}<span>${res.correct ? 'Right.' : 'Not this time.'}${!res.correct && res.answer ? ` The answer: <b>${esc(res.answer)}</b>.` : ''}</span></p>
++          <button class="btn btn-primary" type="button" data-next>${index + 1 < list.length ? 'Next' : 'Finish the set'}</button>`;
++        v.querySelector('[data-next]').addEventListener('click', () => { index += 1; show(); });
++        v.querySelector('[data-next]').focus();
++      } else { index += 1; show(); }
++    }
++
++    function show() {
++      if (index >= list.length) { host.innerHTML = ''; o.onDone(); return; }
++      const it = list[index];
++      host.innerHTML = `
++        <div class="skill-q">
++          <p class="skill-q-count"><span class="num">${index + 1}</span> / <span class="num">${list.length}</span></p>
++          <p class="skill-stem">${esc(it.prompt).replace(/\n/g, '<br>')}</p>
++          <div data-body></div>
++          <div data-verdict aria-live="polite"></div>
++        </div>`;
++      const body = host.querySelector('[data-body]');
++      if (it.kind === 'choice' || it.kind === 'chord_ear') {
++        if (it.kind === 'chord_ear') {
++          body.insertAdjacentHTML('beforeend', '<p><button class="btn" type="button" data-play>Play the chord</button></p>');
++          body.querySelector('[data-play]').addEventListener('click', () => { const io = IO(); if (io) it.notes.forEach((m) => io.synth.play(m, 1200)); });
++        }
++        if (it.fen && global.PolymathBoard) { const b = document.createElement('div'); b.className = 'skill-board'; body.appendChild(b); global.PolymathBoard.create(b, { fen: it.fen, interactive: false }); }
++        const row = document.createElement('div');
++        row.className = 'skill-choices';
++        row.innerHTML = it.choices.map((c) => `<button class="btn choice" type="button" data-c="${esc(c)}">${esc(c)}</button>`).join('');
++        body.appendChild(row);
++        row.querySelectorAll('[data-c]').forEach((b) => b.addEventListener('click', () => submit(b.getAttribute('data-c'), it.kind === 'chord_ear' ? 'tap' : null)));
++      } else if (it.kind === 'move' || it.kind === 'squares' || it.kind === 'text') {
++        if (it.fen && global.PolymathBoard) {
++          const b = document.createElement('div');
++          b.className = 'skill-board';
++          body.appendChild(b);
++          board = global.PolymathBoard.create(b, { fen: it.fen, interactive: it.kind === 'move', onMove: (m, san) => { field.value = san; } });
++        }
++        const form = document.createElement('form');
++        form.className = 'skill-answer';
++        form.innerHTML = `<label class="visually-hidden" for="skill-a">Your answer</label>
++          <input id="skill-a" class="input" autocomplete="off" spellcheck="false" placeholder="${it.kind === 'squares' ? 'e.g. c4 d5 e6' : it.kind === 'move' ? 'Move, e.g. Qh7#' : 'Your answer'}">
++          <button class="btn btn-primary" type="submit">Answer</button>
++          ${it.allow_no_mate ? '<button class="btn" type="button" data-nomate>No mate</button>' : ''}`;
++        body.appendChild(form);
++        const field = form.querySelector('input');
++        form.addEventListener('submit', (e) => { e.preventDefault(); if (field.value.trim()) submit(field.value.trim(), 'board'); });
++        const nm = form.querySelector('[data-nomate]');
++        if (nm) nm.addEventListener('click', () => submit('no mate', 'board'));
++        if (!board) field.focus();
++      } else if (it.kind === 'key') {
++        input = pianoInput(body, { onNote: (e) => { if (!host.dataset.busy) { host.dataset.busy = '1'; submit({ midi: e.midi }, e.source).finally(() => { delete host.dataset.busy; }); } } });
++      } else if (it.kind === 'echo') {
++        const tries = [];
++        let current = [];
++        body.insertAdjacentHTML('beforeend', `<p class="row-wrap"><button class="btn" type="button" data-play>Play it</button>
++          <span class="tiny muted" data-heard>Play back <span class="num">${it.notes.length}</span> notes${it.tries > 1 ? `; <span class="num">${it.tries}</span> tries` : ''}.</span></p>`);
++        body.querySelector('[data-play]').addEventListener('click', () => { const io = IO(); if (io) io.synth.sequence(it.notes.map((m, i) => ({ midi: m, beat: i })), 90); });
++        const heard = body.querySelector('[data-heard]');
++        let source = 'screen';
++        input = pianoInput(body, { onNote: (e) => {
++          source = e.source === 'mic' ? 'mic' : source === 'mic' ? 'mic' : e.source;
++          current.push(e.midi);
++          heard.textContent = `Heard ${current.length} of ${it.notes.length}.`;
++          if (current.length === it.notes.length) {
++            tries.push(current);
++            current = [];
++            if (tries.length >= (it.tries || 1)) submit({ tries }, source);
++            else heard.textContent = `Try ${tries.length + 1} of ${it.tries}: play it again if it was not right, or finish.`;
++          }
++        } });
++        if ((it.tries || 1) > 1) {
++          body.insertAdjacentHTML('beforeend', '<p><button class="btn btn-sm" type="button" data-done>That one was right: answer</button></p>');
++          body.querySelector('[data-done]').addEventListener('click', () => { if (tries.length) submit({ tries }, source); });
++        }
++      }
++    }
++    show();
++    return { stop: cleanup };
++  }
++
++  // ── piano takes ───────────────────────────────────────────────────────────
++  function takes(host, o) {
++    let part = 0;
++    let input = null;
++    function show() {
++      if (input) { input.stop(); input = null; }
++      if (part >= o.parts.length) { host.innerHTML = ''; o.onDone(); return; }
++      const p = o.parts[part];
++      const names = p.chords ? p.chords.join('  ') : p.any_key ? 'Any key, on the click' : (p.names || []).join(' ');
++      host.innerHTML = `
++        <div class="skill-q">
++          <p class="skill-q-count">Part <span class="num">${part + 1}</span> / <span class="num">${o.parts.length}</span></p>
++          <p class="skill-stem">${esc(p.label)}</p>
++          <p class="skill-notes num">${esc(names)}</p>
++          <p class="tiny muted">At <span class="num">${p.tempo}</span> beats a minute. Press Start: <span class="num">${p.count_in || 4}</span> clicks count you in, then play. Press Done when you finish.</p>
++          <div data-input></div>
++          <div class="path-actions"><button class="btn btn-primary" type="button" data-go>Start</button><span class="tiny muted" data-heard></span></div>
++          <div data-verdict aria-live="polite"></div>
++        </div>`;
++      let played = [];
++      let origin = null;
++      let recording = false;
++      input = pianoInput(host.querySelector('[data-input]'), { onNote: (e) => { if (!recording) return; played.push({ midi: e.midi, time: e.time, velocity: e.velocity || null, source: e.source === 'screen' && p.any_key ? 'tap' : e.source, confidence: e.confidence || 1 }); heard.textContent = `${played.length} note${played.length === 1 ? '' : 's'}`; } });
++      const go = host.querySelector('[data-go]');
++      const heard = host.querySelector('[data-heard]');
++      go.addEventListener('click', async () => {
++        if (!recording) {
++          go.disabled = true;
++          const io = IO();
++          const beat = 60000 / p.tempo;
++          for (let i = 0; i < (p.count_in || 4); i++) { if (io) io.synth.click(i === 0); heard.textContent = `${(p.count_in || 4) - i}`; await new Promise((r) => setTimeout(r, beat)); }
++          if (p.any_key && io) {
++            // The click carries on under the taps, one per beat, for as long as the target lasts.
++            const n = (p.target || []).length;
++            for (let i = 0; i < n; i++) setTimeout(() => io.synth.click(false), i * beat);
++          }
++          played = [];
++          origin = now();
++          recording = true;
++          heard.textContent = 'Playing';
++          go.textContent = 'Done';
++          go.disabled = false;
++          return;
++        }
++        recording = false;
++        go.disabled = true;
++        if (!played.length) { heard.textContent = 'No notes heard. Start again.'; go.textContent = 'Start'; go.disabled = false; return; }
++        let res;
++        try { res = await o.onTake(part, played, origin); } catch (err) { global.App.toast(err.message, 'error'); go.textContent = 'Start'; go.disabled = false; return; }
++        const v = host.querySelector('[data-verdict]');
++        const facts = [
++          res.notes != null ? `notes <b class="num">${Math.round(res.notes * 100)}%</b>` : '',
++          res.on_beat != null ? `on the beat <b class="num">${Math.round(res.on_beat * 100)}%</b>` : '',
++          res.cv != null ? `evenness CV <b class="num">${res.cv}</b>` : '',
++          res.stops ? `<b class="num">${res.stops}</b> stop${res.stops === 1 ? '' : 's'}` : '',
++          res.chords != null ? `chords <b class="num">${res.chords_right}/${res.chords}</b>` : '',
++        ].filter(Boolean).join(', ');
++        const needSecond = res.source === 'mic' && !o.practice && (res.takes || 1) < 2;
++        v.innerHTML = `<p class="skill-verdict ${res.pass ? 'is-right' : 'is-wrong'}">${global.mark(res.pass ? 'tick' : 'cross')}<span>${res.pass ? 'At the bar.' : 'Below the bar.'} ${facts}.</span></p>
++          ${res.source === 'mic' ? `<p class="tiny muted">Heard by the microphone: an estimate.${needSecond ? ' Play it once more to confirm it.' : ''}</p>` : ''}
++          <div class="row-wrap">${needSecond ? '<button class="btn" type="button" data-again>Play it again to confirm</button>' : ''}<button class="btn btn-primary" type="button" data-next>${part + 1 < o.parts.length ? 'Next part' : o.practice ? 'Finish the set' : 'Finish the check'}</button></div>`;
++        const again = v.querySelector('[data-again]');
++        if (again) again.addEventListener('click', () => show());
++        v.querySelector('[data-next]').addEventListener('click', () => { part += 1; show(); });
++      });
++    }
++    show();
++    return { stop() { if (input) input.stop(); } };
++  }
++
++  // ── basketball counts ─────────────────────────────────────────────────────
++  function count(host, o) {
++    const fieldsHtml = (prefix, title) => `
++      <fieldset class="skill-count-set">
++        ${title ? `<legend>${esc(title)}</legend>` : ''}
++        ${o.fields.map((f) => `<label class="skill-count"><span>${esc(f.label)}</span><input class="input num" type="number" inputmode="numeric" min="${f.min}" max="${f.max}" name="${prefix}${f.name}" required></label>`).join('')}
++      </fieldset>`;
++    host.innerHTML = `
++      <form class="skill-count-form">
++        ${o.hands ? fieldsHtml('left.', 'Left hand') + fieldsHtml('right.', 'Right hand') : fieldsHtml('', '')}
++        ${o.cameraOk ? `
++          <fieldset class="skill-count-set">
++            <legend>Who counted</legend>
++            <label class="skill-radio"><input type="radio" name="source" value="count" checked> I (or a grown-up) counted</label>
++            <label class="skill-radio"><input type="radio" name="source" value="camera"> The camera tracker counted (it stays on this device)</label>
++            <label class="skill-radio" data-confirm hidden><input type="checkbox" name="confirmed"> I watched and the camera's count is right</label>
++          </fieldset>` : ''}
++        <div class="path-actions"><button class="btn btn-primary" type="submit">${esc(o.submitLabel || 'Record it')}</button></div>
++      </form>`;
++    const form = host.querySelector('form');
++    const confirmRow = form.querySelector('[data-confirm]');
++    form.querySelectorAll('input[name=source]').forEach((r) => r.addEventListener('change', () => { if (confirmRow) confirmRow.hidden = form.source.value !== 'camera'; }));
++    form.addEventListener('submit', (e) => {
++      e.preventDefault();
++      const body = {};
++      form.querySelectorAll('input[type=number]').forEach((inp) => {
++        const [a, b] = inp.name.split('.');
++        if (b) { body[a] = body[a] || {}; body[a][b] = Number(inp.value); } else body[a] = Number(inp.value);
++      });
++      if (o.cameraOk) { body.source = form.source.value; body.confirmed = !!(form.confirmed && form.confirmed.checked); }
++      o.onSubmit(body, form);
++    });
++  }
++
++  global.SkillKit = { items, takes, count, pianoInput };
++})(typeof window !== 'undefined' ? window : globalThis);
+diff --git a/public/css/skills.css b/public/css/skills.css
+new file mode 100644
+index 0000000..673e80f
+--- /dev/null
++++ b/public/css/skills.css
+@@ -0,0 +1,66 @@
++/* Chess, piano and basketball: the stage rows on the path, the stage check,
++   what is left in a stage, and today's practice (staged skills round 3).
++   Quiet like the rest: sections split by space and a hairline, colour only
++   for the subject and for right and wrong. */
++
++/* The path: this stage's rows, a level row with a word on the rail. */
++.skill-stage { margin-bottom: var(--s-2); }
++.node.node-skill .badge { font-family: var(--font); font-size: 0.75rem; font-weight: 700; color: var(--subj); border-right: 3px solid var(--subj); padding-right: 12px; }
++.node.node-skill.node-done .badge { border-right-color: var(--line-strong); }
++.node.node-skill .skill-detail { display: block; line-height: 1.45; color: var(--ink-2); font-size: var(--t-meta); max-width: 70ch; }
++
++/* The pages. */
++.skill-now { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: var(--s-6) var(--s-10); align-items: start; margin-top: var(--s-6); }
++.skill-lede { font-size: 1.125rem; line-height: 1.5; max-width: 60ch; margin: 0 0 var(--s-3); }
++.skill-lede .mark { width: 22px; height: 22px; vertical-align: -4px; margin-right: 6px; }
++.skill-note { max-width: 64ch; margin: 0 0 var(--s-3); }
++.skill-section { margin-top: var(--s-8); max-width: 820px; }
++.skill-list { list-style: none; margin: 0; padding: 0; }
++.skill-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: start; gap: var(--s-2) var(--s-4); padding: 14px 0; border-top: 1px solid var(--line); }
++.skill-row.is-due .skill-title { color: var(--ink); }
++.skill-mark { width: 24px; height: 24px; padding-top: 2px; }
++.skill-mark .mark { width: 22px; height: 22px; }
++.skill-mark .mark-circle { width: 26px; height: 14px; color: var(--subj); }
++.skill-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
++.skill-title { font-weight: 600; line-height: 1.35; }
++.skill-tag { font-weight: 500; font-size: var(--t-meta); color: var(--ink-3); margin-left: 8px; white-space: nowrap; }
++.skill-why { font-size: var(--t-ui-s); color: var(--ink-2); max-width: 66ch; }
++.skill-meta { font-size: var(--t-meta); color: var(--ink-3); max-width: 66ch; }
++.skill-act { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px 10px; }
++.skill-kind { font-size: var(--t-meta); color: var(--ink-2); white-space: nowrap; }
++.skill-review { margin-top: var(--s-6); max-width: 760px; font-size: var(--t-ui-s); }
++.skill-review summary { cursor: pointer; font-weight: 600; }
++.skill-review li { margin: var(--s-2) 0; }
++
++/* A sitting. */
++.skill-player .card { margin-top: var(--s-4); }
++.skill-q-count { font-family: var(--num); font-size: var(--t-meta); color: var(--ink-3); margin: 0 0 var(--s-2); }
++.skill-stem { font-size: var(--t-stem); font-weight: 600; line-height: 1.35; max-width: 34ch; margin: 0 0 var(--s-4); }
++.skill-notes { font-family: var(--num); font-size: var(--t-ui); letter-spacing: 0.02em; overflow-wrap: anywhere; margin: 0 0 var(--s-2); }
++.skill-board { max-width: 360px; margin: 0 0 var(--s-4); }
++.skill-choices { display: grid; gap: var(--s-2); max-width: 520px; }
++.skill-answer { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; max-width: 520px; }
++.skill-answer input { flex: 1 1 200px; min-width: 0; font: inherit; padding: 10px 12px; border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--page); color: var(--ink); }
++.skill-input { margin: 0 0 var(--s-4); }
++.skill-input-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); margin-bottom: var(--s-2); }
++.skill-keys { overflow-x: auto; max-width: 100%; }
++.skill-verdict { display: flex; align-items: center; gap: 8px; font-weight: 600; margin: var(--s-4) 0 var(--s-2); }
++.skill-verdict .mark { width: 24px; height: 24px; flex: none; }
++.skill-verdict.is-right .mark { color: var(--correct); }
++.skill-verdict.is-wrong .mark { color: var(--incorrect); }
++
++/* Basketball counts. */
++.skill-count-form { display: grid; gap: var(--s-4); max-width: 520px; }
++.skill-count-set { border: 0; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
++.skill-count-set legend { font-weight: 600; margin-bottom: var(--s-2); }
++.skill-count { display: grid; grid-template-columns: minmax(0, 1fr) 110px; align-items: center; gap: var(--s-3); }
++.skill-count input { font: inherit; font-family: var(--num); padding: 8px 10px; border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--page); color: var(--ink); width: 100%; }
++.skill-radio { display: flex; gap: 8px; align-items: flex-start; font-size: var(--t-ui-s); }
++
++@media (max-width: 760px) {
++  .skill-now { grid-template-columns: 1fr; }
++  .skill-row { grid-template-columns: 24px minmax(0, 1fr); }
++  .skill-act { grid-column: 2; justify-content: flex-start; }
++  .skill-stem { font-size: var(--t-h3, 1.25rem); }
++  .skill-answer .btn { flex: 1 1 auto; }
++}
+diff --git a/scripts/lib/skills-r3-fixture.js b/scripts/lib/skills-r3-fixture.js
+new file mode 100644
+index 0000000..7772013
+--- /dev/null
++++ b/scripts/lib/skills-r3-fixture.js
+@@ -0,0 +1,96 @@
++/**
++ * Shared set-up for the skills round 3 tests (scripts/skills-r3-*-test.js):
++ * a throwaway data file, every model key blanked, a clock the test moves, an
++ * app with the given routers mounted (the x-user header signs in), and
++ * learners enrolled in a chess, piano or basketball grade.
++ *
++ * Require this first, before anything that loads config/db.
++ */
++const os = require('os');
++const path = require('path');
++const fs = require('fs');
++const http = require('http');
++
++process.env.NODE_ENV = 'test';
++for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
++const tmp = path.join(os.tmpdir(), `skills-r3-${path.basename(require.main ? require.main.filename : 'x', '.js')}-${process.pid}.json`);
++process.env.DB_FILE = tmp;
++for (const k of ['SKILL_RECORD', 'SKILL_STAGE_TESTS', 'SKILL_STAGE_GATE', 'SKILL_DOSE', 'COVERAGE_GATE', 'COVERAGE_RULE', 'ADAPTIVE_TEACHING', 'ADMIN_EMAILS', 'OWNER_EMAIL',
++  'SKILL_MAINT_SHARE', 'SKILL_OVERLEARN', 'SKILL_CARRY_DAYS', 'SKILL_COLD_HOURS', 'SKILL_PROOF_DAYS']) delete process.env[k];
++
++const express = require('express');
++const db = require('../../config/db');
++const curriculum = require('../../config/curriculum');
++
++const HOUR = 3600 * 1000;
++const DAY = 24 * HOUR;
++// The clock: tests move it; everything that calls Date.now() sees it.
++const realNow = Date.now.bind(Date);
++let clock = Date.UTC(2026, 9, 1, 9, 0, 0);
++Date.now = () => clock;
++const at = (t) => { clock = t; return clock; };
++const later = (ms) => { clock += ms; return clock; };
++
++let failures = 0;
++function check(label, ok, detail) {
++  if (ok) { console.log(`  ok   ${label}`); return; }
++  failures++;
++  console.log(`  FAIL ${label}${detail === undefined ? '' : ` — ${JSON.stringify(detail).slice(0, 500)}`}`);
++}
++
++let n = 0;
++/** A learner enrolled in a grade, standing on `level` (default 1; 'final' for the grade's Final). */
++function learner(track, gradeId, level = 1, extra = {}) {
++  n += 1;
++  const grade = curriculum.getGrade(track, gradeId);
++  const final = grade.levels.find((l) => l.kind === 'graduation').level;
++  const user = db.insert('users', { email: `sk${n}-${process.pid}@example.test`, display_name: `Tester ${n}`, password_hash: 'x', streak: 0, xp: 0, onboarded: true });
++  const lvl = level === 'final' ? final : level;
++  const enrollment = db.insert('enrollments', {
++    user_id: user.id, track_id: track, grade_id: gradeId, target_level: grade.pathLength, current_level: lvl,
++    level_items: 0, levels_completed: lvl - 1, xp: 0, status: 'active', pending_checkpoint: null, placed_at: new Date(clock).toISOString(), ...extra,
++  });
++  return { user, enrollment, grade, final };
++}
++
++/** An app with the routers mounted under /api; the x-user header is the signed-in account. */
++function serve(routers) {
++  const app = express();
++  app.use(express.json());
++  app.use((req, res, next) => { req.user = db.byId('users', Number(req.headers['x-user'])) || null; next(); });
++  for (const r of routers) app.use('/api', r);
++  app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' }));
++  return new Promise((resolve) => {
++    const server = app.listen(0, '127.0.0.1', () => {
++      const port = server.address().port;
++      const call = (method, url, body, uid) => new Promise((done, fail) => {
++        const data = body ? JSON.stringify(body) : null;
++        const req = http.request({ host: '127.0.0.1', port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
++          let text = '';
++          res.on('data', (c) => { text += c; });
++          res.on('end', () => { let json = null; try { json = JSON.parse(text); } catch { json = text; } done({ status: res.statusCode, json }); });
++        });
++        req.on('error', fail);
++        if (data) req.write(data);
++        req.end();
++      });
++      resolve({ get: (u, uid) => call('GET', u, null, uid), post: (u, b, uid) => call('POST', u, b || {}, uid), close: () => server.close() });
++    });
++  });
++}
++
++/** Load a module fresh, by its path from the repo root ('routes/skills'). */
++function fresh(mod) {
++  const p = require.resolve(path.join(__dirname, '..', '..', mod));
++  delete require.cache[p];
++  return require(p);
++}
++
++function done() {
++  try { fs.unlinkSync(tmp); } catch { /* not written */ }
++  try { fs.unlinkSync(`${tmp}.tmp`); } catch { /* not written */ }
++  console.log(failures ? `\n${failures} FAILED` : '\nPASS');
++  process.exit(failures ? 1 : 0);
++}
++
++module.exports = { db, curriculum, HOUR, DAY, at, later, now: () => clock, realNow, check, learner, serve, fresh, done, failures: () => failures };
+diff --git a/scripts/skills-r3-record-test.js b/scripts/skills-r3-record-test.js
+new file mode 100644
+index 0000000..57217f9
+--- /dev/null
++++ b/scripts/skills-r3-record-test.js
+@@ -0,0 +1,134 @@
++/**
++ * Tests for the skill record store (staged skills round 3, patch
++ * 01-skill-record): services/skill-record.js, routes/skills.js, the
++ * skill_records collection and its place in the consent export and deletion.
++ *
++ *   node scripts/skills-r3-record-test.js
++ *
++ * Throwaway data file, keys blanked, no model call, no network.
++ */
++const F = require('./lib/skills-r3-fixture');
++const fs = require('fs');
++const path = require('path');
++
++const { db, check, learner, serve, fresh, HOUR, DAY, at, later, now } = F;
++const record = require('../services/skill-record');
++const sc = require('../services/skill-coverage');
++
++(async () => {
++  console.log('skills round 3, patch 01: the skill record store');
++
++  // ── the store and the consent rules ──
++  check('the skill_records collection exists', (() => { try { db.all('skill_records'); return true; } catch { return false; } })());
++  const consentSrc = fs.readFileSync(path.join(__dirname, '..', 'routes', 'consent.js'), 'utf8');
++  const known = consentSrc.slice(consentSrc.indexOf('const KNOWN_COLLECTIONS'), consentSrc.indexOf('];', consentSrc.indexOf('const KNOWN_COLLECTIONS')));
++  check('routes/consent.js lists skill_records, so the parent export and a deletion reach its rows', known.includes("'skill_records'"));
++  check('the progressions are in the app (content/skill-progressions)', sc.stagesFor('chess').length === 10 && sc.stagesFor('piano').length === 8 && sc.stagesFor('basketball').length === 7);
++  for (const s of sc.SUBJECTS) check(`${s}: every stage has an exit battery with tests, pass rules and sources`, sc.validate(s).ok, sc.validate(s).problems.slice(0, 2));
++
++  // ── off: every route answers 404 ──
++  const routes = fresh('routes/skills');
++  const app = await serve([routes]);
++  const chess = learner('chess', 'chess_rules_learner');
++  let r = await app.get(`/api/skills/record/${chess.enrollment.id}`, chess.user.id);
++  check('off: GET /api/skills/record answers 404', r.status === 404, r);
++  r = await app.get(`/api/skills/path/${chess.enrollment.id}`, chess.user.id);
++  check('off: GET /api/skills/path answers 404', r.status === 404, r);
++
++  process.env.SKILL_RECORD = 'on';
++  r = await app.get(`/api/skills/record/${chess.enrollment.id}`, chess.user.id);
++  check('on: the record names the stage of the grade (chess_rules_learner is CH1)', r.status === 200 && r.json.record.stage.id === 'CH1' && r.json.record.metrics.length === 4, r.json && r.json.record && r.json.record.stage);
++  check('...every metric unproven, nothing stored before a sitting', r.json.record.metrics.every((m) => m.status === 'unproven' && m.sittings === 0) && db.find('skill_records', (x) => x.user_id === chess.user.id).length === 0);
++  const other = learner('chess', 'chess_board_explorer');
++  r = await app.get(`/api/skills/record/${chess.enrollment.id}`, other.user.id);
++  check("someone else's enrollment is not found", r.status === 404, r.status);
++  r = await app.get(`/api/skills/record/${chess.enrollment.id}`, null);
++  check('signed out: 401', r.status === 401);
++  const math = learner('math', 'numbers_to_10');
++  r = await app.get(`/api/skills/record/${math.enrollment.id}`, math.user.id);
++  check('a subject that is not chess, piano or basketball has no skill record', r.status === 404);
++  r = await app.get(`/api/skills/path/${chess.enrollment.id}`, chess.user.id);
++  check('the path rows: none while the parts (02-04) are off or not applied', r.status === 200 && Array.isArray(r.json.nodes) && r.json.nodes.length === 0, r.json);
++
++  // ── sittings: cold or warm, day, source, confirmation ──
++  const uid = chess.user.id;
++  const id = 'CH1:check_mate_stalemate_id';
++  at(Date.UTC(2026, 9, 1, 9));
++  let out = record.sit(uid, { subject: 'chess', metricId: id, pass: true, source: 'board', kind: 'stage_test', score: 0.95, n: 20 });
++  check('a first sitting is cold and counts', out.counted && out.sitting.cold && out.row.status === 'unproven');
++  check('...and is stored with its day, source word, class, score and kind', out.sitting.day === '2026-10-01' && out.sitting.source_word === 'board' && out.sitting.source === 'exact' && out.sitting.score === 0.95 && out.sitting.kind === 'stage_test' && out.sitting.at_iso);
++  later(2 * HOUR);
++  out = record.sit(uid, { subject: 'chess', metricId: id, pass: true, source: 'board' });
++  check('a second sitting the same day is warm and does not count', !out.counted && !out.sitting.cold && /warm/.test(out.why), out.why);
++  at(Date.UTC(2026, 9, 2, 6));
++  record.practise(uid, { subject: 'chess', metricId: id, atTarget: true });
++  later(4 * HOUR);
++  out = record.sit(uid, { subject: 'chess', metricId: id, pass: true, source: 'board' });
++  check('four hours after practising it, a sitting is warm', !out.counted && out.row.status === 'unproven');
++  check('coldAt says when the next sitting will be cold (20 hours after practice, the next day)', record.coldAt(out.row, now()) >= Date.UTC(2026, 9, 3, 0) - 1);
++  at(Date.UTC(2026, 9, 3, 9));
++  out = record.sit(uid, { subject: 'chess', metricId: id, pass: true, source: 'board' });
++  check('cold passes on two different days prove the metric', out.counted && out.proved && out.row.status === 'proven', out.row.status);
++  const audit = record.auditStage(uid, 'chess', 'CH1').find((x) => x.id === id);
++  check('...and the proof re-derives from its sittings', audit.holds && audit.holds.ok, audit);
++
++  // Retaking until two lucky passes come cannot prove a metric.
++  const id2 = 'CH1:mate_in_1_unannounced';
++  at(Date.UTC(2026, 9, 1, 9)); record.sit(uid, { subject: 'chess', metricId: id2, pass: true, source: 'board' });
++  at(Date.UTC(2026, 9, 2, 9)); record.sit(uid, { subject: 'chess', metricId: id2, pass: false, source: 'board' });
++  at(Date.UTC(2026, 9, 3, 9)); out = record.sit(uid, { subject: 'chess', metricId: id2, pass: true, source: 'board' });
++  check('pass, miss, pass on three days is not proof (the belief)', out.counted && out.row.status === 'unproven', out.row.B);
++  at(Date.UTC(2026, 9, 4, 9)); out = record.sit(uid, { subject: 'chess', metricId: id2, pass: true, source: 'board' });
++  check('...one more cold pass is', out.row.status === 'proven', out.row.B);
++
++  // Sources: an estimate counts only confirmed; a source the metric does not list never counts.
++  const piano = learner('piano', 'piano_first_reader');
++  const pid = 'PI2:pieces';
++  at(Date.UTC(2026, 9, 1, 9)); out = record.sit(piano.user.id, { subject: 'piano', metricId: pid, pass: true, source: 'mic' });
++  check('a microphone take unconfirmed is recorded and does not count', !out.counted && out.sitting.source === 'estimate' && /confirmed/.test(out.why), out.why);
++  at(Date.UTC(2026, 9, 2, 9)); out = record.sit(piano.user.id, { subject: 'piano', metricId: pid, pass: true, source: 'mic', confirmed: true });
++  check('a confirmed microphone take counts', out.counted && out.sitting.confirmed);
++  at(Date.UTC(2026, 9, 3, 9)); out = record.sit(piano.user.id, { subject: 'piano', metricId: pid, pass: true, source: 'on-screen' });
++  check('on-screen keys never count for a metric that lists only MIDI and the microphone', !out.counted && /not a source this metric lists/.test(out.why), out.why);
++  at(Date.UTC(2026, 9, 4, 9)); out = record.sit(piano.user.id, { subject: 'piano', metricId: pid, pass: true, source: 'midi' });
++  check('MIDI counts, and with the confirmed microphone day it proves the metric', out.counted && out.row.status !== 'unproven', out.row.status);
++  const bb = learner('basketball', 'basketball_mini_starter');
++  at(Date.UTC(2026, 9, 1, 9)); out = record.sit(bb.user.id, { subject: 'basketball', metricId: 'BB1:layup_both_hands', pass: true, source: 'camera', confirmed: true });
++  check('basketball: a confirmed camera count counts where the metric lists the camera', out.counted && out.sitting.source === 'estimate');
++  const bb2 = learner('basketball', 'basketball_mini_player');
++  out = record.sit(bb2.user.id, { subject: 'basketball', metricId: 'BB2:form_shots_1m', pass: true, source: 'camera', confirmed: true });
++  check('...and never where it does not (BB2 form shots list only counts)', !out.counted, out.why);
++  out = record.sit(bb2.user.id, { subject: 'basketball', metricId: 'BB2:warmup_habit', pass: true, source: 'log' });
++  check('an attested-only metric is recorded and never counts', !out.counted && /attested/.test(out.why), out.why);
++  check('an unknown metric is refused', !!record.sit(uid, { subject: 'chess', metricId: 'CH1:nope', pass: true, source: 'board' }).error);
++
++  // Retention and the battery standing at exit.
++  const c2 = learner('chess', 'chess_rules_learner');
++  const st = record.stageFor('chess', 'chess_rules_learner');
++  at(Date.UTC(2026, 10, 1, 9));
++  for (const mt of st.metrics) record.sit(c2.user.id, { subject: 'chess', metricId: mt.id, pass: true, source: mt.id.endsWith('legal_game') ? 'games' : 'board' });
++  at(Date.UTC(2026, 10, 2, 9));
++  for (const mt of st.metrics) record.sit(c2.user.id, { subject: 'chess', metricId: mt.id, pass: true, source: mt.id.endsWith('legal_game') ? 'games' : 'board' });
++  let v = record.stageView(c2.user.id, c2.enrollment, now());
++  check('proven on two days, the stage still waits on its retention tests (CH1 asks again after 7+ days)', v.gate.unkept.length === 4 && v.gate.missing.length === 0 && v.metrics.every((m) => m.retention_due_at), v.gate);
++  at(Date.UTC(2026, 10, 10, 9));
++  for (const mt of st.metrics) record.sit(c2.user.id, { subject: 'chess', metricId: mt.id, pass: true, source: mt.id.endsWith('legal_game') ? 'games' : 'board' });
++  v = record.stageView(c2.user.id, c2.enrollment, now());
++  check('after the retention sittings every metric is kept', v.gate.unkept.length === 0 && v.metrics.every((m) => m.status === 'retained'), v.gate);
++  check('the knowledge side comes from the coverage gate of the stage\'s grade', v.knowledge.length === 1 && v.knowledge[0].id === 'chess_rules_learner' && v.gate.knowledge_ok === v.knowledge[0].complete);
++  at(Date.UTC(2026, 10, 19, 9));
++  v = record.stageView(c2.user.id, c2.enrollment, now());
++  check('a proof over 7 days old is stale: the battery must stand when the stage is left', v.gate.stale.length === 4 && v.metrics.every((m) => m.stale), v.gate.stale);
++
++  // Deletion reaches skill rows.
++  const consent = require('../routes/consent');
++  const kid = learner('piano', 'piano_keyboard_explorer');
++  record.sit(kid.user.id, { subject: 'piano', metricId: 'PI0:find_keys', pass: true, source: 'midi' });
++  const c = db.insert('parental_consents', { child_user_id: kid.user.id, status: 'active', parent_email: 'p@example.test', history: [] });
++  check('a child has a skill row before deletion', db.find('skill_records', (x) => x.user_id === kid.user.id).length === 1);
++  try { consent.deleteChild(db.byId('parental_consents', c.id), 'parent_request', 'test'); } catch (err) { check(`deleteChild ran (${err.message})`, false); }
++  check("deleting a child's account removes its skill records", db.find('skill_records', (x) => x.user_id === kid.user.id).length === 0);
++
++  app.close();
++  F.done();
++})().catch((err) => { console.error(err); process.exit(1); });

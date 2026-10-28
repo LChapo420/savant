@@ -1,0 +1,73 @@
+[
+ {
+  "grade_id": "expert_reasoning",
+  "index": 1,
+  "action": "rewrite",
+  "why": "Ambiguous key, confirmed by counting: 90, 60, 84 and 72 all have exactly 12 positive divisors. Exactly one option may satisfy the condition."
+ },
+ {
+  "grade_id": "expert_reasoning",
+  "index": 2,
+  "action": "rewrite",
+  "why": "Wrong key, confirmed: sigma(2^3*3^2*5) = 15*13*6 = 1170, which is not an option; 2520 is not the divisor sum. Work the arithmetic and make sure the right value is an option."
+ },
+ {
+  "grade_id": "expert_reasoning",
+  "index": 3,
+  "action": "rewrite",
+  "why": "Wrong key, confirmed: the sequence mod 7 is 3,0,1,3,0,1 so a6 = 1, not an option. Work every step and make sure the right value is an option."
+ },
+ {
+  "grade_id": "expert_reasoning",
+  "index": 5,
+  "action": "rewrite",
+  "why": "Wrong key, confirmed: 0.42/0.48 = 0.875, keyed 0.81. Work the arithmetic exactly and use an exact option."
+ },
+ {
+  "grade_id": "frontier_reasoning",
+  "index": 0,
+  "action": "rewrite",
+  "why": "Ambiguous: (An+B)2^n is also a valid particular-solution form, so two options are defensible."
+ },
+ {
+  "grade_id": "frontier_reasoning",
+  "index": 4,
+  "action": "rewrite",
+  "why": "Flawed: the aggregation rule is circular on a cyclic graph (A attacks B, B supports C, C attacks A), so no single value follows."
+ },
+ {
+  "grade_id": "formal_and_original_thinking",
+  "index": 0,
+  "action": "keep",
+  "why": "Key correct, source-checked: 2 -> 7 -> 6 -> 3 -> 2, cycle length 4 (judge B's own trace gives 4).",
+  "prompt": "Consider the function f(x) = (3x + 1) mod 8. Starting from x₀ = 2, what is the length of the cycle reached?"
+ },
+ {
+  "grade_id": "extreme_difficulty_reasoning",
+  "index": 1,
+  "action": "keep",
+  "why": "Key correct, source-checked: phi(55) = 40, gcd(3,40) = 1; e is odd, 3 < 40, 3 does not divide 40 (judge B's own note concludes the key is correct).",
+  "prompt": "In RSA, the public exponent e must be coprime to φ(n). For n = 55 (5·11) and e = 3, which statement about e is true?"
+ },
+ {
+  "grade_id": "frontier_reasoning",
+  "index": 2,
+  "action": "keep",
+  "why": "Key correct, source-checked: 3! * (1/2 + 1/6) = 4 (involutions of a 3-set); judge B's own working gives 4.",
+  "prompt": "In the exponential generating function e^{x + x^2/2}, what is the coefficient of x^3/3! ?"
+ },
+ {
+  "grade_id": "extreme_difficulty_reasoning",
+  "index": 4,
+  "action": "rewrite",
+  "why": "A: without a regularity assumption the solution set is larger (x² plus any additive function). Confirmed; the prompt now says continuous, which makes x² + cx the unique answer.",
+  "done_by": "claude"
+ },
+ {
+  "grade_id": "extreme_difficulty_reasoning",
+  "index": 5,
+  "action": "rewrite",
+  "why": "A: the sum of elements also strictly decreases (by min(a,b)). Confirmed by working it; that option is replaced by \"Number of nonzero elements\", which can stay the same.",
+  "done_by": "claude"
+ }
+]

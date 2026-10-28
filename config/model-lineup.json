@@ -1,0 +1,610 @@
+{
+  "_doc": "Which NVIDIA build model answers which work. Read by services/providers/nvidia.js on every call (cached, re-read when the file changes). Tiers are the owner's lineup; roles map the app's provider roles to a tier; tasks override a role for one call site and are written by scripts/model-lineup-eval.js from measured results. Each model entry is {model, effort}; effort is off|low|medium|high|max. Env overrides: NVIDIA_TIER_<TIER>, NVIDIA_ROLE_<ROLE>, NVIDIA_TASK_<TASK> as 'model@effort,model@effort' (or a tier name for roles). See curriculum-build/MODEL-LINEUP.md.",
+  "version": 1,
+  "source": "scripts/model-lineup-eval.js run 2026-10-23T01:39:31.990Z (curriculum-build/model-lineup/EVAL-REPORT.md)",
+  "updated_at": "2026-10-23T01:39:32.332Z",
+  "tiers": {
+    "instant": [
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "effort": "off"
+      },
+      {
+        "model": "nvidia/nemotron-3-ultra-550b-a55b",
+        "effort": "off"
+      }
+    ],
+    "light": [
+      {
+        "model": "nvidia/nemotron-3-ultra-550b-a55b",
+        "effort": "medium"
+      },
+      {
+        "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "effort": "high"
+      }
+    ],
+    "fast_thinking": [
+      {
+        "model": "z-ai/glm-5.3-flash",
+        "effort": "high"
+      },
+      {
+        "model": "deepseek-ai/deepseek-v4.1-flash",
+        "effort": "high"
+      }
+    ],
+    "hard": [
+      {
+        "model": "deepseek-ai/deepseek-v4.1-flash",
+        "effort": "max"
+      },
+      {
+        "model": "z-ai/glm-5.3",
+        "effort": "max"
+      }
+    ]
+  },
+  "spill": {
+    "instant": [
+      "light",
+      "fast_thinking"
+    ],
+    "light": [
+      "fast_thinking"
+    ],
+    "fast_thinking": [
+      "hard"
+    ],
+    "hard": []
+  },
+  "roles": {
+    "fast": "light",
+    "check": "light",
+    "deep": "hard",
+    "author": "hard",
+    "regen": "fast_thinking",
+    "diagnose": "hard",
+    "rewrite": "hard",
+    "personalize": "fast_thinking",
+    "games": "hard",
+    "blocks": "fast_thinking",
+    "placement": "hard"
+  },
+  "tasks": {
+    "grade_free_response": {
+      "tier": "hard",
+      "models": [
+        {
+          "model": "z-ai/glm-5.3",
+          "effort": "max"
+        },
+        {
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "effort": "medium"
+        },
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "effort": "high"
+        }
+      ],
+      "eval": {
+        "task": "grading",
+        "winner": "glm-5.3@max",
+        "accuracy": 0.938,
+        "cases": 48,
+        "median_ms": 71336,
+        "at": "2026-10-23T01:39:31.990Z"
+      }
+    },
+    "coach_turn": {
+      "tier": "light"
+    },
+    "tutor_explain": {
+      "tier": "light"
+    },
+    "remediation_teach": {
+      "tier": "light"
+    },
+    "assist_help": {
+      "tier": "light"
+    },
+    "spanish_partner_turn": {
+      "tier": "instant"
+    },
+    "spanish_rubric": {
+      "tier": "fast_thinking"
+    },
+    "author_items": {
+      "tier": "hard"
+    },
+    "lesson_write": {
+      "tier": "hard"
+    },
+    "lesson_write_urgent": {
+      "tier": "fast_thinking"
+    },
+    "essay_prompt": {
+      "tier": "fast_thinking"
+    },
+    "essay_grade": {
+      "tier": "hard"
+    },
+    "analyze_session": {
+      "tier": "fast_thinking"
+    },
+    "regen_items": {
+      "tier": "fast_thinking"
+    },
+    "diagnose": {
+      "tier": "hard"
+    },
+    "personalize_read": {
+      "tier": "fast_thinking"
+    },
+    "level_editor": {
+      "tier": "hard"
+    },
+    "block_layout": {
+      "tier": "fast_thinking"
+    },
+    "block_fill": {
+      "tier": "hard"
+    },
+    "game_questions": {
+      "tier": "hard"
+    },
+    "fact_claims": {
+      "tier": "light"
+    },
+    "fact_read": {
+      "tier": "hard",
+      "eval": {
+        "task": "facts",
+        "winner": null,
+        "best": "glm-5.3@max",
+        "quality": 0.575,
+        "cases": 40,
+        "at": "2026-10-23T01:39:31.990Z",
+        "note": "no free model reached 0.75; tier default kept"
+      }
+    },
+    "fact_verify": {
+      "tier": "hard",
+      "eval": {
+        "task": "facts",
+        "winner": null,
+        "best": "glm-5.3@max",
+        "quality": 0.575,
+        "cases": 40,
+        "at": "2026-10-23T01:39:31.990Z",
+        "note": "no free model reached 0.75; tier default kept"
+      }
+    },
+    "fact_repair": {
+      "tier": "hard"
+    },
+    "blind_mc": {
+      "tier": "light",
+      "models": [
+        {
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "effort": "medium"
+        },
+        {
+          "model": "z-ai/glm-5.3",
+          "effort": "max"
+        },
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "effort": "high"
+        }
+      ],
+      "eval": {
+        "task": "blind",
+        "winner": "ultra@medium",
+        "accuracy": 1,
+        "cases": 48,
+        "median_ms": 10506,
+        "at": "2026-10-23T01:39:31.990Z"
+      }
+    },
+    "placement_key_judge": {
+      "tier": "light",
+      "models": [
+        {
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "effort": "medium"
+        },
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "effort": "high"
+        },
+        {
+          "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "keys",
+        "winner": "ultra@medium",
+        "accuracy": 1,
+        "cases": 40,
+        "median_ms": 7614,
+        "at": "2026-10-23T01:39:31.990Z"
+      }
+    },
+    "placement_unit_judge": {
+      "tier": "light",
+      "models": [
+        {
+          "model": "nvidia/nemotron-3-ultra-550b-a55b",
+          "effort": "medium"
+        },
+        {
+          "model": "z-ai/glm-5.3-flash",
+          "effort": "high"
+        },
+        {
+          "model": "deepseek-ai/deepseek-v4.1-flash",
+          "effort": "max"
+        }
+      ],
+      "eval": {
+        "task": "units",
+        "winner": "ultra@medium",
+        "accuracy": 0.9,
+        "cases": 30,
+        "median_ms": 20501,
+        "at": "2026-10-23T01:39:31.990Z"
+      }
+    },
+    "spanish_reaction": {
+      "tier": "light"
+    }
+  },
+  "jev": {
+    "_doc": "Jev (typesafe/jev-1.13 on OpenRouter, paid) is used for a task only when enabled here AND JEV_ENABLED=1, AND the persistent ledger data/jev-ledger.json has budget. The eval sets these from measured results.",
+    "grade_free_response": false,
+    "blind_mc": false
+  },
+  "grading": {
+    "stages": [
+      {
+        "name": "fast",
+        "judges": [
+          "ultra-any",
+          "lightning"
+        ]
+      },
+      {
+        "name": "escalate",
+        "judges": [
+          "glm-max"
+        ]
+      },
+      {
+        "name": "tiebreak",
+        "judges": [
+          "or-ultra"
+        ]
+      },
+      {
+        "name": "free_fallback",
+        "judges": [
+          "or-gemma",
+          "qwen9-local"
+        ],
+        "when": "unresolved"
+      },
+      {
+        "name": "claude",
+        "judges": [
+          "claude"
+        ],
+        "when": "unresolved"
+      }
+    ],
+    "strong": [
+      "ultra",
+      "ultra-any",
+      "glm-max",
+      "glm-flash",
+      "or-ultra",
+      "claude"
+    ],
+    "veto": [],
+    "min_correct": 2,
+    "min_incorrect": 2,
+    "min_incorrect_strong": 1,
+    "min_strong_correct": 1,
+    "accept_margin": 1,
+    "min_confidence": 0.6,
+    "interactive_budget_ms": 25000,
+    "local_stages": [
+      {
+        "name": "local",
+        "judges": [
+          "qwen-local",
+          "qwen9-local"
+        ]
+      }
+    ],
+    "eval": {
+      "run": "2026-10-24T13:11:33.061Z",
+      "prompt_hash": "e3e56f480b",
+      "cases": 585,
+      "adversarial_cases": 44,
+      "adversarial_false_accepts": 0,
+      "false_accepts": 0,
+      "false_rejects": 4,
+      "accuracy": 0.9932,
+      "judged_median_ms": 59236,
+      "judged_p95_ms": 180555,
+      "policy": "MAJORITY ultra-any+lightning > glm-max > or-ultra | strong correct>=1 | margin>=1",
+      "judges_collected": "NVIDIA only: ultra, lightning (all cases), glm-max (cases the fast pair left open); 2026-10-24 security follow-up, fenced prompt"
+    },
+    "note": "Chosen 2026-10-23 from curriculum-build/grading-cascade/REPORT.md: the best policy with 0 false accepts. Fast pass: Ultra (NVIDIA, else the same model free on OpenRouter) and Lightning in parallel; agreement settles it. On disagreement GLM 5.3 @max decides by majority (accept needs more right than wrong votes and at least one strong judge); OpenRouter Ultra breaks a tie when GLM cannot answer. Unsettled answers are held as being checked, then closed as not accepted.",
+    "eval_previous": {
+      "run": "2026-10-23T06:24:47.408Z",
+      "prompt_hash": "f452f8d22a",
+      "cases": 541,
+      "false_accepts": 0,
+      "false_rejects": 4,
+      "accuracy": 0.9926,
+      "judged_median_ms": 60768,
+      "judged_p95_ms": 230640,
+      "policy": "MAJORITY ultra-any+lightning > glm-max > - | strong correct>=1 | margin>=1"
+    }
+  },
+  "tiers_note": "Owner 2026-10-23: for hard work, DeepSeek V4.1 Flash @max goes before GLM 5.3 @max (slightly higher on the AA index at about an eighth of the cost per task, which matters if NVIDIA free limits track cost). Only typed-answer grading keeps GLM 5.3 @max as its tie-breaker (services/typed-grading.js policy, measured 0 false accepts) until deepseek-max is measured on the 541 grading cases. Fact checking now tries DeepSeek first: both scored near chance closed-book, so neither is trusted alone there.",
+  "pool": {
+    "_doc": "The model pool (services/pool.js, curriculum-build/MODEL-LINEUP.md \"The model pool\"). The app's own chain (services/providers/index.js, in its preference order) supplies the slots NVIDIA / local / Gemini free / OpenRouter :free / Claude; the extra_slots below are further slots that exist only for PIPELINE-class work (scripts, the night runner, shared base levels): a request must say dataClass \"pipeline\" and carry no userId, or these slots never see it. A slot that is not in the app's chain serves a task only if tasks.<task>.allow lists it (glob on the slot id, \"*\" wildcard) and a slot matching tasks.<task>.deny never serves it. tasks.<task>.timeout_ms is the hard per-attempt timeout (default 120 s). Prices are USD per million tokens; 0 = free. Paid slots (price > 0) pull work only when the free slots cannot meet a deadline, and only inside their ledger (Standard Compute: data/standard-compute-ledger.json, $15 total; Anthropic: data/anthropic-ledger.json, $24 stop). OpenRouter is never a paid slot: only :free routes with a $0 price cap (services/providers/free-apis.js). LLM Gateway is not used for text.",
+    "version": 1,
+    "breaker_threshold": 3,
+    "breaker_open_ms": 30000,
+    "default_allow": [],
+    "extra_slots": [
+      {
+        "id": "xkiro:minimax/minimax-m3.1-flash",
+        "provider": "xkiro",
+        "model": "minimax/minimax-m3.1-flash",
+        "label": "xKiro MiniMax M3.1 Flash (60M-token grant)",
+        "family": "minimax",
+        "concurrency": 2,
+        "rpm": 20,
+        "hint_ms": 25000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline"
+      },
+      {
+        "id": "xkiro:qwen/qwen3.8-max:free",
+        "provider": "xkiro",
+        "model": "qwen/qwen3.8-max:free",
+        "label": "xKiro Qwen3.8 Max (free plan, 500K tokens/day)",
+        "family": "qwen",
+        "concurrency": 1,
+        "rpm": 6,
+        "hint_ms": 40000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline"
+      },
+      {
+        "id": "xkiro:mistralai/mistral-large-2512",
+        "provider": "xkiro",
+        "model": "mistralai/mistral-large-2512",
+        "label": "xKiro Mistral Large 2512 (free plan)",
+        "family": "mistral",
+        "concurrency": 1,
+        "rpm": 6,
+        "hint_ms": 30000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline"
+      },
+      {
+        "id": "unorouter:gemini-3.6-flash:free",
+        "provider": "unorouter",
+        "model": "gemini-3.6-flash:free",
+        "label": "UnoRouter Gemini 3.6 Flash :free",
+        "family": "google",
+        "concurrency": 1,
+        "rpm": 1,
+        "hint_ms": 30000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline",
+        "supports": [
+          "structured"
+        ]
+      },
+      {
+        "id": "unorouter:nemotron-3-ultra-550b-a55b:free",
+        "provider": "unorouter",
+        "model": "nemotron-3-ultra-550b-a55b:free",
+        "label": "UnoRouter Nemotron Ultra :free",
+        "family": "nemotron",
+        "concurrency": 1,
+        "rpm": 4,
+        "hint_ms": 30000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline",
+        "supports": [
+          "structured"
+        ]
+      },
+      {
+        "id": "unorouter:qwen3.6-35b-a3b:free",
+        "provider": "unorouter",
+        "model": "qwen3.6-35b-a3b:free",
+        "label": "UnoRouter Qwen3.6 35B :free",
+        "family": "qwen",
+        "concurrency": 1,
+        "rpm": 1,
+        "hint_ms": 30000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline",
+        "supports": [
+          "structured"
+        ]
+      },
+      {
+        "id": "unorouter:glm-5.3:free",
+        "provider": "unorouter",
+        "model": "glm-5.3:free",
+        "label": "UnoRouter GLM 5.3 :free",
+        "family": "glm",
+        "concurrency": 1,
+        "rpm": 1,
+        "hint_ms": 40000,
+        "price_in": 0,
+        "price_out": 0,
+        "data_class": "pipeline",
+        "supports": [
+          "structured"
+        ]
+      },
+      {
+        "id": "standard_compute:deepseek/deepseek-v4.1-flash-1017",
+        "provider": "standard_compute",
+        "model": "deepseek/deepseek-v4.1-flash-1017",
+        "label": "Standard Compute DeepSeek V4.1 Flash 1017 (paid)",
+        "family": "deepseek",
+        "concurrency": 6,
+        "rpm": 60,
+        "hint_ms": 6000,
+        "price_in": 0.3,
+        "price_out": 1.2,
+        "data_class": "pipeline",
+        "price_note": "Assumed upper bound; the API reports no cost. The ledger (services/standard-compute-ledger.js) uses these figures, so recorded spend is a ceiling."
+      }
+    ],
+    "tasks": {
+      "night_write": {
+        "allow": [
+          "xkiro:minimax/minimax-m3.1-flash",
+          "xkiro:qwen/*",
+          "unorouter:*",
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "basis": "night-runner writers.json: MiniMax kept 8775 of 15098 drafts, Qwen3.8 Max 641 of 1615, through code checks + two independent blind judges + source checks"
+      },
+      "night_read": {
+        "allow": [
+          "xkiro:minimax/minimax-m3.1-flash",
+          "xkiro:qwen/*",
+          "unorouter:*"
+        ],
+        "basis": "source readers in the night runner; the paid slot is not used for reading"
+      },
+      "night_judge": {
+        "allow": [
+          "xkiro:minimax/minimax-m3.1-flash",
+          "xkiro:qwen/*",
+          "unorouter:*",
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "basis": "blind judges; the night runner still enforces writer/judge family independence on its own lanes"
+      },
+      "pool_batch_test": {
+        "allow": [
+          "xkiro:*",
+          "unorouter:*",
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "basis": "the pool's own measurement batch: short fixed prompts, no learner data"
+      },
+      "lesson_write": {
+        "allow": [
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "timeout_ms": 300000,
+        "basis": "same family as the lineup's hard-tier head (DeepSeek V4.1 Flash); no direct eval on lesson writing"
+      },
+      "block_fill": {
+        "allow": [
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "timeout_ms": 300000,
+        "basis": "as lesson_write"
+      },
+      "block_layout": {
+        "allow": [
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "timeout_ms": 180000,
+        "basis": "as lesson_write"
+      },
+      "game_questions": {
+        "allow": [
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "timeout_ms": 300000,
+        "basis": "as lesson_write"
+      },
+      "author_items": {
+        "allow": [
+          "standard_compute:deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "timeout_ms": 300000,
+        "basis": "as lesson_write"
+      },
+      "lesson_write_urgent": {
+        "timeout_ms": 180000
+      },
+      "fact_read": {
+        "timeout_ms": 300000
+      },
+      "fact_verify": {
+        "timeout_ms": 300000
+      },
+      "fact_repair": {
+        "timeout_ms": 300000
+      },
+      "level_editor": {
+        "timeout_ms": 300000
+      },
+      "essay_grade": {
+        "timeout_ms": 300000
+      },
+      "diagnose": {
+        "timeout_ms": 180000
+      },
+      "grade_free_response": {
+        "timeout_ms": 300000,
+        "deny": [
+          "nvidia:nvidia/nemotron-3.5-lightning-30b-a3b@*"
+        ],
+        "basis": "eval 2026-10-22: Lightning had 1 false accept in 48"
+      },
+      "analyze_session": {
+        "timeout_ms": 180000
+      },
+      "regen_items": {
+        "timeout_ms": 180000
+      },
+      "personalize_read": {
+        "timeout_ms": 180000
+      },
+      "spanish_rubric": {
+        "timeout_ms": 180000
+      },
+      "blind_mc": {
+        "deny": [
+          "nvidia:nvidia/nemotron-3.5-lightning-30b-a3b@*"
+        ],
+        "basis": "eval: Lightning blind MC 0.833 with 8 false flags"
+      },
+      "placement_unit_judge": {
+        "deny": [
+          "nvidia:nvidia/nemotron-3.5-lightning-30b-a3b@*"
+        ],
+        "basis": "eval: Lightning unit location 0.40"
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+ "model": "typesafe/jev-1.13",
+ "cap_usd": 0.08,
+ "start_usage": 0.441234616,
+ "start_at": "2026-10-22T23:20:56.303Z",
+ "readings": [
+  {
+   "at": "2026-10-22T23:20:56.303Z",
+   "label": "before probe",
+   "usage": 0.441234616
+  },
+  {
+   "at": "2026-10-22T23:20:58.855Z",
+   "label": "after probe",
+   "usage": 0.441234616
+  },
+  {
+   "at": "2026-10-22T23:21:04.708Z",
+   "label": "before grading",
+   "usage": 0.441234616
+  },
+  {
+   "at": "2026-10-22T23:21:30.464Z",
+   "label": "before units",
+   "usage": 0.442202002
+  },
+  {
+   "at": "2026-10-22T23:21:44.102Z",
+   "label": "before blind",
+   "usage": 0.445278712
+  },
+  {
+   "at": "2026-10-22T23:22:11.203Z",
+   "label": "before blind",
+   "usage": 0.457182982
+  },
+  {
+   "at": "2026-10-22T23:22:42.633Z",
+   "label": "manual",
+   "usage": 0.461234512
+  },
+  {
+   "at": "2026-10-22T23:23:07.436Z",
+   "label": "manual",
+   "usage": 0.461276428
+  }
+ ],
+ "calls": 540,
+ "failed_calls": 0,
+ "input_tokens": 477186,
+ "reported_cost": 0.020041811999999996,
+ "counted_cost": 0.020041811999999996,
+ "max_cost_per_call": 0.000290556,
+ "by_task": {
+  "probe-grading": {
+   "calls": 2,
+   "input_tokens": 1004,
+   "counted_cost": 0.000042168
+  },
+  "probe-units": {
+   "calls": 1,
+   "input_tokens": 1746,
+   "counted_cost": 0.000073332
+  },
+  "probe-blind": {
+   "calls": 2,
+   "input_tokens": 998,
+   "counted_cost": 0.000041915999999999996
+  },
+  "grading": {
+   "calls": 186,
+   "input_tokens": 92540,
+   "counted_cost": 0.0038866799999999983
+  },
+  "units": {
+   "calls": 149,
+   "input_tokens": 296457,
+   "counted_cost": 0.012451194
+  },
+  "blind": {
+   "calls": 200,
+   "input_tokens": 84441,
+   "counted_cost": 0.003546522000000005
+  }
+ }
+}

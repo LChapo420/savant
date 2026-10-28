@@ -1,0 +1,2069 @@
+<style>
+  #base-lesson-body {
+    --base: #050508;
+    --surface: #0C0C15;
+    --surface-2: #13131F;
+    --surface-3: #1B1B2B;
+    --accent: #F43F5E;
+    --accent-dark: #8B0F26;
+    --accent-glow: rgba(244, 63, 94, 0.45);
+    --violet: #A855F7;
+    --violet-dark: #5B21B6;
+    --violet-glow: rgba(168, 85, 247, 0.38);
+    --cyan: #06B6D4;
+    --cyan-dark: #0E7490;
+    --cyan-glow: rgba(6, 182, 212, 0.38);
+    --gold: #FBBF24;
+    --gold-dark: #92640A;
+    --gold-glow: rgba(251, 191, 36, 0.38);
+    --green: #22C55E;
+    --green-dark: #15803D;
+    --green-glow: rgba(34, 197, 94, 0.38);
+    --text: #E9E9F5;
+    --muted: #8A8AA8;
+    --line: rgba(168, 85, 247, 0.20);
+
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(168, 85, 247, 0.12), transparent 45%),
+      radial-gradient(circle at 92% 6%, rgba(244, 63, 94, 0.12), transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(6, 182, 212, 0.08), transparent 50%),
+      var(--base);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.62;
+    font-size: 15.5px;
+    padding: 0 0 70px;
+    overflow-x: hidden;
+  }
+
+  #base-lesson-body *,
+  #base-lesson-body *::before,
+  #base-lesson-body *::after { box-sizing: border-box; }
+
+  #base-lesson-body .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* ============ HUD ============ */
+  #base-lesson-body .hud {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: linear-gradient(180deg, rgba(5, 5, 8, 0.98), rgba(12, 12, 21, 0.96));
+    border-bottom: 2px solid var(--line);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), inset 0 -1px 0 rgba(244, 63, 94, 0.18);
+    backdrop-filter: blur(8px);
+    padding: 10px 16px 12px;
+  }
+  #base-lesson-body .hud-inner { max-width: 1180px; margin: 0 auto; }
+  #base-lesson-body .hud-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  #base-lesson-body .hud-row + .hud-row { margin-top: 8px; }
+
+  #base-lesson-body .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 6px 11px;
+    border-radius: 8px;
+    border: 2px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    white-space: nowrap;
+  }
+  #base-lesson-body .badge-level {
+    border-color: var(--accent);
+    color: #fff;
+    background: linear-gradient(180deg, rgba(244, 63, 94, 0.32), rgba(244, 63, 94, 0.08));
+    box-shadow: 0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .badge-subject {
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #E4D6FF;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.22), rgba(168, 85, 247, 0.05));
+    box-shadow: 0 3px 0 var(--violet-dark);
+  }
+  #base-lesson-body .badge-grade {
+    border-color: rgba(6, 182, 212, 0.5);
+    color: #C9F4FC;
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05));
+    box-shadow: 0 3px 0 var(--cyan-dark);
+  }
+  #base-lesson-body .badge-callsign {
+    border-color: rgba(251, 191, 36, 0.45);
+    color: #FFE9AE;
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.18), rgba(251, 191, 36, 0.04));
+    box-shadow: 0 3px 0 var(--gold-dark);
+  }
+  #base-lesson-body .callsign-input {
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(251, 191, 36, 0.6);
+    color: #fff;
+    width: 128px;
+    padding: 0 0 1px;
+    outline: none;
+  }
+
+  #base-lesson-body .xp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--green);
+    color: #CFFFE0;
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.24), rgba(34, 197, 94, 0.05));
+    box-shadow: 0 3px 0 var(--green-dark);
+    white-space: nowrap;
+  }
+  #base-lesson-body .xp-chip b { color: #fff; font-size: 0.85rem; }
+
+  #base-lesson-body .gauge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 260px;
+    min-width: 220px;
+  }
+  #base-lesson-body .gauge-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  #base-lesson-body .gauge {
+    position: relative;
+    flex: 1 1 auto;
+    height: 16px;
+    border-radius: 9px;
+    border: 2px solid rgba(168, 85, 247, 0.45);
+    background: #08080F;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9);
+  }
+  #base-lesson-body .gauge-fill {
+    height: 100%;
+    width: 25%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--violet), var(--accent) 55%, var(--gold));
+    box-shadow: 0 0 14px var(--accent-glow);
+    transition: width 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  #base-lesson-body .gauge-val {
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  #base-lesson-body .gauge-wrap.secured .gauge { border-color: var(--green); }
+  #base-lesson-body .gauge-wrap.secured .gauge-fill {
+    background: linear-gradient(90deg, var(--green), #A3E635);
+    box-shadow: 0 0 18px var(--green-glow);
+  }
+  #base-lesson-body .gauge-wrap.secured .gauge-val { color: var(--green); }
+
+  #base-lesson-body .mission {
+    margin: 10px 0 0;
+    font-size: 0.82rem;
+    color: #B9B9D2;
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+    line-height: 1.5;
+  }
+  #base-lesson-body .mission b { color: #fff; }
+
+  /* ============ SECTIONS ============ */
+  #base-lesson-body .sec { margin: 34px 0 0; }
+  #base-lesson-body .sec-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  #base-lesson-body .sec-num {
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 7px;
+    padding: 3px 9px;
+    background: rgba(244, 63, 94, 0.1);
+    box-shadow: 0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .sec-title {
+    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    color: #fff;
+  }
+  #base-lesson-body .sec-sub {
+    font-size: 0.74rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-left: auto;
+  }
+
+  #base-lesson-body .card {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+  #base-lesson-body .card + .card { margin-top: 16px; }
+  #base-lesson-body .card h3 {
+    margin: 0 0 10px;
+    font-size: 0.86rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 900;
+  }
+  #base-lesson-body .card h4 {
+    margin: 14px 0 6px;
+    font-size: 0.74rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 900;
+  }
+  #base-lesson-body p { margin: 0 0 10px; }
+  #base-lesson-body ul, #base-lesson-body ol { margin: 0 0 10px; padding-left: 20px; }
+  #base-lesson-body li { margin-bottom: 5px; }
+  #base-lesson-body em { color: #FFF2B8; font-style: italic; }
+  #base-lesson-body strong { color: #fff; }
+  #base-lesson-body .muted { color: var(--muted); font-size: 0.82rem; }
+
+  #base-lesson-body .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  #base-lesson-body .grid-2 > .card { margin-top: 0; }
+
+  /* Tag pills for color-coded syntax */
+  #base-lesson-body .tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid currentColor;
+    margin-right: 6px;
+    vertical-align: 1px;
+    white-space: nowrap;
+  }
+  #base-lesson-body .tag-core { color: #FF8FA5; background: rgba(244, 63, 94, 0.14); }
+  #base-lesson-body .tag-ground { color: #67E8F9; background: rgba(6, 182, 212, 0.14); }
+  #base-lesson-body .tag-warrant { color: #D8B4FE; background: rgba(168, 85, 247, 0.16); }
+  #base-lesson-body .tag-scope { color: #FDE68A; background: rgba(251, 191, 36, 0.14); }
+  #base-lesson-body .tag-bound { color: #86EFAC; background: rgba(34, 197, 94, 0.14); }
+
+  #base-lesson-body .workex {
+    border: 2px solid rgba(168, 85, 247, 0.32);
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.08), rgba(12, 12, 21, 0.6));
+  }
+  #base-lesson-body .workex-head {
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 10px;
+    border-bottom: 1px dashed rgba(168, 85, 247, 0.35);
+    padding-bottom: 6px;
+  }
+  #base-lesson-body .workex p { font-size: 0.87rem; }
+  #base-lesson-body .workex-verdict {
+    margin-top: 12px;
+    border-left: 3px solid var(--green);
+    background: rgba(34, 197, 94, 0.08);
+    padding: 9px 12px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.84rem;
+    color: #D6FFE4;
+  }
+  #base-lesson-body .workex-verdict b { color: #fff; }
+
+  /* ============ PODS ============ */
+  #base-lesson-body .pod {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.55);
+    position: relative;
+    overflow: hidden;
+  }
+  #base-lesson-body .pod::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--violet), var(--cyan));
+    opacity: 0.85;
+  }
+  #base-lesson-body .pod-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 4px 0 10px;
+  }
+  #base-lesson-body .pod-icon {
+    font-size: 1.25rem;
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+  }
+  #base-lesson-body .pod-title {
+    font-size: 0.86rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  #base-lesson-body .pod-sub {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  #base-lesson-body .pod h4 { color: var(--gold); }
+  #base-lesson-body .pod ul { font-size: 0.84rem; }
+  #base-lesson-body .pod p { font-size: 0.84rem; }
+  #base-lesson-body .risk {
+    border-left: 3px solid var(--accent);
+    background: rgba(244, 63, 94, 0.08);
+    padding: 8px 11px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.82rem;
+    color: #FFD5DE;
+    margin: 10px 0;
+  }
+  #base-lesson-body .risk b { color: #fff; }
+  #base-lesson-body .excerpt {
+    background: #07070D;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 9px;
+    padding: 10px 12px;
+    font-size: 0.83rem;
+    color: #CFEFF7;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  #base-lesson-body .diag {
+    font-size: 0.81rem;
+    color: #C9C9E0;
+    background: rgba(6, 182, 212, 0.06);
+    border: 1px dashed rgba(6, 182, 212, 0.3);
+    border-radius: 9px;
+    padding: 9px 11px;
+  }
+  #base-lesson-body .diag b { color: var(--cyan); }
+
+  /* ============ BUTTONS ============ */
+  #base-lesson-body .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 11px 16px;
+    border-radius: 10px;
+    border: 2px solid var(--accent);
+    background: linear-gradient(180deg, rgba(244, 63, 94, 0.24), rgba(244, 63, 94, 0.06));
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--accent-dark);
+    transition: box-shadow 0.16s ease, transform 0.08s ease, background 0.16s ease;
+    text-align: center;
+    line-height: 1.25;
+  }
+  #base-lesson-body .btn:hover {
+    box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: 0 4px 0 #1a1a1a; }
+  #base-lesson-body .btn:disabled:active { transform: none; }
+
+  #base-lesson-body .btn-cyan {
+    border-color: var(--cyan);
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.24), rgba(6, 182, 212, 0.06));
+    box-shadow: 0 4px 0 var(--cyan-dark);
+  }
+  #base-lesson-body .btn-cyan:hover { box-shadow: 0 4px 14px var(--cyan-glow), 0 4px 0 var(--cyan-dark); }
+  #base-lesson-body .btn-cyan:active { box-shadow: 0 2px 0 var(--cyan-dark); }
+
+  #base-lesson-body .btn-violet {
+    border-color: var(--violet);
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.24), rgba(168, 85, 247, 0.06));
+    box-shadow: 0 4px 0 var(--violet-dark);
+  }
+  #base-lesson-body .btn-violet:hover { box-shadow: 0 4px 14px var(--violet-glow), 0 4px 0 var(--violet-dark); }
+  #base-lesson-body .btn-violet:active { box-shadow: 0 2px 0 var(--violet-dark); }
+
+  #base-lesson-body .btn-gold {
+    border-color: var(--gold);
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.22), rgba(251, 191, 36, 0.05));
+    color: #FFF6D9;
+    box-shadow: 0 4px 0 var(--gold-dark);
+  }
+  #base-lesson-body .btn-gold:hover { box-shadow: 0 4px 14px var(--gold-glow), 0 4px 0 var(--gold-dark); }
+  #base-lesson-body .btn-gold:active { box-shadow: 0 2px 0 var(--gold-dark); }
+
+  #base-lesson-body .btn-green {
+    border-color: var(--green);
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.22), rgba(34, 197, 94, 0.05));
+    color: #E3FFEE;
+    box-shadow: 0 4px 0 var(--green-dark);
+  }
+  #base-lesson-body .btn-green:hover { box-shadow: 0 4px 14px var(--green-glow), 0 4px 0 var(--green-dark); }
+  #base-lesson-body .btn-green:active { box-shadow: 0 2px 0 var(--green-dark); }
+
+  #base-lesson-body .btn-lg { font-size: 0.92rem; padding: 16px 30px; border-radius: 12px; }
+
+  /* ============ SECTION 03 : DETONATOR RIG ============ */
+  #base-lesson-body .rig {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 16px;
+    align-items: start;
+  }
+  #base-lesson-body .chamber {
+    border: 2px solid rgba(6, 182, 212, 0.45);
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.07), rgba(5, 5, 8, 0.9));
+    padding: 14px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(6, 182, 212, 0.06);
+  }
+  #base-lesson-body .chamber-glass {
+    position: relative;
+    min-height: 250px;
+    border: 2px solid rgba(6, 182, 212, 0.5);
+    border-radius: 10px;
+    background:
+      repeating-linear-gradient(0deg, rgba(6, 182, 212, 0.07) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(90deg, rgba(6, 182, 212, 0.07) 0 1px, transparent 1px 26px),
+      radial-gradient(circle at 50% 40%, rgba(168, 85, 247, 0.12), transparent 60%),
+      #07070E;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 14px;
+  }
+  #base-lesson-body .chamber-glass.shake { animation: chamberShake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+  @keyframes chamberShake {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-8px, 3px); }
+    30% { transform: translate(7px, -4px); }
+    45% { transform: translate(-6px, 2px); }
+    60% { transform: translate(5px, 3px); }
+    80% { transform: translate(-3px, -1px); }
+  }
+  #base-lesson-body .chamber-glass.breach {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 60px rgba(244, 63, 94, 0.35);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  #base-lesson-body .capsule {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    border: 2px solid var(--violet);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.18), rgba(10, 10, 18, 0.95));
+    padding: 12px 14px;
+    box-shadow: 0 0 22px var(--violet-glow), 0 6px 0 rgba(0, 0, 0, 0.55);
+    z-index: 3;
+  }
+  #base-lesson-body .capsule-tag {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 7px;
+  }
+  #base-lesson-body .capsule-tag b { color: #fff; }
+  #base-lesson-body .capsule p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #F2E9FF;
+    line-height: 1.55;
+  }
+  #base-lesson-body .capsule.shattered { animation: capsuleBreak 0.85s forwards; }
+  @keyframes capsuleBreak {
+    0% { transform: none; opacity: 1; }
+    18% { transform: translateX(-7px) rotate(-1.6deg); }
+    36% { transform: translateX(7px) rotate(1.6deg); }
+    54% { transform: translateX(-5px) rotate(-1deg) scale(0.98); }
+    100% { transform: translateY(56px) scale(0.62) rotate(-7deg); opacity: 0; }
+  }
+  #base-lesson-body .capsule.cracking::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    pointer-events: none;
+    background:
+      linear-gradient(115deg, transparent 46%, rgba(255, 255, 255, 0.85) 47%, transparent 48%),
+      linear-gradient(62deg, transparent 60%, rgba(255, 255, 255, 0.7) 61%, transparent 62%),
+      linear-gradient(150deg, transparent 34%, rgba(244, 63, 94, 0.9) 35%, transparent 36%),
+      linear-gradient(20deg, transparent 72%, rgba(255, 255, 255, 0.6) 73%, transparent 74%);
+    animation: crackFlash 0.7s ease-out;
+  }
+  @keyframes crackFlash {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0.85; }
+  }
+
+  #base-lesson-body .debris-field {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+  }
+  #base-lesson-body .debris {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+    opacity: 0;
+    animation: debrisFly 1.15s ease-out forwards;
+  }
+  @keyframes debrisFly {
+    0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
+  }
+
+  #base-lesson-body .chamber-alert {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 7px;
+    padding: 3px 10px;
+    background: rgba(5, 5, 8, 0.92);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 6;
+    white-space: nowrap;
+  }
+  #base-lesson-body .chamber-alert.on { opacity: 1; animation: alertPulse 1.1s ease-in-out infinite; }
+  @keyframes alertPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(244, 63, 94, 0); }
+    50% { box-shadow: 0 0 18px var(--accent-glow); }
+  }
+
+  #base-lesson-body .strut-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+  #base-lesson-body .strut {
+    border: 2px solid rgba(168, 85, 247, 0.28);
+    border-radius: 11px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    padding: 11px 12px;
+    cursor: pointer;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.1s;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.55);
+    position: relative;
+  }
+  #base-lesson-body .strut:hover { border-color: var(--violet); box-shadow: 0 4px 14px var(--violet-glow), 0 4px 0 rgba(0, 0, 0, 0.55); }
+  #base-lesson-body .strut:active { transform: translateY(2px); }
+  #base-lesson-body .strut-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  #base-lesson-body .strut-id {
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  #base-lesson-body .strut-switch {
+    font: inherit;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    padding: 4px 9px;
+    border-radius: 7px;
+    border: 2px solid var(--cyan);
+    color: #C9F4FC;
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.28), rgba(6, 182, 212, 0.06));
+    box-shadow: 0 3px 0 var(--cyan-dark);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #base-lesson-body .strut.negated { border-color: var(--accent); box-shadow: 0 4px 0 rgba(0, 0, 0, 0.55), 0 0 18px var(--accent-glow); }
+  #base-lesson-body .strut.negated .strut-switch {
+    border-color: var(--accent);
+    color: #FFD5DE;
+    background: linear-gradient(180deg, rgba(244, 63, 94, 0.3), rgba(244, 63, 94, 0.06));
+    box-shadow: 0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .strut-text {
+    font-size: 0.8rem;
+    color: #D6D6EA;
+    margin: 0 0 8px;
+    line-height: 1.5;
+  }
+  #base-lesson-body .strut-status {
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+  #base-lesson-body .strut.negated .strut-status { color: var(--accent); }
+  #base-lesson-body .strut-kind {
+    display: none;
+    margin-top: 8px;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-top: 1px dashed rgba(168, 85, 247, 0.3);
+    padding-top: 7px;
+    color: var(--gold);
+  }
+  #base-lesson-body .strut-grid.revealed .strut-kind { display: block; }
+  #base-lesson-body .strut.load-bearing .strut-kind { color: var(--accent); }
+
+  #base-lesson-body .console {
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    padding: 14px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.6);
+  }
+  #base-lesson-body .readout {
+    min-height: 118px;
+    border: 2px solid rgba(6, 182, 212, 0.35);
+    border-radius: 10px;
+    background: #07070E;
+    padding: 11px 13px;
+    font-size: 0.82rem;
+    color: #C8E9F2;
+    line-height: 1.55;
+    box-shadow: inset 0 0 22px rgba(6, 182, 212, 0.08);
+  }
+  #base-lesson-body .readout .ro-label {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 6px;
+  }
+  #base-lesson-body .readout.ok { border-color: var(--green); color: #D5FFE6; box-shadow: inset 0 0 22px rgba(34, 197, 94, 0.12); }
+  #base-lesson-body .readout.ok .ro-label { color: var(--green); }
+  #base-lesson-body .readout.bad { border-color: var(--accent); color: #FFD8E0; box-shadow: inset 0 0 22px rgba(244, 63, 94, 0.12); }
+  #base-lesson-body .readout.bad .ro-label { color: var(--accent); }
+  #base-lesson-body .console-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  #base-lesson-body .rig-progress {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 11px;
+    flex-wrap: wrap;
+  }
+  #base-lesson-body .rig-dot {
+    flex: 1 1 0;
+    height: 8px;
+    border-radius: 5px;
+    background: #16161F;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+  #base-lesson-body .rig-dot.done { background: linear-gradient(90deg, var(--green), #A3E635); border-color: var(--green); box-shadow: 0 0 10px var(--green-glow); }
+  #base-lesson-body .rig-dot.active { background: linear-gradient(90deg, var(--accent), var(--violet)); border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+
+  /* ============ SECTION 04 ============ */
+  #base-lesson-body .arena {
+    position: relative;
+    border: 2px solid rgba(244, 63, 94, 0.4);
+    border-radius: 14px;
+    background:
+      repeating-linear-gradient(45deg, rgba(244, 63, 94, 0.04) 0 12px, transparent 12px 24px),
+      linear-gradient(180deg, rgba(244, 63, 94, 0.08), rgba(5, 5, 8, 0.9));
+    padding: 18px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+  }
+  #base-lesson-body .arena-load {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  #base-lesson-body .det-card {
+    position: relative;
+    border: 2px solid var(--violet);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.14), rgba(10, 10, 18, 0.95));
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 20px var(--violet-glow);
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  #base-lesson-body .det-card p { margin: 0; font-size: 0.88rem; }
+  #base-lesson-body .det-card.flash { animation: detFlash 0.65s ease-out; border-color: var(--accent); }
+  @keyframes detFlash {
+    0%, 100% { background-color: transparent; }
+    25% { background-color: rgba(244, 63, 94, 0.4); }
+    50% { background-color: rgba(251, 191, 36, 0.3); }
+    75% { background-color: rgba(244, 63, 94, 0.35); }
+  }
+  #base-lesson-body .det-card.crack::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    pointer-events: none;
+    background:
+      linear-gradient(112deg, transparent 44%, rgba(255, 255, 255, 0.9) 45%, transparent 46%),
+      linear-gradient(58deg, transparent 58%, rgba(244, 63, 94, 0.95) 59%, transparent 60%),
+      linear-gradient(148deg, transparent 32%, rgba(255, 255, 255, 0.75) 33%, transparent 34%),
+      linear-gradient(24deg, transparent 70%, rgba(244, 63, 94, 0.85) 71%, transparent 72%),
+      linear-gradient(170deg, transparent 52%, rgba(255, 255, 255, 0.6) 53%, transparent 54%);
+    animation: crackFlash 0.8s ease-out forwards;
+  }
+  #base-lesson-body .det-card.collapse {
+    animation: detCollapse 1s cubic-bezier(0.4, 0, 0.7, 1) forwards;
+    pointer-events: none;
+  }
+  @keyframes detCollapse {
+    0% { transform: none; opacity: 1; }
+    22% { transform: translate(-6px, 3px) rotate(-1.2deg); }
+    46% { transform: translate(6px, -4px) rotate(1.2deg) scale(0.99); }
+    70% { transform: translateY(10px) scale(0.95); opacity: 0.85; }
+    100% { transform: translateY(70px) scale(0.6) rotate(-8deg); opacity: 0; }
+  }
+  #base-lesson-body .det-plate {
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.16), rgba(12, 12, 21, 0.9));
+    padding: 13px 15px;
+    box-shadow: 0 0 22px var(--gold-glow), 0 4px 0 var(--gold-dark);
+    margin-bottom: 16px;
+  }
+  #base-lesson-body .det-plate-label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 7px;
+  }
+  #base-lesson-body .det-plate p { margin: 0; font-size: 0.88rem; color: #FFF4D6; font-weight: 600; }
+  #base-lesson-body .arena-actions { display: flex; justify-content: center; }
+
+  #base-lesson-body .debrief-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(3, 3, 6, 0.86);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  #base-lesson-body .debrief-overlay.on { opacity: 1; pointer-events: auto; }
+  #base-lesson-body .debrief-card {
+    max-width: 560px;
+    width: 100%;
+    border: 2px solid var(--accent);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface));
+    padding: 22px 22px 20px;
+    box-shadow: 0 0 40px var(--accent-glow), 0 10px 0 rgba(0, 0, 0, 0.6);
+    transform: translateY(14px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  }
+  #base-lesson-body .debrief-overlay.on .debrief-card { transform: translateY(0) scale(1); }
+  #base-lesson-body .debrief-card h3 {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+  #base-lesson-body .debrief-card p { font-size: 0.88rem; color: #E0E0F0; }
+  #base-lesson-body .debrief-card .negated-line {
+    border-left: 3px solid var(--gold);
+    background: rgba(251, 191, 36, 0.08);
+    padding: 9px 12px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.83rem;
+    color: #FFF1CC;
+    margin: 12px 0;
+  }
+  #base-lesson-body .debrief-actions { margin-top: 16px; text-align: right; }
+
+  /* ============ SECTION 05 ============ */
+  #base-lesson-body .forensics-grid {
+    display: grid;
+    grid-template-columns: 1.65fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  #base-lesson-body .scan-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  #base-lesson-body .scan-btn { font-size: 0.63rem; padding: 10px 8px; }
+  #base-lesson-body .scan-btn.active { transform: translateY(2px); }
+  #base-lesson-body .scan-btn.btn-green.active { box-shadow: 0 2px 0 var(--green-dark), 0 0 18px var(--green-glow); }
+  #base-lesson-body .scan-btn.btn-cyan.active { box-shadow: 0 2px 0 var(--cyan-dark), 0 0 18px var(--cyan-glow); }
+  #base-lesson-body .scan-btn.btn-gold.active { box-shadow: 0 2px 0 var(--gold-dark), 0 0 18px var(--gold-glow); }
+
+  #base-lesson-body .passage-frame {
+    border: 2px solid rgba(6, 182, 212, 0.3);
+    border-radius: 12px;
+    background: #06060C;
+    padding: 16px;
+    box-shadow: inset 0 0 30px rgba(6, 182, 212, 0.06);
+  }
+  #base-lesson-body .passage {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.85;
+    color: #C6C6DE;
+  }
+  #base-lesson-body .passage span {
+    border-radius: 4px;
+    padding: 1px 2px;
+    transition: background 0.28s, opacity 0.28s, box-shadow 0.28s, color 0.28s;
+  }
+  #base-lesson-body .passage.scan-grounds span[data-scan="grounds"] {
+    background: rgba(6, 182, 212, 0.26);
+    box-shadow: 0 0 0 1px var(--cyan), 0 0 12px var(--cyan-glow);
+    color: #EAFBFF;
+  }
+  #base-lesson-body .passage.scan-grounds span:not([data-scan="grounds"]) { opacity: 0.3; }
+  #base-lesson-body .passage.scan-core span[data-scan="core"] {
+    background: rgba(6, 182, 212, 0.0);
+    background: rgba(59, 130, 246, 0.28);
+    box-shadow: 0 0 0 1px #60A5FA, 0 0 12px rgba(96, 165, 250, 0.5);
+    color: #EAF2FF;
+  }
+  #base-lesson-body .passage.scan-core span:not([data-scan="core"]) { opacity: 0.3; }
+  #base-lesson-body .passage.scan-warrant span[data-scan="warrant"] {
+    background: rgba(251, 191, 36, 0.24);
+    box-shadow: 0 0 0 1px var(--gold), 0 0 12px var(--gold-glow);
+    color: #FFF7E0;
+  }
+  #base-lesson-body .passage.scan-warrant span:not([data-scan="warrant"]) { opacity: 0.3; }
+
+  #base-lesson-body .inspector {
+    border: 2px solid rgba(168, 85, 247, 0.32);
+    border-radius: 12px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    padding: 14px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.55);
+    min-height: 200px;
+  }
+  #base-lesson-body .inspector h4 {
+    margin: 0 0 10px;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--violet);
+    font-weight: 900;
+    border-bottom: 1px dashed rgba(168, 85, 247, 0.35);
+    padding-bottom: 7px;
+  }
+  #base-lesson-body .note-item {
+    border-left: 3px solid var(--violet);
+    background: rgba(168, 85, 247, 0.07);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 10px;
+    margin-bottom: 9px;
+    font-size: 0.78rem;
+    color: #D8D8EE;
+    animation: noteIn 0.35s ease-out;
+  }
+  #base-lesson-body .note-item.g { border-left-color: var(--cyan); background: rgba(6, 182, 212, 0.07); }
+  #base-lesson-body .note-item.c { border-left-color: #60A5FA; background: rgba(59, 130, 246, 0.07); }
+  #base-lesson-body .note-item.w { border-left-color: var(--gold); background: rgba(251, 191, 36, 0.07); }
+  #base-lesson-body .note-item b { display: block; color: #fff; font-size: 0.72rem; letter-spacing: 0.04em; margin-bottom: 3px; }
+  @keyframes noteIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  #base-lesson-body .hypo-block {
+    margin-top: 16px;
+    border: 2px solid rgba(244, 63, 94, 0.32);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(244, 63, 94, 0.07), var(--surface));
+    padding: 14px;
+  }
+  #base-lesson-body .hypo-block h4 {
+    margin: 0 0 11px;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 900;
+  }
+  #base-lesson-body .hypo {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    font-size: 0.82rem;
+    color: #E2E2F2;
+    background: linear-gradient(180deg, var(--surface-3), var(--surface));
+    border: 2px solid rgba(168, 85, 247, 0.3);
+    border-radius: 10px;
+    padding: 11px 13px;
+    margin-bottom: 9px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.55);
+    transition: border-color 0.16s, box-shadow 0.16s, transform 0.08s;
+    line-height: 1.5;
+  }
+  #base-lesson-body .hypo:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px var(--accent-glow), 0 4px 0 rgba(0, 0, 0, 0.55);
+  }
+  #base-lesson-body .hypo:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.55); }
+  #base-lesson-body .hypo.correct {
+    border-color: var(--green);
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05));
+    color: #DCFFE9;
+    box-shadow: 0 4px 0 var(--green-dark), 0 0 18px var(--green-glow);
+  }
+  #base-lesson-body .hypo.wrong {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(244, 63, 94, 0.16), rgba(244, 63, 94, 0.04));
+    color: #FFD5DE;
+    animation: chamberShake 0.5s;
+  }
+  #base-lesson-body .hypo:disabled { cursor: default; }
+  #base-lesson-body .hypo-feedback {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    border-radius: 9px;
+    padding: 9px 11px;
+    display: none;
+  }
+  #base-lesson-body .hypo-feedback.on { display: block; animation: noteIn 0.35s ease-out; }
+  #base-lesson-body .hypo-feedback.ok { background: rgba(34, 197, 94, 0.12); border: 1px solid var(--green); color: #D6FFE6; }
+  #base-lesson-body .hypo-feedback.bad { background: rgba(244, 63, 94, 0.12); border: 1px solid var(--accent); color: #FFD8E0; }
+
+  /* ============ SECTION 06 ============ */
+  #base-lesson-body .matrix-wrap {
+    overflow-x: auto;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.55);
+  }
+  #base-lesson-body table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.79rem;
+    min-width: 620px;
+  }
+  #base-lesson-body table.matrix th {
+    text-align: left;
+    padding: 10px 13px;
+    font-size: 0.63rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--base);
+    background: linear-gradient(180deg, var(--gold), #D9A20D);
+    border-bottom: 2px solid var(--gold-dark);
+  }
+  #base-lesson-body table.matrix td {
+    padding: 10px 13px;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.16);
+    color: #D4D4E8;
+    vertical-align: top;
+  }
+  #base-lesson-body table.matrix tr:nth-child(even) td { background: rgba(168, 85, 247, 0.04); }
+  #base-lesson-body table.matrix td:first-child { color: #fff; font-weight: 800; white-space: nowrap; }
+  #base-lesson-body table.matrix td:nth-child(2) { color: #FFC9D4; }
+
+  #base-lesson-body .protocol {
+    border: 2px solid rgba(34, 197, 94, 0.35);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.07), var(--surface));
+    padding: 16px 18px;
+    margin-top: 16px;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.55);
+  }
+  #base-lesson-body .protocol h3 {
+    margin: 0 0 12px;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 900;
+  }
+  #base-lesson-body .protocol ol { counter-reset: none; padding-left: 22px; }
+  #base-lesson-body .protocol li {
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: #D6D6EA;
+  }
+  #base-lesson-body .protocol li strong { color: #fff; }
+
+  /* ============ TERMINATION ============ */
+  #base-lesson-body .termination {
+    margin-top: 40px;
+    text-align: center;
+    padding: 26px 16px 10px;
+    border-top: 2px solid var(--line);
+  }
+  #base-lesson-body .term-status {
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    transition: color 0.4s;
+  }
+  #base-lesson-body .term-status.secured {
+    color: var(--green);
+    text-shadow: 0 0 18px var(--green-glow);
+  }
+  #base-lesson-body .finish-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 17px 42px;
+    border-radius: 12px;
+    border: 2px solid var(--green);
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.08));
+    color: #EAFFF2;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--green-dark), 0 0 26px rgba(34, 197, 94, 0.2);
+    transition: box-shadow 0.18s, transform 0.08s;
+  }
+  #base-lesson-body .finish-btn:hover {
+    box-shadow: 0 5px 22px var(--green-glow), 0 5px 0 var(--green-dark);
+  }
+  #base-lesson-body .finish-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--green-dark);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    #base-lesson-body .rig { grid-template-columns: 1fr; }
+    #base-lesson-body .forensics-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    #base-lesson-body { font-size: 15px; }
+    #base-lesson-body .grid-2 { grid-template-columns: 1fr; }
+    #base-lesson-body .strut-grid { grid-template-columns: 1fr; }
+    #base-lesson-body .scan-bar { grid-template-columns: 1fr; }
+    #base-lesson-body .sec-sub { margin-left: 0; width: 100%; }
+    #base-lesson-body .badge { font-size: 0.62rem; padding: 5px 9px; }
+    #base-lesson-body .gauge-wrap { min-width: 100%; }
+    #base-lesson-body .debrief-card { padding: 18px 16px; }
+    #base-lesson-body .arena { padding: 14px; }
+  }
+</style>
+
+<div id="base-lesson-body">
+
+  <!-- ============ 1. HUD & TELEMETRY ============ -->
+  <div class="hud">
+    <div class="hud-inner">
+      <div class="hud-row">
+        <span class="badge badge-level">⬢ LEVEL 115</span>
+        <span class="badge badge-subject">ENGLISH · Advanced Vocabulary: Latin &amp; Greek</span>
+        <span class="badge badge-grade">9th–10th Grade | Ages 12–16</span>
+        <span class="badge badge-callsign">OPERATOR:
+          <input class="callsign-input" id="callsignInput" type="text" value="ROOT-CUTTER-13" aria-label="Player callsign" />
+        </span>
+      </div>
+      <div class="hud-row">
+        <span class="xp-chip">⚡ XP <b id="xpVal">0</b></span>
+        <div class="gauge-wrap" id="gaugeWrap">
+          <span class="gauge-label">STRUCTURAL INTEGRITY</span>
+          <div class="gauge"><div class="gauge-fill" id="gaugeFill"></div></div>
+          <span class="gauge-val" id="gaugeVal">25% CALIBRATION</span>
+        </div>
+      </div>
+      <p class="mission">
+        <b>MISSION:</b> The district's classical-roots vocabulary mandate has been routed into the Negation Detonator,
+        and every claim inside it is suspended by a single load-bearing warrant. Isolate the unstated bridge, invert it,
+        and detonate — only the assumption that actually carries the inference will bring the claim down.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ============ 2. SECTION 01 ============ -->
+    <section class="sec" id="sec01">
+      <div class="sec-head">
+        <span class="sec-num">SECTION 01</span>
+        <h2 class="sec-title">Comprehensive Textbook Foundation</h2>
+        <span class="sec-sub">Full Domain Architecture</span>
+      </div>
+
+      <div class="card">
+        <h3>The Structural Model of a Vocabulary Argument</h3>
+        <p>
+          Every claim about a word — what it means, where it came from, whether a usage is "correct," whether a
+          teaching method works — can be decomposed into five load-bearing components. Advanced vocabulary study is
+          not the memorisation of root glosses; it is the disciplined reconstruction of these five parts, so that you
+          can tell which parts are doing real work and which are decorative.
+        </p>
+        <ul>
+          <li><span class="tag tag-core">CORE ASSERTION / OUTCOME</span> The claim being advanced. <em>"Describing a corrupt official as <em>egregious</em> is a misuse."</em> or <em>"Root instruction raises reading comprehension."</em> The core assertion always carries a <strong>scope</strong>: which register, which dialect, which period, which population.</li>
+          <li><span class="tag tag-ground">EMPIRICAL GROUNDS / INPUTS</span> The evidence offered: etymological records, dictionary attestations, corpus frequencies, dated citations, study results, sample sizes. Grounds are the raw material; they never move a claim on their own.</li>
+          <li><span class="tag tag-warrant">CONNECTING BRIDGES / MECHANISMS</span> The principle that licenses the move from grounds to claim. This is the component most often left unstated. <em>"A word's present meaning is governed by its earliest literal etymology"</em> is a bridge. Bridges are where arguments live or die.</li>
+          <li><span class="tag tag-scope">SCOPE QUALIFIERS</span> The boundaries of legitimate application: formal vs. informal register, British vs. American usage, technical vs. general prose, one district vs. all districts, one semester vs. a decade. Removing a scope qualifier silently universalises a claim.</li>
+          <li><span class="tag tag-bound">BOUNDARY CONDITIONS</span> The conditions that would falsify the claim. A claim with no conceivable boundary condition is not an empirical claim at all — it is a preference wearing a lab coat.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>The Four Core Verification Criteria</h3>
+        <div class="grid-2">
+          <div>
+            <h4>1 · Relevance</h4>
+            <p class="muted">Does the evidence actually bear on the claim? A Latin root gloss from 50 BCE is highly relevant to <em>etymology</em> and only marginally relevant to <em>contemporary usage</em>. Relevance is a bridge property, not a ground property.</p>
+            <h4>2 · Sufficiency</h4>
+            <p class="muted">Is there enough evidence to support the full scope of the claim? One volunteer cohort cannot support a district-wide mandate. Sufficiency failures are almost always <em>scope</em> failures in disguise.</p>
+          </div>
+          <div>
+            <h4>3 · Accuracy</h4>
+            <p class="muted">Is each ground itself true and correctly reported? Check the citation date, the sample size, the measurement instrument, and whether a correlation has been quietly restated as an effect.</p>
+            <h4>4 · Independence</h4>
+            <p class="muted">Do the grounds corroborate one another, or are they restatements of a single source? Five articles summarising one study are one piece of evidence wearing five hats.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Validity vs. Soundness · Deduction vs. Induction</h3>
+        <div class="grid-2">
+          <div>
+            <h4>Structural Validity</h4>
+            <p class="muted">An argument is <strong>valid</strong> when the conclusion follows necessarily from the premises — internal consistency only. <em>"All Latin roots are meaningful; <em>cred-</em> is a Latin root; therefore <em>cred-</em> is meaningful"</em> is valid regardless of whether the first premise is true.</p>
+            <h4>Soundness</h4>
+            <p class="muted">An argument is <strong>sound</strong> when it is valid <em>and</em> every premise is factually true. Most real vocabulary arguments are valid in form and unsound in content: the etymology is correct, the bridge is false.</p>
+          </div>
+          <div>
+            <h4>Deductive Systems (Truth-Preserving)</h4>
+            <p class="muted">Morphological rule application is deductive. Given <em>in-</em> (not) + <em>cred-</em> (believe) + <em>-ible</em> (capable of), <em>incredible</em> = "not capable of being believed." Certainty is inherited from the premises — but only if the morphological rule and the affix senses are themselves verified.</p>
+            <h4>Inductive Systems (Probabilistic Strength)</h4>
+            <p class="muted">Claims that root study <em>improves</em> comprehension are inductive. Strength depends on sample robustness, representativeness, duration, control of confounds, and replication. Inductive conclusions are always graded, never absolute.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Key Presumption Traps in Classical Vocabulary Study</h3>
+        <ul>
+          <li><strong>The Etymological Fallacy.</strong> Treating a word's earliest literal sense as its current meaning. <em>Nice</em> once meant "foolish"; <em>silly</em> once meant "blessed." Meaning drifts; etymology describes history, not present usage.</li>
+          <li><strong>Root-Sum Overreach.</strong> Assuming a compound's meaning is the arithmetic sum of its roots. <em>Manufacture</em> is <em>manus</em> (hand) + <em>facere</em> (make), but no one makes things by hand in a factory.</li>
+          <li><strong>Equivocation / Definitional Shift.</strong> Sliding between a technical and a colloquial sense of the same surface word mid-argument.</li>
+          <li><strong>Causal Leap.</strong> Converting a correlation (morphological awareness ↔ comprehension) into a mechanism (root drills → comprehension).</li>
+          <li><strong>Prescriptivist Value Trap.</strong> Smuggling a preference for older forms into a claim about linguistic fact.</li>
+          <li><strong>Micro-Sample Mirage.</strong> Generalising from volunteer cohorts, short pilots, and self-selected completers.</li>
+          <li><strong>Register Mismatch.</strong> Applying a technical or archaic sense in a context governed by ordinary usage, or vice versa.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Two Fully Analysed Worked Examples</h3>
+
+        <div class="workex" style="margin-bottom:16px;">
+          <div class="workex-head">WORKED EXAMPLE 01 · Etymology vs. Present Sense</div>
+          <p><span class="tag tag-core">CORE CLAIM</span> Using <em>decimate</em> to mean "to destroy a large portion of" is a misuse of the word.</p>
+          <p><span class="tag tag-ground">GROUNDS</span> Latin <em>decem</em> means "ten," and the Roman punishment <em>decimatio</em> killed one soldier in ten by lot.</p>
+          <p><span class="tag tag-warrant">UNSTATED WARRANT</span> A word's contemporary meaning is fixed by its earliest attested technical sense.</p>
+          <p><span class="tag tag-scope">SCOPE QUALIFIER</span> The claim concerns modern general and journalistic English, not Roman military terminology.</p>
+          <p><span class="tag tag-bound">BOUNDARY CONDITION</span> If mainstream dictionaries and large corpora record the "destroy a large portion" sense as standard, the warrant fails.</p>
+          <div class="workex-verdict">
+            <b>VERDICT — UNSOUND (Etymological Fallacy).</b> The structure is formally valid: if the warrant were true, the conclusion would follow. But the warrant is false. Semantic broadening is a normal, documented process, and <em>decimate</em> has carried the extended sense in edited prose for well over a century. The grounds are accurate; the bridge is not. <b>Accurate grounds + false bridge = unsound argument.</b>
+          </div>
+        </div>
+
+        <div class="workex">
+          <div class="workex-head">WORKED EXAMPLE 02 · Root Knowledge and Reading Comprehension</div>
+          <p><span class="tag tag-core">CORE CLAIM</span> Students who master Latin and Greek roots will comprehend academic texts better.</p>
+          <p><span class="tag tag-ground">GROUNDS</span> A large share of Academic Word List entries contain a Latin or Greek root, and morphological awareness correlates strongly with reading comprehension across multiple peer-reviewed studies.</p>
+          <p><span class="tag tag-warrant">UNSTATED WARRANT</span> Knowing a root's meaning reliably enables accurate inference of a derived word's meaning in context.</p>
+          <p><span class="tag tag-scope">SCOPE QUALIFIER</span> Secondary students already reading English syntax at grade level, working with academic expository prose.</p>
+          <p><span class="tag tag-bound">BOUNDARY CONDITION</span> Polysemy, false friends, idiomatic override, and contexts where the surrounding syntax — not the root — determines the sense.</p>
+          <div class="workex-verdict">
+            <b>VERDICT — INDUCTIVELY STRONG, DEDUCTIVELY INVALID.</b> The grounds are relevant, accurate, and largely independent, and the bridge is plausible rather than certain. But "correlates with" does not license "will comprehend better," because correlation cannot establish direction or rule out confounds such as general verbal ability driving both. The claim survives only inside its scope qualifier, and only as a probabilistic expectation — never as a guarantee.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. SECTION 02 ============ -->
+    <section class="sec" id="sec02">
+      <div class="sec-head">
+        <span class="sec-num">SECTION 02</span>
+        <h2 class="sec-title">The Four Hazard Pods</h2>
+        <span class="sec-sub">Failure-Mode Archetypes</span>
+      </div>
+
+      <div class="grid-2">
+
+        <div class="pod">
+          <div class="pod-head">
+            <span class="pod-icon">⚖️</span>
+            <div>
+              <div class="pod-title">Pod 1 · The Value Trap</div>
+              <div class="pod-sub">Unstated priorities &amp; prescriptivism</div>
+            </div>
+          </div>
+          <h4>Formal Identification Rules</h4>
+          <ul>
+            <li>Scan the conclusion for normative vocabulary: <em>should, correct, proper, misuse, corruption, lazy, debased, decline, better</em>.</li>
+            <li>Separate the descriptive premises (what is the case) from the evaluative conclusion (what ought to be preferred).</li>
+            <li>Ask: which preference hierarchy would have to be true for the conclusion to follow, and was it ever argued for?</li>
+          </ul>
+          <div class="risk"><b>CATASTROPHIC FAILURE RISK:</b> Prescriptivist verdicts are presented as linguistic facts. Usage guides, exam answer keys, and style rules get built on an unexamined aesthetic preference, and students learn to distrust legitimate, well-documented language change.</div>
+          <div class="excerpt">"Because <em>nice</em> originally meant 'foolish' in Middle English, calling a kind person <em>nice</em> is a corruption of the language and should be avoided."</div>
+          <div class="diag">
+            <b>DIAGNOSTIC BREAKDOWN:</b> The premise is a true descriptive etymology. The conclusion is evaluative ("corruption," "should be avoided"). Unstated warrant: <em>earlier meanings are intrinsically better than later ones.</em> Negate it — <em>earlier meanings are not intrinsically better</em> — and the entire recommendation evaporates, leaving the etymology intact and irrelevant.
+          </div>
+        </div>
+
+        <div class="pod">
+          <div class="pod-head">
+            <span class="pod-icon">🔗</span>
+            <div>
+              <div class="pod-title">Pod 2 · The Causal Leap</div>
+              <div class="pod-sub">Correlation → causation; omitted variables</div>
+            </div>
+          </div>
+          <h4>Formal Identification Rules</h4>
+          <ul>
+            <li>Flag any verb of production: <em>causes, drives, produces, improves, boosts, raises</em>.</li>
+            <li>Check whether the underlying evidence is a bare correlation, a shared time trend, or a pre/post comparison with no control group.</li>
+            <li>Enumerate at least three plausible third variables: selection effects, concurrent interventions, maturation, instrument changes.</li>
+          </ul>
+          <div class="risk"><b>CATASTROPHIC FAILURE RISK:</b> Entire curricula, textbook adoptions, and funding streams are justified by a single confounded trend line. When the confound resolves, the intervention is abandoned — and a genuinely useful method is discarded along with the bad argument for it.</div>
+          <div class="excerpt">"Districts with mandatory Latin outperformed districts without it on the verbal section, so mandatory Latin raises verbal scores."</div>
+          <div class="diag">
+            <b>DIAGNOSTIC BREAKDOWN:</b> Districts self-select into Latin mandates; affluent districts with strong feeder schools adopt classical programs. Unstated warrant: <em>the districts are equivalent in every relevant respect except the Latin mandate.</em> Negate it — <em>they are not equivalent</em> — and the causal conclusion collapses into a bare correlation with no mechanism attached.
+          </div>
+        </div>
+
+        <div class="pod">
+          <div class="pod-head">
+            <span class="pod-icon">🔀</span>
+            <div>
+              <div class="pod-title">Pod 3 · The Definitional Shift</div>
+              <div class="pod-sub">Equivocation between senses</div>
+            </div>
+          </div>
+          <h4>Formal Identification Rules</h4>
+          <ul>
+            <li>Underline every occurrence of the key term in the argument.</li>
+            <li>Assign each occurrence a distinct sense label: <em>technical / etymological / colloquial / contextual</em>.</li>
+            <li>If two occurrences carry different senses, the inference is invalid <em>even when every premise is true</em>.</li>
+          </ul>
+          <div class="risk"><b>CATASTROPHIC FAILURE RISK:</b> The argument looks airtight because the surface word never changes while its referent silently swaps. Students then misread literary diction, mis-answer close-reading questions, and carry a technical sense into a context where ordinary usage governs.</div>
+          <div class="excerpt">"<em>Vernacular</em> means 'native to a place,' so the poet's vernacular diction must be simple and uneducated speech."</div>
+          <div class="diag">
+            <b>DIAGNOSTIC BREAKDOWN:</b> Sense 1 = "the native language of a region." Sense 2 = "a plain, non-literary register." These are different properties, and the second does not follow from the first. Unstated warrant: <em>the two senses are identical.</em> Negate it — <em>they are not identical</em> — and the inference fails despite two true premises.
+          </div>
+        </div>
+
+        <div class="pod">
+          <div class="pod-head">
+            <span class="pod-icon">🔬</span>
+            <div>
+              <div class="pod-title">Pod 4 · The Micro-Sample Mirage</div>
+              <div class="pod-sub">Non-representative samples &amp; survivor bias</div>
+            </div>
+          </div>
+          <h4>Formal Identification Rules</h4>
+          <ul>
+            <li>Interrogate the sample: who, how many, chosen how, measured for how long.</li>
+            <li>Test for self-selection, survivorship (only completers reported), and duration too short to detect durable change.</li>
+            <li>Ask whether the sample could differ from the target population in ways that matter to the outcome.</li>
+          </ul>
+          <div class="risk"><b>CATASTROPHIC FAILURE RISK:</b> Volunteer cohorts and one-semester pilots produce glowing results that evaporate at scale. The method is then declared a failure when the real problem was the inference, not the instruction.</div>
+          <div class="excerpt">"Of the 22 students who completed the optional Greek Roots Challenge, 20 reported that their vocabulary 'improved dramatically,' proving the method works for all students."</div>
+          <div class="diag">
+            <b>DIAGNOSTIC BREAKDOWN:</b> n = 22; self-selected completers (survivor bias); self-reported outcome with no objective measure; no comparison group; "all students" wildly outruns the scope. Unstated warrant: <em>students who chose and finished an optional challenge are interchangeable with the general student body.</em> Negate it, and the universal claim has nothing beneath it.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ 4. SECTION 03 : THE SIGNATURE GAME ENGINE ============ -->
+    <section class="sec" id="sec03">
+      <div class="sec-head">
+        <span class="sec-num">SECTION 03</span>
+        <h2 class="sec-title">The Logic Negation Detonator</h2>
+        <span class="sec-sub">Variant 13 · Inverted Assumption Circuit Rig</span>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <h3>Rig Operating Principle</h3>
+        <p>
+          Each claim capsule in the blast chamber is suspended by four candidate struts. Exactly one strut is the
+          <strong>load-bearing warrant</strong> — the unstated bridge that converts grounds into a conclusion. Flipping a strut to
+          <strong>[NEGATE]</strong> severs it. Only severing the load-bearing warrant drops the capsule; severing a scope
+          qualifier, a verified ground, or a decorative context plate leaves the claim hanging in mid-air.
+        </p>
+      </div>
+
+      <div class="rig">
+        <div class="chamber">
+          <div class="chamber-glass" id="chamberGlass">
+            <div class="capsule" id="capsule">
+              <span class="capsule-tag">CLAIM CAPSULE · ROUND <b id="roundNum">1</b>/3</span>
+              <p id="capsuleText">Loading…</p>
+            </div>
+            <div class="debris-field" id="debrisField"></div>
+            <div class="chamber-alert" id="chamberAlert">⚠ CHAMBER BREACH — CAPSULE SHATTERED</div>
+          </div>
+          <div class="strut-grid" id="strutGrid"></div>
+        </div>
+
+        <div class="console">
+          <div class="rig-progress" id="rigProgress">
+            <div class="rig-dot active" data-dot="0"></div>
+            <div class="rig-dot" data-dot="1"></div>
+            <div class="rig-dot" data-dot="2"></div>
+          </div>
+          <div class="readout" id="rigReadout">
+            <span class="ro-label">RIG TELEMETRY</span>
+            Four struts mounted. Read each candidate, flip the one you believe is the unstated warrant to NEGATE, then fire.
+          </div>
+          <div class="console-actions">
+            <button class="btn" id="fireBtn">💣 DETONATE NEGATION TEST</button>
+            <button class="btn btn-cyan" id="nextBtn" hidden>➡ LOAD NEXT CLAIM</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. SECTION 04 : NEGATION DETONATOR ARENA ============ -->
+    <section class="sec" id="sec04">
+      <div class="sec-head">
+        <span class="sec-num">SECTION 04</span>
+        <h2 class="sec-title">The Negation Detonator</h2>
+        <span class="sec-sub">Active Heuristic Destruction</span>
+      </div>
+
+      <div class="arena">
+        <div class="arena-load">◉ ARGUMENT UNDER SYNTHETIC LOAD · VALUE-TRAP CLASS</div>
+
+        <div class="det-card" id="detCard">
+          <p>
+            A district curriculum memo argues: <em>"Our new classical-roots vocabulary program raised the mean vocabulary
+            subtest score by nine points, so it should replace the literature seminar entirely. Nothing of value is lost
+            by cutting the novels."</em>
+          </p>
+        </div>
+
+        <div class="det-plate">
+          <div class="det-plate-label">TARGET IMPLICIT WARRANT · ILLUMINATED DETONATOR PLATE</div>
+          <p>"The only outcome that counts as value in an English curriculum is a measurable vocabulary subtest gain."</p>
+        </div>
+
+        <div class="arena-actions">
+          <button class="btn btn-lg" id="detonateBtn">💣 DETONATE NEGATION TEST</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. SECTION 05 : LIVE FIRE FORENSICS ============ -->
+    <section class="sec" id="sec05">
+      <div class="sec-head">
+        <span class="sec-num">SECTION 05</span>
+        <h2 class="sec-title">Live Fire Forensics</h2>
+        <span class="sec-sub">Interactive Text X-Ray</span>
+      </div>
+
+      <div class="forensics-grid">
+        <div>
+          <div class="scan-bar">
+            <button class="btn btn-green scan-btn" data-mode="grounds">🟢 SCAN FOUNDATION / GROUNDS</button>
+            <button class="btn btn-cyan scan-btn" data-mode="core">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+            <button class="btn btn-gold scan-btn" data-mode="warrant">🟠 DETECT UNSTATED MECHANISMS / WARRANTS</button>
+          </div>
+
+          <div class="passage-frame">
+            <p class="passage" id="passage">
+              Over the past decade, <span data-scan="grounds" data-note="Relevance: enrollment growth is a real record, but it describes who enrolled — not what they learned.">our district's Latin enrollment has climbed from 90 to 240 students</span>, and during the same period <span data-scan="grounds" data-note="Accuracy: an unverified aggregate. No comparison group, no effect size, no correction for concurrent reforms.">the mean verbal score on the state assessment rose eleven points</span>. <span data-scan="core" data-note="Inference marker. Everything after 'therefore' inherits the full evidential burden of the grounds above it.">Administrators therefore concluded</span> that classical-language study <span data-scan="warrant" data-note="Unstated mechanism: the verb presupposes that no third variable — selection, curriculum reform, or a change in the testing population — produced the gain.">directly drives</span> verbal-ability gains, and they extended the requirement to <span data-scan="core" data-note="Scope: a universal mandate built from a local, self-selected pilot. The scope of the conclusion outruns the scope of the evidence.">every ninth grader in the district</span>. The program's designers note that <span data-scan="grounds" data-note="Relevance: background support for the proposed mechanism, but it is a general claim about English, not evidence about this district.">Latin and Greek roots supply roughly sixty percent of academic English vocabulary</span>, and that <span data-scan="grounds" data-note="Independence: peer-reviewed and replicated — the strongest ground in the passage. Correlation, however, is still not causation.">morphological awareness — the ability to decompose unfamiliar words into meaningful parts — correlates strongly with reading comprehension in multiple peer-reviewed studies</span>. The pilot <span data-scan="warrant" data-note="Unstated duration warrant: one semester is assumed sufficient to produce a durable, measurable change in verbal ability.">ran for a single semester</span> and was evaluated using <span data-scan="warrant" data-note="Unstated representativeness warrant: volunteers who chose Latin are treated as interchangeable with the general ninth-grade population.">the Latin Club's own self-selected volunteers</span>.
+            </p>
+          </div>
+
+          <div class="hypo-block">
+            <h4>◈ INTERACTIVE CHALLENGE · FIND THE FATAL FLAW</h4>
+            <button class="hypo" data-correct="false" data-fb="The term is defined inline and used consistently throughout. No sense shift occurs, so this is not where the argument breaks.">A) The passage fails because <em>morphological awareness</em> is a technical term being used colloquially.</button>
+            <button class="hypo" data-correct="true" data-fb="Correct. The passage moves from a parallel ten-year rise and a self-selected, one-semester volunteer pilot straight to a district-wide causal mandate. The unstated warrant — that the volunteers are representative and that Latin, not any concurrent change, produced the gain — is never argued for, so the causal conclusion has no bridge beneath it.">B) The passage moves from a parallel rise and a self-selected volunteer pilot to a district-wide causal mandate, so the causal warrant is unsupported.</button>
+            <button class="hypo" data-correct="false" data-fb="The sixty-percent figure is genuine background support for the proposed mechanism. It is a general claim about English rather than district evidence, which weakens it — but it is not the fatal flaw.">C) The passage fails because the sixty-percent root figure is irrelevant to vocabulary at all.</button>
+            <div class="hypo-feedback" id="hypoFeedback"></div>
+          </div>
+        </div>
+
+        <aside class="inspector">
+          <h4>◈ INSPECTOR NOTES</h4>
+          <div id="notesList">
+            <p class="muted">Select a scan mode to illuminate the passage and load inspector notes.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ 7. SECTION 06 : QUICK-REFERENCE PROTOCOL ============ -->
+    <section class="sec" id="sec06">
+      <div class="sec-head">
+        <span class="sec-num">SECTION 06</span>
+        <h2 class="sec-title">Quick-Reference Procedural Protocol</h2>
+        <span class="sec-sub">Transfer &amp; Error-Detection Triage</span>
+      </div>
+
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Failure Mode</th>
+              <th>Diagnostic Countermeasure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Unstated Warrant</td>
+              <td>Missing or false bridge between grounds and claim</td>
+              <td>Write it out as one declarative sentence, then negate it. If the claim survives the negation, the bridge was decorative.</td>
+            </tr>
+            <tr>
+              <td>Etymological Grounds</td>
+              <td>Treated as governing present meaning</td>
+              <td>Ask whether contemporary dictionaries and corpora record the sense. Etymology describes history, not current usage.</td>
+            </tr>
+            <tr>
+              <td>Scope Qualifier</td>
+              <td>Absent, so a bounded finding is universalised</td>
+              <td>Name the population, register, period and dialect. Re-test the claim inside and outside that boundary.</td>
+            </tr>
+            <tr>
+              <td>Causal Verb</td>
+              <td>Correlation presented as mechanism</td>
+              <td>List three alternative explanations, then check whether the study design actually rules any of them out.</td>
+            </tr>
+            <tr>
+              <td>Key Term</td>
+              <td>Sense shifts mid-argument (equivocation)</td>
+              <td>Assign a sense to each occurrence. If the senses differ, the inference fails even when every premise is true.</td>
+            </tr>
+            <tr>
+              <td>Sample Evidence</td>
+              <td>Volunteer cohort, short pilot, or survivor bias</td>
+              <td>Compare the sample's selection method to the target population. Weight the result by representativeness, not enthusiasm.</td>
+            </tr>
+            <tr>
+              <td>Value Language</td>
+              <td>Preference smuggled in as fact</td>
+              <td>Rewrite the claim in purely descriptive terms. Whatever evaluative residue remains is the unstated value premise.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="protocol">
+        <h3>◈ The Universal 5-Step Deconstruction Protocol</h3>
+        <ol>
+          <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark every certainty limiter (<em>may, tends to, in this sample, under these conditions</em>).</li>
+          <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check sample representation, selection bias, measurement instrument, and source independence.</li>
+          <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle that links the grounds to the outcome as a single declarative sentence.</li>
+          <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge; if the outcome collapses, the component is load-bearing and must be defended or the claim withdrawn.</li>
+          <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, omitted variables, and definitional shifts in the key term.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ 8. CLEARANCE & TERMINATION ============ -->
+    <div class="termination">
+      <div class="term-status" id="termStatus">◈ CALIBRATION INCOMPLETE — 25% STRUCTURAL INTEGRITY</div>
+      <button class="finish-btn" id="finishBtn">✓ FINISH LESSON</button>
+    </div>
+
+  </div>
+
+  <!-- Debrief overlay -->
+  <div class="debrief-overlay" id="debriefOverlay">
+    <div class="debrief-card">
+      <h3>💥 DETONATION SUCCESSFUL!</h3>
+      <p>
+        By proving the opposite of the implicit assumption, the entire premise collapsed. The Negation Test proves this
+        assumption was a fatal structural dependency.
+      </p>
+      <div class="negated-line">
+        <strong>NEGATED WARRANT:</strong> "The only outcome that counts as value in an English curriculum is a measurable
+        vocabulary subtest gain."<br><br>
+        <strong>ITS NEGATION:</strong> "A measurable subtest gain is not the only outcome that counts." With that
+        inverted, the recommendation to cut the literature seminar has nothing beneath it — the phrase
+        <em>"nothing of value is lost"</em> depended entirely on the value premise just removed.
+      </div>
+      <p class="muted">
+        This is a <strong>Value Trap</strong>: a descriptive finding (nine points of measured gain) was used to license an
+        evaluative conclusion (nothing else in the curriculum matters). The nine-point result may be entirely true; the
+        recommendation still collapses.
+      </p>
+      <div class="debrief-actions">
+        <button class="btn btn-green" id="debriefClose">✓ ACKNOWLEDGE &amp; LOG RESULT</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // The boot flag is declared before anything that can call initLesson.
+  //
+  // It was written after them, and the call below fires immediately when the page
+  // has already loaded — which is the case here, because this script is loaded
+  // after the page it belongs to. So `initLesson` ran before `__lessonBooted` had
+  // been initialised, which is a temporal-dead-zone ReferenceError: the throw
+  // aborted the rest of this script, `__lessonBooted` was never initialised at
+  // all, and every later call failed the same way. The lesson's whole interactive
+  // layer was dead, and the page looked completely normal.
+  let __lessonBooted = false;
+
+  document.addEventListener('DOMContentLoaded', () => { initLesson(); });
+  if (document.readyState !== 'loading') { initLesson(); }
+
+  function initLesson() {
+    if (__lessonBooted) return;
+    __lessonBooted = true;
+
+    const root = document.getElementById('base-lesson-body');
+    if (!root) return;
+
+    /* ---------------- STATE ---------------- */
+    const state = {
+      xp: 0,
+      integrity: 25,
+      rigSolved: 0,
+      arenaSolved: false,
+      forensicsSolved: false
+    };
+
+    const xpVal = document.getElementById('xpVal');
+    const gaugeFill = document.getElementById('gaugeFill');
+    const gaugeVal = document.getElementById('gaugeVal');
+    const gaugeWrap = document.getElementById('gaugeWrap');
+    const termStatus = document.getElementById('termStatus');
+
+    function addXP(n) {
+      state.xp += n;
+      xpVal.textContent = state.xp;
+      xpVal.animate(
+        [{ transform: 'scale(1)' }, { transform: 'scale(1.35)' }, { transform: 'scale(1)' }],
+        { duration: 420, easing: 'ease-out' }
+      );
+    }
+
+    function addIntegrity(n) {
+      state.integrity = Math.min(100, state.integrity + n);
+      gaugeFill.style.width = state.integrity + '%';
+      if (state.integrity >= 100) {
+        gaugeWrap.classList.add('secured');
+        gaugeVal.textContent = '100% SECURED';
+        termStatus.textContent = '◈ STRUCTURE SECURED & VERIFIED — 100% STRUCTURAL INTEGRITY';
+        termStatus.classList.add('secured');
+      } else {
+        gaugeVal.textContent = state.integrity + '% CALIBRATION';
+        termStatus.textContent = '◈ CALIBRATION INCOMPLETE — ' + state.integrity + '% STRUCTURAL INTEGRITY';
+      }
+    }
+
+    /* ================= SECTION 03 : NEGATION DETONATOR RIG ================= */
+
+    const RIG_ROUNDS = [
+      {
+        claim: 'Therefore, describing a politician\u2019s corruption as "egregious" is a misuse, since the Latin e-gregius means "standing out from the herd" in a neutral or even flattering sense.',
+        struts: [
+          {
+            text: '"Egregious" derives from Latin e- (out of) + grex (flock); its earliest attested English sense was "distinguished, eminent."',
+            loadBearing: false,
+            kind: 'Stated Grounds — verified historical record'
+          },
+          {
+            text: 'A word\u2019s present meaning is governed by its earliest literal etymology.',
+            loadBearing: true,
+            kind: 'Unstated Warrant — LOAD-BEARING'
+          },
+          {
+            text: 'The claim concerns modern standard American English usage in formal prose.',
+            loadBearing: false,
+            kind: 'Scope Qualifier — range limiter'
+          },
+          {
+            text: 'The word appeared in a newspaper editorial about municipal corruption.',
+            loadBearing: false,
+            kind: 'Background Context — decorative detail'
+          }
+        ],
+        success: 'DETONATION SUCCESSFUL. Negating the bridge \u2014 "present meaning is not governed by earliest literal etymology" \u2014 removes the only support holding the usage verdict in place, and the capsule drops intact into the debris tray. This is the Etymological Fallacy: a true historical record was asked to license a verdict about contemporary meaning.',
+        failGrounds: 'STRUT SEVERED \u2014 CAPSULE STABLE. You cut a verified historical record, which supplies raw material rather than inferential weight; the claim is still hanging. Locate the strut that states the unstated principle licensing the leap.',
+        failScope: 'STRUT SEVERED \u2014 CAPSULE STABLE. You cut a scope qualifier, which constrains range rather than carrying support; the inference is untouched. Locate the strut that states the unstated principle licensing the leap.',
+        failContext: 'STRUT SEVERED \u2014 CAPSULE STABLE. You cut a decorative context plate that the inference never rested on. Locate the strut that states the unstated principle licensing the leap.',
+        failNone: 'INERT CHARGE. No circuit was inverted, so the claim capsule never lost support. Flip the strut you believe is the unstated warrant to NEGATE, then fire again.'
+      },
+      {
+        claim: 'Therefore, the poet\u2019s phrase "a sanguine disposition" describes a bloodthirsty, violent temperament.',
+        struts: [
+          {
+            text: '"Sanguine" descends from Latin sanguis, "blood," and humoral theory linked blood to a hopeful, ruddy temperament.',
+            loadBearing: false,
+            kind: 'Stated Grounds — verified historical record'
+          },
+          {
+            text: 'The claim is about a twentieth-century poem read by modern secondary students.',
+            loadBearing: false,
+            kind: 'Scope Qualifier — range limiter'
+          },
+          {
+            text: 'Where a word\u2019s historical or technical sense is recoverable, that sense overrides the sense established by the surrounding literary context.',
+            loadBearing: true,
+            kind: 'Unstated Warrant — LOAD-BEARING'
+          },
+          {
+            text: 'The phrase occurs in a line describing a friend\u2019s temperament.',
+            loadBearing: false,
+            kind: 'Background Context — decorative detail'
+          }
+        ],
+        success: 'DETONATION SUCCESSFUL. With "context does not yield to historical sense" inverted, the poem\u2019s surrounding language regains authority and the bloodthirsty reading has nothing left to stand on. The original argument committed a Definitional Shift \u2014 smuggling a technical sense past the contextual one that governs the line.',
+        failGrounds: 'STRUT SEVERED \u2014 CAPSULE STABLE. The etymology you cut is accurate but inert; it feeds the argument without holding it up. Locate the strut that states the unstated principle licensing the leap.',
+        failScope: 'STRUT SEVERED \u2014 CAPSULE STABLE. Cutting a scope qualifier only changes how far the claim reaches, not whether it stands. Locate the strut that states the unstated principle licensing the leap.',
+        failContext: 'STRUT SEVERED \u2014 CAPSULE STABLE. That descriptive detail carries no inferential weight at all. Locate the strut that states the unstated principle licensing the leap.',
+        failNone: 'INERT CHARGE. No circuit was inverted, so the claim capsule never lost support. Flip the strut you believe is the unstated warrant to NEGATE, then fire again.'
+      },
+      {
+        claim: 'Therefore, all ninth graders in the district will gain roughly eleven points of verbal ability if they enrol in Latin.',
+        struts: [
+          {
+            text: 'District Latin enrolment rose from 90 to 240 students over the decade under review.',
+            loadBearing: false,
+            kind: 'Stated Grounds — verified historical record'
+          },
+          {
+            text: 'The claim covers every ninth grader in the district, not only current Latin students.',
+            loadBearing: false,
+            kind: 'Scope Qualifier — range limiter'
+          },
+          {
+            text: 'The state verbal assessment is administered each spring in grades 9\u201312.',
+            loadBearing: false,
+            kind: 'Background Context — decorative detail'
+          },
+          {
+            text: 'The eleven-point verbal gain was produced by Latin enrolment rather than by any concurrent change in the cohort, the curriculum, or the testing population.',
+            loadBearing: true,
+            kind: 'Unstated Warrant — LOAD-BEARING'
+          }
+        ],
+        success: 'DETONATION SUCCESSFUL. Inverting the causal bridge leaves the parallel rise entirely unexplained, and the district-wide mandate collapses into a bare correlation. This is the Causal Leap: a confounded ten-year trend was quietly converted into a mechanism.',
+        failGrounds: 'STRUT SEVERED \u2014 CAPSULE STABLE. The enrolment figures are a factual record, not the support beam; severing them contradicts the district\u2019s data rather than dismantling the inference. Locate the strut that states the unstated principle licensing the leap.',
+        failScope: 'STRUT SEVERED \u2014 CAPSULE STABLE. You removed a range limiter, which changes how far the claim reaches but not whether it holds. Locate the strut that states the unstated principle licensing the leap.',
+        failContext: 'STRUT SEVERED \u2014 CAPSULE STABLE. Administrative background detail carries no inferential weight. Locate the strut that states the unstated principle licensing the leap.',
+        failNone: 'INERT CHARGE. No circuit was inverted, so the claim capsule never lost support. Flip the strut you believe is the unstated warrant to NEGATE, then fire again.'
+      }
+    ];
+
+    let rigIndex = 0;
+    let rigState = [];
+    let rigLocked = false;
+
+    const capsule = document.getElementById('capsule');
+    const capsuleText = document.getElementById('capsuleText');
+    const roundNum = document.getElementById('roundNum');
+    const strutGrid = document.getElementById('strutGrid');
+    const chamberGlass = document.getElementById('chamberGlass');
+    const chamberAlert = document.getElementById('chamberAlert');
+    const debrisField = document.getElementById('debrisField');
+    const rigReadout = document.getElementById('rigReadout');
+    const fireBtn = document.getElementById('fireBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const rigDots = Array.from(document.querySelectorAll('#rigProgress .rig-dot'));
+
+    function loadRound(i) {
+      const round = RIG_ROUNDS[i];
+      rigState = round.struts.map(() => false);
+      rigLocked = false;
+
+      capsule.classList.remove('shattered', 'cracking');
+      capsule.style.opacity = '';
+      capsule.style.transform = '';
+      chamberGlass.classList.remove('breach', 'shake');
+      chamberAlert.classList.remove('on');
+      debrisField.innerHTML = '';
+      strutGrid.classList.remove('revealed');
+      strutGrid.innerHTML = '';
+      nextBtn.hidden = true;
+      fireBtn.hidden = false;
+      fireBtn.disabled = false;
+
+      capsuleText.textContent = round.claim;
+      roundNum.textContent = String(i + 1);
+
+      const letters = ['A', 'B', 'C', 'D'];
+      round.struts.forEach((s, idx) => {
+        const el = document.createElement('div');
+        el.className = 'strut';
+        el.dataset.idx = String(idx);
+        el.innerHTML =
+          '<div class="strut-head">' +
+            '<span class="strut-id">CANDIDATE STRUT ' + letters[idx] + '</span>' +
+            '<span class="strut-switch">ASSERT</span>' +
+          '</div>' +
+          '<p class="strut-text">' + s.text + '</p>' +
+          '<div class="strut-status">STRUCTURAL INTEGRITY: HOLDING</div>' +
+          '<div class="strut-kind">' + s.kind + '</div>';
+        el.addEventListener('click', () => toggleStrut(idx, el));
+        strutGrid.appendChild(el);
+      });
+
+      rigDots.forEach((d, di) => {
+        d.classList.remove('active', 'done');
+        if (di < i) d.classList.add('done');
+        if (di === i) d.classList.add('active');
+      });
+
+      rigReadout.className = 'readout';
+      rigReadout.innerHTML = '<span class="ro-label">RIG TELEMETRY · ROUND ' + (i + 1) + ' OF 3</span>' +
+        'Four struts mounted beneath the capsule. Read each candidate carefully, flip the one you believe is the unstated warrant to NEGATE, then fire.';
+    }
+
+    function toggleStrut(idx, el) {
+      if (rigLocked) return;
+      rigState[idx] = !rigState[idx];
+      const sw = el.querySelector('.strut-switch');
+      const st = el.querySelector('.strut-status');
+      if (rigState[idx]) {
+        el.classList.add('negated');
+        sw.textContent = 'NEGATE';
+        st.textContent = 'SEVERED — STRUT REMOVED';
+      } else {
+        el.classList.remove('negated');
+        sw.textContent = 'ASSERT';
+        st.textContent = 'STRUCTURAL INTEGRITY: HOLDING';
+      }
+    }
+
+    function spawnDebris() {
+      debrisField.innerHTML = '';
+      for (let i = 0; i < 16; i++) {
+        const d = document.createElement('i');
+        d.className = 'debris';
+        d.style.setProperty('--dx', (Math.random() * 300 - 150) + 'px');
+        d.style.setProperty('--dy', (Math.random() * -200 - 40) + 'px');
+        d.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+        d.style.left = (28 + Math.random() * 44) + '%';
+        d.style.top = (28 + Math.random() * 32) + '%';
+        d.style.animationDelay = (Math.random() * 0.22) + 's';
+        if (i % 3 === 0) {
+          d.style.background = 'var(--violet)';
+          d.style.boxShadow = '0 0 10px var(--violet-glow)';
+        } else if (i % 3 === 1) {
+          d.style.background = 'var(--gold)';
+          d.style.boxShadow = '0 0 10px var(--gold-glow)';
+        }
+        debrisField.appendChild(d);
+      }
+    }
+
+    fireBtn.addEventListener('click', () => {
+      if (rigLocked) return;
+      const round = RIG_ROUNDS[rigIndex];
+      const negatedIdx = rigState.map((v, i) => v ? i : -1).filter(i => i >= 0);
+
+      rigLocked = true;
+      strutGrid.classList.add('revealed');
+
+      if (negatedIdx.length === 0) {
+        chamberGlass.classList.add('shake');
+        setTimeout(() => chamberGlass.classList.remove('shake'), 600);
+        rigReadout.className = 'readout bad';
+        rigReadout.innerHTML = '<span class="ro-label">FIRING SEQUENCE ABORTED</span>' + round.failNone;
+        rigLocked = false;
+        return;
+      }
+
+      const loadIdx = round.struts.findIndex(s => s.loadBearing);
+
+      if (rigState[loadIdx]) {
+        /* SUCCESS */
+        chamberAlert.classList.add('on');
+        chamberGlass.classList.add('breach');
+        capsule.classList.add('cracking');
+        spawnDebris();
+        setTimeout(() => { capsule.classList.add('shattered'); }, 380);
+
+        rigReadout.className = 'readout ok';
+        rigReadout.innerHTML = '<span class="ro-label">DETONATION SUCCESSFUL · CLAIM CAPSULE SHATTERED</span>' + round.success;
+
+        state.rigSolved += 1;
+        addXP(100);
+        addIntegrity(15);
+
+        const dot = rigDots[rigIndex];
+        if (dot) { dot.classList.remove('active'); dot.classList.add('done'); }
+
+        fireBtn.hidden = true;
+        if (rigIndex < RIG_ROUNDS.length - 1) {
+          nextBtn.hidden = false;
+        } else {
+          rigReadout.innerHTML += '<br><br><strong>RIG CERTIFIED — all three claim capsules collapsed under negation. The detonator is now cleared for live-fire forensics.</strong>';
+        }
+      } else {
+        /* FAILURE */
+        chamberGlass.classList.add('shake');
+        setTimeout(() => chamberGlass.classList.remove('shake'), 600);
+
+        const cutIdx = negatedIdx[0];
+        const cut = round.struts[cutIdx];
+        let msg;
+        if (cut.kind.indexOf('Grounds') >= 0) msg = round.failGrounds;
+        else if (cut.kind.indexOf('Scope') >= 0) msg = round.failScope;
+        else msg = round.failContext;
+
+        rigReadout.className = 'readout bad';
+        rigReadout.innerHTML = '<span class="ro-label">NEGATION TEST FAILED · CAPSULE INTACT</span>' + msg;
+
+        setTimeout(() => {
+          rigState = round.struts.map(() => false);
+          Array.from(strutGrid.children).forEach(el => {
+            el.classList.remove('negated');
+            el.querySelector('.strut-switch').textContent = 'ASSERT';
+            el.querySelector('.strut-status').textContent = 'STRUCTURAL INTEGRITY: HOLDING';
+          });
+          rigLocked = false;
+        }, 500);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      rigIndex += 1;
+      if (rigIndex >= RIG_ROUNDS.length) { nextBtn.hidden = true; return; }
+      loadRound(rigIndex);
+    });
+
+    loadRound(0);
+
+    /* ================= SECTION 04 : NEGATION DETONATOR ARENA ================= */
+
+    const detonateBtn = document.getElementById('detonateBtn');
+    const detCard = document.getElementById('detCard');
+    const debriefOverlay = document.getElementById('debriefOverlay');
+    const debriefClose = document.getElementById('debriefClose');
+    let detonating = false;
+
+    detonateBtn.addEventListener('click', () => {
+      if (detonating) return;
+      detonating = true;
+      detonateBtn.disabled = true;
+      detonateBtn.textContent = '💥 SEQUENCE RUNNING…';
+
+      detCard.classList.add('flash');
+      setTimeout(() => { detCard.classList.add('crack'); }, 520);
+      setTimeout(() => { detCard.classList.add('collapse'); }, 1150);
+      setTimeout(() => {
+        debriefOverlay.classList.add('on');
+        if (!state.arenaSolved) {
+          state.arenaSolved = true;
+          addXP(100);
+          addIntegrity(15);
+        }
+        detonateBtn.textContent = '💥 NEGATION TEST COMPLETE';
+      }, 1900);
+    });
+
+    debriefClose.addEventListener('click', () => {
+      debriefOverlay.classList.remove('on');
+    });
+
+    /* ================= SECTION 05 : LIVE FIRE FORENSICS ================= */
+
+    const passage = document.getElementById('passage');
+    const notesList = document.getElementById('notesList');
+    const scanBtns = Array.from(document.querySelectorAll('.scan-btn'));
+    let activeMode = null;
+
+    const MODE_META = {
+      grounds: { cls: 'g', label: 'GROUNDS' },
+      core: { cls: 'c', label: 'CORE CLAIM' },
+      warrant: { cls: 'w', label: 'UNSTATED WARRANT' }
+    };
+
+    function renderNotes(mode) {
+      const spans = Array.from(passage.querySelectorAll('span[data-scan="' + mode + '"]'));
+      const meta = MODE_META[mode];
+      if (!spans.length) {
+        notesList.innerHTML = '<p class="muted">No elements detected in this channel.</p>';
+        return;
+      }
+      let html = '';
+      spans.forEach((sp, i) => {
+        const text = sp.textContent.trim();
+        const short = text.length > 68 ? text.slice(0, 68) + '…' : text;
+        html += '<div class="note-item ' + meta.cls + '">' +
+                  '<b>' + meta.label + ' ' + (i + 1) + '</b>' +
+                  '<span style="display:block;color:#A9A9C6;font-size:0.72rem;margin-bottom:4px;">"' + short + '"</span>' +
+                  sp.dataset.note +
+                '</div>';
+      });
+      notesList.innerHTML = html;
+    }
+
+    scanBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode;
+        if (activeMode === mode) {
+          activeMode = null;
+          passage.classList.remove('scan-grounds', 'scan-core', 'scan-warrant');
+          scanBtns.forEach(b => b.classList.remove('active'));
+          notesList.innerHTML = '<p class="muted">Select a scan mode to illuminate the passage and load inspector notes.</p>';
+          return;
+        }
+        activeMode = mode;
+        passage.classList.remove('scan-grounds', 'scan-core', 'scan-warrant');
+        passage.classList.add('scan-' + mode);
+        scanBtns.forEach(b => b.classList.toggle('active', b === btn));
+        renderNotes(mode);
+      });
+    });
+
+    const hypoBtns = Array.from(document.querySelectorAll('.hypo'));
+    const hypoFeedback = document.getElementById('hypoFeedback');
+    let forensicsDone = false;
+
+    hypoBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (forensicsDone) return;
+        const correct = btn.dataset.correct === 'true';
+        hypoFeedback.className = 'hypo-feedback on ' + (correct ? 'ok' : 'bad');
+        hypoFeedback.innerHTML = (correct ? '<strong>✔ STRUCTURAL CLEARANCE GRANTED. </strong>' : '<strong>✘ HYPOTHESIS REJECTED. </strong>') + btn.dataset.fb;
+
+        if (correct) {
+          forensicsDone = true;
+          btn.classList.add('correct');
+          hypoBtns.forEach(b => { b.disabled = true; });
+          if (!state.forensicsSolved) {
+            state.forensicsSolved = true;
+            addXP(100);
+            addIntegrity(15);
+          }
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(() => btn.classList.remove('wrong'), 700);
+        }
+      });
+    });
+
+    /* ================= TERMINATION ================= */
+
+    const finishBtn = document.getElementById('finishBtn');
+    finishBtn.addEventListener('click', () => {
+      if (window.polymathFinishLesson && typeof window.polymathFinishLesson === 'function') {
+        window.polymathFinishLesson();
+      }
+    });
+
+    /* ================= INIT HUD ================= */
+    gaugeFill.style.width = state.integrity + '%';
+    gaugeVal.textContent = state.integrity + '% CALIBRATION';
+    termStatus.textContent = '◈ CALIBRATION INCOMPLETE — ' + state.integrity + '% STRUCTURAL INTEGRITY';
+    xpVal.textContent = '0';
+  }
+</script>
+</｜DSML｜ parameter>
+</｜DSML｜ invoke>
+</｜DSML｜ calls>

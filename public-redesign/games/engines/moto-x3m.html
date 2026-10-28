@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+<base href="/games/moto-x3m/">
+<link rel="stylesheet" href="app.css" type="text/css">
+<style>
+  /* Fill the frame so SHOW_ALL scaling has a box to fit the game into. */
+  #content { position: fixed; inset: 0; width: 100%; height: 100%; }
+  #mx3m-rotate { position: fixed; inset: 0; z-index: 2147483647; display: none; align-items: center; justify-content: center; flex-direction: column; background: #0b1626; color: #eaf6ff; font-family: Arial, sans-serif; text-align: center; }
+  #mx3m-rotate.show { display: flex; }
+  #mx3m-rotate-card { padding: 30px; }
+  #mx3m-rotate-phone { width: 66px; height: 116px; border: 5px solid #6ec1ff; border-radius: 14px; margin: 0 auto 14px; position: relative; }
+  #mx3m-rotate-phone::after { content: ''; position: absolute; left: 50%; bottom: 7px; width: 22px; height: 3px; background: #6ec1ff; border-radius: 2px; transform: translateX(-50%); }
+  #mx3m-rotate-arrow { font-size: 46px; line-height: 1; }
+  #mx3m-rotate-title { margin-top: 12px; font-size: 20px; font-weight: bold; }
+  #mx3m-rotate-sub { margin-top: 6px; opacity: .85; }
+</style>
+<title>Moto X3M</title>
+<script>window.GAME_ID = 'moto-x3m'; window.GAME_DATA = [/* __DATA_INJECTION__ */][0];</script>
+</head>
+<body data-engine="moto-x3m">
+<div id="content"></div>
+<div id="orientation"></div>
+<div id="loader">Loading ...</div>
+<script src="min.js"></script>
+<script src="jquery.js"></script>
+<script src="easeljs.js"></script>
+<script src="bluebird.js"></script>
+<script src="phaser.js"></script>
+<script src="phaser1.js"></script>
+<script src="phaser-super.js"></script>
+<script src="dragonBones.min.js"></script>
+<script src="assets/box2dweb/nape.min.js"></script>
+<script src="assets/box2dweb/nape-debug-draw.min.js"></script>
+<script src="mobile-fit.js"></script>
+<script src="motox3m4.min.js"></script>
+<script src="math-gate.js"></script>
+</body>
+</html>

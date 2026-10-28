@@ -1,0 +1,153 @@
+{
+ "collection": "lessons",
+ "row_id": 848,
+ "shared": false,
+ "user_id": 1339,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P35",
+   "wrong": "Dividing by 2 before removing the + 5 in 2x + 5 = 17. That move gives x + 5 = 8.5 and then x = 3.5, which fails the check because 2(3.5) + 5 = 12, not 17.",
+   "correct": "Dividing both sides of 2x + 5 = 17 by 2 gives x + 2.5 = 8.5, so x = 6; dividing first is valid and does not give x + 5 = 8.5.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Dividing by 2 before removing the + 5 in 2x + 5 = 17. That move gives x + 5 = 8.5 and then x = 3.5, which fails the check because 2(3.5) + 5 = 12, not 17. Subtract 5 first, then divide.",
+   "replace": "Dividing by 2 before removing the + 5 in 2x + 5 = 17 is valid: it gives x + 2.5 = 8.5, so x = 6. The mistake is thinking it gives x + 5 = 8.5; dividing by 2 divides every term on both sides, including the + 5. Subtracting 5 first, then dividing, also works.",
+   "fixes": [
+    "P35"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Dividing by 2 before removing the + 5 in 2x + 5 = 17. That move gives x + 5 = 8.5 and then x = 3.5, which fails the check because 2(3.5) + 5 = 12, not 17. Subtract 5 first, then divide.",
+   "after": "Dividing by 2 before removing the + 5 in 2x + 5 = 17 is valid: it gives x + 2.5 = 8.5, so x = 6. The mistake is thinking it gives x + 5 = 8.5; dividing by 2 divides every term on both sides, including the + 5. Subtracting 5 first, then dividing, also works.",
+   "fixes": [
+    "P35"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax-m3.1-flash:free",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving Linear Equations: Undoing the Operations",
+  "intro": "A linear equation like x + 7 = 12 is a balance: both sides are equal, and your job is to get x alone on one side. You will learn one rule for doing that, then use it on harder equations.",
+  "sections": [
+   {
+    "heading": "One-Step Equations: Undo Addition",
+    "body": "Rule: do the same thing to both sides, and undo an operation by using its opposite. To undo + 7, subtract 7 from both sides.",
+    "example": "x + 7 = 12\nSubtract 7 from both sides: x + 7 - 7 = 12 - 7\nSimplify: x = 5\nCheck: 5 + 7 = 12. It balances, so x = 5."
+   },
+   {
+    "heading": "Two-Step Equations: Addition First, Then Multiplication",
+    "body": "Rule: undo addition or subtraction first, then undo multiplication or division. This order keeps the number attached to x from getting tangled.",
+    "example": "2x + 5 = 17\nSubtract 5 from both sides: 2x = 12\nDivide both sides by 2: x = 6\nCheck: 2(6) + 5 = 12 + 5 = 17. It balances, so x = 6."
+   },
+   {
+    "heading": "Dividing by a Negative",
+    "body": "Rule: when the x term is negative, divide by that whole negative number and keep the minus sign. Then substitute your answer back to catch sign errors.",
+    "example": "-3x + 2 = 14\nSubtract 2 from both sides: -3x = 12\nDivide both sides by -3: x = -4\nCheck: -3(-4) + 2 = 12 + 2 = 14. It balances, so x = -4."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 4x - 7 = 21",
+   "steps": [
+    "The x term has a - 7 attached, so first undo it by adding 7 to both sides: 4x - 7 + 7 = 21 + 7.",
+    "Simplify both sides: 4x = 28.",
+    "Now undo the multiplication by dividing both sides by 4: 4x / 4 = 28 / 4.",
+    "Simplify: x = 7.",
+    "Check by substituting: 4(7) - 7 = 28 - 7 = 21. It balances."
+   ],
+   "answer": "x = 7"
+  },
+  "common_mistakes": [
+   "Dividing by 2 before removing the + 5 in 2x + 5 = 17 is valid: it gives x + 2.5 = 8.5, so x = 6. The mistake is thinking it gives x + 5 = 8.5; dividing by 2 divides every term on both sides, including the + 5. Subtracting 5 first, then dividing, also works.",
+   "Subtracting 4 in 3x - 4 = 11 instead of adding 4. That move gives 3x = 7 and x = 7/3, which fails because 3(7/3) - 4 = 3, not 11. The opposite of - 4 is + 4.",
+   "Dropping the minus sign when dividing 12 by - 3 in -3x + 2 = 14. Writing x = 4 gives -3(4) + 2 = -10, not 14. The quotient of 12 and - 3 is -4.",
+   "Substituting your answer and only reading the first term. In 4x - 7 = 21, checking x = 7 as 4(7) = 28 forgets the - 7; the full check is 28 - 7 = 21."
+  ],
+  "summary": "To solve a linear equation, get x alone by undoing operations with their opposites, doing addition and subtraction first and multiplication or division second. Keep the sign with the number when you divide. Always substitute your answer back to confirm both sides match.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x + 9 = 22.",
+    "answer": "x = 13",
+    "rationale": "Subtract 9 from both sides: x = 22 - 9 = 13.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve 2x + 5 = 17.",
+    "answer": "x = 6",
+    "rationale": "Subtract 5 first to get 2x = 12, then divide by 2 to get x = 6.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "x = 6",
+     "x = 11",
+     "x = 8.5",
+     "x = 12"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "In 3x - 4 = 11, what is the correct first move?",
+    "answer": "Add 4 to both sides",
+    "rationale": "The opposite of - 4 is + 4, so adding 4 to both sides gives 3x = 15 before you divide.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Add 4 to both sides",
+     "Subtract 4 from both sides",
+     "Divide both sides by 3",
+     "Multiply both sides by 3"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve -2x + 3 = 11.",
+    "answer": "x = -4",
+    "rationale": "Subtract 3 to get -2x = 8, then divide by -2, keeping the minus sign, so x = -4.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

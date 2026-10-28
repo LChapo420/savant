@@ -1,0 +1,27 @@
+# /etc/systemd/system/savant-site.service : the landing site's own small server (site/server.js).
+[Unit]
+Description=Savant landing site
+After=network-online.target
+
+[Service]
+Type=simple
+User=savant
+Group=savant
+WorkingDirectory=/srv/savant/site
+Environment=NODE_ENV=production
+Environment=PORT=8787
+Environment=HOST=127.0.0.1
+Environment=TRUST_PROXY=1
+Environment=DATA_DIR=/srv/savant/site-data
+# Set to your real origins once the domain is live:
+Environment=SITE_ORIGINS=https://example.com,https://www.example.com
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/savant/site-data
+SyslogIdentifier=savant-site
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,25 @@
+/* Layout for the design-system page only. Not loaded by real screens. */
+.ds-head { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: var(--es-space-4); flex-wrap: wrap; padding: var(--es-space-4) var(--es-space-6); background: var(--es-bg); border-bottom: var(--es-border-width) solid var(--es-border); }
+.ds-main { max-width: 1100px; margin: 0 auto; padding: var(--es-space-6) var(--es-space-4) 120px; }
+.ds-sec { margin-bottom: var(--es-space-8); }
+.ds-sec > .es-h3 { margin-bottom: var(--es-space-4); }
+.ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--es-space-3); margin-bottom: var(--es-space-3); }
+.ds-card { border: var(--es-border-width) solid var(--es-border); border-radius: var(--es-radius-lg); padding: var(--es-space-5); margin-bottom: var(--es-space-4); }
+.ds-card-flat { border-radius: var(--es-radius-lg); position: relative; }
+.ds-center { text-align: center; }
+.ds-gap { margin-top: var(--es-space-5); }
+.ds-small { font-size: var(--es-text-sm); }
+.ds-split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--es-space-6); margin-top: var(--es-space-5); }
+@media (max-width: 760px) { .ds-split { grid-template-columns: 1fr; } }
+.ds-prompt { margin: var(--es-space-2) 0 var(--es-space-5); }
+.ds-pathbox { max-width: 520px; }
+.ds-lesson .es-lesson__top { padding: 0 0 var(--es-space-4); }
+.ds-inline-audio { width: 32px; height: 32px; vertical-align: middle; color: var(--es-secondary-text); }
+.ds-hero-char { width: 140px; height: 160px; margin: 0 auto; }
+.ds-cast { display: flex; flex-wrap: wrap; gap: var(--es-space-5); }
+.ds-cast button { display: grid; justify-items: center; gap: var(--es-space-2); width: 130px; padding: var(--es-space-3); border: var(--es-border-width) solid var(--es-border); border-radius: var(--es-radius-lg); background: transparent; color: var(--es-text); font: inherit; font-weight: 700; cursor: pointer; }
+.ds-cast svg { width: 100px; height: 116px; }
+.ds-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: var(--es-space-3); }
+.ds-icons div { display: grid; justify-items: center; gap: 6px; padding: var(--es-space-3) 0; border-radius: var(--es-radius-md); background: var(--es-surface); font-size: var(--es-text-xs); color: var(--es-text-muted); }
+.ds-icons svg { width: 28px; height: 28px; color: var(--es-text); }
+#footer:empty { display: none; }

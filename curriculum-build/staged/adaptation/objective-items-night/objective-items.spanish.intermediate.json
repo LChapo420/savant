@@ -1,0 +1,708 @@
+{
+ "track_id": "spanish",
+ "grade_id": "intermediate",
+ "generated_at": "2026-10-26T03:38:11.864Z",
+ "items": [
+  {
+   "objective_id": "intermediate:L86",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 86,
+   "format": "multiple_choice",
+   "prompt": "Which phrase means 'I am going to eat' using the chunk 'voy a'?",
+   "choices": [
+    "voy a comer",
+    "voy comer",
+    "voy a como",
+    "voy como"
+   ],
+   "answer": "voy a comer",
+   "rationale": "The fixed chunk 'voy a' plus the infinitive 'comer' forms the plan expression; the other options omit 'a' or use an incorrect verb form.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L86",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 86,
+   "format": "multiple_choice",
+   "prompt": "Choose the correct way to say 'We are going to the store' using the chunk 'vamos a'.",
+   "choices": [
+    "vamos a la tienda",
+    "vamos la tienda",
+    "vamos a tienda",
+    "vamos tienda"
+   ],
+   "answer": "vamos a la tienda",
+   "rationale": "The chunk 'vamos a' requires the preposition 'a' and the definite article 'la' before 'tienda'; the other choices miss either 'a' or the article.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L86",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 86,
+   "format": "multiple_choice",
+   "prompt": "Complete the sentence: 'Mañana ______ trabajar.' (Tomorrow I am going to work.)",
+   "choices": [
+    "voy a",
+    "voy",
+    "voy a la",
+    "voy al"
+   ],
+   "answer": "voy a",
+   "rationale": "The plan chunk 'voy a' directly precedes the infinitive 'trabajar'; the other options either lack 'a' or add unnecessary articles.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L86",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 86,
+   "format": "multiple_choice",
+   "prompt": "Which question asks 'Are we going to the store?' using the chunk 'vamos a'?",
+   "choices": [
+    "¿Vamos a la tienda?",
+    "¿Vamos la tienda?",
+    "¿Vamos a tienda?",
+    "¿Vamos tienda?"
+   ],
+   "answer": "¿Vamos a la tienda?",
+   "rationale": "The interrogative form keeps the chunk 'vamos a' plus the article 'la'; the other options omit 'a' or the article, breaking the fixed expression.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L81",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_questions",
+   "level": 81,
+   "format": "multiple_choice",
+   "prompt": "Which Spanish question word means \"Who?\"",
+   "choices": [
+    "quién",
+    "qué",
+    "cómo",
+    "cuánto"
+   ],
+   "answer": "quién",
+   "rationale": "Quién is the memorized chunk for asking \"who\" before any grammar is taught.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In Spanish, quién means 'who'.",
+      "url": "https://en.wikipedia.org/wiki/%C2%BFQui%C3%A9n_quiere_ser_millonario%3F_(Spanish_game_show)",
+      "quote": "¿Quién quiere ser millonario? is the Spanish version of the game show Who Wants to Be a Millionaire?",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L81",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_questions",
+   "level": 81,
+   "format": "multiple_choice",
+   "prompt": "To ask \"How much does the book cost?\" you would use which word?",
+   "choices": [
+    "cuánto",
+    "quién",
+    "qué",
+    "dónde"
+   ],
+   "answer": "cuánto",
+   "rationale": "Cuánto is the set phrase for asking about quantity or price, corresponding to \"how much\".",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "“How much” is translated by “cuánto” in Spanish.",
+      "url": "https://en.wikipedia.org/wiki/B%C3%A1rbara_Tard%C3%B3n",
+      "quote": "Los desorbitados salarios de la mesa de la vergüenza: cuánto cobran Pam y sus expertas",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "intermediate:L121",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 121,
+   "format": "multiple_choice",
+   "prompt": "What is the correct Spanish conversion of the English word nation?",
+   "choices": [
+    "nación",
+    "nacion",
+    "nacíon",
+    "nasion"
+   ],
+   "answer": "nación",
+   "rationale": "Changing the English ending -tion to -ción and placing the written accent correctly gives nación.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L121",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 121,
+   "format": "multiple_choice",
+   "prompt": "The English word university is converted by changing -ity to -idad. Which Spanish spelling is correct?",
+   "choices": [
+    "universidad",
+    "universitad",
+    "universitate",
+    "univercidad"
+   ],
+   "answer": "universidad",
+   "rationale": "Applying the ending pattern to university gives universidad, with -idad replacing -ity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L121",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 121,
+   "format": "multiple_choice",
+   "prompt": "Which Spanish form is produced when finally is converted from -ly to -mente?",
+   "choices": [
+    "finalmente",
+    "finalmiente",
+    "finalmiento",
+    "finalmienta"
+   ],
+   "answer": "finalmente",
+   "rationale": "The base final combines with -mente to form finalmente.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L121",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 121,
+   "format": "multiple_choice",
+   "prompt": "Which conversion does not follow the course rule for converting English cognates into Spanish?",
+   "choices": [
+    "nation → nación",
+    "university → universidad",
+    "quality → calidad",
+    "finally → finalmiente"
+   ],
+   "answer": "finally → finalmiente",
+   "rationale": "The ending -ly must become -mente, so finally converts to finalmente, not finalmiente.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L111",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_questions",
+   "level": 111,
+   "format": "multiple_choice",
+   "prompt": "Someone says, “I don’t understand.” Which Spanish sentence says this?",
+   "choices": [
+    "No entiendo",
+    "No hablo",
+    "No quiero",
+    "No tengo"
+   ],
+   "answer": "No entiendo",
+   "rationale": "“No entiendo” means “I don’t understand.” In a basic negative sentence, “no” comes before the verb.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L111",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_questions",
+   "level": 111,
+   "format": "multiple_choice",
+   "prompt": "Choose the short negative sentence that means “I don’t want it.”",
+   "choices": [
+    "No quiero",
+    "No sé",
+    "No tengo",
+    "No hablo"
+   ],
+   "answer": "No quiero",
+   "rationale": "“No quiero” means “I don’t want it.” The word “no” is placed directly before the verb “quiero.”",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L111",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_questions",
+   "level": 111,
+   "format": "multiple_choice",
+   "prompt": "A classmate asks, “¿Tienes un lápiz?” Which is the correct short negative answer?",
+   "choices": [
+    "No, no tengo",
+    "No, no es",
+    "No, no está",
+    "No, no soy"
+   ],
+   "answer": "No, no tengo",
+   "rationale": "“No, no tengo” means “No, I don’t have one.” The negative word “no” comes before the verb “tengo.”",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L111",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_questions",
+   "level": 111,
+   "format": "multiple_choice",
+   "prompt": "Which sentence correctly puts “no” before the verb?",
+   "choices": [
+    "No quiero",
+    "Quiero no",
+    "No es quiero",
+    "Tengo no"
+   ],
+   "answer": "No quiero",
+   "rationale": "“No quiero” is correctly formed because “no” comes before the verb “quiero.”",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L112",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 112,
+   "format": "multiple_choice",
+   "prompt": "In Spanish, “embarazada” describes a woman who is:",
+   "choices": [
+    "pregnant",
+    "embarrassed",
+    "confused",
+    "married"
+   ],
+   "answer": "pregnant",
+   "rationale": "“Embarazada” means pregnant. It is a false friend of “embarrassed,” which means “avergonzada.”",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "nemotron",
+     "glm"
+    ],
+    "source": [
+     {
+      "claim": "embarazada means pregnant in Spanish.",
+      "url": "https://en.wikipedia.org/wiki/False_friend",
+      "quote": "Spanish embarazada ('pregnant')",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     },
+     {
+      "claim": "\"Embarazada\" means pregnant in Spanish, not embarrassed.",
+      "url": "https://en.wikipedia.org/wiki/False_friend",
+      "quote": "Examples of false friends include English embarrassed and Spanish embarazada ('pregnant'); English parents versus Portuguese parentes and Italian parenti (the latter two both meaning 'relatives'); English demand and French demander ('ask'); and English gift , German Gift ('poison'), and Norwegian gift (both 'married' and 'poison').",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L112",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 112,
+   "format": "multiple_choice",
+   "prompt": "A student wants to say “bookstore.” Which word should they use?",
+   "choices": [
+    "biblioteca",
+    "librería",
+    "libro",
+    "librero"
+   ],
+   "answer": "librería",
+   "rationale": "“Librería” means a shop that sells books. “Biblioteca” is a place where books can be borrowed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "intermediate:L112",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 112,
+   "format": "multiple_choice",
+   "prompt": "A student wants to say that the concert was a success. Which word should they use?",
+   "choices": [
+    "éxito",
+    "salida",
+    "entrada",
+    "escalera"
+   ],
+   "answer": "éxito",
+   "rationale": "“Éxito” means success. “Salida” and “entrada” mean exit and entrance.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "intermediate:L112",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 112,
+   "format": "multiple_choice",
+   "prompt": "A student says, “No tengo ganas de salir; estoy constipado.” What is the student most likely saying?",
+   "choices": [
+    "I have a cold.",
+    "I am constipated.",
+    "I am hungry.",
+    "I am thirsty."
+   ],
+   "answer": "I have a cold.",
+   "rationale": "In this usage, “constipado” means having a cold, although it resembles the English word “constipated.”",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "intermediate:L122",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 122,
+   "format": "multiple_choice",
+   "prompt": "The English noun artist names a person who creates art. Which Spanish noun correctly uses the -ist to -ista pattern?",
+   "choices": [
+    "artista",
+    "artisto",
+    "artísta",
+    "artístico"
+   ],
+   "answer": "artista",
+   "rationale": "Artista is the correct Spanish cognate of artist and uses the ending -ista.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "artista is the Spanish noun for artist.",
+      "url": "https://en.wikipedia.org/wiki/Spanish_noun",
+      "quote": "el artista refers to an artist who is male while la artista refers to an artist who is female.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L97",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Today is Monday. How do you answer “What day is it today?”",
+   "choices": [
+    "Hoy es lunes.",
+    "Ayer es lunes.",
+    "Hoy fue lunes.",
+    "Mañana es lunes."
+   ],
+   "answer": "Hoy es lunes.",
+   "rationale": "“Hoy es lunes.” means “Today is Monday” and uses hoy correctly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L97",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "If today is Friday, which sentence says that yesterday was Thursday?",
+   "choices": [
+    "Hoy fue jueves.",
+    "Ayer fue jueves.",
+    "Mañana es jueves.",
+    "Ayer es jueves."
+   ],
+   "answer": "Ayer fue jueves.",
+   "rationale": "“Ayer fue jueves.” means “Yesterday was Thursday” and correctly uses ayer with the past tense.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Thursday comes immediately before Friday in the weekly cycle.",
+      "url": "https://en.wiktionary.org/wiki/Thursday",
+      "quote": "it follows Wednesday and precedes Friday",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "intermediate:L97",
+   "track_id": "spanish",
+   "grade_id": "intermediate",
+   "skill_id": "es_vocab_core",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Which Spanish question means \"What day is it today?\"",
+   "choices": [
+    "¿Qué día es hoy?",
+    "¿Qué día es mañana?",
+    "¿Qué día fue ayer?",
+    "¿Qué hora es?"
+   ],
+   "answer": "¿Qué día es hoy?",
+   "rationale": "The phrase \"¿Qué día es hoy?\" directly asks for the current day, matching the learning objective.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

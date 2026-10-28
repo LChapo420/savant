@@ -1,0 +1,154 @@
+{
+ "collection": "lessons",
+ "row_id": 232,
+ "shared": false,
+ "user_id": 430,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P27",
+   "wrong": "In x + 7 = 12, adding 7 to both sides gives x = 19, which is wrong because 19 + 7 = 26, not 12.",
+   "correct": "Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "In x + 7 = 12, adding 7 to both sides gives x = 19, which is wrong because 19 + 7 = 26, not 12. You needed to subtract 7.",
+   "replace": "Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19. You needed to subtract 7.",
+   "fixes": [
+    "P27"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Using the same operation instead of the opposite. In x + 7 = 12, adding 7 to both sides gives x = 19, which is wrong because 19 + 7 = 26, not 12. You needed to subtract 7.",
+   "after": "Using the same operation instead of the opposite. Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19. You needed to subtract 7.",
+   "fixes": [
+    "P27"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving linear equations with one move",
+  "intro": "A linear equation says that two expressions are equal. To solve it, you find the number that makes it true. The whole skill rests on one rule, and you will use it three ways.",
+  "sections": [
+   {
+    "heading": "The balance rule",
+    "body": "Rule: an equation is a balance. Whatever you do to one side, you must do to the other side, or the balance breaks. That single rule is what lets you change an equation without changing its answer.",
+    "example": "Take x + 7 = 12. The number 5 makes it true, because 5 + 7 = 12. If I add 3 to both sides I get x + 10 = 15, and 5 still works, since 5 + 10 = 15. Same answer, new-looking equation."
+   },
+   {
+    "heading": "Undoing addition and subtraction",
+    "body": "Rule: to strip a number off x, apply the opposite operation to both sides. If x has a number added, subtract that number from both sides. If x has a number subtracted, add that number to both sides.",
+    "example": "Solve x + 4 = 13. The opposite of adding 4 is subtracting 4, so subtract 4 from both sides: x + 4 - 4 = 13 - 4. The left side collapses to x, and 13 - 4 = 9, so x = 9. Check it: 9 + 4 = 13. That works."
+   },
+   {
+    "heading": "Undoing multiplication",
+    "body": "Rule: when a number is multiplied by x, divide both sides by that number. The number stays stuck to x until you divide, so dividing is the move that frees x. Then check your answer by putting it back into the original equation.",
+    "example": "Solve 5x = 35. Divide both sides by 5: 5x / 5 = 35 / 5. The left side is x, and 35 / 5 = 7, so x = 7. Check it: 5 times 7 is 35. That works."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve x - 6 = 10.",
+   "steps": [
+    "Identify what is stuck to x. Here a 6 is subtracted from x.",
+    "Use the rule: undo subtraction by adding. Add 6 to both sides so the balance holds.",
+    "Left side: x - 6 + 6 = x. The -6 and +6 cancel.",
+    "Right side: 10 + 6 = 16.",
+    "So x = 16.",
+    "Check by substituting back: 16 - 6 = 10. The original equation is true, so 16 is correct."
+   ],
+   "answer": "x = 16"
+  },
+  "common_mistakes": [
+   "Using the same operation instead of the opposite. Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19. You needed to subtract 7.",
+   "Applying the move to only one side. In x + 3 = 10, subtracting 3 from the left alone leaves you writing x = 10, which fails the check since 7 + 3 = 10, not 10 + 3.",
+   "Subtracting instead of dividing when x is multiplied. In 5x = 35, subtracting 5 from both sides gives 5x - 5 = 30 and the 5 is still stuck to x. The wrong answer x = 30 fails because 5 times 30 is 150.",
+   "Treating 5x as 5 + x. In 5x = 35 the two symbols are multiplied, so the undoing move is division, not subtraction."
+  ],
+  "summary": "An equation is a balance, so every move goes on both sides. Undo addition with subtraction, undo subtraction with addition, and undo multiplication with division. Always substitute your answer back into the original equation to check it.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x + 4 = 13.",
+    "answer": "x = 9",
+    "rationale": "The deciding step is subtracting 4 from both sides, which gives x = 13 - 4 = 9.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "In x - 6 = 10, which move isolates x?",
+    "answer": "Add 6 to both sides",
+    "rationale": "The 6 is subtracted from x, so the opposite operation, adding 6 to both sides, cancels it and leaves x = 16.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Subtract 6 from both sides",
+     "Add 6 to both sides",
+     "Divide both sides by 6",
+     "Multiply both sides by 6"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 5x = 35.",
+    "answer": "x = 7",
+    "rationale": "The deciding step is dividing both sides by 5, since 5 is multiplied by x, giving x = 35 / 5 = 7.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Sam solves x + 7 = 12 by adding 7 to both sides and reports x = 19. What is the error?",
+    "answer": "Adding 7 repeats the +7 instead of undoing it, and 19 + 7 = 26 fails the check",
+    "rationale": "The rule is to use the opposite operation, so x + 7 = 12 needs 7 subtracted from both sides, giving x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Adding 7 repeats the +7 instead of undoing it, and 19 + 7 = 26 fails the check",
+     "Sam should have added 7 only to the left side",
+     "Sam should have divided both sides by 7",
+     "Nothing is wrong, x = 19 is correct"
+    ]
+   }
+  ]
+ }
+}

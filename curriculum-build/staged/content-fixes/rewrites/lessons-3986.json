@@ -1,0 +1,152 @@
+{
+ "collection": "lessons",
+ "row_id": 3986,
+ "shared": false,
+ "user_id": 6223,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P66",
+   "wrong": "Everything here uses only multiplication and division.",
+   "correct": "The lesson says it uses only multiplication and division, but its own Common Mistakes use addition (2x + x).",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Everything here uses only multiplication and division.",
+   "replace": "The main rules here use multiplication and division, while the Common Mistakes also include addition.",
+   "fixes": [
+    "P66 [rewrite_text]"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "intro",
+   "before": "Algebra is a way of writing a calculation before you know the numbers. In this lesson you will learn what a letter means in an expression, and how to turn the expression into a real number. Everything here uses only multiplication and division.",
+   "after": "Algebra is a way of writing a calculation before you know the numbers. In this lesson you will learn what a letter means in an expression, and how to turn the expression into a real number. The main rules here use multiplication and division, while the Common Mistakes also include addition.",
+   "fixes": [
+    "P66 [rewrite_text]"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Algebra as a Language of Structure: Letters Mean Numbers",
+  "intro": "Algebra is a way of writing a calculation before you know the numbers. In this lesson you will learn what a letter means in an expression, and how to turn the expression into a real number. The main rules here use multiplication and division, while the Common Mistakes also include addition.",
+  "sections": [
+   {
+    "heading": "A letter stands for a number, and 5x means 5 times x",
+    "body": "The rule: when a number sits right next to a letter, that means multiplication. So 5x means 5 times x, and x is a placeholder for whatever number you choose. When x is 3, the value of 5x is 5 times 3, which is 15.",
+    "example": "If x = 3, then 5x = 5 times 3 = 15."
+   },
+   {
+    "heading": "A fraction bar means division",
+    "body": "The rule: x/3 means x divided by 3, with the top number being divided. The letter can sit on top or on the bottom, and where it sits matters. If x = 12, then x/3 = 12 divided by 3 = 4.",
+    "example": "If x = 12, then x/3 = 12 divided by 3 = 4, while 3/x = 3 divided by 12, which is 1/4. Same two symbols, different result."
+   },
+   {
+    "heading": "To evaluate, put the number in first, then compute",
+    "body": "The rule: replace every copy of the letter with its value, then do the multiplications and divisions left to right. You never guess the answer from the shape of the expression. If x = 6 and the expression is 2x/3, you write 2 times 6 divided by 3.",
+    "example": "If x = 6, then 2x/3 = 2 times 6 divided by 3 = 12 divided by 3 = 4."
+   }
+  ],
+  "worked_example": {
+   "problem": "Evaluate 3x/4 when x = 8.",
+   "steps": [
+    "Rule: 3x means 3 times x, and the /4 means divide that result by 4.",
+    "Substitute x = 8 into the expression: 3x/4 becomes 3 times 8 divided by 4.",
+    "Multiply first: 3 times 8 = 24.",
+    "Now divide: 24 divided by 4 = 6.",
+    "So the value of 3x/4 at x = 8 is 6."
+   ],
+   "answer": "6"
+  },
+  "common_mistakes": [
+   "Reading 4x as 4 plus x. The number next to a letter means multiply, so with x = 3 this mistake gives 4 + 3 = 7 instead of the correct 4 times 3 = 12.",
+   "Reading x/3 as 3 divided by x. The top is what gets divided, so with x = 12 this mistake gives 3/12 = 1/4 instead of the correct 12 divided by 3 = 4.",
+   "Substituting only one x when the letter appears twice. In 2x + x with x = 5, writing 2 times 5 + x gives 11 instead of the correct 2 times 5 + 5 = 15."
+  ],
+  "summary": "A letter stands for a number you have not chosen yet. A number next to a letter means multiply, a fraction bar means divide the top by the bottom, and to evaluate you substitute the value for every copy of the letter, then compute.",
+  "check_questions": [
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "What does 6x mean?",
+    "answer": "6 times x",
+    "rationale": "The rule for section 1 is that a number sitting next to a letter means multiplication, so 6x is 6 times x.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "6 plus x",
+     "6 times x",
+     "x divided by 6",
+     "6 divided by x"
+    ]
+   },
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "Evaluate 3x when x = 5.",
+    "answer": "15",
+    "rationale": "Substitute x = 5 into 3x to get 3 times 5, and 3 times 5 = 15.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "Which expression means x divided by 4?",
+    "answer": "x/4",
+    "rationale": "The rule for section 2 is that the top of a fraction is what gets divided, so x divided by 4 must be written x/4, not 4/x.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "4/x",
+     "x/4",
+     "4x",
+     "x - 4"
+    ]
+   },
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "Evaluate 2x/3 when x = 6.",
+    "answer": "4",
+    "rationale": "Substitute to get 2 times 6 divided by 3, multiply first for 12, then divide: 12 divided by 3 = 4.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

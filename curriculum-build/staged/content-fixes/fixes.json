@@ -1,0 +1,3517 @@
+{
+ "generated": "2026-10-23T18:54:33.077Z",
+ "note": "Proposed corrections only. Nothing here has been applied. Each entry names the stored row and path; \"set\" is the exact field change for a simple re-key, otherwise the text needs a rewrite (or the item removed).",
+ "count": 240,
+ "fixes": [
+  {
+   "ref": "P3",
+   "collection": "lessons",
+   "row_id": 30,
+   "path": "body",
+   "shared": false,
+   "user_id": 95,
+   "action": "rewrite_text",
+   "wrong": "Whatever you do to one side of an equation, you must do to the exact same side or the opposite side to keep it balanced.",
+   "correct": "Do the same thing to BOTH sides of an equation to keep it balanced (the text says \"the exact same side or the opposite side\").",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P4",
+   "collection": "lessons",
+   "row_id": 40,
+   "path": "body",
+   "shared": false,
+   "user_id": 108,
+   "action": "rewrite_text",
+   "wrong": "dividing by 2 first gives x + 3 = 5.5",
+   "correct": "Dividing both sides of 2x + 3 = 11 by 2 gives x + 1.5 = 5.5, so x = 4: dividing first is valid. The wrong answer 2.5 comes from dividing only the 2x term.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P5",
+   "collection": "lessons",
+   "row_id": 40,
+   "path": "body",
+   "shared": false,
+   "user_id": 108,
+   "action": "rewrite_text",
+   "wrong": "adding 3 to both sides gives 2x = 14 and then x = 7",
+   "correct": "Adding 3 to both sides of 2x + 3 = 11 gives 2x + 6 = 14 (x = 4). The slip that gives 2x = 14 is moving the +3 across without changing its sign.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P6",
+   "collection": "lessons",
+   "row_id": 41,
+   "path": "body",
+   "shared": false,
+   "user_id": 108,
+   "action": "rewrite_text",
+   "wrong": "In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = 17 written as 2x + 5 = 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "correct": "Subtracting x from only the left of 3x + 5 = x + 17 gives 2x + 5 = x + 17; the bullet garbles this (\"gives 2x + 5 = 17 written as 2x + 5 = 17 while the right still has x\").",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P9",
+   "collection": "lessons",
+   "row_id": 48,
+   "path": "body",
+   "shared": false,
+   "user_id": 120,
+   "action": "rewrite_text",
+   "wrong": "Multiplying both sides by 3 when you see 3x = 15, giving x = 45.",
+   "correct": "Multiplying both sides of 3x = 15 by 3 gives 9x = 45, not x = 45.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P10",
+   "collection": "lessons",
+   "row_id": 50,
+   "path": "body",
+   "shared": false,
+   "user_id": 121,
+   "action": "rewrite_text",
+   "wrong": "Keep the rule from the examples in mind: Subtract 18 from both sides: 7x = 7. Divide by 7: x = 1.",
+   "correct": "The summary is a stray solution (\"Subtract 18 from both sides: 7x = 7 ... x = 1\") for an equation the lesson never shows; replace with the general rule (undo the constant, then divide by the coefficient). The Common Mistakes list is empty.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P12",
+   "collection": "lessons",
+   "row_id": 67,
+   "path": "body",
+   "shared": false,
+   "user_id": 148,
+   "action": "rewrite_text",
+   "wrong": "Dividing by 2 before removing the 4 in 2x + 4 = 14. That turns the 4 into 2 as well and gives x + 4 = 7, so x = 3, but 2 x 3 + 4 = 10, not 14.",
+   "correct": "Dividing 2x + 4 = 14 by 2 gives x + 2 = 7 (x = 5); the bullet says the 4 \"turns into 2\" and then writes x + 4 = 7.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P13",
+   "collection": "lessons",
+   "row_id": 66,
+   "path": "body",
+   "shared": false,
+   "user_id": 148,
+   "action": "rewrite_text",
+   "wrong": "Adding 7 to both sides of x + 7 = 12 instead of subtracting 7. That gives x = 19, which fails because 19 + 7 = 26, not 12.",
+   "correct": "Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19. The slip that gives 19 is writing x = 12 + 7.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P14",
+   "collection": "lessons",
+   "row_id": 79,
+   "path": "body",
+   "shared": false,
+   "user_id": 162,
+   "action": "rewrite_text",
+   "wrong": "Picking the number closest to zero as the smaller one when signs differ. Between -6 and -2, -2 is closer to zero but -6 sits farther left, so -6 is the smaller number.",
+   "correct": "-6 and -2 have the SAME sign; the example does not show the \"signs differ\" case it claims.",
+   "source": "https://en.wikipedia.org/wiki/Negative_number",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P15",
+   "collection": "lessons",
+   "row_id": 80,
+   "path": "body",
+   "shared": false,
+   "user_id": 163,
+   "action": "rewrite_text",
+   "wrong": "Adding the 6 to one side only in x + 6 = 15. That gives x = 21 on the left while the right side stays 15, and the check 21 + 6 = 27 fails.",
+   "correct": "Adding 6 to one side only of x + 6 = 15 does not give x = 21; the slip that gives 21 is writing x = 15 + 6.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P17",
+   "collection": "lessons",
+   "row_id": 130,
+   "path": "body",
+   "shared": false,
+   "user_id": 252,
+   "action": "rewrite_text",
+   "wrong": "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x = 5, and the check 5 - 7 = -2 does not equal 12. The - 7 needs + 7.",
+   "correct": "Subtracting 7 from both sides of x - 7 = 12 gives x - 14 = 5 (x = 19), not x = 5. The slip that gives 5 is computing 12 - 7.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P21",
+   "collection": "lessons",
+   "row_id": 131,
+   "path": "body",
+   "shared": false,
+   "user_id": 252,
+   "action": "rewrite_text",
+   "wrong": "In x + 7 = 12, subtracting 7 from the right side only. That gives x = 12, because you never balanced the left side. Subtract 7 from both sides to get x = 5.",
+   "correct": "Subtracting 7 from the RIGHT side only of x + 7 = 12 gives x + 7 = 5; x = 12 comes from removing the 7 on the LEFT only.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P22",
+   "collection": "lessons",
+   "row_id": 131,
+   "path": "body",
+   "shared": false,
+   "user_id": 252,
+   "action": "rewrite_text",
+   "wrong": "In x - 4 = 10, subtracting 4 from both sides instead of adding 4. That gives x = 6, and 6 - 4 = 2 does not equal 10.",
+   "correct": "Subtracting 4 from both sides of x - 4 = 10 gives x - 8 = 6 (x = 14), not x = 6.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P24",
+   "collection": "lessons",
+   "row_id": 131,
+   "path": "body",
+   "shared": false,
+   "user_id": 252,
+   "action": "rewrite_text",
+   "wrong": "In x / 5 = 4, dividing both sides by 5 again. That gives x = 4/5, but (4/5) / 5 is not 4.",
+   "correct": "Dividing both sides of x/5 = 4 by 5 gives x/25 = 4/5 (still x = 20), not x = 4/5.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P25",
+   "collection": "lessons",
+   "row_id": 193,
+   "path": "body",
+   "shared": false,
+   "user_id": 365,
+   "action": "rewrite_text",
+   "wrong": "In 2x + 7 = 17, dividing only the left side by 2 gives x + 7 = 17 and then x = 10.",
+   "correct": "Dividing the whole left side of 2x + 7 = 17 by 2 gives x + 3.5; x + 7 = 17 comes from dividing only the 2x term.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P27",
+   "collection": "lessons",
+   "row_id": 232,
+   "path": "body",
+   "shared": false,
+   "user_id": 430,
+   "action": "rewrite_text",
+   "wrong": "In x + 7 = 12, adding 7 to both sides gives x = 19, which is wrong because 19 + 7 = 26, not 12.",
+   "correct": "Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P28",
+   "collection": "lessons",
+   "row_id": 233,
+   "path": "body",
+   "shared": false,
+   "user_id": 430,
+   "action": "rewrite_text",
+   "wrong": "The +5 is an addition, not a factor, so it does not get divided.",
+   "correct": "Dividing both sides of 3x + 5 = 20 by 3 divides every term: x + 5/3 = 20/3 (x = 5). \"The +5 ... does not get divided\" is false.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P29",
+   "collection": "lessons",
+   "row_id": 234,
+   "path": "body",
+   "shared": false,
+   "user_id": 431,
+   "action": "rewrite_text",
+   "wrong": "Adding 7 to both sides of x + 7 = 12. You must undo the addition, so this move gives 19 on the right and x = 19, which is wrong.",
+   "correct": "Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P33",
+   "collection": "lessons",
+   "row_id": 358,
+   "path": "body",
+   "shared": false,
+   "user_id": 708,
+   "action": "rewrite_text",
+   "wrong": "Doing the divide before the subtract in 5x + 2 = 27, which gives x + 2 = 5.4 and then x = 3.4.",
+   "correct": "Dividing both sides of 5x + 2 = 27 by 5 first gives x + 0.4 = 5.4, so x = 5; dividing first does not give x + 2 = 5.4 or x = 3.4.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P34",
+   "collection": "lessons",
+   "row_id": 424,
+   "path": "body",
+   "shared": false,
+   "user_id": 833,
+   "action": "rewrite_text",
+   "wrong": "In 5x = 20, subtracting 5 from both sides. That gives 5x = 15, which still has x multiplied by 5, so x is not alone.",
+   "correct": "Subtracting 5 from both sides of 5x = 20 gives 5x - 5 = 15, not 5x = 15.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P35",
+   "collection": "lessons",
+   "row_id": 848,
+   "path": "body",
+   "shared": false,
+   "user_id": 1339,
+   "action": "rewrite_text",
+   "wrong": "Dividing by 2 before removing the + 5 in 2x + 5 = 17. That move gives x + 5 = 8.5 and then x = 3.5, which fails the check because 2(3.5) + 5 = 12, not 17.",
+   "correct": "Dividing both sides of 2x + 5 = 17 by 2 gives x + 2.5 = 8.5, so x = 6; dividing first is valid and does not give x + 5 = 8.5.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P37",
+   "collection": "lessons",
+   "row_id": 425,
+   "path": "body",
+   "shared": false,
+   "user_id": 833,
+   "action": "rewrite_text",
+   "wrong": "In x + 6 = 14, adding 6 to both sides gives x = 20, and 20 + 6 = 26 does not equal 14.",
+   "correct": "Adding 6 to both sides of x + 6 = 14 gives x + 12 = 20 (x = 8), not x = 20.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P38",
+   "collection": "lessons",
+   "row_id": 1219,
+   "path": "body",
+   "shared": false,
+   "user_id": 1728,
+   "action": "rewrite_text",
+   "wrong": "Reading x - 7 = 5 and subtracting 7 from both sides, getting x = -2.",
+   "correct": "Subtracting 7 from both sides of x - 7 = 5 gives x - 14 = -2 (x = 12), not x = -2.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P39",
+   "collection": "lessons",
+   "row_id": 1220,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "Some verbs never stand alone. Can, could, will, would, shall, should, may, might, must, do, does, did, have, has, had.",
+   "correct": "do/does/did and have/has/had can be main verbs (\"She has a cat\", \"I did the work\"); only the modals never stand alone.",
+   "source": "https://en.wikipedia.org/wiki/Auxiliary_verb",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P40",
+   "collection": "lessons",
+   "row_id": 1220,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "Now the helpers (could have) point to a real verb (finished), and the thought is done.",
+   "correct": "In \"She could have had it finished by noon\" the main verb is \"had\"; \"finished\" is a participle complement.",
+   "source": "https://en.wikipedia.org/wiki/Auxiliary_verb",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P41",
+   "collection": "lessons",
+   "row_id": 1220,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "Because walking to the store is a dangling piece: it describes the person, not the phone, and it has no main verb of its own. It is a fragment attached to the wrong subject.",
+   "correct": "\"Walking to the store, her phone rang\" is a dangling modifier, not a fragment (it has a subject and finite verb).",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P42",
+   "collection": "lessons",
+   "row_id": 1220,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "But tired and sore, is a description with no verb. It dangles between the two real pieces. ... The fragment is absorbed, and the thought completes.",
+   "correct": "\"After the meeting, tired and sore, everyone sat down.\" is a correct sentence; \"tired and sore\" is an adjective phrase modifying \"everyone\", not a dangling fragment.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P43",
+   "collection": "lessons",
+   "row_id": 1272,
+   "path": "body",
+   "shared": false,
+   "user_id": 1890,
+   "action": "rewrite_text",
+   "wrong": "Divided by, half of, and per mean divide, and the thing named FIRST goes on top of the fraction.",
+   "correct": "\"Half of a number n\" is n/2: the \"thing named first goes on top\" rule fails for \"half of\".",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P44",
+   "collection": "lessons",
+   "row_id": 1272,
+   "path": "body",
+   "shared": false,
+   "user_id": 1890,
+   "action": "rewrite_text",
+   "wrong": "Start with the amount the phrase names first, so \"less than\" and \"more than\" attach to what comes before them.",
+   "correct": "\"7 less than n\" is n - 7: the number named first goes SECOND for \"less than\"; the summary says the opposite.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P47",
+   "collection": "lessons",
+   "row_id": 1510,
+   "path": "body",
+   "shared": false,
+   "user_id": 2163,
+   "action": "rewrite_text",
+   "wrong": "removing it leaves \"kip\", which is a different word.",
+   "correct": "Removing \"ch\" from \"chip\" leaves \"ip\", not \"kip\".",
+   "source": "https://en.wiktionary.org/wiki/chip",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P49",
+   "collection": "lessons",
+   "row_id": 1801,
+   "path": "body",
+   "shared": false,
+   "user_id": 2500,
+   "action": "rewrite_text",
+   "wrong": "\"More than\" keeps the order the same, so 5 more than a number is x + 5.",
+   "correct": "\"5 more than a number\" names 5 first but is written x + 5, so \"more than\" does not keep the word order (5 + x is also right because addition commutes; with \"less than\" the order matters).",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P54",
+   "collection": "lessons",
+   "row_id": 2040,
+   "path": "body",
+   "shared": false,
+   "user_id": 2860,
+   "action": "rewrite_text",
+   "wrong": "Remember that \"less than\" and \"more than\" put the number on the left of the operation",
+   "correct": "\"7 less than n\" is n - 7 and \"9 more than n\" is n + 9: the number goes on the RIGHT, not the left.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P55",
+   "collection": "lessons",
+   "row_id": 2144,
+   "path": "body",
+   "shared": false,
+   "user_id": 3016,
+   "action": "rewrite_text",
+   "wrong": "Write the expression in the same order the words appear, except that more than and less than put the named number first.",
+   "correct": "\"8 less than y\" is y - 8: the named number goes second; Section 1 says it goes first and the summary says second (contradiction).",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P57",
+   "collection": "lessons",
+   "row_id": 2813,
+   "path": "body",
+   "shared": false,
+   "user_id": 3865,
+   "action": "rewrite_text",
+   "wrong": "The top 12x is 12 times x, so the 3 divides both the 12 and the x.",
+   "correct": "12x/3 = (12/3)x = 4x: dividing a product divides ONE factor; the 3 does not divide both the 12 and the x.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P59",
+   "collection": "lessons",
+   "row_id": 2850,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "\"Jaw-broken silence\" or the classic \"deafening silence\" is an oxymoron: silent and loud are opposites, yet one is piled on the other.",
+   "correct": "\"Jaw-broken silence\" is not an oxymoron (its words do not contradict each other); \"deafening silence\" is.",
+   "source": "https://en.wikipedia.org/wiki/Oxymoron",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P62",
+   "collection": "lessons",
+   "row_id": 3069,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "Greek -opt / -scop / -graph give you telescope, optical, biography. Both mean something with sight, but the Latin set is everyday and the Greek set is the scientific, specialized version.",
+   "correct": "-graph means \"write\" (biography = life-writing); it is not a sight root. Greek sight roots are -opt- and -scop-.",
+   "source": "https://en.wiktionary.org/wiki/-graphy",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P63",
+   "collection": "lessons",
+   "row_id": 3069,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "Diagnosis and condition are Latin-family (general, professional).",
+   "correct": "\"Diagnosis\" is Greek (dia- + gnosis), not Latin-family.",
+   "source": "https://en.wiktionary.org/wiki/diagnosis",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P64",
+   "collection": "lessons",
+   "row_id": 3069,
+   "path": "body",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite_text",
+   "wrong": "gen- in geographer is Greek (earth).",
+   "correct": "The Greek root for \"earth\" in geographer is geo-/ge-, not \"gen-\".",
+   "source": "https://en.wiktionary.org/wiki/geo-",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P66",
+   "collection": "lessons",
+   "row_id": 3986,
+   "path": "body",
+   "shared": false,
+   "user_id": 6223,
+   "action": "rewrite_text",
+   "wrong": "Everything here uses only multiplication and division.",
+   "correct": "The lesson says it uses only multiplication and division, but its own Common Mistakes use addition (2x + x).",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge flag + computation"
+  },
+  {
+   "ref": "P67",
+   "collection": "block_plans",
+   "row_id": 2,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"chips[{\"correctIndex\":3,\"id\":\"c4\",\"text\":\"the sky writes poems\"},{\"correctIndex\":1,\"id\":\"c2\",\"text\":\"poetry builds attention\"},{\"correctIndex\":2,\"id\":\"c3\",\"text\":\"and\"},{\"correctIndex\":0,\"id\":\"c1\",\"t",
+   "correct": "The scramble has the chip \"the sky writes poems\" twice (correctIndex 3 and 6), and the target order \"Reading builds patience, poetry builds attention and the sky writes poems attention builds understanding so poetry builds understanding the sky writes poems\" is not a sentence.",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P69",
+   "collection": "block_plans",
+   "row_id": 2,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "caption: \"Two matching halves, mirrored on either side of the dash: practice builds / confidence builds.\"",
+   "correct": "In \"Practice builds confidence, and confidence builds success - so practice builds success\" the mirrored halves are on either side of \"and\", not of the dash.",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P70",
+   "collection": "block_plans",
+   "row_id": 1,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Which of these texts is a real, complete sentence?",
+   "correct": "Neither option is a complete sentence: A is a subordinate-clause fragment and B is a comma splice, but the warm-up asks which one is complete.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P71",
+   "collection": "block_plans",
+   "row_id": 1,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"Because\" (errorId: \"e1\", explanation: \"'Because' makes this a dependent clause — it cannot stand alone.\")",
+   "correct": "\"Because the gym was booked, practice was moved.\" is a correct complex sentence; \"Because\" there is not an error.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P72",
+   "collection": "block_plans",
+   "row_id": 1,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"correctIndex\": 1, \"context\": \"The alarm didn't go off because the power had gone out overnight, we overslept by an hour.\"",
+   "correct": "\"The alarm didn't go off because the power had gone out overnight, we overslept by an hour.\" is a comma splice (\"we overslept by an hour\" is an independent clause); the key \"Complete sentence\" is wrong.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P74",
+   "collection": "block_plans",
+   "row_id": 4,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Option b text: \"The committee voted on the proposal, and the results was announced by the chair.\"",
+   "correct": "The keyed option contains a subject-verb agreement error: \"the results was announced\" should be \"the results were announced\".",
+   "source": "https://en.wikipedia.org/wiki/Agreement_(linguistics)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P75",
+   "collection": "block_plans",
+   "row_id": 4,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Feedback for option d: \"Starting active and then issuing a command can be a mood shift, but this option's shift is smooth and there is no jarring change here.\"",
+   "correct": "Option d (\"First stir the batter slowly, and then pour it into the pan.\") is imperative throughout; the feedback describes an active-then-command shift that is not there.",
+   "source": "https://en.wikipedia.org/wiki/Mood_(grammar)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P76",
+   "collection": "block_plans",
+   "row_id": 3,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "'Sleep matters.' — short, deliberate, punchy.",
+   "correct": "\"Sleep matters.\" is a complete sentence (subject + finite verb), not a deliberate fragment.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P77",
+   "collection": "block_plans",
+   "row_id": 3,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Wrinkled. Stained. Perfect anyway. (a deliberate fragment pair after a full sentence)",
+   "correct": "The example \"Wrinkled. Stained. Perfect anyway.\" shows three fragments with no preceding full sentence, but is labelled \"a deliberate fragment pair after a full sentence\".",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P80",
+   "collection": "block_plans",
+   "row_id": 5,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "The sentence shifts mood from imperative to imperative — that is fine — but it also shifts voice when the doer changes.",
+   "correct": "\"Wear gloves when handling dry ice, and be careful.\" has no voice shift: both clauses are active imperatives with the same understood subject.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P81",
+   "collection": "block_plans",
+   "row_id": 5,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Keep both clauses, but change \"watch out\" to \"you must watch out.\"",
+   "correct": "Option c2 refers to \"watch out\", which is not in the sentence (it says \"be careful\").",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P82",
+   "collection": "block_plans",
+   "row_id": 6,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "'If it rains, we would move the picnic indoors.'",
+   "correct": "A first conditional is \"If it rains, we will move the picnic indoors\" (or second: \"If it rained, we would...\"); \"If it rains, we would\" mixes the two.",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P83",
+   "collection": "block_plans",
+   "row_id": 6,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "'If we hurry, we would catch it.'",
+   "correct": "\"If we hurry, we will catch it\" (or \"If we hurried, we would catch it\"); \"If we hurry, we would\" is nonstandard.",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P85",
+   "collection": "block_plans",
+   "row_id": 9,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "That is not a real word. The noun is effect.",
+   "correct": "\"Effected\" is a real word (past tense of the verb effect, \"to bring about\"); the feedback says it is not.",
+   "source": "https://en.wiktionary.org/wiki/effect",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P86",
+   "collection": "block_plans",
+   "row_id": 9,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "notice the second part has no subject and verb",
+   "correct": "\"because the bus never came\" has a subject (the bus) and a finite verb (came); it is a fragment only when it stands alone, because it is a dependent clause.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P90",
+   "collection": "block_plans",
+   "row_id": 12,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Two clauses are okay when they are joined correctly with because.",
+   "correct": "\"Although the movie was long, nobody left the theater.\" is joined with \"although\", not \"because\".",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P91",
+   "collection": "block_plans",
+   "row_id": 10,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"Never end a sentence with a preposition.\" (correctSide: left, feedback: \"No modern style guide enforces this one; it is a myth, not a rule.\")",
+   "correct": "\"Never end a sentence with a preposition\" is a myth (the feedback says so), but the card files it on the \"settled rule\" side.",
+   "source": "https://en.wikipedia.org/wiki/Preposition_stranding",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P93",
+   "collection": "block_plans",
+   "row_id": 17,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "No subject and no verb — this is an accidental fragment, not a stylistic choice.",
+   "correct": "\"Because the store was closed.\" has a subject and a verb; it is a fragment because it is a dependent clause standing alone.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P94",
+   "collection": "block_plans",
+   "row_id": 17,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "'Leaving' isn't a main verb here, so there's no complete predicate.",
+   "correct": "The card text is \"Running late again and skipping breakfast.\"; the explanation names \"Leaving\", which is not in it.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P95",
+   "collection": "block_plans",
+   "row_id": 17,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Two complete sentences fused together: 'People assume...' and 'but the studies...' have no punctuation or connector joining them.",
+   "correct": "Line 2 has no \"but the studies...\"; its fused clauses are \"People assume longer school days mean more learning\" + \"the studies show the opposite is often true\".",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P99",
+   "collection": "block_plans",
+   "row_id": 18,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' and the dash. That's a writer's choice, not an accident.",
+   "correct": "The sentence has no dash; only \"Do not\" marks the shift.",
+   "source": "https://en.wikipedia.org/wiki/Mood_(grammar)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P101",
+   "collection": "block_plans",
+   "row_id": 19,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "{\"correctBucket\":\"shift\",\"detail\":\"Mood flips: indicative to imperative\",\"explanation\":\"The sentence starts in indicative (tells a fact) and flips to imperative (a command) with no punctuation or marker to signal it.\",\"id\":\"s1\",\"text\":\"The recipe says to preheat the oven and then stir the batter constantly.\"}",
+   "correct": "\"The recipe says to preheat the oven and then stir the batter constantly.\" is one indicative sentence (the infinitives report the recipe); there is no shift to imperative.",
+   "source": "https://en.wikipedia.org/wiki/Mood_(grammar)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P104",
+   "collection": "block_plans",
+   "row_id": 21,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "The singer (subject) does the action directly.",
+   "correct": "The sentence is \"The crowd cheered the winning goal.\" - the subject is the crowd, not \"the singer\".",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P105",
+   "collection": "block_plans",
+   "row_id": 21,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "If plus would is a conditional if-clause structure.",
+   "correct": "\"If it rains tomorrow, the game will be moved indoors\" is if + present / will (first conditional), not \"if plus would\".",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P106",
+   "collection": "block_plans",
+   "row_id": 21,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "Two or more words are missing; it has no subject or no verb, so it cannot stand alone.",
+   "correct": "\"Ran through the parking lot at midnight.\" has a verb (ran) and lacks only a subject.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P109",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"correctBucket\":\"semicolon\",\"explanation\":\"The first half is a complete sentence, so a semicolon (not a colon) fits before the list.\",\"text\":\"Her reasoning was simple ____ no homework, no phone.\"",
+   "correct": "\"Her reasoning was simple: no homework, no phone.\" takes a colon (a complete clause introducing a list/explanation); a semicolon cannot introduce a list.",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P110",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"solution\":[\"The dash was the only mark that\",\"match the mood of the sentence:\",\"sudden, loud, and impossible to ignore.\"]",
+   "correct": "The keyed rebuild \"The dash was the only mark that match the mood of the sentence: sudden, loud...\" has no dash and does not read as a sentence (it also needs \"matched\"); the feedback says a dash is required.",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P111",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"solution\":[\"My brother\",\"the one who never opens a book\",\"somehow knew every answer\"]",
+   "correct": "The keyed rebuild \"My brother the one who never opens a book somehow knew every answer\" omits the two dashes the feedback says are required.",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P112",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"solution\":[\"The recipe needed one unusual thing\",\"a pinch of cinnamon:\",\"for the soup.\"]",
+   "correct": "The keyed rebuild places the colon after \"cinnamon\" (\"...one unusual thing a pinch of cinnamon: for the soup\"); it belongs after \"thing\".",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P113",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"answer\":\"Yes\",\"colId\":\"dash\",\"rowId\":\"complete_before\"",
+   "correct": "The dash row \"complete sentence before?\" is keyed \"Yes\", while its own feedback says a dash can follow an incomplete clause (answer: No).",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P114",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"answer\":\"Comma\",\"colId\":\"dash\",\"rowId\":\"after\"",
+   "correct": "The dash row \"comma after?\" is keyed \"Comma\", while its own feedback says no comma is required after a dash (answer: Nothing).",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "P115",
+   "collection": "block_plans",
+   "row_id": 23,
+   "path": "blocks",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_text",
+   "wrong": "\"answer\":\"isn't\",\"colId\":\"dash\",\"rowId\":\"its\"",
+   "correct": "The its/it's cell is keyed \"isn't\", which is neither option.",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "method": "judge flag + source check"
+  },
+  {
+   "ref": "Q1",
+   "collection": "game_payloads",
+   "row_id": 46,
+   "path": "payload.questions[6]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"The storm knocked out the power; the flashlights, however, were all missing batteries.\"",
+   "correct": "Options repeat ([\"The storm knocked out the power; the flashlights however, were all missing batteries.\",\"The storm knocked out the power: the flashlights, however, were all missing batteries.\",\"The storm knocked out the power; the flashlights however, were all missing batteries.\",\"The storm knocked out the power; the flashlights, however, were all missing batteries.\"]); a learner who taps the copy of the key is marked wrong. ",
+   "source": "code check (exact string comparison)",
+   "method": "judge (Qwen3.8 Max) + source check + code (duplicate options)"
+  },
+  {
+   "ref": "Q2",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[43]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options_then_rekey",
+   "wrong": "Key: \"effect\"",
+   "correct": "Correct option is (0) \"affect\"; the key (2) \"effect\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "method": "judge (Qwen3.8 Max) + source check + code (duplicate options)",
+   "set": {
+    "payload.questions[43].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q3",
+   "collection": "lessons",
+   "row_id": 41,
+   "path": "check_questions[0]",
+   "shared": false,
+   "user_id": 108,
+   "action": "rewrite",
+   "wrong": "Key: \"Subtract x from both sides\"",
+   "correct": "Both \"Subtract x from both sides\" and \"Subtract 3 from both sides\" are valid first steps; there is no rule that x terms must be collected first.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q4",
+   "collection": "game_payloads",
+   "row_id": 13,
+   "path": "payload.questions[36]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"swims\"",
+   "correct": "Correct option is (1) \"had swum\"; the key (2) \"swims\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Pluperfect",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[36].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q5",
+   "collection": "game_payloads",
+   "row_id": 15,
+   "path": "payload.questions[13]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite",
+   "wrong": "Key: \"Balanced, because the halves mirror each other\"",
+   "correct": "\"She gave her time freely; he guarded every minute.\" is a textbook antithesis built on a balanced structure; both options 0 and 1 are defensible.",
+   "source": "https://en.wikipedia.org/wiki/Antithesis",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q6",
+   "collection": "game_payloads",
+   "row_id": 15,
+   "path": "payload.questions[47]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A sentence with a subordinate clause\"",
+   "correct": "Correct option is (1) \"Sentence pattern chosen for effect\"; the key (3) \"A sentence with a subordinate clause\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Dependent_clause",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[47].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q7",
+   "collection": "game_payloads",
+   "row_id": 16,
+   "path": "payload.questions[21]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The price the source sold for when it was first purchased\"",
+   "correct": "Correct option is (2) \"A stable retrieval path such as the URL and the access date, since web content can change\"; the key (3) \"The price the source sold for when it was first purchased\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Citation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[21].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q8",
+   "collection": "game_payloads",
+   "row_id": 17,
+   "path": "payload.questions[35]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite",
+   "wrong": "Key: \"It has no complete thought\"",
+   "correct": "\"Running through the park.\" also has no subject and no finite verb, so options 1 and 2 are true as well.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q9",
+   "collection": "game_payloads",
+   "row_id": 21,
+   "path": "payload.questions[7]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"As the violinist played the encore, the hall went so quiet that listeners could be found wiping tears.\"",
+   "correct": "Not a valid item as written: 'The when clause and a so that result clause connect all three ideas, keeping the listeners as active wipers.' The keyed sentence uses an 'As' clause, not a 'when' clause, and uses passive voice ('listeners could be found wiping tears'), so listeners are not g",
+   "source": "https://en.wikipedia.org/wiki/Dependent_clause",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q11",
+   "collection": "game_payloads",
+   "row_id": 23,
+   "path": "payload.questions[20]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Fragments\"",
+   "correct": "Not a valid item as written: \"the other three are intentional rhetorical structures\" is false because run-on sentences (option 1) are grammatical errors, not intentional rhetorical structures.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q12",
+   "collection": "game_payloads",
+   "row_id": 25,
+   "path": "payload.questions[3]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A careless oversight the writer forgot to fix\"",
+   "correct": "Correct option is (0) \"Deliberate emphasis on a short, punchy idea\"; the key (1) \"A careless oversight the writer forgot to fix\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[3].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q13",
+   "collection": "game_payloads",
+   "row_id": 26,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Dawn came; fog covered the valley; and the hikers waited.\"",
+   "correct": "Correct option is (3) \"Dawn came; fog covered the valley; the hikers waited.\"; the key (2) \"Dawn came; fog covered the valley; and the hikers waited.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[30].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q14",
+   "collection": "game_payloads",
+   "row_id": 29,
+   "path": "payload.questions[21]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"match structure to purpose: unconventional forms belong only in dialogue and quotations\"",
+   "correct": "Correct option is (1) \"match structure to purpose: unconventional forms are acceptable when the emphasis is deliberate and the audience tolerates them\"; the key (2) \"match structure to purpose: unconventional forms belong only in dialogue and quotations\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Rhetoric",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[21].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q15",
+   "collection": "game_payloads",
+   "row_id": 29,
+   "path": "payload.questions[25]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"He still finished — because he had trained for months.\"",
+   "correct": "Not a valid item as written: 'the comma splice in option one' is false; option (0) uses 'Because... , he still finished' which is a grammatically correct complex sentence, not a comma splice.",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q16",
+   "collection": "game_payloads",
+   "row_id": 30,
+   "path": "payload.questions[2]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Late the bus was, but angry we were not.\"",
+   "correct": "Not a valid item as written: Option (2) 'Late the bus was, but angry we were not.' does not grammatically complete the prompt 'The bus was late, but ______.' because it repeats the first clause instead of completing after 'but'. The explanation 'Reversing the word order of the second clau",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q17",
+   "collection": "game_payloads",
+   "row_id": 30,
+   "path": "payload.questions[44]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"only in conversation, never in any kind of writing\"",
+   "correct": "Not a valid item as written: Key is (2) 'only in conversation, never in any kind of writing' but the explanation says 'Fragments can work in ads and speeches', directly contradicting the key. No option is fully correct.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q18",
+   "collection": "game_payloads",
+   "row_id": 31,
+   "path": "payload.questions[35]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Count how many passive verbs appear and remove half of them.\"",
+   "correct": "Correct option is (2) \"Underline the verb phrases and check each subject's role and each mood's signal.\"; the key (1) \"Count how many passive verbs appear and remove half of them.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[35].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q19",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[34]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"leaving is not done\"",
+   "correct": "Correct option is (0) \"do not leave\"; the key (1) \"leaving is not done\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Mood_(grammar)",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[34].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q20",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[38]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"is\"",
+   "correct": "Correct option is (0) \"be\"; the key (1) \"is\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[38].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q21",
+   "collection": "game_payloads",
+   "row_id": 37,
+   "path": "payload.questions[12]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"It emphasizes the storm as the cause of the damage.\"",
+   "correct": "Not a valid item as written: \"It emphasizes the storm as the cause of the damage.\" is false. Passive voice puts the receiver (the dock) in focus and de-emphasizes the doer (the storm surge).",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q22",
+   "collection": "game_payloads",
+   "row_id": 37,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"He was encouraged to speak bravely.\"",
+   "correct": "Not a valid item as written: The options do not match the question stem about a sports article; none answer what effect passive voice has in that sentence.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q24",
+   "collection": "game_payloads",
+   "row_id": 39,
+   "path": "payload.questions[1]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Mood shift from subjunctive to imperative\"",
+   "correct": "Not a valid item as written: KEY: \"Mood shift from subjunctive to imperative\" is wrong; the sentence shifts from imperative to passive, which is a voice shift. Explanation: \"opens with a subjunctive wish were\" is false; there is no \"were\" in the sentence.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q25",
+   "collection": "game_payloads",
+   "row_id": 39,
+   "path": "payload.questions[6]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"The mail was sorted by the clerk, who then took a break.\"",
+   "correct": "Not a valid item as written: Option (0) is not fully active (\"was sorted\" is passive), so it does not fix the shift as claimed. Explanation: \"Rewriting both clauses in the active voice\" is false because the first clause remains passive.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q27",
+   "collection": "game_payloads",
+   "row_id": 40,
+   "path": "payload.questions[18]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The striker had been a goal scorer in the final minute.\"",
+   "correct": "Correct option is (1) \"The striker was scoring a goal in the final minute.\"; the key (2) \"The striker had been a goal scorer in the final minute.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[18].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q28",
+   "collection": "game_payloads",
+   "row_id": 40,
+   "path": "payload.questions[42]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Reporting who performed a simple step.\"",
+   "correct": "Correct option is (2) \"Creating a wish or hypothetical with distance.\"; the key (1) \"Reporting who performed a simple step.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[42].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q29",
+   "collection": "game_payloads",
+   "row_id": 41,
+   "path": "payload.questions[4]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A medal was awarded to her.\"",
+   "correct": "Correct option is (0) \"She was awarded a medal.\"; the key (3) \"A medal was awarded to her.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[4].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q30",
+   "collection": "game_payloads",
+   "row_id": 42,
+   "path": "payload.questions[5]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It makes the results easier for nonspecialists to read.\"",
+   "correct": "Correct option is (0) \"It shifts focus to the experiment itself and away from the scientists.\"; the key (2) \"It makes the results easier for nonspecialists to read.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[5].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q31",
+   "collection": "game_payloads",
+   "row_id": 42,
+   "path": "payload.questions[16]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Delete the second half of the sentence entirely.\"",
+   "correct": "Correct option is (0) \"Keep the voice consistent within each sentence or use a clear, purposeful shift.\"; the key (2) \"Delete the second half of the sentence entirely.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[16].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q32",
+   "collection": "game_payloads",
+   "row_id": 42,
+   "path": "payload.questions[21]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Because passive voice makes every sentence sound more exciting.\"",
+   "correct": "Correct option is (0) \"Because passive voice fits when the doer is unknown or the focus should stay on the object.\"; the key (3) \"Because passive voice makes every sentence sound more exciting.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[21].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q33",
+   "collection": "game_payloads",
+   "row_id": 43,
+   "path": "payload.questions[47]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"A colon should be used, because 'my favorite things' is a complete sentence.\"",
+   "correct": "Not a valid item as written: 'my favorite things' is a complete sentence — 'I love my three favorite things' is the complete sentence; 'my favorite things' alone is not. The colon correctly introduces the list because the independent clause before it is complete, but the stated reason mis",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q35",
+   "collection": "game_payloads",
+   "row_id": 47,
+   "path": "payload.questions[38]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite",
+   "wrong": "Key: \"creating an abrupt break or strong emphasis\"",
+   "correct": "Dashes also set off extra information (option 1), so options 1 and 3 are both correct.",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q36",
+   "collection": "game_payloads",
+   "row_id": 51,
+   "path": "payload.questions[3]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The principal handed me the award, and I smiled for the camera.\"",
+   "correct": "Correct option is (1) \"The principal handed me the award, and I was photographed holding it.\"; the key (2) \"The principal handed me the award, and I smiled for the camera.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[3].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q36",
+   "collection": "items",
+   "row_id": 61303,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"The principal handed me the award, and I smiled for the camera.\"",
+   "correct": "Correct option is (1) \"The principal handed me the award, and I was photographed holding it.\"; the key (2) \"The principal handed me the award, and I smiled for the camera.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "The principal handed me the award, and I was photographed holding it."
+   }
+  },
+  {
+   "ref": "Q38",
+   "collection": "game_payloads",
+   "row_id": 57,
+   "path": "payload.questions[10]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"She hopefully opened the letter.\"",
+   "correct": "Not a valid item as written: KEY: (1) She hopefully opened the letter. is wrong; none of the options show the disputed sentence-adverb use ('it is to be hoped that'). The explanation itself correctly states the disputed use is 'hopefully, the letter arrived', which is not among the choice",
+   "source": "https://en.wiktionary.org/wiki/hopefully",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q39",
+   "collection": "game_payloads",
+   "row_id": 57,
+   "path": "payload.questions[13]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"adjective\"",
+   "correct": "Correct option is (1) \"verb\"; the key (2) \"adjective\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[13].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q40",
+   "collection": "game_payloads",
+   "row_id": 57,
+   "path": "payload.questions[39]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"confusion over compound adjectives, like a well-known writer\"",
+   "correct": "Correct option is (2) \"confusion with nearby lists, like my brothers, John and Paul\"; the key (0) \"confusion over compound adjectives, like a well-known writer\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Serial_comma",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[39].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q41",
+   "collection": "game_payloads",
+   "row_id": 58,
+   "path": "payload.questions[16]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"keep the sentence exactly as the original\"",
+   "correct": "Correct option is (2) \"use an ellipsis to show words were left out\"; the key (1) \"keep the sentence exactly as the original\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[16].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q42",
+   "collection": "game_payloads",
+   "row_id": 59,
+   "path": "payload.questions[8]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Drop the comma for the pause and keep the ellipsis for the fade; only the fade needs a mark.\"",
+   "correct": "Correct option is (0) \"Keep the comma for the pause and the ellipsis for the fade; each mark has its own job.\"; the key (1) \"Drop the comma for the pause and keep the ellipsis for the fade; only the fade needs a mark.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[8].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q43",
+   "collection": "game_payloads",
+   "row_id": 60,
+   "path": "payload.questions[34]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It shows where one item in the list ends and the next one begins\"",
+   "correct": "Correct option is (0) \"The word or words the comma separates must be capitalized\"; the key (1) \"It shows where one item in the list ends and the next one begins\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Style_guide",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[34].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q44",
+   "collection": "game_payloads",
+   "row_id": 60,
+   "path": "payload.questions[36]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Because it is shorter than saying he or she every time\"",
+   "correct": "Correct option is (1) \"Because writers from centuries ago, including Jane Austen, used it\"; the key (2) \"Because it is shorter than saying he or she every time\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Singular_they",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[36].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q45",
+   "collection": "game_payloads",
+   "row_id": 61,
+   "path": "payload.questions[15]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Its meaning shifted toward approval over time\"",
+   "correct": "Not a valid item as written: KEY: (0) Its meaning shifted toward approval over time is wrong. The meaning did not shift toward 'approval'; it shifted from 'in a hopeful manner' to a sentence adverb meaning 'it is to be hoped that'. The explanation correctly says it 'gained acceptance as u",
+   "source": "https://en.wiktionary.org/wiki/hopefully",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q46",
+   "collection": "game_payloads",
+   "row_id": 62,
+   "path": "payload.questions[14]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"They are binding grammar laws for all writers\"",
+   "correct": "Correct option is (0) \"They are advisory conventions adopted by an organization or field\"; the key (1) \"They are binding grammar laws for all writers\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Style_guide",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[14].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q47",
+   "collection": "game_payloads",
+   "row_id": 62,
+   "path": "payload.questions[41]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Double spaces between sentences\"",
+   "correct": "Correct option is (0) \"Split infinitives\"; the key (1) \"Double spaces between sentences\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Split_infinitive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[41].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q48",
+   "collection": "game_payloads",
+   "row_id": 63,
+   "path": "payload.questions[26]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"All guides have always accepted it without comment\"",
+   "correct": "Correct option is (0) \"Older guides banned it, and some modern guides now accept it\"; the key (1) \"All guides have always accepted it without comment\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Style_guide",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[26].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q49",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[4]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"House\"",
+   "correct": "Correct option is (1) \"Mansion\"; the key (0) \"House\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Connotation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[4].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q50",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It carries a feeling of praise and triumph.\"",
+   "correct": "Correct option is (2) \"It is the dictionary meaning of the word.\"; the key (1) \"It carries a feeling of praise and triumph.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Connotation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[30].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q51",
+   "collection": "game_payloads",
+   "row_id": 67,
+   "path": "payload.questions[22]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"to swim every morning\"",
+   "correct": "Correct option is (2) \"to easily win the race\"; the key (3) \"to swim every morning\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Split_infinitive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[22].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q52",
+   "collection": "game_payloads",
+   "row_id": 67,
+   "path": "payload.questions[32]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It became popular only after 1960, so critics saw it as slangy\"",
+   "correct": "Correct option is (2) \"Critics say a sentence adverb should describe how the subject acts, not the writer's hope\"; the key (1) \"It became popular only after 1960, so critics saw it as slangy\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/hopefully",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[32].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q53",
+   "collection": "game_payloads",
+   "row_id": 69,
+   "path": "payload.questions[2]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"deleted\"",
+   "correct": "Correct option is (0) \"eradicated\"; the key (1) \"deleted\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_grammar",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[2].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q54",
+   "collection": "game_payloads",
+   "row_id": 69,
+   "path": "payload.questions[43]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"states\"",
+   "correct": "Correct option is (0) \"implies\"; the key (1) \"states\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/imply",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[43].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q56",
+   "collection": "items",
+   "row_id": 7175,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rewrite",
+   "wrong": "Key: \"presents\"",
+   "correct": "\"their findings\" signals plural (notional) agreement, so \"are presenting\" is also defensible; the item has two answers.",
+   "source": "https://en.wikipedia.org/wiki/Collective_noun",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q57",
+   "collection": "lessons",
+   "row_id": 233,
+   "path": "check_questions[2]",
+   "shared": false,
+   "user_id": 430,
+   "action": "rekey",
+   "wrong": "Key: \"They subtracted 4 from the left side but not the right\"",
+   "correct": "x = 3 IS the solution of 2x + 4 = 10 (2*3 + 4 = 10), so the right option is (3) \"Nothing went wrong, x = 3 is correct\"; the explanation also wrongly says x = 3 fails the check.",
+   "source": "https://en.wikipedia.org/wiki/Equation_solving",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "check_questions[2].answer": "Nothing went wrong, x = 3 is correct"
+   }
+  },
+  {
+   "ref": "Q58",
+   "collection": "game_payloads",
+   "row_id": 1,
+   "path": "payload.questions[32]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"pre-\"",
+   "correct": "Correct option is (2) \"sub-\"; the key (1) \"pre-\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/sub-",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[32].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q59",
+   "collection": "game_payloads",
+   "row_id": 2,
+   "path": "payload.questions[6]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"exacting\"",
+   "correct": "Correct option is (2) \"exactly\"; the key (1) \"exacting\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/exactly",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[6].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q59",
+   "collection": "items",
+   "row_id": 61209,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"exacting\"",
+   "correct": "Correct option is (2) \"exactly\"; the key (1) \"exacting\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/exactly",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "exactly"
+   }
+  },
+  {
+   "ref": "Q60",
+   "collection": "game_payloads",
+   "row_id": 2,
+   "path": "payload.questions[10]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"participial phrase\"",
+   "correct": "Correct option is (1) \"appositive\"; the key (0) \"participial phrase\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Appositive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[10].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q60",
+   "collection": "items",
+   "row_id": 61213,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"participial phrase\"",
+   "correct": "Correct option is (1) \"appositive\"; the key (0) \"participial phrase\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Appositive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "appositive"
+   }
+  },
+  {
+   "ref": "Q61",
+   "collection": "game_payloads",
+   "row_id": 2,
+   "path": "payload.questions[22]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"run-on sentence\"",
+   "correct": "A comma splice is a kind of run-on, and the explanation names comma splice while the key is run-on: two defensible answers.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[22].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q62",
+   "collection": "game_payloads",
+   "row_id": 2,
+   "path": "payload.questions[38]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"its'\"",
+   "correct": "Correct option is (0) \"it's\"; the key (2) \"its'\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[38].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q63",
+   "collection": "game_payloads",
+   "row_id": 3,
+   "path": "payload.questions[11]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Slowly\"",
+   "correct": "Correct option is (0) \"Unhappily\"; the key (3) \"Slowly\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Connotation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[11].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q63",
+   "collection": "items",
+   "row_id": 61238,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"Slowly\"",
+   "correct": "Correct option is (0) \"Unhappily\"; the key (3) \"Slowly\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Connotation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "Unhappily"
+   }
+  },
+  {
+   "ref": "Q64",
+   "collection": "game_payloads",
+   "row_id": 4,
+   "path": "payload.questions[7]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The number of paragraphs used in the piece\"",
+   "correct": "Correct option is (3) \"The way word choice and sentence style fit the audience and purpose\"; the key (0) \"The number of paragraphs used in the piece\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Citation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[7].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q64",
+   "collection": "items",
+   "row_id": 61247,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"The number of paragraphs used in the piece\"",
+   "correct": "Correct option is (3) \"The way word choice and sentence style fit the audience and purpose\"; the key (0) \"The number of paragraphs used in the piece\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Citation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "The way word choice and sentence style fit the audience and purpose"
+   }
+  },
+  {
+   "ref": "Q65",
+   "collection": "game_payloads",
+   "row_id": 4,
+   "path": "payload.questions[9]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Tone\"",
+   "correct": "Correct option is (1) \"Evidence\"; the key (0) \"Tone\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Evidence",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[9].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q65",
+   "collection": "items",
+   "row_id": 61249,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"Tone\"",
+   "correct": "Correct option is (1) \"Evidence\"; the key (0) \"Tone\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Evidence",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "Evidence"
+   }
+  },
+  {
+   "ref": "Q66",
+   "collection": "game_payloads",
+   "row_id": 5,
+   "path": "payload.questions[5]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Textbook\"",
+   "correct": "Correct option is (1) \"Interview\"; the key (0) \"Textbook\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Primary_source",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[5].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q67",
+   "collection": "game_payloads",
+   "row_id": 5,
+   "path": "payload.questions[13]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Indenting the first line of each entry like a paragraph\"",
+   "correct": "Correct option is (2) \"A hanging indent, with the first line flush left and later lines indented\"; the key (1) \"Indenting the first line of each entry like a paragraph\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Hanging_indent",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[13].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q68",
+   "collection": "game_payloads",
+   "row_id": 5,
+   "path": "payload.questions[14]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Publisher and city of publication\"",
+   "correct": "Correct option is (2) \"Journal name and volume number\"; the key (1) \"Publisher and city of publication\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/APA_style",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[14].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q69",
+   "collection": "game_payloads",
+   "row_id": 5,
+   "path": "payload.questions[22]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"On the first page after the title page, single-spaced and numbered\"",
+   "correct": "Correct option is (0) \"On a separate final page titled References, double-spaced and alphabetized\"; the key (1) \"On the first page after the title page, single-spaced and numbered\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/APA_style",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[22].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q70",
+   "collection": "game_payloads",
+   "row_id": 5,
+   "path": "payload.questions[28]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Citing a source in your reference list that you never actually read\"",
+   "correct": "Correct option is (0) \"Presenting another person's ideas or words as your own without credit\"; the key (1) \"Citing a source in your reference list that you never actually read\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/APA_style",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[28].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q71",
+   "collection": "game_payloads",
+   "row_id": 7,
+   "path": "payload.questions[5]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Describing the setting and characters in vivid sensory detail\"",
+   "correct": "Correct option is (1) \"Explaining what the experience taught the writer and why it still matters\"; the key (2) \"Describing the setting and characters in vivid sensory detail\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Essay",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[5].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q72",
+   "collection": "game_payloads",
+   "row_id": 10,
+   "path": "payload.questions[26]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"an indirect mention of a conversation that happened at some point\"",
+   "correct": "Correct option is (0) \"a clearly labeled quotation or paraphrase with a citation to the interviewee\"; the key (1) \"an indirect mention of a conversation that happened at some point\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Citation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[26].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q73",
+   "collection": "game_payloads",
+   "row_id": 10,
+   "path": "payload.questions[44]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It shows readers how the writer's personal views changed during the project\"",
+   "correct": "Correct option is (0) \"It lets readers check how each finding connects back to the original research question\"; the key (1) \"It shows readers how the writer's personal views changed during the project\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/IMRAD",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[44].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q74",
+   "collection": "game_payloads",
+   "row_id": 11,
+   "path": "payload.questions[20]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A comma\"",
+   "correct": "Correct option is (0) \"A semicolon\"; the key (1) \"A comma\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[20].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q75",
+   "collection": "game_payloads",
+   "row_id": 11,
+   "path": "payload.questions[23]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Independent clause\"",
+   "correct": "Correct option is (1) \"Dependent clause\"; the key (0) \"Independent clause\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Dependent_clause",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[23].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q76",
+   "collection": "game_payloads",
+   "row_id": 11,
+   "path": "payload.questions[37]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"a subject with its finite verb\"",
+   "correct": "Correct option is (0) \"a subordinating word\"; the key (2) \"a subject with its finite verb\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[37].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q77",
+   "collection": "game_payloads",
+   "row_id": 11,
+   "path": "payload.questions[42]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Fused run-on\"",
+   "correct": "Correct option is (0) \"Comma splice\"; the key (1) \"Fused run-on\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[42].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q78",
+   "collection": "game_payloads",
+   "row_id": 12,
+   "path": "payload.questions[0]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"causally\"",
+   "correct": "Correct option is (0) \"closely\"; the key (2) \"causally\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[0].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q78",
+   "collection": "items",
+   "row_id": 61276,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"causally\"",
+   "correct": "Correct option is (0) \"closely\"; the key (2) \"causally\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "closely"
+   }
+  },
+  {
+   "ref": "Q79",
+   "collection": "game_payloads",
+   "row_id": 12,
+   "path": "payload.questions[15]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"effected\"",
+   "correct": "Correct option is (0) \"affect\"; the key (2) \"effected\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[15].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q80",
+   "collection": "game_payloads",
+   "row_id": 12,
+   "path": "payload.questions[17]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"predicate\"",
+   "correct": "Correct option is (3) \"modifier\"; the key (2) \"predicate\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[17].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q81",
+   "collection": "game_payloads",
+   "row_id": 12,
+   "path": "payload.questions[27]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"until\"",
+   "correct": "Correct option is (0) \"unless\"; the key (1) \"until\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/unless",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[27].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q82",
+   "collection": "game_payloads",
+   "row_id": 12,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"complement\"",
+   "correct": "Correct option is (0) \"modifier\"; the key (2) \"complement\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[30].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q83",
+   "collection": "game_payloads",
+   "row_id": 12,
+   "path": "payload.questions[31]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"split\"",
+   "correct": "Correct option is (0) \"splice\"; the key (2) \"split\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[31].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q84",
+   "collection": "game_payloads",
+   "row_id": 13,
+   "path": "payload.questions[5]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Balanced parallel\"",
+   "correct": "Correct option is (1) \"Faulty parallelism\"; the key (2) \"Balanced parallel\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[5].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q85",
+   "collection": "game_payloads",
+   "row_id": 13,
+   "path": "payload.questions[20]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"sentence\"",
+   "correct": "Correct option is (3) \"fragment\"; the key (0) \"sentence\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[20].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q86",
+   "collection": "game_payloads",
+   "row_id": 15,
+   "path": "payload.questions[12]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Fragment\"",
+   "correct": "Correct option is (0) \"Balanced\"; the key (2) \"Fragment\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[12].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q87",
+   "collection": "game_payloads",
+   "row_id": 15,
+   "path": "payload.questions[20]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Opposite meanings and different length\"",
+   "correct": "Correct option is (0) \"Similar length and structure\"; the key (1) \"Opposite meanings and different length\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Antithesis",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[20].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q88",
+   "collection": "game_payloads",
+   "row_id": 15,
+   "path": "payload.questions[36]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The contrasting halves\"",
+   "correct": "Correct option is (2) \"The modifiers that pile up\"; the key (1) \"The contrasting halves\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[36].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q89",
+   "collection": "game_payloads",
+   "row_id": 15,
+   "path": "payload.questions[39]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Inversion\"",
+   "correct": "Correct option is (0) \"Antithesis\"; the key (3) \"Inversion\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Antithesis",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[39].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q90",
+   "collection": "game_payloads",
+   "row_id": 16,
+   "path": "payload.questions[5]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Choosing the note that appears most often across the collected sources\"",
+   "correct": "Correct option is (0) \"Grouping related notes, identifying a pattern, and phrasing a claim that the pattern supports\"; the key (1) \"Choosing the note that appears most often across the collected sources\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Citation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[5].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q91",
+   "collection": "game_payloads",
+   "row_id": 16,
+   "path": "payload.questions[32]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Recording one general impression after reading all the sources together at once\"",
+   "correct": "Correct option is (3) \"Listing each source's key facts separately with full citation details so each note can be traced to its origin\"; the key (2) \"Recording one general impression after reading all the sources together at once\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[32].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q92",
+   "collection": "game_payloads",
+   "row_id": 16,
+   "path": "payload.questions[39]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Whether the blog post loads faster on a phone than the magazine's website\"",
+   "correct": "Correct option is (3) \"The spread's mode mix shifts the argument's tone and audience, changing how the same information is received\"; the key (0) \"Whether the blog post loads faster on a phone than the magazine's website\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Multimodality",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[39].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q93",
+   "collection": "game_payloads",
+   "row_id": 17,
+   "path": "payload.questions[1]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Because the rain stopped, we went outside.\"",
+   "correct": "Correct option is (0) \"The rain stopped we finally went outside.\"; the key (2) \"Because the rain stopped, we went outside.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[1].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q94",
+   "collection": "game_payloads",
+   "row_id": 17,
+   "path": "payload.questions[17]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Run-on\"",
+   "correct": "Correct option is (1) \"Fragment\"; the key (0) \"Run-on\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[17].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q95",
+   "collection": "game_payloads",
+   "row_id": 22,
+   "path": "payload.questions[39]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Put the main clause at the end for suspense\"",
+   "correct": "Correct option is (3) \"Build one sentence whose parts mirror each other in structure and length\"; the key (1) \"Put the main clause at the end for suspense\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[39].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q96",
+   "collection": "game_payloads",
+   "row_id": 23,
+   "path": "payload.questions[16]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Add quotation marks around \"the students were exhausted\"\"",
+   "correct": "Correct option is (3) \"Add a comma plus a coordinating conjunction such as \"but\"\"; the key (2) \"Add quotation marks around \"the students were exhausted\"\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[16].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q97",
+   "collection": "game_payloads",
+   "row_id": 23,
+   "path": "payload.questions[19]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It is a run-on that slipped past the writer unnoticed\"",
+   "correct": "Correct option is (0) \"It is a deliberate fragment for punch, and the model is showing how emphasis works\"; the key (2) \"It is a run-on that slipped past the writer unnoticed\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[19].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q98",
+   "collection": "game_payloads",
+   "row_id": 23,
+   "path": "payload.questions[35]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The triple negatives in \"shall not perish\" build dramatic tension\"",
+   "correct": "Correct option is (2) \"The parallel structure \"of the people, by the people, for the people\" creates memorable, persuasive rhythm\"; the key (0) \"The triple negatives in \"shall not perish\" build dramatic tension\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[35].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q99",
+   "collection": "game_payloads",
+   "row_id": 24,
+   "path": "payload.questions[45]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Anaphora\"",
+   "correct": "Correct option is (2) \"Antithesis\"; the key (0) \"Anaphora\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Antithesis",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[45].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q100",
+   "collection": "game_payloads",
+   "row_id": 25,
+   "path": "payload.questions[32]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Comma splice\"",
+   "correct": "Correct option is (0) \"Parallel structure\"; the key (1) \"Comma splice\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[32].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q101",
+   "collection": "game_payloads",
+   "row_id": 28,
+   "path": "payload.questions[1]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A misplaced modifier confusing the reader\"",
+   "correct": "Correct option is (1) \"A deliberate one-word rhetorical fragment for emphasis\"; the key (2) \"A misplaced modifier confusing the reader\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[1].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q102",
+   "collection": "game_payloads",
+   "row_id": 28,
+   "path": "payload.questions[23]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Change praises to will praise so the sentence stays in the future\"",
+   "correct": "Correct option is (0) \"Change praises to praised for past-tense consistency with the first clause\"; the key (1) \"Change praises to will praise so the sentence stays in the future\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Pluperfect",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[23].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q103",
+   "collection": "game_payloads",
+   "row_id": 28,
+   "path": "payload.questions[40]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The modal could must be followed by an infinitive, not a bare verb like hear\"",
+   "correct": "Correct option is (2) \"The adverb hardly already carries a negative, so not makes it a double negative\"; the key (1) \"The modal could must be followed by an infinitive, not a bare verb like hear\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Double_negative",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[40].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q104",
+   "collection": "game_payloads",
+   "row_id": 30,
+   "path": "payload.questions[3]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"because varied openings keep every sentence surprising\"",
+   "correct": "Correct option is (0) \"because the repeated rhythm makes the ideas feel connected and convincing\"; the key (1) \"because varied openings keep every sentence surprising\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[3].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q105",
+   "collection": "game_payloads",
+   "row_id": 30,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"misplaced modifiers, which attach the wrong words together\"",
+   "correct": "Not a valid item as written: Explanation says 'A run-on fuses independent clauses without correct punctuation, so readers cannot tell where one thought ends.' This describes option (3), but the key is (2). The explanation does not match the key.",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q106",
+   "collection": "game_payloads",
+   "row_id": 30,
+   "path": "payload.questions[47]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"the details all come after the main clause\"",
+   "correct": "Correct option is (3) \"the sentence contains exactly two clauses of equal weight\"; the key (2) \"the details all come after the main clause\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[47].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q107",
+   "collection": "game_payloads",
+   "row_id": 31,
+   "path": "payload.questions[37]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Imperative mood\"",
+   "correct": "Correct option is (1) \"Subjunctive mood\"; the key (0) \"Imperative mood\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[37].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q108",
+   "collection": "game_payloads",
+   "row_id": 31,
+   "path": "payload.questions[48]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"indicative\"",
+   "correct": "Correct option is (2) \"subjunctive\"; the key (0) \"indicative\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[48].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q109",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[0]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"closing it was done\"",
+   "correct": "Correct option is (2) \"I closed it\"; the key (1) \"closing it was done\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[0].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q110",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[36]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"had been\"",
+   "correct": "Correct option is (0) \"were\"; the key (3) \"had been\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[36].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q111",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[39]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"active\"",
+   "correct": "Correct option is (1) \"passive\"; the key (0) \"active\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[39].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q112",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[44]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"will plant\"",
+   "correct": "Correct option is (2) \"planted\"; the key (3) \"will plant\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[44].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q113",
+   "collection": "game_payloads",
+   "row_id": 33,
+   "path": "payload.questions[49]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"tense\"",
+   "correct": "Correct option is (1) \"voice\"; the key (2) \"tense\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Pluperfect",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[49].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q114",
+   "collection": "game_payloads",
+   "row_id": 34,
+   "path": "payload.questions[40]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"voice\"",
+   "correct": "Correct option is (1) \"mood\"; the key (0) \"voice\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[40].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q115",
+   "collection": "game_payloads",
+   "row_id": 34,
+   "path": "payload.questions[44]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"was\"",
+   "correct": "Correct option is (1) \"were\"; the key (0) \"was\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[44].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q116",
+   "collection": "game_payloads",
+   "row_id": 36,
+   "path": "payload.questions[2]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"target\"",
+   "correct": "Correct option is (0) \"receiver\"; the key (1) \"target\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[2].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q117",
+   "collection": "game_payloads",
+   "row_id": 36,
+   "path": "payload.questions[16]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"dialogue\"",
+   "correct": "Correct option is (1) \"actor\"; the key (3) \"dialogue\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[16].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q118",
+   "collection": "game_payloads",
+   "row_id": 36,
+   "path": "payload.questions[17]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"to seem\"",
+   "correct": "Correct option is (0) \"to be\"; the key (2) \"to seem\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[17].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q119",
+   "collection": "game_payloads",
+   "row_id": 36,
+   "path": "payload.questions[35]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"was\"",
+   "correct": "Correct option is (0) \"were\"; the key (1) \"was\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[35].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q120",
+   "collection": "game_payloads",
+   "row_id": 39,
+   "path": "payload.questions[23]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"was returned\"",
+   "correct": "Not a valid item as written: Explanation says 'the matching active form is returned, with the library as the subject.' But the key is (0) 'was returned', which is passive, contradicting the explanation.",
+   "source": "https://en.wikipedia.org/wiki/Pluperfect",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q121",
+   "collection": "game_payloads",
+   "row_id": 39,
+   "path": "payload.questions[33]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Passive\"",
+   "correct": "Not a valid item as written: Explanation says 'The subject trees performs the action of the verb, so the voice is active.' This is false; 'were bent' is passive voice, and the explanation contradicts the key.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q122",
+   "collection": "game_payloads",
+   "row_id": 40,
+   "path": "payload.questions[49]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"was\"",
+   "correct": "Correct option is (0) \"were\"; the key (1) \"was\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[49].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q123",
+   "collection": "game_payloads",
+   "row_id": 42,
+   "path": "payload.questions[35]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"It requires an object after the main verb.\"",
+   "correct": "Correct option is (1) \"Its subject receives the action, formed with be plus a past participle.\"; the key (2) \"It requires an object after the main verb.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[35].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q124",
+   "collection": "game_payloads",
+   "row_id": 45,
+   "path": "payload.questions[27]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A comma\"",
+   "correct": "Correct option is (0) \"A dash\"; the key (1) \"A comma\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[27].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q125",
+   "collection": "game_payloads",
+   "row_id": 48,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Which\"",
+   "correct": "Correct option is (0) \"However,\"; the key (3) \"Which\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[30].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q126",
+   "collection": "game_payloads",
+   "row_id": 49,
+   "path": "payload.questions[18]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"capitalization\"",
+   "correct": "Correct option is (0) \"rhythm and emphasis\"; the key (1) \"capitalization\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[18].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q127",
+   "collection": "game_payloads",
+   "row_id": 49,
+   "path": "payload.questions[40]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"a dash, because dashes look stronger than colons\"",
+   "correct": "Correct option is (3) \"a colon, because the first part is a complete sentence introducing the list\"; the key (0) \"a dash, because dashes look stronger than colons\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[40].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q128",
+   "collection": "game_payloads",
+   "row_id": 54,
+   "path": "payload.questions[21]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"comma\"",
+   "correct": "Correct option is (0) \"ellipsis\"; the key (2) \"comma\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[21].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q129",
+   "collection": "game_payloads",
+   "row_id": 56,
+   "path": "payload.questions[35]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"italics\"",
+   "correct": "Correct option is (2) \"dots\"; the key (1) \"italics\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[35].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q130",
+   "collection": "game_payloads",
+   "row_id": 57,
+   "path": "payload.questions[30]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"there\"",
+   "correct": "Correct option is (1) \"their\"; the key (0) \"there\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/their",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[30].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q131",
+   "collection": "game_payloads",
+   "row_id": 57,
+   "path": "payload.questions[33]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"loosen\"",
+   "correct": "Correct option is (1) \"lose\"; the key (2) \"loosen\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/lose",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[33].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q132",
+   "collection": "game_payloads",
+   "row_id": 57,
+   "path": "payload.questions[42]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"except\"",
+   "correct": "Correct option is (0) \"accept\"; the key (1) \"except\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/accept",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[42].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q133",
+   "collection": "game_payloads",
+   "row_id": 60,
+   "path": "payload.questions[6]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"A plural pronoun used for plural nouns\"",
+   "correct": "Correct option is (2) \"A plural pronoun used for one person of unknown or unstated gender\"; the key (1) \"A plural pronoun used for plural nouns\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Singular_they",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[6].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q134",
+   "collection": "game_payloads",
+   "row_id": 60,
+   "path": "payload.questions[24]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The desert island was deserted\"",
+   "correct": "Correct option is (0) \"The desert\"; the key (2) \"The desert island was deserted\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/desert",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[24].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q135",
+   "collection": "game_payloads",
+   "row_id": 62,
+   "path": "payload.questions[17]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"the pronoun one\"",
+   "correct": "Correct option is (1) \"an adverb\"; the key (2) \"the pronoun one\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Split_infinitive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[17].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q136",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[5]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"conditions\"",
+   "correct": "Correct option is (0) \"weather\"; the key (3) \"conditions\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Weather_forecasting",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[5].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q137",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[10]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"contemplated\"",
+   "correct": "Correct option is (3) \"worried about\"; the key (0) \"contemplated\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/worry",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[10].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q138",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[16]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"stuff\"",
+   "correct": "Correct option is (1) \"supplies\"; the key (0) \"stuff\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[16].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q139",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[22]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"relaxed\"",
+   "correct": "Correct option is (0) \"sluggish\"; the key (1) \"relaxed\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Connotation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[22].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q140",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[34]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"gears\"",
+   "correct": "Correct option is (2) \"brakes\"; the key (1) \"gears\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Brake",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[34].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q141",
+   "collection": "game_payloads",
+   "row_id": 65,
+   "path": "payload.questions[1]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"speak at\"",
+   "correct": "Correct option is (3) \"speak to\"; the key (0) \"speak at\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/speak",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[1].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q142",
+   "collection": "game_payloads",
+   "row_id": 65,
+   "path": "payload.questions[2]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Economical\"",
+   "correct": "Not a valid item as written: The key (3) Economical is correct, but (0) Inexpensive and (2) Affordable also have positive connotations for a low price. The explanation is true but discusses 'inexpensive' rather than explaining why 'economical' is the most positive.",
+   "source": "https://en.wikipedia.org/wiki/Connotation",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q143",
+   "collection": "game_payloads",
+   "row_id": 65,
+   "path": "payload.questions[4]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"its'\"",
+   "correct": "Correct option is (2) \"it's\"; the key (1) \"its'\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[4].answerIndex": 2
+   }
+  },
+  {
+   "ref": "Q144",
+   "collection": "game_payloads",
+   "row_id": 65,
+   "path": "payload.questions[11]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"affected\"",
+   "correct": "Correct option is (0) \"Effect\"; the key (2) \"affected\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[11].answerIndex": 0
+   }
+  },
+  {
+   "ref": "Q145",
+   "collection": "block_plans",
+   "row_id": 4,
+   "path": "checks[3]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"should be\"",
+   "correct": "The subjunctive form is the one word \"be\" (\"It is required that you be on time\"); \"should be\" is two words and the keyed answer would reject \"be\".",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "checks[3].answer": "be"
+   }
+  },
+  {
+   "ref": "Q147",
+   "collection": "game_payloads",
+   "row_id": 1,
+   "path": "payload.questions[39]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"The French teacher used curious: a word borrowed from Latin.\"",
+   "correct": "Correct option is (1) \"The curious student wondered how Latin words travel into English.\"; the key (0) \"The French teacher used curious: a word borrowed from Latin.\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wiktionary.org/wiki/curious",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[39].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q148",
+   "collection": "game_payloads",
+   "row_id": 2,
+   "path": "payload.questions[13]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"quiet\"",
+   "correct": "Correct option is (1) \"quietly\"; the key (0) \"quiet\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Adverb",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[13].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q148",
+   "collection": "items",
+   "row_id": 61216,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"quiet\"",
+   "correct": "Correct option is (1) \"quietly\"; the key (0) \"quiet\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Adverb",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "quietly"
+   }
+  },
+  {
+   "ref": "Q149",
+   "collection": "game_payloads",
+   "row_id": 4,
+   "path": "payload.questions[10]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"An appeal to logic built on usage statistics from schools\"",
+   "correct": "Correct option is (1) \"An appeal to emotion that links social media to feeling left out\"; the key (2) \"An appeal to logic built on usage statistics from schools\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Modes_of_persuasion",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[10].answerIndex": 1
+   }
+  },
+  {
+   "ref": "Q149",
+   "collection": "items",
+   "row_id": 61250,
+   "path": "",
+   "shared": false,
+   "user_id": 4,
+   "action": "rekey",
+   "wrong": "Key: \"An appeal to logic built on usage statistics from schools\"",
+   "correct": "Correct option is (1) \"An appeal to emotion that links social media to feeling left out\"; the key (2) \"An appeal to logic built on usage statistics from schools\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Modes_of_persuasion",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "answer": "An appeal to emotion that links social media to feeling left out"
+   }
+  },
+  {
+   "ref": "Q150",
+   "collection": "game_payloads",
+   "row_id": 5,
+   "path": "payload.questions[8]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Whether the author is famous\"",
+   "correct": "Not a valid item as written: picked (-1) undefined no correct option",
+   "source": "https://en.wikipedia.org/wiki/Citation",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q151",
+   "collection": "game_payloads",
+   "row_id": 6,
+   "path": "payload.questions[16]",
+   "shared": true,
+   "user_id": null,
+   "action": "rekey",
+   "wrong": "Key: \"Because reading passages aloud helps you memorize them faster\"",
+   "correct": "Correct option is (3) \"Because then your imitation shows you understood the technique, not just the words\"; the key (0) \"Because reading passages aloud helps you memorize them faster\" is wrong and its own explanation describes the correct option.",
+   "source": "https://en.wikipedia.org/wiki/Imitation",
+   "method": "judge (Qwen3.8 Max) + source check",
+   "set": {
+    "payload.questions[16].answerIndex": 3
+   }
+  },
+  {
+   "ref": "Q152",
+   "collection": "game_payloads",
+   "row_id": 14,
+   "path": "payload.questions[37]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Because the dam released the floodwaters, the downstream villages were evacuated before dawn.\"",
+   "correct": "Not a valid item as written: The original sentence is already a complete complex sentence, so calling it a fragment is incorrect.",
+   "source": "https://en.wikipedia.org/wiki/Sentence_fragment",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q154",
+   "collection": "game_payloads",
+   "row_id": 43,
+   "path": "payload.questions[48]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite",
+   "wrong": "Key: \"A colon\"",
+   "correct": "A dash can also introduce the explanation (\"one rule above all - be kind\"), so options 0 and 2 are both defensible.",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "Q156",
+   "collection": "game_payloads",
+   "row_id": 54,
+   "path": "payload.questions[43]",
+   "shared": true,
+   "user_id": null,
+   "action": "rewrite_or_remove",
+   "wrong": "Key: \"Four dots, so the omission plus the period close the full sentence\"",
+   "correct": "Not a valid item as written: The quoted text shows three spaced dots mid-sentence, but the question asks why it ends with four dots. The premise contradicts the quotation provided.",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "method": "judge (Qwen3.8 Max) + source check"
+  },
+  {
+   "ref": "S2",
+   "collection": "game_payloads",
+   "row_id": 46,
+   "path": "payload.questions[8]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"The whole village flooded; consequently, the festival was canceled.\",\"The whole village flooded: consequently, the festival was canceled.\",\"The whole village flooded; consequently, the festival was canceled.\",\"The whole village flooded, consequently the festival was canceled.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S3",
+   "collection": "game_payloads",
+   "row_id": 46,
+   "path": "payload.questions[15]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"The debate team won regionals; furthermore, they had never lost a single round.\",\"The debate team won regionals: furthermore, they had never lost a single round.\",\"The debate team won regionals, furthermore, they had never lost a single round.\",\"The debate team won regionals; furthermore, they had never lost a single round.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S4",
+   "collection": "game_payloads",
+   "row_id": 46,
+   "path": "payload.questions[42]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"The trail marker was gone; consequently, we hiked an extra hour.\",\"The trail marker was gone: consequently, we hiked an extra hour.\",\"The trail marker was gone; consequently, we hiked an extra hour.\",\"The trail marker was gone, consequently, we hiked an extra hour.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S5",
+   "collection": "game_payloads",
+   "row_id": 49,
+   "path": "payload.questions[26]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"The storm arrived at dawn; the roads closed by nine.\",\"The storm arrived at dawn; the roads closed by nine:\",\"The storm arrived at dawn; the roads closed by nine;\",\"The storm arrived at dawn; the roads closed by nine.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S6",
+   "collection": "game_payloads",
+   "row_id": 49,
+   "path": "payload.questions[31]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"My plans for tonight: study, sleep, and panic.\",\"My plans for tonight; study, sleep, and panic.\",\"My plans for tonight — study, sleep, and panic;\",\"My plans for tonight: study, sleep, and panic.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S7",
+   "collection": "game_payloads",
+   "row_id": 50,
+   "path": "payload.questions[48]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"The phone rang twice, then stopped.\",\"The phone rang twice — then stopped.\",\"The phone rang twice, then stopped.\",\"The phone rang twice; then it stopped, for good.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S8",
+   "collection": "game_payloads",
+   "row_id": 54,
+   "path": "payload.questions[22]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"I was going to tell you, but . . . never mind.\",\"I was going to tell you — but never mind.\",\"I was going to tell you . . . but . . . never . . . mind.\",\"I was going to tell you, but . . . never mind.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S9",
+   "collection": "game_payloads",
+   "row_id": 58,
+   "path": "payload.questions[0]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"We could take the bus, if it stops here.\",\"We could take the bus, if it stops here.\",\"We could take the bus, if it stops here.\",\"We could take the bus, if it stops here.\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S10",
+   "collection": "game_payloads",
+   "row_id": 63,
+   "path": "payload.questions[46]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"whether\",\"if\",\"whether\",\"if\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S11",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[6]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"less\",\"fewer\",\"fewer\",\"less\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S12",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[18]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"less\",\"fewer\",\"less\",\"fewer\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S13",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[40]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"it's\",\"it's\",\"its\",\"its\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  },
+  {
+   "ref": "S14",
+   "collection": "game_payloads",
+   "row_id": 64,
+   "path": "payload.questions[42]",
+   "shared": true,
+   "user_id": null,
+   "action": "replace_duplicate_options",
+   "wrong": "Options repeat: [\"It's\",\"Its\",\"It's\",\"Its\"]",
+   "correct": "Each option must be distinct; a learner who taps the duplicate of the key is marked wrong. Replace the duplicate option(s).",
+   "source": "code check (exact string comparison)",
+   "method": "code"
+  }
+ ]
+}

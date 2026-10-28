@@ -1,0 +1,67 @@
+{
+ "collection": "lessons",
+ "row_id": 233,
+ "shared": false,
+ "user_id": 430,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 1
+ },
+ "errors": [
+  {
+   "ref": "P28",
+   "wrong": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. The +5 is an addition, not a factor, so it does not get divided.",
+   "correct": "Dividing both sides of 3x + 5 = 20 by 3 divides every term: x + 5/3 = 20/3 (x = 5). \"The +5 ... does not get divided\" is false."
+  },
+  {
+   "ref": "Q57",
+   "wrong": "Check question rationale: \"Dividing first would give x = 2.5, and x = 3 is not correct since 2(3) + 4 = 10 fails. ... actually the deciding check: substituting 3 gives 2(3) + 4 = 10, which is true...\"",
+   "correct": "x = 3 is the solution of 2x + 4 = 10 (2*3 + 4 = 10), so nothing went wrong; the rationale must say so without the false and garbled part."
+  }
+ ],
+ "edits": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. The +5 is an addition, not a factor, so it does not get divided. Subtract 5 first, giving 3x = 15.",
+   "after": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. Dividing both sides by 3 divides every term, so the +5 becomes 5/3: x + 5/3 = 20/3. It is simpler to subtract 5 first, giving 3x = 15 and x = 5."
+  },
+  {
+   "path": "check_questions[2].rationale",
+   "before": "Dividing first would give x = 2.5, and x = 3 is not correct since 2(3) + 4 = 10 fails. Their answer shows 2x = 6 came from subtracting 4 from only one side... actually the deciding check: substituting 3 gives 2(3) + 4 = 10, which is true, so x = 3 is correct and nothing went wrong.",
+   "after": "Substitute to check: 2(3) + 4 = 6 + 4 = 10, which matches the right side, so x = 3 is correct and nothing went wrong."
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. The +5 is an addition, not a factor, so it does not get divided. Subtract 5 first, giving 3x = 15.",
+   "after": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. Dividing both sides by 3 divides every term, so the +5 becomes 5/3: x + 5/3 = 20/3. It is simpler to subtract 5 first, giving 3x = 15 and x = 5."
+  },
+  {
+   "path": "check_questions[2].rationale",
+   "before": "Dividing first would give x = 2.5, and x = 3 is not correct since 2(3) + 4 = 10 fails. Their answer shows 2x = 6 came from subtracting 4 from only one side... actually the deciding check: substituting 3 gives 2(3) + 4 = 10, which is true, so x = 3 is correct and nothing went wrong.",
+   "after": "Substitute to check: 2(3) + 4 = 6 + 4 = 10, which matches the right side, so x = 3 is correct and nothing went wrong."
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "the key text appears twice (answer and choices[1]), so the find matched 2 places; the key itself was already re-keyed live",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

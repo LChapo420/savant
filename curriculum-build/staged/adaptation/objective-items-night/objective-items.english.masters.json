@@ -1,0 +1,1996 @@
+{
+ "track_id": "english",
+ "grade_id": "masters",
+ "generated_at": "2026-10-26T03:38:11.707Z",
+ "items": [
+  {
+   "objective_id": "masters:L324",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "In visual rhetoric, a visual metaphor functions by mapping attributes of a source domain onto a target domain to suggest similarity.",
+   "choices": [
+    "Stating the argument explicitly in accompanying text",
+    "Mapping source attributes onto a target to imply similarity",
+    "Employing vivid colors to capture viewer attention",
+    "Repeating a brand logo for recognition purposes"
+   ],
+   "answer": "Mapping source attributes onto a target to imply similarity",
+   "rationale": "Visual metaphors operate by transferring qualities from a source domain to a target domain, creating an implied comparison; the other options describe literal text, color attraction, or brand repetition, which are not metaphoric mapping.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L324",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "Which principle of visual hierarchy most directly guides a viewer’s eye to the primary claim in a poster?",
+   "choices": [
+    "Balancing elements symmetrically across the layout",
+    "Contrasting size and weight to emphasize key content",
+    "Applying complementary color pairs for aesthetic harmony",
+    "Including a concise tagline beneath the image"
+   ],
+   "answer": "Contrasting size and weight to emphasize key content",
+   "rationale": "Contrast in size and weight creates a visual hierarchy that draws the eye to the most important element; symmetrical balance, complementary colors, and taglines support design but do not primarily direct attention to the claim.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Visual hierarchy directs attention by creating emphasis through differences such as size, weight, color, and placement.",
+      "url": "https://en.wikipedia.org/wiki/Visual_hierarchy",
+      "quote": "Size has a strong influence on visual hierarchy. Large elements typically attract attention, provided that they can be recognized as figures.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L324",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 324,
+   "format": "multiple_choice",
+   "prompt": "A single infographic that presents a problem, evidence, and a proposed solution exemplifies which rhetorical structure?",
+   "choices": [
+    "Following a narrative arc with beginning, middle, end",
+    "Using an enthymeme that omits a premise",
+    "Applying the Toulmin model of claim, data, warrant",
+    "Adhering to classical arrangement of exordium, narratio, confirmatio"
+   ],
+   "answer": "Applying the Toulmin model of claim, data, warrant",
+   "rationale": "The Toulmin model structures arguments as claim, data, warrant, backing, qualifier, rebuttal, matching problem‑evidence‑solution; narrative arc, enthymeme, and classical arrangement organize discourse differently.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Toulmin’s model distinguishes a claim, supporting data or evidence, and the warrant connecting the evidence to the claim.",
+      "url": "https://en.wikipedia.org/wiki/Stephen_Toulmin",
+      "quote": "The first three elements, claim , ground , and warrant , are considered as the essential components of practical arguments, while the second triad, qualifier , backing , and rebuttal , may not be needed in some arguments.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L229",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "In a dichotic listening task, an adult hears different speech sounds simultaneously in each ear. Which pattern most strongly supports the usual left-hemisphere specialization for speech in a right-handed adult?",
+   "choices": [
+    "More left-ear words are reported correctly.",
+    "More right-ear words are reported correctly.",
+    "Right- and left-ear words are reported equally often.",
+    "Only words presented to the left ear are reported."
+   ],
+   "answer": "More right-ear words are reported correctly.",
+   "rationale": "The left hemisphere usually receives auditory input from the right ear, producing a right-ear advantage for speech processing in most right-handed adults.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In right-handed adults, the left hemisphere is typically dominant for language, which produces a right-ear advantage in dichotic listening tasks.",
+      "url": "https://en.wikipedia.org/wiki/Doreen_Kimura",
+      "quote": "She demonstrated that right-handed subjects have a right-ear superiority for the reception of words and numbers, and left-ear superiority for the perception of melodies",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     },
+     {
+      "claim": "In dichotic listening, speech sounds show a right-ear advantage in right-handed adults due to left hemisphere specialization.",
+      "url": "https://en.wikipedia.org/wiki/Doreen_Kimura",
+      "quote": "right-handed subjects have a right-ear superiority for the reception of words and numbers",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L229",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Which neuroimaging technique offers millisecond temporal resolution for tracking the time course of language processing?",
+   "choices": [
+    "MEG",
+    "fMRI",
+    "PET",
+    "DTI"
+   ],
+   "answer": "MEG",
+   "rationale": "Magnetoencephalography (MEG) directly measures the magnetic fields generated by neuronal currents, providing sub‑millisecond temporal resolution, whereas fMRI, PET, and DTI are limited by hemodynamic or diffusion contrasts.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": [
+     {
+      "claim": "MEG provides millisecond temporal resolution for language processing.",
+      "url": "https://en.wikipedia.org/wiki/Neurolinguistics",
+      "quote": "These techniques are able to measure brain activity from one millisecond to the next, providing excellent temporal resolution , which is important in studying processes that take place as quickly as language comprehension and production.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "MEG (like EEG) has millisecond temporal resolution, whereas fMRI and PET measure slower hemodynamic responses and DTI tracks white-matter structure.",
+      "url": "https://en.wikipedia.org/wiki/Developmental_cognitive_neuroscience",
+      "quote": "MEG : MEG is a neuroimaging technique that records the magnetic fields that are generated by neural activity. A key advantage of this imaging technique is that it provides excellent spatial localization, as well as high temporal resolution of neural events.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L229",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 229,
+   "format": "multiple_choice",
+   "prompt": "Which event-related potential component indexes difficulty in semantic integration during sentence comprehension?",
+   "choices": [
+    "N400",
+    "P600",
+    "ELAN",
+    "P300"
+   ],
+   "answer": "N400",
+   "rationale": "The N400 is a negative-going ERP peaking around 400 ms that is reliably larger for semantically incongruent or unexpected words, making it the canonical index of semantic integration effort.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": [
+     {
+      "claim": "The N400 component is known to index difficulty in semantic integration.",
+      "url": "https://en.wikipedia.org/wiki/N400_(neuroscience)",
+      "quote": "This suggests that the N400 reflects both access to semantic memory (which is sensitive to prediction), and semantic integration (sensitive to plausibility).",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The N400 ERP component is elicited by semantic anomalies and indexes difficulty in semantic integration during sentence comprehension.",
+      "url": "https://en.wikipedia.org/wiki/N400_(ERP)",
+      "quote": "Brown and Hagoort (1993) believe that the N400 occurs late in the processing stream, and reflects the integration of a word's meaning into the preceding context (see Kutas & Federmeier, 2011, for a discussion).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L187",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "Which step is essential in the comparative method for establishing a genetic relationship between two languages?",
+   "choices": [
+    "Collecting a list of basic vocabulary items and identifying regular sound correspondences.",
+    "Comparing grammatical gender systems for similarity across the languages.",
+    "Counting the number of loanwords shared between the two languages.",
+    "Measuring mutual intelligibility of modern speakers of the languages."
+   ],
+   "answer": "Collecting a list of basic vocabulary items and identifying regular sound correspondences.",
+   "rationale": "The comparative method requires systematic sound correspondences in core vocabulary to demonstrate common ancestry.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The comparative method establishes genetic relationships through systematic regular sound correspondences, especially in basic vocabulary.",
+      "url": "https://en.wikipedia.org/wiki/Comparative_method",
+      "quote": "The aim of the comparative method is to highlight and interpret systematic phonological and semantic correspondences between two or more attested languages . ), and if they are sufficiently numerous, regular, and systematic that they cannot be dismissed as chance similarities , then it must be assumed that they descend from a single parent language called the ' proto-language '.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L187",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "When a language shows an alternation between [k] and [ʃ] before front vowels, internal reconstruction would posit what?",
+   "choices": [
+    "A single proto-phoneme *k that palatalized before front vowels.",
+    "Two unrelated phonemes that later merged in the language.",
+    "A borrowing from a neighboring language with a different phonology.",
+    "A morphological rule that inserts [ʃ] in specific environments."
+   ],
+   "answer": "A single proto-phoneme *k that palatalized before front vowels.",
+   "rationale": "Internal reconstruction assumes a single source phoneme with conditioned allophony rather than separate origins.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Internal reconstruction can posit a single earlier phoneme whose later conditioned reflex accounts for an alternation, such as palatalization of reconstructed *k.",
+      "url": "https://en.wikipedia.org/wiki/Internal_reconstruction",
+      "quote": "The basic premise of internal reconstruction is that a meaning-bearing element that alternates between two or more similar forms in different environments was probably once a single form into which alternation has been introduced by the usual mechanisms of sound change and analogy .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L187",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 187,
+   "format": "multiple_choice",
+   "prompt": "What does the principle of regular sound correspondence require in the comparative method?",
+   "choices": [
+    "That correspondences be exceptionless across the core vocabulary",
+    "That each phoneme correspond to a single reflex in all languages",
+    "That borrowings be identified before establishing correspondences",
+    "That only grammatical morphemes be used for reconstruction"
+   ],
+   "answer": "That correspondences be exceptionless across the core vocabulary",
+   "rationale": "The regularity hypothesis states that sound correspondences must hold without exception in the core vocabulary, providing the basis for genetic classification and reconstruction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": [
+     {
+      "claim": "Regular sound correspondence requires that phonological changes appear consistently across core vocabulary without exceptions.",
+      "url": "https://en.wikipedia.org/wiki/Regular_sound_correspondence",
+      "quote": "sound laws have no exceptions",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The comparative method's regularity principle holds that sound correspondences are exceptionless (regular) within core/native vocabulary, not that each phoneme has one reflex in every language.",
+      "url": "https://en.wikipedia.org/wiki/Comparative_method",
+      "quote": "), and if they are sufficiently numerous, regular, and systematic that they cannot be dismissed as chance similarities , then it must be assumed that they descend from a single parent language called the ' proto-language '.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L513",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "A technical report’s section headings are only 2 points larger than its 10-point body text, and all headings use the same bold style. Which change best improves hierarchy?",
+   "choices": [
+    "Increase heading size and add space above sections",
+    "Italicize body text and reduce both page margins",
+    "Center all headings and use a smaller body font",
+    "Use a unique typeface for every section heading"
+   ],
+   "answer": "Increase heading size and add space above sections",
+   "rationale": "A clear hierarchy uses meaningful differences in scale and spacing, while the other changes add inconsistency or reduce readability.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L513",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "A procedures manual uses centered body paragraphs, while numbered steps are left-aligned. Which revision creates a more consistent, scannable layout?",
+   "choices": [
+    "Left-align related text and use one consistent margin grid",
+    "Keep centered text and indent steps by paragraph length",
+    "Justify all text and align each step to the center",
+    "Center headings while leaving body text unchanged"
+   ],
+   "answer": "Left-align related text and use one consistent margin grid",
+   "rationale": "Consistent alignment and margins make relationships easier to perceive and help readers scan procedural information efficiently.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L513",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "A report uses light gray 8-point text for cautions against a white background. Which revision best supports readable, accessible communication?",
+   "choices": [
+    "Use dark text at an accessible size and sufficient contrast",
+    "Keep gray text but make every caution bold",
+    "Use pale red text on a white background at 10 points",
+    "Place cautions in centered boxes with smaller gray text"
+   ],
+   "answer": "Use dark text at an accessible size and sufficient contrast",
+   "rationale": "Readable technical documents require adequate type size, color contrast, and visual prominence for important warnings.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L513",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 513,
+   "format": "multiple_choice",
+   "prompt": "In a one-page summary, captions sit halfway between unrelated charts, and each metric appears in a different font. Which revision best improves grouping and consistency?",
+   "choices": [
+    "Place each caption with its chart and standardize metric typography",
+    "Move all captions to the bottom and use a new font",
+    "Keep captions where they are and enlarge every chart",
+    "Center each caption and vary fonts by department"
+   ],
+   "answer": "Place each caption with its chart and standardize metric typography",
+   "rationale": "Proximity connects captions with the content they describe, while consistent typography helps readers interpret metrics uniformly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L629",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 629,
+   "format": "multiple_choice",
+   "prompt": "In activity theory, what mediates the relationship between a writer and the writing task?",
+   "choices": [
+    "Tools and artifacts",
+    "Personal motivation",
+    "Organizational hierarchy",
+    "Audience expectations"
+   ],
+   "answer": "Tools and artifacts",
+   "rationale": "Activity theory posits that tools and artifacts mediate human activity, including writing tasks.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "In activity theory, tools and artifacts mediate a person's interaction with an object or task.",
+      "url": "https://en.wikipedia.org/wiki/Activity_Theory",
+      "quote": "This system includes the object (or objective), subject, mediating artifacts (signs and tools), rules, community and division of labor.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L629",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 629,
+   "format": "multiple_choice",
+   "prompt": "Which research method is most appropriate for capturing the situated writing practices of engineers in a design team?",
+   "choices": [
+    "Ethnographic observation",
+    "Controlled experiment",
+    "Survey questionnaire",
+    "Corpus analysis"
+   ],
+   "answer": "Ethnographic observation",
+   "rationale": "Ethnographic observation allows researchers to document writing practices in their natural, situated context.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Ethnographic observation is well suited to studying writing practices as they occur in their natural social and workplace setting.",
+      "url": "https://en.wikipedia.org/wiki/Ethnography",
+      "quote": "Ethnography is a form of inquiry that relies heavily on participant observation.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L629",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 629,
+   "format": "multiple_choice",
+   "prompt": "What does a think-aloud protocol primarily reveal about workplace documents?",
+   "choices": [
+    "Readers' cognitive processes",
+    "Document's visual layout",
+    "Author's intent",
+    "Organizational policy"
+   ],
+   "answer": "Readers' cognitive processes",
+   "rationale": "Think-aloud protocols capture readers' moment‑by‑moment cognitive processing while interacting with a document.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Think-aloud protocols elicit participants' verbalized thoughts and reasoning while they read or compose.",
+      "url": "https://en.wikipedia.org/wiki/Think-aloud_protocols",
+      "quote": "This gives observers insight into the participant's cognitive processes (rather than only their final product), to make thought processes as explicit as possible during task performance.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L629",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 629,
+   "format": "multiple_choice",
+   "prompt": "Which concept from genre theory emphasizes that genres are typified rhetorical actions recurring in a discourse community?",
+   "choices": [
+    "Genre as social action",
+    "Genre as fixed template",
+    "Genre as individual style",
+    "Genre as grammatical structure"
+   ],
+   "answer": "Genre as social action",
+   "rationale": "Genre as social action reflects Carolyn Miller's view that genres are recurrent rhetorical actions shaped by community expectations.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Genre theory's “social action” conception treats genres as socially recognized, recurring rhetorical actions performed by discourse communities.",
+      "url": "https://en.wikipedia.org/wiki/Genre_theory",
+      "quote": "Another definition which shows the different aspects of genre theory is Miller who defines genres as \"typified rhetorical actions\" that respond to recurring situations and become instantiated in groups' behaviors.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L649",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 649,
+   "format": "multiple_choice",
+   "prompt": "During an internship, you receive a brief for a technical manual aimed at non‑expert users. Which first step best ensures the document meets audience needs?",
+   "choices": [
+    "Select a pre‑approved template for the manual.",
+    "Conduct a brief audience analysis to identify gaps.",
+    "Write the manual using technical jargon throughout.",
+    "Deliver the first draft without any review."
+   ],
+   "answer": "Conduct a brief audience analysis to identify gaps.",
+   "rationale": "Conducting a brief audience analysis identifies knowledge gaps, ensuring the manual addresses non‑expert users’ needs before drafting.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L649",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 649,
+   "format": "multiple_choice",
+   "prompt": "Your supervisor asks you to edit a client report to follow the organization’s style guide. What is the most efficient first action?",
+   "choices": [
+    "Rewrite the entire report from scratch.",
+    "Compare the report against the style‑guide checklist.",
+    "Ignore the guide and keep original formatting.",
+    "Send the report to the client unchanged."
+   ],
+   "answer": "Compare the report against the style‑guide checklist.",
+   "rationale": "Comparing the report against the style‑guide checklist quickly reveals deviations, allowing targeted edits rather than a full rewrite.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L649",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 649,
+   "format": "multiple_choice",
+   "prompt": "During a team meeting, a colleague suggests a major structural change to a proposal you drafted. How should you respond to maintain professional standards?",
+   "choices": [
+    "Reject the suggestion outright without discussion.",
+    "Evaluate the suggestion against project goals and audience.",
+    "Accept the change without any further review.",
+    "Defer the decision to the client immediately."
+   ],
+   "answer": "Evaluate the suggestion against project goals and audience.",
+   "rationale": "Evaluating the suggestion against project goals and audience ensures changes improve the proposal while preserving professional collaboration.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L281",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Which three modes of persuasion did Aristotle identify as the core of rhetorical appeal?",
+   "choices": [
+    "Ethos, pathos, logos",
+    "Ethos, pathos, kairos",
+    "Logos, mythos, ethos",
+    "Pathos, logos, techne"
+   ],
+   "answer": "Ethos, pathos, logos",
+   "rationale": "Aristotle's Rhetoric defines the three artistic proofs as ethos (character), pathos (emotion), and logos (reason).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Aristotle identified ethos, pathos, and logos as the core modes of persuasion.",
+      "url": "https://en.wikipedia.org/wiki/Ethos_pathos_logos",
+      "quote": "Often, the modes of persuasion are directly equated with these three traditional rhetorical appeals: ethos , pathos , and logos —an appeal to the presenter's credibility, an appeal to audience emotions, and an appeal to reasoning or logic, respectively—all three of which appear in Aristotle's Rhetoric .",
+      "reader": "z-ai/glm-5.3"
+     },
+     {
+      "claim": "Aristotle identifies ethos, pathos, and logos as the three core rhetorical appeals.",
+      "url": "https://en.wikipedia.org/wiki/Aristotle",
+      "quote": "Aristotle's Rhetoric proposes that a speaker can use three basic kinds of appeals to persuade his audience: ethos (an appeal to the speaker's character), pathos (an appeal to the audience's emotion), and logos (an appeal to logical reasoning).",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L281",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "In medieval rhetorical theory, Augustine adapted classical rhetoric primarily for which purpose?",
+   "choices": [
+    "Christian preaching",
+    "Legal argument",
+    "Poetic composition",
+    "Philosophical debate"
+   ],
+   "answer": "Christian preaching",
+   "rationale": "Augustine's De Doctrina Christiana reorients classical rhetorical principles toward the exposition and defense of Christian doctrine.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Augustine adapted classical rhetoric primarily for Christian preaching.",
+      "url": "https://en.wikipedia.org/wiki/De_doctrina_Christiana",
+      "quote": "In the final chapter of On Christian Doctrine, Augustine uses much of Cicero's rhetorical theory as he lays down the foundation for the proper use of rhetoric by Christian teachers.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Augustine adapted classical rhetorical principles chiefly for Christian preaching and instruction, especially in On Christian Doctrine.",
+      "url": "https://en.wikipedia.org/wiki/Augustine_of_Hippo",
+      "quote": "After converting to Christianity, Augustine turned against his profession as a rhetoric professor in order to devote more time to preaching.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L281",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 281,
+   "format": "multiple_choice",
+   "prompt": "Which scholar introduced the concept of the 'rhetorical situation' as a response to exigence, audience, and constraints?",
+   "choices": [
+    "Lloyd Bitzer",
+    "Kenneth Burke",
+    "Chaim Perelman",
+    "Michel Foucault"
+   ],
+   "answer": "Lloyd Bitzer",
+   "rationale": "Lloyd Bitzer's 1968 essay 'The Rhetorical Situation' defines the rhetorical situation as a complex of exigence, audience, and constraints that invites discourse.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Lloyd Bitzer introduced the concept of the rhetorical situation.",
+      "url": "https://en.wikipedia.org/wiki/Rhetorical_situation",
+      "quote": "An article by Lloyd Bitzer introduced the model of the rhetorical situation in 1968, which was later challenged and modified by Richard E. Vatz (1973) and Scott Consigny (1974).",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Lloyd Bitzer defined the rhetorical situation in terms of exigence, audience, and constraints.",
+      "url": "https://en.wikipedia.org/wiki/Rhetorical_situation",
+      "quote": "An article by Lloyd Bitzer introduced the model of the rhetorical situation in 1968, which was later challenged and modified by Richard E. Vatz (1973) and Scott Consigny (1974).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L503",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "Which practice reduces ambiguity when defining a new algorithm in a conference paper?",
+   "choices": [
+    "Use informal analogies instead of formal definitions.",
+    "Provide a formal definition, then illustrate with a concrete example.",
+    "Rely on the reader's prior knowledge of similar algorithms.",
+    "Omit the definition and reference a textbook."
+   ],
+   "answer": "Provide a formal definition, then illustrate with a concrete example.",
+   "rationale": "A formal definition followed by a concrete example precisely specifies the algorithm and illustrates its operation; analogies, reliance on prior knowledge, or omitting definitions leave ambiguity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Formal definitions establish precise meaning, and concrete examples illustrate how an algorithm works.",
+      "url": "https://en.wikipedia.org/wiki/Definitions",
+      "quote": "In mathematics , a definition is used to give a precise meaning to a new term, by describing a condition which unambiguously qualifies what the mathematical term is and is not.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L503",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 503,
+   "format": "multiple_choice",
+   "prompt": "A specialist explains a predictive model to researchers from different disciplines. Which opening strategy best balances rigor with accessibility?",
+   "choices": [
+    "Replace every technical term with an everyday synonym.",
+    "Use analogies and omit assumptions to maintain simplicity.",
+    "Define key terms and assumptions before interpreting results.",
+    "Give the full derivation before stating the model’s purpose."
+   ],
+   "answer": "Define key terms and assumptions before interpreting results.",
+   "rationale": "Defining essential terminology and assumptions helps a mixed audience understand the model without sacrificing scientific precision.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L555",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "According to Nielsen’s guideline, how many participants are typically sufficient to uncover the majority of usability problems in a formative test?",
+   "choices": [
+    "Five participants",
+    "One participant",
+    "Thirty participants",
+    "One hundred participants"
+   ],
+   "answer": "Five participants",
+   "rationale": "Five users typically reveal about 80 % of usability issues; fewer miss many problems, while larger samples yield diminishing returns for formative testing.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Nielsen recommends testing with five participants to uncover the majority of usability problems.",
+      "url": "https://en.wikipedia.org/wiki/Usability_testing",
+      "quote": "The widely cited claim that five participants are sufficient to identify 85% of usability problems has been subject to significant academic scrutiny.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Nielsen's rule of thumb is that about five participants usually reveal most usability problems in a formative evaluation.",
+      "url": "https://en.wikipedia.org/wiki/Usability_testing",
+      "quote": "The widely cited claim that five participants are sufficient to identify 85% of usability problems has been subject to significant academic scrutiny.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L555",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "A research team wants deep insight into why users abandon a checkout flow. Which usability testing method best provides rich, qualitative data on user reasoning?",
+   "choices": [
+    "Moderated think‑aloud session with screen recording",
+    "Remote unmoderated A/B test of two designs",
+    "Heuristic evaluation by three experts",
+    "Post‑task satisfaction survey with Likert scale"
+   ],
+   "answer": "Moderated think‑aloud session with screen recording",
+   "rationale": "Think‑aloud yields verbalized reasoning, revealing why users abandon, whereas A/B, heuristics, or surveys give limited qualitative depth.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Think‑aloud sessions produce qualitative insight into user reasoning.",
+      "url": "https://en.wikipedia.org/wiki/Usability",
+      "quote": "Qualitative usually allows for observing respondent's screens and verbal think aloud commentary (Screen Recording Video, SRV), and for a richer level of insight also include the webcam view of the respondent (Video-in-Video, ViV, sometimes referred to as Picture-in-Picture , PiP)",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "A moderated think-aloud session captures participants' reasoning in real time while screen recording preserves their interactions.",
+      "url": "https://en.wikipedia.org/wiki/Usability",
+      "quote": "Qualitative usually allows for observing respondent's screens and verbal think aloud commentary (Screen Recording Video, SRV), and for a richer level of insight also include the webcam view of the respondent",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L555",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 555,
+   "format": "multiple_choice",
+   "prompt": "In a summative usability test of a new documentation portal, which quantitative metric most directly indicates overall effectiveness?",
+   "choices": [
+    "Task success rate",
+    "Average time on task",
+    "Number of error occurrences",
+    "Post‑test satisfaction rating"
+   ],
+   "answer": "Task success rate",
+   "rationale": "Task success rate directly measures whether users can complete the intended tasks, providing the clearest indicator of a product’s overall effectiveness in a summative test.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Task success rate measures the proportion of test tasks users complete successfully and directly indicates task effectiveness.",
+      "url": "https://en.wikipedia.org/wiki/Usability",
+      "quote": "These categories are measured by the percent that complete the task, how long it takes to complete the tasks, ratios of success to failure to complete the task, time spent on errors, the number of errors, rating scale of satisfactions, number of times user seems frustrated, etc.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L418",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 418,
+   "format": "multiple_choice",
+   "prompt": "What is the primary function of the 'evaluation' segment in a Labovian narrative?",
+   "choices": [
+    "It expresses the narrator's attitude toward the events",
+    "It lists events in chronological order",
+    "It describes the physical setting",
+    "It resolves the narrative tension"
+   ],
+   "answer": "It expresses the narrator's attitude toward the events",
+   "rationale": "Evaluation conveys the narrator's stance or significance attached to the events, not their order or setting.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "In Labov's model, the evaluation segment expresses the narrator's attitude toward the events.",
+      "url": "https://en.wikipedia.org/wiki/Personal_narrative",
+      "quote": "In many narratives, the evaluation is connected to the result and shows the narrator's attitude towards the narrative.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The evaluation segment of a Labovian narrative conveys the narrator's attitude toward the events.",
+      "url": "https://en.wikipedia.org/wiki/Personal_narrative",
+      "quote": "In many narratives, the evaluation is connected to the result and shows the narrator's attitude towards the narrative.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L587",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 587,
+   "format": "multiple_choice",
+   "prompt": "In a mobile onboarding flow, what content strategy technique presents essential information first and reveals details on demand?",
+   "choices": [
+    "Show all steps on a single screen.",
+    "Use progressive disclosure with expandable sections.",
+    "Randomize tip order each user session.",
+    "Link full documentation at the bottom."
+   ],
+   "answer": "Use progressive disclosure with expandable sections.",
+   "rationale": "Progressive disclosure shows only essential info initially and lets users expand details when needed, improving onboarding clarity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Progressive disclosure presents essential information first and reveals additional detail on demand.",
+      "url": "https://en.wikipedia.org/wiki/Progressive_disclosure",
+      "quote": "Progressive disclosure is an interaction design pattern used to make applications easier to learn and less error-prone. It does so by deferring some advanced or rarely-used features to a secondary screen and designing workflows where information is revealed when it becomes relevant to the current task.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L597",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 597,
+   "format": "multiple_choice",
+   "prompt": "Which element is essential for a work breakdown structure (WBS) in a documentation project?",
+   "choices": [
+    "Deliverable‑oriented decomposition of documentation outputs",
+    "Chronological list of project phases",
+    "Comprehensive resource allocation table",
+    "Detailed risk register for each task"
+   ],
+   "answer": "Deliverable‑oriented decomposition of documentation outputs",
+   "rationale": "A WBS must break the project into deliverables (e.g., user guide, API reference) rather than phases, resources, or risks, ensuring each work package produces a tangible documentation artifact.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A work breakdown structure is a deliverable-oriented decomposition of project work into manageable components.",
+      "url": "https://en.wikipedia.org/wiki/Work_breakdown_structure",
+      "quote": "WBS is a hierarchical and incremental decomposition of the project into deliverables (from major ones such as phases to the smallest ones, sometimes known as work packages).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L597",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 597,
+   "format": "multiple_choice",
+   "prompt": "When estimating effort for a documentation project, which technique uses historical data from similar past projects to calculate a baseline?",
+   "choices": [
+    "Analogous estimating",
+    "Parametric estimating",
+    "Bottom-up estimating",
+    "Three-point estimating"
+   ],
+   "answer": "Analogous estimating",
+   "rationale": "Analogous estimating relies on historical data from comparable projects to produce a quick baseline estimate, making it the technique described.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Analogous estimating uses historical data from similar past projects to calculate a baseline.",
+      "url": "https://en.wikipedia.org/wiki/Project_management_triangle",
+      "quote": "Analogous Estimating: Using the cost of similar project to determine the cost of the current project",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Analogous estimating uses historical data from similar past projects to establish an estimated baseline.",
+      "url": "https://en.wikipedia.org/wiki/Project_management_triangle",
+      "quote": "Using actual cost of previous, similar projects as the basis for estimating the cost of current project.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L567",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 567,
+   "format": "multiple_choice",
+   "prompt": "When adapting a user manual for a high‑power‑distance culture, which writing strategy best respects hierarchical expectations?",
+   "choices": [
+    "Use direct imperative mood throughout.",
+    "Include explicit authority references and formal address.",
+    "Replace all text with icons.",
+    "Adopt a casual, conversational tone."
+   ],
+   "answer": "Include explicit authority references and formal address.",
+   "rationale": "High power‑distance cultures expect clear status cues; formal address and authority references signal respect for hierarchy, whereas imperative or casual tones can appear disrespectful.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "High‑power‑distance cultures emphasize hierarchical differences and expect respect for authority.",
+      "url": "https://en.wikipedia.org/wiki/Power_distance",
+      "quote": "Due to high power distance, it is a culture where one may not question someone in power like a manager, a professor, or a government official, because authority is valued and power is not equally distributed.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "High-power-distance cultures generally regard hierarchy and formal authority as legitimate, making formal address an appropriate respect-oriented strategy.",
+      "url": "https://en.wikipedia.org/wiki/Power_distance",
+      "quote": "In higher PDI cultures, the power relations are paternalistic and autocratic , and centralized authority exists; there is a wide gap or emotional distance which is perceived to exist among people at different levels of the hierarchy.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L567",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 567,
+   "format": "multiple_choice",
+   "prompt": "When writing a procedural guide for a low‑context culture, which strategy best ensures clarity?",
+   "choices": [
+    "Provide explicit, step‑by‑step instructions",
+    "Assume readers share extensive background knowledge",
+    "Use indirect, polite phrasing throughout",
+    "Embed culturally specific metaphors"
+   ],
+   "answer": "Provide explicit, step‑by‑step instructions",
+   "rationale": "Low‑context cultures depend on explicit, detailed information; step‑by‑step instructions reduce ambiguity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Low-context cultures generally require explicit instructions because readers are less likely to share contextual knowledge.",
+      "url": "https://en.wikipedia.org/wiki/High-context_and_low-context_cultures",
+      "quote": "Individuals and groups operating in low context cultures are quite explicit and elaborate without having prior knowledge of each member's history or background, and tend to take what is said literally and prefer to have thorough knowledge before a task or a meeting.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L702",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 702,
+   "format": "multiple_choice",
+   "prompt": "A CEFR‑aligned speaking rubric describes B2 learners as able to...",
+   "choices": [
+    "interact fluently on familiar topics with some hesitation",
+    "produce only memorized phrases in routine situations",
+    "discuss abstract ideas without any errors",
+    "understand native‑speed speech without clarification"
+   ],
+   "answer": "interact fluently on familiar topics with some hesitation",
+   "rationale": "The CEFR B2 descriptor for spoken interaction states that learners can “interact with a degree of fluency and spontaneity” on familiar matters, though occasional hesitation may occur. The other options describe A2, C1, and C2 levels respectively.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "CEFR B2 speaking learners can interact fluently, spontaneously, and discuss abstract topics with some hesitation.",
+      "url": "https://en.wikipedia.org/wiki/B2_First",
+      "quote": "interact with some degree of fluency and spontaneity without great difficulty",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "CEFR B2 describes independent users who can communicate spontaneously and effectively on familiar topics, though errors and some hesitation may occur.",
+      "url": "https://en.wikipedia.org/wiki/B2_First",
+      "quote": "interact with some degree of fluency and spontaneity without great difficulty",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L702",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 702,
+   "format": "multiple_choice",
+   "prompt": "When planning a reading lesson for intermediate ELLs, which scaffolding technique best supports comprehension of a complex expository text?",
+   "choices": [
+    "Pre‑teach key vocabulary with visual aids",
+    "Provide a full translation of the text",
+    "Allow only silent reading without support",
+    "Assign a summary writing task before reading"
+   ],
+   "answer": "Pre‑teach key vocabulary with visual aids",
+   "rationale": "Pre‑teaching key vocabulary with visual aids activates prior knowledge and reduces lexical load, enabling learners to focus on text structure and meaning.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Pre-teaching key vocabulary with visual aids is an effective scaffold for helping intermediate ELLs comprehend complex expository texts.",
+      "url": "https://en.wikipedia.org/wiki/English-language_learner",
+      "quote": "Different scaffolding strategies include associating English vocabulary to visuals, drawing back to a student's prior knowledge, pre-teaching difficult vocabulary before assigning readings they appear in, and encouraging questions from students, whether they be content-related or to ensure comprehension.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L147",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Given ⟦every⟧ = λQλP.∀x(Q(x)→P(x)) and ⟦student⟧ = λx.student(x), what is ⟦every student⟧?",
+   "choices": [
+    "λP.∀x(student(x)→P(x))",
+    "λP.∃x(student(x)∧P(x))",
+    "λP.∀x(student(x)∧P(x))",
+    "λP.∃x(student(x)→P(x))"
+   ],
+   "answer": "λP.∀x(student(x)→P(x))",
+   "rationale": "Applying ⟦every⟧ to ⟦student⟧ yields λP.∀x(student(x)→P(x)), the standard universal quantifier restricted to students.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L147",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Given ⟦likes⟧ = λyλx.likes(x,y), ⟦John⟧ = λP.P(j), ⟦Mary⟧ = λP.P(m), what is ⟦John likes Mary⟧?",
+   "choices": [
+    "likes(j,m)",
+    "likes(m,j)",
+    "λx.likes(x,m)",
+    "λy.likes(j,y)"
+   ],
+   "answer": "likes(j,m)",
+   "rationale": "John and Mary are applied as arguments to the verb: (λP.P(j)) ( (λP.P(m)) (λyλx.likes(x,y)) ) reduces to likes(j,m).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "deepseek-ai/deepseek-v4.1-flash (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "deepseek",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L682",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 682,
+   "format": "multiple_choice",
+   "prompt": "Which metadata standard provides a hierarchical map of the components of a complex digital object, such as a multi‑page manuscript?",
+   "choices": [
+    "METS for structural mapping of objects",
+    "MODS for bibliographic description of resources",
+    "Dublin Core for simple resource description",
+    "PREMIS for preservation metadata management"
+   ],
+   "answer": "METS for structural mapping of objects",
+   "rationale": "METS (Metadata Encoding and Transmission Standard) includes a structural map that records the hierarchy and order of files within a complex digital object.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "METS provides structural metadata for representing and hierarchically mapping the components of complex digital objects.",
+      "url": "https://en.wikipedia.org/wiki/Metadata_Encoding_and_Transmission_Standard",
+      "quote": "as early as 1996 the University of California, Berkeley began working toward the development of a system that combined encoding for an outline of a digital object's structure with metadata for that object.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "METS defines the structural map of a complex digital object.",
+      "url": "https://en.wikipedia.org/wiki/Metadata_Encoding_and_Transmission_Standard",
+      "quote": "Structural Map structMap: Outlines a hierarchical structure for the digital library object, and links the elements of that structure to associated content files and metadata.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L619",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 619,
+   "format": "multiple_choice",
+   "prompt": "Which revenue model in contemporary publishing relies primarily on recurring reader payments rather than one‑time sales or advertising?",
+   "choices": [
+    "Digital subscription model",
+    "Pay‑per‑article micropayments",
+    "Ad‑supported free access",
+    "Licensing of back‑list titles"
+   ],
+   "answer": "Digital subscription model",
+   "rationale": "A digital subscription model generates steady income through periodic reader fees, distinguishing it from single‑purchase, ad‑based, or licensing revenue streams.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Digital subscription model relies on recurring reader payments.",
+      "url": "https://en.wikipedia.org/wiki/Subscription_Model",
+      "quote": "The subscription business model is a business model in which a customer must pay a recurring price at regular intervals for access to a product or service.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "A digital subscription model relies on recurring payments from readers for continued access to content.",
+      "url": "https://en.wikipedia.org/wiki/Subscription_business_model",
+      "quote": "The subscription business model is a business model in which a customer must pay a recurring price at regular intervals for access to a product or service.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L744",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 744,
+   "format": "multiple_choice",
+   "prompt": "A graduate student is choosing between the non-thesis capstone and a full thesis. Which description best captures the capstone’s central requirement?",
+   "choices": [
+    "Complete a substantial project with a defined problem and a concrete final deliverable.",
+    "Complete a shorter research study with fewer pages than a full thesis.",
+    "Complete additional coursework and submit a final examination instead.",
+    "Complete an extended literature review without producing a new product."
+   ],
+   "answer": "Complete a substantial project with a defined problem and a concrete final deliverable.",
+   "rationale": "A non-thesis capstone centers on completing substantial project work that produces a defined deliverable, rather than completing a dissertation-length research study.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L744",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 744,
+   "format": "multiple_choice",
+   "prompt": "A capstone proposal names a topic but gives no schedule, success criteria, or resources. Which revision best shows that the project is substantial and achievable?",
+   "choices": [
+    "Add milestones, expected outcomes, required resources, and deliverable acceptance criteria.",
+    "Add a longer background section describing the topic’s historical development.",
+    "Add several possible deliverables without selecting one clear final product.",
+    "Add broad claims about the topic’s importance while leaving the scope unchanged."
+   ],
+   "answer": "Add milestones, expected outcomes, required resources, and deliverable acceptance criteria.",
+   "rationale": "A feasible proposal connects substantial project work to a concrete deliverable through milestones, resources, expected outcomes, and explicit acceptance criteria.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L744",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 744,
+   "format": "multiple_choice",
+   "prompt": "Near the deadline, a team has a polished report but has not produced the project outcome promised in its proposal. What should the team do?",
+   "choices": [
+    "Revise the scope and complete the agreed deliverable before declaring the project finished.",
+    "Submit the report because written documentation alone satisfies every commitment.",
+    "Remove the unmet outcome from the proposal without changing or completing the project.",
+    "Claim in the conclusion that the original outcome was unnecessary from the beginning."
+   ],
+   "answer": "Revise the scope and complete the agreed deliverable before declaring the project finished.",
+   "rationale": "Completion requires the promised project deliverable to be produced or the approved scope to be revised. Merely documenting unmet commitments does not complete the capstone.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L744",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 744,
+   "format": "multiple_choice",
+   "prompt": "Which evidence should a review committee use to judge whether a capstone met its purpose?",
+   "choices": [
+    "Evaluate the deliverable against the proposal’s acceptance criteria and documented project outcomes.",
+    "Compare the report’s page count with the page count of a full thesis.",
+    "Count project meetings and appendix pages without evaluating the final work.",
+    "Use the topic’s novelty alone, regardless of the quality of the deliverable."
+   ],
+   "answer": "Evaluate the deliverable against the proposal’s acceptance criteria and documented project outcomes.",
+   "rationale": "A capstone should be evaluated against its approved objectives, acceptance criteria, and actual project outcomes, rather than proxy measures such as length, meetings, or novelty.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L408",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "Why are analytic memos essential during the coding process?",
+   "choices": [
+    "They capture evolving insights and decisions for audit trail.",
+    "They replace the need for a formal codebook entirely.",
+    "They ensure quantitative reliability metrics are calculated accurately.",
+    "They automatically generate final themes for publication purposes."
+   ],
+   "answer": "They capture evolving insights and decisions for audit trail.",
+   "rationale": "Analytic memos capture evolving insights and decisions, providing an audit trail that enhances the trustworthiness of the analysis.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Analytic memos document a researcher's evolving interpretations, coding decisions, and methodological reasoning.",
+      "url": "https://en.wikipedia.org/wiki/Thematic_analysis",
+      "quote": "Reflexivity journals are somewhat similar to the use of analytic memos or memo writing in grounded theory , which can be useful for reflecting on the developing analysis and potential patterns, themes and concepts.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L408",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "During axial coding, a researcher most likely does what?",
+   "choices": [
+    "Links categories to subcategories and identifies relationships among them.",
+    "Assigns numeric codes for later statistical analysis procedures.",
+    "Writes a final narrative without any further coding.",
+    "Removes all codes that appear only a single time."
+   ],
+   "answer": "Links categories to subcategories and identifies relationships among them.",
+   "rationale": "Axial coding involves linking categories to subcategories and identifying relationships among them to build a more structured coding scheme.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Axial coding organizes codes into categories and subcategories and identifies relationships among them.",
+      "url": "https://en.wikipedia.org/wiki/Axial_coding",
+      "quote": "Axial coding in grounded theory is the process of relating codes (categories and concepts) to each other, via a combination of inductive and deductive thinking.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L408",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 408,
+   "format": "multiple_choice",
+   "prompt": "A researcher codes an interview transcript and notices that participants describe delaying applications until they feel “fully ready.” Which is the most appropriate in vivo code?",
+   "choices": [
+    "“Fully ready”",
+    "“Delaying applications”",
+    "“Participant hesitation”",
+    "“Interview preparation"
+   ],
+   "answer": "“Fully ready”",
+   "rationale": "An in vivo code uses words or phrases directly from participants’ speech. “Fully ready” preserves the participant’s language, while the other choices are researcher-created labels.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "In vivo coding uses the participant’s exact wording.",
+      "url": "https://en.wikipedia.org/wiki/Coding_(social_sciences)",
+      "quote": "In vivo coding : Codes terms and phrases used by the participants themselves.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L473",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Which sequence best reflects the standard IMRaD organization of a full-length research manuscript?",
+   "choices": [
+    "Introduction, Methods, Results, Discussion",
+    "Abstract, Introduction, Results, Methods, Discussion",
+    "Literature Review, Methods, Discussion, Results",
+    "Methods, Introduction, Results, Discussion"
+   ],
+   "answer": "Introduction, Methods, Results, Discussion",
+   "rationale": "The IMRaD structure (Introduction, Methods, Results, Discussion) is the conventional organization for full-length research manuscripts, guiding readers from background to findings to interpretation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "IMRaD stands for Introduction, Methods, Results, and Discussion.",
+      "url": "https://en.wikipedia.org/wiki/IMRAD",
+      "quote": "IMRAD or IMRaD ( / ˈ ɪ m r æ d / ) ( Introduction, Methods, Results, and Discussion ) is a common organizational structure for the format of a document.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L473",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "literary_analysis",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "When integrating a literature review into a manuscript, where should the review primarily appear?",
+   "choices": [
+    "In the Introduction to frame the research gap",
+    "As a separate chapter after Methods",
+    "In the Results to compare findings",
+    "In the Discussion to interpret data"
+   ],
+   "answer": "In the Introduction to frame the research gap",
+   "rationale": "The literature review is typically embedded in the Introduction to establish the research gap and justify the study, rather than placed in separate chapters or later sections.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A literature review commonly appears in the introduction to establish context and identify the research gap.",
+      "url": "https://en.wikipedia.org/wiki/Literature_Review",
+      "quote": "It serves to situate the current study within the body of the relevant literature and provides context for the reader. In such cases, the review usually precedes the methodology and results sections of the work.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L607",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 607,
+   "format": "multiple_choice",
+   "prompt": "In the ARCS motivation model, which component addresses learners' belief in their ability to succeed?",
+   "choices": [
+    "Attention‑grabbing strategies",
+    "Confidence‑building feedback",
+    "Relevance to goals",
+    "Satisfaction of outcomes"
+   ],
+   "answer": "Confidence‑building feedback",
+   "rationale": "The ARCS model's Confidence component specifically targets learners' expectancy of success, while Attention, Relevance, and Satisfaction address other motivational factors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Confidence component of the ARCS motivation model addresses learners' belief in their ability to succeed.",
+      "url": "https://en.wikipedia.org/wiki/John_M._Keller",
+      "quote": "Additionally, confidence is built when positive reinforcement for personal achievements is given through timely, relevant feedback.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The Confidence component of the ARCS model concerns learners' belief that they can succeed.",
+      "url": "https://en.wikipedia.org/wiki/John_M._Keller",
+      "quote": "The confidence aspect of the ARCS model focuses on establishing positive expectations for achieving success among learners.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L607",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 607,
+   "format": "multiple_choice",
+   "prompt": "In Gagné’s Nine Events of Instruction, which event directly targets activating learners’ prior knowledge?",
+   "choices": [
+    "Gain attention",
+    "Inform learners of objectives",
+    "Stimulate recall of prior learning",
+    "Present the content"
+   ],
+   "answer": "Stimulate recall of prior learning",
+   "rationale": "The third event, “Stimulate recall of prior learning,” explicitly asks learners to retrieve relevant existing knowledge before new material is presented.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Gagné's third event, “Stimulate recall of prior learning,” activates learners' existing knowledge.",
+      "url": "https://en.wikipedia.org/wiki/Conditions_of_Learning",
+      "quote": "Stimulating recall of prior learning (retrieval)",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L607",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "academic_writing",
+   "level": 607,
+   "format": "multiple_choice",
+   "prompt": "During which ADDIE phase are assessment instruments created to match the defined learning objectives?",
+   "choices": [
+    "Analysis",
+    "Design",
+    "Development",
+    "Implementation"
+   ],
+   "answer": "Design",
+   "rationale": "The Design phase specifies learning objectives and the corresponding assessments; Development then builds the actual instructional materials.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "In ADDIE, the Design phase establishes the assessment strategy and instruments aligned with the learning objectives.",
+      "url": "https://en.wikipedia.org/wiki/ADDIE_model",
+      "quote": "The design phase deals with learning objectives, assessment instruments, exercises, content, subject matter analysis, lesson planning, and media selection.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "masters:L692",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 692,
+   "format": "multiple_choice",
+   "prompt": "When designing a composition course, which step ensures that assessments directly measure the stated learning outcomes?",
+   "choices": [
+    "Selecting texts before writing outcomes",
+    "Writing outcomes after creating assignments",
+    "Mapping each assignment to specific outcomes",
+    "Using a single rubric for all assignments"
+   ],
+   "answer": "Mapping each assignment to specific outcomes",
+   "rationale": "Mapping each assignment to specific outcomes aligns assessment with learning goals, ensuring validity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Constructive alignment requires mapping each assignment to the specific learning outcomes it assesses.",
+      "url": "https://en.wikipedia.org/wiki/Constructive_alignment",
+      "quote": "\"Constructive alignment is a principle used for devising teaching and learning activities, and assessment tasks, that directly address the intended learning outcomes\"",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "masters:L692",
+   "track_id": "english",
+   "grade_id": "masters",
+   "skill_id": "linguistics",
+   "level": 692,
+   "format": "multiple_choice",
+   "prompt": "In backward design for a composition course, what is the first step a graduate instructor should take?",
+   "choices": [
+    "Select canonical texts",
+    "Write detailed lesson plans",
+    "Define measurable learning outcomes",
+    "Create a grading rubric"
+   ],
+   "answer": "Define measurable learning outcomes",
+   "rationale": "Backward design begins with identifying desired results—measurable learning outcomes—before planning assessments and instruction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Backward design begins by defining the measurable learning outcomes students should attain.",
+      "url": "https://en.wikipedia.org/wiki/Backward_design",
+      "quote": "Backward design is a method of designing an educational curriculum by setting goals before choosing instructional methods and forms of assessment . It shifts curriculum planning, both on large and small scales, to focusing on identifying the desired learning outcomes and then creating learning activities to reach the learning goals.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,457 @@
+diff --git a/public/css/style.css b/public/css/style.css
+index a428d0a..8e9f029 100644
+--- a/public/css/style.css
++++ b/public/css/style.css
+@@ -1165,6 +1165,10 @@ body:has(#item > .verdict .verdict-actions [data-act="next"]) main { padding-bot
+ .node-open .detail { display: none; }
+ .node-unjoined .badge { border-right-style: dotted; }
+ 
++/* Consolidation before the Final (staged round 3, ADAPT_CONSOLIDATE): how much
++   of the grade is likely to last, under the day's actions. */
++.consolidate-meter { flex-basis: 100%; max-width: 420px; margin-top: var(--s-2); }
++
+ @media (max-width: 640px) {
+   .node { grid-template-columns: 40px minmax(0, 1fr); gap: 2px var(--s-3); }
+   .node .badge { padding-right: 10px; grid-row: span 2; }
+diff --git a/public/js/path.js b/public/js/path.js
+index 7dc1452..30516a7 100644
+--- a/public/js/path.js
++++ b/public/js/path.js
+@@ -546,7 +546,44 @@ App.mount(async () => {
+       </section>`;
+   }
+ 
+-  const action0 = enrollment.status === 'graduated'
++  // Consolidation before the Final (staged round 3, ADAPT_CONSOLIDATE): short
++  // daily reviews until the grade will last, for at most 21 days, with the next
++  // grade open meanwhile. Asked only on the Final's level; null while it is off.
++  const consolidation = checkpoint === 'graduation' && enrollment.status === 'active' && !failed
++    ? await App.api.get(`/api/consolidation/${enrollment.id}`).then((x) => (x && x.consolidation) || null).catch(() => null)
++    : null;
++  const consolidationAction = (c) => {
++    const ends = new Date(c.ends_at).toLocaleDateString([], { month: 'long', day: 'numeric' });
++    const r = c.review || {};
++    const next = c.next_grade;
++    const nextName = next ? App.escapeHtml(App.gradeParts(next.name)[0]) : '';
++    const nextBtn = !next ? ''
++      : next.enrollment_id
++        ? `<a class="btn btn-text" href="/path?enrollment=${next.enrollment_id}">Go on with ${nextName}</a>`
++        : `<button class="btn btn-text" type="button" id="start-next-grade" data-grade="${App.escapeHtml(next.id)}">Start ${nextName} now</button>`;
++    return `${r.due
++      ? `<a class="btn btn-primary btn-lg" href="/review?enrollment=${enrollment.id}">Today's review</a>`
++      : `<p class="path-done-line">${window.mark('tick')}Today's review is done.</p>`}
++      ${nextBtn}
++      <span class="small">Before the Final: about <span class="num">${c.minutes}</span> minutes of review a day until this grade will last. Day <span class="num">${c.day}</span> of at most <span class="num">${c.days}</span>; the Final opens by ${App.escapeHtml(ends)}, or sooner.${next ? ` You can start ${nextName} meanwhile.` : ''}</span>
++      <div class="consolidate-meter">${App.tmeter({ label: 'Likely to last a month', value: c.share, target: c.at })}</div>`;
++  };
++  if (consolidation && consolidation.active) {
++    root.addEventListener('click', async (event) => {
++      const button = event.target.closest('#start-next-grade');
++      if (!button) return;
++      button.disabled = true;
++      try {
++        const out = await App.api.post('/api/enrollments', { selections: [{ track_id: track.id, grade_id: button.dataset.grade }] });
++        const made = (out.created || [])[0];
++        window.location.href = made ? `/placement?enrollment=${made.id}` : '/dashboard';
++      } catch (err) {
++        App.toast(err.message, 'error');
++        button.disabled = false;
++      }
++    });
++  }
++  const action0 = consolidation && consolidation.active ? consolidationAction(consolidation) : enrollment.status === 'graduated'
+     ? `<p class="path-done-line">${window.mark('tick')}You graduated this track.</p> <a class="btn btn-primary" href="/onboarding">Pick the next one</a>`
+     : checkpoint
+       ? (failed
+diff --git a/public/js/session.js b/public/js/session.js
+index 62e46ca..44bccd5 100644
+--- a/public/js/session.js
++++ b/public/js/session.js
+@@ -43,6 +43,14 @@ App.mount(async () => {
+       return;
+     }
+   } catch (err) {
++    // The Final waiting behind consolidation (staged round 3, ADAPT_CONSOLIDATE) is
++    // not an error: it says why, and offers the day's review.
++    if (err.payload && err.payload.consolidation) {
++      host.innerHTML = `<div class="notice">${App.escapeHtml(err.message)}
++        <div class="row-wrap" style="margin-top:10px"><a class="btn btn-sm btn-primary" href="/review?enrollment=${enrollmentId}">Today's review</a>
++        <a class="btn btn-sm" href="/path?enrollment=${enrollmentId}">Back to your path</a></div></div>`;
++      return;
++    }
+     host.innerHTML = `<div class="notice notice-error">${App.escapeHtml(err.message)}
+       <div style="margin-top:10px"><a class="btn btn-sm" href="/path?enrollment=${enrollmentId}">Back to your path</a></div></div>`;
+     return;
+diff --git a/routes/learn.js b/routes/learn.js
+index 0114bb4..ef92724 100644
+--- a/routes/learn.js
++++ b/routes/learn.js
+@@ -224,6 +224,19 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
+   const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
+   if (!grade) return res.status(400).json({ error: 'That subject is no longer available.' });
+ 
++  // Consolidation before the Final (staged round 3; ADAPT_CONSOLIDATE=on with the
++  // daily review on, off by default): while the learner's record says the grade
++  // will not last, the Final waits behind short daily reviews, for at most 21
++  // days. A level other than their own is not affected, nor is the next grade.
++  if (req.body.level === undefined || req.body.level === null || Number(req.body.level) === enrollment.current_level) {
++    // eslint-disable-next-line global-require
++    const consolidation = require('../services/consolidation');
++    const stretch = consolidation.forEnrollment(req.user.id, enrollment, grade);
++    if (stretch && stretch.active) {
++      return res.status(409).json({ error: consolidation.heldMessage(stretch), consolidation: stretch });
++    }
++  }
++
+   // A level other than the one the enrollment is standing on.
+   //
+   // Two different permissions, and they used to be one:
+@@ -1227,6 +1240,20 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
+   });
+ });
+ 
++/**
++ * Consolidation before the Final, for the path (staged round 3,
++ * ADAPT_CONSOLIDATE): where the stretch stands, today's review, and the next
++ * grade. 404 while it is off, so the path draws as before.
++ */
++router.get('/consolidation/:enrollmentId', requireAuth, (req, res) => {
++  // eslint-disable-next-line global-require
++  const consolidation = require('../services/consolidation');
++  if (!consolidation.enabled()) return res.status(404).json({ error: 'No such endpoint.' });
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return res.status(404).json({ error: 'Enrollment not found.' });
++  res.json({ consolidation: consolidation.forEnrollment(req.user.id, enrollment) });
++});
++
+ /**
+  * Read the whole curriculum: every subject, every grade, every level.
+  *
+diff --git a/scripts/round3-consolidation-test.js b/scripts/round3-consolidation-test.js
+new file mode 100644
+index 0000000..1814361
+--- /dev/null
++++ b/scripts/round3-consolidation-test.js
+@@ -0,0 +1,214 @@
++/**
++ * Tests for consolidation before the Final (staged round 3, patch
++ * 02-consolidation): services/consolidation.js, adaptation.consolidation, the
++ * session route's hold on the Final, and GET /api/consolidation.
++ *
++ *   node scripts/round3-consolidation-test.js
++ *
++ * Needs the daily review (patch 01) for the stretch to run at all; without it
++ * the test checks that consolidation stays off. Runs on its own throwaway data
++ * file with every model key blanked: no model call, no network.
++ */
++const os = require('os');
++const path = require('path');
++const fs = require('fs');
++const http = require('http');
++
++process.env.NODE_ENV = 'test';
++for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
++const tmp = path.join(os.tmpdir(), `${path.basename(__filename, '.js')}-${process.pid}.json`);
++process.env.DB_FILE = tmp;
++for (const k of ['COVERAGE_GATE', 'COVERAGE_RULE', 'ADAPTIVE_TEACHING', 'ADAPT_REVIEW_SESSION', 'ADAPT_CONSOLIDATE', 'ADAPT_EFFORT', 'ADAPT_REMEDIATION', 'ADAPT_OWNER', 'ADMIN_EMAILS', 'OWNER_EMAIL']) delete process.env[k];
++
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const coverage = require('../services/coverage');
++
++let failures = 0;
++function check(label, ok, detail) {
++  if (ok) { console.log(`  ok   ${label}`); return; }
++  failures++;
++  console.log(`  FAIL ${label}${detail === undefined ? '' : ` — ${JSON.stringify(detail).slice(0, 400)}`}`);
++}
++
++const DAY = coverage.DAY;
++const TRACK = 'math';
++const GRADE = 'numbers_to_10';
++const grade = curriculum.getGrade(TRACK, GRADE);
++const model = coverage.modelFor(TRACK, GRADE);
++const FINAL = grade.levels.find((l) => l.kind === 'graduation').level;
++
++/** A learner enrolled in numbers_to_10, standing on `level`. */
++function learner(email, level, extra = {}) {
++  const user = db.insert('users', { email, name: email.split('@')[0], password_hash: 'x', streak: 0, xp: 0, onboarded: true });
++  const enrollment = db.insert('enrollments', {
++    user_id: user.id, track_id: TRACK, grade_id: GRADE, target_level: grade.pathLength, current_level: level,
++    level_items: 0, levels_completed: 0, xp: 0, status: 'active', pending_checkpoint: null, placed_at: new Date().toISOString(), ...extra,
++  });
++  const session = db.insert('sessions', {
++    user_id: user.id, enrollment_id: enrollment.id, track_id: TRACK, grade_id: GRADE, level: 1, kind: 'lesson',
++    blocks: [{ index: 0, level: 1, kind: 'practice', resolved: true }], started_at: new Date(Date.now() - 30 * DAY).toISOString(), ended_at: new Date().toISOString(),
++  });
++  return { user, enrollment, session };
++}
++
++/** One answered question on objective i, `daysAgo` days back: its lesson's check question, typed unless choices given. */
++function answer(who, i, daysAgo, correct = true, { choices = null, ms = 9000, role = 'check', level = null } = {}) {
++  const o = model.objectives[i];
++  const at = new Date(Date.now() - daysAgo * DAY).toISOString();
++  return db.insert('items', {
++    user_id: who.user.id, session_id: who.session.id, skill_id: o.skill, difficulty: 3, format: choices ? 'multiple_choice' : 'short_answer',
++    prompt: `q ${i} ${daysAgo} ${Math.random()}`, answer: '1', choices, role, level: level || o.lesson_level, block: 0, index: 0,
++    user_answer: correct ? '1' : '2', correct, ms, coach_used: false, answered_at: at,
++  });
++}
++
++/** Proven `daysAgo` days back (five typed right answers to its lesson's questions, minutes apart). */
++function prove(who, i, daysAgo) {
++  for (let k = 0; k < 5; k++) answer(who, i, daysAgo - k * 0.002);
++}
++
++/** Proven, then kept: a right typed memory check `checkDaysAgo` days back. */
++function keep(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo);
++}
++
++/** Proven, then forgotten: a wrong memory check. */
++function lapse(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo, false, { choices: ['1', '2', '3', '4'] });
++}
++
++function stateOf(who, i) {
++  return coverage.forEnrollment(who.user.id, db.byId('enrollments', who.enrollment.id)).states[i];
++}
++
++/** An app with the given routers mounted under /api, signed in as the x-user header's account. */
++function serve(routers) {
++  const app = express();
++  app.use(express.json());
++  app.use((req, res, next) => { req.user = db.byId('users', Number(req.headers['x-user'])) || null; next(); });
++  for (const r of routers) app.use('/api', r);
++  app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' }));
++  return new Promise((resolve) => {
++    const server = app.listen(0, '127.0.0.1', () => {
++      const port = server.address().port;
++      const call = (method, url, body, uid) => new Promise((done, fail) => {
++        const data = body ? JSON.stringify(body) : null;
++        const req = http.request({ host: '127.0.0.1', port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
++          let text = '';
++          res.on('data', (c) => { text += c; });
++          res.on('end', () => { let json = null; try { json = JSON.parse(text); } catch { json = null; } done({ status: res.statusCode, body: json }); });
++        });
++        req.on('error', fail);
++        if (data) req.write(data);
++        req.end();
++      });
++      resolve({ call, close: () => server.close() });
++    });
++  });
++}
++
++function done() {
++  try { fs.unlinkSync(tmp); } catch { /* already gone */ }
++  console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
++  process.exit(failures ? 1 : 0);
++}
++
++
++(async () => {
++  const adaptation = require('../services/adaptation');
++  const consolidation = require('../services/consolidation');
++  const app = await serve([require('../routes/learn')]);
++  let haveReview = true;
++  try { require('../services/review-session'); } catch { haveReview = false; }
++
++  // A learner on the Final: everything proven and kept, but recently, so the
++  // curve does not yet expect it to last a month.
++  function onFinal(email, extra) {
++    const who = learner(email, FINAL, extra);
++    for (let i = 0; i < model.objectives.length; i++) keep(who, i, 4, 2);
++    return who;
++  }
++
++  console.log('off by default');
++  {
++    const a = onFinal('cons-a@example.test');
++    check('ADAPT_CONSOLIDATE unset: off', consolidation.enabled() === false && consolidation.forEnrollment(a.user.id, a.enrollment) === null);
++    const r = await app.call('GET', `/api/consolidation/${a.enrollment.id}`, null, a.user.id);
++    check('the path route answers 404 while off', r.status === 404, r.status);
++    process.env.ADAPT_CONSOLIDATE = 'on';
++    check('on, but without the daily review switched on: still off (no review to do)', consolidation.enabled() === false);
++  }
++  if (!haveReview) {
++    console.log('  (patch 01-daily-review is not applied: consolidation cannot run, as designed)');
++    app.close();
++    done();
++    return;
++  }
++
++  process.env.ADAPT_REVIEW_SESSION = 'on';
++  console.log('the stretch');
++  {
++    const a = onFinal('cons-b@example.test');
++    const c = consolidation.forEnrollment(a.user.id, a.enrollment);
++    check('on the Final, with the grade not yet lasting: active', c && c.active === true, c);
++    check('day 1 of at most 21', c.day === 1 && c.days === 21, { day: c.day, days: c.days });
++    check('ends 21 days from the first day on the Final', Math.abs(Date.parse(c.ends_at) - (Date.parse(c.started_at) + 21 * DAY)) < 1000);
++    check('it starts the clock on the enrollment', !!db.byId('enrollments', a.enrollment.id).consolidation_started_at);
++    check('it reports how much of the grade will last, against 90%', c.share < 0.9 && c.at === 0.9, { share: c.share });
++    check('it carries today\'s review (10 minutes at most)', c.review && c.review.minutes <= 10, c.review);
++    check('it names the next grade, to start meanwhile', c.next_grade && c.next_grade.id === curriculum.getTrack(TRACK).grades[curriculum.getTrack(TRACK).grades.findIndex((g) => g.id === GRADE) + 1].id && c.next_grade.enrollment_id === null, c.next_grade);
++    const r = await app.call('GET', `/api/consolidation/${a.enrollment.id}`, null, a.user.id);
++    check('GET /api/consolidation reports it', r.status === 200 && r.body.consolidation.active === true);
++    const s = await app.call('POST', '/api/sessions', { enrollment_id: a.enrollment.id }, a.user.id);
++    check('asking for the Final during the stretch answers 409, with the stretch', s.status === 409 && s.body.consolidation && /Before the Final/.test(s.body.error), { status: s.status, error: s.body && s.body.error });
++    const back = await app.call('POST', '/api/sessions', { enrollment_id: a.enrollment.id, level: model.objectives[0].lesson_level }, a.user.id);
++    check('an earlier level can still be opened (a lesson to learn again)', [200, 201].includes(back.status), back.status);
++    const nextId = c.next_grade.id;
++    const catalog = require('../routes/catalog').router;
++    const app2 = await serve([catalog]);
++    const made = await app2.call('POST', '/api/enrollments', { selections: [{ track_id: TRACK, grade_id: nextId }] }, a.user.id);
++    app2.close();
++    check('the next grade can be started meanwhile', made.status === 201 && made.body.created.length === 1);
++    const c2 = consolidation.forEnrollment(a.user.id, db.byId('enrollments', a.enrollment.id));
++    check('and the stretch then links to it', c2.next_grade.enrollment_id === made.body.created[0].id);
++  }
++
++  console.log('it ends');
++  {
++    const a = onFinal('cons-c@example.test', { consolidation_started_at: new Date(Date.now() - 22 * DAY).toISOString() });
++    const c = consolidation.forEnrollment(a.user.id, a.enrollment);
++    check('after 21 days it ends on time', c && c.active === false && c.reason === 'time', c);
++    const e = db.byId('enrollments', a.enrollment.id);
++    check('and stays ended (recorded on the enrollment)', !!e.consolidation_ended_at && e.consolidation_reason === 'time');
++    check('a later look agrees without recomputing', consolidation.forEnrollment(a.user.id, e).active === false);
++    process.env.ADAPT_CONSOLIDATE_AT = '0';
++    const b = onFinal('cons-d@example.test');
++    const d = consolidation.forEnrollment(b.user.id, b.enrollment);
++    check('when enough of the grade will last it ends at once (durable)', d.active === false && d.reason === 'durable', d);
++    delete process.env.ADAPT_CONSOLIDATE_AT;
++    const pure = adaptation.consolidation({ model, states: coverage.forEnrollment(b.user.id, b.enrollment).states, now: Date.now(), startedAt: Date.now() - 3.5 * DAY });
++    check('the pure rule counts days from the start (day 4)', pure.day === 4 && pure.active === true, pure);
++  }
++
++  console.log('when it does not apply');
++  {
++    const a = onFinal('cons-e@example.test', { checkpoint_attempts: 1 });
++    check('not before a retry of a missed Final', consolidation.forEnrollment(a.user.id, a.enrollment) === null);
++    const b = onFinal('cons-f@example.test', { coverage_held_at: new Date().toISOString() });
++    check('not on a held graduation', consolidation.forEnrollment(b.user.id, b.enrollment) === null);
++    const d = onFinal('cons-h@example.test');
++    db.insert('sessions', { user_id: d.user.id, enrollment_id: d.enrollment.id, track_id: TRACK, grade_id: GRADE, level: FINAL, kind: 'graduation', blocks: [], started_at: new Date().toISOString(), ended_at: null });
++    check('not while a Final is already under way (it is finished, not held)', consolidation.forEnrollment(d.user.id, d.enrollment) === null);
++    const c = learner('cons-g@example.test', model.objectives[3].practice[0]);
++    check('not below the Final', consolidation.forEnrollment(c.user.id, c.enrollment) === null);
++    const other = await app.call('GET', `/api/consolidation/${b.enrollment.id}`, null, c.user.id);
++    check('another learner\'s stretch is not found', other.status === 404);
++  }
++
++  app.close();
++  done();
++})().catch((err) => { console.error(err); process.exit(1); });
+diff --git a/services/consolidation.js b/services/consolidation.js
+new file mode 100644
+index 0000000..d9e9fd7
+--- /dev/null
++++ b/services/consolidation.js
+@@ -0,0 +1,102 @@
++/**
++ * Consolidation before the Final (curriculum-build/ADAPTIVE-COVERAGE.md
++ * section 7, decision 7; staged patch round3/02-consolidation).
++ *
++ * When a learner first stands on a grade's Graduation exam, the Final waits
++ * while their record says the grade will not last: short review-only days
++ * (the daily review, at most ADAPT_REVIEW_MINUTES, 10 minutes, a day) until
++ * at least ADAPT_CONSOLIDATE_AT (90%) of the grade's objectives are predicted
++ * to be recalled 30 days on, for at most ADAPT_CONSOLIDATE_DAYS (21) days
++ * (adaptation.consolidation). In the simulation's ablation, taking this stretch
++ * away dropped 30-day recall with no further study from 95.6% to 80.0%, below
++ * today's lessons (93.8%).
++ *
++ * It costs calendar days, not study time, so it never holds the learner up:
++ * the next grade can be started the same day, and worked alongside.
++ *
++ * It applies once, before the first sitting of the Final: a retry after a miss
++ * is not held (remediation is the answer there), and a stretch that has ended
++ * stays ended. The owner's account is never held.
++ *
++ * Off unless ADAPT_CONSOLIDATE=on, and only while the daily review (staged
++ * patch round3/01, ADAPT_REVIEW_SESSION=on) is installed and on: holding the
++ * Final with no review to do would only be a wait.
++ */
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const adaptation = require('./adaptation');
++
++function reviewOn() {
++  try {
++    // eslint-disable-next-line global-require
++    return require('./review-session').enabled();
++  } catch {
++    return false;
++  }
++}
++
++function enabled() {
++  return String(process.env.ADAPT_CONSOLIDATE || 'off').toLowerCase() === 'on' && reviewOn();
++}
++
++/** The grade after this one on the track, and the learner's enrollment in it if they have one. */
++function nextGrade(userId, enrollment) {
++  const track = curriculum.getTrack(enrollment.track_id);
++  if (!track) return null;
++  const at = track.grades.findIndex((g) => g.id === enrollment.grade_id);
++  const next = at >= 0 ? track.grades[at + 1] : null;
++  if (!next) return null;
++  const mine = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === enrollment.track_id && e.grade_id === next.id);
++  return { id: next.id, name: next.name, enrollment_id: mine ? mine.id : null, status: mine ? mine.status : null };
++}
++
++/**
++ * Where the stretch stands for one enrollment, or null when it does not apply
++ * (off, not on the Final, already sat, held, the owner, or no objective model).
++ * Starts the clock the first time the learner is found on the Final.
++ */
++function forEnrollment(userId, enrollment, grade = null, { now = Date.now() } = {}) {
++  if (!enabled() || !enrollment || enrollment.status !== 'active' || enrollment.coverage_held_at) return null;
++  const g = grade || curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  if (!g || curriculum.levelKind(enrollment.current_level, g.pathLength, g) !== 'graduation') return null;
++  if ((enrollment.checkpoint_attempts || 0) > 0) return null;
++  // A Final already under way (started before the stretch applied) is finished, not held.
++  if (db.findOne('sessions', (s) => s.enrollment_id === enrollment.id && !s.ended_at && s.kind === 'graduation')) return null;
++  if (adaptation.ownerSkips(userId)) return null;
++  if (enrollment.consolidation_ended_at) {
++    return { active: false, reason: enrollment.consolidation_reason || null, ended_at: enrollment.consolidation_ended_at };
++  }
++  const rec = adaptation.recordFor(userId, enrollment);
++  if (!rec) return null;
++  let started = Date.parse(enrollment.consolidation_started_at);
++  if (!Number.isFinite(started)) {
++    started = now;
++    db.update('enrollments', enrollment.id, { consolidation_started_at: new Date(now).toISOString() });
++  }
++  const c = adaptation.consolidation({ model: rec.report.model, states: rec.report.states, now, startedAt: started, curve: rec.curve });
++  if (!c.active) {
++    db.update('enrollments', enrollment.id, { consolidation_ended_at: new Date(now).toISOString(), consolidation_reason: c.reason });
++    return { ...c, ended_at: new Date(now).toISOString() };
++  }
++  // eslint-disable-next-line global-require
++  const today = require('./review-session').today(userId, enrollment, { now });
++  return {
++    ...c,
++    review: today ? { due: today.retrieve.length, minutes: today.minutes, reteach: today.reteach.length, done_today: today.done_today } : null,
++    next_grade: nextGrade(userId, enrollment),
++  };
++}
++
++/** What the session route says when the Final is asked for during the stretch. */
++function heldMessage(c) {
++  const ends = new Date(c.ends_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' });
++  return `Before the Final: a short review each day until this grade will last (day ${c.day} of at most ${c.days}). The Final opens by ${ends}, or sooner. You can start the next grade meanwhile.`;
++}
++
++module.exports = {
++  enabled,
++  reviewOn,
++  nextGrade,
++  forEnrollment,
++  heldMessage,
++};

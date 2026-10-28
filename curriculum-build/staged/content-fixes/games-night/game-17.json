@@ -1,0 +1,2611 @@
+{
+ "row_id": 17,
+ "engine_id": "bowling",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 11,
+ "generated_at": "2026-10-24T11:53:07.572Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 57,
+  "code_rejected": 4,
+  "sent_to_judges": 53,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 53,
+   "picked_same_option": 52,
+   "a_picked_key": 53,
+   "b_picked_key": 52,
+   "models_a": [
+    "minimax/minimax-m3.1-flash"
+   ],
+   "models_b": [
+    "nemotron-3-ultra-550b-a55b:free",
+    "gemini-3.6-flash:free",
+    "nvidia/nemotron-3-ultra-550b-a55b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "bowling",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 11,
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Advanced Grammar Review",
+   "title": "Notice It in a Model Text: Advanced Grammar Review",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q4",
+    "prompt": "Four labels appear around a model text: a main title, a section heading, a figure caption, and a page footer. Which label should be marked to locate Advanced Grammar Review?",
+    "choices": [
+     "The page footer beneath the passage",
+     "The main title above the opening paragraph",
+     "The figure caption below the flowchart",
+     "The section heading above the grammar examples"
+    ],
+    "answerIndex": 3,
+    "explanation": "The section heading above the grammar examples is where Advanced Grammar Review appears.",
+    "difficulty": 3,
+    "skill": "Distinguishing a section heading from other labels",
+    "topic": "Finding Advanced Grammar Review in a Model Text"
+   },
+   {
+    "id": "q25",
+    "prompt": "A model text is arranged in a two-by-two grid. The document title is in the upper-left cell, the introduction is in the lower-left cell, and the editing checklist is in the lower-right cell. Which cell contains Advanced Grammar Review?",
+    "choices": [
+     "The upper-right cell",
+     "The lower-left cell",
+     "The lower-right cell",
+     "The upper-left cell"
+    ],
+    "answerIndex": 0,
+    "explanation": "The upper-right cell contains the Advanced Grammar Review section heading in this grid layout.",
+    "difficulty": 2,
+    "skill": "Locate a target heading by page position",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q44",
+    "prompt": "Four labeled hotspots sit over a diagram of the model text: H1 marks the introduction, H3 marks the Advanced Grammar Review, H5 marks the practice section, and H7 marks the conclusion. Which hotspot should be selected?",
+    "choices": [
+     "H1",
+     "H7",
+     "H5",
+     "H3"
+    ],
+    "answerIndex": 3,
+    "explanation": "Hotspot H3 is positioned over the Advanced Grammar Review heading.",
+    "difficulty": 4,
+    "skill": "Select the diagram hotspot marking a target section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q3",
+    "prompt": "A contents panel lists sections on sentence drills, advanced grammar, paragraph planning, and the drafting process. Which entry should be marked for the advanced grammar section?",
+    "choices": [
+     "The Paragraph Planning entry",
+     "The Sentence Drills entry",
+     "The Advanced Grammar Review entry",
+     "The Drafting Process entry"
+    ],
+    "answerIndex": 2,
+    "explanation": "The Advanced Grammar Review entry is the contents-panel entry for the advanced grammar section.",
+    "difficulty": 3,
+    "skill": "Matching a section to its contents entry",
+    "topic": "Finding Advanced Grammar Review in a Model Text"
+   },
+   {
+    "id": "q2",
+    "prompt": "The model text presents four section headings in this order: Sentence Variety, Advanced Grammar Review, Paragraph Cohesion, and Editing Checklist. Which heading should be marked?",
+    "choices": [
+     "The first heading",
+     "The second heading",
+     "The third heading",
+     "The fourth heading"
+    ],
+    "answerIndex": 1,
+    "explanation": "The second heading is Advanced Grammar Review, so that is the heading to mark.",
+    "difficulty": 2,
+    "skill": "Locating a named section by position",
+    "topic": "Finding Advanced Grammar Review in a Model Text"
+   },
+   {
+    "id": "q14",
+    "prompt": "A reading app displays a page index with four entries: Grammar Foundations, Sentence Expansion, Advanced Grammar Review, and Practice Responses. Which index entry should be selected?",
+    "choices": [
+     "The Grammar Foundations index entry",
+     "The Advanced Grammar Review index entry",
+     "The Sentence Expansion index entry",
+     "The Practice Responses index entry"
+    ],
+    "answerIndex": 1,
+    "explanation": "The Advanced Grammar Review label identifies the page-index entry for the target section.",
+    "difficulty": 3,
+    "skill": "Using a page index",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q23",
+    "prompt": "A model text ends with four navigation links. Which link returns the reader to the Advanced Grammar Review?",
+    "choices": [
+     "The Drafting Steps link",
+     "The Resource List link",
+     "The Review Rules link",
+     "The Example Notes link"
+    ],
+    "answerIndex": 2,
+    "explanation": "The Review Rules link returns readers to the rules that make up the Advanced Grammar Review.",
+    "difficulty": 5,
+    "skill": "Use a return link to locate a section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q15",
+    "prompt": "A slide sorter shows four slides titled Introduction to the Model, Advanced Grammar Review, Worked Examples, and Closing Reflection. Which slide should be opened to find the target section?",
+    "choices": [
+     "The slide titled Introduction to the Model",
+     "The slide titled Worked Examples",
+     "The slide titled Advanced Grammar Review",
+     "The slide titled Closing Reflection"
+    ],
+    "answerIndex": 2,
+    "explanation": "The slide titled Advanced Grammar Review contains the target section.",
+    "difficulty": 3,
+    "skill": "Locating a slide title",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q10",
+    "prompt": "A model text is displayed with numbered lines: 1 Introduction, 2 Editing Foundations, 3 Advanced Grammar Review, 4 Paragraph Organization, and 5 Final Checklist. Which line number should be marked to locate the Advanced Grammar Review?",
+    "choices": [
+     "Line 1",
+     "Line 3",
+     "Line 2",
+     "Line 4"
+    ],
+    "answerIndex": 1,
+    "explanation": "Line 3 contains the Advanced Grammar Review heading in the numbered model text.",
+    "difficulty": 2,
+    "skill": "Locating a heading by its line number",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q19",
+    "prompt": "An online model has four expandable navigation items: Document Overview, Language Rules, Guided Practice, and Final Reflection. Which item should be opened to find the Advanced Grammar Review?",
+    "choices": [
+     "The item labeled Document Overview",
+     "The item labeled Guided Practice",
+     "The item labeled Language Rules",
+     "The item labeled Final Reflection"
+    ],
+    "answerIndex": 2,
+    "explanation": "The item labeled Language Rules is the navigation entry containing the Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Locate a section in a navigation list",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q22",
+    "prompt": "A contents table lists four rows with section names and page numbers. Which row should be chosen to jump directly to the Advanced Grammar Review?",
+    "choices": [
+     "The row labeled Editing Checklist on page 4",
+     "The row labeled Advanced Grammar Review on page 7",
+     "The row labeled Grammar Foundations on page 2",
+     "The row labeled Final Reflection on page 9"
+    ],
+    "answerIndex": 1,
+    "explanation": "The row labeled Advanced Grammar Review on page 7 is the contents entry that leads directly to the requested section.",
+    "difficulty": 4,
+    "skill": "Select a target from a contents table",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q20",
+    "prompt": "A preview presents four section cards, each with a short description. Which card should be opened to reach the Advanced Grammar Review?",
+    "choices": [
+     "The card about paragraph transitions and thematic links",
+     "The card about spelling patterns and dictionary sources",
+     "The card about timed drafting and response length",
+     "The card about sentence boundaries, modifier placement, and pronoun references"
+    ],
+    "answerIndex": 3,
+    "explanation": "The card about sentence boundaries, modifier placement, and pronoun references describes the grammar material in the Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Match a section card to its content",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q29",
+    "prompt": "A document editor shows four tabs labeled A Setup, B Advanced Grammar Review, C Rule Examples, and D Final Check. Which tab should be opened to reach the section that must be marked?",
+    "choices": [
+     "Tab B",
+     "Tab A",
+     "Tab C",
+     "Tab D"
+    ],
+    "answerIndex": 0,
+    "explanation": "Tab B opens the Advanced Grammar Review section that the activity asks the learner to locate.",
+    "difficulty": 2,
+    "skill": "Locating a target section among tabs",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q11",
+    "prompt": "A model text's accessibility map assigns outline level 1 to the document title, level 2 to section headings, level 3 to subheadings, and level 4 to body text. Which outline level should be assigned to the line Advanced Grammar Review?",
+    "choices": [
+     "Outline level 1",
+     "Outline level 3",
+     "Outline level 2",
+     "Outline level 4"
+    ],
+    "answerIndex": 2,
+    "explanation": "Advanced Grammar Review is a section heading, so the accessibility map assigns it outline level 2.",
+    "difficulty": 3,
+    "skill": "Identifying a heading's outline level",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q28",
+    "prompt": "An OCR tool has divided a model text into four labeled boxes. Box 1 contains the introduction, Box 2 contains the heading Advanced Grammar Review, Box 3 contains numbered grammar rules, and Box 4 contains the closing reflection. Which box should be marked?",
+    "choices": [
+     "Box 1",
+     "Box 4",
+     "Box 3",
+     "Box 2"
+    ],
+    "answerIndex": 3,
+    "explanation": "Box 2 contains the Advanced Grammar Review heading, so marking it locates the section named in the activity.",
+    "difficulty": 2,
+    "skill": "Identifying target text in OCR output",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q40",
+    "prompt": "A worksheet stores the model text in spreadsheet cells. Cell I2 holds the introduction, cell G2 contains the Advanced Grammar Review, cell K2 holds practice prompts, and cell N2 holds the closing note. Which cell should be selected?",
+    "choices": [
+     "Cell I2",
+     "Cell N2",
+     "Cell K2",
+     "Cell G2"
+    ],
+    "answerIndex": 3,
+    "explanation": "Cell G2 contains the Advanced Grammar Review heading, so it is the cell that should be selected.",
+    "difficulty": 3,
+    "skill": "Locate a target section in a spreadsheet layout",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q43",
+    "prompt": "An audio version of the model text marks four spoken cues: 00:18 for the introduction, 01:42 for the Advanced Grammar Review, 03:05 for practice prompts, and 04:10 for the final note. Which cue should be played?",
+    "choices": [
+     "00:18",
+     "03:05",
+     "01:42",
+     "04:10"
+    ],
+    "answerIndex": 2,
+    "explanation": "The 01:42 cue begins with the Advanced Grammar Review heading.",
+    "difficulty": 4,
+    "skill": "Locate a target section using an audio cue",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q42",
+    "prompt": "A PDF's labeled object panel lists Object 4 as the introduction, Object 6 as the Advanced Grammar Review, Object 9 as sentence drills, and Object 12 as the editing checklist. Which object should be opened?",
+    "choices": [
+     "Object 4",
+     "Object 6",
+     "Object 9",
+     "Object 12"
+    ],
+    "answerIndex": 1,
+    "explanation": "Object 6 is the labeled PDF object that opens the Advanced Grammar Review heading.",
+    "difficulty": 3,
+    "skill": "Select the correct PDF object for a target section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q1",
+    "prompt": "A model text contains four possible section titles. Which title should be marked as the target heading?",
+    "choices": [
+     "Advanced Grammar Review",
+     "Advanced Grammar Reviews",
+     "Advanced Grammar Reviewer",
+     "Advanced Grammar Reviewed"
+    ],
+    "answerIndex": 0,
+    "explanation": "Advanced Grammar Review is the exact section title specified by the target.",
+    "difficulty": 2,
+    "skill": "Recognizing the exact section heading",
+    "topic": "Finding Advanced Grammar Review in a Model Text"
+   },
+   {
+    "id": "q45",
+    "prompt": "A web model text places the document title in a header, navigation in a nav area, the target h2 heading Advanced Grammar Review in the main area with the class advanced-review-title, and a page number in a footer. Which CSS selector selects only the target heading?",
+    "choices": [
+     "main .advanced-review-title",
+     "header .document-title",
+     "nav .top-link",
+     "footer .page-number"
+    ],
+    "answerIndex": 0,
+    "explanation": "The selector main .advanced-review-title matches the unique title element in the main region, which is Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Locating a heading with a CSS selector",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q32",
+    "prompt": "A margin-scanning tool labels four highlighted locations. Marker 1 is beside the introduction, Marker 2 beside the closing note, Marker 3 beside the second grammar example, and Marker 4 beside the Advanced Grammar Review heading. Which marker should be used?",
+    "choices": [
+     "Marker 1",
+     "Marker 2",
+     "Marker 3",
+     "Marker 4"
+    ],
+    "answerIndex": 3,
+    "explanation": "Marker 4 is positioned beside the Advanced Grammar Review heading that should be marked.",
+    "difficulty": 4,
+    "skill": "Choosing a margin marker for target text",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q7",
+    "prompt": "A model text is arranged in four labeled panels: Introduction, Grammar Examples, Editing Checklist, and Conclusion. Which panel contains the Advanced Grammar Review?",
+    "choices": [
+     "The Introduction panel",
+     "The Editing Checklist panel",
+     "The Grammar Examples panel",
+     "The Conclusion panel"
+    ],
+    "answerIndex": 2,
+    "explanation": "The Grammar Examples panel is where the model text presents the Advanced Grammar Review on subject-verb agreement and run-on sentences.",
+    "difficulty": 2,
+    "skill": "Locating a section by its labeled panel",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q8",
+    "prompt": "A linked table of contents gives a one-line purpose for each section. Which link should be selected to open the Advanced Grammar Review, the section on parallel structure and pronoun agreement?",
+    "choices": [
+     "The link for organizing paragraphs around a main idea",
+     "The link for correcting comma splices and inconsistent verb tense",
+     "The link for recording sources and publication details",
+     "The link for checking parallel structure and pronoun agreement"
+    ],
+    "answerIndex": 3,
+    "explanation": "This link leads to the Advanced Grammar Review section, which covers parallel structure and pronoun agreement.",
+    "difficulty": 3,
+    "skill": "Selecting a table-of-contents link by purpose",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q47",
+    "prompt": "The model-text metadata has a sections array with four objects. Their keys, in order, are overview, grammar-review, practice, and closing, and the grammar-review object is labeled Advanced Grammar Review. Which JSON path selects the key of the target section?",
+    "choices": [
+     "sections[0].key",
+     "sections[2].key",
+     "sections[1].key",
+     "sections[3].key"
+    ],
+    "answerIndex": 2,
+    "explanation": "Because the grammar-review object is second in the sections array, sections[1].key selects its key value.",
+    "difficulty": 3,
+    "skill": "Locating a section with a JSON path",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q18",
+    "prompt": "A model text begins with an introduction, then places its review title in bold above a numbered list of grammar rules. Which text element should be marked as Advanced Grammar Review?",
+    "choices": [
+     "The first sentence of the opening paragraph",
+     "The bold line immediately above the numbered rules",
+     "The third item in the example footnote",
+     "The italic label beneath the diagram"
+    ],
+    "answerIndex": 1,
+    "explanation": "The bold line immediately above the numbered rules is the model text's section heading for the Advanced Grammar Review.",
+    "difficulty": 2,
+    "skill": "Identify a heading by visual hierarchy",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q50",
+    "prompt": "A LaTeX model text places the command \\section{Advanced Grammar Review}\\label{sec:grammar-rules} at the target heading. Which command in another sentence should create a cross-reference to that exact section?",
+    "choices": [
+     "\\pageref{sec:grammar-rules}",
+     "\\ref{sec:grammar-rules}",
+     "\\cite{grammar-rules}",
+     "\\label{grammar-rules}"
+    ],
+    "answerIndex": 1,
+    "explanation": "A LaTeX reference command links to a label, and sec:grammar-rules is the label attached to the target section.",
+    "difficulty": 5,
+    "skill": "Referencing the target section with LaTeX",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q12",
+    "prompt": "A document preview shows four page thumbnails from a model text. Which thumbnail should be opened to find the Advanced Grammar Review?",
+    "choices": [
+     "The thumbnail showing a title page and an author photograph",
+     "The thumbnail showing a paragraph plan with a highlighted thesis",
+     "The thumbnail showing a bibliography arranged by source type",
+     "The thumbnail showing a bold review heading above numbered rules on sentence fragments and modifier placement"
+    ],
+    "answerIndex": 3,
+    "explanation": "The Advanced Grammar Review appears on the thumbnail with a bold review heading and numbered grammar rules.",
+    "difficulty": 3,
+    "skill": "Choosing the page preview containing the target",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q21",
+    "prompt": "A word-processing document displays style names for its blocks. Which style is applied to the block titled Advanced Grammar Review?",
+    "choices": [
+     "Section Heading",
+     "Figure Caption",
+     "Document Title",
+     "Body Text"
+    ],
+    "answerIndex": 0,
+    "explanation": "The Section Heading style identifies the Advanced Grammar Review as a section within the model text.",
+    "difficulty": 4,
+    "skill": "Identify the formatting style of a section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q6",
+    "prompt": "A search tool lists four matches in a model text. Which match should be marked as the section heading Advanced Grammar Review rather than a mention within another part of the text?",
+    "choices": [
+     "The phrase inside the first paragraph",
+     "The standalone heading",
+     "The words inside a footnote",
+     "The wording inside a caption"
+    ],
+    "answerIndex": 1,
+    "explanation": "The standalone heading is Advanced Grammar Review, while the other matches occur within other text elements.",
+    "difficulty": 3,
+    "skill": "Distinguishing a heading from a text mention",
+    "topic": "Finding Advanced Grammar Review in a Model Text"
+   },
+   {
+    "id": "q34",
+    "prompt": "A model-text webpage assigns accessibility landmarks: the document title appears in the banner, section links in the navigation, the Advanced Grammar Review in the main article, and the copyright notice in the content info. Which landmark should be selected to reach the target section?",
+    "choices": [
+     "The banner region",
+     "The main region",
+     "The navigation region",
+     "The content-info region"
+    ],
+    "answerIndex": 1,
+    "explanation": "The main region contains the Advanced Grammar Review article, while the other landmarks contain page-level material.",
+    "difficulty": 2,
+    "skill": "Using accessibility landmarks",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q36",
+    "prompt": "A screen reader queues a document's headings: H-4 is the document title, H-7 is the Advanced Grammar Review, H-9 is a subsection, and H-12 is the footer. Which queue item should be selected?",
+    "choices": [
+     "H-4",
+     "H-12",
+     "H-9",
+     "H-7"
+    ],
+    "answerIndex": 3,
+    "explanation": "H-7 is the queued heading for the Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Using a screen-reader heading queue",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q24",
+    "prompt": "In the model text's HTML source, the document title uses an h1 element, and each major section title uses an h2 element. Which tag encloses the Advanced Grammar Review title?",
+    "choices": [
+     "h1",
+     "p",
+     "h3",
+     "h2"
+    ],
+    "answerIndex": 3,
+    "explanation": "The h2 element encloses the Advanced Grammar Review title because it is a major section heading below the document title.",
+    "difficulty": 2,
+    "skill": "Identify a section heading in HTML source",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q13",
+    "prompt": "An electronic model text includes four bookmarks named sentence-patterns, advanced-grammar-review, paragraph-cohesion, and final-editing. Which bookmark should be selected to jump directly to the target section?",
+    "choices": [
+     "advanced-grammar-review",
+     "sentence-patterns",
+     "paragraph-cohesion",
+     "final-editing"
+    ],
+    "answerIndex": 0,
+    "explanation": "The advanced-grammar-review bookmark points directly to the section titled Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Using document bookmarks",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q48",
+    "prompt": "An accessible model text gives its review section the id review-section and the attribute aria-labelledby review-heading. The heading element inside that section has the id review-heading and displays Advanced Grammar Review. Which ID provides the section's accessible name?",
+    "choices": [
+     "model-title",
+     "review-section",
+     "grammar-examples",
+     "review-heading"
+    ],
+    "answerIndex": 3,
+    "explanation": "The section's aria-labelledby attribute points to review-heading, so that ID supplies its accessible name.",
+    "difficulty": 4,
+    "skill": "Tracing an ARIA accessible-name reference",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q30",
+    "prompt": "Pagination data places Introduction on page 6, Sentence Foundations on page 7, Advanced Grammar Review on page 8, and Editing Checklist on page 9. Which page marker should be selected?",
+    "choices": [
+     "Page 6",
+     "Page 8",
+     "Page 7",
+     "Page 9"
+    ],
+    "answerIndex": 1,
+    "explanation": "Page 8 contains the Advanced Grammar Review section that needs to be marked.",
+    "difficulty": 3,
+    "skill": "Using pagination to locate a section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q39",
+    "prompt": "An editor separates a model text into four tagged blocks: introBlock, reviewBlock, drillBlock, and closingBlock. Which block must be marked to locate the Advanced Grammar Review?",
+    "choices": [
+     "introBlock",
+     "drillBlock",
+     "reviewBlock",
+     "closingBlock"
+    ],
+    "answerIndex": 2,
+    "explanation": "ReviewBlock is the tagged block assigned to the Advanced Grammar Review section.",
+    "difficulty": 2,
+    "skill": "Match a tagged block to the target section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q26",
+    "prompt": "A screen reader is positioned at the document title of a model text, and Advanced Grammar Review is the next section heading. Which command should move the reader directly to that section?",
+    "choices": [
+     "Previous heading",
+     "Next heading",
+     "First heading",
+     "Last heading"
+    ],
+    "answerIndex": 1,
+    "explanation": "The Next heading command moves from the document title to the Advanced Grammar Review section heading.",
+    "difficulty": 3,
+    "skill": "Navigate to a target section with a screen reader",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q49",
+    "prompt": "A model text has four tagged elements: the introduction uses data-marker intro, a body mention of Advanced Grammar Review uses data-marker mention, the target heading uses data-marker target-section, and a figure caption uses data-marker caption. Which attribute-value pair identifies the target heading?",
+    "choices": [
+     "data-marker=\"target-section\"",
+     "data-marker=\"mention\"",
+     "data-marker=\"intro\"",
+     "data-marker=\"caption\""
+    ],
+    "answerIndex": 0,
+    "explanation": "Only the target heading carries data-marker target-section, while the other markers identify different elements.",
+    "difficulty": 2,
+    "skill": "Matching a data attribute to the target heading",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q31",
+    "prompt": "Four review comments are anchored to a model text. Comment 1 is attached to the introduction, Comment 2 to the first numbered rule, Comment 3 to the Advanced Grammar Review heading, and Comment 4 to the final checklist. Which comment anchor should be selected?",
+    "choices": [
+     "Comment 1",
+     "Comment 2",
+     "Comment 3",
+     "Comment 4"
+    ],
+    "answerIndex": 2,
+    "explanation": "Comment 3 is anchored directly to the Advanced Grammar Review heading.",
+    "difficulty": 3,
+    "skill": "Selecting the correct comment anchor",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q46",
+    "prompt": "An XML model text has document as the root, with front and body branches. Under body is a section whose type attribute is grammar-review, and that section contains the heading element whose text is Advanced Grammar Review. Which XPath expression selects the target heading?",
+    "choices": [
+     "/document/front/heading",
+     "/document/body/section[@type='grammar-review']/heading",
+     "/document/body/heading",
+     "/document/body/section[@type='practice']/heading"
+    ],
+    "answerIndex": 1,
+    "explanation": "This XPath follows document to body, selects the section whose type is grammar-review, and then selects its heading element.",
+    "difficulty": 5,
+    "skill": "Locating a heading with XPath",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q41",
+    "prompt": "A source map identifies four regions of a model-text webpage: overview, grammar-review, guided-drills, and final-notes. Which source-map value identifies the region containing the Advanced Grammar Review?",
+    "choices": [
+     "data-area=grammar-review",
+     "data-area=overview",
+     "data-area=guided-drills",
+     "data-area=final-notes"
+    ],
+    "answerIndex": 0,
+    "explanation": "The data-area=grammar-review value identifies the region containing the Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Identify the source-map attribute for a target section",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q33",
+    "prompt": "A document analyzer assigns identifiers to four blocks: P-14 is the introduction, P-22 is the Advanced Grammar Review heading, P-31 contains pronoun-agreement examples, and P-46 is the closing reflection. Which identifier should be marked?",
+    "choices": [
+     "P-22",
+     "P-14",
+     "P-31",
+     "P-46"
+    ],
+    "answerIndex": 0,
+    "explanation": "P-22 identifies the block containing the Advanced Grammar Review heading.",
+    "difficulty": 4,
+    "skill": "Matching a target heading to a block identifier",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q37",
+    "prompt": "A version history shows Draft 1 with the introduction, Draft 2 with sentence examples, Draft 3 with the Advanced Grammar Review, and Draft 4 with the conclusion. Which version should be opened to find the target section?",
+    "choices": [
+     "Draft 3",
+     "Draft 2",
+     "Draft 1",
+     "Draft 4"
+    ],
+    "answerIndex": 0,
+    "explanation": "Draft 3 contains the Advanced Grammar Review section.",
+    "difficulty": 2,
+    "skill": "Locating a section in version history",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q27",
+    "prompt": "A model text places two numbered examples beneath one heading: one explains a compound predicate, and the other describes pronoun case. Which heading should be marked above those examples?",
+    "choices": [
+     "Sentence Expansion",
+     "Editing Foundations",
+     "Advanced Grammar Review",
+     "Final Reflection"
+    ],
+    "answerIndex": 2,
+    "explanation": "The Advanced Grammar Review heading introduces the numbered examples about compound predicates and pronoun case.",
+    "difficulty": 3,
+    "skill": "Match a target heading to its instructional content",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q35",
+    "prompt": "A model text includes cross-reference notes in four places, and the note in the Editing Hints section reads, For a full summary, see Advanced Grammar Review on page 12. Which note should be followed to reach the target section?",
+    "choices": [
+     "The cross-reference in the Closing Activities box",
+     "The cross-reference in the Opening Definition box",
+     "The cross-reference in the Editing Hints section",
+     "The cross-reference in the Author Biography sidebar"
+    ],
+    "answerIndex": 2,
+    "explanation": "The Editing Hints note directs the reader to the Advanced Grammar Review on page 12.",
+    "difficulty": 3,
+    "skill": "Following a cross-reference",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q38",
+    "prompt": "An e-book menu offers four expandable groups: Foundations, Review Sections, Practice Sets, and Reference Tools. The Advanced Grammar Review is nested under Review Sections beside Model Text and Practice Exercises. Which menu group should be opened?",
+    "choices": [
+     "Foundations",
+     "Review Sections",
+     "Practice Sets",
+     "Reference Tools"
+    ],
+    "answerIndex": 1,
+    "explanation": "Review Sections is the expandable group that contains the Advanced Grammar Review.",
+    "difficulty": 2,
+    "skill": "Using an e-book navigation group",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q9",
+    "prompt": "An outline pane displays four expandable branches. The Advanced Grammar Review is the branch that expands into numbered rules for dangling modifiers and verb tense. Which branch should be marked?",
+    "choices": [
+     "The branch leading to the numbered rules on dangling modifiers and verb tense",
+     "The branch leading to the drafting process and revision schedule",
+     "The branch leading to the final editing checklist and submission notes",
+     "The branch leading to the introduction and learning goals"
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct branch expands into the numbered usage rules that make up the Advanced Grammar Review.",
+    "difficulty": 3,
+    "skill": "Finding the target within a document outline",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q16",
+    "prompt": "A navigation strip offers four labels. Which label exactly matches the section heading that should be marked in the model text?",
+    "choices": [
+     "The four-word label The Advanced Grammar Review",
+     "The three-word label Advanced Grammar Notes",
+     "The three-word label Reviewing Advanced Grammar",
+     "The three-word label Advanced Grammar Review"
+    ],
+    "answerIndex": 3,
+    "explanation": "The exact section title is Advanced Grammar Review, which contains three words.",
+    "difficulty": 4,
+    "skill": "Matching an exact heading",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   },
+   {
+    "id": "q5",
+    "prompt": "A model text contains the headings Warm-Up, Advanced Grammar Review, Guided Practice, and Reflection. Which heading is the one to mark?",
+    "choices": [
+     "The Advanced Grammar Review heading",
+     "The Warm-Up heading",
+     "The Guided Practice heading",
+     "The Reflection heading"
+    ],
+    "answerIndex": 0,
+    "explanation": "The Advanced Grammar Review heading is the target section title within the model text.",
+    "difficulty": 2,
+    "skill": "Selecting the correct heading from a sequence",
+    "topic": "Finding Advanced Grammar Review in a Model Text"
+   },
+   {
+    "id": "q17",
+    "prompt": "A word-processing program provides a section dropdown containing Opening Context, Editing Checklist, Advanced Grammar Review, and Sentence Variants. Which entry should be chosen when working in the target section?",
+    "choices": [
+     "The section named Advanced Grammar Review",
+     "The section named Editing Checklist",
+     "The section named Opening Context",
+     "The section named Sentence Variants"
+    ],
+    "answerIndex": 0,
+    "explanation": "The dropdown entry named Advanced Grammar Review corresponds to the target section.",
+    "difficulty": 3,
+    "skill": "Using a section dropdown",
+    "topic": "Notice It in a Model Text - Advanced Grammar Review"
+   }
+  ],
+  "feedback": {
+   "correct": "Nice eye — that ball is headed straight for the pins.",
+   "incorrect": "Not quite — the bot gets this ball. Check the sentence for what it's really missing.",
+   "win": "Strike after strike! You spotted every sentence flaw the bot threw at you.",
+   "lose": "The bot edged you out this frame — study the explanations and bowl back harder next game.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "A model text contains four possible section titles. Which title should be marked as the target heading?",
+   "choices": [
+    "Advanced Grammar Review",
+    "Advanced Grammar Reviews",
+    "Advanced Grammar Reviewer",
+    "Advanced Grammar Reviewed"
+   ],
+   "answerIndex": 0,
+   "explanation": "Advanced Grammar Review is the exact section title specified by the target.",
+   "difficulty": 2,
+   "skill": "Recognizing the exact section heading",
+   "topic": "Finding Advanced Grammar Review in a Model Text",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The model text presents four section headings in this order: Sentence Variety, Advanced Grammar Review, Paragraph Cohesion, and Editing Checklist. Which heading should be marked?",
+   "choices": [
+    "The first heading",
+    "The second heading",
+    "The third heading",
+    "The fourth heading"
+   ],
+   "answerIndex": 1,
+   "explanation": "The second heading is Advanced Grammar Review, so that is the heading to mark.",
+   "difficulty": 2,
+   "skill": "Locating a named section by position",
+   "topic": "Finding Advanced Grammar Review in a Model Text",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A contents panel lists sections on sentence drills, advanced grammar, paragraph planning, and the drafting process. Which entry should be marked for the advanced grammar section?",
+   "choices": [
+    "The Advanced Grammar Review entry",
+    "The Sentence Drills entry",
+    "The Paragraph Planning entry",
+    "The Drafting Process entry"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Advanced Grammar Review entry is the contents-panel entry for the advanced grammar section.",
+   "difficulty": 3,
+   "skill": "Matching a section to its contents entry",
+   "topic": "Finding Advanced Grammar Review in a Model Text",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Four labels appear around a model text: a main title, a section heading, a figure caption, and a page footer. Which label should be marked to locate Advanced Grammar Review?",
+   "choices": [
+    "The section heading above the grammar examples",
+    "The main title above the opening paragraph",
+    "The figure caption below the flowchart",
+    "The page footer beneath the passage"
+   ],
+   "answerIndex": 0,
+   "explanation": "The section heading above the grammar examples is where Advanced Grammar Review appears.",
+   "difficulty": 3,
+   "skill": "Distinguishing a section heading from other labels",
+   "topic": "Finding Advanced Grammar Review in a Model Text",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A model text contains the headings Warm-Up, Advanced Grammar Review, Guided Practice, and Reflection. Which heading is the one to mark?",
+   "choices": [
+    "The Warm-Up heading",
+    "The Advanced Grammar Review heading",
+    "The Guided Practice heading",
+    "The Reflection heading"
+   ],
+   "answerIndex": 1,
+   "explanation": "The Advanced Grammar Review heading is the target section title within the model text.",
+   "difficulty": 2,
+   "skill": "Selecting the correct heading from a sequence",
+   "topic": "Finding Advanced Grammar Review in a Model Text",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A search tool lists four matches in a model text. Which match should be marked as the section heading Advanced Grammar Review rather than a mention within another part of the text?",
+   "choices": [
+    "The standalone heading",
+    "The phrase inside the first paragraph",
+    "The words inside a footnote",
+    "The wording inside a caption"
+   ],
+   "answerIndex": 0,
+   "explanation": "The standalone heading is Advanced Grammar Review, while the other matches occur within other text elements.",
+   "difficulty": 3,
+   "skill": "Distinguishing a heading from a text mention",
+   "topic": "Finding Advanced Grammar Review in a Model Text",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A model text is arranged in four labeled panels: Introduction, Grammar Examples, Editing Checklist, and Conclusion. Which panel contains the Advanced Grammar Review?",
+   "choices": [
+    "The Introduction panel",
+    "The Grammar Examples panel",
+    "The Editing Checklist panel",
+    "The Conclusion panel"
+   ],
+   "answerIndex": 1,
+   "explanation": "The Grammar Examples panel is where the model text presents the Advanced Grammar Review on subject-verb agreement and run-on sentences.",
+   "difficulty": 2,
+   "skill": "Locating a section by its labeled panel",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A linked table of contents gives a one-line purpose for each section. Which link should be selected to open the Advanced Grammar Review, the section on parallel structure and pronoun agreement?",
+   "choices": [
+    "The link for organizing paragraphs around a main idea",
+    "The link for correcting comma splices and inconsistent verb tense",
+    "The link for checking parallel structure and pronoun agreement",
+    "The link for recording sources and publication details"
+   ],
+   "answerIndex": 2,
+   "explanation": "This link leads to the Advanced Grammar Review section, which covers parallel structure and pronoun agreement.",
+   "difficulty": 3,
+   "skill": "Selecting a table-of-contents link by purpose",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "An outline pane displays four expandable branches. The Advanced Grammar Review is the branch that expands into numbered rules for dangling modifiers and verb tense. Which branch should be marked?",
+   "choices": [
+    "The branch leading to the introduction and learning goals",
+    "The branch leading to the drafting process and revision schedule",
+    "The branch leading to the final editing checklist and submission notes",
+    "The branch leading to the numbered rules on dangling modifiers and verb tense"
+   ],
+   "answerIndex": 3,
+   "explanation": "The correct branch expands into the numbered usage rules that make up the Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Finding the target within a document outline",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A model text is displayed with numbered lines: 1 Introduction, 2 Editing Foundations, 3 Advanced Grammar Review, 4 Paragraph Organization, and 5 Final Checklist. Which line number should be marked to locate the Advanced Grammar Review?",
+   "choices": [
+    "Line 1",
+    "Line 2",
+    "Line 3",
+    "Line 4"
+   ],
+   "answerIndex": 2,
+   "explanation": "Line 3 contains the Advanced Grammar Review heading in the numbered model text.",
+   "difficulty": 2,
+   "skill": "Locating a heading by its line number",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A model text's accessibility map assigns outline level 1 to the document title, level 2 to section headings, level 3 to subheadings, and level 4 to body text. Which outline level should be assigned to the line Advanced Grammar Review?",
+   "choices": [
+    "Outline level 1",
+    "Outline level 2",
+    "Outline level 3",
+    "Outline level 4"
+   ],
+   "answerIndex": 1,
+   "explanation": "Advanced Grammar Review is a section heading, so the accessibility map assigns it outline level 2.",
+   "difficulty": 3,
+   "skill": "Identifying a heading's outline level",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A document preview shows four page thumbnails from a model text. Which thumbnail should be opened to find the Advanced Grammar Review?",
+   "choices": [
+    "The thumbnail showing a title page and an author photograph",
+    "The thumbnail showing a paragraph plan with a highlighted thesis",
+    "The thumbnail showing a bold review heading above numbered rules on sentence fragments and modifier placement",
+    "The thumbnail showing a bibliography arranged by source type"
+   ],
+   "answerIndex": 2,
+   "explanation": "The Advanced Grammar Review appears on the thumbnail with a bold review heading and numbered grammar rules.",
+   "difficulty": 3,
+   "skill": "Choosing the page preview containing the target",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "An electronic model text includes four bookmarks named sentence-patterns, advanced-grammar-review, paragraph-cohesion, and final-editing. Which bookmark should be selected to jump directly to the target section?",
+   "choices": [
+    "sentence-patterns",
+    "advanced-grammar-review",
+    "paragraph-cohesion",
+    "final-editing"
+   ],
+   "answerIndex": 1,
+   "explanation": "The advanced-grammar-review bookmark points directly to the section titled Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Using document bookmarks",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A reading app displays a page index with four entries: Grammar Foundations, Sentence Expansion, Advanced Grammar Review, and Practice Responses. Which index entry should be selected?",
+   "choices": [
+    "The Grammar Foundations index entry",
+    "The Sentence Expansion index entry",
+    "The Advanced Grammar Review index entry",
+    "The Practice Responses index entry"
+   ],
+   "answerIndex": 2,
+   "explanation": "The Advanced Grammar Review label identifies the page-index entry for the target section.",
+   "difficulty": 3,
+   "skill": "Using a page index",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A slide sorter shows four slides titled Introduction to the Model, Advanced Grammar Review, Worked Examples, and Closing Reflection. Which slide should be opened to find the target section?",
+   "choices": [
+    "The slide titled Introduction to the Model",
+    "The slide titled Advanced Grammar Review",
+    "The slide titled Worked Examples",
+    "The slide titled Closing Reflection"
+   ],
+   "answerIndex": 1,
+   "explanation": "The slide titled Advanced Grammar Review contains the target section.",
+   "difficulty": 3,
+   "skill": "Locating a slide title",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A navigation strip offers four labels. Which label exactly matches the section heading that should be marked in the model text?",
+   "choices": [
+    "The three-word label Advanced Grammar Review",
+    "The three-word label Advanced Grammar Notes",
+    "The three-word label Reviewing Advanced Grammar",
+    "The four-word label The Advanced Grammar Review"
+   ],
+   "answerIndex": 0,
+   "explanation": "The exact section title is Advanced Grammar Review, which contains three words.",
+   "difficulty": 4,
+   "skill": "Matching an exact heading",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A word-processing program provides a section dropdown containing Opening Context, Editing Checklist, Advanced Grammar Review, and Sentence Variants. Which entry should be chosen when working in the target section?",
+   "choices": [
+    "The section named Opening Context",
+    "The section named Editing Checklist",
+    "The section named Advanced Grammar Review",
+    "The section named Sentence Variants"
+   ],
+   "answerIndex": 2,
+   "explanation": "The dropdown entry named Advanced Grammar Review corresponds to the target section.",
+   "difficulty": 3,
+   "skill": "Using a section dropdown",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A model text begins with an introduction, then places its review title in bold above a numbered list of grammar rules. Which text element should be marked as Advanced Grammar Review?",
+   "choices": [
+    "The bold line immediately above the numbered rules",
+    "The first sentence of the opening paragraph",
+    "The third item in the example footnote",
+    "The italic label beneath the diagram"
+   ],
+   "answerIndex": 0,
+   "explanation": "The bold line immediately above the numbered rules is the model text's section heading for the Advanced Grammar Review.",
+   "difficulty": 2,
+   "skill": "Identify a heading by visual hierarchy",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "An online model has four expandable navigation items: Document Overview, Language Rules, Guided Practice, and Final Reflection. Which item should be opened to find the Advanced Grammar Review?",
+   "choices": [
+    "The item labeled Document Overview",
+    "The item labeled Language Rules",
+    "The item labeled Guided Practice",
+    "The item labeled Final Reflection"
+   ],
+   "answerIndex": 1,
+   "explanation": "The item labeled Language Rules is the navigation entry containing the Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Locate a section in a navigation list",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A preview presents four section cards, each with a short description. Which card should be opened to reach the Advanced Grammar Review?",
+   "choices": [
+    "The card about paragraph transitions and thematic links",
+    "The card about spelling patterns and dictionary sources",
+    "The card about sentence boundaries, modifier placement, and pronoun references",
+    "The card about timed drafting and response length"
+   ],
+   "answerIndex": 2,
+   "explanation": "The card about sentence boundaries, modifier placement, and pronoun references describes the grammar material in the Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Match a section card to its content",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A word-processing document displays style names for its blocks. Which style is applied to the block titled Advanced Grammar Review?",
+   "choices": [
+    "Body Text",
+    "Figure Caption",
+    "Document Title",
+    "Section Heading"
+   ],
+   "answerIndex": 3,
+   "explanation": "The Section Heading style identifies the Advanced Grammar Review as a section within the model text.",
+   "difficulty": 4,
+   "skill": "Identify the formatting style of a section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A contents table lists four rows with section names and page numbers. Which row should be chosen to jump directly to the Advanced Grammar Review?",
+   "choices": [
+    "The row labeled Advanced Grammar Review on page 7",
+    "The row labeled Editing Checklist on page 4",
+    "The row labeled Grammar Foundations on page 2",
+    "The row labeled Final Reflection on page 9"
+   ],
+   "answerIndex": 0,
+   "explanation": "The row labeled Advanced Grammar Review on page 7 is the contents entry that leads directly to the requested section.",
+   "difficulty": 4,
+   "skill": "Select a target from a contents table",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A model text ends with four navigation links. Which link returns the reader to the Advanced Grammar Review?",
+   "choices": [
+    "The Drafting Steps link",
+    "The Resource List link",
+    "The Review Rules link",
+    "The Example Notes link"
+   ],
+   "answerIndex": 2,
+   "explanation": "The Review Rules link returns readers to the rules that make up the Advanced Grammar Review.",
+   "difficulty": 5,
+   "skill": "Use a return link to locate a section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "In the model text's HTML source, the document title uses an h1 element, and each major section title uses an h2 element. Which tag encloses the Advanced Grammar Review title?",
+   "choices": [
+    "h1",
+    "h2",
+    "h3",
+    "p"
+   ],
+   "answerIndex": 1,
+   "explanation": "The h2 element encloses the Advanced Grammar Review title because it is a major section heading below the document title.",
+   "difficulty": 2,
+   "skill": "Identify a section heading in HTML source",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A model text is arranged in a two-by-two grid. The document title is in the upper-left cell, the introduction is in the lower-left cell, and the editing checklist is in the lower-right cell. Which cell contains Advanced Grammar Review?",
+   "choices": [
+    "The upper-right cell",
+    "The lower-left cell",
+    "The lower-right cell",
+    "The upper-left cell"
+   ],
+   "answerIndex": 0,
+   "explanation": "The upper-right cell contains the Advanced Grammar Review section heading in this grid layout.",
+   "difficulty": 2,
+   "skill": "Locate a target heading by page position",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A screen reader is positioned at the document title of a model text, and Advanced Grammar Review is the next section heading. Which command should move the reader directly to that section?",
+   "choices": [
+    "Next heading",
+    "Previous heading",
+    "First heading",
+    "Last heading"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Next heading command moves from the document title to the Advanced Grammar Review section heading.",
+   "difficulty": 3,
+   "skill": "Navigate to a target section with a screen reader",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A model text places two numbered examples beneath one heading: one explains a compound predicate, and the other describes pronoun case. Which heading should be marked above those examples?",
+   "choices": [
+    "Advanced Grammar Review",
+    "Editing Foundations",
+    "Sentence Expansion",
+    "Final Reflection"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Advanced Grammar Review heading introduces the numbered examples about compound predicates and pronoun case.",
+   "difficulty": 3,
+   "skill": "Match a target heading to its instructional content",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "An OCR tool has divided a model text into four labeled boxes. Box 1 contains the introduction, Box 2 contains the heading Advanced Grammar Review, Box 3 contains numbered grammar rules, and Box 4 contains the closing reflection. Which box should be marked?",
+   "choices": [
+    "Box 1",
+    "Box 2",
+    "Box 3",
+    "Box 4"
+   ],
+   "answerIndex": 1,
+   "explanation": "Box 2 contains the Advanced Grammar Review heading, so marking it locates the section named in the activity.",
+   "difficulty": 2,
+   "skill": "Identifying target text in OCR output",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A document editor shows four tabs labeled A Setup, B Advanced Grammar Review, C Rule Examples, and D Final Check. Which tab should be opened to reach the section that must be marked?",
+   "choices": [
+    "Tab A",
+    "Tab B",
+    "Tab C",
+    "Tab D"
+   ],
+   "answerIndex": 1,
+   "explanation": "Tab B opens the Advanced Grammar Review section that the activity asks the learner to locate.",
+   "difficulty": 2,
+   "skill": "Locating a target section among tabs",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Pagination data places Introduction on page 6, Sentence Foundations on page 7, Advanced Grammar Review on page 8, and Editing Checklist on page 9. Which page marker should be selected?",
+   "choices": [
+    "Page 6",
+    "Page 7",
+    "Page 8",
+    "Page 9"
+   ],
+   "answerIndex": 2,
+   "explanation": "Page 8 contains the Advanced Grammar Review section that needs to be marked.",
+   "difficulty": 3,
+   "skill": "Using pagination to locate a section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Four review comments are anchored to a model text. Comment 1 is attached to the introduction, Comment 2 to the first numbered rule, Comment 3 to the Advanced Grammar Review heading, and Comment 4 to the final checklist. Which comment anchor should be selected?",
+   "choices": [
+    "Comment 1",
+    "Comment 2",
+    "Comment 3",
+    "Comment 4"
+   ],
+   "answerIndex": 2,
+   "explanation": "Comment 3 is anchored directly to the Advanced Grammar Review heading.",
+   "difficulty": 3,
+   "skill": "Selecting the correct comment anchor",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A margin-scanning tool labels four highlighted locations. Marker 1 is beside the introduction, Marker 2 beside the closing note, Marker 3 beside the second grammar example, and Marker 4 beside the Advanced Grammar Review heading. Which marker should be used?",
+   "choices": [
+    "Marker 1",
+    "Marker 2",
+    "Marker 3",
+    "Marker 4"
+   ],
+   "answerIndex": 3,
+   "explanation": "Marker 4 is positioned beside the Advanced Grammar Review heading that should be marked.",
+   "difficulty": 4,
+   "skill": "Choosing a margin marker for target text",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A document analyzer assigns identifiers to four blocks: P-14 is the introduction, P-22 is the Advanced Grammar Review heading, P-31 contains pronoun-agreement examples, and P-46 is the closing reflection. Which identifier should be marked?",
+   "choices": [
+    "P-14",
+    "P-22",
+    "P-31",
+    "P-46"
+   ],
+   "answerIndex": 1,
+   "explanation": "P-22 identifies the block containing the Advanced Grammar Review heading.",
+   "difficulty": 4,
+   "skill": "Matching a target heading to a block identifier",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A model-text webpage assigns accessibility landmarks: the document title appears in the banner, section links in the navigation, the Advanced Grammar Review in the main article, and the copyright notice in the content info. Which landmark should be selected to reach the target section?",
+   "choices": [
+    "The main region",
+    "The banner region",
+    "The navigation region",
+    "The content-info region"
+   ],
+   "answerIndex": 0,
+   "explanation": "The main region contains the Advanced Grammar Review article, while the other landmarks contain page-level material.",
+   "difficulty": 2,
+   "skill": "Using accessibility landmarks",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A model text includes cross-reference notes in four places, and the note in the Editing Hints section reads, For a full summary, see Advanced Grammar Review on page 12. Which note should be followed to reach the target section?",
+   "choices": [
+    "The cross-reference in the Editing Hints section",
+    "The cross-reference in the Opening Definition box",
+    "The cross-reference in the Closing Activities box",
+    "The cross-reference in the Author Biography sidebar"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Editing Hints note directs the reader to the Advanced Grammar Review on page 12.",
+   "difficulty": 3,
+   "skill": "Following a cross-reference",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A screen reader queues a document's headings: H-4 is the document title, H-7 is the Advanced Grammar Review, H-9 is a subsection, and H-12 is the footer. Which queue item should be selected?",
+   "choices": [
+    "H-4",
+    "H-7",
+    "H-9",
+    "H-12"
+   ],
+   "answerIndex": 1,
+   "explanation": "H-7 is the queued heading for the Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Using a screen-reader heading queue",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A version history shows Draft 1 with the introduction, Draft 2 with sentence examples, Draft 3 with the Advanced Grammar Review, and Draft 4 with the conclusion. Which version should be opened to find the target section?",
+   "choices": [
+    "Draft 1",
+    "Draft 2",
+    "Draft 3",
+    "Draft 4"
+   ],
+   "answerIndex": 2,
+   "explanation": "Draft 3 contains the Advanced Grammar Review section.",
+   "difficulty": 2,
+   "skill": "Locating a section in version history",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "An e-book menu offers four expandable groups: Foundations, Review Sections, Practice Sets, and Reference Tools. The Advanced Grammar Review is nested under Review Sections beside Model Text and Practice Exercises. Which menu group should be opened?",
+   "choices": [
+    "Foundations",
+    "Review Sections",
+    "Practice Sets",
+    "Reference Tools"
+   ],
+   "answerIndex": 1,
+   "explanation": "Review Sections is the expandable group that contains the Advanced Grammar Review.",
+   "difficulty": 2,
+   "skill": "Using an e-book navigation group",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "An editor separates a model text into four tagged blocks: introBlock, reviewBlock, drillBlock, and closingBlock. Which block must be marked to locate the Advanced Grammar Review?",
+   "choices": [
+    "introBlock",
+    "reviewBlock",
+    "drillBlock",
+    "closingBlock"
+   ],
+   "answerIndex": 1,
+   "explanation": "ReviewBlock is the tagged block assigned to the Advanced Grammar Review section.",
+   "difficulty": 2,
+   "skill": "Match a tagged block to the target section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A worksheet stores the model text in spreadsheet cells. Cell I2 holds the introduction, cell G2 contains the Advanced Grammar Review, cell K2 holds practice prompts, and cell N2 holds the closing note. Which cell should be selected?",
+   "choices": [
+    "Cell I2",
+    "Cell G2",
+    "Cell K2",
+    "Cell N2"
+   ],
+   "answerIndex": 1,
+   "explanation": "Cell G2 contains the Advanced Grammar Review heading, so it is the cell that should be selected.",
+   "difficulty": 3,
+   "skill": "Locate a target section in a spreadsheet layout",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A source map identifies four regions of a model-text webpage: overview, grammar-review, guided-drills, and final-notes. Which source-map value identifies the region containing the Advanced Grammar Review?",
+   "choices": [
+    "data-area=overview",
+    "data-area=grammar-review",
+    "data-area=guided-drills",
+    "data-area=final-notes"
+   ],
+   "answerIndex": 1,
+   "explanation": "The data-area=grammar-review value identifies the region containing the Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Identify the source-map attribute for a target section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A PDF's labeled object panel lists Object 4 as the introduction, Object 6 as the Advanced Grammar Review, Object 9 as sentence drills, and Object 12 as the editing checklist. Which object should be opened?",
+   "choices": [
+    "Object 4",
+    "Object 6",
+    "Object 9",
+    "Object 12"
+   ],
+   "answerIndex": 1,
+   "explanation": "Object 6 is the labeled PDF object that opens the Advanced Grammar Review heading.",
+   "difficulty": 3,
+   "skill": "Select the correct PDF object for a target section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "An audio version of the model text marks four spoken cues: 00:18 for the introduction, 01:42 for the Advanced Grammar Review, 03:05 for practice prompts, and 04:10 for the final note. Which cue should be played?",
+   "choices": [
+    "00:18",
+    "01:42",
+    "03:05",
+    "04:10"
+   ],
+   "answerIndex": 1,
+   "explanation": "The 01:42 cue begins with the Advanced Grammar Review heading.",
+   "difficulty": 4,
+   "skill": "Locate a target section using an audio cue",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Four labeled hotspots sit over a diagram of the model text: H1 marks the introduction, H3 marks the Advanced Grammar Review, H5 marks the practice section, and H7 marks the conclusion. Which hotspot should be selected?",
+   "choices": [
+    "H1",
+    "H3",
+    "H5",
+    "H7"
+   ],
+   "answerIndex": 1,
+   "explanation": "Hotspot H3 is positioned over the Advanced Grammar Review heading.",
+   "difficulty": 4,
+   "skill": "Select the diagram hotspot marking a target section",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A web model text places the document title in a header, navigation in a nav area, the target h2 heading Advanced Grammar Review in the main area with the class advanced-review-title, and a page number in a footer. Which CSS selector selects only the target heading?",
+   "choices": [
+    "main .advanced-review-title",
+    "header .document-title",
+    "nav .top-link",
+    "footer .page-number"
+   ],
+   "answerIndex": 0,
+   "explanation": "The selector main .advanced-review-title matches the unique title element in the main region, which is Advanced Grammar Review.",
+   "difficulty": 3,
+   "skill": "Locating a heading with a CSS selector",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "An XML model text has document as the root, with front and body branches. Under body is a section whose type attribute is grammar-review, and that section contains the heading element whose text is Advanced Grammar Review. Which XPath expression selects the target heading?",
+   "choices": [
+    "/document/front/heading",
+    "/document/body/section[@type='grammar-review']/heading",
+    "/document/body/heading",
+    "/document/body/section[@type='practice']/heading"
+   ],
+   "answerIndex": 1,
+   "explanation": "This XPath follows document to body, selects the section whose type is grammar-review, and then selects its heading element.",
+   "difficulty": 5,
+   "skill": "Locating a heading with XPath",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The model-text metadata has a sections array with four objects. Their keys, in order, are overview, grammar-review, practice, and closing, and the grammar-review object is labeled Advanced Grammar Review. Which JSON path selects the key of the target section?",
+   "choices": [
+    "sections[0].key",
+    "sections[1].key",
+    "sections[2].key",
+    "sections[3].key"
+   ],
+   "answerIndex": 1,
+   "explanation": "Because the grammar-review object is second in the sections array, sections[1].key selects its key value.",
+   "difficulty": 3,
+   "skill": "Locating a section with a JSON path",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "An accessible model text gives its review section the id review-section and the attribute aria-labelledby review-heading. The heading element inside that section has the id review-heading and displays Advanced Grammar Review. Which ID provides the section's accessible name?",
+   "choices": [
+    "model-title",
+    "review-section",
+    "review-heading",
+    "grammar-examples"
+   ],
+   "answerIndex": 2,
+   "explanation": "The section's aria-labelledby attribute points to review-heading, so that ID supplies its accessible name.",
+   "difficulty": 4,
+   "skill": "Tracing an ARIA accessible-name reference",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A model text has four tagged elements: the introduction uses data-marker intro, a body mention of Advanced Grammar Review uses data-marker mention, the target heading uses data-marker target-section, and a figure caption uses data-marker caption. Which attribute-value pair identifies the target heading?",
+   "choices": [
+    "data-marker=\"intro\"",
+    "data-marker=\"mention\"",
+    "data-marker=\"target-section\"",
+    "data-marker=\"caption\""
+   ],
+   "answerIndex": 2,
+   "explanation": "Only the target heading carries data-marker target-section, while the other markers identify different elements.",
+   "difficulty": 2,
+   "skill": "Matching a data attribute to the target heading",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A LaTeX model text places the command \\section{Advanced Grammar Review}\\label{sec:grammar-rules} at the target heading. Which command in another sentence should create a cross-reference to that exact section?",
+   "choices": [
+    "\\ref{sec:grammar-rules}",
+    "\\pageref{sec:grammar-rules}",
+    "\\cite{grammar-rules}",
+    "\\label{grammar-rules}"
+   ],
+   "answerIndex": 0,
+   "explanation": "A LaTeX reference command links to a label, and sec:grammar-rules is the label attached to the target section.",
+   "difficulty": 5,
+   "skill": "Referencing the target section with LaTeX",
+   "topic": "Notice It in a Model Text - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A student must copy the target section heading exactly. Which version preserves its title capitalization and spacing without adding punctuation?",
+   "choices": [
+    "Advanced Grammar Review",
+    "Advanced grammar review",
+    "AdvancedGrammar Review",
+    "Advanced Grammar Review:"
+   ],
+   "answerIndex": 0,
+   "explanation": "Advanced Grammar Review preserves the heading's title capitalization and spacing without adding punctuation.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "An HTML model text contains <section id=\"grammar-review\"><h2>Advanced Grammar Review</h2><p>...</p></section>. Which CSS selector targets the target heading most specifically?",
+   "choices": [
+    "#grammar-review h2",
+    "#grammar-review",
+    "h2",
+    "section > p"
+   ],
+   "answerIndex": 0,
+   "explanation": "The selector #grammar-review h2 matches the h2 heading specifically within the section whose id is grammar-review.",
+   "reason": "markup in the text"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "An XML model text contains <heading level=\"2\">Advanced Grammar Review</heading>. Which XPath expression selects only that heading?",
+   "choices": [
+    "//heading[@level=\"2\" and text()=\"Advanced Grammar Review\"]",
+    "//heading[@level=\"1\" and text()=\"Advanced Grammar Review\"]",
+    "//section[text()=\"Advanced Grammar Review\"]",
+    "//heading[contains(text(),\"Grammar\")]"
+   ],
+   "answerIndex": 0,
+   "explanation": "The expression requires both level 2 and the exact heading text, so it selects only the Advanced Grammar Review heading.",
+   "reason": "markup in the text"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A plain-text model contains one standalone line reading Advanced Grammar Review. Which regular expression matches only that complete line?",
+   "choices": [
+    "^Advanced Grammar Review$",
+    "^Advanced Grammar",
+    "Grammar Review$",
+    "Advanced Grammar Review"
+   ],
+   "answerIndex": 0,
+   "explanation": "The anchors require Advanced Grammar Review to occupy the entire line, while the other expressions allow extra text before or after it.",
+   "reason": "explanation-key: the explanation quotes option 4, not the keyed option 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A printed model text is arranged in four vertical panels. Their headings are Editing Foundations, Advanced Grammar Review, Sentence Modeling, and Final Revision. Which panel should be marked to find the target section?",
+   "choices": [
+    "The panel headed Advanced Grammar Review",
+    "The panel headed Editing Foundations",
+    "The panel headed Sentence Modeling",
+    "The panel headed Final Revision"
+   ],
+   "answerIndex": 0,
+   "explanation": "The target is in the panel whose bold heading reads Advanced Grammar Review.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Four lines are detected in a scanned model text: Understanding the Main Idea is left-aligned, Advanced Grammar Review is centered, Watch the Verb Tense is left-aligned, and Final Reflection is right-aligned. Which line should be marked as the section heading?",
+   "choices": [
+    "Understanding the Main Idea",
+    "Advanced Grammar Review",
+    "Watch the Verb Tense",
+    "Final Reflection"
+   ],
+   "answerIndex": 1,
+   "explanation": "The centered line reading Advanced Grammar Review is the section heading in the scanned model text.",
+   "reason": "B: not exactly one correct (Ambiguous: insufficient information to uniquely determine which line is the section heading; alignment alone does not definitively indicate )"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "An outline for a model text lists four identifiers: DOC-1 marks the overview, R-14 marks the Advanced Grammar Review, P-03 marks the practice prompts, and Z-9 marks the closing notes. Which identifier should be marked?",
+   "choices": [
+    "DOC-1",
+    "R-14",
+    "P-03",
+    "Z-9"
+   ],
+   "answerIndex": 1,
+   "explanation": "R-14 is the identifier assigned to the Advanced Grammar Review section.",
+   "reason": "B: not exactly one correct (Question does not specify target section to mark; ambiguous.)"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  }
+ ],
+ "applied": false
+}

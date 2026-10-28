@@ -1,0 +1,3716 @@
+{
+ "track_id": "math",
+ "grade_id": "doctoral",
+ "generated_at": "2026-10-26T03:38:11.712Z",
+ "items": [
+  {
+   "objective_id": "doctoral:L147",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "How many surjective functions are there from a 6-element set to a 4-element set?",
+   "choices": [
+    "1560",
+    "1296",
+    "1440",
+    "1800"
+   ],
+   "answer": "1560",
+   "rationale": "By inclusion–exclusion, the count is 4^6 − 4·3^6 + 6·2^6 − 4 = 1560.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L147",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "In the random graph G(8, 1/2), each edge appears independently with probability 1/2. What is the expected number of not necessarily induced 4-cycles?",
+   "choices": [
+    "105/8",
+    "105/4",
+    "21/2",
+    "105/16"
+   ],
+   "answer": "105/8",
+   "rationale": "K_8 has 3·C(8,4) = 210 four-cycles. Each appears with probability (1/2)^4, so the expected number is 210/16 = 105/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L147",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "What is the coefficient of x^10 in the expansion of (1 + x + x^2)^8?",
+   "choices": [
+    "784",
+    "812",
+    "840",
+    "896"
+   ],
+   "answer": "784",
+   "rationale": "Using (1 − x^3)^8(1 − x)^−8, the coefficient is C(17,7) − 8C(14,7) + 28C(11,7) − 56C(8,7) = 784.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L20",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Which daily schedule best supports sustained progress in a research project?",
+   "choices": [
+    "Delay each task until urgent, then work late to catch up.",
+    "Use protected daily blocks for reading, calculating, writing, and planning.",
+    "Try new ideas each morning; postpone written synthesis until project end.",
+    "Choose the easiest task daily and replan whenever attention fades."
+   ],
+   "answer": "Use protected daily blocks for reading, calculating, writing, and planning.",
+   "rationale": "Protected blocks, regular breaks, and brief next-day planning make progress sustainable across all four research activities.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L20",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "How can a researcher use seminar time effectively while sustaining regular participation?",
+   "choices": [
+    "Prepare one focused question beforehand and record ideas and follow-up tasks afterward.",
+    "Attend only when the topic is directly needed for current calculations.",
+    "Listen without preparation or notes, saving all effort for independent work.",
+    "Ask no questions unless the speaker has already discussed the topic extensively."
+   ],
+   "answer": "Prepare one focused question beforehand and record ideas and follow-up tasks afterward.",
+   "rationale": "Focused preparation, active participation, and follow-up notes make seminars contribute consistently to ongoing research.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L20",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "When routine calculation becomes frustrating, which habit best preserves useful progress?",
+   "choices": [
+    "Skip the calculation and begin writing claims that the eventual result may support.",
+    "Restart from unrelated calculations each day to avoid attachment to one method.",
+    "Time-box a focused session, record failed approaches, and schedule a brief return to the problem.",
+    "Work on the calculation indefinitely, ignoring fatigue and other research duties."
+   ],
+   "answer": "Time-box a focused session, record failed approaches, and schedule a brief return to the problem.",
+   "rationale": "Time limits, documentation, and a scheduled return prevent frustration from turning into avoidance or endless overwork.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L30",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "A paper is indexed in both MathSciNet and zbMATH. A researcher needs to determine whether a published review exists and identify the work reviewed. What is the best step?",
+   "choices": [
+    "Open each database’s review records and verify the review type, reviewed paper, and bibliographic citation.",
+    "Read the arXiv abstract’s comments and infer a formal review from any mention of related work.",
+    "Search the author’s MathOverflow activity and use answer votes as evidence of a published review.",
+    "Look up matching OEIS entries and treat their keywords as the database’s review classification."
+   ],
+   "answer": "Open each database’s review records and verify the review type, reviewed paper, and bibliographic citation.",
+   "rationale": "MathSciNet and zbMATH can record formal reviews with metadata identifying the reviewed work. arXiv comments, forum activity, and OEIS keywords are not substitutes for published review records.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "MathSciNet and zbMATH each store review records; checking those records directly reveals whether a formal review exists and which work it covers.",
+      "url": "https://en.wikipedia.org/wiki/Dennis_Hejhal",
+      "quote": "Patterson, S. J. (1978). \"Review: Dennis A. Hejhal, The Selberg trace formula for PSL (2, R ), Volume I\" . Bull. Amer. Math. Soc . 84 (2): 256– 260. 1090/s0002-9904-1978-14466-8 .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L30",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which workflow traces an arXiv paper’s cited foundational result?",
+   "choices": [
+    "Search each cited author in arXiv and choose the earliest matching title.",
+    "Open the PDF’s references, then search each cited title in MathSciNet or zbMATH.",
+    "Search the paper’s keywords in OEIS and follow links from matching sequences.",
+    "Search the paper’s DOI on MathOverflow and open the newest tagged discussion."
+   ],
+   "answer": "Open the PDF’s references, then search each cited title in MathSciNet or zbMATH.",
+   "rationale": "The reference list identifies the cited works precisely; searching their exact titles in MathSciNet or zbMATH then locates their authoritative bibliographic records and related citations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L30",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which workflow places an unfamiliar problem among related concepts?",
+   "choices": [
+    "Search MathOverflow by phrase and tags; inspect answers, then search nLab for linked concepts.",
+    "Post the full problem, then treat comments on nLab as formal citations.",
+    "Search OEIS for keywords, then assume every matching sequence explains the problem.",
+    "Use LMFDB labels first, then identify the problem solely from its database record."
+   ],
+   "answer": "Search MathOverflow by phrase and tags; inspect answers, then search nLab for linked concepts.",
+   "rationale": "MathOverflow supports targeted searches and expert discussion, while nLab organizes conceptual links and terminology; the other resources require a sequence, object, or database context.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L137",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "linear_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Let N be a 4×4 nilpotent operator on a complex vector space whose Jordan form has one block of size 3 and one block of size 1. What are its minimal polynomial and the dimension of its kernel?",
+   "choices": [
+    "m_N(t)=t^3; dim ker N=2",
+    "m_N(t)=t^4; dim ker N=1",
+    "m_N(t)=t^3; dim ker N=3",
+    "m_N(t)=t^2; dim ker N=2"
+   ],
+   "answer": "m_N(t)=t^3; dim ker N=2",
+   "rationale": "The nilpotency index equals the largest Jordan block size, so the minimal polynomial is t^3. Kernel dimension equals the number of Jordan blocks, which is 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L137",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "linear_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A 6×6 complex matrix A has characteristic polynomial (λ-3)^4(λ+2)^2 and minimal polynomial (λ-3)^2(λ+2). What is the size of the largest Jordan block for eigenvalue 3?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "2",
+   "rationale": "The exponent of (λ-3) in the minimal polynomial equals the size of the largest Jordan block for that eigenvalue; here the exponent is 2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L137",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "linear_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Let B be a real symmetric bilinear form on a 5‑dimensional vector space with inertia (2,2,1) (two positive, two negative, one zero). What is the rank of B?",
+   "choices": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "answer": "4",
+   "rationale": "Rank equals the number of non‑zero eigenvalues in the inertia; with two positive and two negative the rank is 2+2 = 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L179",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "For A=[[4,2],[2,3]] and b=(4,3)ᵀ, a Cholesky factorization A=LLᵀ is used to solve Ax=b. What is the solution vector x?",
+   "choices": [
+    "(1/2, 3/4)ᵀ",
+    "(3/4, 1/2)ᵀ",
+    "(1, 1)ᵀ",
+    "(2/3, 1/3)ᵀ"
+   ],
+   "answer": "(3/4, 1/2)ᵀ",
+   "rationale": "The Cholesky factor is L=[[2,0],[1,√2]]. Forward and backward substitution for Ax=b yields x=(3/4,1/2)ᵀ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L179",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "For steepest descent applied to a symmetric positive-definite matrix A, the standard error bound is ‖xₖ−x*‖_A ≤ ((κ₂(A)−1)/(κ₂(A)+1))^k‖x₀−x*‖_A. If κ₂(A)=5 and k=3, what is the multiplicative bound, to four decimal places?",
+   "choices": [
+    "0.2963",
+    "0.1250",
+    "0.5120",
+    "0.6667"
+   ],
+   "answer": "0.2963",
+   "rationale": "The contraction factor is (5−1)/(5+1)=2/3, so after three iterations the multiplicative bound is (2/3)^3=8/27≈0.2963.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L179",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "A cubic Hermite interpolant p satisfies p(0)=1, p′(0)=2, p(1)=4, and p′(1)=−1. What is p(0.5)?",
+   "choices": [
+    "2.875",
+    "2.625",
+    "3.125",
+    "3.250"
+   ],
+   "answer": "2.875",
+   "rationale": "Writing p(t)=1+2t+6t²−5t³ gives p(0.5)=1+1+1.5−0.625=2.875.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L179",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Using the two-point Gauss–Legendre rule on [0,1], where the nodes are (1±1/√3)/2 and both weights are 1/2, what value approximates ∫₀¹√x dx, to four decimal places?",
+   "choices": [
+    "0.6739",
+    "0.6667",
+    "0.7071",
+    "0.7500"
+   ],
+   "answer": "0.6739",
+   "rationale": "The rule gives 0.5[√((1−1/√3)/2)+√((1+1/√3)/2)]≈0.673887, which rounds to 0.6739.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L95",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "For f(z)=1/(z^2 sin z), determine Res(f,0).",
+   "choices": [
+    "−1/6",
+    "0",
+    "1/6",
+    "1/2"
+   ],
+   "answer": "1/6",
+   "rationale": "Since sin z=z−z^3/6+⋯, we have f(z)=z^(−3)+(1/6)z^(−1)+⋯. Thus the residue at 0 is 1/6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L95",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "On the unit disk D, which statement about the family f_n(z)=nz is correct?",
+   "choices": [
+    "It is normal because every bounded sequence has a convergent subsequence.",
+    "It is not normal because its values are unbounded on |z|=1.",
+    "It is normal because all its derivatives vanish at z=0.",
+    "It is not normal because it is not locally bounded near 0."
+   ],
+   "answer": "It is not normal because it is not locally bounded near 0.",
+   "rationale": "For every neighborhood of 0, choosing z=1/n gives |f_n(z)|=1, while larger multiples make the values unbounded. Hence the family is not locally bounded near 0 and is not normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L105",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Regard the Heaviside function H as a distribution. For a smooth compactly supported test function φ, what is the distributional pairing ⟨H′,φ⟩?",
+   "choices": [
+    "the value of −∫₀^∞ φ(t)dt",
+    "the value of ∫₋∞^0 φ(t)dt",
+    "the value of φ(0)",
+    "the value of −φ(0)"
+   ],
+   "answer": "the value of φ(0)",
+   "rationale": "The Heaviside function has a unit jump at zero, so its distributional derivative is the Dirac delta, whose action on φ is φ(0).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L157",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let K = ([−1,1]×{0}) ∪ ({0}×[−1,1]). Which argument proves that K is compact and connected?",
+   "choices": [
+    "Each segment is compact and connected, and they meet.",
+    "Each segment is compact, but their union is disconnected.",
+    "The union is closed and bounded, but not connected.",
+    "The union is connected, but not compact."
+   ],
+   "answer": "Each segment is compact and connected, and they meet.",
+   "rationale": "Each closed line segment is compact and connected. Because the two segments intersect at the origin, their union is connected; a finite union of compact sets is compact.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L157",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Let X = S¹ ∨ S¹ with the wedge point as basepoint. Which group is π₁(X)?",
+   "choices": [
+    "The nonabelian free group F₂",
+    "The direct product ℤ × ℤ",
+    "The infinite cyclic group ℤ",
+    "The trivial group {e}"
+   ],
+   "answer": "The nonabelian free group F₂",
+   "rationale": "By van Kampen’s theorem, the fundamental group of a wedge of two circles is the free product ℤ * ℤ, namely the free group on two generators.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L157",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "For p: ℝ → S¹, p(t) = exp(2πit), which maps are deck transformations? Here n ∈ ℤ.",
+   "choices": [
+    "Translations t ↦ t + n",
+    "Shifts t ↦ t + √2",
+    "Reflections t ↦ −t + n",
+    "Doublings t ↦ 2t"
+   ],
+   "answer": "Translations t ↦ t + n",
+   "rationale": "A deck transformation must satisfy p(h(t)) = p(t). Exactly the integer translations preserve exp(2πit), so the deck transformation group is isomorphic to ℤ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L251",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Which reading list best prepares a committee to assess both the origins and current frontiers of a research area?",
+   "choices": [
+    "Only classic papers, allowing unlimited time to examine each source",
+    "Foundational studies, key debates, recent advances, and opposing perspectives",
+    "Recent papers only, emphasizing the latest methods and findings",
+    "One textbook, supplemented by summaries of current research"
+   ],
+   "answer": "Foundational studies, key debates, recent advances, and opposing perspectives",
+   "rationale": "A balanced list covers historical foundations, current developments, central debates, and alternative perspectives, enabling the committee to assess both breadth and depth.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L251",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "How should a candidate structure an opening overview to demonstrate breadth and depth?",
+   "choices": [
+    "List every article reviewed without explaining how they relate",
+    "Begin with technical procedures and delay explaining the research gap",
+    "Trace the field's development, frame its main debates, and locate the contribution",
+    "Emphasize terminology throughout so the audience judges technical command"
+   ],
+   "answer": "Trace the field's development, frame its main debates, and locate the contribution",
+   "rationale": "This structure synthesizes the field, shows awareness of major debates, and explains how the candidate’s research extends or challenges existing knowledge.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L251",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "Which practice best prepares a candidate for the probing questions that follow an oral presentation?",
+   "choices": [
+    "Rehearse clear answers to likely challenges, including concise responses to follow-up requests",
+    "Memorize a long script so every response follows the presentation wording",
+    "Practice only summarizing findings and avoid anticipating examiner objections",
+    "Review slides silently without answering questions aloud"
+   ],
+   "answer": "Rehearse clear answers to likely challenges, including concise responses to follow-up requests",
+   "rationale": "Anticipating likely challenges and answering them aloud develops the clarity, directness, and flexibility needed to respond constructively to probing questions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L241",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "A researcher wants to understand how preservice teachers conceptualize mathematical proof. Which research design best matches this aim?",
+   "choices": [
+    "Semi-structured interviews analyzed using inductive thematic methods.",
+    "Randomized pretest-posttest experiment using standardized achievement scores.",
+    "Cross-sectional survey using Likert scales and descriptive statistics.",
+    "Controlled trial comparing proof curricula and delayed retention rates."
+   ],
+   "answer": "Semi-structured interviews analyzed using inductive thematic methods.",
+   "rationale": "Semi-structured interviews and thematic analysis are well suited to exploring participants’ interpretations of proof in depth.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L241",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "A quantitative study wants to estimate the causal effect of using manipulatives on students’ algebra achievement. Which design provides the strongest basis?",
+   "choices": [
+    "Random assignment to conditions, with equivalent pretests and outcomes.",
+    "Convenience assignment by teachers, with equivalent pretests and outcomes.",
+    "Voluntary participation in conditions, with retrospective self-reports.",
+    "Pre-existing class comparison, without baseline scores or random assignment."
+   ],
+   "answer": "Random assignment to conditions, with equivalent pretests and outcomes.",
+   "rationale": "Random assignment minimizes systematic selection differences between conditions, strengthening causal inference about the manipulatives.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L241",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "An activity has students solve a problem, explain their strategies, and revise their explanations after challenging a peer. Which learning theory most directly informs this design?",
+   "choices": [
+    "Social constructivism emphasizes knowledge construction through social interaction.",
+    "Behaviorism emphasizes reinforcement of observable student responses.",
+    "Cognitivism emphasizes internal representations and information processing.",
+    "Connectivism emphasizes learning through networks and information sources."
+   ],
+   "answer": "Social constructivism emphasizes knowledge construction through social interaction.",
+   "rationale": "Social constructivism most directly emphasizes how learners develop and negotiate mathematical understanding through social interaction.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L241",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "A teacher correctly solves a nonroutine geometry task but cannot identify which student justifications reveal a misconception. Which knowledge component most directly addresses this gap?",
+   "choices": [
+    "Knowledge of mathematical content structure, relationships, and representations.",
+    "Knowledge of students’ conceptions and misconceptions within the content.",
+    "Knowledge of general teaching methods, learning processes, and assessment principles.",
+    "Knowledge of mathematical proofs, algorithms, and standard problem-solving procedures."
+   ],
+   "answer": "Knowledge of students’ conceptions and misconceptions within the content.",
+   "rationale": "Understanding students’ conceptions and misconceptions is a key component of pedagogical content knowledge needed to interpret their reasoning.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L453",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "A 50-minute talk reserves 8 minutes for the introduction, 10 minutes for presenting the theorem, and 20 minutes for the proof sketch. What time remains for questions?",
+   "choices": [
+    "10 minutes",
+    "11 minutes",
+    "12 minutes",
+    "13 minutes"
+   ],
+   "answer": "12 minutes",
+   "rationale": "The remaining time is 50 − 8 − 10 − 20 = 12 minutes, which completes the planned talk.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L453",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "You are presenting a machine-learning theorem to researchers in adjacent fields. Which introduction best prepares this audience?",
+   "choices": [
+    "State the problem, explain its relevance to adjacent research, and define only the notation needed.",
+    "Review the field’s complete history, introduce all notation, and then state the main theorem.",
+    "Present the full proof first, explain the problem afterward, and assume the result is already clear.",
+    "Use unexplained technical terms, omit motivation, and begin directly with the proof of the theorem."
+   ],
+   "answer": "State the problem, explain its relevance to adjacent research, and define only the notation needed.",
+   "rationale": "An audience-calibrated introduction connects the theorem to the audience’s interests while limiting definitions to those needed for understanding it.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L453",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "During rehearsal, listeners cannot identify the main theorem because its slide mixes notation, motivation, and a long proof. What should the slide emphasize?",
+   "choices": [
+    "A concise statement of the assumptions and conclusion, plus one plain-language interpretation of the result.",
+    "Every intermediate proof step, so the audience can reconstruct the argument without a separate sketch.",
+    "A broad historical discussion, with the theorem stated only as a final citation for reference.",
+    "All notation definitions, with the conclusion placed in small text below the technical setup."
+   ],
+   "answer": "A concise statement of the assumptions and conclusion, plus one plain-language interpretation of the result.",
+   "rationale": "A clear theorem slide foregrounds the assumptions and conclusion, while one interpretation helps the audience understand what the result establishes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L453",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "Which outline is most appropriate for a 20-minute proof sketch of a doctoral-level theorem?",
+   "choices": [
+    "State the key lemma, explain the main argument connecting it to the theorem, and defer routine details to backup slides.",
+    "Reproduce every line of the formal proof, pausing to check each algebraic step with the audience.",
+    "Give only the theorem’s history and citations, leaving all proof ideas for the discussion period.",
+    "List related results without selecting a lemma, then conclude with a complete formal proof in small print."
+   ],
+   "answer": "State the key lemma, explain the main argument connecting it to the theorem, and defer routine details to backup slides.",
+   "rationale": "A proof sketch should identify the central idea and its connection to the theorem while reserving routine technical details for questions or backup material.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L40",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "A graduate student must first understand a dense research paper before deciding whether it addresses the student’s problem. Which reading sequence best extracts the paper’s skeleton efficiently?",
+   "choices": [
+    "Read the abstract, introduction, headings, and conclusion, then scan figures and tables for the main structure.",
+    "Read the full methods section first, then inspect the introduction to determine which experiments matter.",
+    "Read every paragraph in order, marking unclear claims before examining the abstract or conclusion.",
+    "Search only for the student’s topic, then read the matching sections without reviewing the paper’s organization."
+   ],
+   "answer": "Read the abstract, introduction, headings, and conclusion, then scan figures and tables for the main structure.",
+   "rationale": "A first-pass skeleton should reveal the problem, claimed contribution, section organization, and main evidence before detailed analysis. This saves time while still allowing an initial relevance judgment.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L40",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "A new method fits the student’s problem on paper, but its performance may hinge on an unusual assumption. Which example-based check would provide the most informative strategic test?",
+   "choices": [
+    "Apply it to a small case, compare output with a baseline, and check whether the unusual assumption holds.",
+    "Apply it only to a large dataset, recording runtime but not checking the resulting scientific claims.",
+    "Modify the method until every case succeeds, then report only the case that matches the hypothesis.",
+    "Use the paper’s published examples without changing them, since reproducing them verifies all assumptions."
+   ],
+   "answer": "Apply it to a small case, compare output with a baseline, and check whether the unusual assumption holds.",
+   "rationale": "A small worked case reveals how assumptions affect behavior, while comparison with a baseline tests practical value. Published examples may not represent the learner’s problem.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L40",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "A paper’s central argument relies on a seminal result that the paper summarizes briefly. Which citation-following strategy best supports a deeper critical assessment?",
+   "choices": [
+    "Locate the original result, check whether its conditions support the cited use, and inspect papers citing it for later corrections.",
+    "Read the summary several times, assuming repetition establishes that the result’s conditions are satisfied.",
+    "Follow only later papers that agree with the claim, ignoring earlier sources and contradictory evidence.",
+    "Treat the citation as sufficient proof, since the authors are responsible for interpreting the original result correctly."
+   ],
+   "answer": "Locate the original result, check whether its conditions support the cited use, and inspect papers citing it for later corrections.",
+   "rationale": "Strategic citation tracing checks the original evidence, verifies that the cited result applies under the needed conditions, and reveals later critiques or qualifications.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L400",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "You observe a pattern in computational experiments for a class of graphs. Which step best converts this pattern into a rigorous conjecture?",
+   "choices": [
+    "Publish the raw data without interpretation.",
+    "State the pattern as a precise mathematical statement with quantifiers.",
+    "Cite similar results without modification.",
+    "Assume the pattern holds for all graphs."
+   ],
+   "answer": "State the pattern as a precise mathematical statement with quantifiers.",
+   "rationale": "A rigorous conjecture requires a precise, quantified mathematical formulation, not just data, citations, or unchecked assumptions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L400",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "When writing a proof of a new theorem, which practice ensures completeness?",
+   "choices": [
+    "Outline main ideas and leave routine calculations to the reader.",
+    "Include every logical step, justify each inference, and verify edge cases.",
+    "Reference a textbook for standard lemmas without proof.",
+    "Use informal intuition to skip technical details."
+   ],
+   "answer": "Include every logical step, justify each inference, and verify edge cases.",
+   "rationale": "A complete proof must contain all logical steps, justifications, and edge‑case checks; omitting details or relying on intuition leaves gaps.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L400",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "After proving a result, how should you honestly report its novelty?",
+   "choices": [
+    "Claim it solves a long‑standing open problem regardless of prior work.",
+    "Compare your theorem with the closest known results and explicitly state what is new.",
+    "Omit discussion of related literature to emphasize originality.",
+    "Attribute the result to a well‑known conjecture without proof."
+   ],
+   "answer": "Compare your theorem with the closest known results and explicitly state what is new.",
+   "rationale": "Honest novelty reporting requires a clear comparison with existing work and an explicit statement of the new contribution.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L400",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "You discover a gap in your argument after a draft is written. The responsible action is:",
+   "choices": [
+    "Submit the paper unchanged, hoping reviewers miss the gap.",
+    "Add a remark that the gap is minor and likely fixable.",
+    "Revise the proof, fill the gap, and note the revision in the final version.",
+    "Remove the theorem and replace it with a weaker statement without explanation."
+   ],
+   "answer": "Revise the proof, fill the gap, and note the revision in the final version.",
+   "rationale": "Responsible scholarship demands correcting the gap, completing the proof, and transparently documenting the revision.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L443",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "Which opening best gives a concrete example before the general principle?",
+   "choices": [
+    "Work through a representative case, then extract the governing principle.",
+    "State an abstract principle first, then present one representative case.",
+    "Give several cases but never state the principle they illustrate.",
+    "State the general principle first, then give an unrelated example."
+   ],
+   "answer": "Work through a representative case, then extract the governing principle.",
+   "rationale": "It moves from a concrete representative case to the general principle, making the abstraction easier to understand.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L443",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "A paragraph defines f(x) but later writes F(x) for the same map. Which revision is cleanest?",
+   "choices": [
+    "Change the first f(x) to F(x) and assign a different meaning to f.",
+    "Change the later F(x) to f(x), retaining the notation already defined.",
+    "Keep both symbols and assert, without explanation, that they are identical.",
+    "Delete the map symbol later while leaving the definition unchanged."
+   ],
+   "answer": "Change the later F(x) to f(x), retaining the notation already defined.",
+   "rationale": "Replacing F(x) with f(x) preserves the mathematical meaning and uses the defined notation consistently throughout.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L443",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "A proof has three stages: building an invariant, comparing cases, and deriving a conclusion. Which sentence best signposts them?",
+   "choices": [
+    "We first build something; afterward other steps occur; eventually the proof ends.",
+    "This proof has three stages, which the following paragraphs describe in detail.",
+    "First we build the invariant; next we compare cases; finally, we derive the conclusion.",
+    "The invariant, two cases, and the conclusion appear in their required order."
+   ],
+   "answer": "First we build the invariant; next we compare cases; finally, we derive the conclusion.",
+   "rationale": "The words first, next, and finally clearly mark the proof’s sequence and guide the reader through its three stages.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L505",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "A principal investigator and a collaborator receive grant funds from a company in which the collaborator holds substantial stock. What is the appropriate next step?",
+   "choices": [
+    "Disclose the financial interest and obtain an institutional determination and any required management plan.",
+    "Accept the award because university research collaborations are exempt from conflict-of-interest disclosure.",
+    "Transfer grant administration to the collaborator so the university avoids responsibility for the conflict.",
+    "Wait until publication because financial interests matter only if they affect the research results."
+   ],
+   "answer": "Disclose the financial interest and obtain an institutional determination and any required management plan.",
+   "rationale": "Significant financial interests in sponsors or collaborators should be disclosed so the institution can assess the conflict and require management, recusals, or other safeguards. Such interests are relevant before research begins, not only when results are published.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L505",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "A doctoral student develops data under a funded project. Who generally controls ownership and permitted use of those data?",
+   "choices": [
+    "The applicable grant or contract, institutional policy, and project agreements determine the rights.",
+    "The student automatically owns the data because the student personally created and collected it.",
+    "The principal investigator personally owns all data and may distribute them without institutional review.",
+    "The data become unrestricted public property once the student receives the doctoral degree."
+   ],
+   "answer": "The applicable grant or contract, institutional policy, and project agreements determine the rights.",
+   "rationale": "Data rights generally depend on applicable institutional policies, sponsor requirements, employment terms, and project agreements. Neither authorship nor authorship status alone determines ownership or unrestricted distribution rights.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L505",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "Which activity is most clearly protected by academic freedom at a U.S. university?",
+   "choices": [
+    "Presenting evidence-based criticism of a university policy through ordinary scholarly or campus channels.",
+    "Using targeted intimidation to prevent colleagues from publishing disputed research findings.",
+    "Threatening a student who reports discrimination if the investigation reaches a hearing.",
+    "Disrupting classes repeatedly to prevent the administration from answering criticism."
+   ],
+   "answer": "Presenting evidence-based criticism of a university policy through ordinary scholarly or campus channels.",
+   "rationale": "Academic freedom protects scholarly criticism and discussion grounded in evidence. It does not protect targeted intimidation, threats, harassment, or repeated disruption intended to suppress lawful expression.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L125",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Let F=Q(√2,√3). What is the degree [F:Q]?",
+   "choices": [
+    "2",
+    "4",
+    "6",
+    "8"
+   ],
+   "answer": "4",
+   "rationale": "The extension Q(√2)/Q has degree 2. Since √3 is not in Q(√2), adjoining it contributes another factor of 2, so [F:Q]=4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L125",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "Let L/K be a finite Galois extension with group G, and let H≤G. What is Gal(L/K^H), where K^H is the fixed field of H?",
+   "choices": [
+    "the normalizer N_G(H)",
+    "the centralizer C_G(H)",
+    "the quotient group G/H",
+    "the subgroup H"
+   ],
+   "answer": "the subgroup H",
+   "rationale": "By the fundamental theorem of Galois theory, the subgroup of Gal(L/K) fixing K^H pointwise is exactly H. Thus Gal(L/K^H)=H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L167",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "For a two-dimensional Riemannian manifold with constant sectional curvature c, what is its scalar curvature?",
+   "choices": [
+    "2c",
+    "c",
+    "c²",
+    "2c²"
+   ],
+   "answer": "2c",
+   "rationale": "In dimension two, the Ricci tensor is c times the metric. Taking its trace gives scalar curvature 2c.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L167",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Let G be a matrix Lie group, and let θ = g⁻¹dg be its left Maurer–Cartan form. Which identity holds?",
+   "choices": [
+    "dθ + ½[θ,θ] = 0",
+    "dθ = ½[θ,θ]",
+    "dθ + [θ,θ] = 0",
+    "dθ − ½[θ,θ] = 0"
+   ],
+   "answer": "dθ + ½[θ,θ] = 0",
+   "rationale": "Differentiating θ = g⁻¹dg gives dθ = −θ∧θ. Since ½[θ,θ] = θ∧θ for matrix-valued forms, the stated identity follows.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L167",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "For the metric ds² = dr² + f(r)²dθ², where f is smooth and positive, which equation governs the r-coordinate of a geodesic?",
+   "choices": [
+    "r'' − f(r)f'(r)(θ')² = 0",
+    "r'' + f(r)f'(r)(θ')² = 0",
+    "r'' + f'(r)/f(r) = 0",
+    "r'' − f'(r)/f(r) = 0"
+   ],
+   "answer": "r'' − f(r)f'(r)(θ')² = 0",
+   "rationale": "The relevant Christoffel symbol is Γʳ_θθ = −f(r)f'(r). Substitution into the radial geodesic equation yields r'' − f(r)f'(r)(θ')² = 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L294",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Let Ω⊂ℝᴺ be bounded and smooth, p>1, and f∈(W₀¹,ᵖ(Ω))*. For u∈W₀¹,ᵖ(Ω), which condition is equivalent to u being a weak solution of −Δₚu=f, where Δₚ is the p-Laplacian?",
+   "choices": [
+    "∫Ω |∇u|ᵖ⁻²∇u·∇φ dx = ⟨f,φ⟩ for every φ∈W₀¹,ᵖ(Ω)",
+    "∫Ω |∇u|ᵖ⁻²∇u·∇φ dx = −⟨f,φ⟩ for every φ∈W₀¹,ᵖ(Ω)",
+    "∫Ω (Δu)φ dx = ∫Ω fφ dx for every φ∈W₀¹,ᵖ(Ω)",
+    "∫Ω ∇u·∇φ dx = ⟨f,φ⟩ for every φ∈W₀¹,ᵖ(Ω)"
+   ],
+   "answer": "∫Ω |∇u|ᵖ⁻²∇u·∇φ dx = ⟨f,φ⟩ for every φ∈W₀¹,ᵖ(Ω)",
+   "rationale": "The weak formulation of −div(|∇u|ᵖ⁻²∇u)=f is obtained directly from its distributional definition, using the zero trace of u and integration by parts.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L294",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Let u and v be weak solutions of −Δₚw=f in Ω with zero Dirichlet data, where p>1. Testing the difference of their equations with u−v gives which integral identity?",
+   "choices": [
+    "∫Ω(|∇u|ᵖ⁻²∇u−|∇v|ᵖ⁻²∇v)·(∇u−∇v) dx=0.",
+    "∫Ω(|∇u|ᵖ⁻²∇u−|∇v|ᵖ⁻²∇v)·(u−v) dx=0.",
+    "∫Ω(|∇u|ᵖ−|∇v|ᵖ)·(∇u−∇v) dx=0.",
+    "∫Ω(∇u−∇v)·(u−v) dx=0."
+   ],
+   "answer": "∫Ω(|∇u|ᵖ⁻²∇u−|∇v|ᵖ⁻²∇v)·(∇u−∇v) dx=0.",
+   "rationale": "Subtracting the weak equations and using the test function u−v makes the forcing terms cancel, producing the first identity. Strict monotonicity then implies ∇u=∇v almost everywhere, and hence u=v.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L579",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 579,
+   "format": "multiple_choice",
+   "prompt": "A researcher paraphrases a published argument without citing it. What best meets research-integrity standards?",
+   "choices": [
+    "Treat it as common knowledge because the wording was changed.",
+    "Cite the source because a borrowed argument still needs attribution.",
+    "Replace it with another source and omit credit to the original author.",
+    "Cite only exact quotations; paraphrased arguments need no credit."
+   ],
+   "answer": "Cite the source because a borrowed argument still needs attribution.",
+   "rationale": "Attribution is required for another scholar’s argument even when it is paraphrased rather than quoted.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L579",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 579,
+   "format": "multiple_choice",
+   "prompt": "Two collaborators disagree about first authorship before submission. What is the most responsible way to resolve the disagreement?",
+   "choices": [
+    "Use contribution criteria, discuss roles openly, and record the agreement.",
+    "Give first authorship to the senior investigator because rank determines order.",
+    "List authors alphabetically to avoid negotiating contribution order.",
+    "Assign authorship by lab seniority, then ask everyone to accept it."
+   ],
+   "answer": "Use contribution criteria, discuss roles openly, and record the agreement.",
+   "rationale": "Authorship priority should reflect agreed contribution criteria, with roles discussed and the resulting agreement documented.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L579",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 579,
+   "format": "multiple_choice",
+   "prompt": "Before sharing computational study materials, which step most improves reproducibility?",
+   "choices": [
+    "Archive code, data, dependency versions, and clear rerunning instructions.",
+    "Share only final figures, since they are the clearest reproducible output.",
+    "Upload working files without documentation, assuming others can infer the steps.",
+    "Replace old software with newer versions without recording the originals used."
+   ],
+   "answer": "Archive code, data, dependency versions, and clear rerunning instructions.",
+   "rationale": "Reproducibility requires the code, data, software versions, and instructions needed to rerun and verify the analysis.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L579",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 579,
+   "format": "multiple_choice",
+   "prompt": "A published paper contains a verified error that changes its main conclusion. What should the researcher do?",
+   "choices": [
+    "Notify coauthors and the journal, document the error, and help publish a correction.",
+    "Silently update files while leaving the published record unchanged.",
+    "Post a private note to a colleague and delay action on the article.",
+    "Withdraw all records and conceal which result was affected."
+   ],
+   "answer": "Notify coauthors and the journal, document the error, and help publish a correction.",
+   "rationale": "A verified published error should be communicated to relevant parties and addressed transparently through the journal’s formal correction process.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L632",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 632,
+   "format": "multiple_choice",
+   "prompt": "An international fellowship award conflicts with the earliest available visa appointment. What is the best way to manage the conflict?",
+   "choices": [
+    "Ask the funder and host institution to confirm or adjust the permitted start date under the award terms.",
+    "Begin the funded work abroad before authorization, using the fellowship letter as temporary permission.",
+    "Cancel the visa process and rely on the fellowship agreement to cover immigration status.",
+    "Start on the original date, because immigration appointments do not affect fellowship eligibility."
+   ],
+   "answer": "Ask the funder and host institution to confirm or adjust the permitted start date under the award terms.",
+   "rationale": "Early coordination with both the funder and host allows the start date to comply with award requirements while obtaining the necessary immigration authorization.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L632",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 632,
+   "format": "multiple_choice",
+   "prompt": "A doctoral researcher has been offered a 12-month postdoctoral position in another country. What should they do before arranging the move and beginning paid work?",
+   "choices": [
+    "Confirm the post’s visa category and its timing with official authorities and the employer.",
+    "Use a conference invitation and tourist entry to perform the full postdoctoral appointment.",
+    "Accept the offer immediately because the host’s contract always replaces a work permit.",
+    "Apply for a student visa, since postdoctoral research is automatically classified as study."
+   ],
+   "answer": "Confirm the post’s visa category and its timing with official authorities and the employer.",
+   "rationale": "The researcher should determine the applicable immigration category, required documents, and earliest permitted start date before beginning paid employment.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Visa application procedures require confirming the visa category and its timing with the host country's immigration authorities and the employer before the move.",
+      "url": "https://en.wikipedia.org/wiki/Visa_requirements_for_Pakistani_citizens",
+      "quote": "It is important that visitors check any possible restrictions with the relevant authorities before travel plan confirmation.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L632",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 632,
+   "format": "multiple_choice",
+   "prompt": "A visiting doctoral researcher is deciding whether a short research stay requires a work visa or permits a business visitor to give a seminar. Which source should determine the answer?",
+   "choices": [
+    "The destination country’s official immigration rules and the host institution’s visa advice.",
+    "The researcher’s reading of the conference invitation and assumptions about local research practices.",
+    "The fellowship organization’s general travel guidance for recipients of its research awards.",
+    "Recent travel blogs describing how other researchers obtained entry to the country."
+   ],
+   "answer": "The destination country’s official immigration rules and the host institution’s visa advice.",
+   "rationale": "Official immigration rules determine permitted activities, while the host institution can clarify how those rules apply to the proposed stay. Invitations, fellowship guidance, and travel blogs are not authoritative sources for visa classification.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L274",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "Under local reciprocity rec_K: K× → Gal(K^ab/K), which subgroup corresponds to a finite extension L/K?",
+   "choices": [
+    "The unit subgroup O_K× of the base field",
+    "The norm subgroup N_{L/K}(L×) of K×",
+    "The inertia subgroup I_{L/K} of the local Galois group",
+    "The decomposition subgroup D_{L/K} of the local Galois group"
+   ],
+   "answer": "The norm subgroup N_{L/K}(L×) of K×",
+   "rationale": "Local class field theory gives K×/N_{L/K}(L×) ≅ Gal(K^ab/L). Thus the norm subgroup is the kernel of the restriction map to the Galois group of L.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L274",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "For a normalized newform f of weight k and nebentypus χ over Q, which formula gives the local Euler factor of L(s,f) at a good prime p?",
+   "choices": [
+    "(1−α_p p^(−s))^(−1)(1−β_p p^(−s)), with α_p+β_p=χ(p)a_p and α_pβ_p=p^(k−1)",
+    "(1−α_p p^(−s))^(−1)(1−β_p p^(−s)), with α_p+β_p=a_p p^(k−1) and α_pβ_p=χ(p)",
+    "(1−α_p p^(−s))^(−1)(1−β_p p^(−s)), with α_p+β_p=a_p and α_pβ_p=χ(p)p^(−(k−1))",
+    "(1−α_p p^(−s))^(−1)(1−β_p p^(−s)), with α_p+β_p=a_p and α_pβ_p=χ(p)p^(k−1)"
+   ],
+   "answer": "(1−α_p p^(−s))^(−1)(1−β_p p^(−s)), with α_p+β_p=a_p and α_pβ_p=χ(p)p^(k−1)",
+   "rationale": "Expanding the correct factor gives 1+a_p p^(−s)+χ(p)p^(k−1−2s). Hence its unnormalized Satake parameters have sum a_p and product χ(p)p^(k−1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L274",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "By global class field theory, which profinite group is canonically isomorphic to Gal(K^ab/K) for a number field K?",
+   "choices": [
+    "The profinite completion of the idèle class group C_K",
+    "The inverse limit of the unit groups of all completions of K",
+    "The product of the absolute Galois groups of all completions of K",
+    "The profinite completion of the ideal class group alone"
+   ],
+   "answer": "The profinite completion of the idèle class group C_K",
+   "rationale": "Global Artin reciprocity identifies Gal(K^ab/K) with the profinite completion of the idèle class group. The ideal class group alone describes only the unramified abelian Hilbert class field extension.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "By global class field theory, Gal(K^ab/K) is canonically isomorphic to the idèle class group C_K.",
+      "url": "https://en.wikipedia.org/wiki/Global_class_field_theory",
+      "quote": "The fundamental result of general class field theory states that the group G is naturally isomorphic to the profinite completion of C K , the multiplicative group of a local field or the idele class group of the global field, with respect to the natural topology on C K related to the specific structure of the field K .",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L612",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 612,
+   "format": "multiple_choice",
+   "prompt": "An early draft of a research statement lists every project and emphasizes the candidate’s cleverness. Which revision best presents a doctoral candidate as a serious scholar?",
+   "choices": [
+    "Organize around a central question, situate prior work in the field, and explain a feasible research direction.",
+    "List every project chronologically, adding methods, datasets, technical tools, and preliminary results for each one.",
+    "Replace technical details with a broad claim that the candidate will transform the discipline and attract attention.",
+    "Summarize every publication, including unrelated work, and conclude with the candidate’s complete list of awards."
+   ],
+   "answer": "Organize around a central question, situate prior work in the field, and explain a feasible research direction.",
+   "rationale": "A coherent research narrative identifies a significant question, demonstrates disciplinary knowledge, and establishes a credible scholarly direction. The other choices substitute breadth, exaggerated claims, or irrelevant achievements for a focused argument.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L612",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 612,
+   "format": "multiple_choice",
+   "prompt": "Which teaching statement is strongest for a position requiring evidence of effective college-level instruction?",
+   "choices": [
+    "Uses specific teaching examples, explains changes made from feedback, and reflects on evidence of student learning.",
+    "Describes favorite courses, prepares detailed syllabi, and emphasizes keeping current with textbooks and technology.",
+    "Explains a teaching philosophy, highlights research awards, and stresses availability to students outside class.",
+    "Lists course evaluations, discusses grading consistency, and avoids examples involving student learning or feedback."
+   ],
+   "answer": "Uses specific teaching examples, explains changes made from feedback, and reflects on evidence of student learning.",
+   "rationale": "Effective teaching statements pair concrete evidence with reflection on instructional choices and student learning. The other options emphasize planning, credentials, or unsupported claims without showing the effects of teaching.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L612",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 612,
+   "format": "multiple_choice",
+   "prompt": "After creating a MathJobs.org search for a targeted position, which action best improves the candidate’s ability to respond promptly to a relevant opening?",
+   "choices": [
+    "Save the search, set an alert, review matching postings, and apply through the posting before its deadline.",
+    "Bookmark MathJobs.org once, ignore new postings, and rely on weekly reminders to notice every matching opening.",
+    "Save unrelated postings, disable email alerts, and contact the department before reading the advertisement.",
+    "Apply to several loosely related openings without reading their requirements, then reuse identical materials."
+   ],
+   "answer": "Save the search, set an alert, review matching postings, and apply through the posting before its deadline.",
+   "rationale": "Saved searches and alerts help surface relevant openings, while reviewing the posting and applying before the deadline ensures that the materials meet the employer’s requirements.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L537",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 537,
+   "format": "multiple_choice",
+   "prompt": "A dissertation combines four papers on different case studies. What is the strongest way to make the chapters function as one thesis?",
+   "choices": [
+    "Write a unifying introduction stating the shared argument and chapter transitions.",
+    "Rewrite each chapter so every result supports one common hypothesis.",
+    "Arrange the papers chronologically and add a general chapter summary.",
+    "Standardize abstract formatting across papers before revising the argument."
+   ],
+   "answer": "Write a unifying introduction stating the shared argument and chapter transitions.",
+   "rationale": "A unifying introduction establishes the dissertation’s central argument and explains how the separate studies relate, creating coherence without distorting each paper’s original contribution.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L537",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 537,
+   "format": "multiple_choice",
+   "prompt": "Two papers use different symbols for related concepts. Before final assembly, what should the author do to achieve consistent notation?",
+   "choices": [
+    "Create one notation key, resolve conflicts, and update all chapters consistently.",
+    "Retain each paper’s symbols because local conventions preserve the original work.",
+    "Use the first paper’s symbols throughout and edit the remaining chapters.",
+    "Replace all symbols with words, including standard mathematical notation."
+   ],
+   "answer": "Create one notation key, resolve conflicts, and update all chapters consistently.",
+   "rationale": "A master notation plan, applied throughout the dissertation, prevents ambiguity and ensures that symbols, definitions, and cross-references remain consistent across chapters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L537",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 537,
+   "format": "multiple_choice",
+   "prompt": "After moving chapters into one file, which check most directly produces a clean and reliable bibliography?",
+   "choices": [
+    "Match every citation to a source and remove duplicate or incomplete entries.",
+    "Order references by topic to show relationships among the original papers.",
+    "Retain each paper’s reference list under its chapter heading.",
+    "List only works cited in the unifying introduction and final conclusion."
+   ],
+   "answer": "Match every citation to a source and remove duplicate or incomplete entries.",
+   "rationale": "A consolidated bibliography should include every cited source, use one required style, and contain complete, verified, nonduplicated entries.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L537",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 537,
+   "format": "multiple_choice",
+   "prompt": "During assembly, a new section is needed to connect two papers that reach the same conclusion by different methods. What should it do?",
+   "choices": [
+    "Explain how the methods jointly support the thesis and guide readers between chapters.",
+    "Repeat both abstracts verbatim to establish the similarity between the studies.",
+    "Prioritize the newer method and relegate the earlier paper to supporting material.",
+    "State the shared conclusion without discussing differences in methods or evidence."
+   ],
+   "answer": "Explain how the methods jointly support the thesis and guide readers between chapters.",
+   "rationale": "Effective connective material explains the relationship among contributions and shows how they jointly advance the thesis, helping readers move coherently between chapters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L557",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 557,
+   "format": "multiple_choice",
+   "prompt": "Which task provides the strongest evidence that students can decide whether a function is increasing or decreasing and justify that decision?",
+   "choices": [
+    "List the first- and second-derivative tests without identifying when each applies.",
+    "Report intervals of change and explain how derivative signs support each conclusion.",
+    "Draw a graph, label increasing and decreasing regions, and estimate critical points.",
+    "Compute and simplify the derivative without interpreting what the result means."
+   ],
+   "answer": "Report intervals of change and explain how derivative signs support each conclusion.",
+   "rationale": "The task requires both an accurate conclusion and mathematical justification using derivative behavior, directly measuring the intended learning outcome.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L557",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 557,
+   "format": "multiple_choice",
+   "prompt": "During a proof course, which prompt is most likely to engage students in actively evaluating mathematical reasoning?",
+   "choices": [
+    "Copy the instructor’s proof of a theorem from the board onto a page.",
+    "Watch a complete proof, then transcribe each line in the instructor’s words.",
+    "Compare two candidate proofs of the same claim and identify the first logical gap.",
+    "Read a proof silently and highlight every sentence containing a mathematical symbol."
+   ],
+   "answer": "Compare two candidate proofs of the same claim and identify the first logical gap.",
+   "rationale": "Comparing proofs requires students to evaluate claims, identify assumptions, and justify a critique, making students responsible for the reasoning rather than passive recipients.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L557",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 557,
+   "format": "multiple_choice",
+   "prompt": "After a proof assessment, many responses state the desired theorem but do not justify its key inference. Which follow-up best supports student learning?",
+   "choices": [
+    "Rewrite the theorem and discuss its importance to the broader course.",
+    "Use a checklist to revise and explain which changes repair the missing logic.",
+    "Submit a longer proof while keeping all of the original reasoning unchanged.",
+    "Discuss general proof advice without revisiting the failed logical inference."
+   ],
+   "answer": "Use a checklist to revise and explain which changes repair the missing logic.",
+   "rationale": "The follow-up targets the diagnosed weakness, requires revision, and asks students to explain how specific changes restore logically valid reasoning.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L684",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 684,
+   "format": "multiple_choice",
+   "prompt": "Which research question is most appropriate for a doctoral study of how classroom interaction contributes to students’ mathematical reasoning?",
+   "choices": [
+    "How does teacher questioning shape students’ explanations of mathematical strategies?",
+    "Do students score higher on achievement tests when class periods last longer?",
+    "Which mathematics curricula are most commonly used in secondary schools nationwide?",
+    "Do teachers believe that manipulatives improve students’ conceptual understanding?"
+   ],
+   "answer": "How does teacher questioning shape students’ explanations of mathematical strategies?",
+   "rationale": "The question directly examines classroom interaction and students’ mathematical reasoning through observable teaching practices and student explanations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L684",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 684,
+   "format": "multiple_choice",
+   "prompt": "A dissertation will examine mathematical reasoning among Grade 8 students in one urban middle school. Which sampling plan is most defensible?",
+   "choices": [
+    "Invite every eligible student in the target classes, record refusals, and report class selection.",
+    "Randomly select students from the full school roster, even if they are not in target classes.",
+    "Recruit only students whom teachers identify as strong mathematical reasoners.",
+    "Allow any student who wants to participate to join the study without quotas."
+   ],
+   "answer": "Invite every eligible student in the target classes, record refusals, and report class selection.",
+   "rationale": "Including all eligible students reduces within-class selection bias, while recording refusals and explaining class selection makes the sample transparent and limitsable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L684",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 684,
+   "format": "multiple_choice",
+   "prompt": "The same students complete written mathematical explanations before and after an intervention. Scores are interval-level, and score differences are approximately normally distributed. Which analysis is appropriate?",
+   "choices": [
+    "A paired t-test of pre- and post-intervention scores, with an effect size and confidence interval.",
+    "An independent-samples t-test comparing pre-intervention and post-intervention score groups.",
+    "A one-way analysis of variance comparing students from three separate intervention groups.",
+    "A Spearman correlation between classroom attendance and post-intervention explanation scores."
+   ],
+   "answer": "A paired t-test of pre- and post-intervention scores, with an effect size and confidence interval.",
+   "rationale": "A paired t-test is appropriate because the two scores come from the same students and the relevant difference scores are approximately normally distributed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L684",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 684,
+   "format": "multiple_choice",
+   "prompt": "A study will collect classroom videos, student interviews, and work samples from minors. Which procedure should the researcher follow before data collection?",
+   "choices": [
+    "Secure institutional review board review, parental permission, and student assent.",
+    "Obtain school principal approval and collect anonymous data without participant consent.",
+    "Secure institutional review board review and written consent from each student.",
+    "Use teacher consent and collect student data after the study is completed."
+   ],
+   "answer": "Secure institutional review board review, parental permission, and student assent.",
+   "rationale": "Research involving identifiable data from minors generally requires ethics review, appropriate parental permission, and the students’ own assent before participation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L664",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 664,
+   "format": "multiple_choice",
+   "prompt": "An ecologist and mechanical engineer need a joint air-drying model. Which first step best establishes a shared basis for their work?",
+   "choices": [
+    "Each selects measures independently, without aligning scales or definitions.",
+    "They jointly define variables, units, assumptions, and validation criteria.",
+    "One writes the model alone and requests the other’s data later.",
+    "They create separate publication plans before choosing shared data."
+   ],
+   "answer": "They jointly define variables, units, assumptions, and validation criteria.",
+   "rationale": "Jointly defining variables, units, assumptions, and validation criteria creates shared meanings and makes the data usable across both fields.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L664",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 664,
+   "format": "multiple_choice",
+   "prompt": "After a successful interdisciplinary project, the team must agree how contributions will be recognized. Which approach best reflects fair credit practices?",
+   "choices": [
+    "Assign authorship by title, regardless of intellectual contributions.",
+    "Use a transparent, pre-agreed rubric tied to actual contributions.",
+    "Give authorship to whoever obtained the largest project grant.",
+    "Rotate authorship positions evenly among all project members."
+   ],
+   "answer": "Use a transparent, pre-agreed rubric tied to actual contributions.",
+   "rationale": "A transparent, pre-agreed contribution rubric supports equitable credit and can incorporate the authorship standards relevant to each field.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L664",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 664,
+   "format": "multiple_choice",
+   "prompt": "A team wants to predict whether a bridge sensor will trigger an alert. Which formulation turns the scientific problem into a rigorous mathematical model?",
+   "choices": [
+    "Describe the bridge as safe until engineers judge it unsafe.",
+    "Define readings, error bounds, an alert threshold, and prediction conditions.",
+    "Select a sensor type first and assume its measurements will be reliable.",
+    "Rank qualitative reports and treat the most confident report as prediction."
+   ],
+   "answer": "Define readings, error bounds, an alert threshold, and prediction conditions.",
+   "rationale": "The formulation defines measurable quantities, uncertainty, a decision threshold, and the conditions under which the prediction is valid.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L664",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "analysis",
+   "level": 664,
+   "format": "multiple_choice",
+   "prompt": "Two collaborators interpret one measurement differently because their fields use different uncertainty conventions. Which practice preserves meaning while enabling a joint conclusion?",
+   "choices": [
+    "Choose the more familiar convention silently and avoid the discrepancy.",
+    "Restate both conventions in shared terms, then agree on uncertainty to report.",
+    "Report both numbers without defining their assumptions or relationship.",
+    "Defer all interpretation until another project is completed."
+   ],
+   "answer": "Restate both conventions in shared terms, then agree on uncertainty to report.",
+   "rationale": "Explicitly translating both conventions into shared terms preserves disciplinary distinctions while allowing the collaborators to agree on a joint report.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L622",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 622,
+   "format": "multiple_choice",
+   "prompt": "You are opening a job talk for researchers, practitioners, and non-specialists. Which strategy is strongest?",
+   "choices": [
+    "Begin with a broadly meaningful problem, then connect your technical contributions to its implications.",
+    "Open with the most specialized methods from your latest paper and invite questions afterward.",
+    "Begin with a detailed literature review organized by subfield, publication year, and research method.",
+    "Open with a personal anecdote about your research journey before stating the talk’s main objective."
+   ],
+   "answer": "Begin with a broadly meaningful problem, then connect your technical contributions to its implications.",
+   "rationale": "A shared problem establishes relevance across disciplines, while clearly connecting technical work to broader implications helps a mixed audience follow the talk.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L622",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 622,
+   "format": "multiple_choice",
+   "prompt": "During an interview, an interviewer asks how you evaluate whether students have learned your material. Which response is strongest?",
+   "choices": [
+    "Describe learning objectives, assessments aligned with them, feedback students can act on, and adjustments made.",
+    "Explain that examinations are the most reliable measure because students cannot revise answers afterward.",
+    "State that students usually perform well when the course is well organized and materials are current.",
+    "Focus on how much time you spend preparing lectures, grading assignments, and answering student questions."
+   ],
+   "answer": "Describe learning objectives, assessments aligned with them, feedback students can act on, and adjustments made.",
+   "rationale": "A strong teaching answer links objectives, evidence of learning, actionable feedback, and reflection on whether instruction should change.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L622",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 622,
+   "format": "multiple_choice",
+   "prompt": "Asked why your research program is a good fit for a particular university, which response is strongest?",
+   "choices": [
+    "Connect your agenda to the institution’s priorities, explain relevant strengths, and describe a concrete contribution.",
+    "Express admiration for the university’s reputation and emphasize that you would value access to its resources.",
+    "Focus mainly on how your field has grown and explain why you want to train with leading scholars.",
+    "Discuss several institutions you admire, but avoid ranking them because your preferences are still developing."
+   ],
+   "answer": "Connect your agenda to the institution’s priorities, explain relevant strengths, and describe a concrete contribution.",
+   "rationale": "A convincing fit answer uses specific evidence about the institution and shows how your research would advance shared priorities.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L622",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 622,
+   "format": "multiple_choice",
+   "prompt": "A panelist asks why your job-talk agenda differs from an earlier published project. What is the best way to respond?",
+   "choices": [
+    "Acknowledge the change, explain the new question and evidence, and clarify how it extends your research program.",
+    "Defend the earlier project as your primary contribution and describe the current agenda as temporary.",
+    "Avoid discussing the difference and emphasize that every project in your field remains equally important.",
+    "Suggest that the panelist may misunderstand research development and invite them to consult your publications."
+   ],
+   "answer": "Acknowledge the change, explain the new question and evidence, and clarify how it extends your research program.",
+   "rationale": "A transparent, composed response acknowledges the change and explains its intellectual rationale without becoming defensive or dismissing the questioner.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L284",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Let M=Σg×Σh, where each Σ is a closed oriented hyperbolic surface of genus at least two, with the product metric. Which combination is correct?",
+   "choices": [
+    "χ(M)<0, σ(M)=0, and π₁(M)≅π₁(Σg)×π₁(Σh).",
+    "χ(M)>0, σ(M)≠0, and π₁(M)≅π₁(Σg)*π₁(Σh).",
+    "χ(M)=0, σ(M)=0, and π₁(M)≅π₁(Σg)×π₁(Σh).",
+    "χ(M)>0, σ(M)=0, and π₁(M)≅π₁(Σg)×π₁(Σh)."
+   ],
+   "answer": "χ(M)>0, σ(M)=0, and π₁(M)≅π₁(Σg)×π₁(Σh).",
+   "rationale": "Both surface Euler characteristics are negative, so their product is positive. A product of two oriented surfaces has signature zero, and fundamental groups of Cartesian products form a direct product.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L463",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "When designing a mathematics research poster, which layout principle best supports rapid comprehension by conference attendees?",
+   "choices": [
+    "Use a clear visual hierarchy with title, abstract, methods, results, conclusions, and ample whitespace.",
+    "Fill the entire board with dense equations to showcase technical depth.",
+    "Place all figures at the bottom and keep text in a single column.",
+    "Employ bright colors for every section to attract attention."
+   ],
+   "answer": "Use a clear visual hierarchy with title, abstract, methods, results, conclusions, and ample whitespace.",
+   "rationale": "A structured hierarchy with distinct sections and whitespace lets viewers scan the poster quickly and locate the main contributions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A clear visual hierarchy and ample whitespace support rapid comprehension of a research poster.",
+      "url": "https://en.wikipedia.org/wiki/Visual_hierarchy",
+      "quote": "Visual hierarchy , in Gestalt psychology , describes how particular elements in a visual field stand out more than others in a pattern, creating a perceived order of importance.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L115",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let C3 = ⟨σ⟩ act on {1,2,3,4,5,6} by σ = (1 2 3)(4 5 6). How many orbits are there?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "6"
+   ],
+   "answer": "2",
+   "rationale": "The orbits are {1,2,3} and {4,5,6}. Equivalently, Burnside’s lemma gives (6 + 0 + 0)/3 = 2 orbits.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L115",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Let a finite group G act transitively on a set X with |X| = 12. If the stabilizer of a point has order 4, what is the order of G?",
+   "choices": [
+    "The order of G is forty‑eight.",
+    "The order of G is thirty‑six.",
+    "The order of G is sixty.",
+    "The order of G is twenty‑four."
+   ],
+   "answer": "The order of G is forty‑eight.",
+   "rationale": "Orbit–stabilizer theorem gives |G| = |X|·|Stab(x)| = 12·4 = 48.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The orbit–stabilizer theorem gives |G|=|X||G_x|.",
+      "url": "https://en.wiktionary.org/wiki/orbit-stabilizer_theorem",
+      "quote": "there is a natural bijection between the orbit of that element and the cosets of the stabilizer subgroup with respect to that element.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L388",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "You want to test whether a recursively defined integer sequence satisfies a conjectured linear recurrence. Which computational approach best avoids floating‑point rounding errors?",
+   "choices": [
+    "Compute terms using Python's float and compare with recurrence evaluated in double precision.",
+    "Compute terms using Python's fractions.Fraction (exact rational arithmetic) and verify recurrence symbolically.",
+    "Compute terms with NumPy float64 and use a tolerance of 1e-12 for equality.",
+    "Compute terms with Sage's RealField(53) and round to nearest integer."
+   ],
+   "answer": "Compute terms using Python's fractions.Fraction (exact rational arithmetic) and verify recurrence symbolically.",
+   "rationale": "fractions.Fraction performs exact rational arithmetic, eliminating rounding; the other options rely on floating‑point representations that can introduce subtle errors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Python's fractions.Fraction performs exact rational arithmetic and therefore avoids binary floating-point rounding errors.",
+      "url": "https://en.wikipedia.org/wiki/Floating-point_arithmetic",
+      "quote": "Software packages that perform rational arithmetic represent numbers as fractions with integral numerator and denominator, and can therefore represent any rational number exactly.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L368",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "A researcher has proven a result for 2×2 matrices and wants to extend it to n×n. Which strategy exemplifies “generalization”?",
+   "choices": [
+    "Test the result on random 3×3 matrices",
+    "Formulate a conjecture for all n and attempt proof",
+    "Reduce the problem to a known eigenvalue problem",
+    "Work backwards from the desired conclusion"
+   ],
+   "answer": "Formulate a conjecture for all n and attempt proof",
+   "rationale": "Generalization involves abstracting a proven special case to a broader class and seeking a universal proof.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Generalization extends a result from a restricted class to a broader class, such as from 2×2 matrices to n×n matrices.",
+      "url": "https://en.wikipedia.org/wiki/Generalization",
+      "quote": "In mathematics , one commonly says that a concept or a result B is a generalization of A if A is defined or proved before B (historically or conceptually) and A is a special case of B .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L368",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "A researcher who has proved a theorem for 2×2 matrices now attempts to prove it for arbitrary n×n matrices by first examining the 3×3 and 4×4 cases to detect a pattern. Which strategy is being used?",
+   "choices": [
+    "Testing small cases to infer a pattern.",
+    "Extending a known result to larger dimensions.",
+    "Borrowing a proof technique from a related field.",
+    "Simplifying the problem by removing constraints."
+   ],
+   "answer": "Testing small cases to infer a pattern.",
+   "rationale": "Examining specific small instances (3×3, 4×4) to discover a pattern exemplifies specialization—studying special cases to gain insight before generalizing.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L368",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "A physicist struggling with a nonlinear PDE recalls a similar equation in fluid dynamics whose solution method uses a change of variables. She adopts that change of variables for her problem. Which strategy is being used?",
+   "choices": [
+    "Reducing the problem to a simpler subproblem.",
+    "Applying a solution method from a different but similar problem.",
+    "Proving a special case first to build intuition.",
+    "Working backwards from the desired conclusion."
+   ],
+   "answer": "Applying a solution method from a different but similar problem.",
+   "rationale": "Transferring a known technique from a related, analogous problem illustrates the analogy strategy—using similarity to another domain to guide the attack.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L368",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "A mathematician wants to prove that a certain graph has a Hamiltonian cycle. She assumes the cycle exists, deduces necessary degree conditions, and then verifies those conditions hold. Which strategy is being used?",
+   "choices": [
+    "Assuming the conclusion and deriving necessary conditions.",
+    "Reducing the graph to a smaller subgraph.",
+    "Examining small graphs to guess a general theorem.",
+    "Translating the problem into an algebraic formulation."
+   ],
+   "answer": "Assuming the conclusion and deriving necessary conditions.",
+   "rationale": "Starting from the desired conclusion and reasoning backward to required conditions is the working‑backward strategy.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L547",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 547,
+   "format": "multiple_choice",
+   "prompt": "How should authors courteously respond to a referee’s request to clarify a change?",
+   "choices": [
+    "Address the point directly, state any change, and identify its manuscript location",
+    "Ignore the request and argue that the original method was already correct",
+    "Reply only to the editor and leave the referee’s concern unanswered",
+    "Promise every requested change without discussing feasibility or implementation"
+   ],
+   "answer": "Address the point directly, state any change, and identify its manuscript location",
+   "rationale": "A strong response is specific and courteous: address the point, explain the action taken, and direct the editor and referee to the relevant text.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L547",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 547,
+   "format": "multiple_choice",
+   "prompt": "When selecting a journal for a manuscript that bridges two specialized subfields, which criterion should be weighed most heavily to ensure the work reaches the appropriate audience?",
+   "choices": [
+    "The journal’s current impact factor",
+    "The match between the journal’s scope and the manuscript’s interdisciplinary focus",
+    "The article‑processing charge for open‑access publication",
+    "The journal’s average time from submission to first decision"
+   ],
+   "answer": "The match between the journal’s scope and the manuscript’s interdisciplinary focus",
+   "rationale": "A journal whose stated scope explicitly covers both subfields will attract the relevant reviewers and readers, whereas impact factor, fees, or speed are secondary to audience fit.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L306",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "Let a Monte Carlo Feynman–Kac estimate have deterministic spatial bias 2h and sampling variance 100/N, independently. With h=0.01 and N=10,000, what is its root-mean-square error?",
+   "choices": [
+    "0.01990",
+    "0.10000",
+    "0.10198",
+    "0.12000"
+   ],
+   "answer": "0.10198",
+   "rationale": "The spatial bias is 0.02 and the sampling standard error is sqrt(100/10000)=0.10. Their root-sum-square is sqrt(0.02²+0.10²)=sqrt(0.0104), approximately 0.10198.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L306",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "For an Ito value, let Y be unbiased and û_h a grid-based control variate. Given Var(Y)=1, Var(û_h)=4, Cov(Y,û_h)=1.6, which result is correct for the centered proxy?",
+   "choices": [
+    "β=0.40; residual variance 0.36; remains unbiased; RMSE=0.60.",
+    "β=0.40; residual variance 0.64; remains unbiased; RMSE=0.80.",
+    "β=0.25; residual variance 0.36; remains unbiased; RMSE=0.60.",
+    "β=2.50; residual variance 0.36; remains unbiased; RMSE=0.60."
+   ],
+   "answer": "β=0.40; residual variance 0.36; remains unbiased; RMSE=0.60.",
+   "rationale": "The optimal coefficient is Cov/Var=1.6/4=0.40. Centering preserves unbiasedness, and the residual variance is 1−1.6²/4=0.36, giving RMSE sqrt(0.36)=0.60.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L306",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "A multilevel Monte Carlo estimator for an SDE uses Euler step h and M samples. Weak bias = 2h, variance per sample = 1. Total work W = M/h = 10^6. What is the minimal root‑mean‑square error achievable?",
+   "choices": [
+    "0.017",
+    "0.025",
+    "0.012",
+    "0.030"
+   ],
+   "answer": "0.017",
+   "rationale": "RMSE^2 = (2h)^2 + 1/M with M = Wh. Minimizing 4h^2 + 1/(Wh) gives h = (1/(8W))^{1/3}. For W=10^6, h≈0.005, M≈5000, RMSE^2≈3×10^{-4}, so RMSE≈0.017.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L473",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Which section must a dissertation prospectus include to demonstrate awareness of existing scholarship?",
+   "choices": [
+    "Detailed methodology",
+    "Comprehensive literature review",
+    "Full data analysis",
+    "Final conclusions"
+   ],
+   "answer": "Comprehensive literature review",
+   "rationale": "A prospectus must contain a comprehensive literature review to show the candidate knows prior work and positions the problem within the field.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A comprehensive literature review demonstrates the dissertation's awareness of existing scholarship.",
+      "url": "https://en.wikipedia.org/wiki/Graduate_science_education_in_the_United_States",
+      "quote": "In many cases, depending on the discipline, a dissertation consists of a comprehensive literature review , an outline of methodology, and several chapters of scientific, social, historical, philosophical, or literary analysis.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L473",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "Which component of a dissertation prospectus most directly demonstrates that the proposed research can be completed within the allotted time?",
+   "choices": [
+    "A detailed work plan with milestones and deadlines",
+    "An exhaustive literature review covering all related fields",
+    "Complete source code for the planned data analysis",
+    "A list of potential journals for future publications"
+   ],
+   "answer": "A detailed work plan with milestones and deadlines",
+   "rationale": "A realistic plan with specific milestones shows feasibility; the other items are valuable but do not prove timeline viability.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A timeline with milestones and deadlines is the standard way to show that a proposed project is feasible.",
+      "url": "https://en.wikipedia.org/wiki/Time_limit",
+      "quote": "In project management , deadlines are most often associated with milestones .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L264",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "topology",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "For an affine scheme X = Spec A and a quasi-coherent sheaf F, what does the affine vanishing theorem state?",
+   "choices": [
+    "H^i(X,F) = 0 for every i > 0",
+    "H^i(X,F) = 0 for every i ≥ 0",
+    "H^i(X,F) is nonzero for every i > 0",
+    "H^i(X,F) = 0 exactly when i < 0"
+   ],
+   "answer": "H^i(X,F) = 0 for every i > 0",
+   "rationale": "Quasi-coherent sheaf cohomology vanishes in all positive degrees on an affine scheme, although degree-zero cohomology need not vanish.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "For any quasi‑coherent sheaf on an affine scheme, all higher cohomology groups vanish.",
+      "url": "https://en.wikipedia.org/wiki/Coherent_sheaf_cohomology",
+      "quote": "In fact, affine schemes are characterized among all quasi-compact schemes by the vanishing of higher cohomology for quasi-coherent sheaves.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L495",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "During a long project, an experiment produces inconclusive results and progress has stalled for several months. What is the most effective response that keeps the project moving without ignoring the uncertainty?",
+   "choices": [
+    "Break the uncertainty into a small testable next step, then review it with the mentor.",
+    "Repeat the same experiment more times before changing the research approach.",
+    "Replace the stalled aim with a broader topic to restore interest immediately.",
+    "Wait for the next scheduled committee meeting before attempting any progress."
+   ],
+   "answer": "Break the uncertainty into a small testable next step, then review it with the mentor.",
+   "rationale": "A small, testable step preserves momentum, while mentor input helps address uncertainty and avoid unproductive repetition.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L495",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "Two years into the PhD, repeated dead ends are leaving the researcher exhausted and disengaged. What action best supports sustainable progress and wellbeing?",
+   "choices": [
+    "Discuss workload and wellbeing with the mentor, then set realistic priorities and recovery boundaries.",
+    "Work longer hours each week until the current results finally become conclusive.",
+    "Delay discussing the difficulty until the next formal progress review meeting.",
+    "Remove the most challenging tasks and continue working only on easier ones."
+   ],
+   "answer": "Discuss workload and wellbeing with the mentor, then set realistic priorities and recovery boundaries.",
+   "rationale": "A candid mentor discussion can identify unsustainable demands and support realistic priorities, boundaries, and recovery.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L495",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "After a three-month interruption, the researcher returns to a complex project containing many files. Which record should be consulted first to resume work efficiently?",
+   "choices": [
+    "A dated decision log listing current questions, next steps, and unresolved issues.",
+    "An archive of raw data files stored in the project’s main analysis folder.",
+    "The original proposal document, especially its opening literature review.",
+    "A colleague’s notes from meetings held before the interruption began."
+   ],
+   "answer": "A dated decision log listing current questions, next steps, and unresolved issues.",
+   "rationale": "A current decision log provides the rationale, status, and immediate next actions needed to reconstruct the project’s direction.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L495",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "The original research question no longer matches the evidence emerging in year three, and the researcher feels pressure to continue unchanged. What is the strongest way to handle the shift?",
+   "choices": [
+    "Discuss the evidence with mentors and peers, then document a revised question and plan.",
+    "Keep the original wording unchanged so that earlier work remains fully relevant.",
+    "Change the question immediately without documentation to avoid unnecessary discussion.",
+    "Select a new question independently and inform supervisors only after completion."
+   ],
+   "answer": "Discuss the evidence with mentors and peers, then document a revised question and plan.",
+   "rationale": "Consulting mentors and peers supports a reasoned reassessment, while documenting the revision preserves clarity and continuity across the long project.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L599",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 599,
+   "format": "multiple_choice",
+   "prompt": "When anticipating committee questions, which preparation method best balances thoroughness and flexibility during the defense?",
+   "choices": [
+    "Memorize a full script of every possible answer",
+    "Write a 10‑page narrative covering all topics",
+    "Create a concise question bank with bullet‑point responses",
+    "Assume the committee will ask only about the abstract"
+   ],
+   "answer": "Create a concise question bank with bullet‑point responses",
+   "rationale": "A focused question bank lets you retrieve key points quickly while still adapting to unexpected follow‑ups.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L599",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 599,
+   "format": "multiple_choice",
+   "prompt": "You have 20 minutes for a defense talk and five minutes for questions. Which preparation plan is most appropriate?",
+   "choices": [
+    "Memorize a full script, devote most slides to background, and practice no follow-up answers.",
+    "Organize slides around key claims, practice concise methods and results explanations, and rehearse follow-up answers.",
+    "Read all relevant papers, place every result in an appendix, and avoid stating the study’s main conclusion.",
+    "Use a detailed field chronology, minimize discussion of methods, and present the conclusion only if asked."
+   ],
+   "answer": "Organize slides around key claims, practice concise methods and results explanations, and rehearse follow-up answers.",
+   "rationale": "An effective defense talk foregrounds the study’s claims and evidence while leaving time to rehearse concise answers to likely questions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L599",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 599,
+   "format": "multiple_choice",
+   "prompt": "A committee member asks, “How do you know your interview sample is representative when participants self-selected?” What is the strongest defense-talk response?",
+   "choices": [
+    "The sample was large enough to make self-selection irrelevant to the findings.",
+    "I will read the recruitment advertisement and the complete interview transcript.",
+    "I will state the limitations, explain recruitment context, and show analyses addressing possible selection bias.",
+    "I will replace the original sample with a more representative sample during the defense."
+   ],
+   "answer": "I will state the limitations, explain recruitment context, and show analyses addressing possible selection bias.",
+   "rationale": "A strong response acknowledges the limitation and then supports the findings with transparent recruitment information and appropriate bias analyses.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L599",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 599,
+   "format": "multiple_choice",
+   "prompt": "Your defense is conditionally passed. The program requires approved revisions before final formatting and deposit. What should happen next?",
+   "choices": [
+    "Deposit the current files, format them later, and notify the committee after submission.",
+    "Revise the manuscript, obtain the required approval, and then format and deposit the final version.",
+    "Format the current version, revise the content, and deposit both versions without approval.",
+    "Revise only the slides, keep the chapter unchanged, and submit the final files immediately."
+   ],
+   "answer": "Revise the manuscript, obtain the required approval, and then format and deposit the final version.",
+   "rationale": "The candidate should complete the agreed revisions, secure any required approval, and only then perform final formatting and deposit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L589",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 589,
+   "format": "multiple_choice",
+   "prompt": "Which factor is most critical for selecting a summer school or institute program aligned with a PhD candidate's research goals?",
+   "choices": [
+    "Proximity to the candidate's home institution",
+    "Availability of travel funding for all attendees",
+    "Curriculum relevance and faculty expertise in the candidate's specialty",
+    "Length of the program in weeks"
+   ],
+   "answer": "Curriculum relevance and faculty expertise in the candidate's specialty",
+   "rationale": "Alignment of curriculum and faculty expertise with the candidate's specialty ensures the program advances their research objectives.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L589",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 589,
+   "format": "multiple_choice",
+   "prompt": "Which U.S. federal agency primarily funds graduate research through the Graduate Research Fellowship Program (GRFP)?",
+   "choices": [
+    "National Institutes of Health",
+    "National Science Foundation",
+    "Department of Energy",
+    "National Aeronautics and Space Administration"
+   ],
+   "answer": "National Science Foundation",
+   "rationale": "The NSF administers the GRFP, the premier federal fellowship for graduate students in STEM fields.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Graduate Research Fellowship Program (GRFP) is sponsored by the National Science Foundation.",
+      "url": "https://en.wikipedia.org/wiki/Graduate_Research_Fellowship_Program",
+      "quote": "\"2020 GRFP Application Guidelines\" . Chicago, IL: National Science Foundation . Retrieved 2019-10-10 .",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The National Science Foundation administers the Graduate Research Fellowship Program.",
+      "url": "https://en.wikipedia.org/wiki/Graduate_Research_Fellowship_Program",
+      "quote": "The National Science Foundation Graduate Research Fellowship Program (NSF-GRFP) is a grant awarded annually by the National Science Foundation to approximately 2,000 students pursuing research-based Master's and doctoral degrees in the natural, social, and engineering sciences at US institutions.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L430",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "A journal you plan to submit to permits preprints on arXiv provided they are posted no later than the time of submission and carry the journal’s accepted license (usually CC‑BY‑NC‑ND). Which action follows this policy?",
+   "choices": [
+    "Post the preprint on arXiv at submission with the journal’s required license.",
+    "Wait until after acceptance to post the preprint on arXiv.",
+    "Post the preprint on arXiv before submission under a CC‑BY license of your choice.",
+    "Never post a preprint because the journal offers a gold open‑access option."
+   ],
+   "answer": "Post the preprint on arXiv at submission with the journal’s required license.",
+   "rationale": "Most journals allow a preprint at submission (or earlier) but not after acceptance, and they usually require the preprint to carry the journal’s specified license (often CC‑BY‑NC‑ND).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L430",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Your funder requires that the code and data underlying a publication be deposited in a FAIR‑compliant repository with a persistent identifier. Which action satisfies this requirement?",
+   "choices": [
+    "Deposit code and data in a domain‑specific repository (e.g., Zenodo, Dryad) that assigns a DOI and applies an open license.",
+    "Upload the code as a supplementary PDF file to the journal’s website.",
+    "Store the files on a personal cloud drive and share the link in the manuscript.",
+    "Email the code to the reviewers during the peer‑review process."
+   ],
+   "answer": "Deposit code and data in a domain‑specific repository (e.g., Zenodo, Dryad) that assigns a DOI and applies an open license.",
+   "rationale": "FAIR compliance demands a persistent identifier (DOI), open licensing, and a repository that ensures long‑term accessibility; supplementary PDFs, personal drives, and email do not meet these criteria.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "FAIR-compliant repositories such as Zenodo or Dryad assign persistent identifiers (DOIs) and apply open licenses.",
+      "url": "https://en.wikipedia.org/wiki/Zenodo",
+      "quote": "It provides a DOI to datasets and other submitted data that lacks one to make the work easier to cite and supports various data and license types.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Repositories such as Zenodo and Dryad assign persistent DOIs and support openly licensed deposits of research code and data.",
+      "url": "https://en.wikipedia.org/wiki/Zenodo",
+      "quote": "\"It provides a DOI to datasets and other submitted data that lacks one to make the work easier to cite and supports various data and license types.\"",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L430",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "probability",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "A journal’s publisher agreement assigns exclusive copyright to the publisher and permits deposit of the accepted manuscript in an institutional repository after a 12-month embargo. What should the author do?",
+   "choices": [
+    "Post the manuscript on arXiv immediately, despite the embargo",
+    "Wait until the embargo ends, then deposit it as the agreement permits",
+    "Post it permanently on a personal website because authors retain their tools",
+    "Post it on social media because linking to it is unrestricted"
+   ],
+   "answer": "Wait until the embargo ends, then deposit it as the agreement permits",
+   "rationale": "The agreement permits repository deposit only after the stated embargo. The author should wait until that period ends and then comply with the agreement’s deposit conditions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L569",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 569,
+   "format": "multiple_choice",
+   "prompt": "To make a proof‑based lesson inclusive for diverse learners, the instructor should:",
+   "choices": [
+    "Present each statement in formal notation, plain language, and a visual diagram; accept varied proof formats",
+    "Use only formal symbolic notation throughout the lesson",
+    "Deliver the content solely through oral lecture with no written supports",
+    "Require every student to produce a proof in the same two‑column format"
+   ],
+   "answer": "Present each statement in formal notation, plain language, and a visual diagram; accept varied proof formats",
+   "rationale": "Multiple representations and flexible proof formats address language, visual, and cognitive differences, fostering equity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L515",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "abstract_algebra",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "During a faculty hiring meeting, a senior professor suggests that candidates from certain universities are 'less rigorous.' This illustrates which type of bias?",
+   "choices": [
+    "Confirmation bias.",
+    "Affinity bias.",
+    "Stereotype threat.",
+    "Implicit (unconscious) bias."
+   ],
+   "answer": "Implicit (unconscious) bias.",
+   "rationale": "The professor’s automatic assumption about candidates based on institution reflects an unconscious stereotype, i.e., implicit bias.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Implicit bias refers to unconscious attitudes that influence decisions about individuals or groups.",
+      "url": "https://en.wikipedia.org/wiki/Unconscious_bias",
+      "quote": "This effect is particularly observable in real-world contexts such as judgments of fame and hiring processes.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Implicit bias consists of unconsciously held associations or stereotypes that can influence judgments.",
+      "url": "https://en.wikipedia.org/wiki/Implicit_bias",
+      "quote": "Implicit stereotypes – unconscious associations held by individuals – can influence behavior even when they contradict consciously endorsed beliefs. This effect is particularly observable in real-world contexts such as judgments of fame and hiring processes.",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L654",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 654,
+   "format": "multiple_choice",
+   "prompt": "A collaborator says “the effect of training” is ambiguous because productivity and follow-up vary. Which formulation best makes the target quantity explicit?",
+   "choices": [
+    "Assume all productivity differences are caused by training.",
+    "Define conditional effects and specify how to average them.",
+    "Replace the effect with prediction error and minimize validation loss.",
+    "Adjust for covariates but leave the target effect undefined."
+   ],
+   "answer": "Define conditional effects and specify how to average them.",
+   "rationale": "Defining conditional effects and their aggregation makes the estimand precise while acknowledging the sources of heterogeneity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L654",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 654,
+   "format": "multiple_choice",
+   "prompt": "Two collaborators’ models fit similarly but imply different treatment effects. What is the most defensible way to reconcile them?",
+   "choices": [
+    "Choose the model with lower AIC and report its causal interpretation.",
+    "Pool the estimates without checking whether their targets agree.",
+    "Compare assumptions and estimands, then agree on one target model.",
+    "Retain whichever treatment coefficient has the smaller p-value."
+   ],
+   "answer": "Compare assumptions and estimands, then agree on one target model.",
+   "rationale": "A defensible reconciliation requires agreement about the causal target, model assumptions, and the mathematical quantity each model estimates.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L654",
+   "track_id": "math",
+   "grade_id": "doctoral",
+   "skill_id": "discrete_math",
+   "level": 654,
+   "format": "multiple_choice",
+   "prompt": "A paper claims an adaptive policy improves expected utility under a specified MDP. Which result deserves proof?",
+   "choices": [
+    "Under the model, an optimal admissible policy has expected utility at least a feasible baseline’s.",
+    "The simulation includes every state label at least once.",
+    "Gradient descent converges faster than random search for this policy.",
+    "The policy improves utility in every state under all possible transitions."
+   ],
+   "answer": "Under the model, an optimal admissible policy has expected utility at least a feasible baseline’s.",
+   "rationale": "This theorem directly supports the paper’s central claim under stated assumptions. The other results are peripheral or demand conclusions that the model does not justify.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  }
+ ]
+}

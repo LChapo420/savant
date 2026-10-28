@@ -1,0 +1,154 @@
+{
+ "collection": "lessons",
+ "row_id": 130,
+ "shared": false,
+ "user_id": 252,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P17",
+   "wrong": "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x = 5, and the check 5 - 7 = -2 does not equal 12. The - 7 needs + 7.",
+   "correct": "Subtracting 7 from both sides of x - 7 = 12 gives x - 14 = 5 (x = 19), not x = 5. The slip that gives 5 is computing 12 - 7.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x = 5, and the check 5 - 7 = -2 does not equal 12. The - 7 needs + 7.",
+   "replace": "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x - 14 = 5 (x = 19), not x = 5. The slip that gives 5 is computing 12 - 7. The - 7 needs + 7: add 7 to both sides to get x = 19.",
+   "fixes": [
+    "P17"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x = 5, and the check 5 - 7 = -2 does not equal 12. The - 7 needs + 7.",
+   "after": "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x - 14 = 5 (x = 19), not x = 5. The slip that gives 5 is computing 12 - 7. The - 7 needs + 7: add 7 to both sides to get x = 19.",
+   "fixes": [
+    "P17"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Linear Equations: Undoing to Find x",
+  "intro": "A linear equation is a balance: both sides hold the same value. Solving means undoing what was done to x, one move at a time. In this lesson you will learn the undo rule and use it on one-step and two-step equations.",
+  "sections": [
+   {
+    "heading": "The undo rule",
+    "body": "Rule: whatever you do to one side of the equation, do to the other side. To undo an operation, use its opposite: undo + with -, undo - with +, undo times with divide. The goal is to get x alone on one side.\n\nSay you have x + 7 = 12. The + 7 is stuck to x, so undo it by subtracting 7 from both sides: x + 7 - 7 = 12 - 7, which gives x = 5. The check: 5 + 7 = 12.",
+    "example": "x - 7 = 12. Undo the - 7 by adding 7 to both sides: x - 7 + 7 = 12 + 7, so x = 19. Check: 19 - 7 = 12."
+   },
+   {
+    "heading": "One-step equations with multiplication",
+    "body": "Rule: when x is multiplied by a number, undo it by dividing both sides by that number. Say you have 4x = 20. Divide both sides by 4: 4x / 4 = 20 / 4, which gives x = 5. The check: 4 times 5 = 20.\n\nThe same rule runs backwards. If x is divided by 3, undo it by multiplying both sides by 3.",
+    "example": "x / 3 = 6. Multiply both sides by 3: (x / 3) times 3 = 6 times 3, so x = 18. Check: 18 / 3 = 6."
+   },
+   {
+    "heading": "Two-step equations: undo addition first",
+    "body": "Rule: undo the + or - first, then undo the times or divide. Say you have 3x + 5 = 20. Subtract 5 from both sides to get 3x = 15, then divide both sides by 3 to get x = 5. The check: 3 times 5 plus 5 equals 20.\n\nIf you do the steps in the other order you get fractions and more chances to slip. Addition first keeps the numbers clean.",
+    "example": "5x - 3 = 22. Add 3 to both sides: 5x = 25. Divide both sides by 5: x = 5. Check: 5 times 5 minus 3 = 25 - 3 = 22."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 5x - 3 = 22.",
+   "steps": [
+    "Identify what is stuck to x: 5x - 3, so there is a times 5 and a - 3.",
+    "Undo the - 3 first. Its opposite is + 3, so add 3 to both sides: 5x - 3 + 3 = 22 + 3.",
+    "Simplify both sides: 5x = 25.",
+    "Undo the times 5. Divide both sides by 5: 5x / 5 = 25 / 5.",
+    "Simplify both sides: x = 5.",
+    "Check by substituting x = 5 back into the original: 5(5) - 3 = 25 - 3 = 22. It matches, so x = 5 is right."
+   ],
+   "answer": "x = 5"
+  },
+  "common_mistakes": [
+   "Using the wrong opposite: in x - 7 = 12, subtracting 7 from both sides gives x - 14 = 5 (x = 19), not x = 5. The slip that gives 5 is computing 12 - 7. The - 7 needs + 7: add 7 to both sides to get x = 19.",
+   "Dividing only one side: in 5x = 25, dividing the left side by 5 to get x but leaving the right side at 25 produces x = 25, and the check 5(25) = 125 does not equal 25. You must divide both sides.",
+   "Dividing before undoing the + and dropping the fraction: in 3x + 5 = 20, dividing the left by 3 and writing x + 5 = 20 / 3 drops the 5 to 5 / 3. That gives x = 5 / 3, and the check 3(5 / 3) + 5 = 10 does not equal 20. Subtract 5 first instead.",
+   "Subtracting the wrong number in a two-step equation: in 5x - 3 = 22, subtracting 3 gives 5x = 19 and then x = 19 / 5, which fails the check. The - 3 needs + 3."
+  ],
+  "summary": "Solving a linear equation means undoing each operation with its opposite, always doing the same move to both sides. Undo + or - first, then undo times or divide, until x is alone. Substitute your answer back in to check it.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "To solve x + 9 = 15, which move do you make first?",
+    "answer": "Subtract 9 from both sides",
+    "rationale": "The opposite of + 9 is - 9, so subtracting 9 from both sides gives x = 6.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Add 9 to both sides",
+     "Subtract 9 from both sides",
+     "Divide both sides by 9",
+     "Multiply both sides by 9"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 4x = 28. Write the value of x.",
+    "answer": "7",
+    "rationale": "Undo the times 4 by dividing both sides by 4: 28 / 4 = 7.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "In 5x - 3 = 22, what is the correct first move?",
+    "answer": "Add 3 to both sides",
+    "rationale": "You undo the + or - first. The opposite of - 3 is + 3, so adding 3 to both sides gives 5x = 25.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Divide both sides by 5",
+     "Add 3 to both sides",
+     "Subtract 3 from both sides",
+     "Add 22 to both sides"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 3x + 5 = 20. Write the value of x.",
+    "answer": "5",
+    "rationale": "Subtract 5 from both sides to get 3x = 15, then divide both sides by 3 to get x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

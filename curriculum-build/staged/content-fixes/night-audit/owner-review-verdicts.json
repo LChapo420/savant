@@ -1,0 +1,3792 @@
+{
+ "generated": "2026-10-24T20:29:10.391Z",
+ "note": "Source check of every owner-review item (owner-review.json). Game items are moot for learners: every one of their rows is either held or replaced by a verified regenerated set, so nothing is re-keyed in game_payloads. Non-game items are fixed by verified rewrites (staged/content-fixes/owner-review/) or refuted.",
+ "summary": {
+  "items": 163,
+  "confirmed_key_wrong": 80,
+  "confirmed_no_single_answer": 75,
+  "refuted": 8,
+  "missing": 0,
+  "game_items": 153,
+  "moot_replaced_rows": 16,
+  "moot_held_rows": 139,
+  "still_served_game": 0,
+  "quotes_verbatim": 48,
+  "quotes_total": 48,
+  "quote_failures": []
+ },
+ "items": [
+  {
+   "index": 0,
+   "uid": "q-02c054632783",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[13]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence keeps a consistent active voice across both clauses?",
+   "key": "We announced the winners, and cheers filled the room.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 and 2 are both active in both clauses",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Active_voice",
+   "quote": "In active voice, the subject of the sentence performs the action expressed by the main verb and is thus the agent.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 1,
+   "uid": "q-028a4ab61b2f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 33,
+     "path": "payload.questions[28]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank so the mood stays imperative: Lock the storage room, and then ___ before the storm arrives.",
+   "key": "you packed the gear",
+   "verdict": "confirmed: key wrong",
+   "correct": "Pack your gear",
+   "note": "only \"Pack your gear\" is imperative",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Imperative_mood",
+   "quote": "The imperative mood is a grammatical mood that forms a command or request.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 2,
+   "uid": "q-012eb04eeae6",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 49,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence correctly uses a colon to introduce an explanation?",
+   "key": "That night changed everything; I knew it.",
+   "verdict": "confirmed: key wrong",
+   "correct": "That night changed everything: I knew it.",
+   "note": "the colon version introduces the explanation; the key is the semicolon",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 3,
+   "uid": "q-01ea8807896a",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 41,
+     "path": "payload.questions[18]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence contains an inappropriate shift in voice?",
+   "key": "The whistle was blown by the referee, and the crowd was sent roaring.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option shows a voice shift: 1 is passive throughout, 2 is ungrammatical, 3 has a dangling modifier",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 4,
+   "uid": "prose-7c64058201db",
+   "occ": [
+    {
+     "coll": "lessons",
+     "row": 2815,
+     "path": "body",
+     "user": 4
+    }
+   ],
+   "prompt": "Both verb phrases follow the pattern [verb]s [it] into/across [a unit], keeping the parallel. / Check parallelism: both clauses follow the pattern lets the silence [verb/phrase]. grows louder and rema",
+   "key": null,
+   "verdict": "confirmed: key wrong",
+   "correct": null,
+   "note": "confirmed: 5 owner errors plus N2/N3; rewritten (lessons 2815)",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": false,
+   "fixed_by": "owner-review rewrite lessons:2815"
+  },
+  {
+   "index": 5,
+   "uid": "q-0517e8c2d006",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 29,
+     "path": "payload.questions[20]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In a formal research essay, a student writes: 'Which explains why the experiment failed.' Standing alone as its own sentence, how should this be judged?",
+   "key": "rhetorical fragment: deliberate emphasis",
+   "verdict": "confirmed: key wrong",
+   "correct": "accidental fragment: careless error",
+   "note": "a lone \"Which explains...\" relative clause in a formal research essay is an accidental fragment",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 6,
+   "uid": "q-042aaa60e974",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 31,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision best fixes the shift in \"The report was finished by the whole team, and then they celebrated loudly\"?",
+   "key": "Rewrite as \"The star player skips practice, and benching happens.\" so the mood stays consistent.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the options are about a benched star player, not the report sentence in the prompt",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 7,
+   "uid": "q-04a471bd7afc",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 53,
+     "path": "payload.questions[22]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: I grabbed my backpack. I grabbed my lunch and my keys. I still missed the bus.",
+   "key": "I grabbed my backpack, my lunch, and my keys — and still missed the bus.",
+   "verdict": "refuted: key correct",
+   "correct": "I grabbed my backpack, my lunch, and my keys — and still missed the bus.",
+   "note": "the dash version is correct; 0 misuses an ellipsis, 2 lacks list commas, 3 puts a comma before a compound predicate",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 8,
+   "uid": "q-052950b0e829",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[47]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In the sentence The council approved the budget, and a new park was announced by the mayor, where does the inappropriate shift in voice occur?",
+   "key": "before the semicolon",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the sentence has no semicolon; the shift happens after the comma, which no option says",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 9,
+   "uid": "q-00e620a28b01",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 32,
+     "path": "payload.questions[10]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence contains an inappropriate shift?",
+   "key": "The vase was knocked off the shelf by the cat, and it was swept up by me.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key (0) is passive throughout with no shift; options 1 and 3 both shift voice",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 10,
+   "uid": "q-0897668126e4",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 50,
+     "path": "payload.questions[36]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Revise: The sky darkened the storm was coming.",
+   "key": "The sky darkened; the storm was coming.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the semicolon (key), the colon and the dash all repair the fused sentence",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "quote": "The most common use of the semicolon is to join two independent clauses without using a conjunction such as the word and.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 11,
+   "uid": "q-07bc74c1c333",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 68,
+     "path": "payload.questions[39]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence's diction best fits a serious news report about a dangerous storm?",
+   "key": "The chilly air made everyone shiver.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The frigid air made everyone shiver.",
+   "note": "\"chilly\" is mild; \"frigid\" fits a serious report about a dangerous storm",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/frigid",
+   "quote": "Very cold; lacking warmth; icy.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 12,
+   "uid": "q-095a088eb8d1",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 53,
+     "path": "payload.questions[32]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine with an omission: I wanted to tell her the truth. I never got the chance. The moment passed.",
+   "key": "- …",
+   "verdict": "confirmed: key wrong",
+   "correct": "...",
+   "note": "the ellipsis marks omitted words",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "quote": "An ellipsis can be used in many ways, such as for intentional omission of text or numbers, to imply a concept without using words, or to mark a pause in speech.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 13,
+   "uid": "q-0a364e56de9f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 69,
+     "path": "payload.questions[40]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In a formal lab report, which revision of I need to check the thing about the data is best?",
+   "key": "A thing needs checking by me.",
+   "verdict": "confirmed: key wrong",
+   "correct": "I need to check something.",
+   "note": "the key \"A thing needs checking by me\" is the vaguest and adds a stiff passive",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "quote": "The term register is often, in language teaching especially, shorthand for formal/informal style, although this is an aging definition.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 14,
+   "uid": "q-0a482c5d445e",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 65,
+     "path": "payload.questions[13]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Thrifty and stingy both describe careful spending. How do they differ?",
+   "key": "One is formal while the other is slang",
+   "verdict": "confirmed: key wrong",
+   "correct": "One is positive while the other is negative",
+   "note": "thrifty is approving, stingy disapproving",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/stingy",
+   "quote": "Unwilling to spend, give, or share; ungenerous; mean.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 15,
+   "uid": "q-0b64abfd9ed1",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 52,
+     "path": "payload.questions[38]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: I found the letter. You kept it all these years. He whispered it, voice faltering. Which version shows the faltering, trailing hesitation?",
+   "key": "\"I found the letter. You kept it all these years,\" he whispered.",
+   "verdict": "confirmed: key wrong",
+   "correct": "\"I found the letter you... you kept it all these years,\" he whispered.",
+   "note": "the ellipsis shows the faltering hesitation; the key has none",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "quote": "Depending on context, ellipsis can indicate an unfinished thought, a leading statement, a slight pause, an echoing voice, or a nervous or awkward silence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 16,
+   "uid": "q-0ba553699edb",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 62,
+     "path": "payload.questions[43]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In standard usage, what distinguishes affect from effect?",
+   "key": "Affect is only used in formal writing; effect only in speech",
+   "verdict": "confirmed: key wrong",
+   "correct": "Effect is usually the noun; affect is usually the verb",
+   "note": "effect is usually the noun, affect usually the verb",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "quote": "(transitive) To influence or alter.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 17,
+   "uid": "q-0c30bb2995e8",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[25]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: The plan had one flaw. Nobody had checked the weather.",
+   "key": "The plan had one flaw: nobody had checked the weather.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the colon (key) and the semicolon are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 18,
+   "uid": "q-0cd91ba0b85d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 6,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which sentence best serves as a concession-and-rebuttal pair in an essay against homework?",
+   "key": "Critics of homework are wrong because teachers assign it for good reasons",
+   "verdict": "confirmed: key wrong",
+   "correct": "Although some believe homework improves learning, a 2019 district study found no gains in test scores",
+   "note": "only option 2 concedes (\"Although some believe...\") and then rebuts with evidence",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Adverbial_clause",
+   "quote": "Adverb clause of concession (contrast)",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 19,
+   "uid": "q-0d92d5f275b3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 55,
+     "path": "payload.questions[30]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence trails off softly instead of ending with a firm stop?",
+   "key": "The storm, lifted by morning…",
+   "verdict": "confirmed: key wrong",
+   "correct": "The storm lifted by morning…",
+   "note": "the key \"The storm, lifted by morning…\" is a fragment; 2 is a sentence that trails off",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 20,
+   "uid": "q-0d6c2cc163be",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 61,
+     "path": "payload.questions[8]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence marks its break and states current guide practice correctly?",
+   "key": "Singular they is accepted, by several major style guides.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "every option misplaces a comma; the key's content is true but its comma is wrong",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Singular_they",
+   "quote": "However, by 2020, most style guides and English-learning websites, such as the APA, AP, CMOS, British Council etc. accepted the singular they as a personal pronoun.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 21,
+   "uid": "q-0e845d36c580",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 20,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "[Fill in the blank] The chief effect of a periodic sentence is ______.",
+   "key": "suspense with emphasis at the start",
+   "verdict": "confirmed: key wrong",
+   "correct": "suspense with emphasis at the end",
+   "note": "a periodic sentence saves the emphasis for the end",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "The periodic sentence emphasizes its main idea by placing it at the end, following all the subordinate clauses and other modifiers that support the principal idea.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 22,
+   "uid": "q-0b51a1214959",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 17,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which option is a complete sentence?",
+   "key": "Whoever finishes first, which is rarely me.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0, 1 and 2 are complete sentences; the key (3) is a fragment",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 23,
+   "uid": "q-0aac22da6148",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 13,
+     "path": "payload.questions[44]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which phrase correctly completes \"The committee reviewed the essays and approved ___ after ___ had been revised twice\" with consistent pronoun reference?",
+   "key": "each essay",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the prompt has two blanks but each option fills one",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 24,
+   "uid": "q-11f28f750450",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 48,
+     "path": "payload.questions[20]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In a rubric check, why is the colon in this sentence wrong: My hobbies are: running, reading, and chess?",
+   "key": "Because the words before it are a complete sentence",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the colon is wrong because the words before it are NOT a complete sentence; the key says the opposite and no option says that",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 25,
+   "uid": "q-134d9abd1114",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 32,
+     "path": "payload.questions[17]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: (1) Leave the building immediately. (2) Gather at the flagpole. (3) Do not reenter until the alarm stops. Which combination keeps the mood consistent?",
+   "key": "If the alarm sounds, leave the building immediately and gather at the flagpole.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "option 0 keeps the mood but drops sentence 3; no option combines all three",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Imperative_mood",
+   "quote": "The imperative mood is a grammatical mood that forms a command or request.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 26,
+   "uid": "q-12d95384482b",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 38,
+     "path": "payload.questions[31]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine so the choir, not the anthem, is emphasized: The anthem was sung by the choir. The flag was raised at the same time.",
+   "key": "The choir sang the anthem, and then the flag was raised.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The choir sang the anthem while the flag was being raised.",
+   "note": "\"and then\" changes \"at the same time\"; option 1 keeps the timing with the choir as subject",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Active_voice",
+   "quote": "In active voice, the subject of the sentence performs the action expressed by the main verb and is thus the agent.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 27,
+   "uid": "q-139be00911c7",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 64,
+     "path": "payload.questions[40]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Choose the correct word: 'The puppy wagged ___ tail.'",
+   "key": "its",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "repeated options (\"it's\" twice, \"its\" twice); \"its\" is correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "quote": "Equivalent to it +‎ -s (possessive marker).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 28,
+   "uid": "q-1458bad7d2a5",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 27,
+     "path": "payload.questions[23]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What is the rhetorical advantage of a balanced sentence like To err is human; to forgive is divine?",
+   "key": "It signals to readers that the writer is being ironic.",
+   "verdict": "confirmed: key wrong",
+   "correct": "It mirrors two halves against each other, making the contrast memorable and persuasive.",
+   "note": "a balanced sentence mirrors two halves to sharpen a contrast",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Antithesis",
+   "quote": "Parallelism of expression serves to emphasize opposition of ideas\".",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 29,
+   "uid": "q-1468d2dac749",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 21,
+     "path": "payload.questions[36]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: The crowd held its breath. The runner approached the bar. The bar was set at a world-record height.",
+   "key": "The runner approached the bar at a world-record height, the crowd held its breath.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The crowd held its breath as the runner approached the bar that was set at a world-record height.",
+   "note": "the key is a comma splice; option 2 is correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 30,
+   "uid": "q-0acdb8171c1d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 31,
+     "path": "payload.questions[17]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What is the basic fix for an inappropriate mood shift within one paragraph?",
+   "key": "Rewrite the first part so the mood matches the second.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "rewriting either part to match the other (0 or 3) fixes the shift",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 31,
+   "uid": "q-10f7a93f5b2f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 18,
+     "path": "payload.questions[40]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why does 'Because the roads iced over overnight, schools closed' work better as 'Because the roads iced over overnight, a full week of classes was suddenly cancelled, schools closed'? Wait — instead: a writer wants maximum suspense from these two facts: The roads iced over overnight. Schools closed. Which pattern should she choose, and why?",
+   "key": "Because splitting the idea in two keeps the reader from rushing ahead too fast.",
+   "verdict": "confirmed: key wrong",
+   "correct": "Because saving the main clause for last builds suspense and lands the news with a punch.",
+   "note": "saving the main clause for last builds suspense; the prompt also contains a drafting note (\"Wait — instead:\")",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "The periodic sentence emphasizes its main idea by placing it at the end, following all the subordinate clauses and other modifiers that support the principal idea.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 32,
+   "uid": "q-10e2b6e4b65d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 20,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank: A fragment can never be a cumulative sentence because a cumulative sentence must ______.",
+   "key": "fragments are never cumulative",
+   "verdict": "confirmed: key wrong",
+   "correct": "begins with an independent clause",
+   "note": "a cumulative (loose) sentence begins with its independent clause",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 33,
+   "uid": "q-11a2a82fd589",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 39,
+     "path": "payload.questions[24]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence expands this plain one without a mood shift: If the tickets were cheaper, we would go more often?",
+   "key": "If the tickets were cheaper, more students attend the matinee.",
+   "verdict": "confirmed: key wrong",
+   "correct": "If the tickets were cheaper, the show would sell out every night.",
+   "note": "only option 0 keeps the \"were ... would\" unreal conditional",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "quote": "Special tense morphology can be used to form a counterfactual conditional.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 34,
+   "uid": "q-17fe02eb53c3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 68,
+     "path": "payload.questions[18]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "The word 'homey' is a good choice to describe a kitchen because its connotation is:",
+   "key": "Suggesting something cheap or poorly built",
+   "verdict": "confirmed: key wrong",
+   "correct": "Suggesting a pleasant, inviting quality",
+   "note": "homey suggests something pleasant and inviting",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/homey",
+   "quote": "Befitting a home; cozy, intimate.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 35,
+   "uid": "q-1781396efcad",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 9,
+     "path": "payload.questions[1]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Combine: My cousin is a paramedic. She volunteers on weekends. She lives in Denver.",
+   "key": "My cousin, a paramedic, volunteers on weekends.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option keeps all three facts (Denver is dropped everywhere)",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 36,
+   "uid": "q-1870b7aa6b58",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 11,
+     "path": "payload.questions[38]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank: One accepted way to fix a comma splice is to add a subordinating word, because ______.",
+   "key": "adding a coordinating word makes both clauses independent, allowing a comma between them",
+   "verdict": "confirmed: key wrong",
+   "correct": "a subordinating word turns one clause dependent, letting a comma join them",
+   "note": "a subordinating word makes one clause dependent, so a comma can join them",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dependent_clause",
+   "quote": "Adverbial clauses express when, why, where, opposition, and conditions, and, as with all dependent clauses, they cannot stand alone.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 37,
+   "uid": "q-187f9259dc40",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 13,
+     "path": "payload.questions[41]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Expand \"The crowd left early\" by adding the reason it grew tired of the rain, keeping the sentence free of splices and fragments.",
+   "key": "The crowd left early, it had grown tired of the rain.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key (0) is a comma splice; options 1 and 3 are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 38,
+   "uid": "q-1904915d57e3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 21,
+     "path": "payload.questions[30]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine without confusing who did what: The mayor faced the reporters. The mayor had promised reform. The reporters shouted questions.",
+   "key": "The mayor, who shouted questions, faced the reporters who had promised reform.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The mayor, who had promised reform, faced the reporters, who shouted questions.",
+   "note": "only option 0 keeps who promised reform and who shouted",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "quote": "A dangling modifier has no subject and is usually a participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 39,
+   "uid": "q-1901121d77cc",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[32]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: The tryouts were brutal. Only five players made the cut.",
+   "key": "The tryouts were brutal: only five players made the cut.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the colon (key) and the semicolon are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 40,
+   "uid": "q-18dd4a04dbd2",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 39,
+     "path": "payload.questions[48]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence contains an inappropriate shift that should be fixed?",
+   "key": "Rewrite the second clause actively to match the first.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the prompt asks for a sentence but the options are revision advice",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 41,
+   "uid": "q-119ce56abebc",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 58,
+     "path": "payload.questions[29]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "A draft line reads: Yes — I mean, no — I mean, maybe — or not. What is the editing problem with it?",
+   "key": "Yes — I mean, no... I mean, maybe — or not.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the prompt asks for the editing problem but the options are rewrites",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 42,
+   "uid": "q-164d58e7d4c5",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 18,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: The winner grinned broadly. The runner-up was gracious. Both waved. Which version assigns each description to the right person?",
+   "key": "The winner waved while grinning broadly, and the gracious runner-up waved also.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 and 2 both assign each description correctly",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "quote": "A dangling modifier has no subject and is usually a participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 43,
+   "uid": "q-171fef88be60",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 68,
+     "path": "payload.questions[21]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence best matches the informal register of a friendly text to a classmate?",
+   "key": "We cannot proceed without gathering reliable information.",
+   "verdict": "confirmed: key wrong",
+   "correct": "We can't cruise through this without bagging some intel.",
+   "note": "option 0 is the informal register; the key is formal",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "quote": "The term register is often, in language teaching especially, shorthand for formal/informal style, although this is an aging definition.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 44,
+   "uid": "q-1ae007e3d5db",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 42,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision best makes this sentence active and energetic? The badge was earned by the scout who had completed all the tasks.",
+   "key": "The badge had been earned by the scout through task completion.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The scout earned the badge by completing all the tasks.",
+   "note": "option 0 is active; the key stays passive",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Active_voice",
+   "quote": "In active voice, the subject of the sentence performs the action expressed by the main verb and is thus the agent.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 45,
+   "uid": "q-1d249ecc6ac4",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 33,
+     "path": "payload.questions[43]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank so both clauses match in voice: The drills were scheduled for Tuesday, and ___.",
+   "key": "the whistle blew for us",
+   "verdict": "confirmed: key wrong",
+   "correct": "the whistle was heard by us",
+   "note": "the first clause is passive, so \"the whistle was heard by us\" matches; the key is active",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 46,
+   "uid": "q-1f98c6ad3834",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 52,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one line of dialogue: I was going to say something. She cut me off with Forget it. Which version shows the speech being interrupted mid-word?",
+   "key": "\"I was going to say, forget it,\" she snapped.",
+   "verdict": "confirmed: key wrong",
+   "correct": "\"I was going to say—\" \"Forget it,\" she snapped.",
+   "note": "the dash shows speech cut off mid-word",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 47,
+   "uid": "q-1ef09fc638d1",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 11,
+     "path": "payload.questions[5]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank: To repair the fragment 'Although the roads were icy. We drove slowly.', you should ______.",
+   "key": "change 'although' to 'even though' and add a comma after 'although'",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the fix (replace the period with a comma) is not offered",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dependent_clause",
+   "quote": "Adverbial clauses express when, why, where, opposition, and conditions, and, as with all dependent clauses, they cannot stand alone.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 48,
+   "uid": "q-19c7a234b211",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 22,
+     "path": "payload.questions[45]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which expansion is cumulative?",
+   "key": "Because his speech was so long and dull, everyone in the room was bored.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key (2) opens with its subordinate clause; options 0 and 3 are both cumulative",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 49,
+   "uid": "q-19704361d5ec",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 42,
+     "path": "payload.questions[42]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "The teacher suggested that he (to be) given a second chance. Which verb form fits the subjunctive?",
+   "key": "Were",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the subjunctive \"be\" is not offered; \"were\" is wrong after \"suggested that\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "quote": "For instance, \"It's essential that he be here\" uses the subjunctive mood while \"It's essential that he is here\" does not.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 50,
+   "uid": "q-19fd750018a6",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 40,
+     "path": "payload.questions[45]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Expand to PASSIVE voice: Bees swarmed the garden.",
+   "key": "The garden was swarming with bees all afternoon.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option is passive (\"The garden was swarmed by bees\"); the key is active progressive",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 51,
+   "uid": "q-19cf13ab7b95",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 49,
+     "path": "payload.questions[37]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence uses the transition word correctly?",
+   "key": "It was the final night; however nobody wanted to leave.",
+   "verdict": "confirmed: key wrong",
+   "correct": "It was the final night; however, nobody wanted to leave.",
+   "note": "semicolon before and comma after \"however\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunctive_adverb",
+   "quote": "Conjunctive adverbs are frequently preceded by a semicolon or a period (full stop).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 52,
+   "uid": "q-25415e54c732",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 53,
+     "path": "payload.questions[44]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: I was almost home free. My phone rang. It was my little brother, locked out of the house.",
+   "key": "I was almost home free when my phone rang — it was my little brother, locked out of the house.",
+   "verdict": "refuted: key correct",
+   "correct": "I was almost home free when my phone rang — it was my little brother, locked out of the house.",
+   "note": "the key is correct; the colon version (2) is also acceptable",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 53,
+   "uid": "q-2102eff80164",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 69,
+     "path": "payload.questions[4]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Choose the correct word: The committee announced ______ decision on Friday.",
+   "key": "it's",
+   "verdict": "confirmed: key wrong",
+   "correct": "its",
+   "note": "possessive \"its\"; the key \"it's\" means \"it is\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "quote": "Equivalent to it +‎ -s (possessive marker).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 54,
+   "uid": "q-23c09a8a326c",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 18,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine all three: The rescue succeeded. It was risky. The climber was grateful. Which version is punctuated correctly?",
+   "key": "The rescue, risky from the first moment, succeeded, and the climber never forgot it.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The rescue, which succeeded, was risky, and the climber was grateful.",
+   "note": "option 0 keeps all three facts, correctly punctuated; the key drops \"grateful\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 55,
+   "uid": "q-2432194e885c",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 28,
+     "path": "payload.questions[21]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision fixes the parallelism while keeping all content: The candidate promised to lower taxes, improve schools, and that crime would drop?",
+   "key": "Rewrite the third item in parallel -ing form, like the others",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key says \"-ing form, like the others\", but the others are infinitives (\"to lower\", \"improve\")",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 56,
+   "uid": "q-27c5214b3a09",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 52,
+     "path": "payload.questions[16]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: You want me to apologize. To him? Which version ends with correct end punctuation while keeping the emphatic break?",
+   "key": "You want me to apologize to him?",
+   "verdict": "confirmed: key wrong",
+   "correct": "You want me to apologize — to him?",
+   "note": "the dash keeps the emphatic break with a question mark; the key drops the break",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 57,
+   "uid": "q-260a527fd7ad",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 33,
+     "path": "payload.questions[20]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank so the mood does not shift: Read the chapter tonight, and then ___ your notes in the morning.",
+   "key": "you review",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the imperative \"review\" is not offered; the key \"you review\" is indicative",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Imperative_mood",
+   "quote": "The imperative mood is a grammatical mood that forms a command or request.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 58,
+   "uid": "q-2619f7a613d1",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 1,
+     "path": "payload.questions[41]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which root and meaning are correctly paired?",
+   "key": "graph-: write",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "both \"ped-: foot\" and \"graph-: write\" are correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/-graph",
+   "quote": "From Ancient Greek -γράφος (-gráphos, “that writes, describes”), from γράφω (gráphō, “to scratch, to scrape, to graze”), whence also -graphy.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 59,
+   "uid": "q-297d1f3590aa",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 54,
+     "path": "payload.questions[25]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Choose the sentence with clean, standard punctuation.",
+   "key": "She said she was tired . . . hungry . . . and ready to leave.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option is clean standard punctuation (\"tired, hungry, and ready\" is not offered)",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "quote": "Depending on context, ellipsis can indicate an unfinished thought, a leading statement, a slight pause, an echoing voice, or a nervous or awkward silence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 60,
+   "uid": "q-298797894960",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 60,
+     "path": "payload.questions[41]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What is a practical reason AP style omits the Oxford comma?",
+   "key": "Keeping the rule would force writers to rewrite every sentence they type",
+   "verdict": "confirmed: key wrong",
+   "correct": "Changing the rule would make headlines and captions harder to fit and read quickly",
+   "note": "journalism omits it to save space (headlines and captions)",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Serial_comma",
+   "quote": "The serial comma is popular in formal writing (such as in academic, literary, and legal contexts) but is usually omitted in journalism as a way to save space.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 61,
+   "uid": "q-2844ac0f8d24",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 41,
+     "path": "payload.questions[38]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence keeps a consistent unreal conditional structure?",
+   "key": "If the alarm were to ring now, we would evacuate calmly.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 1 and 2 are both consistent unreal conditionals",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "quote": "Special tense morphology can be used to form a counterfactual conditional.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 62,
+   "uid": "q-28694705d131",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 32,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence contains an inappropriate shift in voice or mood?",
+   "key": "Please silence your phones, and seats should be taken before the film begins.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 (the key) and 2 both shift mood",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 63,
+   "uid": "q-28b3dcb6da6d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[30]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: The recipe needs one secret ingredient. The ingredient is patience.",
+   "key": "The recipe needs one secret ingredient: patience.",
+   "verdict": "refuted: key correct",
+   "correct": "The recipe needs one secret ingredient: patience.",
+   "note": "the key is correct; the appositive comma (3) is also acceptable",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 64,
+   "uid": "q-2c1695fcd87b",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 25,
+     "path": "payload.questions[43]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: The team had talent. It lacked discipline. Which coordinating conjunction best joins them to show contrast?",
+   "key": "yet",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"but\" and \"yet\" both show contrast",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunction_(grammar)",
+   "quote": "Some style guides prescribe that two independent clauses joined by a coordinating conjunction (for, and, nor, but, or, yet, so) must be separated by a comma placed before the conjunction.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 65,
+   "uid": "q-2d5b9e37ddd8",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 48,
+     "path": "payload.questions[4]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence uses a dash to give its final phrase the strongest punch?",
+   "key": "The marmalade and cream occupied his attention.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option contains a dash",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 66,
+   "uid": "q-2ea271c7ee3d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 50,
+     "path": "payload.questions[18]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Revise: The game came down to luck and luck ran out.",
+   "key": "The game came down to luck; and luck ran out.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The game came down to luck, and luck ran out.",
+   "note": "comma before \"and\"; the key puts a semicolon before \"and\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunction_(grammar)",
+   "quote": "Some style guides prescribe that two independent clauses joined by a coordinating conjunction (for, and, nor, but, or, yet, so) must be separated by a comma placed before the conjunction.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 67,
+   "uid": "q-2f4407a240a3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 48,
+     "path": "payload.questions[40]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence is punctuated correctly?",
+   "key": "The practice; therefore, we won.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"The practice\" is a fragment in every option",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 68,
+   "uid": "q-2a6c8193c771",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 39,
+     "path": "payload.questions[42]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Tighten the lug nuts, and the wheel would stay secure. What kind of mood shift is this?",
+   "key": "conditional to imperative",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the shift is imperative to conditional; no option says that and the key reverses it",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 69,
+   "uid": "q-2cd3897d21fc",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 12,
+     "path": "payload.questions[13]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "A fragment is missing a subject, a verb, or a complete thought; 'Running through the park' lacks a ___.",
+   "key": "verb",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"Running through the park\" lacks both a subject and a finite verb",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Non-finite_verb",
+   "quote": "Nonfinite verbs are verb forms that do not show tense, person, or number.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 70,
+   "uid": "q-30beb6e9b4ea",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 50,
+     "path": "payload.questions[24]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Revise: The chess match was over and the result was a stalemate.",
+   "key": "The chess match was over: a stalemate.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the dash and the colon (key) are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 71,
+   "uid": "q-32f1a78fe8ca",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 30,
+     "path": "payload.questions[27]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the effect: Detail by detail, a cumulative sentence builds emphasis because ______.",
+   "key": "each added detail pushes the main point further from the reader",
+   "verdict": "confirmed: key wrong",
+   "correct": "the opening clause carries the point and each added detail sharpens the picture",
+   "note": "the opening clause carries the point and each detail sharpens it",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 72,
+   "uid": "q-336dc2c45ade",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 19,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "A weak sentence reads: The diners noticed her quickly when she passed by the tables in a way that was not loud, and their voices were made lower by it. Which revision fixes the stacked adverbs while keeping the same facts?",
+   "key": "She passed the tables in silence, and the diners noticed her briefly, and their voices were lowered slowly",
+   "verdict": "confirmed: key wrong",
+   "correct": "When she passed the tables in silence, the diners noticed her, glancing up briefly and lowering their voices slowly",
+   "note": "option 0 keeps the facts in active voice; the key keeps a passive and stacks clauses",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 73,
+   "uid": "q-33c006c0ca1b",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[0]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: The audience loved the opener. The headliner stole the show.",
+   "key": "The audience loved the opener; the headliner stole the show.",
+   "verdict": "refuted: key correct",
+   "correct": "The audience loved the opener; the headliner stole the show.",
+   "note": "the key is correct; the dash (2) is also acceptable",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "quote": "The most common use of the semicolon is to join two independent clauses without using a conjunction such as the word and.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 74,
+   "uid": "q-30ec1b39e410",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 68,
+     "path": "payload.questions[8]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which word is the best choice in a straightforward instruction manual sentence: 'Choose a ___ tree for the planting site.'",
+   "key": "verdant",
+   "verdict": "confirmed: key wrong",
+   "correct": "tall",
+   "note": "plain \"tall\" suits an instruction manual",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/verdant",
+   "quote": "Green in colour.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 75,
+   "uid": "q-30e59d11c081",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 53,
+     "path": "payload.questions[35]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fix the punctuation: He was late, again, and nobody, was surprised.",
+   "key": "He was late — again — and nobody was surprised.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the dashes (key) and the plain version (3) are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 76,
+   "uid": "q-325788627694",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 13,
+     "path": "payload.questions[9]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which sentence attaches the participial phrase to the word it modifies?",
+   "key": "While the orchestra tuned, the audience settled into their seats, whispering softly.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 and 1 (key) both attach the participle to \"the audience\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dangling_modifier",
+   "quote": "A dangling modifier has no subject and is usually a participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 77,
+   "uid": "q-32730a68e239",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 44,
+     "path": "payload.questions[18]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one passive-voice sentence: People make mistakes. People learn lessons. Everyone forgets the mistakes.",
+   "key": "Mistakes are made, and lessons are learned.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key drops \"Everyone forgets the mistakes\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 78,
+   "uid": "q-33a7b94be3f5",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 27,
+     "path": "payload.questions[48]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence expands a simple statement with parallel prepositional phrases?",
+   "key": "He searched the attic, the closet, and beneath the stairs.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key mixes two nouns with a prepositional phrase (faulty parallelism); no option is parallel",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 79,
+   "uid": "q-3548d259d0bd",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 48,
+     "path": "payload.questions[19]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which word can correctly follow a semicolon in a compound sentence?",
+   "key": "However",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"However\" (key) and \"Meanwhile\" can both follow a semicolon",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunctive_adverb",
+   "quote": "Conjunctive adverbs are frequently preceded by a semicolon or a period (full stop).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 80,
+   "uid": "q-37111aed1bca",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 61,
+     "path": "payload.questions[25]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which pair is a commonly confused usage pair that guides address?",
+   "key": "affect / effect",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 and 1 are the same pair",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "quote": "(transitive) To influence or alter.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 81,
+   "uid": "q-38679051f43d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 48,
+     "path": "payload.questions[2]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "How does the complete-sentence rule apply to a colon before a one-item list?",
+   "key": "End the sentence before the list with a period",
+   "verdict": "confirmed: key wrong",
+   "correct": "Make sure a complete sentence comes first",
+   "note": "a complete sentence must come before the colon",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 82,
+   "uid": "q-35629f96b824",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[33]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: The team traveled through three states. The states were Ohio, Kentucky, and Indiana.",
+   "key": "three states; Ohio, Kentucky, and Indiana",
+   "verdict": "confirmed: key wrong",
+   "correct": "three states: Ohio, Kentucky, and Indiana",
+   "note": "a colon introduces the list after a complete clause",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 83,
+   "uid": "q-3b9ffc64e671",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 5,
+     "path": "payload.questions[27]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "A source about current treatments for a disease is generally MOST reliable if it was published how long ago?",
+   "key": "One year ago",
+   "verdict": "confirmed: key wrong",
+   "correct": "Two months ago",
+   "note": "for current treatments, the most recent source is generally most reliable",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "quote": "The term register is often, in language teaching especially, shorthand for formal/informal style, although this is an aging definition.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 84,
+   "uid": "q-3a5ec8b856c2",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 25,
+     "path": "payload.questions[8]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why is clause order considered a rhetorical choice rather than just a grammar rule?",
+   "key": "It makes the sentence shorter, which readers find more persuasive.",
+   "verdict": "confirmed: key wrong",
+   "correct": "It lets the writer control the pace so the strongest idea lands last.",
+   "note": "clause order controls where the emphasis lands",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "The periodic sentence emphasizes its main idea by placing it at the end, following all the subordinate clauses and other modifiers that support the principal idea.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 85,
+   "uid": "q-3ab42ec480a6",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 22,
+     "path": "payload.questions[41]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which quality does symmetry most directly give a balanced sentence?",
+   "key": "Richness",
+   "verdict": "confirmed: key wrong",
+   "correct": "Contrast",
+   "note": "symmetry sharpens contrast; \"richness\" belongs to cumulative sentences",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Antithesis",
+   "quote": "Parallelism of expression serves to emphasize opposition of ideas\".",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 86,
+   "uid": "q-3c2f26ed1d59",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 26,
+     "path": "payload.questions[17]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine without repeating 'the tree': The cat watched the bird. The bird was in the tree. The tree was tall.",
+   "key": "From the tall tree, the bird watched nothing; the cat watched the bird.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The cat watched the bird in the tall tree.",
+   "note": "option 3 combines without repeating \"the tree\"; the key is nonsense",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 87,
+   "uid": "q-3c61aca766c3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: I had one job left. It was mopping the floor.",
+   "key": "I had one job left, and it was the worst: mopping the floor.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "every option adds or breaks something; \"I had one job left: mopping the floor.\" is not offered",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 88,
+   "uid": "q-3d0006258c95",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 32,
+     "path": "payload.questions[26]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: (1) The Senator introduced the bill. (2) It was debated for weeks. (3) Journalists covered the hearings. Which version keeps a consistent passive voice?",
+   "key": "The Senator introduced the bill, it was debated for weeks, and the hearings were covered by journalists.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The bill was introduced by the Senator, it was debated for weeks, and the hearings were covered by journalists.",
+   "note": "only option 3 is passive throughout",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 89,
+   "uid": "q-3cf8598f720f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 44,
+     "path": "payload.questions[17]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one active-voice sentence: The senator delivered the speech. Laughter interrupted it. She kept going anyway.",
+   "key": "The senator delivered the speech, and laughter interrupted it.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key drops \"She kept going anyway\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Active_voice",
+   "quote": "In active voice, the subject of the sentence performs the action expressed by the main verb and is thus the agent.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 90,
+   "uid": "q-3771329e74f9",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 2,
+     "path": "payload.questions[23]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which adjective correctly completes the sentence: I felt ___ about missing the deadline.",
+   "key": "badly",
+   "verdict": "confirmed: key wrong",
+   "correct": "bad",
+   "note": "after the linking verb \"felt\" the adjective \"bad\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/badly",
+   "quote": "Most prescriptive grammarians prefer \"I feel bad\" to \"I feel badly\", but \"I feel badly\" is widely used.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 91,
+   "uid": "q-37856b0c5534",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 7,
+     "path": "payload.questions[13]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which of these is narrative writing?",
+   "key": "A coming-of-age memory told with a beginning, middle, and end",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the folk tale (0) and the memory (3, key) are both narratives",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Narrative",
+   "quote": "A narrative, story, or tale is any account of a series of related events or experiences, whether non-fictional (memoir, biography, news report, documentary, travelogue, etc.) or fictional (fairy tale, fable, legend, thriller, novel, etc.).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 92,
+   "uid": "q-3e0c7393d8e4",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[1]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: My three favorite authors are Toni Morrison, Neil Gaiman, and Jane Austen. That is the whole list.",
+   "key": "My three favorite authors are Toni Morrison, Neil Gaiman, and Jane Austen.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key is the best option but the prompt's second sentence is not combined in any option",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 93,
+   "uid": "q-3e3fcb13cdeb",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 22,
+     "path": "payload.questions[7]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In what position does a main clause receive the most emphasis in English syntax?",
+   "key": "The middle of the sentence",
+   "verdict": "confirmed: key wrong",
+   "correct": "Saved for the end of the sentence",
+   "note": "end focus: the final position gets the most emphasis",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "The periodic sentence emphasizes its main idea by placing it at the end, following all the subordinate clauses and other modifiers that support the principal idea.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 94,
+   "uid": "q-3feac7ab4453",
+   "occ": [
+    {
+     "coll": "block_plans",
+     "row": 3,
+     "path": "checks[3]",
+     "user": null
+    }
+   ],
+   "prompt": "Rewrite this flat sentence so the strongest idea lands at the end, using only the words given and adding at most a comma and a period: 'Silence came after the rage.' Write your reordered sentence.",
+   "key": "Rage, then silence.",
+   "verdict": "confirmed: key wrong",
+   "correct": null,
+   "note": "confirmed: the key uses \"then\", not a given word; correct \"After the rage came silence.\"; rewritten",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "quote": "The term register is often, in language teaching especially, shorthand for formal/informal style, although this is an aging definition.",
+   "quote_verbatim": true,
+   "moot": false,
+   "fixed_by": "owner-review rewrite block_plans:3"
+  },
+  {
+   "index": 95,
+   "uid": "q-408faee4822f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 59,
+     "path": "payload.questions[37]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why is a comma better than a dash in: She opened the door, and gasped?",
+   "key": "Because the two items are far apart in weight, so only a sharp break will do.",
+   "verdict": "confirmed: key wrong",
+   "correct": "Because the two items are close in rhythm and weight, so only a mild pause is called for.",
+   "note": "close, light ideas take a mild pause",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 96,
+   "uid": "q-41ea9380fb98",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 36,
+     "path": "payload.questions[29]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence puts its subject in the passive position?",
+   "key": "Audiences remember the actress.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The actress is remembered by audiences.",
+   "note": "\"The actress is remembered by audiences\" puts the subject in the passive position",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 97,
+   "uid": "q-3ffc63689801",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 50,
+     "path": "payload.questions[32]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Revise: She promised she would call she never did.",
+   "key": "She promised she would call — she did not.",
+   "verdict": "refuted: key correct",
+   "correct": "She promised she would call — she did not.",
+   "note": "the key is correct; the semicolon (2) is also acceptable",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 98,
+   "uid": "q-4291eb795320",
+   "occ": [
+    {
+     "coll": "block_plans",
+     "row": 17,
+     "path": "checks[4]",
+     "user": null
+    }
+   ],
+   "prompt": "Here is the paragraph's run-on: 'The volunteers cleared the beach the research team recorded the results and everyone agreed the project was a success, the opposite of what critics predicted.' What is the exact punctuation fix?",
+   "key": "A period after 'opposite'",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "confirmed: options name words not in the sentence; fix is a period after \"beach\"; rewritten",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses.",
+   "quote_verbatim": true,
+   "moot": false,
+   "fixed_by": "owner-review rewrite block_plans:17"
+  },
+  {
+   "index": 99,
+   "uid": "q-4285f0d6c76d",
+   "occ": [
+    {
+     "coll": "lessons",
+     "row": 3069,
+     "path": "check_questions[2]",
+     "user": 4
+    }
+   ],
+   "prompt": "Which of these sentences uses a Greek-family root to pin the sentence to a medical register?",
+   "key": "The physician's chronic case required careful observation.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "confirmed: clinic and surgery are Greek-family medical words too; options rewritten",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/clinic",
+   "quote": "Borrowed from French clinique, from Late Latin clīnicus (“a bed-ridden person, one baptized on a sick-bed, a physician”), from Ancient Greek κλῑνικός (klīnikós, “pertaining to a bed”), from κλῑ́νη (klī́nē, “bed”), from κλῑ́νω (klī́nō, “to lean, incline”).",
+   "quote_verbatim": true,
+   "moot": false,
+   "fixed_by": "owner-review rewrite lessons:3069"
+  },
+  {
+   "index": 100,
+   "uid": "q-4576fc1468da",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 1,
+     "path": "payload.questions[12]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "The word manufacture contains the roots manu- and fact-. Based on manu- (hand), manufacture originally involved:",
+   "key": "fear",
+   "verdict": "confirmed: key wrong",
+   "correct": "hands",
+   "note": "manu- means hand: making by hand",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/manufacture",
+   "quote": "Learned borrowing from Medieval Latin manufactūra (“making by hand”); from manū (“by hand”) + factūra (“act of making”).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 101,
+   "uid": "q-444a32d9d56e",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 58,
+     "path": "payload.questions[47]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence correctly uses a comma after an introductory phrase?",
+   "key": "After the meeting ended, everyone left quietly.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 and 1 (key) are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 102,
+   "uid": "q-449945039dfb",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 64,
+     "path": "payload.questions[42]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Choose the correct word: '___ going to rain later today.'",
+   "key": "It's",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "repeated options; \"It's\" is correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "quote": "Equivalent to it +‎ -s (possessive marker).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 103,
+   "uid": "q-4462301d9a28",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 42,
+     "path": "payload.questions[36]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision contains an inappropriate, unintentional shift in voice? The judges announced the results, and it was decided that... ",
+   "key": "Announced Friday, the results were the judges' secret.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option shows an unintentional voice shift",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 104,
+   "uid": "q-4600e46fb9a7",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 27,
+     "path": "payload.questions[19]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which expansion of The road stretched ahead is strongest for a descriptive passage, and why?",
+   "key": "The road stretched ahead, ending at the far horizon, because a single strong image keeps a description focused.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The road stretched ahead, weaving between hills, disappearing over ridges, and reappearing in the valley below, because it emphasizes continuous movement through unfolding detail.",
+   "note": "option 2 builds the description detail by detail",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 105,
+   "uid": "q-453e2150537f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision fixes the shift in: If the weather were good tomorrow, the volunteers will plant trees?",
+   "key": "The volunteers will plant trees tomorrow if the weather were good.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The volunteers will plant trees tomorrow if the weather is good.",
+   "note": "option 0 makes both clauses real-conditional; the key keeps \"were ... will\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "quote": "Special tense morphology can be used to form a counterfactual conditional.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 106,
+   "uid": "q-47df2554c9a9",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 68,
+     "path": "payload.questions[0]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "A draft sentence praises a donor who is 'parsimonious' with her money. Which word would better match the intended positive tone?",
+   "key": "frugal",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "thrifty, frugal (key) and economical are all approving",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/parsimonious",
+   "quote": "Exhibiting parsimony; sparing in the expenditure of money; frugal, possibly to excess.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 107,
+   "uid": "q-4ad6475dfbe1",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 12,
+     "path": "payload.questions[38]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which FANBOYS conjunction completes 'The novel was long ___ it was gripping' to add a contrasted but connected idea? Only addition fits.",
+   "key": "and",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the prompt asks for contrast and then says \"Only addition fits\"; \"yet\" is the contrast answer",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunction_(grammar)",
+   "quote": "Some style guides prescribe that two independent clauses joined by a coordinating conjunction (for, and, nor, but, or, yet, so) must be separated by a comma placed before the conjunction.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 108,
+   "uid": "q-4b99d3c23020",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 40,
+     "path": "payload.questions[21]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Plain sentence: He was benched by the coach. Which expansion keeps the same passive emphasis but adds detail correctly?",
+   "key": "The coach benched him for skipping practice.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key is active; a passive with detail is not offered",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 109,
+   "uid": "q-4adcadcb0219",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 52,
+     "path": "payload.questions[44]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: She turned the page. She gasped at the headline. Which version wrongly inserts a pause between the verb and its object?",
+   "key": "She turned the page and gasped at the headline.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option puts a pause between a verb and its object",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 110,
+   "uid": "q-49ddf8fa2bdc",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[24]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: We packed everything for the hike. The list was water, snacks, a map, and a flashlight.",
+   "key": "packed; water, snacks, a map, and a flashlight",
+   "verdict": "confirmed: key wrong",
+   "correct": "packed water, snacks, a map, and a flashlight",
+   "note": "no colon between a verb and its objects",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 111,
+   "uid": "q-4be6bbd5d7b6",
+   "occ": [
+    {
+     "coll": "block_plans",
+     "row": 13,
+     "path": "checks[3]",
+     "user": null
+    },
+    {
+     "coll": "items",
+     "row": 61319,
+     "path": "",
+     "user": 4
+    }
+   ],
+   "prompt": "Which is the correct fix for the comma splice \"The concert sold out, the band added a second show\"?",
+   "key": "The concert sold out, so the band added a second show.",
+   "verdict": "refuted: key correct",
+   "correct": "The concert sold out, so the band added a second show.",
+   "note": "refuted: \"Although...\" makes a concession, but the second show is a consequence of the sell-out, so only \"..., so the band added a second show.\" is a correct fix; no change",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Adverbial_clause",
+   "quote": "Adverb clause of concession (contrast)",
+   "quote_verbatim": true,
+   "moot": false
+  },
+  {
+   "index": 112,
+   "uid": "q-4bf22756e761",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 23,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why do cumulative sentences work well in descriptive writing?",
+   "key": "It keeps all description at the same level of detail",
+   "verdict": "confirmed: key wrong",
+   "correct": "It lets each added phrase sharpen the picture of one subject",
+   "note": "each added phrase sharpens the picture",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 113,
+   "uid": "q-4c03917b3d48",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[35]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision removes the inappropriate shift? The cookies were eaten by the children, and they emptied the plate.",
+   "key": "The children ate the cookies, and they emptied the plate.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 and 2 (key) both remove the shift",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 114,
+   "uid": "q-4a538c0123ba",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 22,
+     "path": "payload.questions[14]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which group of words is a fragment?",
+   "key": "After the assembly ended and the crowd had thinned",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 (key) and 3 are both fragments",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 115,
+   "uid": "q-4a1da9b8682c",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 23,
+     "path": "payload.questions[1]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In a model essay, the writer closes with: \"We have waited long enough. Act.\" What is the grammatical structure of the final word sentence?",
+   "key": "Cumulative sentence, adding detail after the main clause",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"Act.\" is a complete imperative sentence; no option names that, and the key \"cumulative\" is wrong",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Imperative_mood",
+   "quote": "The imperative mood is a grammatical mood that forms a command or request.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 116,
+   "uid": "q-4fd7d65d3e23",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 60,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why can leaving out the Oxford comma cause confusion?",
+   "key": "Creating an odd list, like 'the tools, hammers and nails'",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "several options are apposition misreadings, not just the key",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Serial_comma",
+   "quote": "The serial comma is popular in formal writing (such as in academic, literary, and legal contexts) but is usually omitted in journalism as a way to save space.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 117,
+   "uid": "q-5065f7873847",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 44,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one passive-voice sentence: Someone wrote the rule years ago. People still enforce it. Nobody remembers why.",
+   "key": "The rule was written years ago, but it is still enforced.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the key drops \"Nobody remembers why\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 118,
+   "uid": "q-50bbb638acb8",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 43,
+     "path": "payload.questions[10]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence correctly uses a colon?",
+   "key": "The mall, a place, a food court, and two theaters.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option uses a colon correctly",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 119,
+   "uid": "q-4d9a1b3bce04",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 55,
+     "path": "payload.questions[32]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "A nervous character says: I didn't say you were wrong… Which punctuation shows her hesitating before she continues later?",
+   "key": "\"I didn't — say you were wrong.\"",
+   "verdict": "refuted: key correct",
+   "correct": "\"I didn't — say you were wrong.\"",
+   "note": "the dash version is the only one where she continues; the trailing ellipsis (0) is also defensible",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 120,
+   "uid": "q-52b03c61a71d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 17,
+     "path": "payload.questions[21]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which word is a FANBOYS conjunction?",
+   "key": "but",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"and\" and \"but\" (key) are both FANBOYS",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunction_(grammar)",
+   "quote": "Some style guides prescribe that two independent clauses joined by a coordinating conjunction (for, and, nor, but, or, yet, so) must be separated by a comma placed before the conjunction.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 121,
+   "uid": "q-52bc8dcf224c",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 50,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Revise: He trained for months and then the race was canceled.",
+   "key": "He trained for months: the race was canceled.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the semicolon and the dash are correct; the key colon is wrong",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "quote": "The most common use of the semicolon is to join two independent clauses without using a conjunction such as the word and.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 122,
+   "uid": "q-580b9990f6b5",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 39,
+     "path": "payload.questions[14]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "The batter swung hard, and a home run was hit. The shift moves in which direction?",
+   "key": "Passive to active",
+   "verdict": "confirmed: key wrong",
+   "correct": "Active to passive",
+   "note": "active clause then passive clause",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 123,
+   "uid": "q-536adf036ab7",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 17,
+     "path": "payload.questions[44]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What is missing in the fragment: Walking through the empty hallway after class.",
+   "key": "Missing conjunction",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the fragment lacks a subject and a finite verb; the key \"conjunction\" is wrong",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 124,
+   "uid": "q-5379842596fd",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[45]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Identify the shift in: Wash the car this weekend, and the neighbors admire your effort.",
+   "key": "indicative to imperative",
+   "verdict": "confirmed: key wrong",
+   "correct": "imperative to indicative",
+   "note": "imperative (\"Wash\") to indicative (\"admire\")",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 125,
+   "uid": "q-5619927b7f82",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 20,
+     "path": "payload.questions[12]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Fill in the blank: The quickest fix for a fused run-on like 'The lights dimmed the show began' is ______.",
+   "key": "adding a period between them",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the period (key) and the semicolon both fix it",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "quote": "The most common use of the semicolon is to join two independent clauses without using a conjunction such as the word and.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 126,
+   "uid": "q-7ca7eaede952",
+   "occ": [
+    {
+     "coll": "items",
+     "row": 7178,
+     "path": "",
+     "user": 4
+    }
+   ],
+   "prompt": "Choose the correct verb: Neither the treasurer nor any of the members ___ the revised figures.",
+   "key": "questions",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "confirmed: by proximity \"any of the members\" is usually plural, making three options correct; rewritten with \"the members\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Agreement_(linguistics)",
+   "quote": "When subjects are joined by or, nor, not only ... but also, etc. the verb agrees with the nearer subject.",
+   "quote_verbatim": true,
+   "moot": false,
+   "fixed_by": "owner-review rewrite items:7178"
+  },
+  {
+   "index": 127,
+   "uid": "q-5a14c67c6c2a",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 47,
+     "path": "payload.questions[42]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one sentence: His excuse was simple. He overslept.",
+   "key": "His excuse was simple: he overslept.",
+   "verdict": "refuted: key correct",
+   "correct": "His excuse was simple: he overslept.",
+   "note": "the key is correct; the dash and semicolon are also acceptable",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 128,
+   "uid": "q-5a60581f79d3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 37,
+     "path": "payload.questions[27]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What does it mean to use voice and mood for effect?",
+   "key": "using passive voice in every sentence",
+   "verdict": "confirmed: key wrong",
+   "correct": "choosing voice or mood for its effect on the reader",
+   "note": "choosing voice or mood for its effect on the reader",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 129,
+   "uid": "q-5b404786cb19",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 3,
+     "path": "payload.questions[23]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Which is an example of direct characterization?",
+   "key": "describing how the character looks",
+   "verdict": "confirmed: key wrong",
+   "correct": "telling the reader what the character is like directly",
+   "note": "direct characterization tells the reader what the character is like",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Characterization",
+   "quote": "This representation may include direct methods like the attribution of qualities in description or commentary, and indirect (or \"dramatic\") methods inviting readers to infer qualities from characters' actions, dialogue, or appearance.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 130,
+   "uid": "q-58d865f23ef4",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which revision makes the voice consistent: The teacher graded the essay quickly, and it was returned the next morning.",
+   "key": "The essay was graded quickly by the teacher, and it was returned the next morning.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 0 (key), 1 and 3 are all consistent; 1 is the clearest",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Active_voice",
+   "quote": "In active voice, the subject of the sentence performs the action expressed by the main verb and is thus the agent.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 131,
+   "uid": "q-59b58d978ba6",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 30,
+     "path": "payload.questions[23]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Choose the phrase that correctly fills the blank to fix the run-on: The storm knocked down the old oak tree in the yard, ______ and we spent the weekend clearing branches.",
+   "key": "the storm knocked down the old oak tree in the yard",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the blank duplicates the clause around it; no option fits",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 132,
+   "uid": "q-608a2f58924d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 38,
+     "path": "payload.questions[3]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine into one conditional sentence about a real possibility: The museum might open early. We would see the new exhibit before the crowds arrive.",
+   "key": "If the museum opened early, we will see the new exhibit before the crowds arrive.",
+   "verdict": "confirmed: key wrong",
+   "correct": "If the museum opens early, we will see the new exhibit before the crowds arrive.",
+   "note": "a real possibility takes the present in the if-clause and will in the result",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+   "quote": "Special tense morphology can be used to form a counterfactual conditional.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 133,
+   "uid": "q-60ab0eb78129",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 59,
+     "path": "payload.questions[21]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence uses exactly one dramatic mark, placed for a deliberate effect, and no others?",
+   "key": "She wrote, one word at a time... slowly, deliberately.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 2 (key, one ellipsis) and 3 (one dash) each use one dramatic mark; the explanation describes a dash",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 134,
+   "uid": "q-60e0b26f1eec",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 34,
+     "path": "payload.questions[43]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Read: The rules apply to all students, and please read them carefully. Why might a writer keep this shift?",
+   "key": "It keeps the tone consistent and slightly formal throughout the paragraph.",
+   "verdict": "confirmed: key wrong",
+   "correct": "It makes clear that the rule applies to every reader, so the command feels universal and fair.",
+   "note": "the key does not explain keeping a shift; option 0 does",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 135,
+   "uid": "q-6189fc1fe033",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 32,
+     "path": "payload.questions[3]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Combine: (1) The artist painted the mural. (2) Everyone admired it. (3) Passersby photographed it daily. Which version avoids a voice shift?",
+   "key": "The mural was painted by the artist, and it was admired by everyone who passed the wall.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "options 2 (key, passive throughout) and 3 (active throughout) both avoid a shift, and none keeps \"photographed it daily\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "In English, the passive voice is marked by using be or get followed by a past participle.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 136,
+   "uid": "q-66493acfd81c",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 27,
+     "path": "payload.questions[49]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which item breaks the parallelism in this series: reading quietly, writing neatly, and careful when checking facts?",
+   "key": "Reading quietly, writing neatly",
+   "verdict": "confirmed: key wrong",
+   "correct": "Careful when checking facts",
+   "note": "\"careful when checking facts\" breaks the -ly adverb pattern",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 137,
+   "uid": "q-66816a7890c5",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 45,
+     "path": "payload.questions[23]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence correctly combines a comma with a conjunction and a semicolon?",
+   "key": "The alarm rang, we ignored it; we were late.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The alarm rang; we ignored it, and we were late.",
+   "note": "only option 0 uses a semicolon and a comma with \"and\" correctly",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "quote": "The most common use of the semicolon is to join two independent clauses without using a conjunction such as the word and.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 138,
+   "uid": "q-6b66ae72331d",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 8,
+     "path": "payload.questions[16]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Combine: The lightning flashed. Then thunder rumbled a second later.",
+   "key": "The lightning flashed, and then thunder rumbled a second later.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "the semicolon (1) and \", and then\" (2, key) are both correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Semicolon",
+   "quote": "The most common use of the semicolon is to join two independent clauses without using a conjunction such as the word and.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 139,
+   "uid": "q-6d2366e13188",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 51,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    },
+    {
+     "coll": "items",
+     "row": 61315,
+     "path": "",
+     "user": 4
+    }
+   ],
+   "prompt": "Which sentence contains a subjunctive mood error rather than an acceptable indicative use?",
+   "key": "If I were captain, I would start the bench players.",
+   "verdict": "confirmed: key wrong",
+   "correct": "If I was captain, I would start the bench players.",
+   "note": "\"If I was captain\" is the subjunctive error; the key \"If I were captain\" is correct",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "quote": "For instance, \"It's essential that he be here\" uses the subjunctive mood while \"It's essential that he is here\" does not.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 140,
+   "uid": "q-6d3d945a39f9",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 51,
+     "path": "payload.questions[14]",
+     "user": null,
+     "served": "held (not served)"
+    },
+    {
+     "coll": "items",
+     "row": 61314,
+     "path": "",
+     "user": 4
+    }
+   ],
+   "prompt": "A rubric criterion reads: Maintain one mood across linked clauses. Why does Press the button, and the machine starts fail it?",
+   "key": "It shifts from indicative to imperative at the second clause.",
+   "verdict": "confirmed: key wrong",
+   "correct": "It shifts from imperative to indicative at the second clause.",
+   "note": "\"Press\" is imperative and \"the machine starts\" indicative; the key reverses the direction",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 141,
+   "uid": "q-5d69758721f3",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 9,
+     "path": "payload.questions[24]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Combine: The storm knocked out the power. We studied by candlelight. The quiet was unusual.",
+   "key": "The storm knocked out the power so we studied by candlelight which was quiet.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The storm knocked out the power, so we studied by candlelight, which was quiet.",
+   "note": "comma before \"so\"; the key drops the commas",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunction_(grammar)",
+   "quote": "Some style guides prescribe that two independent clauses joined by a coordinating conjunction (for, and, nor, but, or, yet, so) must be separated by a comma placed before the conjunction.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 142,
+   "uid": "q-61de6e29b41a",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 11,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What change is needed to complete this run-on fix: 'The lights flickered, then gone.'",
+   "key": "The period after 'gone'",
+   "verdict": "confirmed: key wrong",
+   "correct": "The word 'gone'",
+   "note": "\"then gone\" has no verb, so the word \"gone\" must change; the period is not the problem",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+   "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 143,
+   "uid": "q-63e2eb7c420f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 8,
+     "path": "payload.questions[18]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "Combine: The orchestra tuned up. Meanwhile, the ushers seated the audience.",
+   "key": "The orchestra tuned up, meanwhile the ushers seated the audience.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The orchestra tuned up; meanwhile the ushers seated the audience.",
+   "note": "semicolon before \"meanwhile\"; the key is a comma splice",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Conjunctive_adverb",
+   "quote": "Conjunctive adverbs are frequently preceded by a semicolon or a period (full stop).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 144,
+   "uid": "q-6487098f954e",
+   "occ": [
+    {
+     "coll": "block_plans",
+     "row": 27,
+     "path": "checks[3]",
+     "user": null
+    }
+   ],
+   "prompt": "Type the correct word: 'The new style guide will ___ every article we publish.' Is 'The pilot was late, and so the takeoff was delayed' a fragment or a run-on? Answer with the missing word first, then fragment or run-on (for example: word, run-on).",
+   "key": "affected",
+   "verdict": "confirmed: key wrong",
+   "correct": null,
+   "note": "confirmed: keyed \"affected\" (accepts \"effected\"); the verb is \"affect\", and its second sentence is correct, so \"fragment or run-on\" has no right answer; rewritten",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/affect",
+   "quote": "(transitive) To influence or alter.",
+   "quote_verbatim": true,
+   "moot": false,
+   "fixed_by": "owner-review rewrite block_plans:27"
+  },
+  {
+   "index": 145,
+   "uid": "q-7a1790848bde",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 42,
+     "path": "payload.questions[4]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "The coach insisted that the rules be followed. Which version of the second clause is correct in a rewritten sentence? The coach insisted that...",
+   "key": "Rules are followed at all times.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The rules be followed at all times.",
+   "note": "after \"insisted that\" the subjunctive \"the rules be followed\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_subjunctive",
+   "quote": "For instance, \"It's essential that he be here\" uses the subjunctive mood while \"It's essential that he is here\" does not.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 146,
+   "uid": "q-7a250a10ab8a",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 64,
+     "path": "payload.questions[32]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What does replacing 'said' with 'mumbled' tell the reader?",
+   "key": "It tells the reader exactly what was said.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "\"mumbled\" tells how it was said (quietly, unclearly); no option says that",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/mumble",
+   "quote": "A quiet or unintelligible vocalization; a low tone of voice.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 147,
+   "uid": "q-7abad7a25e57",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 36,
+     "path": "payload.questions[46]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Adding 'if only' to a sentence changes its ___.",
+   "key": "the punctuation",
+   "verdict": "confirmed: key wrong",
+   "correct": "the mood",
+   "note": "\"if only\" introduces a wish, a change of mood",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Grammatical_mood",
+   "quote": "Some examples of moods are indicative, interrogative, imperative, subjunctive, injunctive, optative, and irrealis/potential.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 148,
+   "uid": "q-6459ae8ae993",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 62,
+     "path": "payload.questions[1]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "What is the usual distinction between its and it's?",
+   "key": "Its is the plural form; it's is the singular form",
+   "verdict": "confirmed: key wrong",
+   "correct": "Its shows possession; it's is a contraction of it is",
+   "note": "its is possessive; it's is \"it is\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/its",
+   "quote": "Equivalent to it +‎ -s (possessive marker).",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 149,
+   "uid": "q-73a50696eafb",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 58,
+     "path": "payload.questions[48]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "In dialogue, what does a dash at the end of a line usually show?",
+   "key": "shows a cut-off word in quoted speech",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "a cut-off word (2, key) and an interruption (3) are both standard readings",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 150,
+   "uid": "q-71e61b6d9f6f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 27,
+     "path": "payload.questions[43]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why do run-ons and comma splices confuse readers, according to rhetorical grammar?",
+   "key": "They force readers to slow down and lose their sense of time.",
+   "verdict": "confirmed: key wrong",
+   "correct": "They leave the relationship between ideas unclear and force readers to guess.",
+   "note": "run-ons leave the relationship between the ideas unclear",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Comma_splice",
+   "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 151,
+   "uid": "q-75f9d7e36186",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 29,
+     "path": "payload.questions[18]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which list is NOT parallel: 'the poem, the essay, the speech' vs. which of these IS the faulty one?",
+   "key": "noun phrases in a list (the poem, the essay, the speech)",
+   "verdict": "confirmed: key wrong",
+   "correct": "a mix of a noun, a verb, and a clause (the poem, arguing well, that she spoke)",
+   "note": "the faulty list mixes a noun, a verb phrase and a clause; the key is the parallel one",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+   "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 152,
+   "uid": "q-75f74431f33f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 50,
+     "path": "payload.questions[39]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Revise for an abrupt, dramatic break: It happened again the lights went out.",
+   "key": "It happened again: the power went out.",
+   "verdict": "confirmed: key wrong",
+   "correct": "It happened again — the power went out.",
+   "note": "a dash gives the abrupt, dramatic break; the key is a colon",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 153,
+   "uid": "q-63dfb762208f",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 4,
+     "path": "payload.questions[8]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    },
+    {
+     "coll": "items",
+     "row": 61248,
+     "path": "",
+     "user": 4
+    }
+   ],
+   "prompt": "Which sentence states a position rather than a fact?",
+   "key": "The first recycling programs in the United States began in the 1970s.",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "every option states a fact; none states a position",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "quote": "The term register is often, in language teaching especially, shorthand for formal/informal style, although this is an aging definition.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 154,
+   "uid": "q-7452943565b7",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 49,
+     "path": "payload.questions[6]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence correctly uses a dash to introduce a striking explanation?",
+   "key": "The test was brutal: ninety minutes, three essays;",
+   "verdict": "confirmed: no single correct answer",
+   "correct": null,
+   "note": "no option uses a dash correctly (the key has no dash and ends in a semicolon)",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Dash",
+   "quote": "Typical uses of dashes are to mark a break in a sentence, to set off an explanatory remark—similar to parentheses—or to show spans of time or ranges of values.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 155,
+   "uid": "q-6f4dda43d3a9",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 68,
+     "path": "payload.questions[35]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Choose the correct word: The school's honor code is built on five core ___.",
+   "key": "principals",
+   "verdict": "confirmed: key wrong",
+   "correct": "principles",
+   "note": "core \"principles\" (beliefs), not \"principals\"",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/principle",
+   "quote": "A fundamental assumption, fundamental law or guiding belief.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 156,
+   "uid": "q-78a2e8d05945",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 49,
+     "path": "payload.questions[25]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence gives the list of losses the most dramatic punch?",
+   "key": "The lockers were emptied; no note, no warning, no reason.",
+   "verdict": "confirmed: key wrong",
+   "correct": "The lockers were emptied: no note, no warning, no reason.",
+   "note": "a colon after the complete clause introduces the list; the key ends a list after a semicolon",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Colon_(punctuation)",
+   "quote": "In modern English usage, a complete sentence precedes a colon, while a list, description, explanation, or definition follows it.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 157,
+   "uid": "q-78534b0ffa91",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 36,
+     "path": "payload.questions[0]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "A scientist wants to report a lab accident without naming who caused it. Which sentence serves that purpose?",
+   "key": "shouted at me",
+   "verdict": "confirmed: key wrong",
+   "correct": "was shattered",
+   "note": "\"was shattered\" is the agentless passive",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/English_passive_voice",
+   "quote": "Contemporary style guides discourage excessive use of the passive voice but generally consider it to be acceptable in certain situations, such as when the patient is the topic of the sentence, when the agent is unimportant and therefore omitted, or when the agent is placed near the end of a sentence as a means of emphasis.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 158,
+   "uid": "q-7651a3368319",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 62,
+     "path": "payload.questions[15]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "A student asks whether contractions are acceptable in an essay. The best style-guide-based answer is:",
+   "key": "It is required in all academic writing",
+   "verdict": "confirmed: key wrong",
+   "correct": "It depends on the writing's audience and purpose",
+   "note": "contractions depend on audience and purpose; the key says they are required",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Register_(sociolinguistics)",
+   "quote": "The term register is often, in language teaching especially, shorthand for formal/informal style, although this is an aging definition.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 159,
+   "uid": "q-78413b6e79c9",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 24,
+     "path": "payload.questions[24]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Why is a cumulative sentence well suited to descriptive writing?",
+   "key": "Because it keeps every sentence short and punchy",
+   "verdict": "confirmed: key wrong",
+   "correct": "Because it lets each added phrase extend the picture without interrupting the flow",
+   "note": "each added phrase extends the picture; the key describes something else",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 160,
+   "uid": "q-786ff35d7166",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 66,
+     "path": "payload.questions[17]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which word most precisely praises a spotless kitchen?",
+   "key": "nice",
+   "verdict": "confirmed: key wrong",
+   "correct": "immaculate",
+   "note": "\"immaculate\" means absolutely clean",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wiktionary.org/wiki/immaculate",
+   "quote": "Having no blemish or stain; absolutely clean and tidy.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 161,
+   "uid": "q-78e176e3c9ad",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 54,
+     "path": "payload.questions[34]",
+     "user": null,
+     "served": "held (not served)"
+    }
+   ],
+   "prompt": "Which sentence correctly ends with a question that is not weakened by a wrong mark?",
+   "key": "Wait — I think I left my, phone at home.",
+   "verdict": "confirmed: key wrong",
+   "correct": "Wait, did you hear that?",
+   "note": "option 0 ends with its question mark cleanly; the key has a stray comma",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Ellipsis",
+   "quote": "Depending on context, ellipsis can indicate an unfinished thought, a leading statement, a slight pause, an echoing voice, or a nervous or awkward silence.",
+   "quote_verbatim": true,
+   "moot": true
+  },
+  {
+   "index": 162,
+   "uid": "q-79a22e228a5a",
+   "occ": [
+    {
+     "coll": "game_payloads",
+     "row": 15,
+     "path": "payload.questions[11]",
+     "user": null,
+     "served": "replaced by a verified regenerated set"
+    }
+   ],
+   "prompt": "In a model text, a sentence hands the reader its main point in the first few words. What does this tell you about the pattern?",
+   "key": "A periodic sentence that delays the point",
+   "verdict": "confirmed: key wrong",
+   "correct": "A cumulative sentence that lists extra details",
+   "note": "the point first is the cumulative (loose) pattern; the key \"periodic\" delays the point",
+   "method": "worked by hand against the item text; topic source quoted from the offline article",
+   "source": "https://en.wikipedia.org/wiki/Periodic_sentence",
+   "quote": "It is the opposite of the loose sentence, also continuous or running style, where the subject and verb are introduced at the beginning of the sentence.",
+   "quote_verbatim": true,
+   "moot": true
+  }
+ ]
+}

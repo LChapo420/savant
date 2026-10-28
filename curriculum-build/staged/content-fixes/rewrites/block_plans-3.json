@@ -1,0 +1,655 @@
+{
+ "collection": "block_plans",
+ "row_id": 3,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P76",
+   "wrong": "'Sleep matters.' — short, deliberate, punchy.",
+   "correct": "\"Sleep matters.\" is a complete sentence (subject + finite verb), not a deliberate fragment.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P77",
+   "wrong": "Wrinkled. Stained. Perfect anyway. (a deliberate fragment pair after a full sentence)",
+   "correct": "The example \"Wrinkled. Stained. Perfect anyway.\" shows three fragments with no preceding full sentence, but is labelled \"a deliberate fragment pair after a full sentence\".",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "'Sleep matters.' — short, deliberate, punchy.",
+   "replace": "'The research is clear. Plain and simple.' — short, deliberate, punchy.",
+   "fixes": [
+    "P76"
+   ]
+  },
+  {
+   "find": "A student, arguing for a later school start, writes: 'The research is clear. Sleep matters.' The second piece — 'Sleep matters.' — is best described as which of the following?",
+   "replace": "A student, arguing for a later school start, writes: 'The research is clear. Plain and simple.' The second piece — 'Plain and simple.' — is best described as which of the following?",
+   "fixes": [
+    "P76"
+   ]
+  },
+  {
+   "find": "'Sleep matters.' has a subject and a verb and is set off on purpose after a complete sentence it echoes, so it is a deliberate fragment — not a run-on, which would need two complete sentences joined without punctuation.",
+   "replace": "A deliberate fragment follows a complete sentence and echoes it in a compressed form, so the reader feels the punch instead of noticing a missing piece. 'Plain and simple.' echoes the idea of clear research in three words — deliberately incomplete, and clearly so.",
+   "fixes": [
+    "P76"
+   ]
+  },
+  {
+   "find": "Wrinkled. Stained. Perfect anyway. (a deliberate fragment pair after a full sentence)",
+   "replace": "Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)",
+   "fixes": [
+    "P77"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[2].data.leftColumn.items[0].example",
+   "before": "'Sleep matters.' — short, deliberate, punchy.",
+   "after": "'The research is clear. Plain and simple.' — short, deliberate, punchy.",
+   "fixes": [
+    "P76"
+   ]
+  },
+  {
+   "path": "checks[2].prompt",
+   "before": "A student, arguing for a later school start, writes: 'The research is clear. Sleep matters.' The second piece — 'Sleep matters.' — is best described as which of the following?",
+   "after": "A student, arguing for a later school start, writes: 'The research is clear. Plain and simple.' The second piece — 'Plain and simple.' — is best described as which of the following?",
+   "fixes": [
+    "P76"
+   ]
+  },
+  {
+   "path": "checks[2].rationale",
+   "before": "'Sleep matters.' has a subject and a verb and is set off on purpose after a complete sentence it echoes, so it is a deliberate fragment — not a run-on, which would need two complete sentences joined without punctuation.",
+   "after": "A deliberate fragment follows a complete sentence and echoes it in a compressed form, so the reader feels the punch instead of noticing a missing piece. 'Plain and simple.' echoes the idea of clear research in three words — deliberately incomplete, and clearly so.",
+   "fixes": [
+    "P76"
+   ]
+  },
+  {
+   "path": "blocks[5].data.cautions[3].rightExample",
+   "before": "Wrinkled. Stained. Perfect anyway. (a deliberate fragment pair after a full sentence)",
+   "after": "Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)",
+   "fixes": [
+    "P77"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Hook_QuoteDissect",
+    "purpose": "Open with a short famous quote (e.g., from a speech) where clickable annotations show how word order and clause choice make it persuasive.",
+    "data": {
+     "buzzwords": [
+      {
+       "annotation": "The subject and verb come first, so the promise lands before the conditions. Word order creates confidence: the reader hears the claim before the obstacles.",
+       "label": "We shall fight",
+       "term": "We shall fight",
+       "tone": "key"
+      },
+      {
+       "annotation": "The repeated sentence shape builds a drumbeat rhythm. Repetition of form makes the speech feel relentless and credible.",
+       "label": "repetition",
+       "term": "fight... fight... fight",
+       "tone": "key"
+      },
+      {
+       "annotation": "Ending on 'surrender' gives the sentence end-focus: the last word is what lingers, and Churchill plants the opposite of defeat where it sticks.",
+       "label": "last word",
+       "term": "surrender",
+       "tone": "caution"
+      }
+     ],
+     "epigraph": "Rhetorical Grammar — Word order and emphasis",
+     "instructionLabel": "Tap a highlighted phrase to see why it persuades",
+     "prompt": "Tap each highlighted phrase to see how its grammar does the persuading.",
+     "quote": "We [[shall fight]] on the beaches, we shall fight on the landing grounds, we shall fight in the fields and in the streets, we shall fight in the hills; we shall never [[surrender]].",
+     "source": "Winston Churchill, speech to the House of Commons, June 4, 1940",
+     "speaker": "Winston Churchill"
+    },
+    "repaired": true,
+    "index": 0
+   },
+   {
+    "block": "Theory_RuleCard",
+    "purpose": "Define rhetorical grammar: grammar choices (word order, clause type, sentence shape) selected for effect on the reader, with prerequisites on subjects, verbs, and clauses.",
+    "data": {
+     "anchor": "Rhetorical grammar means choosing your grammatical structures — word order, clause type, and sentence shape — on purpose, for the effect they create in the reader.",
+     "prerequisites": [
+      "You can find the subject and the verb in any sentence.",
+      "You can tell a complete sentence from a fragment by checking for a subject, a verb, and a finished thought.",
+      "You know that a run-on is two complete sentences joined without correct punctuation or a connecting word.",
+      "You can identify a subordinate clause — one that starts with a word like 'because,' 'although,' or 'if' — and tell it apart from a main clause."
+     ],
+     "ruleName": "Rhetorical Grammar",
+     "tag": "Definition"
+    },
+    "repaired": true,
+    "index": 1
+   },
+   {
+    "block": "Theory_ContrastSplit",
+    "purpose": "Side-by-side comparison of the same idea written flat versus written rhetorically (short fragment punch, periodic build-up, fronted phrase) so the effect is visible.",
+    "data": {
+     "footnote": "Rhetorical grammar is a set of choices; a grammatical error is a choice you never meant to make.",
+     "leftColumn": {
+      "heading": "What it IS",
+      "items": [
+       {
+        "example": "'The research is clear. Plain and simple.' — short, deliberate, punchy.",
+        "label": "Deliberate fragment",
+        "text": "A short fragment used on purpose for punch, placed after a complete sentence that sets it up."
+       },
+       {
+        "example": "'If we do not act now, the forest will be gone.'",
+        "label": "Periodic build-up",
+        "text": "A sentence that delays the main point to the end so the reader leans forward waiting for it."
+       },
+       {
+        "example": "'Silence, never again.'",
+        "label": "Fronted phrase",
+        "text": "A key phrase moved to the start of the sentence so the reader meets it first."
+       },
+       {
+        "example": "'We came, we saw, we stayed.'",
+        "label": "Parallel structure",
+        "text": "Matching grammatical forms repeated to build rhythm and credibility."
+       }
+      ],
+      "tone": "success"
+     },
+     "rightColumn": {
+      "heading": "What it is NOT",
+      "items": [
+       {
+        "example": "'I missed the bus I was late for class.'",
+        "label": "Accidental fragment or run-on",
+        "text": "A fragment that drops a needed subject or verb by mistake, or a run-on that jams two sentences together without punctuation."
+       },
+       {
+        "example": "'The the result was very unique in every way.'",
+        "label": "Rule-breaking",
+        "text": "Breaking grammar rules without a purpose, which reads as carelessness rather than style."
+       },
+       {
+        "example": "'When considering the matter of the start time, the analysis that was conducted by the committee...' — padding, not power.",
+        "label": "Longer is stronger",
+        "text": "Adding clauses or words just to sound impressive; empty padding weakens persuasion."
+       },
+       {
+        "example": "Mixing 'she likes running, swimming, and to bike' breaks the pattern.",
+        "label": "Broken parallelism",
+        "text": "Structures that almost match but don't — the rhythm stumbles and the point wobbles."
+       }
+      ],
+      "tone": "caution"
+     },
+     "subtitle": "Same idea, two sentences — one flat, one built for effect.",
+     "title": "Flat Writing vs. Rhetorical Writing"
+    },
+    "repaired": true,
+    "index": 2
+   },
+   {
+    "block": "Theory_TimelineSteps",
+    "purpose": "Walk through four moves in order — say it plain, then front the key phrase, then add the short punch, then end with the strongest point — building one example sentence at each step.",
+    "data": {
+     "accent": null,
+     "orientation": "auto",
+     "steps": [
+      {
+       "description": "'The team played hard, but they lost the game anyway.' A normal order: subject, verb, detail. Clear, but nothing stands out.",
+       "label": "Say it plain",
+       "marker": "1"
+      },
+      {
+       "description": "Spotlight a key phrase by moving it to the front: 'Despite playing hard, the team lost the game anyway.' The reader meets the setback first.",
+       "label": "Front the key phrase",
+       "marker": "2"
+      },
+      {
+       "description": "Add a deliberate fragment after a complete sentence for punch: 'Despite playing hard, the team lost anyway. Every single game.' The short sentence stings.",
+       "label": "Add the short punch",
+       "marker": "3"
+      },
+      {
+       "description": "Save the strongest point for the last position, where end-focus gives it the most weight: 'They played hard. They fought in every quarter. They lost anyway.' The final words carry the argument.",
+       "emphasis": "highlight",
+       "label": "End with the strongest point",
+       "marker": "4"
+      }
+     ],
+     "subtitle": "One idea, rebuilt four times for effect.",
+     "title": "Four Moves of Rhetorical Grammar"
+    },
+    "repaired": true,
+    "index": 3
+   },
+   {
+    "block": "Interact_WordBankMatch",
+    "purpose": "Learner drags technique chips (fragment for emphasis, periodic sentence, parallel structure, end-focus) into the correct example sentences.",
+    "data": {
+     "chips": [
+      {
+       "id": "chip_frag",
+       "text": "Deliberate fragment for emphasis",
+       "note": "A short, incomplete sentence used on purpose for punch."
+      },
+      {
+       "id": "chip_periodic",
+       "text": "Periodic sentence",
+       "note": "Builds up to the main point, which arrives at the end."
+      },
+      {
+       "id": "chip_parallel",
+       "text": "Parallel structure",
+       "note": "Matching grammatical forms that build rhythm and credibility."
+      },
+      {
+       "id": "chip_endfocus",
+       "text": "End-focus",
+       "note": "The strongest word or point is saved for last, where it weighs most."
+      }
+     ],
+     "feedbackCorrect": "All four matched — you can now read a sentence and name the move behind it.",
+     "feedbackTryAgain": "Not quite — reread each example and ask what the grammar is doing for the reader.",
+     "instructions": "Read each example sentence, then drag the chip that names the rhetorical technique it uses.",
+     "slots": [
+      {
+       "correctChipId": "chip_frag",
+       "hint": "It is not a complete sentence — and that is the point.",
+       "id": "slot1",
+       "label": "'Failure is simply the opportunity to begin again. More intelligently.'"
+      },
+      {
+       "correctChipId": "chip_periodic",
+       "hint": "Where does the main point finally arrive?",
+       "id": "slot2",
+       "label": "'If we do not protect the forest now, the birds, the streams, and the shade will be gone within a decade.'"
+      },
+      {
+       "correctChipId": "chip_parallel",
+       "hint": "Notice the matching verb forms.",
+       "id": "slot3",
+       "label": "'She studied the past, she questioned the present, and she shaped the future.'"
+      },
+      {
+       "correctChipId": "chip_endfocus",
+       "hint": "Which word lands with the most weight?",
+       "id": "slot4",
+       "label": "'The team had talent, discipline, and one thing no other team had: belief.'"
+      }
+     ],
+     "subtitle": "Name the move behind each sentence.",
+     "title": "Match the Technique"
+    },
+    "repaired": false,
+    "index": 4
+   },
+   {
+    "block": "Concept_CautionFlag",
+    "purpose": "Warns about the top errors: fragments that just read as mistakes, run-ons, and parallelism broken mid-list, with non-examples of each.",
+    "data": {
+     "cautions": [
+      {
+       "detail": "A fragment only works as a rhetorical choice when the reader can tell it is deliberate — usually because it is very short, follows a complete sentence, and clearly echoes it. A stray phrase on its own just reads as a typo.",
+       "kind": "pitfall",
+       "rightExample": "The storm passed by morning. Then silence.",
+       "title": "Deliberate vs. accidental fragments",
+       "wrongExample": "Walking home because the bus was late.",
+       "exampleNote": "The right example is two words the reader instantly understands as deliberate. The wrong one looks like a missing piece."
+      },
+      {
+       "detail": "A run-on occurs when two or more complete sentences are joined with no punctuation or connector. Blurred structure blurs persuasion: the reader cannot tell which idea to weigh.",
+       "kind": "non_example",
+       "rightExample": "The plan was bold. It was also risky.",
+       "title": "Run-ons kill impact",
+       "wrongExample": "The plan was bold it was also risky.",
+       "exampleNote": "The run-on makes both ideas run together; the corrected version gives each its own punch."
+      },
+      {
+       "detail": "In a list, once you start a pattern (for example, all -ing verbs), every item must keep it. One mismatched item breaks the rhythm and the reader's trust.",
+       "kind": "pitfall",
+       "rightExample": "We came, we saw, we listened.",
+       "title": "Parallelism broken mid-list",
+       "wrongExample": "We came, we saw, listening to every word.",
+       "exampleNote": "Keep the same form for every item in the series."
+      },
+      {
+       "detail": "Rhetorical grammar bends conventions on purpose, not by accident. Before you break a rule, make sure you can build the plain, correct sentence first — then decide that the broken version works harder.",
+       "kind": "illegal_transfer",
+       "rightExample": "Wrinkled. Stained. Perfect anyway. (three fragments with no preceding full sentence)",
+       "title": "Don't transfer 'stylistic' to every context",
+       "wrongExample": "Using fragments in a lab report conclusion to sound dramatic.",
+       "exampleNote": "In formal reporting, complete sentences are the effect you want."
+      }
+     ],
+     "conceptLabel": "Rhetorical grammar",
+     "flagIntro": "Deliberate grammar choices work only when the reader senses they are deliberate. These three errors are the ways 'artistic license' turns into an actual mistake.",
+     "flagTitle": "When effect becomes error",
+     "footerNote": "Rule of thumb: a fragment is a choice only if the reader can tell. If a careful reader would call it an error, fix it."
+    },
+    "repaired": false,
+    "index": 5
+   },
+   {
+    "block": "Trap_CommonError",
+    "purpose": "Targets the #1 mistake — mistaking any short sentence for an intentional fragment — and reveals why the intuition failed.",
+    "data": {
+     "choices": [
+      "It is a deliberate fragment, because it is very short and echoes the complete sentence before it.",
+      "It is a deliberate fragment, because all short sentences are stylistic fragments.",
+      "It is a run-on, because two ideas appear in the same spot.",
+      "It is a complete sentence, because a period was used."
+     ],
+     "commonErrorLabel": "Mistaking every short sentence for a deliberate fragment",
+     "correctIndex": 0,
+     "correctReasoning": "A deliberate fragment follows a complete sentence and echoes it in a compressed form, so the reader feels the punch instead of noticing a missing piece. 'Then silence.' gives the reader the aftermath in two words — deliberately incomplete, and clearly so.",
+     "context": "A student writes about a storm passing: 'The storm passed by morning. Then silence.'",
+     "difficulty": "Trap",
+     "question": "Why is the short second sentence 'Then silence.' a deliberate rhetorical fragment rather than an error?",
+     "recoveryTip": "Ask: does the short piece follow a complete sentence and echo it? If yes, it can be a deliberate fragment. If it stands alone or leaves the reader confused, repair it.",
+     "standardTag": "Fragments and run-ons",
+     "trapChoiceIndexes": [
+      1
+     ],
+     "trapReasons": {
+      "1": "Short is not the test — many short sentences are complete, and some fragments are accidental errors."
+     },
+     "whyIntuitionFailed": "The intuition fails because it uses the wrong test: length. Shortness is not what makes a fragment deliberate. What matters is that the fragment follows a complete sentence, clearly echoes it, and leaves no confusion about what is missing — the reader instantly supplies the meaning."
+    },
+    "repaired": false,
+    "index": 6
+   },
+   {
+    "block": "Interact_SentenceScramble",
+    "purpose": "Learner clicks jumbled chips in sequence to build a persuasive sentence, practising word order as a rhetorical choice.",
+    "data": {
+     "chips": [
+      {
+       "correctIndex": 0,
+       "id": "a",
+       "text": "Down the final stretch,"
+      },
+      {
+       "correctIndex": 1,
+       "id": "b",
+       "text": "with the crowd on its feet,"
+      },
+      {
+       "correctIndex": 2,
+       "id": "c",
+       "text": "the rookie kept running"
+      },
+      {
+       "correctIndex": 3,
+       "id": "d",
+       "text": "when everyone else had given up."
+      }
+     ],
+     "clearOnMistake": true,
+     "contextLabel": "Practice: fronting and end-focus",
+     "feedbackCorrect": "The phrase the reader meets first (Down the final stretch) sets the scene, and the strongest idea (kept running when everyone else gave up) lands last. That is end-focus working for you.",
+     "feedbackReset": "Order matters here — try again and think about what the reader should meet first and last.",
+     "feedbackRetry": "Close — that chip belongs in a different position.",
+     "hintAfterAttempts": 2,
+     "hintText": "Start with where the action happens, and save the biggest idea for the end.",
+     "maxAttemptsHint": 2,
+     "prompt": "Tap the phrases in order to build the sentence with the strongest effect: front the scene-setting phrase, then the supporting detail, then the subject and verb, then end with the most surprising point.",
+     "tokens": [
+      {
+       "id": "a",
+       "text": "Down the final stretch,"
+      },
+      {
+       "id": "b",
+       "text": "with the crowd on its feet,"
+      },
+      {
+       "id": "c",
+       "text": "the rookie kept running"
+      },
+      {
+       "id": "d",
+       "text": "when everyone else had given up."
+      }
+     ]
+    },
+    "repaired": false,
+    "index": 7
+   },
+   {
+    "block": "Recall_BinarySwipe",
+    "purpose": "Rapid retrieval: swipe statements left/right as effective rhetorical choices versus grammar errors, mixing emphasis fragments with genuine run-ons.",
+    "data": {
+     "instruction": "For each card, decide: is this a deliberate rhetorical choice, or a grammar error? Swipe right for choice, left for error.",
+     "leftHint": "Grammar error",
+     "leftLabel": "Error",
+     "rightHint": "Rhetorical choice",
+     "rightLabel": "Choice",
+     "statements": [
+      {
+       "context": "Two complete sentences, no punctuation between them.",
+       "correctSide": "left",
+       "feedback": "Run-on: two independent clauses jammed together. Split them or add a connector.",
+       "id": "s1",
+       "text": "The trial lasted three weeks the verdict surprised everyone.",
+       "tag": "Sentence"
+      },
+      {
+       "context": "It follows a complete sentence about the museum visit.",
+       "correctSide": "right",
+       "feedback": "Deliberate fragment: it echoes the previous sentence and lands like a drumbeat.",
+       "id": "s2",
+       "text": "No photos. No talking. Just history.",
+       "tag": "Fragment"
+      },
+      {
+       "context": "The list starts with -ing verbs, then breaks the pattern.",
+       "correctSide": "left",
+       "feedback": "Broken parallelism: keep every item in the same form to build rhythm.",
+       "id": "s3",
+       "text": "We spent the day hiking, swimming, and then the picnic.",
+       "tag": "Parallelism"
+      },
+      {
+       "context": "The main point arrives at the very end.",
+       "correctSide": "right",
+       "feedback": "Periodic sentence: the build-up creates suspense, and the payoff lands last.",
+       "id": "s4",
+       "text": "If we wait another year to fix the roof, the whole gym closes.",
+       "tag": "Periodic"
+      },
+      {
+       "context": "A dependent clause standing completely alone.",
+       "correctSide": "left",
+       "feedback": "Accidental fragment: 'Because...' cannot stand alone, and there is no complete sentence before it to echo.",
+       "id": "s5",
+       "text": "Because the bus never came.",
+       "tag": "Fragment"
+      },
+      {
+       "context": "One subject, one verb — it is short, but complete.",
+       "correctSide": "right",
+       "feedback": "A complete short sentence: subject and verb are both there. Short does not mean broken.",
+       "id": "s6",
+       "text": "Nobody moved.",
+       "tag": "Short sentence"
+      }
+     ],
+     "summaryBody": "A deliberate fragment is short, follows a complete sentence, and clearly echoes it. A run-on jams complete sentences together. Length is never the test — completeness and clarity are.",
+     "summaryHeading": "Choice or error?",
+     "title": "Rhetorical Choice or Grammar Error?"
+    },
+    "repaired": false,
+    "index": 8
+   },
+   {
+    "block": "Memory_CheatSheet",
+    "purpose": "Compact key-value summary of the four moves and three warnings so the lesson ends with one reference anchor.",
+    "data": {
+     "rows": [
+      {
+       "detail": "Choose word order, clause type, and sentence shape on purpose.",
+       "key": "Rhetorical grammar",
+       "tone": "accent",
+       "value": "Grammar chosen for its effect on the reader, not just for correctness."
+      },
+      {
+       "detail": "The last thing read is the first thing remembered.",
+       "key": "End-focus",
+       "tone": "success",
+       "value": "What the reader meets first and last carries the most weight."
+      },
+      {
+       "detail": "Spotlight a word or phrase by its new position.",
+       "key": "Fronting",
+       "value": "Moving a word or phrase to the start of the sentence."
+      },
+      {
+       "detail": "Use only after a complete sentence the fragment clearly echoes.",
+       "key": "Deliberate fragment",
+       "tone": "success",
+       "value": "A short, incomplete sentence used on purpose for punch."
+      },
+      {
+       "detail": "Structure blurs, so the persuasion blurs with it.",
+       "key": "Run-on",
+       "tone": "error",
+       "value": "Two or more complete sentences joined without punctuation or a connector."
+      },
+      {
+       "detail": "One broken item breaks the whole effect.",
+       "key": "Parallel structure",
+       "value": "Matching grammatical forms in a list or series, building rhythm and credibility."
+      },
+      {
+       "detail": "Same words, different staging, different weight.",
+       "key": "Periodic vs. cumulative",
+       "tone": "accent",
+       "value": "Periodic builds up to the point at the end; cumulative gives the point first, then adds detail."
+      },
+      {
+       "detail": "When in doubt, build the plain sentence first — then choose.",
+       "key": "The one rule",
+       "tone": "caution",
+       "value": "A stylistic choice only works if the reader can tell it is deliberate."
+      }
+     ],
+     "subtitle": "Rhetorical grammar — four moves, three warnings",
+     "title": "One-Page Recall: Rhetorical Grammar"
+    },
+    "repaired": false,
+    "index": 9
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "act_rhetoric",
+    "skill_name": "Rhetorical skills",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "Which statement best defines rhetorical grammar?",
+    "answer": "Choosing grammatical structures on purpose to create an effect on the reader",
+    "rationale": "Rhetorical grammar is defined by intent: the writer selects word order, clause type, or sentence shape because of the effect it produces, not by accident or by rigid rule-following.",
+    "source": "ai",
+    "hint": "Think about the word 'rhetorical' — it means aimed at an audience's reaction.",
+    "choices": [
+     "Choosing grammatical structures on purpose to create an effect on the reader",
+     "Following every grammar rule exactly as written in all writing",
+     "Adding as many clauses as possible to make sentences longer",
+     "Avoiding fragments and run-ons no matter what the situation is"
+    ],
+    "id": "c1",
+    "after": 2,
+    "focus": "Identifying what rhetorical grammar means (choosing structure for effect)"
+   },
+   {
+    "skill_id": "act_rhetoric",
+    "skill_name": "Rhetorical skills",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "A writer produces this sentence: 'If we do not protect the forest now, the birds, the streams, and the shade will be gone.' Which technique is this, and why?",
+    "answer": "Periodic sentence — the main point is saved for the end",
+    "rationale": "The main point arrives only after the conditional build-up, which is the defining feature of a periodic sentence — the suspense resolves at the end.",
+    "source": "ai",
+    "hint": "Ask: where does the reader finally get the main point?",
+    "choices": [
+     "Parallel structure — all clauses match in form",
+     "Fronting — a key phrase is moved to the start",
+     "Deliberate fragment — a short punchy incomplete sentence",
+     "Periodic sentence — the main point is saved for the end"
+    ],
+    "id": "c2",
+    "after": 4,
+    "focus": "Matching a sentence's structure to its rhetorical technique"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "A student, arguing for a later school start, writes: 'The research is clear. Plain and simple.' The second piece — 'Plain and simple.' — is best described as which of the following?",
+    "answer": "Intentional fragment",
+    "rationale": "A deliberate fragment follows a complete sentence and echoes it in a compressed form, so the reader feels the punch instead of noticing a missing piece. 'Plain and simple.' echoes the idea of clear research in three words — deliberately incomplete, and clearly so.",
+    "source": "ai",
+    "hint": "One test: does it contain two complete sentences jammed together, or is it just short on purpose?",
+    "choices": [
+     "Intentional fragment",
+     "Run-on error",
+     "Accidental fragment error",
+     "Broken parallelism"
+    ],
+    "id": "c3",
+    "after": 6,
+    "focus": "Telling an intentional fragment from a run-on error"
+   },
+   {
+    "skill_id": "act_rhetoric",
+    "skill_name": "Rhetorical skills",
+    "difficulty": 1,
+    "format": "type_in",
+    "prompt": "Rewrite this flat sentence so the strongest idea lands at the end, using only the words given and adding at most a comma and a period: 'Silence came after the rage.' Write your reordered sentence.",
+    "answer": "Rage, then silence.",
+    "rationale": "End-focus says the reader weighs last words most heavily, so 'rage' must move to the front and 'silence' must be the final word.",
+    "source": "ai",
+    "accepts": [
+     "Rage, then silence.",
+     "rage, then silence",
+     "Rage, then silence"
+    ],
+    "hint": "Front the loudest idea, and let the quiet word land last.",
+    "id": "c4",
+    "after": 8,
+    "focus": "Producing the persuasive word order for a short sentence"
+   }
+  ]
+ }
+}

@@ -1,0 +1,15 @@
+# rsync --exclude-from=curriculum-build/staged/beta-launch/deploy/rsync-exclude.txt
+# What is NOT copied to the server. data/ is copied once, by hand, at cut-over (section 5).
+.env
+.env.*
+!.env.example
+data/
+logs/
+node_modules/
+curriculum-build/
+public-redesign/
+public-v2/
+*.log
+*.err.log
+.beta-launch-test-server-*.js
+site/data/

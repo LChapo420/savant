@@ -1,0 +1,154 @@
+{
+ "collection": "lessons",
+ "row_id": 67,
+ "shared": false,
+ "user_id": 148,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P12",
+   "wrong": "Dividing by 2 before removing the 4 in 2x + 4 = 14. That turns the 4 into 2 as well and gives x + 4 = 7, so x = 3, but 2 x 3 + 4 = 10, not 14.",
+   "correct": "Dividing 2x + 4 = 14 by 2 gives x + 2 = 7 (x = 5); the bullet says the 4 \"turns into 2\" and then writes x + 4 = 7.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Dividing by 2 before removing the 4 in 2x + 4 = 14. That turns the 4 into 2 as well and gives x + 4 = 7, so x = 3, but 2 x 3 + 4 = 10, not 14.",
+   "replace": "Dividing by 2 before removing the 4 in 2x + 4 = 14 and then writing x + 4 = 7 is a mistake. Dividing both sides by 2 gives x + 2 = 7, so x = 5, and 2 x 5 + 4 = 14.",
+   "fixes": [
+    "P12"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[2]",
+   "before": "Dividing by 2 before removing the 4 in 2x + 4 = 14. That turns the 4 into 2 as well and gives x + 4 = 7, so x = 3, but 2 x 3 + 4 = 10, not 14.",
+   "after": "Dividing by 2 before removing the 4 in 2x + 4 = 14 and then writing x + 4 = 7 is a mistake. Dividing both sides by 2 gives x + 2 = 7, so x = 5, and 2 x 5 + 4 = 14.",
+   "fixes": [
+    "P12"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax-m3.1-flash:free",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving Linear Equations by Undoing Each Step",
+  "intro": "A linear equation says two expressions are equal, and your job is to find the number that makes it true. The whole method is one rule used over and over: undo each operation, and do it to both sides. We will start with one-step equations and build up to two-step ones.",
+  "sections": [
+   {
+    "heading": "The Rule: Do the Same Thing to Both Sides",
+    "body": "An equation is balanced. If you change only one side, the equation stops being true. So whatever you do to the left side, you also do to the right side. To undo an operation, use its inverse: undo addition with subtraction, and undo subtraction with addition. For x + 5 = 12, subtract 5 from both sides. That gives x + 5 - 5 = 12 - 5, so x = 7. Checking it: 7 + 5 = 12, which is true.",
+    "example": "Solve x + 5 = 12.\nSubtract 5 from both sides: x + 5 - 5 = 12 - 5.\nSimplify: x = 7.\nCheck: 7 + 5 = 12. Yes."
+   },
+   {
+    "heading": "Undoing Multiplication with Division",
+    "body": "If x is multiplied by a number, undo it by dividing both sides by that number. The number stuck to x, like the 3 in 3x, means 3 times x. So for 3x = 21, divide both sides by 3. You get x = 7, and checking it gives 3 times 7 = 21, which is true.",
+    "example": "Solve 3x = 21.\nDivide both sides by 3: 3x / 3 = 21 / 3.\nSimplify: x = 7.\nCheck: 3 x 7 = 21. Yes."
+   },
+   {
+    "heading": "Two-Step Equations: Undo Addition First",
+    "body": "When an equation has both multiplication and addition, undo the addition or subtraction first. Then undo the multiplication. For 2x + 4 = 14, first subtract 4 from both sides to get 2x = 10, then divide both sides by 2 to get x = 5. Checking it: 2 times 5 plus 4 equals 14, which is true.",
+    "example": "Solve 2x + 4 = 14.\nSubtract 4 from both sides: 2x + 4 - 4 = 14 - 4, so 2x = 10.\nDivide both sides by 2: 2x / 2 = 10 / 2, so x = 5.\nCheck: 2 x 5 + 4 = 10 + 4 = 14. Yes."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 4x + 3 = 19.",
+   "steps": [
+    "The equation has both a multiplication by 4 and an addition of 3, so undo the addition first.",
+    "Subtract 3 from both sides: 4x + 3 - 3 = 19 - 3.",
+    "Simplify both sides: 4x = 16.",
+    "Now undo the multiplication by 4 by dividing both sides by 4: 4x / 4 = 16 / 4.",
+    "Simplify both sides: x = 4.",
+    "Check by substituting back: 4 x 4 + 3 = 16 + 3 = 19. The equation is true."
+   ],
+   "answer": "x = 4"
+  },
+  "common_mistakes": [
+   "Adding 5 instead of subtracting it in x + 5 = 12. That gives x = 12 + 5 = 17, and 17 + 5 = 22, which does not equal 12.",
+   "Subtracting 3 instead of dividing by 3 in 3x = 21. The 3x means 3 times x, so subtracting 3 gives x = 18, and 3 x 18 = 54, not 21.",
+   "Dividing by 2 before removing the 4 in 2x + 4 = 14 and then writing x + 4 = 7 is a mistake. Dividing both sides by 2 gives x + 2 = 7, so x = 5, and 2 x 5 + 4 = 14.",
+   "Changing only one side, for example subtracting 5 from the left of x + 5 = 12 and leaving the right at 12. That gives x = 12, and 12 + 5 = 17, not 12."
+  ],
+  "summary": "An equation stays balanced only if you do the same thing to both sides. Undo each operation with its inverse: subtract to undo addition, divide to undo multiplication. In two-step equations, clear the addition or subtraction first, then divide, and always check by substituting your answer back.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x + 8 = 15.",
+    "answer": "x = 7",
+    "rationale": "Subtract 8 from both sides, the move that undoes the addition of 8: x = 15 - 8 = 7.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "x = 7",
+     "x = 15",
+     "x = 23",
+     "x = 8"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve 5x = 40.",
+    "answer": "x = 8",
+    "rationale": "Divide both sides by 5 to undo the multiplication: x = 40 / 5 = 8.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "In 3x = 21, which single move isolates x?",
+    "answer": "Divide both sides by 3",
+    "rationale": "The 3 means 3 times x, so division is the inverse operation that leaves x alone.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Subtract 3 from both sides",
+     "Divide both sides by 3",
+     "Add 3 to both sides",
+     "Multiply both sides by 21"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve 2x + 6 = 18.",
+    "answer": "x = 6",
+    "rationale": "First subtract 6 from both sides to get 2x = 12, then divide both sides by 2 to get x = 6.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signed consent form | Savant</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="header"></header>
+  <main class="page">
+    <div class="wrap wrap-narrow signed-form">
+      <h1>Signed consent form</h1>
+      <p class="muted no-print">For the two separate choices: sharing your child's words with outside AI companies, and AI
+        training. Agreeing by email covers only Savant's own use, so these need a signature. Print this page or save it as
+        a PDF, fill it in, sign it, and send a scan or a clear photo to the privacy contact in the
+        <a href="/privacy#contact">privacy policy</a>. We check it against your parent account and switch the choice on;
+        the parent page then shows it as on.</p>
+      <p class="no-print"><button class="btn" id="print" type="button">Print or save as PDF</button></p>
+
+      <section class="form-sheet" aria-label="The form">
+        <h2>Savant: parent or guardian consent to share a child's information</h2>
+        <dl class="form-lines">
+          <div><dt>Parent or guardian's full name</dt><dd data-fill="parent_name"></dd></div>
+          <div><dt>Email of the Savant parent account</dt><dd data-fill="parent_email"></dd></div>
+          <div><dt>Child's first name or nickname on Savant</dt><dd data-fill="child_name"></dd></div>
+          <div><dt>Child's Savant username</dt><dd data-fill="child_username"></dd></div>
+        </dl>
+        <p>I am this child's parent or legal guardian. I have read the Savant privacy policy (version
+          <span class="mono" id="policy-version">2026-10-22.1</span>). I tick each choice I agree to:</p>
+        <p class="form-box"><span class="tick-box" aria-hidden="true"></span> Savant may send what my child writes or says in
+          Savant to the outside AI companies named in the privacy policy, only so those services can answer or mark it,
+          under contracts that keep it confidential and do not let them use it for anything else.</p>
+        <p class="form-box"><span class="tick-box" aria-hidden="true"></span> Savant may use my child's data to train AI models.</p>
+        <p>I understand I can withdraw either choice at any time on the Savant parent page, and that it stops at once.</p>
+        <dl class="form-lines">
+          <div><dt>Signature</dt><dd></dd></div>
+          <div><dt>Date</dt><dd></dd></div>
+        </dl>
+      </section>
+    </div>
+  </main>
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/parent-form.js"></script>
+</body>
+</html>

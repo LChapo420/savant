@@ -1,0 +1,1340 @@
+<style>
+  #base-lesson-body{
+    --bg:#141416;
+    --surface:#1C1C20;
+    --surface-2:#242429;
+    --surface-3:#2E2E34;
+    --accent:#F59E0B;
+    --accent-dark:#B45309;
+    --accent-glow:rgba(245,158,11,.45);
+    --term:#22C55E;
+    --term-dark:#15803D;
+    --term-glow:rgba(34,197,94,.45);
+    --danger:#EF4444;
+    --danger-dark:#991B1B;
+    --danger-glow:rgba(239,68,68,.45);
+    --cyan:#38BDF8;
+    --cyan-dark:#0369A1;
+    --text:#EAE7E0;
+    --muted:#9C978E;
+    --line:#3A3A40;
+    --radius:12px;
+    box-sizing:border-box;
+    max-width:1180px;
+    margin:0 auto;
+    background-color:var(--bg);
+    background-image:repeating-linear-gradient(to bottom, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);
+    color:var(--text);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+    line-height:1.55;
+    font-size:15px;
+    border-radius:14px;
+    padding-bottom:42px;
+    overflow-x:hidden;
+  }
+  #base-lesson-body *{box-sizing:border-box;}
+
+  /* ---------- HUD ---------- */
+  #base-lesson-body .l125-hud{
+    position:sticky; top:0; z-index:60;
+    background:linear-gradient(180deg,#1B1B1F,#141416);
+    border-bottom:2px solid var(--accent-dark);
+    box-shadow:0 6px 18px rgba(0,0,0,.65);
+    padding:10px 14px 12px;
+    border-radius:14px 14px 0 0;
+  }
+  #base-lesson-body .l125-hud-row{
+    display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center;
+  }
+  #base-lesson-body .l125-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    border:2px solid var(--line);
+    background:linear-gradient(180deg,var(--surface-3),var(--surface));
+    border-radius:9px;
+    padding:5px 10px;
+    font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted);
+    box-shadow:0 3px 0 #0C0C0E;
+  }
+  #base-lesson-body .l125-badge-lvl{
+    border-color:var(--accent); color:#141416;
+    background:linear-gradient(180deg,#FBBF24,var(--accent));
+    box-shadow:0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body .l125-badge-subject{ border-color:var(--accent-dark); color:var(--accent); }
+  #base-lesson-body .l125-badge-xp{ border-color:var(--term-dark); color:var(--term); }
+  #base-lesson-body .l125-badge-xp b{ color:#fff; font-size:12.5px; }
+  #base-lesson-body .l125-callsign input{
+    background:#0E0E10; border:1px solid var(--line); border-radius:6px;
+    color:var(--accent); font:inherit; font-size:10.5px; letter-spacing:.09em;
+    padding:2px 6px; width:112px; text-transform:uppercase;
+  }
+  #base-lesson-body .l125-callsign input:focus{ outline:2px solid var(--accent-glow); }
+
+  #base-lesson-body .l125-gauge-row{
+    display:flex; align-items:center; gap:10px; margin-top:9px; flex-wrap:wrap;
+  }
+  #base-lesson-body .l125-gauge-label{
+    font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700;
+  }
+  #base-lesson-body .l125-gauge{
+    position:relative; flex:1 1 220px; min-width:180px; height:20px;
+    background:#0B0B0D; border:2px solid var(--line); border-radius:10px;
+    overflow:hidden;
+  }
+  #base-lesson-body .l125-gauge-fill{
+    height:100%; width:25%;
+    background:linear-gradient(90deg,var(--accent-dark),var(--accent),#FCD34D);
+    box-shadow:0 0 14px var(--accent-glow) inset;
+    transition:width .7s cubic-bezier(.2,.8,.3,1);
+  }
+  #base-lesson-body .l125-gauge.secured .l125-gauge-fill{
+    background:linear-gradient(90deg,var(--term-dark),var(--term),#86EFAC);
+    box-shadow:0 0 16px var(--term-glow) inset;
+  }
+  #base-lesson-body .l125-gauge-txt{
+    font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--accent);
+    min-width:180px;
+  }
+  #base-lesson-body .l125-gauge.secured + .l125-gauge-txt{ color:var(--term); }
+
+  /* ---------- layout ---------- */
+  #base-lesson-body .l125-wrap{ padding:18px 14px 0; }
+  #base-lesson-body .l125-brief{
+    border:2px solid var(--accent-dark);
+    border-left:8px solid var(--accent);
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border-radius:var(--radius);
+    padding:12px 16px; margin:0 0 22px;
+    font-size:13.5px; color:#D8D4CB;
+    box-shadow:0 4px 0 #0C0C0E;
+  }
+  #base-lesson-body .l125-brief strong{ color:var(--accent); }
+
+  #base-lesson-body section.l125-sec{ margin-bottom:30px; }
+  #base-lesson-body .l125-h2{
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:10px;
+    font-size:17px; letter-spacing:.06em; text-transform:uppercase;
+    margin:0 0 14px; padding:0 0 10px;
+    border-bottom:2px solid var(--line);
+    color:var(--text);
+  }
+  #base-lesson-body .l125-secnum{
+    font-size:10.5px; letter-spacing:.16em;
+    background:linear-gradient(180deg,#FBBF24,var(--accent));
+    color:#141416; padding:3px 9px; border-radius:7px;
+    box-shadow:0 3px 0 var(--accent-dark);
+    font-weight:800;
+  }
+  #base-lesson-body .l125-card{
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    box-shadow:0 4px 0 #0C0C0E;
+  }
+  #base-lesson-body h3{
+    font-size:13px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 8px;
+  }
+  #base-lesson-body h4{
+    font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--term); margin:14px 0 6px;
+  }
+  #base-lesson-body p{ margin:0 0 10px; font-size:13.5px; }
+  #base-lesson-body ul, #base-lesson-body ol{ margin:0 0 10px; padding-left:20px; font-size:13.5px; }
+  #base-lesson-body li{ margin-bottom:6px; }
+  #base-lesson-body .l125-muted{ color:var(--muted); }
+  #base-lesson-body .l125-grid2{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  #base-lesson-body .l125-grid2-4{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+
+  /* ---------- syntax tags ---------- */
+  #base-lesson-body .tag{
+    display:inline-block; padding:1px 6px; border-radius:6px;
+    font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    border:1px solid transparent; margin-right:5px;
+  }
+  #base-lesson-body .tag-claim{ background:rgba(56,189,248,.16); border-color:var(--cyan-dark); color:var(--cyan); }
+  #base-lesson-body .tag-ground{ background:rgba(34,197,94,.16); border-color:var(--term-dark); color:var(--term); }
+  #base-lesson-body .tag-bridge{ background:rgba(168,85,247,.16); border-color:#7E22CE; color:#C4B5FD; }
+  #base-lesson-body .tag-scope{ background:rgba(245,158,11,.16); border-color:var(--accent-dark); color:var(--accent); }
+  #base-lesson-body .tag-bound{ background:rgba(239,68,68,.16); border-color:var(--danger-dark); color:#FCA5A5; }
+
+  #base-lesson-body .l125-example{
+    background:#101012; border:2px solid var(--line); border-radius:10px;
+    padding:14px 16px; box-shadow:0 4px 0 #0C0C0E;
+  }
+  #base-lesson-body .l125-quote{
+    border-left:4px solid var(--accent-dark); padding:6px 0 6px 12px; margin:8px 0 12px;
+    color:#D8D4CB; font-style:italic; font-size:13px;
+  }
+  #base-lesson-body .l125-decode{
+    display:grid; gap:6px; font-size:12.5px; margin-top:8px;
+  }
+  #base-lesson-body .l125-decode div{
+    border-left:3px solid var(--line); padding-left:9px;
+  }
+
+  /* ---------- pods ---------- */
+  #base-lesson-body .l125-pod{
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border:2px solid var(--line); border-top:4px solid var(--danger-dark);
+    border-radius:var(--radius); padding:14px 16px;
+    box-shadow:0 4px 0 #0C0C0E;
+  }
+  #base-lesson-body .l125-pod-title{
+    font-size:12.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase;
+    color:#FCA5A5; margin:0 0 8px; display:flex; gap:8px; align-items:center;
+  }
+  #base-lesson-body .l125-pod-title span.l125-podnum{
+    background:var(--danger-dark); color:#fff; border-radius:6px; padding:1px 7px; font-size:10px;
+  }
+  #base-lesson-body .l125-pod-excerpt{
+    background:#0E0E10; border:1px dashed var(--line); border-radius:8px;
+    padding:9px 11px; font-size:12.5px; margin-top:9px; color:#CFCAC0;
+  }
+  #base-lesson-body .l125-pod-diag{
+    margin-top:8px; font-size:12px; color:var(--muted);
+    border-left:3px solid var(--danger); padding-left:9px;
+  }
+  #base-lesson-body .l125-rule{ font-size:12.5px; margin-bottom:6px; }
+  #base-lesson-body .l125-rule b{ color:var(--accent); }
+
+  /* ---------- buttons ---------- */
+  #base-lesson-body .l125-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:linear-gradient(180deg,var(--surface-3),var(--surface-2));
+    color:var(--text);
+    border:2px solid var(--accent);
+    border-radius:10px;
+    padding:11px 16px;
+    font-family:inherit; font-weight:800; letter-spacing:.07em; text-transform:uppercase; font-size:11.5px;
+    cursor:pointer;
+    box-shadow:0 4px 0 var(--accent-dark);
+    transition:box-shadow .15s ease, transform .08s ease, background .15s ease;
+    text-align:left;
+  }
+  #base-lesson-body .l125-btn:hover:not(:disabled){
+    box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark);
+    background:linear-gradient(180deg,#3A3A42,var(--surface-2));
+  }
+  #base-lesson-body .l125-btn:active:not(:disabled){ transform:translateY(2px); box-shadow:0 2px 0 var(--accent-dark); }
+  #base-lesson-body .l125-btn:disabled{ opacity:.42; cursor:not-allowed; }
+  #base-lesson-body .l125-btn-green{ border-color:var(--term); box-shadow:0 4px 0 var(--term-dark); }
+  #base-lesson-body .l125-btn-green:hover:not(:disabled){ box-shadow:0 4px 14px var(--term-glow), 0 4px 0 var(--term-dark); }
+  #base-lesson-body .l125-btn-green:active:not(:disabled){ box-shadow:0 2px 0 var(--term-dark); }
+  #base-lesson-body .l125-btn-red{ border-color:var(--danger); box-shadow:0 4px 0 var(--danger-dark); }
+  #base-lesson-body .l125-btn-red:hover:not(:disabled){ box-shadow:0 4px 14px var(--danger-glow), 0 4px 0 var(--danger-dark); }
+  #base-lesson-body .l125-btn-red:active:not(:disabled){ box-shadow:0 2px 0 var(--danger-dark); }
+
+  /* ---------- centrifuge ---------- */
+  #base-lesson-body .l125-rig{ display:grid; grid-template-columns:minmax(300px,1fr) minmax(300px,1.15fr); gap:16px; }
+  #base-lesson-body .l125-chamber{
+    background:radial-gradient(circle at 50% 40%, #1F1F24 0%, #0E0E10 70%);
+    border:2px solid var(--line); border-radius:var(--radius);
+    padding:14px; box-shadow:0 4px 0 #0C0C0E;
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+  }
+  #base-lesson-body .l125-rotor{
+    position:relative; width:min(360px,78vw); aspect-ratio:1/1;
+    border-radius:50%;
+    background:
+      repeating-conic-gradient(from 0deg, rgba(245,158,11,.09) 0deg 2deg, transparent 2deg 12deg),
+      radial-gradient(circle, #26262C 0%, #17171A 60%, #0C0C0E 100%);
+    border:3px solid var(--accent-dark);
+    box-shadow:0 0 26px rgba(245,158,11,.14), inset 0 0 30px rgba(0,0,0,.85);
+  }
+  #base-lesson-body .l125-rotor::after{
+    content:""; position:absolute; inset:38%;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--surface-3), #0B0B0D);
+    border:2px solid var(--line);
+    box-shadow:inset 0 0 12px rgba(0,0,0,.9);
+  }
+  #base-lesson-body .l125-rotor.l125-spinning{ animation:l125-rotor-spin 2s cubic-bezier(.25,.6,.35,1) 1; }
+  @keyframes l125-rotor-spin{
+    0%{ transform:rotate(0deg); }
+    70%{ transform:rotate(1440deg); }
+    100%{ transform:rotate(1800deg); }
+  }
+  #base-lesson-body .l125-slot{
+    position:absolute; width:40%; min-height:52px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    background:linear-gradient(180deg,var(--surface-3),var(--surface));
+    border:2px solid var(--line); border-radius:10px;
+    color:var(--text); font-family:inherit; cursor:pointer;
+    box-shadow:0 3px 0 #0C0C0E;
+    padding:6px 4px;
+    transition:box-shadow .15s, border-color .15s, transform .08s;
+  }
+  #base-lesson-body .l125-slot:hover{ border-color:var(--accent); box-shadow:0 3px 12px var(--accent-glow), 0 3px 0 #0C0C0E; }
+  #base-lesson-body .l125-slot.sel{ border-color:var(--accent); box-shadow:0 0 14px var(--accent-glow), 0 3px 0 var(--accent-dark); }
+  #base-lesson-body .l125-slot.bonded{ border-color:var(--term); box-shadow:0 0 16px var(--term-glow), 0 3px 0 var(--term-dark); }
+  #base-lesson-body .l125-slot.ruptured{ border-color:var(--danger); box-shadow:0 0 16px var(--danger-glow), 0 3px 0 var(--danger-dark); animation:l125-shake .45s ease 2; }
+  @keyframes l125-shake{
+    0%,100%{ transform:translate(0,0) rotate(0deg); }
+    20%{ transform:translate(-3px,2px) rotate(-1.6deg); }
+    45%{ transform:translate(3px,-2px) rotate(1.6deg); }
+    70%{ transform:translate(-2px,-1px) rotate(-1deg); }
+  }
+  #base-lesson-body .l125-slot.p0{ top:2%; left:50%; transform:translateX(-50%); }
+  #base-lesson-body .l125-slot.p1{ right:1%; top:50%; transform:translateY(-50%); }
+  #base-lesson-body .l125-slot.p2{ bottom:2%; left:50%; transform:translateX(-50%); }
+  #base-lesson-body .l125-slot.p3{ left:1%; top:50%; transform:translateY(-50%); }
+  #base-lesson-body .l125-slot-tag{ font-size:8.5px; letter-spacing:.12em; color:var(--muted); font-weight:800; }
+  #base-lesson-body .l125-slot-word{ font-size:13px; font-weight:800; color:var(--accent); letter-spacing:.03em; }
+  #base-lesson-body .l125-slot.bonded .l125-slot-word{ color:var(--term); }
+  #base-lesson-body .l125-slot.ruptured .l125-slot-word{ color:var(--danger); }
+  #base-lesson-body .l125-slot-led{
+    width:8px; height:8px; border-radius:50%; background:#3A3A40; box-shadow:inset 0 0 4px #000;
+  }
+  #base-lesson-body .l125-slot.bonded .l125-slot-led{ background:var(--term); box-shadow:0 0 10px var(--term); }
+  #base-lesson-body .l125-slot.ruptured .l125-slot-led{ background:var(--danger); box-shadow:0 0 10px var(--danger); }
+  #base-lesson-body .l125-slot.sel .l125-slot-led{ background:var(--accent); box-shadow:0 0 10px var(--accent); }
+
+  #base-lesson-body .l125-controls{ width:100%; display:grid; gap:9px; }
+  #base-lesson-body .l125-rpm{
+    -webkit-appearance:none; appearance:none; width:100%; height:16px; border-radius:9px;
+    background:linear-gradient(90deg,#0B0B0D,var(--accent-dark));
+    border:2px solid var(--line); cursor:pointer;
+  }
+  #base-lesson-body .l125-rpm::-webkit-slider-thumb{
+    -webkit-appearance:none; width:22px; height:28px; border-radius:6px;
+    background:linear-gradient(180deg,#FBBF24,var(--accent));
+    border:2px solid #000; box-shadow:0 3px 0 var(--accent-dark); cursor:grab;
+  }
+  #base-lesson-body .l125-rpm::-moz-range-thumb{
+    width:20px; height:26px; border-radius:6px;
+    background:linear-gradient(180deg,#FBBF24,var(--accent));
+    border:2px solid #000; box-shadow:0 3px 0 var(--accent-dark); cursor:grab;
+  }
+  #base-lesson-body .l125-rpm-read{
+    display:flex; justify-content:space-between; font-size:10.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); font-weight:800;
+  }
+  #base-lesson-body .l125-rpm-read b{ color:var(--accent); }
+  #base-lesson-body .l125-ctrl-row{ display:flex; gap:9px; flex-wrap:wrap; }
+  #base-lesson-body .l125-ctrl-row .l125-btn{ flex:1 1 150px; }
+
+  #base-lesson-body .l125-bay{
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border:2px solid var(--line); border-radius:var(--radius);
+    padding:14px 16px; box-shadow:0 4px 0 #0C0C0E;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  #base-lesson-body .l125-bay-src{ font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:800; }
+  #base-lesson-body .l125-bay-excerpt{
+    background:#0E0E10; border:2px solid var(--line); border-left:5px solid var(--cyan-dark);
+    border-radius:8px; padding:10px 12px; font-size:13px; color:#D8D4CB; font-style:italic;
+  }
+  #base-lesson-body .l125-bay-claim{
+    background:rgba(56,189,248,.08); border:2px solid var(--cyan-dark);
+    border-radius:8px; padding:10px 12px; font-size:12.5px; color:#BFE6FB;
+  }
+  #base-lesson-body .l125-bay-claim b{ color:var(--cyan); }
+  #base-lesson-body .l125-cart{
+    display:flex; gap:10px; align-items:flex-start; width:100%;
+    background:linear-gradient(180deg,var(--surface-3),var(--surface-2));
+    border:2px solid var(--line); border-radius:10px;
+    padding:10px 12px; color:var(--text); font-family:inherit; font-size:12.5px;
+    text-align:left; cursor:pointer; box-shadow:0 4px 0 #0C0C0E;
+    transition:box-shadow .15s, border-color .15s, transform .08s;
+  }
+  #base-lesson-body .l125-cart:hover:not(:disabled){ border-color:var(--accent); box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark); }
+  #base-lesson-body .l125-cart:active:not(:disabled){ transform:translateY(2px); box-shadow:0 2px 0 var(--accent-dark); }
+  #base-lesson-body .l125-cart.chosen{ border-color:var(--accent); background:linear-gradient(180deg,#3B2F14,var(--surface-2)); box-shadow:0 4px 0 var(--accent-dark); }
+  #base-lesson-body .l125-cart:disabled{ opacity:.55; cursor:not-allowed; }
+  #base-lesson-body .l125-cart-num{
+    flex:0 0 24px; height:24px; display:flex; align-items:center; justify-content:center;
+    border-radius:6px; background:var(--surface); border:2px solid var(--accent-dark);
+    color:var(--accent); font-weight:800; font-size:11px;
+  }
+  #base-lesson-body .l125-log{
+    background:#0A0A0C; border:2px solid var(--line); border-radius:10px;
+    padding:10px 12px; max-height:190px; overflow-y:auto; font-size:12px;
+    display:flex; flex-direction:column; gap:7px;
+  }
+  #base-lesson-body .l125-log-line{ border-left:3px solid var(--line); padding-left:9px; color:var(--muted); }
+  #base-lesson-body .l125-log-good{ border-left-color:var(--term); color:#A7F3C9; }
+  #base-lesson-body .l125-log-bad{ border-left-color:var(--danger); color:#FCA5A5; }
+  #base-lesson-body .l125-log-warn{ border-left-color:var(--accent); color:#FCD9A0; }
+
+  /* ---------- detonator ---------- */
+  #base-lesson-body .l125-det{
+    position:relative; overflow:hidden;
+    background:linear-gradient(180deg,#221A14,#161616);
+    border:2px solid var(--danger-dark);
+    border-radius:var(--radius); padding:18px;
+    box-shadow:0 4px 0 #0C0C0E;
+    transition:transform .5s ease, opacity .5s ease;
+  }
+  #base-lesson-body .l125-det.det-flash{ animation:l125-flash .7s ease 1; }
+  @keyframes l125-flash{
+    0%,100%{ background:linear-gradient(180deg,#221A14,#161616); }
+    25%{ background:linear-gradient(180deg,#5A1A1A,#2A0E0E); }
+    55%{ background:linear-gradient(180deg,#7A1414,#3A0B0B); }
+  }
+  #base-lesson-body .l125-det.det-collapsed{ transform:scale(.94) rotate(-1.2deg); opacity:.4; }
+  #base-lesson-body .l125-cracks{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; opacity:0; transition:opacity .5s ease;
+  }
+  #base-lesson-body .l125-det.det-cracked .l125-cracks{ opacity:1; }
+  #base-lesson-body .l125-cracks path{
+    fill:none; stroke:var(--danger); stroke-width:2.4; stroke-linecap:round;
+    stroke-dasharray:900; stroke-dashoffset:900;
+  }
+  #base-lesson-body .l125-det.det-cracked .l125-cracks path{
+    stroke-dashoffset:0; transition:stroke-dashoffset 1.1s ease;
+  }
+  #base-lesson-body .l125-det-plate{
+    background:#0B0B0D; border:2px solid var(--accent);
+    border-radius:10px; padding:12px 14px; margin:12px 0;
+    box-shadow:0 0 18px rgba(245,158,11,.22), inset 0 0 22px rgba(245,158,11,.08);
+    font-size:13px; color:#FCD9A0;
+  }
+  #base-lesson-body .l125-det-plate b{ color:var(--accent); letter-spacing:.06em; }
+  #base-lesson-body .l125-debrief{
+    display:none; margin-top:14px;
+    border:2px solid var(--term); border-radius:10px;
+    background:rgba(34,197,94,.09); padding:12px 14px; font-size:12.8px; color:#B9F3CE;
+  }
+  #base-lesson-body .l125-debrief.show{ display:block; animation:l125-rise .5s ease 1; }
+  @keyframes l125-rise{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:translateY(0);} }
+
+  /* ---------- forensics ---------- */
+  #base-lesson-body .l125-fx{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr); gap:14px; }
+  #base-lesson-body .l125-console{
+    background:#0A0A0C; border:2px solid var(--line); border-radius:var(--radius);
+    padding:14px; box-shadow:inset 0 0 30px rgba(0,0,0,.9), 0 4px 0 #0C0C0E;
+  }
+  #base-lesson-body .l125-passage{ font-size:13.6px; line-height:1.85; color:#B8B4AB; }
+  #base-lesson-body .l125-passage span{
+    transition:background .25s ease, color .25s ease, box-shadow .25s ease;
+    border-radius:4px; padding:1px 2px;
+  }
+  #base-lesson-body .l125-passage[data-mode="g"] .g,
+  #base-lesson-body .l125-passage[data-mode="c"] .c,
+  #base-lesson-body .l125-passage[data-mode="w"] .w{
+    color:#0E0E10; font-weight:700;
+  }
+  #base-lesson-body .l125-passage[data-mode="g"] .g{ background:var(--term); box-shadow:0 0 12px var(--term-glow); }
+  #base-lesson-body .l125-passage[data-mode="c"] .c{ background:var(--cyan); box-shadow:0 0 12px rgba(56,189,248,.5); }
+  #base-lesson-body .l125-passage[data-mode="w"] .w{ background:var(--accent); box-shadow:0 0 12px var(--accent-glow); }
+  #base-lesson-body .l125-fx-modes{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  #base-lesson-body .l125-fx-mode{
+    border:2px solid var(--line); background:linear-gradient(180deg,var(--surface-3),var(--surface-2));
+    color:var(--muted); border-radius:9px; padding:9px 12px; cursor:pointer;
+    font-family:inherit; font-size:10.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    box-shadow:0 4px 0 #0C0C0E; transition:box-shadow .15s, color .15s, border-color .15s, transform .08s;
+  }
+  #base-lesson-body .l125-fx-mode:hover{ border-color:var(--accent); box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark); }
+  #base-lesson-body .l125-fx-mode:active{ transform:translateY(2px); box-shadow:0 2px 0 var(--accent-dark); }
+  #base-lesson-body .l125-fx-mode.active{ color:#0E0E10; border-color:var(--accent); background:linear-gradient(180deg,#FBBF24,var(--accent)); box-shadow:0 4px 0 var(--accent-dark); }
+  #base-lesson-body .l125-fx-mode[data-mode="g"].active{ background:linear-gradient(180deg,#4ADE80,var(--term)); border-color:var(--term); box-shadow:0 4px 0 var(--term-dark); }
+  #base-lesson-body .l125-fx-mode[data-mode="c"].active{ background:linear-gradient(180deg,#7DD3FC,var(--cyan)); border-color:var(--cyan); box-shadow:0 4px 0 var(--cyan-dark); }
+  #base-lesson-body .l125-side{
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border:2px solid var(--line); border-radius:var(--radius); padding:13px 14px;
+    box-shadow:0 4px 0 #0C0C0E; font-size:12.3px;
+  }
+  #base-lesson-body .l125-note{
+    border-left:3px solid var(--accent); padding-left:9px; margin-bottom:9px; color:#CFCAC0;
+  }
+  #base-lesson-body .l125-note b{ display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+  #base-lesson-body .l125-hyp{
+    display:block; width:100%; text-align:left; margin-bottom:8px;
+    border:2px solid var(--line); background:linear-gradient(180deg,var(--surface-3),var(--surface-2));
+    border-radius:10px; padding:11px 13px; color:var(--text); font-family:inherit; font-size:12.5px;
+    cursor:pointer; box-shadow:0 4px 0 #0C0C0E; transition:box-shadow .15s, border-color .15s, transform .08s;
+  }
+  #base-lesson-body .l125-hyp:hover{ border-color:var(--accent); box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 var(--accent-dark); }
+  #base-lesson-body .l125-hyp:active{ transform:translateY(2px); box-shadow:0 2px 0 var(--accent-dark); }
+  #base-lesson-body .l125-hyp.correct{ border-color:var(--term); background:rgba(34,197,94,.12); box-shadow:0 4px 0 var(--term-dark); }
+  #base-lesson-body .l125-hyp.wrong{ border-color:var(--danger); background:rgba(239,68,68,.12); box-shadow:0 4px 0 var(--danger-dark); }
+  #base-lesson-body .l125-hyp:disabled{ cursor:default; opacity:.85; }
+
+  /* ---------- protocol ---------- */
+  #base-lesson-body .l125-table-wrap{ overflow-x:auto; border:2px solid var(--line); border-radius:var(--radius); box-shadow:0 4px 0 #0C0C0E; }
+  #base-lesson-body table{ border-collapse:collapse; width:100%; min-width:620px; font-size:12.4px; }
+  #base-lesson-body thead th{
+    background:linear-gradient(180deg,var(--surface-3),var(--surface-2));
+    color:var(--accent); text-align:left; padding:10px 12px;
+    letter-spacing:.09em; text-transform:uppercase; font-size:10.5px;
+    border-bottom:2px solid var(--accent-dark);
+  }
+  #base-lesson-body tbody td{ padding:10px 12px; border-bottom:1px solid #2A2A2F; vertical-align:top; color:#CFCAC0; }
+  #base-lesson-body tbody tr:nth-child(even) td{ background:#191919; }
+  #base-lesson-body tbody td:first-child{ color:var(--accent); font-weight:800; white-space:nowrap; }
+  #base-lesson-body .l125-protocol li{ margin-bottom:10px; }
+  #base-lesson-body .l125-protocol strong{ color:var(--term); }
+
+  /* ---------- finish ---------- */
+  #base-lesson-body .l125-finish{
+    margin:34px auto 0; text-align:center;
+    border-top:2px solid var(--line); padding-top:26px;
+  }
+  #base-lesson-body .l125-secured{
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:800;
+    color:var(--muted); margin-bottom:16px;
+  }
+  #base-lesson-body .l125-secured.on{ color:var(--term); text-shadow:0 0 14px var(--term-glow); }
+  #base-lesson-body .l125-finish-btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    background:linear-gradient(180deg,#4ADE80,var(--term));
+    color:#08240F; border:2px solid #86EFAC; border-radius:12px;
+    padding:16px 34px; font-family:inherit; font-size:14px; font-weight:900;
+    letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+    box-shadow:0 6px 0 var(--term-dark);
+    transition:box-shadow .15s, transform .08s;
+  }
+  #base-lesson-body .l125-finish-btn:hover{ box-shadow:0 6px 22px var(--term-glow), 0 6px 0 var(--term-dark); }
+  #base-lesson-body .l125-finish-btn:active{ transform:translateY(3px); box-shadow:0 3px 0 var(--term-dark); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    #base-lesson-body .l125-rig{ grid-template-columns:1fr; }
+    #base-lesson-body .l125-fx{ grid-template-columns:1fr; }
+  }
+  @media (max-width:700px){
+    #base-lesson-body .l125-grid2{ grid-template-columns:1fr; }
+    #base-lesson-body .l125-grid2-4{ grid-template-columns:1fr; }
+    #base-lesson-body{ font-size:14px; }
+    #base-lesson-body .l125-h2{ font-size:14.5px; }
+    #base-lesson-body .l125-slot{ width:42%; min-height:46px; }
+    #base-lesson-body .l125-slot-word{ font-size:11.5px; }
+    #base-lesson-body .l125-slot-tag{ font-size:7.5px; }
+  }
+</style>
+
+<div id="base-lesson-body">
+
+  <!-- ================= HUD ================= -->
+  <div class="l125-hud">
+    <div class="l125-hud-row">
+      <span class="l125-badge l125-badge-lvl">⬢ LEVEL 125</span>
+      <span class="l125-badge l125-badge-subject">ENGLISH · VOCABULARY FROM LITERATURE</span>
+      <span class="l125-badge">9TH–10TH GRADE | AGES 12–16</span>
+      <span class="l125-badge l125-callsign">CALLSIGN
+        <input id="l125-callsign" value="OPERATOR-14" maxlength="14" aria-label="Player callsign">
+      </span>
+      <span class="l125-badge l125-badge-xp">XP <b id="l125-xp">0</b></span>
+    </div>
+    <div class="l125-gauge-row">
+      <span class="l125-gauge-label">STRUCTURAL INTEGRITY</span>
+      <div class="l125-gauge" id="l125-gauge">
+        <div class="l125-gauge-fill" id="l125-gauge-fill"></div>
+      </div>
+      <span class="l125-gauge-txt" id="l125-gauge-txt">25% CALIBRATION</span>
+    </div>
+  </div>
+
+  <div class="l125-wrap">
+
+    <p class="l125-brief">
+      <strong>MISSION:</strong> The Lexical Centrifuge is loaded with four meaning-claims harvested from classic novels and poems,
+      each suspended in a tube with its textual grounds. Spin every sample at 10,000 G — a claim bonded to a real inference
+      bridge holds rigid, while a speculative leap separates from its evidence and blows the tube seal.
+    </p>
+
+    <!-- ================= SECTION 01 ================= -->
+    <section class="l125-sec" id="l125-sec1">
+      <h2 class="l125-h2"><span class="l125-secnum">SECTION 01</span> Comprehensive Textbook Foundation — Reading Word Meanings as Evidence</h2>
+
+      <div class="l125-card">
+        <h3>1.1 The Full Structural Model of a Definitional Inference</h3>
+        <p>
+          When you decide what a word means in a poem or a novel, you are not "looking it up" — you are building a small
+          evidentiary argument and testing it against the text. Every such argument has five load-bearing parts. Remove one
+          and the meaning-claim sags; leave one unstated and the argument may still look stable until you apply pressure.
+        </p>
+        <ul>
+          <li><span class="tag tag-claim">CORE CLAIM</span><b>The Outcome.</b> The proposed sense of the word — a single, testable assertion such as "'ken' denotes the range of perception." A claim that quietly bundles two senses together cannot be tested.</li>
+          <li><span class="tag tag-ground">GROUNDS</span><b>The Inputs.</b> The textual evidence: surrounding syntax, the speaker's dramatic situation, parallel usages elsewhere in the same work, the word's attested register in its period, morphological history, and collocational behaviour.</li>
+          <li><span class="tag tag-bridge">BRIDGE</span><b>The Connecting Mechanism.</b> The inference principle that carries you from the evidence to the claim — for example, "the simile's visual frame constrains the noun to a spatial sense." The bridge is almost never written on the page.</li>
+          <li><span class="tag tag-scope">SCOPE</span><b>The Qualifiers.</b> Register, era, genre, speaker, and degree of certainty. "In this line," "in the 1878 sense," "for this speaker only."</li>
+          <li><span class="tag tag-bound">BOUNDARY</span><b>The Failure Conditions.</b> The conditions under which the claim would be false — a different speaker, a different genre, or the word's other well-attested senses.</li>
+        </ul>
+
+        <h4>1.2 The Four Core Verification Criteria</h4>
+        <ul>
+          <li><b>Relevance</b> — does the cited clue actually bear on <em>this</em> word's sense, or merely on the sentence's general mood?</li>
+          <li><b>Sufficiency</b> — are there enough independent clues to fix one sense rather than merely make it possible?</li>
+          <li><b>Accuracy</b> — is the evidence quoted correctly, dated correctly, and attributed to the right speaker?</li>
+          <li><b>Independence</b> — do the clues come from genuinely separate contexts, or is one phrase being counted three times?</li>
+        </ul>
+
+        <h4>1.3 Structural Validity vs. Soundness</h4>
+        <p>
+          <b>Structural validity</b> is internal consistency: if the bridge is true, does the claim follow? A reading can be
+          perfectly valid and still false. <b>Soundness</b> requires validity <em>plus</em> verified factual truth of every
+          ground and every bridge. The classic literary failure is a valid chain resting on a bridge that was never true —
+          for instance, deriving a word's 1818 sense from a Latin root that the author could not have been thinking about.
+        </p>
+
+        <h4>1.4 Deductive and Inductive Meaning-Inference</h4>
+        <p>
+          <b>Deductive</b> inference in vocabulary study runs from a fixed, verified premise: if a documented idiolect
+          constraint says this author uses "art" only in the sense of <em>craft or cunning</em>, then in this line "art"
+          means craft — with certainty. <b>Inductive</b> inference accumulates clues toward probability: three independent
+          contextual signals pointing to the same sense yield a strong but revisable reading. Most literary reading is
+          inductive, which is exactly why the criteria of sufficiency and independence matter so much.
+        </p>
+
+        <h4>1.5 Presumption Traps Specific to Literature Vocabulary</h4>
+        <ul>
+          <li><b>The etymological fallacy</b> — treating a word's root as its present meaning.</li>
+          <li><b>Semantic anachronism</b> — importing a modern sense into an older text without argument.</li>
+          <li><b>Register blindness</b> — ignoring whether the word sits in elevated diction, dialect, or slang.</li>
+          <li><b>Single-attestation generalisation</b> — fixing a sense from one occurrence.</li>
+          <li><b>Context stripping</b> — quoting the word but not the clause that constrains it.</li>
+          <li><b>The dictionary-first fallacy</b> — assuming a modern dictionary entry lists the senses in the order the text intends.</li>
+        </ul>
+      </div>
+
+      <div class="l125-grid2" style="margin-top:14px;">
+
+        <!-- Worked example 1 -->
+        <div class="l125-example">
+          <h3>Worked Example A — “ken” in Keats (1816)</h3>
+          <div class="l125-quote">
+            “Then felt I like some watcher of the skies / When a new planet swims into his ken.”
+          </div>
+          <div class="l125-decode">
+            <div><span class="tag tag-claim">CORE CLAIM</span> “ken” = the range or horizon of a person's perception and knowledge.</div>
+            <div><span class="tag tag-ground">GROUNDS</span> The simile supplies an astronomer whose instrument-field a new planet enters; “swims into” marks a boundary being crossed.</div>
+            <div><span class="tag tag-bridge">BRIDGE</span> The vehicle of a simile constrains the sense of the noun it governs, so the noun must name the <em>field</em>, not the act of knowing.</div>
+            <div><span class="tag tag-scope">SCOPE</span> Noun, archaic/literary register, inside a simile — not the Scots verb “ken” = “to know”.</div>
+            <div><span class="tag tag-bound">BOUNDARY</span> Fails if you treat “ken” as a verb, or if you let modern Scots usage override the syntax of the line.</div>
+          </div>
+          <p style="margin-top:10px;" class="l125-muted">
+            <b>Decoder:</b> the grounds are <em>relevant</em> (they constrain a spatial noun), <em>sufficient</em> (the simile
+            has only one reading), <em>accurate</em> (the clause is quoted whole), and the reading is <em>sound</em> because
+            the bridge is a mechanism, not a slogan.
+          </p>
+        </div>
+
+        <!-- Worked example 2 -->
+        <div class="l125-example">
+          <h3>Worked Example B — “want” in Austen (1813)</h3>
+          <div class="l125-quote">
+            “It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.”
+          </div>
+          <div class="l125-decode">
+            <div><span class="tag tag-claim">CORE CLAIM</span> “want” in “in want of” = lack, need — not desire.</div>
+            <div><span class="tag tag-ground">GROUNDS</span> The fixed collocation “in want of” is a period idiom meaning “lacking”; the ironic frame presupposes a society that assumes he <em>needs</em> one.</div>
+            <div><span class="tag tag-bridge">BRIDGE</span> A fixed collocation fixes sense more reliably than an isolated word, because collocational partners resist substitution.</div>
+            <div><span class="tag tag-scope">SCOPE</span> Restricted to the phrase “in want of” in early-19th-century formal prose.</div>
+            <div><span class="tag tag-bound">BOUNDARY</span> Fails outside the collocation: bare “want” in modern prose normally means desire.</div>
+          </div>
+          <p style="margin-top:10px;" class="l125-muted">
+            <b>Decoder:</b> note the <em>scope qualifier</em>. A student who drops “in … of” converts a sound local reading into
+            a false global one — a definitional shift in miniature.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 02 ================= -->
+    <section class="l125-sec" id="l125-sec2">
+      <h2 class="l125-h2"><span class="l125-secnum">SECTION 02</span> The Four Hazard Pods — Unstated Assumptions That Rupture Meaning-Claims</h2>
+
+      <div class="l125-grid2-4">
+
+        <div class="l125-pod">
+          <p class="l125-pod-title"><span class="l125-podnum">POD 1</span> The Value Trap</p>
+          <p class="l125-rule"><b>Identification rule:</b> the inference silently ranks one connotation — usually the modern, moralised one — above the word's attested register, or presumes the author shares the reader's value hierarchy.</p>
+          <p class="l125-rule"><b>Catastrophic failure risk:</b> a neutral descriptive term becomes an ethical verdict; the narrator's tone is misjudged; a spatial or physical word is converted into a judgement of character.</p>
+          <div class="l125-pod-excerpt">
+            “The awful and majestic appearance of the scene filled me with a reverential dread.”
+          </div>
+          <p class="l125-pod-diag">
+            <b>Diagnostic:</b> the reader glosses “awful” as <em>horrible, bad</em>. But in this period “awful” means
+            <em>full of awe, awe-inspiring</em> — the very next clause (“reverential dread”) supplies that value. The trap is
+            not the dictionary; it is the unstated priority: <em>my modern moral colouring outranks the text's own signal.</em>
+          </p>
+        </div>
+
+        <div class="l125-pod">
+          <p class="l125-pod-title"><span class="l125-podnum">POD 2</span> The Causal Leap</p>
+          <p class="l125-rule"><b>Identification rule:</b> a single surface clue is treated as the <em>cause</em> of the meaning, or a word's etymology is treated as the <em>determiner</em> of its present literary sense. Omitted variables — tone, speaker, genre, syntax — are never considered.</p>
+          <p class="l125-rule"><b>Catastrophic failure risk:</b> the etymological fallacy; a reading that is historically true and literarily false; conclusions about theme built on a root the author never considered.</p>
+          <div class="l125-pod-excerpt">
+            “Because ‘sad’ descends from Old English <em>sæd</em>, ‘sated, weary’, ‘sad’ in this elegy must mean ‘weary’.”
+          </div>
+          <p class="l125-pod-diag">
+            <b>Diagnostic:</b> the root is a legitimate <em>ground</em> for a historical sense — it is not a mechanism for this
+            line. The unstated bridge (“root determines present meaning”) does all the work. Ask instead: what does the
+            surrounding syntax and the speaker's situation force the word to mean <em>here</em>?
+          </p>
+        </div>
+
+        <div class="l125-pod">
+          <p class="l125-pod-title"><span class="l125-podnum">POD 3</span> The Definitional Shift</p>
+          <p class="l125-rule"><b>Identification rule:</b> the same lexical form carries two different senses inside one inference chain. The word slides from a period sense to a colloquial sense (or from noun to verb) mid-argument, and the conclusion is then drawn from the wrong one.</p>
+          <p class="l125-rule"><b>Catastrophic failure risk:</b> theme statements built on a sense the text never uses; “definition shopping” where the gloss is chosen to fit a pre-decided interpretation.</p>
+          <div class="l125-pod-excerpt">
+            “Iago is repeatedly called ‘honest’; since ‘honest’ today means ‘truthful’, Shakespeare's characters trust him because they believe he tells the truth.”
+          </div>
+          <p class="l125-pod-diag">
+            <b>Diagnostic:</b> in 1604 “honest” also carried <em>chaste, decent, socially proper</em> — and the repetition is
+            dramatic irony aimed at the audience, not endorsement by the play. The chain has swapped senses between premise
+            and conclusion; the conclusion therefore never followed from the text.
+          </p>
+        </div>
+
+        <div class="l125-pod">
+          <p class="l125-pod-title"><span class="l125-podnum">POD 4</span> The Micro-Sample Mirage</p>
+          <p class="l125-rule"><b>Identification rule:</b> a word's meaning is fixed from a single occurrence, from one character's idiolect, or from the sample of quotations that happened to survive into anthologies and dictionaries.</p>
+          <p class="l125-rule"><b>Catastrophic failure risk:</b> overgeneralising a hapax legomenon; mistaking a dialect form for standard usage; treating the OED's earliest citation as the word's first use (survivor bias in the textual record).</p>
+          <div class="l125-pod-excerpt">
+            “The word ‘beguile’ occurs exactly once in the poem; therefore the poem's central theme is deception.”
+          </div>
+          <p class="l125-pod-diag">
+            <b>Diagnostic:</b> n = 1. A single attestation can establish <em>possibility</em>, never <em>pattern</em>. Ask how many
+            independent occurrences you have, whether they come from different speakers, and whether the surviving texts are
+            representative of what was actually written.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 03 ================= -->
+    <section class="l125-sec" id="l125-sec3">
+      <h2 class="l125-h2"><span class="l125-secnum">SECTION 03</span> The Lexical Centrifuge — 10,000 G Meaning Separator</h2>
+
+      <p class="l125-muted" style="margin-bottom:12px;font-size:12.8px;">
+        Each rotor slot holds one tube: a word-in-context claim with its textual grounds. Your job is to install the correct
+        <b style="color:var(--accent)">bridge cartridge</b> — the inference mechanism that actually links the grounds to the
+        claim. A sound bridge bonds the sample; a leap, a shift, or a missing bridge will blow the seal.
+      </p>
+
+      <div class="l125-rig">
+
+        <div class="l125-chamber">
+          <div class="l125-rotor" id="l125-rotor"></div>
+
+          <div class="l125-controls">
+            <div class="l125-rpm-read">
+              <span>DRIVE LEVER — G-FORCE</span>
+              <b id="l125-rpm-out">0 G</b>
+            </div>
+            <input type="range" class="l125-rpm" id="l125-rpm" min="0" max="12000" step="500" value="0" aria-label="Centrifuge drive lever">
+            <div class="l125-ctrl-row">
+              <button class="l125-btn l125-btn-green" id="l125-spin-btn">🌀 SPIN ROTOR AT 10,000 G</button>
+              <button class="l125-btn" id="l125-eject-btn">⏏ EJECT &amp; RESEAL</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="l125-bay">
+          <div class="l125-bay-src" id="l125-bay-src">—</div>
+          <div class="l125-bay-excerpt" id="l125-bay-excerpt">—</div>
+          <div class="l125-bay-claim" id="l125-bay-claim">—</div>
+          <div id="l125-cartridges" style="display:flex;flex-direction:column;gap:9px;"></div>
+          <div class="l125-log" id="l125-log">
+            <div class="l125-log-line l125-log-warn">▸ CENTRIFUGE ONLINE. Select a rotor slot, install a bridge cartridge, set the drive lever to 9,500 G or higher, then spin.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 04 ================= -->
+    <section class="l125-sec" id="l125-sec4">
+      <h2 class="l125-h2"><span class="l125-secnum">SECTION 04</span> The Negation Detonator — Destroying a Load-Bearing Assumption</h2>
+
+      <p class="l125-muted" style="margin-bottom:12px;font-size:12.8px;">
+        A claim under heavy synthetic load is held up by one unstated warrant. Negate that warrant: if the claim collapses,
+        the warrant was load-bearing — and the reading was never supported by the text.
+      </p>
+
+      <div class="l125-det" id="l125-det">
+        <svg class="l125-cracks" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M200 0 L188 52 L214 78 L176 118 L198 200"></path>
+          <path d="M188 52 L120 34 L64 62"></path>
+          <path d="M214 78 L286 58 L352 92"></path>
+          <path d="M176 118 L96 132 L40 176"></path>
+          <path d="M198 200 L268 150 L340 168"></path>
+        </svg>
+
+        <h3 style="color:#FCA5A5;">TARGET ARGUMENT — MACBETH, ACT 1 SCENE 4</h3>
+        <p style="font-size:13.4px;">
+          Duncan says: <em>“There's no art / To find the mind's construction in the face.”</em> The reading under test asserts:
+          <b>because “art” denotes creative and aesthetic practice, Shakespeare is here lamenting that beauty cannot reveal
+          a person's true character.</b>
+        </p>
+
+        <div class="l125-det-plate">
+          <b>IMPLICIT WARRANT ON THE PLATE:</b> “The word ‘art’ carries its modern aesthetic sense wherever it appears, so no
+          evidence of any other contemporary sense is required.”
+        </div>
+
+        <button class="l125-btn l125-btn-red" id="l125-detonate-btn">💣 DETONATE NEGATION TEST</button>
+
+        <div class="l125-debrief" id="l125-debrief">
+          <b>DETONATION SUCCESSFUL!</b> By proving the opposite of the implicit assumption, the entire premise collapsed.
+          The Negation Test proves this assumption was a fatal structural dependency.
+          <p style="margin-top:8px;">
+            <b>Negated warrant:</b> “art” in early modern English routinely denotes <em>cunning, craft, or contrived skill</em> —
+            as in “there is no <em>technique</em> that can read a face.” With the aesthetic sense removed, the claim that
+            Shakespeare is lamenting the failure of <em>beauty</em> has no support left: the line is about the impossibility of
+            <em>skill or method</em>, not about art as aesthetic practice.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 05 ================= -->
+    <section class="l125-sec" id="l125-sec5">
+      <h2 class="l125-h2"><span class="l125-secnum">SECTION 05</span> Live Fire Forensics — X-Ray the Passage</h2>
+
+      <div class="l125-fx">
+
+        <div class="l125-console">
+          <div class="l125-fx-modes">
+            <button class="l125-fx-mode" data-mode="g">🟢 SCAN FOUNDATION / GROUNDS</button>
+            <button class="l125-fx-mode" data-mode="c">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+            <button class="l125-fx-mode" data-mode="w">🟠 DETECT UNSTATED MECHANISMS / WARRANTS</button>
+          </div>
+
+          <p class="l125-passage" id="l125-passage" data-mode="none">
+            Thomas Hardy's narrator calls Eustacia Vye
+            <span class="c" data-note="CORE CLAIM #1 — a definitional assertion about the word's sense in this line.">“a little wayward”</span>
+            and then places her
+            <span class="g" data-note="GROUNDS — textual evidence that constrains the sense: her resistance is a response to environment.">“in a world which, to her, was a field of battle”</span>.
+            <span class="w" data-note="UNSTATED WARRANT — the inference silently assumes a word's morphological root dictates its literary sense.">Because “wayward” derives from “away” + “-ward”, “turned away”, the narrator must be implying that Eustacia is morally delinquent.</span>
+            <span class="c" data-note="CORE CLAIM #2 — the conclusion the reading is meant to support.">Readers who gloss “wayward” with its modern sense of “willfully disobedient” therefore overstate the narrator's condemnation</span>;
+            <span class="g" data-note="GROUNDS — the word's attested 1878 register, cited from contemporaneous usage.">the 1878 sense retains a spatial, unmoored quality — “turned from the path”, not “wicked”</span>.
+            <span class="g" data-note="GROUNDS — independent corroboration from elsewhere in the same novel.">Since the novel's narrator elsewhere grants Eustacia “a fervid nature”,</span>
+            <span class="w" data-note="UNSTATED WARRANT #2 — assumes the reader's modern dictionary is the text's dictionary.">the harsher reading depends on importing a modern moral connotation the text does not supply.</span>
+          </p>
+        </div>
+
+        <div class="l125-side">
+          <h4 style="margin-top:0;">INSPECTOR NOTES</h4>
+          <div id="l125-fx-notes">
+            <p class="l125-muted" style="font-size:12.3px;">Select a scan mode above to illuminate the passage and read the inspector's annotations here.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="l125-card" style="margin-top:14px;">
+        <h3>INTERACTIVE CHALLENGE — FIND THE FATAL FLAW</h3>
+        <p class="l125-muted" style="font-size:12.5px;">Three analytical hypotheses. Exactly one identifies the structural failure that makes the harsher reading unsound.</p>
+        <button class="l125-hyp" data-ok="0">A. The evidence from elsewhere in the novel is unreliable because it comes from a single narrator.</button>
+        <button class="l125-hyp" data-ok="1">B. The reading depends on an unstated warrant — that a word's modern moral connotation governs its meaning in an 1878 text — and that warrant is false.</button>
+        <button class="l125-hyp" data-ok="0">C. Hardy's free indirect discourse makes the narrator's tone unknowable, so no reading can be preferred.</button>
+        <div id="l125-fx-verdict" style="margin-top:10px;"></div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 06 ================= -->
+    <section class="l125-sec" id="l125-sec6">
+      <h2 class="l125-h2"><span class="l125-secnum">SECTION 06</span> Quick-Reference Procedural Protocol</h2>
+
+      <div class="l125-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Component</th><th>Failure Mode</th><th>Elimination Move</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CORE CLAIM</td>
+              <td>Two senses bundled into one assertion; scope left unlimited.</td>
+              <td>Split the claim until each part names exactly one sense; attach “in this line / for this speaker”.</td>
+            </tr>
+            <tr>
+              <td>GROUNDS</td>
+              <td>Single attestation; one phrase counted three times; misquote or misdating.</td>
+              <td>Count independent occurrences; verify every quotation against the source text.</td>
+            </tr>
+            <tr>
+              <td>BRIDGE</td>
+              <td>Etymological fallacy; root-to-meaning leap; unstated inference principle.</td>
+              <td>Write the bridge out loud as a sentence; if it sounds absurd aloud, it is the flaw.</td>
+            </tr>
+            <tr>
+              <td>SCOPE</td>
+              <td>Local reading silently promoted to a global definition.</td>
+              <td>Re-attach the qualifier; test the claim outside the collocation and watch it fail.</td>
+            </tr>
+            <tr>
+              <td>BOUNDARY</td>
+              <td>Modern connotation imported without argument; register ignored.</td>
+              <td>Negate the assumption and re-run the reading; note exactly what collapses.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="l125-card" style="margin-top:14px;">
+        <h3>THE UNIVERSAL 5-STEP DECONSTRUCTION PROTOCOL</h3>
+        <ol class="l125-protocol">
+          <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark certainty limiters.</li>
+          <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check for sample representation, bias, and source independence.</li>
+          <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle linking inputs to outcomes.</li>
+          <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge; if the outcome collapses, the component is load-bearing.</li>
+          <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, and definitional shifts.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= TERMINATION ================= -->
+    <div class="l125-finish">
+      <div class="l125-secured" id="l125-secured">INTEGRITY 25% — CALIBRATION IN PROGRESS</div>
+      <button class="l125-finish-btn" id="l125-finish-btn">✅ FINISH LESSON</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ------------------------------------------------------------------ */
+  /* DATA                                                                */
+  /* ------------------------------------------------------------------ */
+  const TUBES = [
+    {
+      id: 0, label: 'TUBE 01', word: 'ken', slot: 'p0',
+      source: 'John Keats, “On First Looking into Chapman’s Homer” (1816)',
+      excerpt: '“Then felt I like some watcher of the skies / When a new planet swims into his ken.”',
+      claim: '“Ken” denotes the range or horizon of a person’s perception and knowledge.',
+      options: [
+        {
+          t: '“Ken” descends from Old English cennan, “to make known”; the noun must therefore mean “a piece of information.”',
+          ok: false,
+          flaw: 'ETYMOLOGICAL LEAP — a root records a word’s history, not its present literary sense. The unstated bridge “root determines meaning” was carrying the whole claim.'
+        },
+        {
+          t: 'The simile places an astronomer watching a new planet enter his field of view, so the noun must name the boundary of that field — the range of perception.',
+          ok: true,
+          why: 'the bridge is a mechanism, not a slogan: the simile’s visual frame is what licenses “range of perception”, and the grounds are relevant and sufficient.'
+        },
+        {
+          t: '“Ken” survives in Scots as a verb meaning “to know”; Keats therefore uses it as a verb meaning “to understand.”',
+          ok: false,
+          flaw: 'DEFINITIONAL SHIFT — the cartridge silently changes the word’s part of speech mid-inference, so the claim no longer matches the syntax of the line.'
+        }
+      ],
+      chosen: null, bonded: false, ruptured: false
+    },
+    {
+      id: 1, label: 'TUBE 02', word: 'want', slot: 'p1',
+      source: 'Jane Austen, Pride and Prejudice (1813), opening sentence',
+      excerpt: '“It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.”',
+      claim: '“Want” in “in want of” means lack or need — not desire.',
+      options: [
+        {
+          t: 'Modern readers experience “want” as “desire”; the most familiar sense must be the sense Austen intends.',
+          ok: false,
+          flaw: 'VALUE TRAP — familiarity is not evidence. The cartridge ranks the reader’s modern connotation above the text’s own collocational signal, which is exactly the presumption that fails.'
+        },
+        {
+          t: 'The fixed collocation “in want of” means “lacking”; the phrase, not the isolated word, fixes the sense.',
+          ok: true,
+          why: 'the bridge invokes collocational resistance — a fixed phrase constrains its parts, and the scope is correctly limited to “in want of”.'
+        },
+        {
+          t: 'Because the sentence is ironic, “want” must mean the opposite of itself — “abundance.”',
+          ok: false,
+          flaw: 'CAUSAL LEAP — irony qualifies the whole proposition, it does not invert an individual lexical item. The bridge “irony flips every word” is a mechanism with no support.'
+        }
+      ],
+      chosen: null, bonded: false, ruptured: false
+    },
+    {
+      id: 2, label: 'TUBE 03', word: 'soliciting', slot: 'p2',
+      source: 'William Shakespeare, Macbeth (c.1606), Act 1 Scene 3',
+      excerpt: '“This supernatural soliciting / Cannot be ill, cannot be good.”',
+      claim: '“Soliciting” names an incitement or urging acting upon Macbeth — not a request for sex or money.',
+      options: [
+        {
+          t: '“Soliciting” today names an illegal proposition; the witches must therefore be propositioning Macbeth.',
+          ok: false,
+          flaw: 'DEFINITIONAL SHIFT — a modern legal-colloquial sense is imported wholesale into a 1606 text, so the conclusion rests on a meaning the passage never carries.'
+        },
+        {
+          t: 'The witches hail Macbeth and vanish without asking him for anything; the participle must name a prompting that works on him from within.',
+          ok: true,
+          why: 'the grounds are drawn from the scene’s action, and the bridge correctly reads the participle as naming an internal pressure rather than a transaction.'
+        },
+        {
+          t: '“Solicit” comes from Latin sollicitare, “to agitate”; the word must therefore mean physical shaking.',
+          ok: false,
+          flaw: 'ETYMOLOGICAL LEAP — the root supplies a historical sense, not this line’s sense. The bridge silently assumes the etymology overrides the dramatic situation.'
+        }
+      ],
+      chosen: null, bonded: false, ruptured: false
+    },
+    {
+      id: 3, label: 'TUBE 04', word: 'critical', slot: 'p3',
+      source: 'William Shakespeare, Othello (c.1603), Act 2 Scene 1',
+      excerpt: '“I am nothing if not critical.”',
+      claim: '“Critical” here denotes fault-finding, censorious judgement — not measured evaluation.',
+      options: [
+        {
+          t: '“Critical” is the standard academic term for evaluative analysis; Iago therefore claims the neutrality of a scholar.',
+          ok: false,
+          flaw: 'DEFINITIONAL SHIFT — an academic register is swapped in for a dramatic one, so the claim contradicts the character who is speaking it.'
+        },
+        {
+          t: 'Iago has just itemised a catalogue of women’s faults and says he is “nothing if not” that quality; the word must name the fault-finding habit.',
+          ok: true,
+          why: 'the grounds come from the immediately preceding speech, and the bridge correctly treats a self-characterising boast as evidence about the word’s sense.'
+        },
+        {
+          t: '“Critical” derives from Greek kritikos, “able to judge”; Iago therefore claims judicial authority.',
+          ok: false,
+          flaw: 'ETYMOLOGICAL LEAP — the root licenses a general sense of judging, not the specific authority Iago claims. The bridge supplies a conclusion the grounds never reach.'
+        }
+      ],
+      chosen: null, bonded: false, ruptured: false
+    }
+  ];
+
+  const state = {
+    xp: 0,
+    integrity: 25,
+    selected: 0,
+    rpm: 0,
+    spinning: false,
+    detonated: false,
+    forensics: false
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* HELPERS                                                             */
+  /* ------------------------------------------------------------------ */
+  const $ = (id) => document.getElementById(id);
+
+  function gaugeLabel(v) {
+    if (v >= 100) return 'STRUCTURE SECURED & VERIFIED';
+    if (v >= 80) return 'NEAR RIGID';
+    if (v >= 50) return 'PARTIAL LOAD';
+    return 'CALIBRATION';
+  }
+
+  function addXP(n) {
+    state.xp += n;
+    const el = $('l125-xp');
+    if (el) el.textContent = state.xp;
+  }
+
+  function setIntegrity(v) {
+    state.integrity = Math.max(0, Math.min(100, v));
+    const fill = $('l125-gauge-fill');
+    const txt = $('l125-gauge-txt');
+    const gauge = $('l125-gauge');
+    const secured = $('l125-secured');
+    if (fill) fill.style.width = state.integrity + '%';
+    if (txt) txt.textContent = state.integrity + '% ' + gaugeLabel(state.integrity);
+    if (gauge) gauge.classList.toggle('secured', state.integrity >= 100);
+    if (secured) {
+      secured.textContent = state.integrity >= 100
+        ? 'INTEGRITY 100% — STRUCTURE SECURED & VERIFIED'
+        : 'INTEGRITY ' + state.integrity + '% — ' + gaugeLabel(state.integrity);
+      secured.classList.toggle('on', state.integrity >= 100);
+    }
+  }
+
+  function log(kind, msg) {
+    const box = $('l125-log');
+    if (!box) return;
+    const div = document.createElement('div');
+    div.className = 'l125-log-line l125-log-' + kind;
+    div.textContent = msg;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* CENTRIFUGE RENDERING                                                */
+  /* ------------------------------------------------------------------ */
+  function renderRotor() {
+    const rotor = $('l125-rotor');
+    if (!rotor) return;
+    rotor.innerHTML = TUBES.map((t, i) => {
+      const cls = [
+        'l125-slot', t.slot,
+        state.selected === i ? 'sel' : '',
+        t.bonded ? 'bonded' : '',
+        t.ruptured ? 'ruptured' : ''
+      ].filter(Boolean).join(' ');
+      return '<button class="' + cls + '" data-tube="' + i + '" type="button" aria-label="Select ' + t.label + '">' +
+        '<span class="l125-slot-tag">' + t.label + '</span>' +
+        '<span class="l125-slot-word">' + t.word + '</span>' +
+        '<span class="l125-slot-led"></span>' +
+        '</button>';
+    }).join('');
+  }
+
+  function renderBay() {
+    const t = TUBES[state.selected];
+    if (!t) return;
+    $('l125-bay-src').textContent = t.source;
+    $('l125-bay-excerpt').textContent = t.excerpt;
+    $('l125-bay-claim').innerHTML = '<b>CLAIM:</b> ' + t.claim;
+
+    const wrap = $('l125-cartridges');
+    wrap.innerHTML = t.options.map((o, i) => {
+      const letter = String.fromCharCode(65 + i);
+      const chosen = t.chosen === i ? ' chosen' : '';
+      const dis = t.bonded ? ' disabled' : '';
+      return '<button class="l125-cart' + chosen + '" data-opt="' + i + '" type="button"' + dis + '>' +
+        '<span class="l125-cart-num">' + letter + '</span>' +
+        '<span class="l125-cart-txt">' + o.t + '</span>' +
+        '</button>';
+    }).join('');
+  }
+
+  function refresh() {
+    renderRotor();
+    renderBay();
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* CENTRIFUGE INTERACTION                                              */
+  /* ------------------------------------------------------------------ */
+  root.addEventListener('click', (ev) => {
+    const slot = ev.target.closest('.l125-slot');
+    if (slot && root.contains(slot)) {
+      const idx = parseInt(slot.dataset.tube, 10);
+      if (!isNaN(idx)) {
+        state.selected = idx;
+        refresh();
+      }
+      return;
+    }
+
+    const cart = ev.target.closest('.l125-cart');
+    if (cart && root.contains(cart)) {
+      const t = TUBES[state.selected];
+      if (!t || t.bonded) return;
+      const optIdx = parseInt(cart.dataset.opt, 10);
+      if (isNaN(optIdx)) return;
+      t.chosen = optIdx;
+      t.ruptured = false;
+      refresh();
+      log('warn', '▸ BRIDGE CARTRIDGE ' + String.fromCharCode(65 + optIdx) + ' seated in ' + t.label + ' (' + t.word + '). Ready to spin.');
+      return;
+    }
+  });
+
+  const rpmSlider = $('l125-rpm');
+  if (rpmSlider) {
+    rpmSlider.addEventListener('input', () => {
+      state.rpm = parseInt(rpmSlider.value, 10) || 0;
+      $('l125-rpm-out').textContent = state.rpm.toLocaleString() + ' G';
+    });
+  }
+
+  function spin() {
+    if (state.spinning) return;
+    if (state.rpm < 9500) {
+      log('warn', '⚠ INSUFFICIENT G-FORCE. The rotor is turning at ' + state.rpm.toLocaleString() +
+        ' G; separation requires at least 9,500 G. Raise the drive lever before spinning.');
+      return;
+    }
+    if (TUBES.every(t => t.bonded)) {
+      log('good', '✔ ALL FOUR SAMPLES ALREADY BONDED. The rotor is balanced and stable — nothing left to separate.');
+      return;
+    }
+
+    state.spinning = true;
+    const rotor = $('l125-rotor');
+    const btn = $('l125-spin-btn');
+    if (rotor) rotor.classList.add('l125-spinning');
+    if (btn) btn.disabled = true;
+
+    setTimeout(() => {
+      if (rotor) rotor.classList.remove('l125-spinning');
+      state.spinning = false;
+      if (btn) btn.disabled = false;
+      resolveSpin();
+    }, 2000);
+  }
+
+  function resolveSpin() {
+    let newlyBonded = 0;
+
+    TUBES.forEach((t) => {
+      if (t.bonded) return;
+
+      if (t.chosen === null) {
+        t.ruptured = true;
+        log('bad', '✖ ' + t.label + ' (' + t.word + ') — UNBALANCED LOAD. No bridge cartridge was installed, so the ' +
+          'claim had nothing connecting it to its grounds. Unsupported output separated and vented at 10,000 G.');
+        return;
+      }
+
+      const opt = t.options[t.chosen];
+
+      if (opt.ok) {
+        t.bonded = true;
+        t.ruptured = false;
+        newlyBonded++;
+        log('good', '✔ ' + t.label + ' (' + t.word + ') — BONDED AND RIGID. The bridge you installed is structurally sound: ' +
+          opt.why + ' The claim held its shape under full tonnage.');
+      } else {
+        t.ruptured = true;
+        const flawText = opt.flaw;
+        t.chosen = null;
+        log('bad', '✖ ' + t.label + ' (' + t.word + ') — SEAL RUPTURE. ' + flawText +
+          ' The sample separated into speculation and grounds.');
+      }
+    });
+
+    if (newlyBonded > 0) {
+      addXP(newlyBonded * 100);
+      setIntegrity(state.integrity + newlyBonded * 15);
+    }
+
+    refresh();
+
+    if (TUBES.every(t => t.bonded)) {
+      log('good', '★ ROTOR BALANCED. All four meaning-claims are bonded to verified bridges. Structural integrity nominal.');
+    } else {
+      const remaining = TUBES.filter(t => !t.bonded).length;
+      log('warn', '▸ ' + remaining + ' sample(s) still unverified. Reseat a cartridge in each ruptured tube and spin again.');
+    }
+  }
+
+  function eject() {
+    if (state.spinning) return;
+    TUBES.forEach((t) => {
+      if (!t.bonded) {
+        t.chosen = null;
+        t.ruptured = false;
+      }
+    });
+    state.rpm = 0;
+    if (rpmSlider) rpmSlider.value = 0;
+    const out = $('l125-rpm-out');
+    if (out) out.textContent = '0 G';
+    refresh();
+    log('warn', '⏏ ROTOR HALTED AND SAMPLES EJECTED. Bridge cartridges cleared from all unverified tubes. Re-seat and spin.');
+  }
+
+  const spinBtn = $('l125-spin-btn');
+  if (spinBtn) spinBtn.addEventListener('click', spin);
+  const ejectBtn = $('l125-eject-btn');
+  if (ejectBtn) ejectBtn.addEventListener('click', eject);
+
+  /* ------------------------------------------------------------------ */
+  /* NEGATION DETONATOR                                                  */
+  /* ------------------------------------------------------------------ */
+  const detBtn = $('l125-detonate-btn');
+  if (detBtn) {
+    detBtn.addEventListener('click', () => {
+      if (state.detonated) return;
+      state.detonated = true;
+      detBtn.disabled = true;
+      detBtn.textContent = '💥 CHARGE SPENT';
+
+      const det = $('l125-det');
+      const debrief = $('l125-debrief');
+
+      det.classList.add('det-flash');
+
+      setTimeout(() => {
+        det.classList.add('det-cracked');
+      }, 650);
+
+      setTimeout(() => {
+        det.classList.add('det-collapsed');
+        if (debrief) debrief.classList.add('show');
+        addXP(100);
+        setIntegrity(state.integrity + 5);
+        log('good', '💣 NEGATION TEST COMPLETE. The aesthetic reading of “art” collapsed when its warrant was negated — the assumption was load-bearing.');
+      }, 1500);
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* LIVE FIRE FORENSICS                                                 */
+  /* ------------------------------------------------------------------ */
+  const passage = $('l125-passage');
+  const notes = $('l125-fx-notes');
+  const modeBtns = root.querySelectorAll('.l125-fx-mode');
+
+  const MODE_LABEL = {
+    g: 'FOUNDATION / GROUNDS',
+    c: 'CORE CLAIMS / OUTCOMES',
+    w: 'UNSTATED MECHANISMS / WARRANTS'
+  };
+
+  modeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      modeBtns.forEach(b => b.classList.toggle('active', b === btn));
+      if (passage) passage.setAttribute('data-mode', mode);
+
+      if (!notes) return;
+      const spans = passage ? passage.querySelectorAll('.' + mode) : [];
+      let html = '<h4 style="margin-top:0;">' + MODE_LABEL[mode] + ' — ' + spans.length + ' SEGMENT(S)</h4>';
+      spans.forEach((s, i) => {
+        html += '<div class="l125-note"><b>SEGMENT ' + (i + 1) + '</b>' + (s.dataset.note || '') + '</div>';
+      });
+      notes.innerHTML = html;
+    });
+  });
+
+  const hypBtns = root.querySelectorAll('.l125-hyp');
+  const verdict = $('l125-fx-verdict');
+
+  hypBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (state.forensics) return;
+      const ok = btn.dataset.ok === '1';
+
+      if (ok) {
+        btn.classList.add('correct');
+        hypBtns.forEach(b => { b.disabled = true; });
+        state.forensics = true;
+        if (verdict) {
+          verdict.innerHTML = '<div class="l125-debrief show"><b>STRUCTURAL CLEARANCE GRANTED.</b> ' +
+            'The harsher reading of “wayward” rests on a single unstated warrant: that a word’s modern moral connotation ' +
+            'governs its meaning in an 1878 text. Negate that warrant and the reading loses its only support, while the ' +
+            'grounds — the “field of battle” clause and the narrator’s “fervid nature” — remain intact for the milder reading.</div>';
+        }
+        addXP(150);
+        setIntegrity(state.integrity + 10);
+        log('good', '★ FORENSIC CLEARANCE. Fatal flaw correctly identified in the “wayward” analysis.');
+      } else {
+        btn.classList.add('wrong');
+        btn.disabled = true;
+        if (verdict) {
+          verdict.innerHTML = '<p style="font-size:12.5px;color:#FCA5A5;">✖ That hypothesis attacks the evidence or the narrator rather than the inference. ' +
+            'Look for the sentence that supplies the connecting principle — the one that is never written on the page.</p>';
+        }
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* FINISH                                                              */
+  /* ------------------------------------------------------------------ */
+  const finishBtn = $('l125-finish-btn');
+  if (finishBtn) {
+    finishBtn.addEventListener('click', () => {
+      if (typeof window.polymathFinishLesson === 'function') {
+        window.polymathFinishLesson();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* BOOT                                                                */
+  /* ------------------------------------------------------------------ */
+  refresh();
+  setIntegrity(25);
+  addXP(0);
+});
+</script>

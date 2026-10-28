@@ -1,0 +1,564 @@
+{
+ "track_id": "reading",
+ "grade_id": "doctoral",
+ "generated_at": "2026-10-26T03:38:11.715Z",
+ "items": [
+  {
+   "objective_id": "doctoral:L85",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "An essay argues that the narrator of “The Tell-Tale Heart” disguises guilt as self-deception. Which revision best answers the objection that he seems genuinely confident?",
+   "choices": [
+    "His self-explanation suggests confidence defends him against guilt.",
+    "The heartbeat is supernatural, and the police hear it.",
+    "Poe intended guilt always to produce madness.",
+    "Guilt makes every conscious person deliberately deceive others."
+   ],
+   "answer": "His self-explanation suggests confidence defends him against guilt.",
+   "rationale": "This revision uses the narrator's need to justify himself as evidence that his confidence functions as a defense against guilt.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L161",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 161,
+   "format": "multiple_choice",
+   "prompt": "When using a publicly released Twitter dataset for sentiment analysis, what ethical issue arises if the data includes tweets from users who never consented to research use?",
+   "choices": [
+    "Violation of informed consent principles",
+    "Breach of copyright and licensing",
+    "Inaccurate sentiment label distribution",
+    "Sampling bias toward highly active users"
+   ],
+   "answer": "Violation of informed consent principles",
+   "rationale": "Research ethics require that individuals give informed consent before their public communications are repurposed for study.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Research use of data from people who did not consent to that use conflicts with informed-consent principles.",
+      "url": "https://en.wikipedia.org/wiki/Institutional_review_board",
+      "quote": "A bona fide process for obtaining informed consent from participants is also generally needed.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L171",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 171,
+   "format": "multiple_choice",
+   "prompt": "In the dual‑route cascaded model of reading, which pathway is primarily responsible for accurate pronunciation of irregularly spelled words such as 'yacht'?",
+   "choices": [
+    "Lexical‑semantic route",
+    "Sublexical grapheme‑to‑phoneme route",
+    "Direct orthography‑to‑phonology route",
+    "Phonological assembly route"
+   ],
+   "answer": "Lexical‑semantic route",
+   "rationale": "Irregular words cannot be sounded out by rule‑based grapheme‑phoneme conversion; they are retrieved via the lexical‑semantic (whole‑word) route that accesses stored phonological forms.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Accurate pronunciation of irregularly spelled words relies primarily on stored lexical-semantic representations rather than regular sublexical spelling-to-sound rules.",
+      "url": "https://en.wikipedia.org/wiki/Language_processing_in_the_brain",
+      "quote": "Dual-route models posit that lexical memory is employed to process irregular and high-frequency regular words, while low-frequency regular words and nonwords are processed using a sub-lexical set of phonological rules.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L171",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 171,
+   "format": "multiple_choice",
+   "prompt": "Which brain region shows the strongest specialization for visual word form processing across alphabetic languages?",
+   "choices": [
+    "Right fusiform gyrus",
+    "Left fusiform gyrus (VWFA)",
+    "Left inferior frontal gyrus",
+    "Left superior temporal gyrus"
+   ],
+   "answer": "Left fusiform gyrus (VWFA)",
+   "rationale": "The left fusiform gyrus, known as the visual word form area, shows consistent specialization for printed words across alphabetic scripts.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The Visual Word Form Area is located in the left fusiform gyrus.",
+      "url": "https://en.wikipedia.org/wiki/Visual_word_form_area",
+      "quote": "The visual word form area (VWFA) is a functional region of the left fusiform gyrus and surrounding cortex",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The visual word form area is located in the left fusiform gyrus and shows strong specialization for alphabetic visual word processing.",
+      "url": "https://en.wikipedia.org/wiki/Visual_word_form_area",
+      "quote": "The visual word form area ( VWFA ) is a functional region of the left fusiform gyrus and surrounding cortex (right-hand side being part of the fusiform face area ) that is hypothesized to be involved in identifying words and letters from lower-level shape images, prior to association with phonology or semantics .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L129",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 129,
+   "format": "multiple_choice",
+   "prompt": "In bibliographic study of born-digital archives, what does “fixity” refer to?",
+   "choices": [
+    "Ensuring bit-level integrity over time",
+    "Converting files to PDF/A format",
+    "Assigning persistent identifiers to items",
+    "Emulating original software environments"
+   ],
+   "answer": "Ensuring bit-level integrity over time",
+   "rationale": "Fixity is the guarantee that a digital object’s bitstream remains unchanged, verified by checksums, which is foundational for bibliographic authenticity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Fixity refers to ensuring bit‑level integrity over time by verifying the digital object's unchanged state.",
+      "url": "https://en.wikipedia.org/wiki/Digital_preservation",
+      "quote": "File fixity is the property of a digital file being fixed, or unchanged. File fixity checking is the process of validating that a file has not changed or been altered from a previous state.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "In digital preservation, fixity is the preservation of a file's bit-level identity over time.",
+      "url": "https://en.wikipedia.org/wiki/Digital_preservation",
+      "quote": "File fixity checking is the process of validating that a file has not changed or been altered from a previous state.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L129",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 129,
+   "format": "multiple_choice",
+   "prompt": "Which metadata standard provides a data dictionary for preservation events, agents, and rights in born‑digital archives?",
+   "choices": [
+    "PREMIS data dictionary",
+    "METS structural map",
+    "Dublin Core elements",
+    "EAD finding aid"
+   ],
+   "answer": "PREMIS data dictionary",
+   "rationale": "PREMIS (Preservation Metadata: Implementation Strategies) defines a data dictionary for preservation events, agents, rights, and object characteristics; METS, Dublin Core, and EAD address packaging, description, and archival finding aids respectively.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "PREMIS (Preservation Metadata Initiative) is an ISO 14721 metadata standard that provides a data dictionary for preservation events, agents, and rights.",
+      "url": "https://en.wikipedia.org/wiki/Preservation_Metadata%3A_Implementation_Strategies_(PREMIS)",
+      "quote": "The PREMIS Data Dictionary for Preservation Metadata, which has become a de facto standard that defines core metadata needed by most preservation repositories.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "PREMIS provides a data dictionary for preservation events, agents, rights, and related preservation metadata.",
+      "url": "https://en.wikipedia.org/wiki/Preservation_metadata",
+      "quote": "The ongoing work of maintaining, supporting, and coordinating future revisions to the PREMIS Data Dictionary is undertaken by the PREMIS Editorial Committee, hosted by the Library of Congress.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L246",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 246,
+   "format": "multiple_choice",
+   "prompt": "When constructing a reading comprehension test with items that differ in difficulty and discrimination but have negligible guessing, which IRT model should be used?",
+   "choices": [
+    "One-parameter logistic (1PL)",
+    "Two-parameter logistic (2PL)",
+    "Three-parameter logistic (3PL)",
+    "Four-parameter logistic (4PL)"
+   ],
+   "answer": "Two-parameter logistic (2PL)",
+   "rationale": "The 2PL model estimates both item difficulty and discrimination, matching items that vary on both parameters while assuming no guessing.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The 2PL model estimates item difficulty and discrimination while assuming negligible guessing.",
+      "url": "https://en.wikipedia.org/wiki/Item_response_theory",
+      "quote": "The two-parameter model (2PL) assumes that the data have no guessing, but that items can vary in terms of location (",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L246",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 246,
+   "format": "multiple_choice",
+   "prompt": "Which analysis provides convergent validity evidence between two independently developed reading ability scales?",
+   "choices": [
+    "Correlation of IRT latent traits",
+    "Factor analysis of item residuals",
+    "Regression of total scores",
+    "ANOVA of group means"
+   ],
+   "answer": "Correlation of IRT latent traits",
+   "rationale": "Correlating the latent trait estimates (theta) from each scale’s IRT calibration shows the degree to which they measure the same underlying reading ability.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Convergent validity is supported when independently developed measures of the same construct are positively correlated.",
+      "url": "https://en.wikipedia.org/wiki/Convergent_Validity",
+      "quote": "a test of a construct is correlated with other tests designed to measure theoretically similar constructs.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L194",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "A school wants causal evidence that a reading program improves word reading among struggling students. Which design is strongest?",
+   "choices": [
+    "Randomize classes within schools, stratified by baseline reading.",
+    "Student-randomize within classes, treating observations as independent.",
+    "Assign schools nonrandomly, then compare pre/post reading scores.",
+    "Match teachers, then let each teacher select the curriculum."
+   ],
+   "answer": "Randomize classes within schools, stratified by baseline reading.",
+   "rationale": "Randomizing classes reduces contamination between students, while stratification balances baseline reading skill across conditions. The other designs leave substantial confounding or selection bias.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L194",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "A nonrandomized pilot improves reading in participating classes more than in comparison classes. What evidence would most strengthen causal inference?",
+   "choices": [
+    "Comparable baseline trends and no concurrent treatment in comparison classes.",
+    "Teacher enthusiasm and stronger classroom ratings in participating classes.",
+    "Attendance gains and fewer absences in participating classes.",
+    "Pre/post improvement and greater requests in participating classes."
+   ],
+   "answer": "Comparable baseline trends and no concurrent treatment in comparison classes.",
+   "rationale": "Comparable baseline trends support the parallel-trends assumption, and an untreated comparison group enables a difference-in-differences estimate with fewer alternative explanations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L194",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "Before a cluster-randomized reading trial, what should determine the number of schools and classrooms needed?",
+   "choices": [
+    "An a priori power analysis accounting for clustering, effect size, and attrition.",
+    "The number of schools currently willing to participate in the pilot.",
+    "Published sample sizes from unrelated literacy programs without adjustment.",
+    "The number of students scoring below benchmark in one pilot school."
+   ],
+   "answer": "An a priori power analysis accounting for clustering, effect size, and attrition.",
+   "rationale": "An a priori power analysis uses the smallest meaningful effect, desired power, significance level, within-cluster correlation, and expected attrition to justify the required sample.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L226",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 226,
+   "format": "multiple_choice",
+   "prompt": "In the BIA+ model, what does language non-selective lexical access predict for a bilingual reading a word that exists in both languages?",
+   "choices": [
+    "Only the target language representation activates during word recognition.",
+    "Both language representations activate, with competition resolved by language nodes.",
+    "The non-target language is suppressed before lexical access occurs.",
+    "Activation spreads only within the script-specific subsystem of each language."
+   ],
+   "answer": "Both language representations activate, with competition resolved by language nodes.",
+   "rationale": "BIA+ posits that lexical candidates from both languages become active simultaneously; language nodes then modulate competition, allowing the appropriate language to be selected.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The BIA+ model predicts non‑selective lexical activation: both language representations of a bilingual word are activated simultaneously.",
+      "url": "https://en.wikipedia.org/wiki/Embodied_bilingual_language",
+      "quote": "According to the BIA+ model of bilingual lexical processing, the brain activates both languages when recognizing a word in either language.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "In the BIA+ model, nonselective lexical access activates both languages' lexical representations before competition is resolved at the language nodes.",
+      "url": "https://en.wikipedia.org/wiki/Bilingual_interactive_activation_plus",
+      "quote": "Both whole-word orthographic and phonological representations then activate the semantic representations and language nodes which indicate membership to a particular language.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L214",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 214,
+   "format": "multiple_choice",
+   "prompt": "An adolescent reads accurately and comprehends well, yet his oral reading rate falls below the 10th percentile. The next diagnostic step should be:",
+   "choices": [
+    "Administer a rapid automatized naming (RAN) test",
+    "Conduct an auditory processing evaluation",
+    "Re‑evaluate phonics instruction",
+    "Refer for a vision screening"
+   ],
+   "answer": "Administer a rapid automatized naming (RAN) test",
+   "rationale": "RAN deficits are strongly linked to slow reading fluency despite intact decoding and comprehension, so RAN testing is the logical next assessment.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Rapid automatized naming contributes to reading fluency, so unusually slow oral reading with intact accuracy warrants RAN testing.",
+      "url": "https://en.wikipedia.org/wiki/Rapid_automatized_naming",
+      "quote": "Faster times in RAN trials have been found to be a good indicator of reading competence, not only in alphabetic writing systems",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L214",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 214,
+   "format": "multiple_choice",
+   "prompt": "A 10‑year‑old student reads single words accurately but makes frequent errors on non‑word reading and phoneme segmentation tasks. Which standardized test is most appropriate to confirm a phonological processing deficit?",
+   "choices": [
+    "CTOPP‑2",
+    "Woodcock‑Johnson IV Tests of Achievement",
+    "GORT‑5",
+    "TOWRE‑2"
+   ],
+   "answer": "CTOPP‑2",
+   "rationale": "The CTOPP‑2 directly assesses phonological awareness, memory, and rapid naming, making it the gold‑standard for identifying phonological processing deficits.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "CTOPP‑2 is a standardized test for phonological processing.",
+      "url": "https://en.wikipedia.org/wiki/Test_of_Word_Reading_Efficiency",
+      "quote": "Physicians use TOWRE–2 and similar other tests such as CTOPP (Comprehensive Test Of Phonological Processing) and Woodcock Reading Mastery Test, in the clinical setting because children do not need to bring their text book and can still have materials for the diagnosis.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The CTOPP-2 is a standardized assessment of phonological processing that includes phonological awareness.",
+      "url": "https://en.wikipedia.org/wiki/Learning_disability",
+      "quote": "Assessments that measure reading subskills include the Gray Oral Reading Test IV – Fourth Edition (GORT IV), Gray Silent Reading Test, Comprehensive Test of Phonological Processing (CTOPP), Tests of Oral Reading and Comprehension Skills (TORCS), Test of Reading Comprehension 3 (TORC-3), Test of Word Reading Efficiency (TOWRE), and the Test of Reading Fluency.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L214",
+   "track_id": "reading",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 214,
+   "format": "multiple_choice",
+   "prompt": "A 9‑year‑old reads fluently but often substitutes semantically related words (e.g., “cat” for “dog”). Which assessment best reveals a semantic processing deficit?",
+   "choices": [
+    "Administer a standardized vocabulary depth test such as PPVT.",
+    "Use a non‑word reading task to probe phonological decoding.",
+    "Complete an orthographic pattern recognition measure.",
+    "Obtain a rapid naming score for letters and objects."
+   ],
+   "answer": "Administer a standardized vocabulary depth test such as PPVT.",
+   "rationale": "A vocabulary depth test directly evaluates semantic knowledge, exposing weaknesses in meaning‑based processing that underlie the substitution errors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The PPVT measures receptive vocabulary knowledge, making it the option most directly relevant to semantic word-processing difficulty.",
+      "url": "https://en.wikipedia.org/wiki/Clinical_linguistics",
+      "quote": "Tests such as Peabody Picture Vocabulary Test (PPVT) assesses instead the receptive vocabulary of children, and even adults.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

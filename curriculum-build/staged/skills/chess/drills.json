@@ -1,0 +1,805 @@
+{
+ "subject": "chess",
+ "version": 1,
+ "status": "STAGED",
+ "generated_by": "chess/build-drills.js (seed 20261023)",
+ "doc": "New drill items for the staged chess progression gates. Every answer was computed (tables or the perft-tested rules) and is re-checked by verify-skill-curricula.js. Types: playout_mate (stars from the distance to mate), kpk_judgement, playout_promote, playout_hold, square_rule, mate_or_not (unannounced, includes positions with no mate).",
+ "specs": [
+  {
+   "type": "coordinates_race",
+   "stage": "CH0-CH2",
+   "rule": "Name or tap the square the coach calls; 30 s rounds; timer off by default for ages 4-7. Squares and colours computed (a1 dark, h1 light; colour = (file + rank) odd -> light).",
+   "gate": "none (fluency practice)"
+  },
+  {
+   "type": "visualisation_ladder",
+   "stage": "CH2-CH7",
+   "rule": "Square colour without a board -> knight path length between two squares -> pieces vanish after N seconds, answer the move -> follow a 2-6 ply notation line, answer about the final position. Each rung passes at 80% before the next opens.",
+   "gate": "practice; rung reached is a scorecard signal, not a stage gate"
+  },
+  {
+   "type": "blunder_check",
+   "stage": "CH2-CH6",
+   "rule": "Shown a candidate move, the learner names the opponent's best reply before committing; positions where the natural move loses material to a 1-2 move reply. Needs engine verification (Leorik/Stockfish server side): the natural move must lose >= 1.5 pawns and the safe alternative must not.",
+   "gate": "part of the tactics_unannounced sets"
+  },
+  {
+   "type": "unannounced_set",
+   "stage": "CH2+",
+   "rule": "Mixed motifs, no theme shown, ~1 in 5 positions with nothing to win (answer: a safe developing move accepted within 0.5 pawns of the engine best, or \"nothing\").",
+   "gate": "tactics_unannounced"
+  }
+ ],
+ "drills": [
+  {
+   "id": "ch-kqk-1",
+   "type": "playout_mate",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Queen and King Box Mate"
+   ],
+   "fen": "4K3/6Q1/8/8/8/8/8/1k6 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 7,
+   "stars": {
+    "three": 9,
+    "two": 13,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-kqk-2",
+   "type": "playout_mate",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Queen and King Box Mate"
+   ],
+   "fen": "4K3/8/2Q5/8/8/8/8/6k1 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 7,
+   "stars": {
+    "three": 9,
+    "two": 13,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-kqk-3",
+   "type": "playout_mate",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Queen and King Box Mate"
+   ],
+   "fen": "1Q6/8/4k3/8/8/8/7K/8 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 7,
+   "stars": {
+    "three": 9,
+    "two": 13,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-kqk-4",
+   "type": "playout_mate",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Queen and King Box Mate"
+   ],
+   "fen": "1Q6/8/8/3k4/8/8/8/5K2 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 8,
+   "stars": {
+    "three": 10,
+    "two": 14,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-kqk-5",
+   "type": "playout_mate",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Queen and King Box Mate"
+   ],
+   "fen": "6Q1/3k4/8/8/8/8/4K3/8 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 7,
+   "stars": {
+    "three": 9,
+    "two": 13,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-krk-1",
+   "type": "playout_mate",
+   "stage": "CH2",
+   "lessons": [
+    "C03 King and Rook Box Mate"
+   ],
+   "fen": "1K6/8/4k3/8/8/8/6R1/8 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 13,
+   "stars": {
+    "three": 15,
+    "two": 19,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-krk-2",
+   "type": "playout_mate",
+   "stage": "CH2",
+   "lessons": [
+    "C03 King and Rook Box Mate"
+   ],
+   "fen": "8/8/8/8/8/8/1K4k1/5R2 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 12,
+   "stars": {
+    "three": 14,
+    "two": 18,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-krk-3",
+   "type": "playout_mate",
+   "stage": "CH2",
+   "lessons": [
+    "C03 King and Rook Box Mate"
+   ],
+   "fen": "8/8/7K/4k3/8/8/R7/8 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 14,
+   "stars": {
+    "three": 16,
+    "two": 20,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-krk-4",
+   "type": "playout_mate",
+   "stage": "CH2",
+   "lessons": [
+    "C03 King and Rook Box Mate"
+   ],
+   "fen": "8/8/5K2/6R1/2k5/8/8/8 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 12,
+   "stars": {
+    "three": 14,
+    "two": 18,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-krk-5",
+   "type": "playout_mate",
+   "stage": "CH2",
+   "lessons": [
+    "C03 King and Rook Box Mate"
+   ],
+   "fen": "8/7K/8/1R6/6k1/8/8/8 w - - 0 1",
+   "side": "w",
+   "goal": "checkmate against perfect defence",
+   "dtm": 13,
+   "stars": {
+    "three": 15,
+    "two": 19,
+    "one": "any mate before the 50-move rule; stalemate or a lost piece fails"
+   },
+   "defence": "the tables: black always plays a move that delays mate longest"
+  },
+  {
+   "id": "ch-kpk-judge-1",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/5k2/3P4/8/1K6/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-2",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/3k4/8/7K/5P2/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-3",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/5PK1/8/8/6k1/8/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-4",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/8/3k4/1P6/3K4/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-5",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/k7/2P5/K7/8/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-6",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/4P1K1/8/8/3k4/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-7",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/2k5/8/2K1P3/8/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-8",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/1k6/3K4/8/3P4/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-9",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/5K1k/4P3/8/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-10",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "2k5/5P2/8/4K3/8/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-11",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "1k6/3KP3/8/8/8/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-12",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "5K2/5P2/2k5/8/8/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-13",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/5P2/8/4K3/2k5/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-14",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/2k5/K7/P7/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-15",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/8/1k6/3P4/8/1K6 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-16",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/8/8/4k1KP/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "win"
+  },
+  {
+   "id": "ch-kpk-judge-17",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/1P2k3/8/1K6/8/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-18",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/6k1/8/8/4P3/5K2/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-19",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "2k5/2P5/3K4/8/8/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-judge-20",
+   "type": "kpk_judgement",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings",
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/7k/8/7P/7K/8 b - - 0 1",
+   "side": "b",
+   "question": "With best play, does White win or is it a draw?",
+   "answer": "draw"
+  },
+  {
+   "id": "ch-kpk-win-1",
+   "type": "playout_promote",
+   "stage": "CH3",
+   "lessons": [
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/8/3K4/5P2/8/7k w - - 0 1",
+   "side": "w",
+   "goal": "promote and keep the new queen (win) against perfect defence"
+  },
+  {
+   "id": "ch-kpk-hold-1",
+   "type": "playout_hold",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings"
+   ],
+   "fen": "8/8/8/2k5/K7/2P5/8/8 b - - 0 1",
+   "side": "b",
+   "goal": "draw as Black against perfect play (stop the pawn or reach K v K / stalemate)"
+  },
+  {
+   "id": "ch-kpk-win-2",
+   "type": "playout_promote",
+   "stage": "CH3",
+   "lessons": [
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/2K5/3P4/8/4k3/8/8 w - - 0 1",
+   "side": "w",
+   "goal": "promote and keep the new queen (win) against perfect defence"
+  },
+  {
+   "id": "ch-kpk-win-3",
+   "type": "playout_promote",
+   "stage": "CH3",
+   "lessons": [
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/4K3/5P2/8/4k3/8/8 w - - 0 1",
+   "side": "w",
+   "goal": "promote and keep the new queen (win) against perfect defence"
+  },
+  {
+   "id": "ch-kpk-win-4",
+   "type": "playout_promote",
+   "stage": "CH3",
+   "lessons": [
+    "C05 Key Squares"
+   ],
+   "fen": "8/8/8/8/1k6/3PK3/8/8 w - - 0 1",
+   "side": "w",
+   "goal": "promote and keep the new queen (win) against perfect defence"
+  },
+  {
+   "id": "ch-kpk-hold-2",
+   "type": "playout_hold",
+   "stage": "CH3",
+   "lessons": [
+    "C04 Direct Opposition Between Kings"
+   ],
+   "fen": "8/8/8/8/3k4/5P2/7K/8 b - - 0 1",
+   "side": "b",
+   "goal": "draw as Black against perfect play (stop the pawn or reach K v K / stalemate)"
+  },
+  {
+   "id": "ch-square-1",
+   "type": "square_rule",
+   "stage": "CH3",
+   "lessons": [
+    "C04 The Square of the Pawn"
+   ],
+   "fen": "7k/8/8/8/8/7P/8/K7 b - - 0 1",
+   "side": "b",
+   "question": "Black to move: can the black king catch the pawn?",
+   "answer": "yes",
+   "rule_says": "yes",
+   "rule": "black to move: the king catches the pawn if it is inside the square or can step into it on this move"
+  },
+  {
+   "id": "ch-square-2",
+   "type": "square_rule",
+   "stage": "CH3",
+   "lessons": [
+    "C04 The Square of the Pawn"
+   ],
+   "fen": "8/6k1/6P1/8/8/8/8/K7 b - - 0 1",
+   "side": "b",
+   "question": "Black to move: can the black king catch the pawn?",
+   "answer": "yes",
+   "rule_says": "yes",
+   "rule": "black to move: the king catches the pawn if it is inside the square or can step into it on this move"
+  },
+  {
+   "id": "ch-square-3",
+   "type": "square_rule",
+   "stage": "CH3",
+   "lessons": [
+    "C04 The Square of the Pawn"
+   ],
+   "fen": "8/8/8/8/1k6/P7/8/7K b - - 0 1",
+   "side": "b",
+   "question": "Black to move: can the black king catch the pawn?",
+   "answer": "yes",
+   "rule_says": "yes",
+   "rule": "black to move: the king catches the pawn if it is inside the square or can step into it on this move"
+  },
+  {
+   "id": "ch-square-4",
+   "type": "square_rule",
+   "stage": "CH3",
+   "lessons": [
+    "C04 The Square of the Pawn"
+   ],
+   "fen": "k7/8/4P3/8/8/8/8/K7 b - - 0 1",
+   "side": "b",
+   "question": "Black to move: can the black king catch the pawn?",
+   "answer": "no",
+   "rule_says": "no",
+   "rule": "black to move: the king catches the pawn if it is inside the square or can step into it on this move"
+  },
+  {
+   "id": "ch-square-5",
+   "type": "square_rule",
+   "stage": "CH3",
+   "lessons": [
+    "C04 The Square of the Pawn"
+   ],
+   "fen": "8/8/k7/7P/8/8/8/K7 b - - 0 1",
+   "side": "b",
+   "question": "Black to move: can the black king catch the pawn?",
+   "answer": "no",
+   "rule_says": "no",
+   "rule": "black to move: the king catches the pawn if it is inside the square or can step into it on this move"
+  },
+  {
+   "id": "ch-square-6",
+   "type": "square_rule",
+   "stage": "CH3",
+   "lessons": [
+    "C04 The Square of the Pawn"
+   ],
+   "fen": "8/8/3k4/8/P7/8/8/7K b - - 0 1",
+   "side": "b",
+   "question": "Black to move: can the black king catch the pawn?",
+   "answer": "yes",
+   "rule_says": "yes",
+   "rule": "black to move: the king catches the pawn if it is inside the square or can step into it on this move"
+  },
+  {
+   "id": "ch-mate-or-not-1",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "2K5/3p1p2/1k6/8/8/6p1/Q7/3R4 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "no mate"
+  },
+  {
+   "id": "ch-mate-or-not-2",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "8/5K1p/7k/8/5P2/R4p2/R7/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Rh2#"
+  },
+  {
+   "id": "ch-mate-or-not-3",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "8/3R4/8/4pk2/5p2/3K3p/8/1Q6 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "no mate"
+  },
+  {
+   "id": "ch-mate-or-not-4",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "5K2/7R/3p4/8/8/4k3/2P5/7Q w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "no mate"
+  },
+  {
+   "id": "ch-mate-or-not-5",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "1K6/8/1P3k2/6p1/4R3/4p3/8/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "no mate"
+  },
+  {
+   "id": "ch-mate-or-not-6",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "8/3p3k/8/1R6/p7/4K3/8/4R3 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "no mate"
+  },
+  {
+   "id": "ch-mate-or-not-7",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "7k/4p3/7K/5p1Q/4P3/8/8/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Qe8#"
+  },
+  {
+   "id": "ch-mate-or-not-8",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "6k1/R7/3p4/8/8/4R3/5K2/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Re8#"
+  },
+  {
+   "id": "ch-mate-or-not-9",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "4K3/1p2Q2p/8/8/8/3p2R1/7k/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Qh4#"
+  },
+  {
+   "id": "ch-mate-or-not-10",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "1k6/5Q2/6K1/3PR3/8/8/3pp3/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Re8#"
+  },
+  {
+   "id": "ch-mate-or-not-11",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "8/5K2/8/6p1/3R4/8/6R1/1k6 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Rd1#"
+  },
+  {
+   "id": "ch-mate-or-not-12",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "8/8/8/6R1/5K2/1R4p1/6p1/k7 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Ra5#"
+  },
+  {
+   "id": "ch-mate-or-not-13",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "8/7p/2K5/k7/1p2p3/4R3/2R5/8 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Ra2#"
+  },
+  {
+   "id": "ch-mate-or-not-14",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "3k4/Q7/6R1/8/p7/1p6/8/4K3 w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "Rg8#"
+  },
+  {
+   "id": "ch-mate-or-not-15",
+   "type": "mate_or_not",
+   "stage": "CH1",
+   "lessons": [
+    "C02 Find the Mate in One"
+   ],
+   "fen": "7k/p7/K7/6Q1/6p1/7P/8/7R w - - 0 1",
+   "side": "w",
+   "question": "Is there a checkmate in one move? Play it, or answer \"no mate\".",
+   "answer": "hxg4#"
+  }
+ ]
+}

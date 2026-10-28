@@ -1,0 +1,662 @@
+{
+ "collection": "block_plans",
+ "row_id": 5,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P80",
+   "wrong": "The sentence shifts mood from imperative to imperative — that is fine — but it also shifts voice when the doer changes.",
+   "correct": "\"Wear gloves when handling dry ice, and be careful.\" has no voice shift: both clauses are active imperatives with the same understood subject.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P81",
+   "wrong": "Keep both clauses, but change \"watch out\" to \"you must watch out.\"",
+   "correct": "Option c2 refers to \"watch out\", which is not in the sentence (it says \"be careful\").",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "The sentence shifts mood from imperative to imperative — that is fine — but it also shifts voice when the doer changes.",
+   "replace": "The sentence has no voice shift: both clauses are active imperatives with the same understood subject.",
+   "fixes": [
+    "P80"
+   ]
+  },
+  {
+   "find": "Keep both clauses, but change \"watch out\" to \"you must watch out.\"",
+   "replace": "Keep both clauses, but change \"be careful\" to \"please be careful.\"",
+   "fixes": [
+    "P81"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[9].data.prompt",
+   "before": "A student wrote: \"Wear gloves when handling dry ice, and be careful.\" The sentence shifts mood from imperative to imperative — that is fine — but it also shifts voice when the doer changes. Which revision keeps voice and mood consistent in BOTH clauses while leaving the sentence as one?",
+   "after": "A student wrote: \"Wear gloves when handling dry ice, and be careful.\" The sentence has no voice shift: both clauses are active imperatives with the same understood subject. Which revision keeps voice and mood consistent in BOTH clauses while leaving the sentence as one?",
+   "fixes": [
+    "P80"
+   ]
+  },
+  {
+   "path": "blocks[9].data.choices[1].label",
+   "before": "Keep both clauses, but change \"watch out\" to \"you must watch out.\"",
+   "after": "Keep both clauses, but change \"be careful\" to \"please be careful.\"",
+   "fixes": [
+    "P81"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Hook_Dilemma",
+    "purpose": "Opens with a real dilemma — 'Is this broken grammar or deliberate style?' — that activates prior knowledge of fragments and voice/mood shifts before any teaching.",
+    "data": {
+     "context": "One writer wants the lines to feel urgent and raw. The other wants the page to read clean and correct. You get to be the editor — but only if you can tell the difference between a mistake and a choice.",
+     "eyebrow": "Warm-Up Dilemma",
+     "footerNote": "Hold on to your instinct. By the end of this lesson you will know which editor you would side with — and why.",
+     "leftChoice": {
+      "body": "If you drop a verb or a subject, you break the sentence. Full stop. Sentences need a subject, a verb, and a complete thought. If it is missing one, it is a fragment, and you should fix it.",
+      "label": "OPTION A",
+      "title": "That is broken grammar",
+      "tone": "caution"
+     },
+     "prompt": "A student hands in an essay that ends with: \"Which changed everything.\" Their partner insists the fragment is deliberate style. You have to decide: broken grammar, or a choice that works?",
+     "rightChoice": {
+      "body": "Writers do end sentences with fragments on purpose — for punch, suspense, or emphasis. A stylistic fragment is short on purpose, placed for effect, and surrounded by complete sentences. Context is the clue.",
+      "label": "OPTION B",
+      "title": "That is deliberate style",
+      "tone": "accent"
+     },
+     "versusLabel": "VS"
+    },
+    "repaired": false,
+    "index": 0
+   },
+   {
+    "block": "Interact_ClickToReveal",
+    "purpose": "Recall-first: learner writes/says everything they remember about complete sentences, fragments, run-ons, syntactic patterns, rhetorical grammar, and voice/mood shifts, then taps cards to compare against their memory.",
+    "data": {
+     "cards": [
+      {
+       "answer": "Three things: a subject, a finite verb, and a complete thought. Take away any one and you have a fragment.",
+       "note": "A finite verb shows tense and can act as the main verb. Watch out for -ing forms and infinitives like to go — they cannot anchor a sentence on their own.",
+       "prompt": "Before you look at anything: what does a complete sentence need?",
+       "promptLabel": "Q1"
+      },
+      {
+       "answer": "Missing a subject, missing a verb, or missing a complete thought. Subordinate-clause fragments count too — \"Because the storm arrived\" starts with a subordinating word and cannot stand alone.",
+       "prompt": "What are the ways a fragment happens?",
+       "promptLabel": "Q2"
+      },
+      {
+       "answer": "A fused sentence (run-on) joins two independent clauses with no punctuation at all. A comma splice is a run-on fixed with only a comma — which is not enough, because a comma cannot join two independent clauses by itself.",
+       "prompt": "Run-on vs. comma splice — what is the difference?",
+       "promptLabel": "Q3"
+      },
+      {
+       "answer": "Four ways: a period or question mark, a semicolon between closely related clauses, a comma plus a coordinating conjunction (FANBOYS: for, and, nor, but, or, yet, so), or a subordinating word like because, when, although, or that.",
+       "prompt": "Name the ways to fix a run-on.",
+       "promptLabel": "Q4"
+      },
+      {
+       "answer": "It places the main clause first, last, or in the middle, and each position changes what the reader notices. Last builds suspense (periodic), first starts strong and adds detail after (cumulative), and matched halves create balance or antithesis.",
+       "prompt": "How does word order control emphasis?",
+       "promptLabel": "Q5"
+      },
+      {
+       "answer": "Voice is active vs. passive: the subject doing the action vs. receiving it. Mood is indicative (facts), imperative (commands), and subjunctive (wishes, ifs, demands). An unplanned switch between either one is an inappropriate shift.",
+       "prompt": "Voice and mood — what do you remember?",
+       "promptLabel": "Q6"
+      }
+     ],
+     "revealLabel": "Tap to reveal",
+     "revealedLabel": "Revealed",
+     "subtitle": "First, write or say everything you remember. Then tap each card to compare against your memory.",
+     "title": "What do you already remember?"
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Basic_TextBlock",
+    "purpose": "Model summary the learner can now read to correct and fill gaps in their own recall, covering all four prior lessons at a 14-year-old reading level.",
+    "data": {
+     "sections": [
+      {
+       "heading": "Complete sentences, fragments, and run-ons",
+       "paragraphs": [
+        "A complete sentence needs three things: a subject, a finite verb, and a complete thought. A finite verb shows tense — walked, is, will arrive — and can act as the main verb of the clause. If any of the three pieces is missing, you have a fragment.",
+        "Fragments come in a few flavors. \"Ran across the field\" has no subject. \"The player sprinting down the sideline\" has no finite verb (sprinting is an -ing form, which cannot be a main verb by itself). \"Because the storm arrived\" is a subordinate-clause fragment: it starts with a subordinating word, so the thought is incomplete even though a subject and verb are there.",
+        "A run-on (also called a fused sentence) joins two independent clauses with no punctuation at all: \"The game ended we went home.\" A comma splice is a run-on that someone tried to fix with a comma alone: \"The game ended, we went home.\" A comma is not strong enough to join two complete clauses on its own.",
+        "You can fix a run-on four ways: use a period or question mark to split it; use a semicolon between closely related clauses; use a comma plus a FANBOYS conjunction (for, and, nor, but, or, yet, so); or turn one clause into a dependent one with a subordinating word like because, when, although, or that."
+       ]
+      },
+      {
+       "heading": "Word order and sentence patterns",
+       "paragraphs": [
+        "Word order controls emphasis. The same ideas read differently depending on where you put the main clause — first, last, or in the middle — because readers pay the most attention to where the sentence starts and where it lands.",
+        "A periodic sentence saves the main clause for the end to build suspense and deliver a punch: \"After hours of waiting, through the rain and the crowd, the train finally came.\" A cumulative sentence does the opposite: it starts with the main clause, then piles on phrases and detail: \"The train finally came, after hours of waiting, through the rain, past the crowd.\" A balanced sentence has two or more parallel parts of similar length and structure, which creates symmetry. Antithesis is a special balanced structure that sets contrasting ideas against each other: \"Ask not what your country can do for you; ask what you can do for your country.\"",
+        "The point is not one pattern being better — it is choosing the pattern that matches your purpose: periodic for suspense, cumulative for richness, balanced or antithetical for contrast and punch."
+       ]
+      },
+      {
+       "heading": "Rhetorical grammar: fragments on purpose",
+       "paragraphs": [
+        "Rhetorical grammar means choosing grammatical structures for their persuasive and stylistic impact. That includes the deliberate stylistic fragment: a piece like \"Which changed everything.\" that you end a paragraph with on purpose. What makes it work is context — it is short by design, it sits next to complete sentences, and it points back at a thought the reader already has. An accidental fragment, like \"Running late for practice.\" in the middle of a body paragraph, just reads like a mistake. Same shape, different intent."
+       ]
+      },
+      {
+       "heading": "Voice and mood shifts",
+       "paragraphs": [
+        "Voice is about active vs. passive. In an active sentence the subject does the action (\"The dog chased the ball\"); in a passive one the subject receives it (\"The ball was chased by the dog\"). Passive voice is fine when the receiver matters more than the doer — but shifting between active and passive inside a sentence or paragraph without a reason is an inappropriate voice shift: \"She wrote the essay, and then it was edited by her brother.\" Fix it by keeping both clauses in one voice: \"She wrote the essay, and her brother edited it.\"",
+        "Mood is about the attitude of the verb. Indicative states facts or asks questions (\"The doors open at nine\"). Imperative gives commands (\"Open the doors\"). Subjunctive handles wishes, conditions contrary to fact, and demands (\"I wish I were there\"; \"If she were taller, she would start\"). An inappropriate mood shift jumps attitude mid-sentence: \"If you finish your homework, please you will call me.\" Keep one mood: \"If you finish your homework, call me.\"",
+        "The big rule for shifts: a shift is appropriate when it matches a real change in meaning or attitude — for example, instructions that switch from describing a fact to giving a command, or a report that moves to passive because the doer is unknown or unimportant. It is inappropriate when nothing in the meaning changed and the shift just sneaks up on the reader."
+       ]
+      }
+     ],
+     "subtitle": "Compare this against what you recalled — correct yourself and fill the gaps.",
+     "title": "The Model Summary"
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Interact_CategorySort",
+    "purpose": "Practises level 10 content: sorting examples into fragment, comma splice, run-on, and complete sentence buckets.",
+    "data": {
+     "categories": [
+      {
+       "accent": "caution",
+       "hint": "Missing a subject, a finite verb, or a complete thought.",
+       "id": "fragment",
+       "label": "Fragment"
+      },
+      {
+       "accent": "error",
+       "hint": "Two independent clauses joined by only a comma — or by nothing at all.",
+       "id": "runon",
+       "label": "Run-on or comma splice"
+      },
+      {
+       "accent": "success",
+       "hint": "Subject + finite verb + complete thought, correctly punctuated.",
+       "id": "complete",
+       "label": "Complete sentence"
+      }
+     ],
+     "instruction": "Drag each card into the bucket it belongs in. Ask yourself: does it have a subject, a finite verb, and a complete thought? If there are two complete clauses, is there real punctuation joining them?",
+     "items": [
+      {
+       "correctCategoryId": "fragment",
+       "detail": "Starts with a subordinating word, so it cannot stand alone.",
+       "id": "i1",
+       "text": "Because the lightning struck the scoreboard"
+      },
+      {
+       "correctCategoryId": "runon",
+       "detail": "A comma alone cannot join two independent clauses.",
+       "id": "i2",
+       "text": "The buzzer sounded, everyone left the gym"
+      },
+      {
+       "correctCategoryId": "complete",
+       "detail": "One subject, one finite verb, one complete thought.",
+       "id": "i3",
+       "text": "The coach blew the whistle at exactly 3:15."
+      },
+      {
+       "correctCategoryId": "fragment",
+       "detail": "No subject and no finite verb.",
+       "id": "i4",
+       "text": "Sprinting through the hallway before the bell"
+      },
+      {
+       "correctCategoryId": "runon",
+       "detail": "Two clauses fused with no punctuation at all.",
+       "id": "i5",
+       "text": "I forgot my cleats my sister drove them over"
+      },
+      {
+       "correctCategoryId": "complete",
+       "detail": "Two clauses, correctly joined with a comma and a FANBOYS conjunction.",
+       "id": "i6",
+       "text": "She studied all night, so she passed the quiz."
+      },
+      {
+       "correctCategoryId": "fragment",
+       "detail": "No finite verb — the infinitive cannot anchor a sentence.",
+       "id": "i7",
+       "text": "The play to end the season"
+      },
+      {
+       "correctCategoryId": "complete",
+       "detail": "A semicolon is strong enough to join two independent clauses.",
+       "id": "i8",
+       "text": "The storm passed; the game continued."
+      }
+     ],
+     "shuffle": true,
+     "title": "Sort the sentences",
+     "resetLabel": "Start over"
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Concept_BeforeAfter",
+    "purpose": "Shows raw flawed sentences fixed via period, semicolon, and FANBOYS/subordinating word, linking fixes to emphasis and flow (levels 10 and 20).",
+    "data": {
+     "after": {
+      "artData": [
+       0.3,
+       0.5,
+       0.7,
+       0.9
+      ],
+      "artKind": "lines",
+      "body": "The storm arrived. When the lights went out, the players stopped, and everyone watched the sky.",
+      "caption": "Same story — four clean clauses.",
+      "label": "Revised",
+      "points": [
+       "Each clause stands alone or is properly joined",
+       "The subordinating word when shows how the events connect",
+       "Voice stays consistent: players stopped, everyone watched"
+      ],
+      "title": "Punctuated and connected",
+      "tone": "success"
+     },
+     "before": {
+      "artData": [
+       0.9,
+       0.6,
+       0.4,
+       0.2
+      ],
+      "artKind": "lines",
+      "body": "The storm arrived when the lights went out the players stopped, everyone watched the sky.",
+      "caption": "Two runs-on and a splice in one sentence.",
+      "label": "Before",
+      "points": [
+       "Fused clauses: no punctuation between some pairs",
+       "Comma splice: a comma doing a job it is too weak for",
+       "The reader cannot tell which events caused which"
+      ],
+      "title": "Everything jammed together",
+      "tone": "error"
+     },
+     "conceptSubtitle": "Three ways to fix the same tangle — and what each one does to the reader.",
+     "conceptTitle": "Fixing a run-on, three ways",
+     "dividerStart": 50,
+     "footerNote": "Punctuation is not just correctness — it decides which moment lands first.",
+     "prompt": "Sweep the divider to compare. Watch what each fix does to the flow and the emphasis."
+    },
+    "repaired": false,
+    "index": 4
+   },
+   {
+    "block": "Theory_ContrastSplit",
+    "purpose": "Side-by-side comparison of periodic, cumulative, and balanced/antithesis sentences, plus the deliberate stylistic fragment, so the learner can choose a pattern to match purpose and tone.",
+    "data": {
+     "footnote": "A fragment is a choice only when it is shaped, placed, and pointed at a thought the reader already holds. Everything else should be complete and connected.",
+     "leftColumn": {
+      "heading": "What it is",
+      "items": [
+       {
+        "example": "\"After the anthem, through the fog, under the floodlights, the team finally took the field.\"",
+        "label": "Periodic",
+        "text": "Saves the main clause for the end to build suspense and land a punch."
+       },
+       {
+        "example": "\"The team finally took the field, after the anthem, through the fog, under the floodlights.\"",
+        "label": "Cumulative",
+        "text": "Starts with the main clause, then piles on phrases that add detail and richness."
+       },
+       {
+        "example": "\"Ask not what your country can do for you; ask what you can do for your country.\"",
+        "label": "Balanced / antithesis",
+        "text": "Uses two or more parallel parts of similar length and structure; antithesis sets contrasting ideas against each other."
+       },
+       {
+        "example": "\"Which changed everything.\"",
+        "label": "Deliberate fragment",
+        "text": "A short, intentional fragment placed next to complete sentences to point back at a thought the reader already holds."
+       }
+      ],
+      "tone": "accent"
+     },
+     "rightColumn": {
+      "heading": "What it is NOT",
+      "items": [
+       {
+        "example": "\"Through the fog, under the floodlights, took the field.\" — no subject, no verb.",
+        "label": "Not a suspense tool",
+        "text": "A periodic sentence is not a sentence with the verb missing — every clause still needs its subject and finite verb."
+       },
+       {
+        "example": "\"The team took the field, which was exciting, they cheered.\" — that is a comma splice, not richness.",
+        "label": "Not a run-on",
+        "text": "A cumulative sentence is not an excuse to string clauses together without punctuation."
+       },
+       {
+        "example": "\"She was fast. The ball was caught by her. He hit it. \" — no structure, no symmetry, no reason.",
+        "label": "Not random mixing",
+        "text": "Balance is not just writing two sentences of any length; the parts must be parallel in structure and matched in weight."
+       },
+       {
+        "example": "\"Running late for practice.\" dropped into a body paragraph — a mistake, not a move.",
+        "label": "Not an accident",
+        "text": "A stylistic fragment is not a fragment that just shows up. If it has no deliberate placement or context, fix it."
+       }
+      ],
+      "tone": "caution"
+     },
+     "subtitle": "Four tools for matching sentence shape to purpose and tone — and the mistakes they get confused with.",
+     "title": "Periodic vs. cumulative vs. balanced — and the deliberate fragment"
+    },
+    "repaired": false,
+    "index": 5
+   },
+   {
+    "block": "Trap_SpotTheLie",
+    "purpose": "Tests rhetorical grammar and voice/mood judgment: four statements about shifts, three defensible, one fabricated — forcing the learner to spot the inappropriate shift.",
+    "data": {
+     "contextLabel": "Voice and mood review",
+     "feedbackCorrect": "Right — that statement contradicts what we learned. A shift is fine when meaning or attitude changes; it is inappropriate when the meaning stays the same and the shift just sneaks up on the reader.",
+     "feedbackIncorrect": "Careful — that statement is actually true. Look for the one that contradicts the rule: shifts are only wrong when nothing in the meaning changed.",
+     "prompt": "Three of these statements are true from the lesson. One is a lie. Click the fabricated one.",
+     "statements": [
+      {
+       "id": "s1",
+       "isLie": false,
+       "reveal": "True. \"She finished the essay, and then it was graded by the teacher\" mixes active and passive for no reason. Keeping both clauses active — \"her teacher graded it\" — fixes it.",
+       "sourceTag": "Voice",
+       "text": "Switching from active to passive voice in the middle of a sentence is an inappropriate shift when the meaning has not changed."
+      },
+      {
+       "id": "s2",
+       "isLie": false,
+       "reveal": "True. Indicative states facts, imperative commands, and subjunctive handles wishes and unreal conditions like \"If I were you\" — jumping between them without a reason is a mood shift.",
+       "sourceTag": "Mood",
+       "text": "Indicative, imperative, and subjunctive are the three moods covered in the lesson."
+      },
+      {
+       "id": "s3",
+       "isLie": true,
+       "reveal": "This is the lie. It gets the rule backwards. A shift is appropriate when it matches a real change in meaning or attitude, and inappropriate when the meaning is unchanged. Nothing about switching makes a sentence always wrong.",
+       "sourceTag": "The rule",
+       "text": "Any change of voice or mood is automatically inappropriate, even when the meaning of the sentence clearly changes."
+      },
+      {
+       "id": "s4",
+       "isLie": false,
+       "reveal": "True. Instructions commonly describe a fact in indicative and then switch to imperative for the command. The attitude genuinely changes, so the shift is allowed.",
+       "sourceTag": "When shifts work",
+       "text": "A shift from indicative to imperative can be appropriate — for example, \"The doors open at nine; arrive early.\""
+      }
+     ],
+     "resetLabel": "Try again",
+     "retryLabel": "Think again"
+    },
+    "repaired": false,
+    "index": 6
+   },
+   {
+    "block": "Recall_BinarySwipe",
+    "purpose": "Rapid retrieval: swipe sentences as 'appropriate shift' or 'inappropriate shift' in voice (active/passive) and mood (indicative/imperative/subjunctive).",
+    "data": {
+     "instruction": "Swipe right if the shift is appropriate. Swipe left if it is inappropriate.",
+     "leftHint": "swipe left",
+     "leftLabel": "Inappropriate shift",
+     "rightHint": "swipe right",
+     "rightLabel": "Appropriate shift",
+     "statements": [
+      {
+       "correctSide": "left",
+       "feedback": "Same meaning throughout — keeping it active is smoother: \"The coach drew up the final play, and the team ran it.\"",
+       "id": "b1",
+       "tag": "Voice",
+       "text": "The coach drew up the final play, and it was run by the team."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "The passive is deliberate here: the doer is unknown and unimportant, so the passive fits.",
+       "id": "b2",
+       "tag": "Voice",
+       "text": "Someone had left the gym lights on; the windows had been broken during the storm."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "The command jumps to \"you will\" in indicative. Keep the imperative: \"Finish your homework, and then call me.\"",
+       "id": "b3",
+       "tag": "Mood",
+       "text": "If you finish your homework, you will call me before dinner."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "Fine. Indicative states the rule; imperative delivers the command. The attitude genuinely changes, so the shift works.",
+       "id": "b4",
+       "tag": "Mood",
+       "text": "The lab closes at five; clean up your station before you leave."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "The subjunctive was is required after a wish: \"I wish I were going to the game.\"",
+       "id": "b5",
+       "tag": "Mood",
+       "text": "I wish I was going to the game."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "Consistent active voice with the same doer throughout — no shift at all.",
+       "id": "b6",
+       "tag": "Voice",
+       "text": "The band tuned up, the crowd settled, and the singer stepped into the light."
+      }
+     ],
+     "summaryBody": "A shift is appropriate when the meaning or attitude really changes — commands after facts, passive when the doer does not matter. It is inappropriate when nothing changed except the grammar.",
+     "summaryHeading": "The shift test",
+     "title": "Appropriate or inappropriate shift?"
+    },
+    "repaired": false,
+    "index": 7
+   },
+   {
+    "block": "Memory_CheatSheet",
+    "purpose": "Compact closing key-value matrix: completeness rules, run-on fixes, sentence patterns, and shift rules for spaced reference.",
+    "data": {
+     "rows": [
+      {
+       "key": "Complete sentence",
+       "value": "Subject + finite verb + complete thought",
+       "tone": "success"
+      },
+      {
+       "key": "Fragment",
+       "value": "Missing a subject, a verb, or a complete thought — includes subordinate-clause fragments (because, when, although, that)",
+       "tone": "caution"
+      },
+      {
+       "key": "Run-on vs. comma splice",
+       "value": "Fused = two independent clauses, no punctuation. Comma splice = same thing with only a comma.",
+       "tone": "error"
+      },
+      {
+       "key": "Fix a run-on (4 ways)",
+       "value": "Period or question mark; semicolon; comma + FANBOYS (for, and, nor, but, or, yet, so); subordinating word"
+      },
+      {
+       "key": "Word order = emphasis",
+       "value": "Main clause first = start strong; last = land the punch; position changes what the reader notices",
+       "tone": "accent"
+      },
+      {
+       "key": "Periodic sentence",
+       "value": "Main clause saved for the end — builds suspense"
+      },
+      {
+       "key": "Cumulative sentence",
+       "value": "Main clause first, then phrases pile up detail"
+      },
+      {
+       "key": "Balanced / antithesis",
+       "value": "Parallel parts of similar length; antithesis sets contrasting ideas against each other"
+      },
+      {
+       "key": "Deliberate fragment",
+       "value": "Short on purpose, placed for effect, surrounded by complete sentences — otherwise fix it",
+       "tone": "caution"
+      },
+      {
+       "key": "Voice shift rule",
+       "value": "Active = subject acts; passive = subject receives. Shift only when the doer stops mattering or the focus really moves."
+      },
+      {
+       "key": "Mood shift rule",
+       "value": "Indicative = facts; imperative = commands; subjunctive = wishes, ifs, demands. Shift only when the attitude genuinely changes.",
+       "tone": "accent"
+      }
+     ],
+     "subtitle": "Everything from this review, in one place.",
+     "title": "Cheat sheet: sentences, patterns, and shifts"
+    },
+    "repaired": false,
+    "index": 8
+   },
+   {
+    "block": "Trap_OverconfidenceCheck",
+    "purpose": "Final calibration check on the learner's confidence about identifying and fixing shifts and fragments, feeding the record.",
+    "data": {
+     "ariaLabel": "Calibration check on voice and mood shifts",
+     "choices": [
+      {
+       "detail": "It breaks the run-on but jumps from indicative to imperative in one breath.",
+       "id": "c1",
+       "label": "Keep both clauses, but change \"be careful\" to \"you should be careful.\"",
+       "tone": ""
+      },
+      {
+       "detail": "It keeps everything in one voice and one mood.",
+       "id": "c2",
+       "label": "Keep both clauses, but change \"be careful\" to \"please be careful.\"",
+       "tone": ""
+      },
+      {
+       "detail": "This fixes the shift, but the original did not need splitting — it can stay one sentence.",
+       "id": "c3",
+       "label": "Split into two sentences: \"Wear gloves when handling dry ice. Be careful.\""
+      }
+     ],
+     "confidencePrompt": "How confident are you?",
+     "confidenceStep": 5,
+     "confidenceTicks": [
+      "Guessing",
+      "Pretty sure",
+      "Certain"
+     ],
+     "correctChoiceId": "c2",
+     "context": "Wear gloves when handling dry ice, and be careful.",
+     "feedback": {
+      "calibrationNote": "Calibration means your confidence matches your accuracy. Say what you know — no more, no less.",
+      "incorrectLabel": "Not quite",
+      "overconfidentNote": "You were sure but off the mark — worth one more look at the mood rules.",
+      "underconfidentNote": "You got it right despite doubting yourself — trust your training.",
+      "wellCalibratedNote": "Your confidence matched your performance. Nicely calibrated."
+     },
+     "prompt": "A student wrote: \"Wear gloves when handling dry ice, and be careful.\" The sentence has no voice shift: both clauses are active imperatives with the same understood subject. Which revision keeps voice and mood consistent in BOTH clauses while leaving the sentence as one?",
+     "tone": ""
+    },
+    "repaired": false,
+    "index": 9
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "In one or two words: is \"The buzzer sounded, everyone left the gym\" a fragment or a comma splice?",
+    "answer": "Comma splice",
+    "rationale": "Two independent clauses are joined by only a comma, which makes it a comma splice, not a fragment.",
+    "source": "ai",
+    "accepts": [
+     "comma splice",
+     "a comma splice",
+     "splice",
+     "it's a comma splice",
+     "its a comma splice"
+    ],
+    "hint": "The comma is there — it is just too weak for the job it is doing.",
+    "id": "c2",
+    "after": 3,
+    "focus": "Identifying a comma splice vs. a fragment in the sorted examples"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A writer wants to build suspense and land the punch at the end. Which pattern fits that purpose best?",
+    "answer": "Periodic",
+    "rationale": "Only the periodic sentence saves the main clause for the end, which is what builds suspense and delivers a punch.",
+    "source": "ai",
+    "hint": "Where does the main clause sit in the sentence?",
+    "choices": [
+     "Periodic",
+     "Cumulative",
+     "Balanced",
+     "Antithesis"
+    ],
+    "id": "c3",
+    "after": 5,
+    "focus": "Choosing the sentence pattern (periodic, cumulative, balanced) that matches a given purpose"
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Which revision fixes the inappropriate mood shift in: \"If you finish your homework, you will call me before dinner.\"?",
+    "answer": "If you finish your homework, call me before dinner.",
+    "rationale": "The if-clause sets a condition and the second clause is a command, so the imperative \"call me\" keeps the mood consistent.",
+    "source": "ai",
+    "hint": "The first clause is an if-clause setting a condition; the command that follows should stay in the imperative.",
+    "choices": [
+     "If you finish your homework, you will call me before dinner.",
+     "Your homework was finished, and call me before dinner.",
+     "If you finish your homework, call me before dinner.",
+     "You finish your homework, and you will call me before dinner."
+    ],
+    "id": "c4",
+    "after": 7,
+    "focus": "Spotting an inappropriate shift in voice or mood and fixing it"
+   }
+  ]
+ }
+}

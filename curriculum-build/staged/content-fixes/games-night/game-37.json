@@ -1,0 +1,2875 @@
+{
+ "row_id": 37,
+ "engine_id": "uno",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 53,
+ "generated_at": "2026-10-24T23:39:11.956Z",
+ "writer": "nvidia/nemotron-3-ultra-550b-a55b, minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 59,
+  "code_rejected": 2,
+  "sent_to_judges": 57,
+  "kept": 50,
+  "keep_rate_of_written": 0.847,
+  "judges": {
+   "both_answered": 57,
+   "picked_same_option": 56,
+   "a_picked_key": 57,
+   "b_picked_key": 56,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ],
+   "models_b": [
+    "minimax/minimax-m3.1-flash",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "uno",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 53,
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Using Voice and Mood for Effect",
+   "title": "Notice It: Voice and Mood at Work",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q11",
+    "prompt": "Which mood is employed in 'When will the meeting start?'",
+    "choices": [
+     "Imperative mood",
+     "Indicative mood",
+     "Interrogative mood",
+     "Subjunctive mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence is interrogative because it asks a question.",
+    "difficulty": 2,
+    "skill": "Identify interrogative mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q34",
+    "prompt": "In the model-text sentence \"At sunset, the lighthouse flashes once every ten seconds,\" which two-word group contains the finite present-tense verb used in the indicative mood?",
+    "choices": [
+     "the lighthouse",
+     "lighthouse flashes",
+     "once every",
+     "ten seconds"
+    ],
+    "answerIndex": 1,
+    "explanation": "Lighthouse flashes contains the finite present-tense verb flashes, which presents the observation as a statement of fact.",
+    "difficulty": 3,
+    "skill": "Locate an indicative verb in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q8",
+    "prompt": "The model text says, \"The murals were restored by students. Students carefully restored each mural.\" What does the shift from passive to active accomplish?",
+    "choices": [
+     "It removes the students' involvement from the sentence about the completed restoration.",
+     "It moves emphasis from the students who carried it out to the restoration and its outcome.",
+     "It keeps the restoration and its outcome equally prominent in both sentences.",
+     "It moves emphasis from the restoration and its outcome to the students who carried it out."
+    ],
+    "answerIndex": 3,
+    "explanation": "The shift moves emphasis away from the completed restoration and toward the students who performed it.",
+    "difficulty": 4,
+    "skill": "Analyzing a shift from passive to active voice for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q47",
+    "prompt": "In the model-text sentence \"The replacement signs were installed along the highway before dawn,\" what is the main effect of the passive voice?",
+    "choices": [
+     "It presents the installation as a condition that must be completed before dawn.",
+     "It makes the highway the clear agent of installing the replacement signs.",
+     "It emphasizes the installation of the new signs without identifying who installed them.",
+     "It frames the replacement signs as speakers requesting an early installation."
+    ],
+    "answerIndex": 2,
+    "explanation": "The passive voice foregrounds the installation of the replacement signs while leaving the people who installed them unmentioned.",
+    "difficulty": 2,
+    "skill": "Analyze passive voice for effect",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q37",
+    "prompt": "In the model-text sentence, \"If the river were rising, the hikers would turn back,\" which two-word group uses the subjunctive mood?",
+    "choices": [
+     "were rising",
+     "the river",
+     "would turn",
+     "hikers would"
+    ],
+    "answerIndex": 0,
+    "explanation": "\"Were rising\" uses subjunctive mood to present the rising river as an imagined condition.",
+    "difficulty": 3,
+    "skill": "Identifying subjunctive mood markers",
+    "topic": "Using Voice and Mood for Effect in a Model Text"
+   },
+   {
+    "id": "q1",
+    "prompt": "In the sentence \"The experiment was conducted by the research team,\" which grammatical voice is used?",
+    "choices": [
+     "Passive voice",
+     "Active voice",
+     "Conditional mood",
+     "Subjunctive mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The subject receives the action, so the sentence is in the passive voice.",
+    "difficulty": 2,
+    "skill": "Identify voice and mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q5",
+    "prompt": "In the model-text sentence \"The final result was announced after noon,\" which analysis is accurate?",
+    "choices": [
+     "It uses passive voice, keeping the announcer less prominent and foregrounding the result and its timing.",
+     "It uses active voice, keeping the announcer less prominent and foregrounding the result and its timing.",
+     "It uses passive voice, making the announcer the grammatical subject and foregrounding the announcer's identity.",
+     "It uses active voice, making the announcer the grammatical subject and foregrounding the announcer's identity."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses passive voice, so the result receives emphasis while the person who announced it remains unstated.",
+    "difficulty": 3,
+    "skill": "Analyzing passive voice and emphasis in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q15",
+    "prompt": "In the sentence \"The committee decides the policy,\" which voice is employed?",
+    "choices": [
+     "Subjunctive mood",
+     "Passive voice",
+     "Active voice",
+     "Imperative mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The subject \"The committee\" performs the action \"decides,\" so the sentence is in active voice.",
+    "difficulty": 2,
+    "skill": "Identify grammatical voice in a sentence",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q6",
+    "prompt": "In the model-text sentence \"The orchestra performs every Thursday,\" what does the use of indicative mood accomplish?",
+    "choices": [
+     "It frames the schedule as a hypothetical possibility.",
+     "It presents the orchestra's schedule as an established fact.",
+     "It turns the sentence into a direct request for weekly performances.",
+     "It expresses a strong emotional reaction to the weekly schedule."
+    ],
+    "answerIndex": 1,
+    "explanation": "Indicative mood presents the orchestra's Thursday performances as an established fact rather than a possibility, request, or emotional reaction.",
+    "difficulty": 3,
+    "skill": "Identifying the effect of indicative mood in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q7",
+    "prompt": "In the model-text sentence \"If the signal failed, the driver would pull into the station,\" how does the conditional construction affect the meaning?",
+    "choices": [
+     "It presents the signal failure and the driver's response as reported events that have already happened.",
+     "It presents the signal failure as a reported event and the driver's response as a hypothetical situation.",
+     "It presents the signal failure and the driver's response as a hypothetical situation rather than a reported event.",
+     "It presents the signal failure as a hypothetical situation and the driver's response as a reported event."
+    ],
+    "answerIndex": 2,
+    "explanation": "The conditional construction presents both the signal failure and the driver's response as a hypothetical situation rather than events that are stated as facts.",
+    "difficulty": 4,
+    "skill": "Interpreting conditional mood and hypothetical meaning in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q19",
+    "prompt": "In the model-text sentence \"The wind snapped the flagpole in half,\" what effect does the active voice create?",
+    "choices": [
+     "It emphasizes the flagpole's final condition while hiding the cause of the break.",
+     "It suggests the breaking happened only as an imagined possibility.",
+     "It makes the wind the clear agent and presents the breaking as a direct action.",
+     "It gives the listener a direct command to break the flagpole."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence names the wind as the active subject, so the agent and its forceful action are presented directly.",
+    "difficulty": 2,
+    "skill": "Identifying active voice and direct action",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q50",
+    "prompt": "A model-text sentence reads: The old theater was repainted by local artists last summer. Which revision preserves the meaning while changing the sentence to active voice?",
+    "choices": [
+     "The old theater was repainted by local artists last summer.",
+     "Local artists repainted the old theater last summer.",
+     "The old theater repainted by local artists last summer.",
+     "By local artists, the old theater was repainted last summer."
+    ],
+    "answerIndex": 1,
+    "explanation": "The revision makes local artists the subject and agents of repainting, so it uses active voice while preserving the original meaning.",
+    "difficulty": 3,
+    "skill": "Transforming passive voice into active voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which voice is used in \"The cake was eaten by the children\"?",
+    "choices": [
+     "Active voice",
+     "Conditional mood",
+     "Passive voice",
+     "Subjunctive mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The subject \"cake\" receives the action, indicating passive voice.",
+    "difficulty": 2,
+    "skill": "Identify voice and mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q44",
+    "prompt": "In the model-text sentence The camp director insists that every hiker check the trail map before dusk, what effect does the subjunctive mood create?",
+    "choices": [
+     "It asks why every hiker must check the trail map before dusk.",
+     "It states that every hiker has already checked the trail map.",
+     "It gives the reader a direct command to check the trail map before dusk.",
+     "It presents checking the map as a required action not established as completed."
+    ],
+    "answerIndex": 3,
+    "explanation": "The subjunctive presents checking the map as a required action without asserting that it has been completed.",
+    "difficulty": 3,
+    "skill": "Identify the effect of subjunctive mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q2",
+    "prompt": "In the sentence \"She wishes that he were here,\" what mood is the verb \"were\"?",
+    "choices": [
+     "Indicative mood",
+     "Subjunctive mood",
+     "Imperative mood",
+     "Conditional mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The past‑form \"were\" after a wish signals the subjunctive mood.",
+    "difficulty": 2,
+    "skill": "Identify voice and mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q28",
+    "prompt": "In the model-text clause \"the suggestion is that the bridge be repaired before winter,\" what effect does the subjunctive mood create?",
+    "choices": [
+     "It asks why the bridge will not be repaired before winter.",
+     "It reports that the bridge was repaired before the previous winter.",
+     "It gives a direct command for the bridge to be repaired immediately.",
+     "It presents the repair as a proposed action that has not yet been completed."
+    ],
+    "answerIndex": 3,
+    "explanation": "The subjunctive mood presents the repair as a proposed action rather than an already completed event.",
+    "difficulty": 4,
+    "skill": "Analyzing subjunctive mood for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q48",
+    "prompt": "In the model-text sentence \"The director recommends that each singer rehearse the final song,\" what effect does the subjunctive mood create?",
+    "choices": [
+     "It presents the rehearsal as a past event confirmed by the director.",
+     "It presents the rehearsal as an order that every singer must carry out immediately.",
+     "It presents the final song as the agent performing the rehearsal.",
+     "It presents the rehearsal as a recommendation rather than a completed fact."
+    ],
+    "answerIndex": 3,
+    "explanation": "The subjunctive verb form presents the rehearsal as a recommended action that has not been established as completed.",
+    "difficulty": 3,
+    "skill": "Analyze subjunctive mood for effect",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q41",
+    "prompt": "In the model-text sentence The baker shaped each loaf on the counter, which analysis is accurate?",
+    "choices": [
+     "It uses active voice, making the baker the clear agent of the shaping.",
+     "It uses passive voice, making the baker the clear agent of the shaping.",
+     "It uses indicative mood, making the shaping a direct command to the baker.",
+     "It uses subjunctive mood, making the shaping a required but unconfirmed action."
+    ],
+    "answerIndex": 0,
+    "explanation": "Active voice makes the baker the agent of the shaping and presents the action as direct.",
+    "difficulty": 2,
+    "skill": "Analyze the effect of active voice",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q10",
+    "prompt": "What mood does the verb 'boils' show in 'Water boils at one hundred degrees Celsius'?",
+    "choices": [
+     "Subjunctive mood",
+     "Indicative mood",
+     "Imperative mood",
+     "Interrogative mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The verb 'boils' is indicative, presenting a fact.",
+    "difficulty": 3,
+    "skill": "Identify indicative mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q31",
+    "prompt": "In the model-text sentence \"The judges declared the winner after reviewing the scores,\" which two-word group identifies the subject performing the action?",
+    "choices": [
+     "the winner",
+     "after reviewing",
+     "The judges",
+     "the scores"
+    ],
+    "answerIndex": 2,
+    "explanation": "The judges is the subject of declared and identifies who performs the action in the active voice.",
+    "difficulty": 2,
+    "skill": "Identify the agent in an active construction",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q26",
+    "prompt": "In the model-text sentence \"The streetlights flicker whenever the wind is strong,\" what effect does the indicative mood create?",
+    "choices": [
+     "It casts the flickering as an unreal possibility rather than an observed event.",
+     "It presents a recurring observation as a definite pattern of cause and effect.",
+     "It requests a detailed explanation of why the streetlights were installed.",
+     "It gives a command to check whether the wind is affecting the streetlights."
+    ],
+    "answerIndex": 1,
+    "explanation": "The indicative mood presents the recurring connection between strong wind and flickering lights as an observed fact.",
+    "difficulty": 3,
+    "skill": "Analyzing indicative mood for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q36",
+    "prompt": "In the model-text sentence, \"The storm tore down the old footbridge,\" which two-word group consists of the complete subject performing the action?",
+    "choices": [
+     "storm tore",
+     "tore down",
+     "down the",
+     "The storm"
+    ],
+    "answerIndex": 3,
+    "explanation": "\"The storm\" is the complete subject and names the agent that performs the action of tearing down the footbridge.",
+    "difficulty": 2,
+    "skill": "Identifying active voice agents",
+    "topic": "Using Voice and Mood for Effect in a Model Text"
+   },
+   {
+    "id": "q40",
+    "prompt": "In the model-text sentence, \"The greenhouse was damaged during the storm,\" who or what is not identified as the agent of the action?",
+    "choices": [
+     "the gardener who inspected the roof",
+     "the greenhouse that sustained the damage",
+     "the storm that reached the greenhouse",
+     "the force or person that damaged the greenhouse"
+    ],
+    "answerIndex": 3,
+    "explanation": "The passive construction leaves the force or person responsible for damaging the greenhouse unspecified.",
+    "difficulty": 4,
+    "skill": "Explaining passive voice information structure",
+    "topic": "Using Voice and Mood for Effect in a Model Text"
+   },
+   {
+    "id": "q45",
+    "prompt": "In the model-text sentence Why did the messenger return without the documents, what effect does the interrogative mood create?",
+    "choices": [
+     "It directs attention to the unexplained reason and invites an inquiry.",
+     "It presents the messenger’s return as a required but unfinished action.",
+     "It gives the reader a direct command to question the messenger.",
+     "It expresses admiration for the messenger’s careful return."
+    ],
+    "answerIndex": 0,
+    "explanation": "Interrogative mood directs attention to the unexplained reason and invites an inquiry.",
+    "difficulty": 3,
+    "skill": "Identify the effect of interrogative mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q30",
+    "prompt": "In the model-text sentence \"The instruments were tuned before the concert,\" which two-word group contains the passive voice construction?",
+    "choices": [
+     "the concert",
+     "were tuned",
+     "before the",
+     "the instruments"
+    ],
+    "answerIndex": 1,
+    "explanation": "Were tuned combines the auxiliary were with the past participle tuned, marking the sentence as passive voice.",
+    "difficulty": 2,
+    "skill": "Locate a passive voice construction in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q46",
+    "prompt": "In the model-text sentence Compare the two readings before recording the result, what does the imperative mood accomplish?",
+    "choices": [
+     "It asks the reader which reading produced the better result.",
+     "It directs the reader to compare the readings and then record the result.",
+     "It states that comparing the two readings is an established fact.",
+     "It presents recording the result as a hypothetical possibility."
+    ],
+    "answerIndex": 1,
+    "explanation": "Imperative mood directly instructs the reader to compare the readings and then record the result.",
+    "difficulty": 2,
+    "skill": "Identify the effect of imperative mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q9",
+    "prompt": "In the model-text sentence \"Why did the delegation leave so suddenly?\" which analysis best describes the mood and its effect?",
+    "choices": [
+     "It uses interrogative mood to request an explanation, while so suddenly also creates urgency and curiosity.",
+     "It uses declarative mood to request an explanation, while so suddenly also creates urgency and curiosity.",
+     "It uses interrogative mood to issue a command, while so suddenly also creates urgency and curiosity.",
+     "It uses exclamatory mood to express admiration, while so suddenly also creates urgency and curiosity."
+    ],
+    "answerIndex": 0,
+    "explanation": "The question mark and auxiliary did place the sentence in interrogative mood, while the phrase so suddenly heightens curiosity about the delegation's departure.",
+    "difficulty": 3,
+    "skill": "Identifying interrogative mood and its effect in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q39",
+    "prompt": "In the model-text sentence, \"Mist covered the hills before sunrise,\" how does the active voice shape the sentence's effect?",
+    "choices": [
+     "It makes sunrise the clear agent and presents covering as a direct event.",
+     "It leaves mist unmentioned and foregrounds the hills' location before sunrise.",
+     "It makes mist the clear agent and presents covering as a direct event.",
+     "It presents covering as uncertain and makes the event depend on an implied condition."
+    ],
+    "answerIndex": 2,
+    "explanation": "The active construction makes \"mist\" the clear agent and presents the covering of the hills as a direct event.",
+    "difficulty": 4,
+    "skill": "Explaining active voice effects",
+    "topic": "Using Voice and Mood for Effect in a Model Text"
+   },
+   {
+    "id": "q16",
+    "prompt": "What mood does the sentence \"Please submit your report by Friday\" employ?",
+    "choices": [
+     "Interrogative mood",
+     "Indicative mood",
+     "Subjunctive mood",
+     "Imperative mood"
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence gives a direct command, which is the function of the imperative mood.",
+    "difficulty": 2,
+    "skill": "Identify grammatical mood in a sentence",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q17",
+    "prompt": "In the sentence \"The results are announced tomorrow,\" which voice is used?",
+    "choices": [
+     "Passive voice",
+     "Active voice",
+     "Subjunctive mood",
+     "Imperative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The subject \"The results\" receives the action \"are announced,\" indicating passive voice.",
+    "difficulty": 3,
+    "skill": "Identify grammatical voice in a sentence",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q49",
+    "prompt": "In the model-text sentence \"Before the storm, the crew secured the shutters with metal braces,\" how does the active voice shape the sentence's effect?",
+    "choices": [
+     "It identifies the crew as the agent and presents securing the shutters as a direct action.",
+     "It emphasizes the shutters as the affected objects and leaves the crew unmentioned.",
+     "It presents the securing as a hypothetical action that depends on another event.",
+     "It changes the sentence into a command addressed to the crew."
+    ],
+    "answerIndex": 0,
+    "explanation": "The active voice makes the crew the clear agent and presents the securing of the shutters as a direct action.",
+    "difficulty": 2,
+    "skill": "Analyze active voice for effect",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q13",
+    "prompt": "In the sentence \"The novel was written by a debut author,\" which grammatical voice is used?",
+    "choices": [
+     "Passive voice",
+     "Active voice",
+     "Subjunctive mood",
+     "Imperative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses passive voice because the subject receives the action and the agent follows \"by.\"",
+    "difficulty": 3,
+    "skill": "Identify grammatical voice in a sentence",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q12",
+    "prompt": "What effect does the imperative mood create in 'Turn off the lights when you leave'?",
+    "choices": [
+     "It presents a hypothetical situation",
+     "It states a fact",
+     "It expresses a wish",
+     "It gives a direct command"
+    ],
+    "answerIndex": 3,
+    "explanation": "The imperative mood issues a direct command.",
+    "difficulty": 2,
+    "skill": "Analyze imperative mood effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q18",
+    "prompt": "In the model-text sentence \"After the storm, several roofs were covered with tarps,\" what is the main effect of the passive construction?",
+    "choices": [
+     "It emphasizes the workers' effort and makes the roofs' condition seem unimportant.",
+     "It emphasizes the roofs' resulting condition and leaves the workers unnamed.",
+     "It establishes that the storm covered the roofs with tarps.",
+     "It expresses a requirement for the workers to cover the roofs with tarps."
+    ],
+    "answerIndex": 1,
+    "explanation": "The passive construction places the roofs in the main focus, presents their covered condition as a result, and omits the workers as the agent.",
+    "difficulty": 3,
+    "skill": "Interpreting passive voice for emphasis",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q20",
+    "prompt": "In the model-text sentence \"The rules require that every player check in before noon,\" what does the subjunctive mood accomplish?",
+    "choices": [
+     "It presents check-in as an optional suggestion rather than a requirement.",
+     "It reports that every player has already completed the check-in.",
+     "It asks each player to choose whether to check in before noon.",
+     "It presents check-in as a required condition of taking part in the tournament."
+    ],
+    "answerIndex": 3,
+    "explanation": "Because require takes a that-clause with the base verb check, the clause is subjunctive and makes check-in a condition of participation.",
+    "difficulty": 4,
+    "skill": "Recognizing subjunctive mood in a requirement",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q32",
+    "prompt": "In the model-text sentence \"Lock the supplies in the cabinet before leaving,\" which two-word group contains the imperative verb?",
+    "choices": [
+     "the supplies",
+     "in the",
+     "before leaving",
+     "Lock the"
+    ],
+    "answerIndex": 3,
+    "explanation": "Lock the contains the base-form verb Lock used to issue a command in the imperative mood.",
+    "difficulty": 2,
+    "skill": "Locate an imperative verb in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q29",
+    "prompt": "In the model-text sentence \"How did the tiny seeds cross the wide valley?\" what effect does the interrogative mood create?",
+    "choices": [
+     "It directs attention to an unexplained process and invites an investigation into how it happened.",
+     "It states with certainty that the seeds crossed the valley by wind.",
+     "It commands the reader to gather every tiny seed in the wide valley.",
+     "It expresses admiration for the small size of the seeds and the valley."
+    ],
+    "answerIndex": 0,
+    "explanation": "The interrogative mood focuses attention on the unexplained journey of the seeds and invites an answer.",
+    "difficulty": 3,
+    "skill": "Analyzing interrogative mood for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q38",
+    "prompt": "In the model-text sentence, \"Carry the lantern to the north entrance before sunset,\" which three-word group begins with the imperative verb?",
+    "choices": [
+     "to the north",
+     "Carry the lantern",
+     "the lantern to",
+     "north entrance before"
+    ],
+    "answerIndex": 1,
+    "explanation": "\"Carry the lantern\" begins with the imperative verb \"carry,\" which directly instructs the reader to perform an action.",
+    "difficulty": 2,
+    "skill": "Identifying imperative verb groups",
+    "topic": "Using Voice and Mood for Effect in a Model Text"
+   },
+   {
+    "id": "q21",
+    "prompt": "In the model-text sentence \"What a brilliant performance the team gave in the final!\" what effect does the exclamative mood create?",
+    "choices": [
+     "It expresses admiration and gives the team's performance extra emphasis.",
+     "It asks the listener to identify which team played in the final.",
+     "It gives a direct instruction to the team about its next performance.",
+     "It presents the team's ranking as an ordinary factual statement."
+    ],
+    "answerIndex": 0,
+    "explanation": "The exclamative construction uses What a to convey strong admiration and emphasize the quality of the performance.",
+    "difficulty": 3,
+    "skill": "Recognizing exclamative mood for effect",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q35",
+    "prompt": "In the model-text sentence, \"A temporary shelter was built beside the trail,\" which two-word group contains the auxiliary and past participle forming the passive voice?",
+    "choices": [
+     "was beside",
+     "built beside",
+     "was built",
+     "beside the"
+    ],
+    "answerIndex": 2,
+    "explanation": "The group \"was built\" contains the auxiliary \"was\" and past participle \"built\" that form the passive construction.",
+    "difficulty": 2,
+    "skill": "Identifying passive voice constructions",
+    "topic": "Using Voice and Mood for Effect in a Model Text"
+   },
+   {
+    "id": "q22",
+    "prompt": "In the model-text sentence \"The plans were approved by the council, but the mayor objected to them,\" how do the two voice choices shape the emphasis?",
+    "choices": [
+     "The passive clause stresses the mayor's opposition, while the active clause stresses the council's approval.",
+     "The passive clause stresses the approval of the plans, while the active clause stresses the mayor's opposition.",
+     "Both clauses use passive voice to keep the decision-makers from view.",
+     "Both clauses emphasize the people making the decisions rather than the plans they consider."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first clause makes the plans the grammatical focus, whereas the second makes the mayor the active subject and presents the objection directly.",
+    "difficulty": 4,
+    "skill": "Comparing voice choices within a sentence",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q25",
+    "prompt": "In the model-text sentence \"The mural was painted by twelve students,\" what is the main effect of the passive voice?",
+    "choices": [
+     "It foregrounds the completed mural and leaves the students as background agents.",
+     "It makes each student the clear agent and foregrounds the act of painting.",
+     "It presents the painting as a possibility that may never be completed.",
+     "It gives the students a direct instruction to finish the mural."
+    ],
+    "answerIndex": 0,
+    "explanation": "Passive voice foregrounds the finished mural while relegating the students to background agents.",
+    "difficulty": 3,
+    "skill": "Analyzing passive voice for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q42",
+    "prompt": "In the model-text sentence A narrow path was cleared through the woods, what is the main effect of the passive construction?",
+    "choices": [
+     "It identifies the woods as the agent that cleared the narrow path.",
+     "It foregrounds the cleared path while leaving the person who cleared it unidentified.",
+     "It presents the path clearing as a requirement that has not yet happened.",
+     "It gives a direct instruction to clear a narrow path through the woods."
+    ],
+    "answerIndex": 1,
+    "explanation": "The passive construction foregrounds the cleared path while leaving the person who cleared it unidentified.",
+    "difficulty": 2,
+    "skill": "Analyze the effect of passive voice",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q33",
+    "prompt": "In the model-text sentence \"Which route did the surveyors take?\" which two-word group identifies the interrogative mood through its question word?",
+    "choices": [
+     "Which route",
+     "route did",
+     "the surveyors",
+     "surveyors take"
+    ],
+    "answerIndex": 0,
+    "explanation": "Which route contains the interrogative determiner Which, which signals that the sentence asks for information.",
+    "difficulty": 3,
+    "skill": "Locate a question word in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q27",
+    "prompt": "In the model-text sentence \"Please place the lantern beside the doorway,\" what effect does the imperative mood create?",
+    "choices": [
+     "It asks the reader to identify the best location for the lantern.",
+     "It reports that a reader has already placed the lantern beside the doorway.",
+     "It gives a courteous instruction that directs the reader to perform an action.",
+     "It imagines a condition under which the lantern remains beside the doorway."
+    ],
+    "answerIndex": 2,
+    "explanation": "The imperative mood turns the sentence into a courteous instruction directing the reader to place the lantern.",
+    "difficulty": 2,
+    "skill": "Analyzing imperative mood for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which mood appears in the clause \"If I were you\" from the sentence \"If I were you, I would study harder\"?",
+    "choices": [
+     "Indicative mood",
+     "Subjunctive mood",
+     "Conditional mood",
+     "Imperative mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The clause \"If I were you\" uses the subjunctive mood to express a hypothetical condition.",
+    "difficulty": 3,
+    "skill": "Identify grammatical mood in a clause",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q24",
+    "prompt": "In the model-text sentence \"The mechanic tightened the loose bolt,\" what is the main effect of the active voice?",
+    "choices": [
+     "It turns the tightening into a direct request for the bolt to change.",
+     "It emphasizes the loose bolt as the main subject and reduces the mechanic's role.",
+     "It suggests that the tightening happened only under a possible condition.",
+     "It identifies the mechanic as the agent and makes the tightening feel direct."
+    ],
+    "answerIndex": 3,
+    "explanation": "Active voice identifies the mechanic as the agent and presents the tightening as a direct, completed action.",
+    "difficulty": 2,
+    "skill": "Analyzing active voice for effect",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q23",
+    "prompt": "If the model-text sentence \"The archivists catalogued the letters after noon\" is changed to \"The letters were catalogued by the archivists after noon,\" what changes most clearly?",
+    "choices": [
+     "The revised version foregrounds the archivists' precise work while making the letters less important.",
+     "The revised version changes the stated time of the cataloguing from after noon to before noon.",
+     "The revised version foregrounds the letters and their cataloguing while making the archivists less prominent.",
+     "The revised version changes the cataloguing from a completed action to an imagined possibility."
+    ],
+    "answerIndex": 2,
+    "explanation": "In the revision, the letters become the subject of a passive construction, bringing them and the cataloguing into the foreground while retaining the archivists in a by-phrase.",
+    "difficulty": 4,
+    "skill": "Recognizing a voice shift and changed emphasis",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q43",
+    "prompt": "In the model-text sentence By noon, the clouds had gathered above the valley, how does indicative mood affect its presentation?",
+    "choices": [
+     "It gives the reader a direct instruction to watch the clouds.",
+     "It presents the cloud formation as an unverified possibility.",
+     "It presents the cloud formation as an established fact.",
+     "It asks the reader to explain why the clouds formed."
+    ],
+    "answerIndex": 2,
+    "explanation": "Indicative mood presents the cloud formation as an established fact.",
+    "difficulty": 3,
+    "skill": "Identify the effect of indicative mood",
+    "topic": "Notice It in a Model Text - Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q4",
+    "prompt": "In the model-text sentence \"The rescue team carried the hikers to safety,\" which analysis is accurate?",
+    "choices": [
+     "It uses passive voice and presents the hikers as the agent of the carrying.",
+     "It uses passive voice and presents the rescue team as the agent of the carrying.",
+     "It uses active voice and presents the hikers as the agent of the carrying.",
+     "It uses active voice and presents the rescue team as the agent of the carrying."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence uses active voice because the rescue team, the grammatical subject, performs the action of carrying the hikers to safety.",
+    "difficulty": 2,
+    "skill": "Identifying active voice and its effect in a model text",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  ],
+  "feedback": {
+   "correct": "Sharp catch! Voice and mood are always choices an author makes.",
+   "incorrect": "Not quite. Reread the sentence and ask who is doing what, and whether it is a wish, a condition, or a demand.",
+   "win": "You cleared the whole run like a grammar pro!",
+   "lose": "The deck ran you over this time. Try spotting active verbs and wish-words first next round.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "In the sentence \"The experiment was conducted by the research team,\" which grammatical voice is used?",
+   "choices": [
+    "Active voice",
+    "Passive voice",
+    "Conditional mood",
+    "Subjunctive mood"
+   ],
+   "answerIndex": 1,
+   "explanation": "The subject receives the action, so the sentence is in the passive voice.",
+   "difficulty": 2,
+   "skill": "Identify voice and mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"She wishes that he were here,\" what mood is the verb \"were\"?",
+   "choices": [
+    "Indicative mood",
+    "Imperative mood",
+    "Subjunctive mood",
+    "Conditional mood"
+   ],
+   "answerIndex": 2,
+   "explanation": "The past‑form \"were\" after a wish signals the subjunctive mood.",
+   "difficulty": 2,
+   "skill": "Identify voice and mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": [
+     {
+      "claim": "The subjunctive \"were\" expresses a hypothetical or wished condition.",
+      "url": "https://en.wikipedia.org/wiki/English_conditional_sentences",
+      "quote": "In the second conditional (where the condition clause expresses an unlikely or counterfactual present/future condition; this may also occur in the mixed conditional ), inversion is possible in the case where the verb is were – the past subjunctive :",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which voice is used in \"The cake was eaten by the children\"?",
+   "choices": [
+    "Active voice",
+    "Passive voice",
+    "Conditional mood",
+    "Subjunctive mood"
+   ],
+   "answerIndex": 1,
+   "explanation": "The subject \"cake\" receives the action, indicating passive voice.",
+   "difficulty": 2,
+   "skill": "Identify voice and mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": [
+     {
+      "claim": "Passive voice uses a form of \"to be\" plus a past participle.",
+      "url": "https://en.wikipedia.org/wiki/Passive_Voice",
+      "quote": "English, like some other languages, uses a periphrastic passive. Rather than conjugating directly for voice, English uses the past participle form of the verb plus an auxiliary verb, either be or get (called linking verbs in traditional grammar ), to indicate passive voice.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The rescue team carried the hikers to safety,\" which analysis is accurate?",
+   "choices": [
+    "It uses active voice and presents the rescue team as the agent of the carrying.",
+    "It uses passive voice and presents the rescue team as the agent of the carrying.",
+    "It uses active voice and presents the hikers as the agent of the carrying.",
+    "It uses passive voice and presents the hikers as the agent of the carrying."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses active voice because the rescue team, the grammatical subject, performs the action of carrying the hikers to safety.",
+   "difficulty": 2,
+   "skill": "Identifying active voice and its effect in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The final result was announced after noon,\" which analysis is accurate?",
+   "choices": [
+    "It uses passive voice, keeping the announcer less prominent and foregrounding the result and its timing.",
+    "It uses active voice, keeping the announcer less prominent and foregrounding the result and its timing.",
+    "It uses passive voice, making the announcer the grammatical subject and foregrounding the announcer's identity.",
+    "It uses active voice, making the announcer the grammatical subject and foregrounding the announcer's identity."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses passive voice, so the result receives emphasis while the person who announced it remains unstated.",
+   "difficulty": 3,
+   "skill": "Analyzing passive voice and emphasis in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The orchestra performs every Thursday,\" what does the use of indicative mood accomplish?",
+   "choices": [
+    "It presents the orchestra's schedule as an established fact.",
+    "It frames the schedule as a hypothetical possibility.",
+    "It turns the sentence into a direct request for weekly performances.",
+    "It expresses a strong emotional reaction to the weekly schedule."
+   ],
+   "answerIndex": 0,
+   "explanation": "Indicative mood presents the orchestra's Thursday performances as an established fact rather than a possibility, request, or emotional reaction.",
+   "difficulty": 3,
+   "skill": "Identifying the effect of indicative mood in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"If the signal failed, the driver would pull into the station,\" how does the conditional construction affect the meaning?",
+   "choices": [
+    "It presents the signal failure and the driver's response as a hypothetical situation rather than a reported event.",
+    "It presents the signal failure as a reported event and the driver's response as a hypothetical situation.",
+    "It presents the signal failure and the driver's response as reported events that have already happened.",
+    "It presents the signal failure as a hypothetical situation and the driver's response as a reported event."
+   ],
+   "answerIndex": 0,
+   "explanation": "The conditional construction presents both the signal failure and the driver's response as a hypothetical situation rather than events that are stated as facts.",
+   "difficulty": 4,
+   "skill": "Interpreting conditional mood and hypothetical meaning in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The model text says, \"The murals were restored by students. Students carefully restored each mural.\" What does the shift from passive to active accomplish?",
+   "choices": [
+    "It moves emphasis from the restoration and its outcome to the students who carried it out.",
+    "It moves emphasis from the students who carried it out to the restoration and its outcome.",
+    "It keeps the restoration and its outcome equally prominent in both sentences.",
+    "It removes the students' involvement from the sentence about the completed restoration."
+   ],
+   "answerIndex": 0,
+   "explanation": "The shift moves emphasis away from the completed restoration and toward the students who performed it.",
+   "difficulty": 4,
+   "skill": "Analyzing a shift from passive to active voice for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"Why did the delegation leave so suddenly?\" which analysis best describes the mood and its effect?",
+   "choices": [
+    "It uses interrogative mood to request an explanation, while so suddenly also creates urgency and curiosity.",
+    "It uses declarative mood to request an explanation, while so suddenly also creates urgency and curiosity.",
+    "It uses interrogative mood to issue a command, while so suddenly also creates urgency and curiosity.",
+    "It uses exclamatory mood to express admiration, while so suddenly also creates urgency and curiosity."
+   ],
+   "answerIndex": 0,
+   "explanation": "The question mark and auxiliary did place the sentence in interrogative mood, while the phrase so suddenly heightens curiosity about the delegation's departure.",
+   "difficulty": 3,
+   "skill": "Identifying interrogative mood and its effect in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What mood does the verb 'boils' show in 'Water boils at one hundred degrees Celsius'?",
+   "choices": [
+    "Indicative mood",
+    "Subjunctive mood",
+    "Imperative mood",
+    "Interrogative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The verb 'boils' is indicative, presenting a fact.",
+   "difficulty": 3,
+   "skill": "Identify indicative mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which mood is employed in 'When will the meeting start?'",
+   "choices": [
+    "Interrogative mood",
+    "Indicative mood",
+    "Imperative mood",
+    "Subjunctive mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence is interrogative because it asks a question.",
+   "difficulty": 2,
+   "skill": "Identify interrogative mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What effect does the imperative mood create in 'Turn off the lights when you leave'?",
+   "choices": [
+    "It gives a direct command",
+    "It states a fact",
+    "It expresses a wish",
+    "It presents a hypothetical situation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood issues a direct command.",
+   "difficulty": 2,
+   "skill": "Analyze imperative mood effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The novel was written by a debut author,\" which grammatical voice is used?",
+   "choices": [
+    "Passive voice",
+    "Active voice",
+    "Subjunctive mood",
+    "Imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses passive voice because the subject receives the action and the agent follows \"by.\"",
+   "difficulty": 3,
+   "skill": "Identify grammatical voice in a sentence",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which mood appears in the clause \"If I were you\" from the sentence \"If I were you, I would study harder\"?",
+   "choices": [
+    "Subjunctive mood",
+    "Indicative mood",
+    "Conditional mood",
+    "Imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause \"If I were you\" uses the subjunctive mood to express a hypothetical condition.",
+   "difficulty": 3,
+   "skill": "Identify grammatical mood in a clause",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": [
+     {
+      "claim": "Subjunctive mood is used for hypothetical or contrary-to-fact statements.",
+      "url": "https://en.wikipedia.org/wiki/Subjunctive_mood",
+      "quote": "The subjunctive was the Indo-European irrealis , used for hypothetical or counterfactual situations.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "In the sentence \"The committee decides the policy,\" which voice is employed?",
+   "choices": [
+    "Active voice",
+    "Passive voice",
+    "Subjunctive mood",
+    "Imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The subject \"The committee\" performs the action \"decides,\" so the sentence is in active voice.",
+   "difficulty": 2,
+   "skill": "Identify grammatical voice in a sentence",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What mood does the sentence \"Please submit your report by Friday\" employ?",
+   "choices": [
+    "Imperative mood",
+    "Indicative mood",
+    "Subjunctive mood",
+    "Interrogative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence gives a direct command, which is the function of the imperative mood.",
+   "difficulty": 2,
+   "skill": "Identify grammatical mood in a sentence",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The results are announced tomorrow,\" which voice is used?",
+   "choices": [
+    "Passive voice",
+    "Active voice",
+    "Subjunctive mood",
+    "Imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The subject \"The results\" receives the action \"are announced,\" indicating passive voice.",
+   "difficulty": 3,
+   "skill": "Identify grammatical voice in a sentence",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"After the storm, several roofs were covered with tarps,\" what is the main effect of the passive construction?",
+   "choices": [
+    "It emphasizes the workers' effort and makes the roofs' condition seem unimportant.",
+    "It emphasizes the roofs' resulting condition and leaves the workers unnamed.",
+    "It establishes that the storm covered the roofs with tarps.",
+    "It expresses a requirement for the workers to cover the roofs with tarps."
+   ],
+   "answerIndex": 1,
+   "explanation": "The passive construction places the roofs in the main focus, presents their covered condition as a result, and omits the workers as the agent.",
+   "difficulty": 3,
+   "skill": "Interpreting passive voice for emphasis",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The wind snapped the flagpole in half,\" what effect does the active voice create?",
+   "choices": [
+    "It emphasizes the flagpole's final condition while hiding the cause of the break.",
+    "It suggests the breaking happened only as an imagined possibility.",
+    "It makes the wind the clear agent and presents the breaking as a direct action.",
+    "It gives the listener a direct command to break the flagpole."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence names the wind as the active subject, so the agent and its forceful action are presented directly.",
+   "difficulty": 2,
+   "skill": "Identifying active voice and direct action",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The rules require that every player check in before noon,\" what does the subjunctive mood accomplish?",
+   "choices": [
+    "It presents check-in as an optional suggestion rather than a requirement.",
+    "It reports that every player has already completed the check-in.",
+    "It asks each player to choose whether to check in before noon.",
+    "It presents check-in as a required condition of taking part in the tournament."
+   ],
+   "answerIndex": 3,
+   "explanation": "Because require takes a that-clause with the base verb check, the clause is subjunctive and makes check-in a condition of participation.",
+   "difficulty": 4,
+   "skill": "Recognizing subjunctive mood in a requirement",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"What a brilliant performance the team gave in the final!\" what effect does the exclamative mood create?",
+   "choices": [
+    "It expresses admiration and gives the team's performance extra emphasis.",
+    "It asks the listener to identify which team played in the final.",
+    "It gives a direct instruction to the team about its next performance.",
+    "It presents the team's ranking as an ordinary factual statement."
+   ],
+   "answerIndex": 0,
+   "explanation": "The exclamative construction uses What a to convey strong admiration and emphasize the quality of the performance.",
+   "difficulty": 3,
+   "skill": "Recognizing exclamative mood for effect",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The plans were approved by the council, but the mayor objected to them,\" how do the two voice choices shape the emphasis?",
+   "choices": [
+    "The passive clause stresses the mayor's opposition, while the active clause stresses the council's approval.",
+    "Both clauses emphasize the people making the decisions rather than the plans they consider.",
+    "Both clauses use passive voice to keep the decision-makers from view.",
+    "The passive clause stresses the approval of the plans, while the active clause stresses the mayor's opposition."
+   ],
+   "answerIndex": 3,
+   "explanation": "The first clause makes the plans the grammatical focus, whereas the second makes the mayor the active subject and presents the objection directly.",
+   "difficulty": 4,
+   "skill": "Comparing voice choices within a sentence",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If the model-text sentence \"The archivists catalogued the letters after noon\" is changed to \"The letters were catalogued by the archivists after noon,\" what changes most clearly?",
+   "choices": [
+    "The revised version foregrounds the archivists' precise work while making the letters less important.",
+    "The revised version changes the stated time of the cataloguing from after noon to before noon.",
+    "The revised version foregrounds the letters and their cataloguing while making the archivists less prominent.",
+    "The revised version changes the cataloguing from a completed action to an imagined possibility."
+   ],
+   "answerIndex": 2,
+   "explanation": "In the revision, the letters become the subject of a passive construction, bringing them and the cataloguing into the foreground while retaining the archivists in a by-phrase.",
+   "difficulty": 4,
+   "skill": "Recognizing a voice shift and changed emphasis",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The mechanic tightened the loose bolt,\" what is the main effect of the active voice?",
+   "choices": [
+    "It identifies the mechanic as the agent and makes the tightening feel direct.",
+    "It emphasizes the loose bolt as the main subject and reduces the mechanic's role.",
+    "It suggests that the tightening happened only under a possible condition.",
+    "It turns the tightening into a direct request for the bolt to change."
+   ],
+   "answerIndex": 0,
+   "explanation": "Active voice identifies the mechanic as the agent and presents the tightening as a direct, completed action.",
+   "difficulty": 2,
+   "skill": "Analyzing active voice for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The mural was painted by twelve students,\" what is the main effect of the passive voice?",
+   "choices": [
+    "It foregrounds the completed mural and leaves the students as background agents.",
+    "It makes each student the clear agent and foregrounds the act of painting.",
+    "It presents the painting as a possibility that may never be completed.",
+    "It gives the students a direct instruction to finish the mural."
+   ],
+   "answerIndex": 0,
+   "explanation": "Passive voice foregrounds the finished mural while relegating the students to background agents.",
+   "difficulty": 3,
+   "skill": "Analyzing passive voice for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The streetlights flicker whenever the wind is strong,\" what effect does the indicative mood create?",
+   "choices": [
+    "It presents a recurring observation as a definite pattern of cause and effect.",
+    "It casts the flickering as an unreal possibility rather than an observed event.",
+    "It requests a detailed explanation of why the streetlights were installed.",
+    "It gives a command to check whether the wind is affecting the streetlights."
+   ],
+   "answerIndex": 0,
+   "explanation": "The indicative mood presents the recurring connection between strong wind and flickering lights as an observed fact.",
+   "difficulty": 3,
+   "skill": "Analyzing indicative mood for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"Please place the lantern beside the doorway,\" what effect does the imperative mood create?",
+   "choices": [
+    "It gives a courteous instruction that directs the reader to perform an action.",
+    "It reports that a reader has already placed the lantern beside the doorway.",
+    "It asks the reader to identify the best location for the lantern.",
+    "It imagines a condition under which the lantern remains beside the doorway."
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood turns the sentence into a courteous instruction directing the reader to place the lantern.",
+   "difficulty": 2,
+   "skill": "Analyzing imperative mood for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text clause \"the suggestion is that the bridge be repaired before winter,\" what effect does the subjunctive mood create?",
+   "choices": [
+    "It presents the repair as a proposed action that has not yet been completed.",
+    "It reports that the bridge was repaired before the previous winter.",
+    "It gives a direct command for the bridge to be repaired immediately.",
+    "It asks why the bridge will not be repaired before winter."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive mood presents the repair as a proposed action rather than an already completed event.",
+   "difficulty": 4,
+   "skill": "Analyzing subjunctive mood for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"How did the tiny seeds cross the wide valley?\" what effect does the interrogative mood create?",
+   "choices": [
+    "It directs attention to an unexplained process and invites an investigation into how it happened.",
+    "It states with certainty that the seeds crossed the valley by wind.",
+    "It commands the reader to gather every tiny seed in the wide valley.",
+    "It expresses admiration for the small size of the seeds and the valley."
+   ],
+   "answerIndex": 0,
+   "explanation": "The interrogative mood focuses attention on the unexplained journey of the seeds and invites an answer.",
+   "difficulty": 3,
+   "skill": "Analyzing interrogative mood for effect",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The instruments were tuned before the concert,\" which two-word group contains the passive voice construction?",
+   "choices": [
+    "the concert",
+    "before the",
+    "were tuned",
+    "the instruments"
+   ],
+   "answerIndex": 2,
+   "explanation": "Were tuned combines the auxiliary were with the past participle tuned, marking the sentence as passive voice.",
+   "difficulty": 2,
+   "skill": "Locate a passive voice construction in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The judges declared the winner after reviewing the scores,\" which two-word group identifies the subject performing the action?",
+   "choices": [
+    "the winner",
+    "The judges",
+    "after reviewing",
+    "the scores"
+   ],
+   "answerIndex": 1,
+   "explanation": "The judges is the subject of declared and identifies who performs the action in the active voice.",
+   "difficulty": 2,
+   "skill": "Identify the agent in an active construction",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"Lock the supplies in the cabinet before leaving,\" which two-word group contains the imperative verb?",
+   "choices": [
+    "the supplies",
+    "in the",
+    "before leaving",
+    "Lock the"
+   ],
+   "answerIndex": 3,
+   "explanation": "Lock the contains the base-form verb Lock used to issue a command in the imperative mood.",
+   "difficulty": 2,
+   "skill": "Locate an imperative verb in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"Which route did the surveyors take?\" which two-word group identifies the interrogative mood through its question word?",
+   "choices": [
+    "route did",
+    "Which route",
+    "the surveyors",
+    "surveyors take"
+   ],
+   "answerIndex": 1,
+   "explanation": "Which route contains the interrogative determiner Which, which signals that the sentence asks for information.",
+   "difficulty": 3,
+   "skill": "Locate a question word in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"At sunset, the lighthouse flashes once every ten seconds,\" which two-word group contains the finite present-tense verb used in the indicative mood?",
+   "choices": [
+    "the lighthouse",
+    "once every",
+    "lighthouse flashes",
+    "ten seconds"
+   ],
+   "answerIndex": 2,
+   "explanation": "Lighthouse flashes contains the finite present-tense verb flashes, which presents the observation as a statement of fact.",
+   "difficulty": 3,
+   "skill": "Locate an indicative verb in a model text",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence, \"A temporary shelter was built beside the trail,\" which two-word group contains the auxiliary and past participle forming the passive voice?",
+   "choices": [
+    "was beside",
+    "built beside",
+    "was built",
+    "beside the"
+   ],
+   "answerIndex": 2,
+   "explanation": "The group \"was built\" contains the auxiliary \"was\" and past participle \"built\" that form the passive construction.",
+   "difficulty": 2,
+   "skill": "Identifying passive voice constructions",
+   "topic": "Using Voice and Mood for Effect in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence, \"The storm tore down the old footbridge,\" which two-word group consists of the complete subject performing the action?",
+   "choices": [
+    "storm tore",
+    "tore down",
+    "The storm",
+    "down the"
+   ],
+   "answerIndex": 2,
+   "explanation": "\"The storm\" is the complete subject and names the agent that performs the action of tearing down the footbridge.",
+   "difficulty": 2,
+   "skill": "Identifying active voice agents",
+   "topic": "Using Voice and Mood for Effect in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence, \"If the river were rising, the hikers would turn back,\" which two-word group uses the subjunctive mood?",
+   "choices": [
+    "would turn",
+    "the river",
+    "were rising",
+    "hikers would"
+   ],
+   "answerIndex": 2,
+   "explanation": "\"Were rising\" uses subjunctive mood to present the rising river as an imagined condition.",
+   "difficulty": 3,
+   "skill": "Identifying subjunctive mood markers",
+   "topic": "Using Voice and Mood for Effect in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence, \"Carry the lantern to the north entrance before sunset,\" which three-word group begins with the imperative verb?",
+   "choices": [
+    "to the north",
+    "Carry the lantern",
+    "the lantern to",
+    "north entrance before"
+   ],
+   "answerIndex": 1,
+   "explanation": "\"Carry the lantern\" begins with the imperative verb \"carry,\" which directly instructs the reader to perform an action.",
+   "difficulty": 2,
+   "skill": "Identifying imperative verb groups",
+   "topic": "Using Voice and Mood for Effect in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence, \"Mist covered the hills before sunrise,\" how does the active voice shape the sentence's effect?",
+   "choices": [
+    "It makes sunrise the clear agent and presents covering as a direct event.",
+    "It leaves mist unmentioned and foregrounds the hills' location before sunrise.",
+    "It presents covering as uncertain and makes the event depend on an implied condition.",
+    "It makes mist the clear agent and presents covering as a direct event."
+   ],
+   "answerIndex": 3,
+   "explanation": "The active construction makes \"mist\" the clear agent and presents the covering of the hills as a direct event.",
+   "difficulty": 4,
+   "skill": "Explaining active voice effects",
+   "topic": "Using Voice and Mood for Effect in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence, \"The greenhouse was damaged during the storm,\" who or what is not identified as the agent of the action?",
+   "choices": [
+    "the force or person that damaged the greenhouse",
+    "the greenhouse that sustained the damage",
+    "the storm that reached the greenhouse",
+    "the gardener who inspected the roof"
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive construction leaves the force or person responsible for damaging the greenhouse unspecified.",
+   "difficulty": 4,
+   "skill": "Explaining passive voice information structure",
+   "topic": "Using Voice and Mood for Effect in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence The baker shaped each loaf on the counter, which analysis is accurate?",
+   "choices": [
+    "It uses active voice, making the baker the clear agent of the shaping.",
+    "It uses passive voice, making the baker the clear agent of the shaping.",
+    "It uses indicative mood, making the shaping a direct command to the baker.",
+    "It uses subjunctive mood, making the shaping a required but unconfirmed action."
+   ],
+   "answerIndex": 0,
+   "explanation": "Active voice makes the baker the agent of the shaping and presents the action as direct.",
+   "difficulty": 2,
+   "skill": "Analyze the effect of active voice",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence A narrow path was cleared through the woods, what is the main effect of the passive construction?",
+   "choices": [
+    "It foregrounds the cleared path while leaving the person who cleared it unidentified.",
+    "It identifies the woods as the agent that cleared the narrow path.",
+    "It presents the path clearing as a requirement that has not yet happened.",
+    "It gives a direct instruction to clear a narrow path through the woods."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive construction foregrounds the cleared path while leaving the person who cleared it unidentified.",
+   "difficulty": 2,
+   "skill": "Analyze the effect of passive voice",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence By noon, the clouds had gathered above the valley, how does indicative mood affect its presentation?",
+   "choices": [
+    "It presents the cloud formation as an established fact.",
+    "It presents the cloud formation as an unverified possibility.",
+    "It gives the reader a direct instruction to watch the clouds.",
+    "It asks the reader to explain why the clouds formed."
+   ],
+   "answerIndex": 0,
+   "explanation": "Indicative mood presents the cloud formation as an established fact.",
+   "difficulty": 3,
+   "skill": "Identify the effect of indicative mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence The camp director insists that every hiker check the trail map before dusk, what effect does the subjunctive mood create?",
+   "choices": [
+    "It presents checking the map as a required action not established as completed.",
+    "It states that every hiker has already checked the trail map.",
+    "It gives the reader a direct command to check the trail map before dusk.",
+    "It asks why every hiker must check the trail map before dusk."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive presents checking the map as a required action without asserting that it has been completed.",
+   "difficulty": 3,
+   "skill": "Identify the effect of subjunctive mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence Why did the messenger return without the documents, what effect does the interrogative mood create?",
+   "choices": [
+    "It directs attention to the unexplained reason and invites an inquiry.",
+    "It presents the messenger’s return as a required but unfinished action.",
+    "It gives the reader a direct command to question the messenger.",
+    "It expresses admiration for the messenger’s careful return."
+   ],
+   "answerIndex": 0,
+   "explanation": "Interrogative mood directs attention to the unexplained reason and invites an inquiry.",
+   "difficulty": 3,
+   "skill": "Identify the effect of interrogative mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence Compare the two readings before recording the result, what does the imperative mood accomplish?",
+   "choices": [
+    "It directs the reader to compare the readings and then record the result.",
+    "It asks the reader which reading produced the better result.",
+    "It states that comparing the two readings is an established fact.",
+    "It presents recording the result as a hypothetical possibility."
+   ],
+   "answerIndex": 0,
+   "explanation": "Imperative mood directly instructs the reader to compare the readings and then record the result.",
+   "difficulty": 2,
+   "skill": "Identify the effect of imperative mood",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The replacement signs were installed along the highway before dawn,\" what is the main effect of the passive voice?",
+   "choices": [
+    "It emphasizes the installation of the new signs without identifying who installed them.",
+    "It makes the highway the clear agent of installing the replacement signs.",
+    "It presents the installation as a condition that must be completed before dawn.",
+    "It frames the replacement signs as speakers requesting an early installation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive voice foregrounds the installation of the replacement signs while leaving the people who installed them unmentioned.",
+   "difficulty": 2,
+   "skill": "Analyze passive voice for effect",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"The director recommends that each singer rehearse the final song,\" what effect does the subjunctive mood create?",
+   "choices": [
+    "It presents the rehearsal as a recommendation rather than a completed fact.",
+    "It presents the rehearsal as an order that every singer must carry out immediately.",
+    "It presents the final song as the agent performing the rehearsal.",
+    "It presents the rehearsal as a past event confirmed by the director."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive verb form presents the rehearsal as a recommended action that has not been established as completed.",
+   "difficulty": 3,
+   "skill": "Analyze subjunctive mood for effect",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model-text sentence \"Before the storm, the crew secured the shutters with metal braces,\" how does the active voice shape the sentence's effect?",
+   "choices": [
+    "It identifies the crew as the agent and presents securing the shutters as a direct action.",
+    "It emphasizes the shutters as the affected objects and leaves the crew unmentioned.",
+    "It presents the securing as a hypothetical action that depends on another event.",
+    "It changes the sentence into a command addressed to the crew."
+   ],
+   "answerIndex": 0,
+   "explanation": "The active voice makes the crew the clear agent and presents the securing of the shutters as a direct action.",
+   "difficulty": 2,
+   "skill": "Analyze active voice for effect",
+   "topic": "Notice It in a Model Text - Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A model-text sentence reads: The old theater was repainted by local artists last summer. Which revision preserves the meaning while changing the sentence to active voice?",
+   "choices": [
+    "The old theater was repainted by local artists last summer.",
+    "The old theater repainted by local artists last summer.",
+    "Local artists repainted the old theater last summer.",
+    "By local artists, the old theater was repainted last summer."
+   ],
+   "answerIndex": 2,
+   "explanation": "The revision makes local artists the subject and agents of repainting, so it uses active voice while preserving the original meaning.",
+   "difficulty": 3,
+   "skill": "Transforming passive voice into active voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which voice appears in 'The architect designed the bridge'?",
+   "choices": [
+    "Active voice",
+    "Passive voice",
+    "Active voice with a modal auxiliary",
+    "Passive voice with a modal auxiliary"
+   ],
+   "answerIndex": 0,
+   "explanation": "Active voice is used because the architect performs the action.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "What voice is used in 'The bridge was designed by the architect'?",
+   "choices": [
+    "Passive voice",
+    "Active voice",
+    "Passive voice with a modal auxiliary",
+    "Active voice with a modal auxiliary"
+   ],
+   "answerIndex": 0,
+   "explanation": "Passive voice is used because the bridge receives the action and the agent follows 'by'.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "Which mood appears in the clause \"that he be present\" from the sentence \"It is essential that he be present\"?",
+   "choices": [
+    "Indicative mood",
+    "Imperative mood",
+    "Subjunctive mood",
+    "Conditional mood"
+   ],
+   "answerIndex": 2,
+   "explanation": "The base‑form verb \"be\" after a necessity expression marks the subjunctive mood.",
+   "reason": "source: \"The subjunctive mood is used after expressions of necessity such as \"essential that\".\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "The pair of sentences \"The manager approved the plan. The plan was approved by the manager.\" demonstrates a shift from which voice to which voice?",
+   "choices": [
+    "Active to passive",
+    "Passive to active",
+    "Active to active",
+    "Passive to passive"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice and the second uses passive voice, showing an active‑to‑passive shift.",
+   "reason": "source: \"In active voice, the subject performs the action; in passive voice, the subject receives it.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "What mood does the sentence \"Please close the door\" employ?",
+   "choices": [
+    "Indicative mood",
+    "Imperative mood",
+    "Subjunctive mood",
+    "Conditional mood"
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence gives a direct command, which is the imperative mood.",
+   "reason": "source: \"Imperative mood issues direct commands.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "What effect does the subjunctive mood convey in the clause 'that he arrive' from 'It is essential that he arrive on time'?",
+   "choices": [
+    "It expresses a necessity or recommendation",
+    "It states a factual observation",
+    "It asks a question",
+    "It gives a direct command"
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive mood expresses a necessity or recommendation.",
+   "reason": "source: \"In English, a clause expressing necessity after 'it is essential that' uses the subjunctive, i.e., the base form of the \": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which mood is used in the clause \"Had the weather been better\" from the sentence \"Had the weather been better, we would have hiked\"?",
+   "choices": [
+    "Subjunctive mood",
+    "Indicative mood",
+    "Conditional mood",
+    "Imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The inverted clause \"Had the weather been better\" employs the subjunctive mood to express a contrary-to-fact condition.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "In the model-text sentence \"The coach insists that every athlete stretch before practice,\" which two-word group contains the subject and bare-form verb of the subjunctive clause?",
+   "choices": [
+    "athlete stretch",
+    "The coach",
+    "every athlete",
+    "before practice"
+   ],
+   "answerIndex": 0,
+   "explanation": "Athlete stretch contains the subject athlete and the bare-form verb stretch used in the subjunctive mood.",
+   "reason": "A: not exactly one correct (No option correctly contains both the subject and bare-form verb of the subjunctive clause.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "In the model-text sentence He walked steadily, as if the ground were moving beneath him, what does the subjunctive were contribute?",
+   "choices": [
+    "It presents the comparison as imagined rather than established as fact.",
+    "It identifies the ground as the agent that caused the walking.",
+    "It turns the movement of the ground into an established observation.",
+    "It gives the reader a direct instruction to watch the ground."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive were frames the comparison as hypothetical or imagined rather than asserting that the ground was actually moving.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  }
+ ],
+ "applied": false
+}

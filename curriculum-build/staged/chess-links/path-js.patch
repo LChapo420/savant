@@ -1,0 +1,15 @@
+--- a/public/js/path.js
++++ b/public/js/path.js
+@@ -608,6 +608,12 @@
+ 
+       ${bannerHtml}
+ 
++      ${track.id === 'chess' ? `<nav class="row-wrap tiny" aria-label="Chess practice" style="gap:var(--s-3)">
++        <a href="/engine/chess/puzzles.html">Rated puzzles</a>
++        <a href="/engine/chess/drills.html">Move trainer</a>
++        <a href="/engine/chess/spar.html">Play a human-like opponent</a>
++      </nav>` : ''}
++
+       ${App.scale({
+         from: 1, to: scaleEnd, you: enrollment.current_level, subject: track.id,
+         ticks: App.checkpointTicks(nodes, Number(pathEnd) || scaleEnd, enrollment.current_level),

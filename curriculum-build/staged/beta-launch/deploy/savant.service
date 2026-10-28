@@ -1,0 +1,34 @@
+# /etc/systemd/system/savant.service  (curriculum-build/BETA-LAUNCH-KIT.md section 1.5)
+# The app, as an unprivileged user, restarted on a crash, logging to journald.
+[Unit]
+Description=Savant app (Node)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=savant
+Group=savant
+WorkingDirectory=/srv/savant/app
+# Secrets live in this file (chmod 600, owner savant), never in git. Names: env.production.example.
+EnvironmentFile=/srv/savant/savant.env
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+# db.js flushes the store on SIGTERM; give it time.
+KillSignal=SIGTERM
+TimeoutStopSec=20
+# The JSON store holds about 300 MB of heap at boot (measured 315 MB RSS on a copy, 2026-10-24).
+MemoryMax=900M
+# Hardening: the app writes only its data, logs and backups.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/savant/shared/data /srv/savant/shared/logs /srv/savant/backups
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=savant
+
+[Install]
+WantedBy=multi-user.target

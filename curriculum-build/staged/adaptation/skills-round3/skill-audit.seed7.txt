@@ -1,0 +1,71 @@
+PART 1. Stages of the skill subjects (skill-coverage.validate)
+  chess      stages 10, exit metrics 31 (30 machine-provable, 1 attested only), knowledge objectives 862, problems 0
+  piano      stages 8, exit metrics 29 (25 machine-provable, 4 attested only), knowledge objectives 1443, problems 0
+     note PI11-16: no machine-provable metric (capstones[human]); its performance part is attested, not gated
+  basketball stages 7, exit metrics 24 (19 machine-provable, 5 attested only), knowledge objectives 1185, problems 0
+
+PART 2. Simulated learners: 8 profiles x 6 x 4 policies; stages: chess CH0-CH5, piano PI0-PI4, basketball BB0-BB3 (seed 7)
+
+chess
+  policy     all stages done  days  minutes  min/stage  sittings  metrics left unproven at exit  truly at threshold at exit  mean pass p at exit  30 days later  false proofs  skipped stages
+  today               100.0%   255     5762        960         0                          100.0%                       34.7%                0.355          0.251          0.0%               0
+  gate                 62.5%   460    12239       3185       494                            0.0%                      100.0%                0.977          0.848          0.2%               0
+  adaptive_r2            68.8%   447    12091       2744       529                            0.0%                       98.8%                0.929          0.704          0.0%               0
+  adaptive             70.8%   466    12763       2777       549                            0.0%                       99.1%                0.956          0.773          0.0%               0
+  maintenance share (round 3), adaptive_r2 -> adaptive (gate):
+    30 days after exit, no practice meanwhile      0.704 -> 0.773 (gate 0.848)
+    practice minutes per stage                     2744 -> 2777 (gate 3185)
+    metrics truly at the bar at exit               98.8% -> 99.1% (gate 100.0%)
+  by profile (gate -> adaptive): minutes, stages skipped by placement
+    beginner     14347 -> 13386 (x0.93), skipped 0, truly at threshold at exit 100% -> 100%
+    child        20614 -> 16614 (x0.81), skipped 0, truly at threshold at exit 100% -> 100%
+    talented     7453 -> 7492 (x1.01), skipped 0, truly at threshold at exit 100% -> 100%
+    slow         22124 -> 24183 (x1.09), skipped 0, truly at threshold at exit 100% -> 99%
+    irregular    11799 -> 13230 (x1.12), skipped 0, truly at threshold at exit 100% -> 100%
+    plateau      20089 -> 16519 (x0.82), skipped 0, truly at threshold at exit 100% -> 17%
+    experienced  8316 -> 7980 (x0.96), skipped 0, truly at threshold at exit 100% -> 99%
+    returning    10467 -> 10735 (x1.03), skipped 0, truly at threshold at exit 100% -> 100%
+
+piano
+  policy     all stages done  days  minutes  min/stage  sittings  metrics left unproven at exit  truly at threshold at exit  mean pass p at exit  30 days later  false proofs  skipped stages
+  today               100.0%   310     5499       1100         0                          100.0%                       46.3%                0.463          0.328          0.0%               0
+  gate                 62.5%   430     9109       3117       371                            0.0%                       99.7%                0.948          0.736          0.1%               0
+  adaptive_r2            64.6%   428     8831       2927       539                            0.0%                       95.6%                0.873          0.568          0.0%              11
+  adaptive             64.6%   427     9136       2988       532                            0.0%                       99.3%                0.935          0.703          0.0%              11
+  maintenance share (round 3), adaptive_r2 -> adaptive (gate):
+    30 days after exit, no practice meanwhile      0.568 -> 0.703 (gate 0.736)
+    practice minutes per stage                     2927 -> 2988 (gate 3117)
+    metrics truly at the bar at exit               95.6% -> 99.3% (gate 99.7%)
+  by profile (gate -> adaptive): minutes, stages skipped by placement
+    beginner     9942 -> 10818 (x1.09), skipped 0, truly at threshold at exit 100% -> 100%
+    child        15916 -> 13942 (x0.88), skipped 0, truly at threshold at exit 100% -> 100%
+    talented     5794 -> 5965 (x1.03), skipped 0, truly at threshold at exit 100% -> 100%
+    slow         20367 -> 20016 (x0.98), skipped 0, truly at threshold at exit 100% -> 99%
+    irregular    11105 -> 11675 (x1.05), skipped 0, truly at threshold at exit 97% -> 97%
+    plateau      21703 -> 20632 (x0.95), skipped 0, truly at threshold at exit 100% -> 50%
+    experienced  6364 -> 5118 (x0.80), skipped 8, truly at threshold at exit 100% -> 100%
+    returning    7526 -> 7945 (x1.06), skipped 3, truly at threshold at exit 100% -> 100%
+
+basketball
+  policy     all stages done  days  minutes  min/stage  sittings  metrics left unproven at exit  truly at threshold at exit  mean pass p at exit  30 days later  false proofs  skipped stages
+  today               100.0%   100     3358        840         0                          100.0%                       36.1%                0.390          0.289          0.0%               0
+  gate                 87.5%   209     7941       2721       271                            0.0%                       99.8%                0.968          0.814          0.0%               0
+  adaptive_r2            87.5%   183     6772       2273       229                            0.0%                      100.0%                0.952          0.728          0.0%              17
+  adaptive             87.5%   189     6926       2390       232                            0.0%                       99.6%                0.967          0.794          0.0%              17
+  maintenance share (round 3), adaptive_r2 -> adaptive (gate):
+    30 days after exit, no practice meanwhile      0.728 -> 0.794 (gate 0.814)
+    practice minutes per stage                     2273 -> 2390 (gate 2721)
+    metrics truly at the bar at exit               100.0% -> 99.6% (gate 99.8%)
+  by profile (gate -> adaptive): minutes, stages skipped by placement
+    beginner     7073 -> 7094 (x1.00), skipped 0, truly at threshold at exit 99% -> 100%
+    child        10003 -> 8631 (x0.86), skipped 0, truly at threshold at exit 100% -> 100%
+    talented     4075 -> 4006 (x0.98), skipped 0, truly at threshold at exit 100% -> 100%
+    slow         17159 -> 12785 (x0.75), skipped 0, truly at threshold at exit 100% -> 100%
+    irregular    8039 -> 8822 (x1.10), skipped 0, truly at threshold at exit 100% -> 100%
+    plateau      21056 -> 18828 (x0.89), skipped 0, truly at threshold at exit 100% -> 33%
+    experienced  3819 -> 2357 (x0.62), skipped 12, truly at threshold at exit 100% -> 100%
+    returning    5418 -> 4786 (x0.88), skipped 5, truly at threshold at exit 100% -> 100%
+
+GUARANTEE (gate, adaptive): no stage was completed or skipped without every machine-provable metric proven on two cold days (re-derived from its sittings) and its knowledge gate complete; no plan dropped an unproven metric
+
+PASS (58.1s)

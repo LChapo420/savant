@@ -1,0 +1,1307 @@
+{
+ "generated": "2026-10-24T20:39:09.532Z",
+ "note": "Verified owner-review replacement data for data/db.json: code checks (exact before value, same shape, key among options, no repeated options, explanation-key check, interactive-block invariants, math-claims 0 problems on lessons) plus two judges of different families. Apply with apply-owner-review.js on a STOPPED server after a backup.",
+ "changes": [
+  {
+   "key": "block_plans:1",
+   "why_failed_before": "writer copied JSON syntax (keys, quotes, newlines) into its find strings, so 15 of 15 edits matched 0 places",
+   "errors": [
+    {
+     "ref": "P70",
+     "wrong": "Hook dilemma asks \"Which of these texts is a real, complete sentence?\" but option A is a fragment and option B (\"The buzzer beat us by half a second, we lost.\") is a comma splice, so neither is complete.",
+     "correct": "Exactly one option must be complete: make option B a correct compound sentence (\"..., and we lost.\")."
+    },
+    {
+     "ref": "P71",
+     "wrong": "Error-highlighter marks \"Because\" in \"Because the gym was booked, practice was moved.\" as a fragment starter, but that sentence is a correct complex sentence.",
+     "correct": "Make the first sentence a real fragment (\"Because the gym was booked. Practice was moved.\") so \"Because\" is truly the fragment starter."
+    },
+    {
+     "ref": "P72",
+     "wrong": "Trap card keys \"Complete sentence\" for \"The alarm didn't go off because the power had gone out overnight, we overslept by an hour.\", which is a comma splice.",
+     "correct": "Make the sentence the one its reasoning describes (\"The alarm didn't go off because the power had gone out overnight.\"), which is complete, and make the trap labels match."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "blocks[0].data.rightChoice.body",
+     "before": "\"The buzzer beat us by half a second, we lost.\"",
+     "after": "\"The buzzer beat us by half a second, and we lost.\""
+    },
+    {
+     "path": "blocks[0].data.rightChoice.title",
+     "before": "The buzzer beat us by half a second, we lost.",
+     "after": "The buzzer beat us by half a second, and we lost."
+    },
+    {
+     "path": "blocks[6].data.paragraph",
+     "before": "Because the gym was booked, practice was moved. My coach texted the team we all showed up late, the warm-up was rushed.",
+     "after": "Because the gym was booked. Practice was moved. My coach texted the team we all showed up late, the warm-up was rushed."
+    },
+    {
+     "path": "blocks[6].data.tokens[8].text",
+     "before": "booked,",
+     "after": "booked."
+    },
+    {
+     "path": "blocks[6].data.tokens[10].text",
+     "before": "practice",
+     "after": "Practice"
+    },
+    {
+     "path": "blocks[7].data.context",
+     "before": "The alarm didn't go off because the power had gone out overnight, we overslept by an hour.",
+     "after": "The alarm didn't go off because the power had gone out overnight."
+    },
+    {
+     "path": "blocks[7].data.commonErrorLabel",
+     "before": "Trusting 'it has a comma and a subject-verb pair, so it's fine'",
+     "after": "Assuming every sentence with 'because' in it is a fragment"
+    },
+    {
+     "path": "blocks[7].data.trapReasons.0",
+     "before": "Longer and starting with 'because' tricks you into expecting a missing piece.",
+     "after": "The long 'because' clause tricks you into expecting a missing piece."
+    },
+    {
+     "path": "blocks[7].data.trapReasons.3",
+     "before": "There is no comma joining two full clauses — the comma sits inside the dependent clause.",
+     "after": "There is no comma at all, so nothing is splicing two full clauses together."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:2",
+   "why_failed_before": "find strings included JSON syntax, so 10 of 11 edits matched 0 places",
+   "errors": [
+    {
+     "ref": "P67",
+     "wrong": "The balanced-sentence scramble has the chip \"the sky writes poems\" twice (correctIndex 3 and 6), and the target order \"Reading builds patience poetry builds attention and the sky writes poems attention builds understanding so poetry builds understanding the sky writes poems\" is not a sentence.",
+     "correct": "Seven distinct chips whose correct order builds one balanced sentence."
+    },
+    {
+     "ref": "P69",
+     "wrong": "Caption: \"Two matching halves, mirrored on either side of the dash: practice builds / confidence builds.\" In \"Practice builds confidence, and confidence builds success — so practice builds success\" the mirrored halves sit on either side of \"and\", not the dash.",
+     "correct": "Say the halves mirror on either side of \"and\"."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "blocks[7].data.chips[0].text",
+     "before": "the sky writes poems",
+     "after": "—"
+    },
+    {
+     "path": "blocks[7].data.chips[1].text",
+     "before": "poetry builds attention",
+     "after": "patience builds attention"
+    },
+    {
+     "path": "blocks[7].data.chips[1].correctIndex",
+     "before": 1,
+     "after": 2
+    },
+    {
+     "path": "blocks[7].data.chips[2].correctIndex",
+     "before": 2,
+     "after": 1
+    },
+    {
+     "path": "blocks[7].data.chips[3].text",
+     "before": "Reading builds patience",
+     "after": "Reading builds patience,"
+    },
+    {
+     "path": "blocks[7].data.chips[4].text",
+     "before": "attention builds understanding",
+     "after": "reading"
+    },
+    {
+     "path": "blocks[7].data.chips[4].correctIndex",
+     "before": 4,
+     "after": 5
+    },
+    {
+     "path": "blocks[7].data.chips[5].text",
+     "before": "so poetry builds understanding",
+     "after": "so"
+    },
+    {
+     "path": "blocks[7].data.chips[5].correctIndex",
+     "before": 5,
+     "after": 4
+    },
+    {
+     "path": "blocks[7].data.chips[6].text",
+     "before": "the sky writes poems",
+     "after": "builds attention."
+    },
+    {
+     "path": "blocks[7].data.tokens[0].text",
+     "before": "Reading builds patience",
+     "after": "Reading builds patience,"
+    },
+    {
+     "path": "blocks[7].data.tokens[1].text",
+     "before": "poetry builds attention",
+     "after": "patience builds attention"
+    },
+    {
+     "path": "blocks[7].data.tokens[3].text",
+     "before": "the sky writes poems",
+     "after": "—"
+    },
+    {
+     "path": "blocks[7].data.tokens[4].text",
+     "before": "attention builds understanding",
+     "after": "reading"
+    },
+    {
+     "path": "blocks[7].data.tokens[5].text",
+     "before": "so poetry builds understanding",
+     "after": "so"
+    },
+    {
+     "path": "blocks[7].data.tokens[6].text",
+     "before": "the sky writes poems",
+     "after": "builds attention."
+    },
+    {
+     "path": "blocks[7].data.feedbackCorrect",
+     "before": "Balanced. Each half mirrors the same subject + verb + object shape, and the extension echoes it too.",
+     "after": "Balanced. 'Reading builds patience' and 'patience builds attention' share the same subject + verb + object shape, and the ending echoes it: reading builds attention."
+    },
+    {
+     "path": "blocks[7].data.hintText",
+     "before": "Start with the first parallel half: \"Reading builds patience.\" The halves must share the same shape.",
+     "after": "Start with the first parallel half: \"Reading builds patience,\" then let the second half mirror it."
+    },
+    {
+     "path": "blocks[3].data.after.caption",
+     "before": "Two matching halves, mirrored on either side of the dash: practice builds / confidence builds.",
+     "after": "Two matching halves, mirrored on either side of \"and\": practice builds confidence / confidence builds success."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:4",
+   "why_failed_before": "two edits used JSON syntax (\"answer\": ..., \"accepts\": [...]) and matched 0 places",
+   "errors": [
+    {
+     "ref": "P74",
+     "wrong": "Option b: \"The committee voted on the proposal, and the results was announced by the chair.\"",
+     "correct": "\"the results were announced\" (subject-verb agreement)."
+    },
+    {
+     "ref": "P75",
+     "wrong": "Feedback for option d (\"First stir the batter slowly, and then pour it into the pan.\"): \"Starting active and then issuing a command can be a mood shift, but this option's shift is smooth and there is no jarring change here.\"",
+     "correct": "Option d is imperative and active throughout; it has no shift at all."
+    },
+    {
+     "ref": "Q145",
+     "wrong": "Type-in check (key already re-keyed to \"be\") still accepts \"should be\", \"should stay\", \"must be\", \"must stay\".",
+     "correct": "The subjunctive form is the one word \"be\" (\"It is required that you be on time\"); accept only \"be\" forms."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "blocks[4].data.options[1].text",
+     "before": "The committee voted on the proposal, and the results was announced by the chair.",
+     "after": "The committee voted on the proposal, and the results were announced by the chair."
+    },
+    {
+     "path": "blocks[4].data.feedback.byOption.d",
+     "before": "Starting active and then issuing a command can be a mood shift, but this option's shift is smooth and there is no jarring change here.",
+     "after": "This sentence is imperative and active throughout (stir, then pour), so neither the voice nor the mood shifts."
+    },
+    {
+     "path": "checks[3].accepts",
+     "before": [
+      "should be",
+      "should stay",
+      "must be",
+      "must stay"
+     ],
+     "after": [
+      "be"
+     ]
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:10",
+   "why_failed_before": "the one edit used JSON syntax and matched 0 places",
+   "errors": [
+    {
+     "ref": "P91",
+     "wrong": "Swipe card \"Never end a sentence with a preposition.\" is filed on the \"Settled rule\" side, while its own feedback says it is a myth, not a rule.",
+     "correct": "State the settled position: ending a sentence with a preposition is acceptable; the \"never\" rule is a myth."
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Preposition_stranding",
+     "quote": "Although preposition stranding has been found in English since the earliest times, it has often been the subject of controversy, and some usage advisors have attempted to form a prescriptive rule against it."
+    }
+   ],
+   "diff": [
+    {
+     "path": "blocks[7].data.statements[2].text",
+     "before": "Never end a sentence with a preposition.",
+     "after": "Ending a sentence with a preposition is acceptable."
+    },
+    {
+     "path": "blocks[7].data.statements[2].feedback",
+     "before": "No modern style guide enforces this one; it is a myth, not a rule.",
+     "after": "Modern style guides agree this is fine; the old 'never end with a preposition' rule is a myth, not a rule."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:19",
+   "why_failed_before": "the one edit used JSON syntax and matched 0 places",
+   "errors": [
+    {
+     "ref": "P101",
+     "wrong": "Card s1 \"The recipe says to preheat the oven and then stir the batter constantly.\" is sorted as a mood shift (indicative to imperative).",
+     "correct": "It is one indicative sentence: \"says\" reports the recipe, and \"to preheat\" and \"(to) stir\" are both what it says; there is no shift."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "blocks[1].data.cards[1].correctBucket",
+     "before": "shift",
+     "after": "consistent"
+    },
+    {
+     "path": "blocks[1].data.cards[1].detail",
+     "before": "Mood flips: indicative to imperative",
+     "after": "Mood stays indicative: the infinitives report the recipe"
+    },
+    {
+     "path": "blocks[1].data.cards[1].explanation",
+     "before": "The sentence starts in indicative (tells a fact) and flips to imperative (a command) with no punctuation or marker to signal it.",
+     "after": "The sentence states a fact about the recipe. 'To preheat' and '(to) stir' are both infinitives telling what the recipe says, so there is no command and no shift."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:23",
+   "why_failed_before": "all 12 edits used JSON syntax and matched 0 places",
+   "errors": [
+    {
+     "ref": "P109",
+     "wrong": "\"Her reasoning was simple ____ no homework, no phone.\" keyed semicolon: \"a semicolon (not a colon) fits before the list\".",
+     "correct": "A complete clause introducing a list takes a colon; a semicolon cannot introduce a list."
+    },
+    {
+     "ref": "P110",
+     "wrong": "Rebuild solution \"The dash was the only mark that / match the mood of the sentence: / sudden, loud, and impossible to ignore.\" has no dash, \"match\" should be \"matched\", and the feedback says a dash is required.",
+     "correct": "Solution \"The dash was the only mark that / matched the mood of the sentence — / sudden, loud, and impossible to ignore.\""
+    },
+    {
+     "ref": "P111",
+     "wrong": "Rebuild solution \"My brother / the one who never opens a book / somehow knew every answer\" omits the two dashes its feedback requires.",
+     "correct": "Solution \"My brother — / the one who never opens a book — / somehow knew every answer\"."
+    },
+    {
+     "ref": "P112",
+     "wrong": "Rebuild solution puts the colon after \"cinnamon\" (\"...one unusual thing a pinch of cinnamon: for the soup.\").",
+     "correct": "The colon goes after \"thing\": \"The recipe needed one unusual thing: a pinch of cinnamon for the soup.\""
+    },
+    {
+     "ref": "P113",
+     "wrong": "Matrix cell dash / \"Complete sentence needed before it?\" keyed \"Yes\" (and accepts \"yes it does\"), while its feedback says a dash can follow an incomplete clause.",
+     "correct": "Answer \"No\"."
+    },
+    {
+     "ref": "P114",
+     "wrong": "Matrix row \"What follows when a transition word like however comes next?\" keys the dash cell \"Comma\" while its feedback says no comma is required after a dash; the row label does not fit the three cells.",
+     "correct": "Ask what goes right after the mark itself: nothing, for all three marks (with a semicolon the comma comes after the transition word, not after the semicolon)."
+    },
+    {
+     "ref": "P115",
+     "wrong": "Its/it's row (\"The team held ___ nickname with pride.\") keys the dash cell \"isn't\" (neither option), and the colon cell \"it's\" (wrong for this sentence; found while fixing).",
+     "correct": "Every cell of the row is \"its\" (possession)."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "blocks[0].data.cards[4].correctBucket",
+     "before": "semicolon",
+     "after": "colon"
+    },
+    {
+     "path": "blocks[0].data.cards[4].explanation",
+     "before": "The first half is a complete sentence, so a semicolon (not a colon) fits before the list.",
+     "after": "The first half is a complete sentence that introduces a list, so a colon fits; a semicolon cannot introduce a list."
+    },
+    {
+     "path": "blocks[1].data.items[0].chunks[3].text",
+     "before": "match the mood of the sentence:",
+     "after": "matched the mood of the sentence —"
+    },
+    {
+     "path": "blocks[1].data.items[0].chunks[4].text",
+     "before": "match the mood of the sentence",
+     "after": "matched the mood of the sentence;"
+    },
+    {
+     "path": "blocks[1].data.items[0].solution[1]",
+     "before": "match the mood of the sentence:",
+     "after": "matched the mood of the sentence —"
+    },
+    {
+     "path": "blocks[1].data.items[1].chunks[0].text",
+     "before": "My brother",
+     "after": "My brother —"
+    },
+    {
+     "path": "blocks[1].data.items[1].chunks[2].text",
+     "before": "the one who never opens a book",
+     "after": "the one who never opens a book —"
+    },
+    {
+     "path": "blocks[1].data.items[1].solution[0]",
+     "before": "My brother",
+     "after": "My brother —"
+    },
+    {
+     "path": "blocks[1].data.items[1].solution[1]",
+     "before": "the one who never opens a book",
+     "after": "the one who never opens a book —"
+    },
+    {
+     "path": "blocks[1].data.items[3].chunks[0].text",
+     "before": "The recipe needed one unusual thing",
+     "after": "The recipe needed one unusual thing:"
+    },
+    {
+     "path": "blocks[1].data.items[3].solution[0]",
+     "before": "The recipe needed one unusual thing",
+     "after": "The recipe needed one unusual thing:"
+    },
+    {
+     "path": "blocks[1].data.items[3].solution[1]",
+     "before": "a pinch of cinnamon:",
+     "after": "a pinch of cinnamon"
+    },
+    {
+     "path": "blocks[2].data.cells[3].answer",
+     "before": "Yes",
+     "after": "No"
+    },
+    {
+     "path": "blocks[2].data.cells[3].acceptedAnswers[0]",
+     "before": "yes it does",
+     "after": "no"
+    },
+    {
+     "path": "blocks[2].data.cells[3].acceptedAnswers[1]",
+     "before": "no",
+     "after": "no, not required"
+    },
+    {
+     "path": "blocks[2].data.cells[3].acceptedAnswers[2]",
+     "before": "n/a - not required",
+     "after": "not required"
+    },
+    {
+     "path": "blocks[2].data.rows[2].label",
+     "before": "What follows when a transition word like however comes next?",
+     "after": "What punctuation goes right after the mark itself?"
+    },
+    {
+     "path": "blocks[2].data.cells[6].answer",
+     "before": "Comma",
+     "after": "Nothing"
+    },
+    {
+     "path": "blocks[2].data.cells[6].acceptedAnswers[0]",
+     "before": "a comma",
+     "after": "no comma"
+    },
+    {
+     "path": "blocks[2].data.cells[6].acceptedAnswers[1]",
+     "before": "comma after it",
+     "after": "nothing"
+    },
+    {
+     "path": "blocks[2].data.cells[8].answer",
+     "before": "Comma",
+     "after": "Nothing"
+    },
+    {
+     "path": "blocks[2].data.cells[8].acceptedAnswers[0]",
+     "before": "a comma",
+     "after": "no comma"
+    },
+    {
+     "path": "blocks[2].data.cells[8].acceptedAnswers[1]",
+     "before": "comma after it",
+     "after": "nothing"
+    },
+    {
+     "path": "blocks[2].data.cells[8].feedback",
+     "before": "Semicolon, then the transition word, then a comma.",
+     "after": "Nothing goes right after the semicolon itself; with a transition word like however, the comma comes after however."
+    },
+    {
+     "path": "blocks[2].data.cells[9].answer",
+     "before": "isn't",
+     "after": "its"
+    },
+    {
+     "path": "blocks[2].data.cells[9].acceptedAnswers[0]",
+     "before": "is not",
+     "after": "its"
+    },
+    {
+     "path": "blocks[2].data.cells[10].answer",
+     "before": "it's",
+     "after": "its"
+    },
+    {
+     "path": "blocks[2].data.cells[10].acceptedAnswers[0]",
+     "before": "it is",
+     "after": "its"
+    },
+    {
+     "path": "blocks[2].data.cells[10].feedback",
+     "before": "Expand it to it is to check: the idea it is about.",
+     "after": "Expand it's to it is to check: 'held it is nickname' makes no sense, so the answer is its."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:30",
+   "why_failed_before": "judge B saw a cut-off excerpt ending in \"b\" and called it a stray character; the stored text has none",
+   "errors": [
+    {
+     "ref": "P3",
+     "wrong": "Whatever you do to one side of an equation, you must do to the exact same side or the opposite side to keep it balanced.",
+     "correct": "Do the same thing to BOTH sides of an equation to keep it balanced."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "sections[0].body",
+     "before": "Whatever you do to one side of an equation, you must do to the exact same side or the opposite side to keep it balanced. To isolate a variable, you undo whatever operation is currently applied to it by using its opposite, or inverse, operation. Addition and subtraction are inverses of each other, and multiplication and division are inverses of each other.",
+     "after": "Whatever you do to one side of an equation, you must also do to the other side to keep it balanced. To isolate a variable, you undo whatever operation is currently applied to it by using its opposite, or inverse, operation. Addition and subtraction are inverses of each other, and multiplication and division are inverses of each other."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:80",
+   "why_failed_before": "the answer text appears twice (answer and choices[1]), so the plain find matched 2 places and the JSON-syntax find matched 0",
+   "errors": [
+    {
+     "ref": "P15",
+     "wrong": "Adding the 6 to one side only in x + 6 = 15. That gives x = 21 on the left while the right side stays 15, and the check 21 + 6 = 27 fails. (Also the check question keyed \"She added 6 to the left side only, giving x = 21\".)",
+     "correct": "Adding 6 to one side only of x + 6 = 15 does not give x = 21; the slip that gives 21 is adding 6 to 15 instead of subtracting it (x = 15 + 6)."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "common_mistakes[0]",
+     "before": "Adding the 6 to one side only in x + 6 = 15. That gives x = 21 on the left while the right side stays 15, and the check 21 + 6 = 27 fails.",
+     "after": "Adding the 6 instead of subtracting it in x + 6 = 15, writing x = 15 + 6 = 21. The check 21 + 6 = 27 fails. Subtracting 6 from both sides gives x = 9, and 9 + 6 = 15."
+    },
+    {
+     "path": "check_questions[2].answer",
+     "before": "She added 6 to the left side only, giving x = 21",
+     "after": "She added 6 to 15 instead of subtracting it, giving x = 21"
+    },
+    {
+     "path": "check_questions[2].choices[1]",
+     "before": "She added 6 to the left side only, giving x = 21",
+     "after": "She added 6 to 15 instead of subtracting it, giving x = 21"
+    },
+    {
+     "path": "check_questions[2].rationale",
+     "before": "Only a one-sided add leaves the equation at x = 21 with 15 untouched. The check exposes it: 21 + 6 = 27, not 15.",
+     "after": "Adding 6 to 15 gives 21, but the 6 has to be undone by subtracting it. The check exposes the slip: 21 + 6 = 27, not 15. The right move, subtracting 6 from both sides, gives x = 9."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:233",
+   "why_failed_before": "the key text appears twice (answer and choices[1]), so the find matched 2 places; the key itself was already re-keyed live",
+   "errors": [
+    {
+     "ref": "P28",
+     "wrong": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. The +5 is an addition, not a factor, so it does not get divided.",
+     "correct": "Dividing both sides of 3x + 5 = 20 by 3 divides every term: x + 5/3 = 20/3 (x = 5). \"The +5 ... does not get divided\" is false."
+    },
+    {
+     "ref": "Q57",
+     "wrong": "Check question rationale: \"Dividing first would give x = 2.5, and x = 3 is not correct since 2(3) + 4 = 10 fails. ... actually the deciding check: substituting 3 gives 2(3) + 4 = 10, which is true...\"",
+     "correct": "x = 3 is the solution of 2x + 4 = 10 (2*3 + 4 = 10), so nothing went wrong; the rationale must say so without the false and garbled part."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "common_mistakes[0]",
+     "before": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. The +5 is an addition, not a factor, so it does not get divided. Subtract 5 first, giving 3x = 15.",
+     "after": "Dividing 3x + 5 = 20 by 3 first and writing x + 5 = 6.67. Dividing both sides by 3 divides every term, so the +5 becomes 5/3: x + 5/3 = 20/3. It is simpler to subtract 5 first, giving 3x = 15 and x = 5."
+    },
+    {
+     "path": "check_questions[2].rationale",
+     "before": "Dividing first would give x = 2.5, and x = 3 is not correct since 2(3) + 4 = 10 fails. Their answer shows 2x = 6 came from subtracting 4 from only one side... actually the deciding check: substituting 3 gives 2(3) + 4 = 10, which is true, so x = 3 is correct and nothing went wrong.",
+     "after": "Substitute to check: 2(3) + 4 = 6 + 4 = 10, which matches the right side, so x = 3 is correct and nothing went wrong."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:1219",
+   "why_failed_before": "the rewritten mistake still said \"subtracting 7 from both sides, and getting x = -2\", which the math check rightly flags (that move keeps x = 12)",
+   "errors": [
+    {
+     "ref": "P38",
+     "wrong": "Reading x - 7 = 5 and subtracting 7 from both sides, getting x = -2.",
+     "correct": "Subtracting 7 from both sides of x - 7 = 5 gives x - 14 = -2 (x = 12), not x = -2; the slip that gives -2 is subtracting 7 from 5."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "common_mistakes[3]",
+     "before": "Reading x - 7 = 5 and subtracting 7 from both sides, getting x = -2. Subtracting makes the minus 7 bigger; adding 7 is what makes it vanish, giving x = 12.",
+     "after": "Undoing the - 7 in x - 7 = 5 by subtracting 7 from 5 and writing x = 5 - 7 = -2. Subtracting does not cancel a subtraction; adding 7 to both sides cancels the - 7 and gives x = 12."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:1801",
+   "why_failed_before": "judge B saw a cut-off excerpt (\"than' mean add\") and called it a grammar error; reworded and judged on the full text",
+   "errors": [
+    {
+     "ref": "P49",
+     "wrong": "\"More than\" keeps the order the same, so 5 more than a number is x + 5.",
+     "correct": "\"5 more than a number\" names 5 first but is written x + 5, so \"more than\" does not keep the word order (5 + x is also right because addition commutes; with \"less than\" the order matters)."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "sections[0].body",
+     "before": "Rule: \"sum\" and \"more than\" mean add, and \"less than\" means subtract with the words in reverse order. \"More than\" keeps the order the same, so 5 more than a number is x + 5. \"Less than\" flips it, so 3 less than a number is x - 3, never 3 - x.",
+     "after": "Rule: \"sum\" and \"more than\" mean add, and \"less than\" means subtract with the words in reverse order. With \"more than\" either order is right, because addition can be done in either order: 5 more than a number is x + 5 or 5 + x. \"Less than\" flips it, so 3 less than a number is x - 3, never 3 - x."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:2040",
+   "why_failed_before": "judge B saw a cut-off excerpt and a stray character; the stored summary really holds backslashes before its quotation marks, now removed",
+   "errors": [
+    {
+     "ref": "P54",
+     "wrong": "Summary: Remember that \\\"less than\\\" and \\\"more than\\\" put the number on the left of the operation (with stray backslashes before the quotation marks).",
+     "correct": "\"7 less than n\" is n - 7 and \"9 more than n\" is n + 9: the number goes on the RIGHT, not the left (and for \"more than\" either order is equal)."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "summary",
+     "before": "Give the unknown a letter first, then let the words choose the operation. Remember that \\\"less than\\\" and \\\"more than\\\" put the number on the left of the operation, and that \\\"times,\\\" \\\"product of,\\\" and \\\"twice\\\" write the number right next to the letter.",
+     "after": "Give the unknown a letter first, then let the words choose the operation. Remember that \"less than\" flips the order, so 7 less than n is n - 7, with the number on the right; with \"more than,\" n + 9 and 9 + n are equal. \"Times,\" \"product of,\" and \"twice\" write the number right next to the letter."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:3",
+   "why_failed_before": "new (owner-review q-3feac7ab4453)",
+   "errors": [
+    {
+     "ref": "OR-BP3",
+     "wrong": "Type-in check: \"Rewrite 'Silence came after the rage.' so the strongest idea lands at the end, using only the words given ...\" is keyed \"Rage, then silence.\", which uses \"then\" (not given) and drops \"came\", \"after\" and \"the\".",
+     "correct": "Using only the given words: \"After the rage came silence.\""
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "checks[3].answer",
+     "before": "Rage, then silence.",
+     "after": "After the rage came silence."
+    },
+    {
+     "path": "checks[3].accepts[0]",
+     "before": "Rage, then silence.",
+     "after": "After the rage came silence."
+    },
+    {
+     "path": "checks[3].accepts[1]",
+     "before": "rage, then silence",
+     "after": "after the rage came silence"
+    },
+    {
+     "path": "checks[3].accepts[2]",
+     "before": "Rage, then silence",
+     "after": "After the rage came silence"
+    },
+    {
+     "path": "checks[3].rationale",
+     "before": "End-focus says the reader weighs last words most heavily, so 'rage' must move to the front and 'silence' must be the final word.",
+     "after": "End-focus says the reader weighs the last words most heavily, so move 'after the rage' to the front and let 'silence' land last; 'After the rage came silence.' uses exactly the words given."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "deepseek-ai/deepseek-v4.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:17",
+   "why_failed_before": "new (owner-review q-4291eb795320)",
+   "errors": [
+    {
+     "ref": "OR-BP17",
+     "wrong": "Check on \"The volunteers cleared the beach the research team recorded the results and everyone agreed the project was a success, the opposite of what critics predicted.\": options name words not in the sentence ('often', 'studies'), the key is \"A period after 'opposite'\" and the rationale says \"after 'success'\"; neither fixes the fused clauses.",
+     "correct": "The run-on is between \"beach\" and \"the research team\": a period after \"beach\" is the fix."
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Comma_splice",
+     "quote": "In written English usage, a comma splice or comma fault is the use of a comma to join two independent clauses."
+    }
+   ],
+   "diff": [
+    {
+     "path": "checks[4].choices[0]",
+     "before": "A comma after 'often'",
+     "after": "A comma after 'beach'"
+    },
+    {
+     "path": "checks[4].choices[1]",
+     "before": "A semicolon after 'studies'",
+     "after": "A period after 'beach'"
+    },
+    {
+     "path": "checks[4].choices[2]",
+     "before": "A period after 'opposite'",
+     "after": "A period after 'success'"
+    },
+    {
+     "path": "checks[4].answer",
+     "before": "A period after 'opposite'",
+     "after": "A period after 'beach'"
+    },
+    {
+     "path": "checks[4].rationale",
+     "before": "The run-on fuses 'the project was a success' with 'the opposite of what critics predicted'; a period after 'success' splits them into two complete sentences.",
+     "after": "The run-on fuses 'The volunteers cleared the beach' with 'the research team recorded the results'; a period after 'beach' splits them into two sentences. A comma there would make a comma splice, and a period after 'success' would leave 'the opposite of what critics predicted' as a fragment."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "deepseek-ai/deepseek-v4.1-flash",
+   "judge_b": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:3069",
+   "why_failed_before": "new (owner-review q-4285f0d6c76d)",
+   "errors": [
+    {
+     "ref": "OR-L3069",
+     "wrong": "Check question \"Which of these sentences uses a Greek-family root to pin the sentence to a medical register?\" keys only \"The physician's chronic case...\" and says \"clinic via Latin\" is not Greek-family; but clinic (Greek klinikos) and surgery (Greek kheirourgia) are Greek-family medical words, so three options qualify.",
+     "correct": "Rewrite the other options so only the keyed sentence has Greek-family medical words, and fix the rationale."
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wiktionary.org/wiki/clinic",
+     "quote": "Borrowed from French clinique, from Late Latin clīnicus (“a bed-ridden person, one baptized on a sick-bed, a physician”), from Ancient Greek κλῑνικός (klīnikós, “pertaining to a bed”), from κλῑ́νη (klī́nē, “bed”), from κλῑ́νω (klī́nō, “to lean, incline”)."
+    },
+    {
+     "url": "https://en.wiktionary.org/wiki/surgery",
+     "quote": "From Middle English surgerie, from Old French surgerie, from Latin chirurgia, from Ancient Greek χειρουργία (kheirourgía), from χείρ (kheír, “hand”) + ἔργον (érgon, “work”)."
+    },
+    {
+     "url": "https://en.wiktionary.org/wiki/chronic",
+     "quote": "From chronical, from Old French cronike, from Latin chronicus, from Ancient Greek χρονικός (khronikós, “of time”), from χρόνος (khrónos, “time”)."
+    }
+   ],
+   "diff": [
+    {
+     "path": "check_questions[2].choices[0]",
+     "before": "The frequent visits to the clinic wore the patient out.",
+     "after": "The frequent visits wore the patient out."
+    },
+    {
+     "path": "check_questions[2].choices[3]",
+     "before": "The patient's vision improved after the surgery.",
+     "after": "The patient's vision improved after a long rest."
+    },
+    {
+     "path": "check_questions[2].rationale",
+     "before": "chronic is the only Greek-family root in this set that carries a medical shade. The other sentences use Latin-family words (frequent, vision, clinic via Latin) that keep the register general. The step that decides this is the rule under pressure: name both families in the sentence, then say which one is carrying the technical load. In this sentence, chronic (Greek) is the word pinning it to a medical register.",
+     "after": "Chronic (Greek khronos, time) and physician (Greek physis, nature) are Greek-family words, and they pin this sentence to a medical register. The other sentences use Latin-family or native words (frequent, visit, patient, doctor, note, vision, rest) that keep the register general. The step that decides this is the rule under pressure: name both families in the sentence, then say which one is carrying the technical load."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "deepseek-ai/deepseek-v4.1-flash",
+   "judge_b": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "items:7178",
+   "why_failed_before": "new (owner-review q-7ca7eaede952)",
+   "errors": [
+    {
+     "ref": "OR-I7178",
+     "wrong": "\"Neither the treasurer nor any of the members ___ the revised figures.\" keyed \"questions\", claiming \"any of the members is treated as singular in this construction\". By the rule of proximity the verb agrees with the nearer subject, and \"any of the members\" is usually plural, which would make three options (\"question\", \"have questioned\", \"are questioning\") correct.",
+     "correct": "Make the nearer subject unambiguous: \"Neither the treasurer nor the members ___ the revised figures.\" -> \"question\", with no other plural option."
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Agreement_(linguistics)",
+     "quote": "When subjects are joined by or, nor, not only ... but also, etc. the verb agrees with the nearer subject."
+    }
+   ],
+   "diff": [
+    {
+     "path": "prompt",
+     "before": "Choose the correct verb: Neither the treasurer nor any of the members ___ the revised figures.",
+     "after": "Choose the correct verb: Neither the treasurer nor the members ___ the revised figures."
+    },
+    {
+     "path": "choices[2]",
+     "before": "have questioned",
+     "after": "has questioned"
+    },
+    {
+     "path": "choices[3]",
+     "before": "are questioning",
+     "after": "is questioning"
+    },
+    {
+     "path": "answer",
+     "before": "questions",
+     "after": "question"
+    },
+    {
+     "path": "accepts[0]",
+     "before": "questions",
+     "after": "question"
+    },
+    {
+     "path": "rationale",
+     "before": "With neither nor, the verb agrees with the nearer subject; any of the members is treated as singular in this construction, so the singular verb questions is required.",
+     "after": "With neither...nor, the verb agrees with the nearer subject. The nearer subject, the members, is plural, so the plural verb question is required; questions, has questioned and is questioning are singular."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "deepseek-ai/deepseek-v4.1-flash",
+   "judge_b": {
+    "index": 3,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "lessons:2815",
+   "why_failed_before": "new (owner-review prose-7c64058201db: 5 owner errors plus night fixes N2 and N3, which were sourced but never rewritten)",
+   "errors": [
+    {
+     "ref": "OR-L2815-0",
+     "wrong": "Both verb phrases follow the pattern [verb]s [it] into/across [a unit], keeping the parallel. (The first phrase is \"compresses grief into\", with the object grief, not it.)",
+     "correct": "The shared structure is [verb] + [object] + into/across + [a unit]."
+    },
+    {
+     "ref": "OR-L2815-1",
+     "wrong": "Check parallelism: ... grows louder and remain static are not parallel (misquotes \"grow louder\"; \"lets the silence grow louder\" and \"lets the silence remain static\" are already parallel).",
+     "correct": "Say the original is already parallel (lets the silence + bare verb) and offer intensify/persist as a tighter optional revision; quote \"grow louder\"."
+    },
+    {
+     "ref": "N2",
+     "wrong": "Now both verbs are simple present and the structure matches.",
+     "correct": "Both verbs are bare-form infinitives in parallel 'lets + object + infinitive' constructions."
+    },
+    {
+     "ref": "OR-L2815-3",
+     "wrong": "The assembled one-sentence answer leaves out the shared-element clause, though the lesson says a comparison sentence names the shared element, the divergence and the significance.",
+     "correct": "Include the shared element in the assembled sentence and the answer."
+    },
+    {
+     "ref": "OR-L2815-4",
+     "wrong": "If you deleted them, you would be left with Both stories use a silent protagonist (not the drafted shared-element clause).",
+     "correct": "Deleting the divergence and significance leaves \"Both stories foreground a protagonist who does not speak\"."
+    },
+    {
+     "ref": "N3",
+     "wrong": "Using whereas or while to introduce a clause whose subject is the wrong noun (a dangling modifier).",
+     "correct": "A dangling modifier is an introductory participial phrase with no subject of its own (Whereas examining guilt, ...); fix: Whereas the first novel examines guilt, the second novel avoids it."
+    },
+    {
+     "ref": "OR-L2815-6",
+     "wrong": "The participial phrase examines guilt has no subject (the phrase in the example is \"examining guilt\").",
+     "correct": "Name the participle \"examining guilt\" and give the complete correction."
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Uses_of_English_verb_forms",
+     "quote": "The first verb in such a combination is the finite verb , the remainder are nonfinite (although constructions in which even the leading verb is nonfinite are also possible – see § Perfect and progressive nonfinite constructions below)."
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dangling_modifier",
+     "quote": "A dangling modifier has no subject and is usually a participle."
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Parallelism_(grammar)",
+     "quote": "In grammar, parallelism, also known as parallel structure or parallel construction, is a balance within one or more sentences of similar phrases or clauses that have the same grammatical structure."
+    }
+   ],
+   "diff": [
+    {
+     "path": "sections[2].example",
+     "before": "Correct: \"Whereas the sonnet compresses grief into a single image, the novel spreads it across an entire chapter, so the reader feels the weight of grief differently in each form.\" Both verb phrases follow the pattern [verb]s [it] into/across [a unit], keeping the parallel. Dangling modifier error: \"Whereas compressing grief into a single image, the novel spreads it across a chapter.\" The participial phrase compressing grief would grammatically modify the novel, which is the wrong subject; the sonnet is the one that compresses. Fix by making the subject explicit: \"Whereas the sonnet compresses grief into a single image, the novel spreads it across a chapter.\"",
+     "after": "Correct: \"Whereas the sonnet compresses grief into a single image, the novel spreads it across an entire chapter, so the reader feels the weight of grief differently in each form.\" Both verb phrases follow the pattern [verb]s [object] into/across [a unit] (compresses grief into a single image, spreads it across an entire chapter), keeping the parallel. Dangling modifier error: \"Whereas compressing grief into a single image, the novel spreads it across a chapter.\" The participial phrase compressing grief would grammatically modify the novel, which is the wrong subject; the sonnet is the one that compresses. Fix by making the subject explicit: \"Whereas the sonnet compresses grief into a single image, the novel spreads it across a chapter.\""
+    },
+    {
+     "path": "worked_example.steps[2]",
+     "before": "Draft the divergence clause with a contrastive conjunction and parallel structure. Whereas story A lets the silence grow louder as the plot advances, story B lets the silence remain static, a fixed absence. Check parallelism: both clauses follow the pattern lets the silence [verb/phrase]. grows louder and remain static are not parallel; revise: whereas story A lets the silence intensify, story B lets the silence persist. Now both verbs are simple present and the structure matches.",
+     "after": "Draft the divergence clause with a contrastive conjunction and parallel structure. Whereas story A lets the silence grow louder as the plot advances, story B lets the silence remain static, a fixed absence. Check parallelism: both clauses follow the pattern lets the silence [bare verb + complement], so grow louder and remain static are already parallel. For a tighter balance, use one verb each: whereas story A lets the silence intensify, story B lets the silence persist. Both verbs are bare infinitives after lets, so the structure matches."
+    },
+    {
+     "path": "worked_example.steps[4]",
+     "before": "Assemble into one sentence and check the modifier placement. Whereas story A lets the silence intensify, story B lets it persist, a difference that reveals A's silence as pressure building toward a breaking point and B's as a settled, inescapable state. The contrastive clause attaches to story A, the main clause to story B, and the appositive a difference that... modifies the whole comparison, not one text.",
+     "after": "Assemble into one sentence and check the modifier placement. Both stories foreground a protagonist who does not speak, yet whereas story A lets the silence intensify, story B lets it persist, a difference that reveals A's silence as pressure building toward a breaking point and B's as a settled, inescapable state. The whereas clause has its own subject (story A), the main clause has story B, and the appositive a difference that... modifies the whole comparison, not one text."
+    },
+    {
+     "path": "worked_example.steps[5]",
+     "before": "Check that the paragraph would be a summary without the divergence and significance clauses. If you deleted them, you would be left with Both stories use a silent protagonist, which is a statement, not a comparison. The paragraph only earns its existence because of the divergence and significance.",
+     "after": "Check that the paragraph would be a summary without the divergence and significance clauses. If you deleted them, you would be left with Both stories foreground a protagonist who does not speak, which is a statement, not a comparison. The paragraph only earns its existence because of the divergence and significance."
+    },
+    {
+     "path": "worked_example.answer",
+     "before": "Whereas story A lets the silence intensify, story B lets it persist, a difference that reveals A's silence as pressure building toward a breaking point and B's as a settled, inescapable state.",
+     "after": "Both stories foreground a protagonist who does not speak, yet whereas story A lets the silence intensify, story B lets it persist, a difference that reveals A's silence as pressure building toward a breaking point and B's as a settled, inescapable state."
+    },
+    {
+     "path": "common_mistakes[1]",
+     "before": "Using whereas or while to introduce a clause whose subject is the wrong noun (a dangling modifier). For example, Whereas examining guilt, the second novel avoids it. The participial phrase examines guilt has no subject; the reader assumes the second novel is examining guilt, when it is the first. Name the subject explicitly in the subordinate clause.",
+     "after": "Opening the comparison with whereas or while plus a participle that has no subject of its own, so the phrase attaches to the wrong noun (a dangling modifier). For example, Whereas examining guilt, the second novel avoids it. The participial phrase examining guilt has no subject of its own, so the reader assumes the second novel is examining guilt, when it is the first. Name the subject explicitly: Whereas the first novel examines guilt, the second novel avoids it."
+    }
+   ],
+   "code_problems": [],
+   "math_after": [],
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:14",
+   "why_failed_before": "night fix N15: staged with a relative set path ({answer}) the apply tool cannot place",
+   "errors": [
+    {
+     "ref": "N15",
+     "wrong": "Q: Which of these is a complete sentence? A. Running down the hall with my backpack half open. B. She sprinted down the hall with her backpack half open. Key: \"Neither is a complete sentence\"",
+     "correct": "B is complete (as the rationale itself says), so the key is \"B only; A is a fragment\"."
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Sentence_clause_structure",
+     "quote": "A set of words with no independent clause may be an incomplete sentence, also called a sentence fragment."
+    }
+   ],
+   "diff": [
+    {
+     "path": "checks[1].answer",
+     "before": "Neither is a complete sentence",
+     "after": "B only; A is a fragment"
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 1,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "items:61322",
+   "why_failed_before": "night fix N25: staged with a relative set path the apply tool cannot place",
+   "errors": [
+    {
+     "ref": "N25",
+     "wrong": "Q: A student wants to check a paragraph for inappropriate shifts. What should the student look for? Key: \"Check whether every sentence begins with a different part of speech.\"",
+     "correct": "The rationale itself names the answer: \"Check whether the agent and the mood stay consistent across clauses, or whether any change is deliberate.\""
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "answer",
+     "before": "Check whether every sentence begins with a different part of speech.",
+     "after": "Check whether the agent and the mood stay consistent across clauses, or whether any change is deliberate."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 2,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  },
+  {
+   "key": "block_plans:27",
+   "why_failed_before": "new (owner-review q-6487098f954e)",
+   "errors": [
+    {
+     "ref": "OR-BP27",
+     "wrong": "Type-in check keyed \"affected\" (also accepts \"effected\") for \"The new style guide will ___ every article we publish.\", and it asks whether \"The pilot was late, and so the takeoff was delayed\" is a fragment or a run-on although its own rationale says that sentence is correctly punctuated.",
+     "correct": "The word is \"affect\" (verb after \"will\"); make the second sentence a real run-on so \"run-on\" is right."
+    }
+   ],
+   "sources": [],
+   "diff": [
+    {
+     "path": "checks[3].prompt",
+     "before": "Type the correct word: 'The new style guide will ___ every article we publish.' Is 'The pilot was late, and so the takeoff was delayed' a fragment or a run-on? Answer with the missing word first, then fragment or run-on (for example: word, run-on).",
+     "after": "Type the correct word: 'The new style guide will ___ every article we publish.' Is 'The pilot was late the takeoff was delayed' a fragment or a run-on? Answer with the missing word first, then fragment or run-on (for example: word, run-on)."
+    },
+    {
+     "path": "checks[3].answer",
+     "before": "affected",
+     "after": "affect, run-on"
+    },
+    {
+     "path": "checks[3].accepts",
+     "before": [
+      "affected",
+      "effected"
+     ],
+     "after": [
+      "affect, run-on",
+      "affect run-on",
+      "affect, run on",
+      "affect; run-on"
+     ]
+    },
+    {
+     "path": "checks[3].rationale",
+     "before": "The deciding facts: affect is the verb meaning to influence, so it fits before the object; the second sentence has two independent clauses joined by and with a comma, which is a correctly punctuated sentence, not a run-on or fragment.",
+     "after": "The deciding facts: affect is the verb meaning to influence, so it fits after 'will' and before the object; 'The pilot was late the takeoff was delayed' fuses two independent clauses with no punctuation, so it is a run-on."
+    }
+   ],
+   "code_problems": [],
+   "math_after": null,
+   "judge_a": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_a": "minimax/minimax-m3.1-flash",
+   "judge_b": {
+    "index": 0,
+    "all_fixed": true,
+    "all_true": true,
+    "note": ""
+   },
+   "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+   "verified": true
+  }
+ ]
+}

@@ -1,0 +1,151 @@
+{
+ "collection": "lessons",
+ "row_id": 2144,
+ "shared": false,
+ "user_id": 3016,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P55",
+   "wrong": "Write the expression in the same order the words appear, except that more than and less than put the named number first.",
+   "correct": "\"8 less than y\" is y - 8: the named number goes second; Section 1 says it goes first and the summary says second (contradiction).",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Write the expression in the same order the words appear, except that more than and less than put the named number first.",
+   "replace": "Write the expression in the same order the words appear, except that more than and less than put the named number second.",
+   "fixes": [
+    "P55"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[0].body",
+   "before": "The rule: the words sum, plus, and more than mean add; difference, minus, and less than mean subtract. Write the expression in the same order the words appear, except that more than and less than put the named number first. Example: the sum of a number x and 5 becomes x + 5.",
+   "after": "The rule: the words sum, plus, and more than mean add; difference, minus, and less than mean subtract. Write the expression in the same order the words appear, except that more than and less than put the named number second. Example: the sum of a number x and 5 becomes x + 5.",
+   "fixes": [
+    "P55"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Turning Words into Expressions",
+  "intro": "Words can describe math without writing a single symbol. Your job is to swap each phrase for the operation it names, keeping the order the words give you. We will start with the three word groups that show up most often.",
+  "sections": [
+   {
+    "heading": "Sum and difference words",
+    "body": "The rule: the words sum, plus, and more than mean add; difference, minus, and less than mean subtract. Write the expression in the same order the words appear, except that more than and less than put the named number second. Example: the sum of a number x and 5 becomes x + 5.",
+    "example": "The sum of a number x and 5 is written x + 5."
+   },
+   {
+    "heading": "Product words mean multiply",
+    "body": "The rule: product, times, twice, and of (with numbers) mean multiply. Write the number parts next to each other, and 2 times a number x is written 2x. Example: the product of 6 and a number n becomes 6n.",
+    "example": "The product of 6 and a number n is written 6n."
+   },
+   {
+    "heading": "Less than and more than flip the order",
+    "body": "The rule: the phrase N less than a number x means you start with x and take N off, so write x - N. The phrase N more than x means x + N. Example: 8 less than a number y becomes y - 8, because the 8 is being taken away from y.",
+    "example": "8 less than a number y is written y - 8."
+   }
+  ],
+  "worked_example": {
+   "problem": "Translate into an expression: 4 more than the product of 3 and a number n.",
+   "steps": [
+    "Find the innermost phrase first. The product of 3 and a number n means multiply, so that part is 3n.",
+    "Now read the outer phrase: 4 more than that result. More than means add, and the number already written goes first.",
+    "So take the 3n and add 4, giving 3n + 4."
+   ],
+   "answer": "3n + 4"
+  },
+  "common_mistakes": [
+   "Writing 8 less than a number y as 8 - y. That move puts 8 first, so it computes how far below 8 the number y is. The correct expression is y - 8, because the 8 comes off of y.",
+   "Writing the product of 6 and a number n as 6 + n. That move swaps multiply for add, producing a sum instead of a product. The correct expression is 6n.",
+   "Writing 4 more than the product of 3 and n as 4 + 3 + n. That move breaks the product into two separate numbers, producing 7 + n instead of 3n + 4. Multiply 3 and n first, then add 4.",
+   "Writing 5 less than a number x as 5x. That move reads less as times, producing a product instead of a subtraction. The correct expression is x - 5."
+  ],
+  "summary": "Each phrase maps to one operation: sum and more than add, difference and less than subtract, product and times multiply. For more than and less than, write the named number second. Multiply the pieces that the word product joins before adding anything else.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.2898305084745763,
+    "prompt": "Which expression means the product of 6 and a number n?",
+    "answer": "6n",
+    "rationale": "Product means multiply, so 6 and n are multiplied together, which is written 6n.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "6 + n",
+     "6n",
+     "n / 6",
+     "6 - n"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.2898305084745763,
+    "prompt": "Write an expression for: 5 more than a number x.",
+    "answer": "x + 5",
+    "rationale": "More than means add, and the named number x goes first, giving x + 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.2898305084745763,
+    "prompt": "Which expression means 8 less than a number y?",
+    "answer": "y - 8",
+    "rationale": "Less than puts the named number first and subtracts the 8 from it, so you write y - 8.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "8 - y",
+     "y + 8",
+     "y - 8",
+     "8y"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.2898305084745763,
+    "prompt": "Write an expression for: the sum of 4 and twice a number m.",
+    "answer": "4 + 2m",
+    "rationale": "Twice a number m means 2m, and sum of 4 and that result means add 4, giving 4 + 2m.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

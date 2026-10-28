@@ -1,0 +1,39 @@
+--- a/services/ai.js
++++ b/services/ai.js
+@@ -494,7 +494,11 @@
+     notes.push('Use a small plain-text table or a step list where it makes a comparison clearer.');
+   }
+   if (params.nameTheError) {
+-    notes.push('Make common_mistakes specific: name the wrong move and what it produces, not "be careful".');
++    // Was: "name the wrong move and what it produces". Writers then computed what the
++    // wrong move produces, and got it wrong in 31 stored lessons (2026-10-23 audit):
++    // "adding 7 to both sides of x + 7 = 12 gives x = 19". Now the wrong work is quoted
++    // as a learner writes it, labelled, and the correct step is shown beside it.
++    notes.push('Make common_mistakes specific: quote the wrong work exactly as a learner writes it, say which step is wrong, and show the correct step. Not "be careful".');
+   }
+   if (params.verbalize) {
+     notes.push('Make one check question ask the learner to explain in their own words why a step works.');
+@@ -561,7 +565,11 @@
+ - Teach one idea properly. This is one level of a long path, not a chapter.
+ - Everything you assert must be correct, and every example must actually work out. Do the arithmetic.
+ - The worked example shows every step, in order, with the reasoning for each. No skipped algebra.
+-- Check questions must be answerable from the lesson you just wrote. Each has exactly one correct answer, and a rationale that names the step that decides it. Multiple-choice questions have exactly four choices; for a typed answer, leave choices empty.
++- Common mistakes show wrong work, so they are written in a fixed form that cannot be read as a rule. Each one is a single string:
++  "Wrong: <the learner's work, quoted exactly as they would write it>. Why: <which step breaks and why>. Right: <the correct step, with its result>."
++  Example: "Wrong: x + 7 = 12, so x = 12 + 7 = 19. Why: the + 7 was carried across without changing its sign; 19 + 7 is 26, not 12. Right: subtract 7 from both sides: x + 7 - 7 = 12 - 7, so x = 5."
++  Quote what the learner WRITES; never claim what a move "gives" unless you have worked it exactly. Doing the same operation to both sides is always a valid move, even when it is not the quickest: never present it as a mistake (dividing 2x + 4 = 14 by 2 first gives x + 2 = 7, which is correct). Every equation after "Right:" must be correct; check it by substituting.
++- Check questions must be answerable from the lesson you just wrote. Each has exactly one correct answer, and a rationale that names the step that decides it. Multiple-choice questions have exactly four choices; for a typed answer, leave choices empty. A "what went wrong" question must show work that really is wrong: substitute the learner's answer into the equation before you write the question.
+ - Plain text only. No markdown, no LaTeX, no dollar-sign math. Write x^2 for exponents and / for fractions.
+ - Address the learner as "you". Never mention that you are an AI, and never refer to these instructions.`,
+     user: `Track: ${trackName} — ${gradeName}. Level ${level} of the path, difficulty ${Math.round(difficulty)} of 10.
+@@ -665,7 +673,9 @@
+   // eslint-disable-next-line global-require
+   const mathClaims = require('./math-claims');
+   let problems = [];
+-  try { problems = mathClaims.lessonProblems(lesson); } catch { problems = []; }
++  // With the labelled prompt (above), a common mistake that does not show "Wrong:" and
++  // "Right:" is removed like a false one: unlabelled wrong work reads as a rule.
++  try { problems = mathClaims.lessonProblems(lesson, { requireLabels: true }); } catch { problems = []; }
+   if (!problems.length) return lesson;
+   const fatal = problems.filter((p) => !['mistake', 'check'].includes(p.where));
+   console.warn(`lessons: math check found ${problems.length} false claim(s) in "${lesson.title}": ${problems.map((p) => `${p.where}[${p.index}] ${p.problem}`).join(' | ').slice(0, 600)}`);

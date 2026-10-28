@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chess Puzzles</title>
+  <!-- The puzzle trainer: rated puzzles that move a Glicko-2 puzzle rating, and a
+       3-minute, 3-strike rush. Every move is graded by /api/chess (content/chess-trainer.js);
+       this page never holds a solution before a puzzle is over. -->
+  <style>
+    body { margin: 0; background: #090d16; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 520px; margin: 0 auto; padding: 18px 16px 60px; display: flex; flex-direction: column; gap: 14px; }
+    h1 { font-size: 1.25rem; margin: 0; }
+    a { color: #38bdf8; }
+    .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+    .stat { flex: 1 1 100px; background: #111827; border: 1px solid #1f293d; border-radius: 12px; padding: 10px 12px; }
+    .stat b { display: block; font-size: 1.3rem; }
+    .stat span { font-size: .8rem; color: #94a3b8; }
+    .modes { display: flex; gap: 8px; }
+    .modes button, .row button { min-height: 44px; padding: 0 16px; border: 1px solid #334155; border-radius: 10px; background: #111827; color: #f8fafc; font: inherit; font-weight: 600; cursor: pointer; }
+    .modes button[aria-pressed="true"] { background: #38bdf8; color: #090d16; border-color: #38bdf8; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .row button.primary { background: #38bdf8; color: #090d16; border-color: #38bdf8; }
+    button:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
+    button:disabled { opacity: .5; cursor: default; }
+    .card { background: #111827; border: 1px solid #1f293d; border-radius: 12px; padding: 14px; }
+    .say { margin: 10px 0 0; min-height: 1.5em; text-align: center; font-size: 15px; line-height: 1.5; }
+    .say.right { color: #34d399; }
+    .say.wrong { color: #fbbf24; }
+    .rushbar { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 10px; }
+    .clock { font-variant-numeric: tabular-nums; font-size: 1.3rem; }
+    .clock.low { color: #f87171; }
+    .strikes span { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #475569; margin-left: 4px; }
+    .strikes span.hit { background: #f87171; border-color: #f87171; }
+    .muted { color: #94a3b8; font-size: .85rem; }
+    .credit { text-align: center; margin: 6px 0 0; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Chess puzzles</h1>
+    <div class="stats" id="stats" aria-live="polite">
+      <div class="stat"><b id="rating">-</b><span id="rating-note">Puzzle rating</span></div>
+      <div class="stat"><b id="solved">-</b><span>Solved / tried</span></div>
+      <div class="stat"><b id="best">-</b><span>Best rush</span></div>
+    </div>
+    <div class="modes" role="group" aria-label="Mode">
+      <button type="button" id="mode-rated" aria-pressed="true">Rated puzzles</button>
+      <button type="button" id="mode-rush" aria-pressed="false">Rush: 3 minutes</button>
+    </div>
+    <section class="card" id="play">
+      <div class="rushbar" id="rushbar" hidden>
+        <span>Score <span id="score">0</span></span>
+        <span class="clock" id="clock">3:00</span>
+        <span class="strikes" id="strikes" aria-label="Strikes"><span></span><span></span><span></span></span>
+      </div>
+      <div id="board"></div>
+      <p class="say" id="say" role="status"></p>
+      <p class="muted credit" id="credit" hidden></p>
+      <div class="row" id="actions">
+        <button type="button" id="next" class="primary">Start</button>
+        <button type="button" id="retry" hidden>Try it again</button>
+        <button type="button" id="giveup" hidden>Show the solution</button>
+      </div>
+    </section>
+    <p class="muted">Rated puzzles move your rating; a retry does not. In a rush, puzzles get harder, a wrong move is a strike, and three strikes or the clock end it. Puzzles are our own positions plus a curated set from the <a href="https://database.lichess.org/" target="_blank" rel="noopener noreferrer">Lichess puzzle database</a> (CC0; thank you, Lichess), each checked again by our rules engine and by Stockfish. <a href="drills.html">Move trainer</a> · <a href="spar.html">Play a human-like bot</a> · <a href="NOTICES.txt">Credits</a></p>
+  </main>
+  <script src="chess-core.js"></script>
+  <script src="board.js"></script>
+  <script src="puzzles.js"></script>
+</body>
+</html>

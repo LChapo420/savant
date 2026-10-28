@@ -1,0 +1,82 @@
+{
+ "collection": "lessons",
+ "row_id": 80,
+ "shared": false,
+ "user_id": 163,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P15",
+   "wrong": "Adding the 6 to one side only in x + 6 = 15. That gives x = 21 on the left while the right side stays 15, and the check 21 + 6 = 27 fails. (Also the check question keyed \"She added 6 to the left side only, giving x = 21\".)",
+   "correct": "Adding 6 to one side only of x + 6 = 15 does not give x = 21; the slip that gives 21 is adding 6 to 15 instead of subtracting it (x = 15 + 6)."
+  }
+ ],
+ "edits": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Adding the 6 to one side only in x + 6 = 15. That gives x = 21 on the left while the right side stays 15, and the check 21 + 6 = 27 fails.",
+   "after": "Adding the 6 instead of subtracting it in x + 6 = 15, writing x = 15 + 6 = 21. The check 21 + 6 = 27 fails. Subtracting 6 from both sides gives x = 9, and 9 + 6 = 15."
+  },
+  {
+   "path": "check_questions[2].answer",
+   "before": "She added 6 to the left side only, giving x = 21",
+   "after": "She added 6 to 15 instead of subtracting it, giving x = 21"
+  },
+  {
+   "path": "check_questions[2].choices[1]",
+   "before": "She added 6 to the left side only, giving x = 21",
+   "after": "She added 6 to 15 instead of subtracting it, giving x = 21"
+  },
+  {
+   "path": "check_questions[2].rationale",
+   "before": "Only a one-sided add leaves the equation at x = 21 with 15 untouched. The check exposes it: 21 + 6 = 27, not 15.",
+   "after": "Adding 6 to 15 gives 21, but the 6 has to be undone by subtracting it. The check exposes the slip: 21 + 6 = 27, not 15. The right move, subtracting 6 from both sides, gives x = 9."
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Adding the 6 to one side only in x + 6 = 15. That gives x = 21 on the left while the right side stays 15, and the check 21 + 6 = 27 fails.",
+   "after": "Adding the 6 instead of subtracting it in x + 6 = 15, writing x = 15 + 6 = 21. The check 21 + 6 = 27 fails. Subtracting 6 from both sides gives x = 9, and 9 + 6 = 15."
+  },
+  {
+   "path": "check_questions[2].answer",
+   "before": "She added 6 to the left side only, giving x = 21",
+   "after": "She added 6 to 15 instead of subtracting it, giving x = 21"
+  },
+  {
+   "path": "check_questions[2].choices[1]",
+   "before": "She added 6 to the left side only, giving x = 21",
+   "after": "She added 6 to 15 instead of subtracting it, giving x = 21"
+  },
+  {
+   "path": "check_questions[2].rationale",
+   "before": "Only a one-sided add leaves the equation at x = 21 with 15 untouched. The check exposes it: 21 + 6 = 27, not 15.",
+   "after": "Adding 6 to 15 gives 21, but the 6 has to be undone by subtracting it. The check exposes the slip: 21 + 6 = 27, not 15. The right move, subtracting 6 from both sides, gives x = 9."
+  }
+ ],
+ "judge_a": {
+  "index": 3,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 3,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "the answer text appears twice (answer and choices[1]), so the plain find matched 2 places and the JSON-syntax find matched 0",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

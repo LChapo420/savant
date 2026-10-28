@@ -1,0 +1,34 @@
+# /etc/caddy/Caddyfile : HTTPS for both sites. Caddy gets and renews the certificates
+# itself (Let's Encrypt / ZeroSSL) once DNS points here and ports 80 and 443 are open.
+# Replace example.com with the real domain.
+
+app.example.com {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:6767
+	# The app sets its own security headers (middleware/security.js), HSTS included in production.
+	log {
+		output file /var/log/caddy/app.log {
+			roll_size 20MiB
+			roll_keep 5
+			roll_keep_for 720h
+		}
+		# No client IPs in the access log is the privacy-first choice; keep "ip" only if you need it for abuse.
+		format filter {
+			wrap json
+			fields {
+				request>remote_ip delete
+				request>client_ip delete
+				request>headers>Cookie delete
+				request>uri query {
+					delete token
+					delete invite
+				}
+			}
+		}
+	}
+}
+
+example.com, www.example.com {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:8787
+}

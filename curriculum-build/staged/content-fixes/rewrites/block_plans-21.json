@@ -1,0 +1,611 @@
+{
+ "collection": "block_plans",
+ "row_id": 21,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P104",
+   "wrong": "The singer (subject) does the action directly.",
+   "correct": "The sentence is \"The crowd cheered the winning goal.\" - the subject is the crowd, not \"the singer\".",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P105",
+   "wrong": "If plus would is a conditional if-clause structure.",
+   "correct": "\"If it rains tomorrow, the game will be moved indoors\" is if + present / will (first conditional), not \"if plus would\".",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P106",
+   "wrong": "Two or more words are missing; it has no subject or no verb, so it cannot stand alone.",
+   "correct": "\"Ran through the parking lot at midnight.\" has a verb (ran) and lacks only a subject.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "The singer (subject) does the action directly.",
+   "replace": "The crowd (subject) does the action directly.",
+   "fixes": [
+    "P104"
+   ]
+  },
+  {
+   "find": "If plus would is a conditional if-clause structure.",
+   "replace": "This first conditional uses if + present / will: 'If it rains tomorrow, the game will be moved indoors.'",
+   "fixes": [
+    "P105"
+   ]
+  },
+  {
+   "find": "Two or more words are missing; it has no subject or no verb, so it cannot stand alone.",
+   "replace": "Only the subject is missing; the verb 'ran' is present, so it cannot stand alone.",
+   "fixes": [
+    "P106"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[0].data.cards[0].explanation",
+   "before": "The singer (subject) does the action directly.",
+   "after": "The crowd (subject) does the action directly.",
+   "fixes": [
+    "P104"
+   ]
+  },
+  {
+   "path": "blocks[0].data.cards[2].explanation",
+   "before": "If plus would is a conditional if-clause structure.",
+   "after": "This first conditional uses if + present / will: 'If it rains tomorrow, the game will be moved indoors.'",
+   "fixes": [
+    "P105"
+   ]
+  },
+  {
+   "path": "blocks[5].data.cells[2].answer",
+   "before": "Two or more words are missing; it has no subject or no verb, so it cannot stand alone.",
+   "after": "Only the subject is missing; the verb 'ran' is present, so it cannot stand alone.",
+   "fixes": [
+    "P106"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Ret_SpeedCategorizer",
+    "purpose": "Rapidly sort sentences as active, passive, conditional, or subjunctive to rebuild quick recognition of each form from memory.",
+    "data": {
+     "buckets": [
+      {
+       "color": "success",
+       "hint": "Subject does the action: was/were + -ing or plain verb",
+       "id": "active",
+       "label": "Active voice"
+      },
+      {
+       "color": "error",
+       "hint": "Be verb + past participle; receiver becomes subject",
+       "id": "passive",
+       "label": "Passive voice"
+      },
+      {
+       "color": "accent",
+       "hint": "Conditional uses if + will/would; subjunctive uses were or that + be",
+       "id": "mood",
+       "label": "Conditional or subjunctive"
+      }
+     ],
+     "cards": [
+      {
+       "correctBucket": "active",
+       "explanation": "The crowd (subject) does the action directly.",
+       "id": "c1",
+       "text": "The crowd cheered the winning goal."
+      },
+      {
+       "correctBucket": "passive",
+       "explanation": "Be verb plus past participle: the trophy is being acted upon.",
+       "id": "c2",
+       "text": "The trophy was lifted by the captain."
+      },
+      {
+       "correctBucket": "mood",
+       "explanation": "This first conditional uses if + present / will: 'If it rains tomorrow, the game will be moved indoors.'",
+       "id": "c3",
+       "text": "If it rains tomorrow, the game will be moved indoors."
+      },
+      {
+       "correctBucket": "mood",
+       "explanation": "That plus base form 'be' is a subjunctive demand.",
+       "id": "c4",
+       "text": "The coach insisted that the play be run again."
+      },
+      {
+       "correctBucket": "active",
+       "explanation": "The band (subject) performs the action.",
+       "id": "c5",
+       "text": "The band played three encores."
+      },
+      {
+       "correctBucket": "passive",
+       "explanation": "Was + delayed: the cause is pushed out of the spotlight.",
+       "id": "c6",
+       "text": "The concert was delayed for an hour."
+      },
+      {
+       "correctBucket": "mood",
+       "explanation": "Hypothetical wish: subjunctive 'were' instead of 'was'.",
+       "id": "c7",
+       "text": "If I were the drummer, I would play the solo."
+      },
+      {
+       "correctBucket": "active",
+       "explanation": "The fans (subject) perform the action; the doer leads the sentence.",
+       "id": "c8",
+       "text": "The fans threw confetti at the players."
+      }
+     ],
+     "prompt": "Tap each card into its bucket as fast as you can.",
+     "seconds": 90,
+     "showExplanations": true,
+     "title": "Voice & Mood Speed Sort"
+    },
+    "repaired": false,
+    "index": 0
+   },
+   {
+    "block": "Ret_MisconceptionTrap",
+    "purpose": "Confront the #1 misconception — that passive voice is always an error — by making the learner pick the sentence where passive is the deliberate, correct choice.",
+    "data": {
+     "correctId": "o2",
+     "notQuiteMessage": "That's the trap.",
+     "options": [
+      {
+       "id": "o1",
+       "text": "\"Passive voice is always bad writing. Every sentence you write in the passive voice is an error you should fix.\"",
+       "whyNot": "Tempting because teachers flag a lot of lazy passive sentences. But passive voice is a choice, not a crime. Writers use it on purpose when the receiver of the action matters more than the doer, or when the doer is unknown."
+      },
+      {
+       "id": "o2",
+       "text": "\"Twelve laptops were stolen from the lab overnight. Anyone with information is urged to come forward.\"",
+       "whyNot": "This one survives. The doer is unknown, so active voice would have to invent or dodge a subject. Passive puts the stolen laptops — the thing readers care about — in the spotlight. This is the deliberate, correct use of passive."
+      },
+      {
+       "id": "o3",
+       "text": "\"The essay was being written by me, and then it was being edited by me too, and it was being finished late.\"",
+       "whyNot": "Tempting because it looks formal and grammatical. But nothing here needs passive: the doer (me) is known and the active verbs 'I wrote, I edited, I finished' would be shorter and stronger. This passive just pads the sentence."
+      }
+     ],
+     "prompt": "One of these claims is wrong about passive voice. Read all three and pick the one that survives scrutiny.",
+     "successMessage": "Survives scrutiny."
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Ret_UncuedReconstruct",
+    "purpose": "Rebuild subjunctive and conditional clauses from scratch ('If I were', 'that he be'), producing the forms without cues.",
+    "data": {
+     "answerLabel": "Reconstructed sentence",
+     "completeMessage": "Both forms rebuilt from memory. That is exactly what shows up on tests.",
+     "items": [
+      {
+       "chunks": [
+        {
+         "text": "If I were"
+        },
+        {
+         "text": "the director"
+        },
+        {
+         "text": "I would cast"
+        },
+        {
+         "text": "my best friend"
+        },
+        {
+         "text": "If I was"
+        },
+        {
+         "text": "I will cast"
+        }
+       ],
+       "feedback": {
+        "correct": "Subjunctive 'were' plus 'would' in the result clause.",
+        "explanation": "For a hypothetical that is not true, the if-clause takes 'were', not 'was', and the result clause takes 'would'.",
+        "incorrect": "None of the chunks are in place yet. Look for the subjunctive 'were'.",
+        "partial": "You are close — the fake-out chunks 'If I was' and 'I will cast' belong back in the bank."
+       },
+       "id": "r1",
+       "label": "Round 1 of 2",
+       "solution": [
+        "If I were",
+        "the director",
+        "I would cast",
+        "my best friend"
+       ]
+      },
+      {
+       "chunks": [
+        {
+         "text": "The principal demanded"
+        },
+        {
+         "text": "that every student be"
+        },
+        {
+         "text": "in the hall"
+        },
+        {
+         "text": "by eight o'clock"
+        },
+        {
+         "text": "that every student is"
+        },
+        {
+         "text": "that every student was"
+        }
+       ],
+       "feedback": {
+        "correct": "Subjunctive demand: 'that' plus base form 'be'.",
+        "explanation": "After a demand verb like 'demanded', the that-clause drops to the base form: 'that every student be', never 'is' or 'was'.",
+        "incorrect": "None in place yet. The demand verb signals the subjunctive.",
+        "partial": "Some pieces are right — but 'is' and 'was' are decoys for a subjunctive demand."
+       },
+       "id": "r2",
+       "label": "Round 2 of 2",
+       "solution": [
+        "The principal demanded",
+        "that every student be",
+        "in the hall",
+        "by eight o'clock"
+       ]
+      }
+     ],
+     "prompt": "The word bank is scrambled. Pull the chunks into the slots, in order, to build each sentence with no hints. Two of the chunks in each bank are decoys — leave them out.",
+     "title": "Build It From Nothing",
+     "placeholder": "Drag or tap a chunk here"
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Ret_ForensicAudit",
+    "purpose": "Hunt inappropriate voice or mood shifts in a short paragraph, distinguishing intentional effects from genuine errors.",
+    "data": {
+     "artifactLabel": "student essay draft — paragraph 2",
+     "artifactType": "essay",
+     "brief": "One of these sentences shifts voice or mood in a way that is an error, not an author's choice. Click the faulty sentence.",
+     "completionMessage": "Found it. 'If the storm was worse' breaks the subjunctive pattern that the writer set up — it should be 'If the storm were worse.'",
+     "id": "audit1",
+     "lines": [
+      {
+       "explanation": "Clean. Passive is deliberate here: the doer is unknown, and the theft itself is what matters.",
+       "id": "l1",
+       "isError": false,
+       "label": "1",
+       "text": "Last month, three helmets were stolen from the equipment shed."
+      },
+      {
+       "explanation": "Clean. An intentional shift: passive suits the unknown doer, then active suits the coach acting on his own.",
+       "id": "l2",
+       "isError": false,
+       "label": "2",
+       "text": "The coach responded by locking the shed and checking it every evening himself."
+      },
+      {
+       "explanation": "Clean. Subjunctive conditional: a hypothetical that did not happen, so 'were' is correct.",
+       "id": "l3",
+       "isError": false,
+       "label": "3",
+       "text": "If the shed were replaced this year, the team would raise the money itself."
+      },
+      {
+       "explanation": "This is the error. The writer set up a subjunctive hypothetical (sentence 3 used 'were'), but here 'was' crashes back to ordinary mood in the middle of the same hypothetical. It should read: 'If the storm were worse, the season would end early.'",
+       "id": "l4",
+       "isError": true,
+       "label": "4",
+       "text": "But if the storm was worse, the season would end early."
+      },
+      {
+       "explanation": "Clean. Straight active voice; the subject does the action.",
+       "id": "l5",
+       "isError": false,
+       "label": "5",
+       "text": "Either way, the players kept practicing through all of it."
+      }
+     ],
+     "maxMisses": 2,
+     "revealLabel": "Reveal the faulty line",
+     "title": "Auditor's Eye: Find the Broken Shift"
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Ret_FarTransferWorkbench",
+    "purpose": "Apply voice and mood choices to an unfamiliar real-world writing scenario, justifying each choice for tone and emphasis.",
+    "data": {
+     "contextItems": [
+      {
+       "label": "Doer known?",
+       "value": "Yes — an intern"
+      },
+      {
+       "label": "Reader's priority",
+       "value": "Confirming the tests passed"
+      },
+      {
+       "label": "Office style",
+       "value": "Facts first, blame never"
+      }
+     ],
+     "decisionKeywords": [
+      "was corrected",
+      "were corrected",
+      "corrected and rerun",
+      "passive",
+      "by the intern"
+     ],
+     "decisionPrompt": "Write the one-sentence status update the lab will send to the client.",
+     "decisionPlaceholder": "Write one sentence using the voice you chose.",
+     "eyebrow": "WORKPLACE WRITING — LAB REPORT",
+     "misconception": {
+      "detail": "If you made the intern the subject ('An intern corrected the samples...'), you shifted the client's attention from the passing samples to the mistake itself. When the receiver of the action matters more than the doer — or the doer should stay out of the spotlight — passive voice is the deliberate, correct choice.",
+      "title": "Blaming the doer on purpose"
+     },
+     "nextLabel": "Case closed",
+     "rationaleKeywords": [
+      "receiver",
+      "emphasis",
+      "unknown",
+      "spotlight",
+      "doer",
+      "matter more",
+      "attention",
+      "out of focus"
+     ],
+     "rationalePrompt": "Explain why the voice you chose fits the supervisor's goals for this email.",
+     "rationalePlaceholder": "Name what the voice emphasizes and why that helps here.",
+     "referenceNote": "You may lean on the rule card: active emphasizes the doer; passive emphasizes the receiver; mood sets condition vs fact.",
+     "retryLabel": "Revise the update",
+     "rule": {
+      "name": "Voice matches emphasis",
+      "statement": "Choose active voice when the doer of the action deserves the spotlight; choose passive voice when the receiver of the action, or the action itself, matters more than who did it."
+     },
+     "scenarioBody": "You intern at a water-quality lab. Overnight, one of your coworkers mixed up two sample labels — an honest mistake. The samples were rerun and everything passed. Your supervisor needs to email the client a one-sentence status update tomorrow morning. The client mainly wants to know: are the results trustworthy? The supervisor also does not want the email to name and shame the intern, though the intern is a known person. Decide which voice the sentence should use, then write the sentence itself.",
+     "scenarioTitle": "The Sample Mix-Up Email",
+     "submitLabel": "Lock in the update",
+     "targetAnswer": {
+      "decision": "Passive voice, for example: \"A labeling error was corrected and all samples were rerun; every result now meets the required standards.\"",
+      "rationale": "The rule says to pick the voice that puts the right thing in the spotlight. The client's real question is whether the results are trustworthy, so the samples and the passing results — the receivers of the actions — deserve the emphasis. Passive voice ('was corrected', 'were rerun') keeps the focus on the tests and their outcome while letting a known doer stay out of the spotlight. Active voice would make the intern the subject and turn a reassurance into a blame report."
+     }
+    },
+    "repaired": true,
+    "index": 4
+   },
+   {
+    "block": "Ret_InterleavedMatrix",
+    "purpose": "Mix in earlier skills — confused words and fragments/run-ons — in a comparative grid so old topics stay retrievable alongside voice and mood.",
+    "data": {
+     "cells": [
+      {
+       "answer": "its",
+       "colId": "rule",
+       "feedback": "Its = belonging to it. It's = it is.",
+       "placeholder": "e.g. its or it's",
+       "rowId": "confused1"
+      },
+      {
+       "answer": "their",
+       "colId": "rule",
+       "feedback": "Their = belonging to them.",
+       "placeholder": "e.g. their, there, they're",
+       "rowId": "confused2"
+      },
+      {
+       "answer": "Only the subject is missing; the verb 'ran' is present, so it cannot stand alone.",
+       "colId": "diagnose",
+       "feedback": "A fragment is missing the subject, the verb, or both.",
+       "placeholder": "What is missing?",
+       "rowId": "fragment"
+      },
+      {
+       "answer": "Two or more complete sentences fused together with no punctuation or connecting word.",
+       "colId": "diagnose",
+       "feedback": "A run-on fuses complete sentences; a comma splice is a run-on joined only by a comma.",
+       "placeholder": "What is the problem?",
+       "rowId": "runon"
+      },
+      {
+       "answer": "Passive voice",
+       "colId": "diagfix",
+       "feedback": "Be verb plus past participle puts the receiver first.",
+       "placeholder": "Which voice or mood?",
+       "rowId": "vm1"
+      },
+      {
+       "answer": "Subjunctive mood",
+       "colId": "diagfix",
+       "feedback": "Demands and hypothetical wishes take the subjunctive.",
+       "placeholder": "Which voice or mood?",
+       "rowId": "vm2"
+      }
+     ],
+     "columns": [
+      {
+       "id": "rule",
+       "label": "The rule from memory"
+      },
+      {
+       "id": "diagnose",
+       "label": "Diagnosis"
+      },
+      {
+       "id": "diagfix",
+       "label": "Name the voice or mood"
+      }
+     ],
+     "completionMessage": "Grid cleared from memory — confused words, fragments and run-ons, and voice and mood all still reachable.",
+     "matrixSubtitle": "Commonly confused words, fragments and run-ons, and voice and mood, side by side",
+     "matrixTitle": "Cross-Topic Grid: Three Units at Once",
+     "rows": [
+      {
+       "id": "confused1",
+       "label": "Its vs. it's: choose the word for \"The dog wagged ___ tail.\"",
+       "sourceUnit": "Commonly confused words"
+      },
+      {
+       "id": "confused2",
+       "label": "Their vs. there vs. they're: choose the word for \"The players lost ___ gloves.\"",
+       "sourceUnit": "Commonly confused words"
+      },
+      {
+       "id": "fragment",
+       "label": "\"Ran through the parking lot at midnight.\"",
+       "sourceUnit": "Fragments and run-ons"
+      },
+      {
+       "id": "runon",
+       "label": "\"The bell rang everyone left the room.\"",
+       "sourceUnit": "Fragments and run-ons"
+      },
+      {
+       "id": "vm1",
+       "label": "Form: was/were + past participle, receiver as subject",
+       "sourceUnit": "Voice and mood"
+      },
+      {
+       "id": "vm2",
+       "label": "Form: 'If I ___ the coach' / 'that he ___ on time'",
+       "sourceUnit": "Voice and mood"
+      }
+     ]
+    },
+    "repaired": false,
+    "index": 5
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A school news post reads: \"The championship banner was cut down and taken overnight.\" Why is the passive voice the deliberate, correct choice here?",
+    "answer": "It is passive, on purpose: the doer is unknown, so it emphasizes the stolen poster and its fate.",
+    "rationale": "The doer is unknown, so an active sentence would have to invent a subject like 'someone'; passive lets the stolen banner — the news itself — be the subject.",
+    "source": "ai",
+    "hint": "Is the doer named or known? Who is the sentence really about?",
+    "choices": [
+     "It is passive, on purpose: the doer is unknown, so it emphasizes the stolen poster and its fate.",
+     "It is passive by accident: the writer should name the thief in an active sentence.",
+     "It is active, and it wrongly emphasizes the doer instead of the poster.",
+     "It is conditional mood, because the thief might never be found."
+    ],
+    "id": "c2",
+    "after": 1,
+    "focus": "Recognize when passive voice is the deliberate, correct choice"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "Complete the subjunctive sentence with one word: \"If I ______ the referee, I would stop the game.\"",
+    "answer": "were",
+    "rationale": "A hypothetical wish about an unreal situation takes the subjunctive 'were' in the if-clause, never 'was'.",
+    "source": "ai",
+    "accepts": [
+     "were"
+    ],
+    "hint": "A wish about something that is not true never takes 'was' in the if-clause.",
+    "id": "c3",
+    "after": 2,
+    "focus": "Produce correct subjunctive form ('If I were', 'that he be')"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A paragraph uses 'If the gym were replaced, the team would...' and then continues. Which sentence contains an inappropriate voice or mood shift?",
+    "answer": "\"But if the storm was worse, the season would end early.\"",
+    "rationale": "The paragraph's hypotheticals use subjunctive 'were'; the sentence 'if the storm was worse' breaks that established pattern with 'was', which is an accidental shift, not an author's choice.",
+    "source": "ai",
+    "hint": "One sentence slides out of the mood the rest of the paragraph is using.",
+    "choices": [
+     "\"Last week, two jerseys were stolen from the locker room.\"",
+     "\"The coach demanded that every player be on time.\"",
+     "\"But if the storm was worse, the season would end early.\"",
+     "\"If I were the captain, I would cancel the trip.\""
+    ],
+    "id": "c4",
+    "after": 3,
+    "focus": "Spot an inappropriate voice or mood shift in a paragraph"
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "A nurse gave the wrong dosage, but no one was hurt. The hospital's public notice must avoid naming the nurse and must focus on what happened to the patient. Which voice should the notice use? One word.",
+    "answer": "passive",
+    "rationale": "Passive voice shifts the spotlight off the doer and onto the receiver of the action, which is exactly the notice's purpose here.",
+    "source": "ai",
+    "accepts": [
+     "passive",
+     "the passive voice",
+     "passive voice"
+    ],
+    "hint": "Which voice keeps the receiver — not the guilty doer — in the spotlight?",
+    "id": "c5",
+    "after": 4,
+    "focus": "Choose voice or mood for a stated purpose and justify it"
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Choose the correct word: \"______ are four fragments and two run-ons on the board.\"",
+    "answer": "There",
+    "rationale": "The sentence states that run-ons exist at a location, so the place word 'there' is correct; 'their' shows possession and 'they're' means 'they are'.",
+    "source": "ai",
+    "hint": "One word points to a place; one shows possession; one means 'they are'.",
+    "choices": [
+     "Their",
+     "There",
+     "They're",
+     "Theirs"
+    ],
+    "id": "c6",
+    "after": 5,
+    "focus": "Interleaved check on commonly confused words and fragments vs run-ons"
+   }
+  ]
+ }
+}

@@ -1,0 +1,3383 @@
+{
+ "row_id": 65,
+ "engine_id": "yahtzee",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 97,
+ "generated_at": "2026-10-25T07:31:45.232Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 81,
+  "code_rejected": 10,
+  "sent_to_judges": 71,
+  "kept": 50,
+  "keep_rate_of_written": 0.617,
+  "judges": {
+   "both_answered": 71,
+   "picked_same_option": 67,
+   "a_picked_key": 67,
+   "b_picked_key": 70,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "yahtzee",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 97,
+   "topic": "Activity 2 of 9 (quiz/game): Learn the Strategy - Diction and Precision",
+   "title": "Word Choice Win: The Diction and Precision Strategy",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q41",
+    "prompt": "A report says a bridge reopened to pedestrians but remained closed to vehicles. Which sentence states this accurately?",
+    "choices": [
+     "The bridge reopened for pedestrians but remained closed to vehicles.",
+     "The bridge reopened for vehicles but remained closed to pedestrians.",
+     "The bridge reopened for both pedestrians and vehicles.",
+     "The bridge remained closed to both pedestrians and vehicles."
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence preserves the report's distinction between access for pedestrians and continued closure to vehicles.",
+    "difficulty": 3,
+    "skill": "Preserving precise meaning",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q42",
+    "prompt": "A ticket booth's posted schedule says it closes at 6:00 p.m. Which sentence communicates the time most precisely?",
+    "choices": [
+     "The ticket booth closes at 6:00 a.m.",
+     "The ticket booth closes at 6:00 p.m.",
+     "The ticket booth opens at 6:00 p.m.",
+     "The ticket booth closes at 9:00 p.m."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence states both the correct closing time and the accurate twelve-hour designation.",
+    "difficulty": 2,
+    "skill": "Pinning down a precise time",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q40",
+    "prompt": "A coach wants to correct a player firmly but respectfully after the player missed a decisive pass. Which sentence best fits that tone?",
+    "choices": [
+     "You missed the decisive pass, but there is nothing to improve.",
+     "You missed the decisive pass, so you are hopeless.",
+     "You missed the decisive pass, and that was stupid.",
+     "You missed the decisive pass, so review the play with me."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence states the problem clearly and respectfully while directing the player toward a constructive response.",
+    "difficulty": 4,
+    "skill": "Matching diction to tone",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q31",
+    "prompt": "A museum app is designed for visitors who use voice control. Which instruction is clearest for that audience?",
+    "choices": [
+     "Choose the artwork corresponding to the recorded date.",
+     "Enter the artwork's archival number using the keypad.",
+     "Say the number of the artwork you want to hear.",
+     "Press the menu icon and open the collection index."
+    ],
+    "answerIndex": 2,
+    "explanation": "The instruction directly tells a voice-control user what to say to hear a selected artwork.",
+    "difficulty": 3,
+    "skill": "Matching diction to audience",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q45",
+    "prompt": "A committee votes 6 to 2 to accept a proposal. Which verb most precisely reports the committee's decision?",
+    "choices": [
+     "approved",
+     "received",
+     "considered",
+     "postponed"
+    ],
+    "answerIndex": 0,
+    "explanation": "Approved states that the committee made the decision to accept the proposal, whereas the other verbs do not report that result.",
+    "difficulty": 2,
+    "skill": "Selecting the exact verb for an action",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q50",
+    "prompt": "A sign states that playground equipment is intended for children ages 5 to 12, while a draft says it is for children. Which revision best follows the L and I steps of CLIP?",
+    "choices": [
+     "The playground equipment is for children under age 12.",
+     "The playground equipment is for children ages 5 to 12.",
+     "The playground equipment is for children over age 5.",
+     "The playground equipment is for children ages 12 to 16."
+    ],
+    "answerIndex": 1,
+    "explanation": "The L and I steps use the source's exact age range of 5 to 12 in the revision.",
+    "difficulty": 3,
+    "skill": "Use exact source details in a revision",
+    "topic": "Diction and Precision: The CLIP Strategy"
+   },
+   {
+    "id": "q33",
+    "prompt": "In the SPOT strategy, the P step pins down an exact detail stated by the source. A sign says the visitor center is 300 meters up the path; a draft says it is nearby. Which sentence carries out the P step?",
+    "choices": [
+     "The visitor center is 300 meters up the path.",
+     "The visitor center is a short distance up the path.",
+     "The visitor center is up the path on the left.",
+     "The visitor center is somewhere up the path."
+    ],
+    "answerIndex": 0,
+    "explanation": "The P step replaces the vague word nearby with the source-supported distance of 300 meters.",
+    "difficulty": 2,
+    "skill": "Pinning down source detail with SPOT",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q8",
+    "prompt": "An instruction says to simmer a sauce and provides an exact cooking time of 12 minutes. Which version preserves both the action and the exact timing?",
+    "choices": [
+     "Simmer the sauce for 12 minutes or longer.",
+     "Simmer the sauce for about 12 minutes.",
+     "Simmer the sauce until it has simmered.",
+     "Simmer the sauce for 12 minutes."
+    ],
+    "answerIndex": 3,
+    "explanation": "This instruction keeps the exact 12-minute duration instead of adding approximation, repetition, or a range.",
+    "difficulty": 3,
+    "skill": "Making instructions precise",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q5",
+    "prompt": "After comparing several candidate words, what is the best final step in the M-T-A word-choice check?",
+    "choices": [
+     "Read it in the full sentence and check meaning, tone, and audience",
+     "Choose the longest candidate regardless of context",
+     "Add another synonym to the same sentence",
+     "Check only whether the candidate sounds impressive"
+    ],
+    "answerIndex": 0,
+    "explanation": "Reading the candidate in context checks that it preserves the intended meaning, suits the tone, and fits the audience.",
+    "difficulty": 4,
+    "skill": "Verify a word in context",
+    "topic": "Diction and Precision: M-T-A Word-Choice Strategy"
+   },
+   {
+    "id": "q39",
+    "prompt": "A notice to customers says, Please utilize the online form to apply. Which version is most appropriate for a general audience?",
+    "choices": [
+     "Please complete the paper form to apply.",
+     "Please use the paper form to apply.",
+     "Please use the online form to apply.",
+     "Please use the online form to request a refund."
+    ],
+    "answerIndex": 2,
+    "explanation": "This version uses direct, familiar diction while preserving the instruction to apply with the online form.",
+    "difficulty": 3,
+    "skill": "Adjusting diction for audience",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q23",
+    "prompt": "A student in a hurry looks quickly at the clock and then keeps walking. Which verb most precisely describes the look?",
+    "choices": [
+     "studied",
+     "stared at",
+     "glanced at",
+     "glared at"
+    ],
+    "answerIndex": 2,
+    "explanation": "Glanced at means to look quickly and briefly, which matches the action without adding sustained attention or anger.",
+    "difficulty": 2,
+    "skill": "Selecting a precise verb",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q43",
+    "prompt": "A school dashboard displays 87 percent for student attendance on Monday. Which sentence preserves that figure and its meaning?",
+    "choices": [
+     "Attendance included 87 students on Monday.",
+     "Attendance was nearly 87 percent on Monday.",
+     "Attendance was 87 percent on Monday.",
+     "Attendance rose by 87 percent on Monday."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence accurately reports the displayed attendance level without changing the figure or implying an increase.",
+    "difficulty": 3,
+    "skill": "Pinning down a precise percentage",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q44",
+    "prompt": "Which sequence correctly applies the SPOT strategy when a draft contains vague wording?",
+    "choices": [
+     "Test the candidate in context, spot vague wording, offer precise alternatives, and pin down source details.",
+     "Pin down source details, spot vague wording, test alternatives in context, and offer precise revisions.",
+     "Spot vague wording, offer precise alternatives before checking the source, pin down source details, and test them in context.",
+     "Spot vague wording, pin down source details, offer precise alternatives, and test them in context."
+    ],
+    "answerIndex": 3,
+    "explanation": "SPOT proceeds by spotting vague wording, pinning down the source's exact details, offering precise alternatives, and testing them in context.",
+    "difficulty": 2,
+    "skill": "Applying the SPOT strategy in sequence",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q21",
+    "prompt": "A recipe instructs the cook to stir a mixture until the sugar dissolves. Which sentence states the action and endpoint most precisely?",
+    "choices": [
+     "Stir the mixture until the sugar has dissolved.",
+     "Stir the mixture until the sugar has melted.",
+     "Stir the mixture before the sugar dissolves.",
+     "Stir the mixture after the sugar has dissolved."
+    ],
+    "answerIndex": 0,
+    "explanation": "This instruction states that the stirring continues until the sugar dissolves in the mixture.",
+    "difficulty": 3,
+    "skill": "Using precise diction to state an endpoint",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q37",
+    "prompt": "A timetable says the train departs at 10:45 a.m. from Platform 6. A draft says, The train departs soon. Which revision best follows SPOT without changing the source-supported details?",
+    "choices": [
+     "The train departs at 10:45 a.m. from Platform 6.",
+     "The train departs at 10:45 a.m. from the main station.",
+     "The train departs around 10:45 a.m. from Platform 6.",
+     "The train departs before 10:45 a.m. from Platform 6."
+    ],
+    "answerIndex": 0,
+    "explanation": "This revision replaces the vague word soon with the exact time and platform stated in the timetable.",
+    "difficulty": 4,
+    "skill": "Applying SPOT to a complete sentence",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q17",
+    "prompt": "A student emails a teacher to request the revised assignment deadline. Which sentence is the most direct professional version without adding urgency that the facts do not support?",
+    "choices": [
+     "Please let me know the revised assignment deadline when it is available.",
+     "Send me the revised assignment deadline right now.",
+     "Could you tell me the revised assignment deadline soon?",
+     "I need to know the revised assignment deadline immediately."
+    ],
+    "answerIndex": 0,
+    "explanation": "This request is direct and professional while waiting for the deadline to be available without inventing a need for immediate action.",
+    "difficulty": 2,
+    "skill": "Applying the M-T-A check for tone",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q28",
+    "prompt": "A draft says, The bus leaves soon. The source says, The bus leaves at 4:00 p.m. After the writer spots soon during the S step, which action belongs to the P step?",
+    "choices": [
+     "Spot another imprecise word in the source",
+     "Offer several vague alternatives to the word soon",
+     "Test each sentence for grammar and punctuation",
+     "Use the source to pin down the exact departure time"
+    ],
+    "answerIndex": 3,
+    "explanation": "The P step uses the source to establish the precise meaning, which here is a 4:00 p.m. departure.",
+    "difficulty": 3,
+    "skill": "Apply the P step to source information",
+    "topic": "Diction and Precision: The SPOT Word-Choice Routine"
+   },
+   {
+    "id": "q14",
+    "prompt": "A teacher records that exactly 31 students improved their writing by one level. Which sentence states this fact most precisely?",
+    "choices": [
+     "At least 30 students improved their writing by one level.",
+     "Exactly 31 students improved their writing by one level.",
+     "About 30 students improved their writing by one level.",
+     "More than 30 students improved their writing by one level."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence gives the exact number of students and the exact amount of improvement.",
+    "difficulty": 3,
+    "skill": "Replacing vague quantities with exact ones",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q47",
+    "prompt": "A writer begins using the CLIP strategy to revise a draft. What should the writer do first?",
+    "choices": [
+     "Insert precise words into the draft.",
+     "List every exact detail from the source.",
+     "Circle vague wording that needs attention.",
+     "Proofread the revision for tone and audience."
+    ],
+    "answerIndex": 2,
+    "explanation": "The C step begins the strategy by identifying vague or imprecise wording in the draft.",
+    "difficulty": 2,
+    "skill": "Identify the first step of a precision strategy",
+    "topic": "Diction and Precision: The CLIP Strategy"
+   },
+   {
+    "id": "q24",
+    "prompt": "In instructions for elementary-school students, which sentence communicates the task most clearly?",
+    "choices": [
+     "Please participate in the table-cleaning procedure.",
+     "Please facilitate our table-cleaning duties.",
+     "Please assist with the table-cleaning process.",
+     "Please help us clean the table."
+    ],
+    "answerIndex": 3,
+    "explanation": "Help us clean the table uses familiar, direct wording suited to younger readers.",
+    "difficulty": 3,
+    "skill": "Matching diction to audience",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q48",
+    "prompt": "An itinerary says a flight departs at 6:40 a.m., while the draft says the flight departs early. Which action belongs to the L step of CLIP?",
+    "choices": [
+     "Insert the flight's 6:40 a.m. departure time into the draft.",
+     "Circle the word early in the draft.",
+     "Proofread the revised sentence for tone and audience.",
+     "List the 6:40 a.m. departure time from the source."
+    ],
+    "answerIndex": 3,
+    "explanation": "The L step lists the exact 6:40 a.m. departure time stated by the source.",
+    "difficulty": 2,
+    "skill": "Gather source details with a precision strategy",
+    "topic": "Diction and Precision: The CLIP Strategy"
+   },
+   {
+    "id": "q49",
+    "prompt": "A source says an exhibit opens at 10:00 a.m. on weekdays, while the draft says it opens in the morning. Which revision best completes the I step of CLIP?",
+    "choices": [
+     "The exhibit opens at 10:00 a.m. on weekdays.",
+     "The exhibit opens during the morning on weekdays.",
+     "The exhibit opens at 10:00 a.m. every day.",
+     "The exhibit opens at 10:00 a.m. on weekends."
+    ],
+    "answerIndex": 0,
+    "explanation": "The I step inserts the precise 10:00 a.m. time and correctly preserves the word weekdays.",
+    "difficulty": 3,
+    "skill": "Replace vague wording with source-supported details",
+    "topic": "Diction and Precision: The CLIP Strategy"
+   },
+   {
+    "id": "q10",
+    "prompt": "An official report says a rescue team safely evacuated all 24 residents. Which sentence presents the fact in the clearest professional style?",
+    "choices": [
+     "The rescue team somehow got all 24 residents out.",
+     "The rescue team safely evacuated all 24 residents.",
+     "The rescue team was awesome and saved all 24 residents.",
+     "The rescue team evacuated residents, and nobody got hurt, like at all."
+    ],
+    "answerIndex": 1,
+    "explanation": "This version is professional, direct, and preserves the exact number of people evacuated.",
+    "difficulty": 4,
+    "skill": "Choosing wording for a formal audience",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q46",
+    "prompt": "Which sentence uses the standard verb-preposition combination?",
+    "choices": [
+     "Please refer on the attached document.",
+     "Please refer to the attached document.",
+     "Please refer with the attached document.",
+     "Please refer at the attached document."
+    ],
+    "answerIndex": 1,
+    "explanation": "Refer to is the standard combination for directing someone's attention to a source or document.",
+    "difficulty": 2,
+    "skill": "Using standard verb-preposition combinations",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q16",
+    "prompt": "A workshop is documented as lasting exactly 45 minutes. Which sentence preserves the exact timing?",
+    "choices": [
+     "The workshop lasted over 45 minutes.",
+     "The workshop lasted about 45 minutes.",
+     "The workshop lasted nearly 45 minutes.",
+     "The workshop lasted exactly 45 minutes."
+    ],
+    "answerIndex": 3,
+    "explanation": "Only the first sentence states the documented duration without replacing the exact timing with an approximation or a different relationship.",
+    "difficulty": 3,
+    "skill": "Preserving exact meaning",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q4",
+    "prompt": "A manual changes the instruction Disable the device to Turn off the device. Which audience is this version designed for?",
+    "choices": [
+     "Readers who want a more literary style",
+     "Readers who prefer formal legal wording",
+     "Readers who already understand every technical command",
+     "Readers who may not know the technical term disable"
+    ],
+    "answerIndex": 3,
+    "explanation": "The plain-language version is accessible to readers who do not know the technical command disable.",
+    "difficulty": 3,
+    "skill": "Match diction to audience",
+    "topic": "Diction and Precision: M-T-A Word-Choice Strategy"
+   },
+   {
+    "id": "q19",
+    "prompt": "A character must sound certain and capable while leading an expedition. Which sentence communicates that tone most clearly?",
+    "choices": [
+     "I may know the route, and perhaps I can lead us.",
+     "I know the route, but I cannot lead the expedition.",
+     "I know the route and can lead the expedition.",
+     "I know the route, though someone else should lead us."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence presents the speaker as both certain about the route and able to lead the expedition.",
+    "difficulty": 2,
+    "skill": "Matching diction to a confident tone",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q11",
+    "prompt": "After the truck reached the warehouse, workers began unloading it. Which revision removes the ambiguous pronoun while staying strictly within the information in the sentence?",
+    "choices": [
+     "After the truck reached the warehouse, the workers began unloading the cargo.",
+     "After the truck reached the warehouse, the workers began unloading the shipment.",
+     "After the truck reached the warehouse, the workers began unloading the truck.",
+     "After the truck reached the warehouse, the workers began unloading the warehouse."
+    ],
+    "answerIndex": 2,
+    "explanation": "Replacing it with the truck makes the object being unloaded explicit without introducing a new noun.",
+    "difficulty": 4,
+    "skill": "Removing ambiguity with precise nouns",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q6",
+    "prompt": "In the M-T-A word-choice check, a teacher must respond to a student who missed one assignment. Which reply best passes the T check by being encouraging without making a false promise?",
+    "choices": [
+     "Your grade will improve after this, so there is no need to worry.",
+     "Let's look at the missed assignment and identify a workable improvement plan.",
+     "That assignment was not important, so your grade is safe.",
+     "Every student misses work, so there is no need to act."
+    ],
+    "answerIndex": 1,
+    "explanation": "The T step asks whether the wording suits the intended tone, and this reply is encouraging without promising a particular grade.",
+    "difficulty": 3,
+    "skill": "Applying the tone step of M-T-A",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q9",
+    "prompt": "A person moved down a hallway without making a sound. Which verb most precisely describes that movement?",
+    "choices": [
+     "tiptoed",
+     "sprinted",
+     "stomped",
+     "leaped"
+    ],
+    "answerIndex": 0,
+    "explanation": "Tiptoeing specifically describes walking quietly on one's toes.",
+    "difficulty": 2,
+    "skill": "Selecting a precise action word",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q2",
+    "prompt": "A shipping report states that the shipment left two days after its scheduled departure date. Which phrase most precisely communicates the timing of the departure?",
+    "choices": [
+     "two days after the date it actually left",
+     "two days after the date it was scheduled to leave",
+     "two days before the date it was scheduled to leave",
+     "two days after the date it was expected to arrive"
+    ],
+    "answerIndex": 1,
+    "explanation": "This phrase preserves the correct reference point—the scheduled departure—and states the exact two-day interval.",
+    "difficulty": 3,
+    "skill": "Apply precise timing",
+    "topic": "Diction and Precision: M-T-A Word-Choice Strategy"
+   },
+   {
+    "id": "q13",
+    "prompt": "A picnic note records that the temperature was 28°C and the weather was sunny. Which sentence communicates both details precisely?",
+    "choices": [
+     "During the picnic, the temperature was 28°C and the weather was sunny.",
+     "During the picnic, the temperature was about 28°C and the weather was sunny.",
+     "During the picnic, the temperature was 28°C and the weather was cloudy.",
+     "During the picnic, the temperature was 28°C, but the weather was rainy."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence states the exact temperature and the correct sunny conditions without adding vague or contradictory information.",
+    "difficulty": 2,
+    "skill": "Preserving exact details in a sentence",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q35",
+    "prompt": "In the SPOT strategy, the T step tests a precise candidate in its full context. An instruction for young children means to put the red block on the blue shelf. Which sentence communicates it clearly without adding an unsupported instruction?",
+    "choices": [
+     "Using one hand, place the red block on the blue shelf.",
+     "Carefully place the red block on the blue shelf.",
+     "Place the red block on the blue shelf.",
+     "After looking around, place the red block on the blue shelf."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence clearly communicates the original instruction without adding requirements that the source did not provide.",
+    "difficulty": 3,
+    "skill": "Testing wording for a specific audience",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q25",
+    "prompt": "A city report says the mayor publicly argued that the proposal had serious flaws. Which verb most precisely conveys that the mayor criticized it without claiming she condemned it?",
+    "choices": [
+     "criticized",
+     "condemned",
+     "applauded",
+     "praised"
+    ],
+    "answerIndex": 0,
+    "explanation": "Criticized expresses strong disapproval through argument without the stronger sense of outright condemnation carried by condemned.",
+    "difficulty": 4,
+    "skill": "Distinguishing degrees of disapproval",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q38",
+    "prompt": "A schedule places a team meeting on the third floor in Room 314. Which revision communicates both details most precisely?",
+    "choices": [
+     "The team meeting is on the third floor near Room 314.",
+     "The team meeting is on the third floor in Room 314.",
+     "The team meeting is upstairs near Room 314.",
+     "The team meeting is in Room 314 on the ground floor."
+    ],
+    "answerIndex": 1,
+    "explanation": "This revision includes the floor and room number stated in the schedule, making the meeting's location precise.",
+    "difficulty": 3,
+    "skill": "Using SPOT to specify a location",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q12",
+    "prompt": "A library report says that exactly 2,340 books were checked out during June. Which sentence communicates the count most precisely?",
+    "choices": [
+     "The library checked out fewer than 2,400 books in June.",
+     "The library checked out more than 2,300 books in June.",
+     "The library checked out about 2,300 books in June.",
+     "The library checked out 2,340 books in June."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence gives the exact count of 2,340 books without adding approximation.",
+    "difficulty": 2,
+    "skill": "Choosing precise numerical diction",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q29",
+    "prompt": "After recording 4:00 p.m. as the source-supported meaning of a bus departure, which action belongs to the O step?",
+    "choices": [
+     "Offer precise alternatives that state 4:00 p.m.",
+     "Spot a vague word in the source statement",
+     "Pin down what the source actually says",
+     "Test the alternatives against the intended audience"
+    ],
+    "answerIndex": 0,
+    "explanation": "The O step generates precise alternatives based on the source-supported meaning of 4:00 p.m.",
+    "difficulty": 3,
+    "skill": "Identify the O step of the SPOT routine",
+    "topic": "Diction and Precision: The SPOT Word-Choice Routine"
+   },
+   {
+    "id": "q34",
+    "prompt": "In the SPOT strategy, the O step offers precise alternatives for vague wording. A source says the library opens at 9:00 a.m.; a draft says it opens early. Which option best performs the O step?",
+    "choices": [
+     "The library opens early in the morning.",
+     "The library opens at 9:00 a.m.",
+     "The library opens at nine.",
+     "The library opens soon."
+    ],
+    "answerIndex": 1,
+    "explanation": "This option offers the source-supported time of 9:00 a.m. instead of the vague word early.",
+    "difficulty": 2,
+    "skill": "Offering precise alternatives with SPOT",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q20",
+    "prompt": "A report states that city officials reviewed the plan and gave it final approval. Which word most precisely completes The council ___ the proposal?",
+    "choices": [
+     "received",
+     "considered",
+     "discussed",
+     "approved"
+    ],
+    "answerIndex": 3,
+    "explanation": "Approved precisely reports the council's decision to give the proposal final approval.",
+    "difficulty": 3,
+    "skill": "Matching a word to the intended meaning",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q30",
+    "prompt": "A source says, The keys are under the blue folder. A draft says, The keys are nearby. Which sentence completes the SPOT strategy without adding or removing details?",
+    "choices": [
+     "The keys are somewhere under the blue folder.",
+     "The keys are under the blue folder.",
+     "The keys are under a blue folder.",
+     "The keys might be under the blue folder."
+    ],
+    "answerIndex": 1,
+    "explanation": "This wording preserves the source's exact location while avoiding the draft's vague and uncertain phrasing.",
+    "difficulty": 4,
+    "skill": "Apply the full SPOT strategy to a revision",
+    "topic": "Diction and Precision: The SPOT Word-Choice Routine"
+   },
+   {
+    "id": "q1",
+    "prompt": "In the M-T-A word-choice check, the first step compares each candidate with the idea the sentence must express. What is the M step?",
+    "choices": [
+     "Match the intended meaning",
+     "Measure the sentence length",
+     "Test the wording's tone",
+     "Assess the reader's age"
+    ],
+    "answerIndex": 0,
+    "explanation": "The M step asks the writer to match the chosen word to the idea the sentence needs to communicate.",
+    "difficulty": 2,
+    "skill": "Recall the M-T-A strategy",
+    "topic": "Diction and Precision: M-T-A Word-Choice Strategy"
+   },
+   {
+    "id": "q36",
+    "prompt": "In the M-T-A word-choice check, which step changes a sentence so its wording fits the audience without changing the intended meaning?",
+    "choices": [
+     "Test the candidate in the full sentence",
+     "Match the candidate to the intended meaning",
+     "Replace the candidate with its opposite",
+     "Adjust the candidate for tone and audience"
+    ],
+    "answerIndex": 3,
+    "explanation": "The A step is Adjust, which changes wording to suit the audience while preserving the intended meaning.",
+    "difficulty": 3,
+    "skill": "Adjusting a candidate with M-T-A",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q27",
+    "prompt": "A weather report says light rain left the pavement damp, with no standing water. Which adjective most precisely describes the pavement?",
+    "choices": [
+     "parched",
+     "flooded",
+     "damp",
+     "frosty"
+    ],
+    "answerIndex": 2,
+    "explanation": "Damp describes a surface lightly moistened by rain without suggesting that it was flooded or dry.",
+    "difficulty": 3,
+    "skill": "Choosing an exact descriptive adjective",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q26",
+    "prompt": "A recipe requires 8 grams of yeast, not an approximate amount. Which instruction follows the requirement exactly?",
+    "choices": [
+     "Add about 8 grams of yeast.",
+     "Add exactly 8 grams of yeast.",
+     "Add roughly 8 grams of yeast.",
+     "Add nearly 8 grams of yeast."
+    ],
+    "answerIndex": 1,
+    "explanation": "Exactly preserves the recipe's precise measurement without introducing an uncertain approximation.",
+    "difficulty": 2,
+    "skill": "Preserving exact measurements",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q18",
+    "prompt": "A public-health notice explains OSHA to readers who may not recognize the abbreviation. Which expansion should the notice provide?",
+    "choices": [
+     "Organizational Safety and Health Agency",
+     "Occupational Safety and Health Administration",
+     "Occupational Security and Health Association",
+     "Office of Safety and Health Administration"
+    ],
+    "answerIndex": 1,
+    "explanation": "OSAA is the abbreviation for Occupational Safety and Health Administration.",
+    "difficulty": 3,
+    "skill": "Expanding technical language for a specific audience",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q22",
+    "prompt": "A friend has just lost a loved one. Which opening best shows a respectful, supportive tone without offering unwanted advice?",
+    "choices": [
+     "I am very sorry about the news. You should manage the arrangements in the proper way.",
+     "I'm very sorry for your loss. Let me know if there is anything I can do to help.",
+     "I am sorry about the news. You need to contact the funeral provider right away.",
+     "I am sorry about the news. Everyone is surprised, and nobody knows what to say."
+    ],
+    "answerIndex": 1,
+    "explanation": "This response expresses sympathy and offers support while avoiding pressure or unsolicited instructions.",
+    "difficulty": 2,
+    "skill": "Selecting diction for a supportive audience and tone",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q15",
+    "prompt": "A source says only that a report was detailed. Which wording stays closest to the source without adding an unsupported degree of detail?",
+    "choices": [
+     "The report was highly detailed.",
+     "The report was extremely detailed.",
+     "The report was detailed.",
+     "The report was exceptionally detailed."
+    ],
+    "answerIndex": 2,
+    "explanation": "The word detailed communicates the sourced information without adding intensifiers that the source does not support.",
+    "difficulty": 3,
+    "skill": "Avoiding unsupported emphasis",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q32",
+    "prompt": "A student repeatedly skips classes without permission. Which word most precisely describes the student's behavior?",
+    "choices": [
+     "withdrawn",
+     "absent",
+     "disruptive",
+     "truant"
+    ],
+    "answerIndex": 3,
+    "explanation": "Truant specifically describes a student who is absent from school without permission.",
+    "difficulty": 4,
+    "skill": "Distinguishing precise meanings",
+    "topic": "Diction and Precision"
+   },
+   {
+    "id": "q7",
+    "prompt": "A trail guide says the path was level and wide, but its surface was covered in loose stones. Which adjective most precisely describes the surface?",
+    "choices": [
+     "steep",
+     "smooth",
+     "rocky",
+     "narrow"
+    ],
+    "answerIndex": 2,
+    "explanation": "Loose stones make the surface rocky, while the guide explicitly rules out smoothness, steepness, and narrowness.",
+    "difficulty": 2,
+    "skill": "Choosing a precise descriptive word",
+    "topic": "Learn the Strategy - Diction and Precision"
+   },
+   {
+    "id": "q3",
+    "prompt": "A principal needs to tell students that they must arrive at 8:00 a.m. in a formal announcement. Which version is most appropriate?",
+    "choices": [
+     "Students should try to make it by eight.",
+     "Students gotta get there by eight.",
+     "Students must arrive by 8:00 a.m.",
+     "Students better show up by eight."
+    ],
+    "answerIndex": 2,
+    "explanation": "The version uses formal language and preserves the requirement, making it appropriate for a principal's announcement.",
+    "difficulty": 3,
+    "skill": "Match diction to tone",
+    "topic": "Diction and Precision: M-T-A Word-Choice Strategy"
+   }
+  ],
+  "feedback": {
+   "correct": "Exactly right — that is the precise word in play.",
+   "incorrect": "Not quite. Ask: is this the exact meaning, tone, and fit for the reader?",
+   "win": "You won the scoresheet — your word choices stayed exact from first roll to last.",
+   "lose": "The bot out-rolled you this time — try asking three questions of every word: exact? right tone? right reader?",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "In the M-T-A word-choice check, the first step compares each candidate with the idea the sentence must express. What is the M step?",
+   "choices": [
+    "Match the intended meaning",
+    "Measure the sentence length",
+    "Test the wording's tone",
+    "Assess the reader's age"
+   ],
+   "answerIndex": 0,
+   "explanation": "The M step asks the writer to match the chosen word to the idea the sentence needs to communicate.",
+   "difficulty": 2,
+   "skill": "Recall the M-T-A strategy",
+   "topic": "Diction and Precision: M-T-A Word-Choice Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A shipping report states that the shipment left two days after its scheduled departure date. Which phrase most precisely communicates the timing of the departure?",
+   "choices": [
+    "two days after the date it was scheduled to leave",
+    "two days after the date it actually left",
+    "two days before the date it was scheduled to leave",
+    "two days after the date it was expected to arrive"
+   ],
+   "answerIndex": 0,
+   "explanation": "This phrase preserves the correct reference point—the scheduled departure—and states the exact two-day interval.",
+   "difficulty": 3,
+   "skill": "Apply precise timing",
+   "topic": "Diction and Precision: M-T-A Word-Choice Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A principal needs to tell students that they must arrive at 8:00 a.m. in a formal announcement. Which version is most appropriate?",
+   "choices": [
+    "Students must arrive by 8:00 a.m.",
+    "Students gotta get there by eight.",
+    "Students should try to make it by eight.",
+    "Students better show up by eight."
+   ],
+   "answerIndex": 0,
+   "explanation": "The version uses formal language and preserves the requirement, making it appropriate for a principal's announcement.",
+   "difficulty": 3,
+   "skill": "Match diction to tone",
+   "topic": "Diction and Precision: M-T-A Word-Choice Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A manual changes the instruction Disable the device to Turn off the device. Which audience is this version designed for?",
+   "choices": [
+    "Readers who may not know the technical term disable",
+    "Readers who prefer formal legal wording",
+    "Readers who already understand every technical command",
+    "Readers who want a more literary style"
+   ],
+   "answerIndex": 0,
+   "explanation": "The plain-language version is accessible to readers who do not know the technical command disable.",
+   "difficulty": 3,
+   "skill": "Match diction to audience",
+   "topic": "Diction and Precision: M-T-A Word-Choice Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "After comparing several candidate words, what is the best final step in the M-T-A word-choice check?",
+   "choices": [
+    "Choose the longest candidate regardless of context",
+    "Read it in the full sentence and check meaning, tone, and audience",
+    "Add another synonym to the same sentence",
+    "Check only whether the candidate sounds impressive"
+   ],
+   "answerIndex": 1,
+   "explanation": "Reading the candidate in context checks that it preserves the intended meaning, suits the tone, and fits the audience.",
+   "difficulty": 4,
+   "skill": "Verify a word in context",
+   "topic": "Diction and Precision: M-T-A Word-Choice Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the M-T-A word-choice check, a teacher must respond to a student who missed one assignment. Which reply best passes the T check by being encouraging without making a false promise?",
+   "choices": [
+    "Let's look at the missed assignment and identify a workable improvement plan.",
+    "Your grade will improve after this, so there is no need to worry.",
+    "That assignment was not important, so your grade is safe.",
+    "Every student misses work, so there is no need to act."
+   ],
+   "answerIndex": 0,
+   "explanation": "The T step asks whether the wording suits the intended tone, and this reply is encouraging without promising a particular grade.",
+   "difficulty": 3,
+   "skill": "Applying the tone step of M-T-A",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A trail guide says the path was level and wide, but its surface was covered in loose stones. Which adjective most precisely describes the surface?",
+   "choices": [
+    "rocky",
+    "smooth",
+    "steep",
+    "narrow"
+   ],
+   "answerIndex": 0,
+   "explanation": "Loose stones make the surface rocky, while the guide explicitly rules out smoothness, steepness, and narrowness.",
+   "difficulty": 2,
+   "skill": "Choosing a precise descriptive word",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An instruction says to simmer a sauce and provides an exact cooking time of 12 minutes. Which version preserves both the action and the exact timing?",
+   "choices": [
+    "Simmer the sauce for 12 minutes.",
+    "Simmer the sauce for about 12 minutes.",
+    "Simmer the sauce until it has simmered.",
+    "Simmer the sauce for 12 minutes or longer."
+   ],
+   "answerIndex": 0,
+   "explanation": "This instruction keeps the exact 12-minute duration instead of adding approximation, repetition, or a range.",
+   "difficulty": 3,
+   "skill": "Making instructions precise",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A person moved down a hallway without making a sound. Which verb most precisely describes that movement?",
+   "choices": [
+    "tiptoed",
+    "sprinted",
+    "stomped",
+    "leaped"
+   ],
+   "answerIndex": 0,
+   "explanation": "Tiptoeing specifically describes walking quietly on one's toes.",
+   "difficulty": 2,
+   "skill": "Selecting a precise action word",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An official report says a rescue team safely evacuated all 24 residents. Which sentence presents the fact in the clearest professional style?",
+   "choices": [
+    "The rescue team safely evacuated all 24 residents.",
+    "The rescue team somehow got all 24 residents out.",
+    "The rescue team was awesome and saved all 24 residents.",
+    "The rescue team evacuated residents, and nobody got hurt, like at all."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version is professional, direct, and preserves the exact number of people evacuated.",
+   "difficulty": 4,
+   "skill": "Choosing wording for a formal audience",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "After the truck reached the warehouse, workers began unloading it. Which revision removes the ambiguous pronoun while staying strictly within the information in the sentence?",
+   "choices": [
+    "After the truck reached the warehouse, the workers began unloading the truck.",
+    "After the truck reached the warehouse, the workers began unloading the shipment.",
+    "After the truck reached the warehouse, the workers began unloading the cargo.",
+    "After the truck reached the warehouse, the workers began unloading the warehouse."
+   ],
+   "answerIndex": 0,
+   "explanation": "Replacing it with the truck makes the object being unloaded explicit without introducing a new noun.",
+   "difficulty": 4,
+   "skill": "Removing ambiguity with precise nouns",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A library report says that exactly 2,340 books were checked out during June. Which sentence communicates the count most precisely?",
+   "choices": [
+    "The library checked out 2,340 books in June.",
+    "The library checked out more than 2,300 books in June.",
+    "The library checked out about 2,300 books in June.",
+    "The library checked out fewer than 2,400 books in June."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence gives the exact count of 2,340 books without adding approximation.",
+   "difficulty": 2,
+   "skill": "Choosing precise numerical diction",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A picnic note records that the temperature was 28°C and the weather was sunny. Which sentence communicates both details precisely?",
+   "choices": [
+    "During the picnic, the temperature was 28°C and the weather was sunny.",
+    "During the picnic, the temperature was about 28°C and the weather was sunny.",
+    "During the picnic, the temperature was 28°C and the weather was cloudy.",
+    "During the picnic, the temperature was 28°C, but the weather was rainy."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence states the exact temperature and the correct sunny conditions without adding vague or contradictory information.",
+   "difficulty": 2,
+   "skill": "Preserving exact details in a sentence",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A teacher records that exactly 31 students improved their writing by one level. Which sentence states this fact most precisely?",
+   "choices": [
+    "Exactly 31 students improved their writing by one level.",
+    "At least 30 students improved their writing by one level.",
+    "About 30 students improved their writing by one level.",
+    "More than 30 students improved their writing by one level."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence gives the exact number of students and the exact amount of improvement.",
+   "difficulty": 3,
+   "skill": "Replacing vague quantities with exact ones",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A source says only that a report was detailed. Which wording stays closest to the source without adding an unsupported degree of detail?",
+   "choices": [
+    "The report was detailed.",
+    "The report was extremely detailed.",
+    "The report was highly detailed.",
+    "The report was exceptionally detailed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The word detailed communicates the sourced information without adding intensifiers that the source does not support.",
+   "difficulty": 3,
+   "skill": "Avoiding unsupported emphasis",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A workshop is documented as lasting exactly 45 minutes. Which sentence preserves the exact timing?",
+   "choices": [
+    "The workshop lasted exactly 45 minutes.",
+    "The workshop lasted about 45 minutes.",
+    "The workshop lasted nearly 45 minutes.",
+    "The workshop lasted over 45 minutes."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only the first sentence states the documented duration without replacing the exact timing with an approximation or a different relationship.",
+   "difficulty": 3,
+   "skill": "Preserving exact meaning",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A student emails a teacher to request the revised assignment deadline. Which sentence is the most direct professional version without adding urgency that the facts do not support?",
+   "choices": [
+    "Send me the revised assignment deadline right now.",
+    "Please let me know the revised assignment deadline when it is available.",
+    "Could you tell me the revised assignment deadline soon?",
+    "I need to know the revised assignment deadline immediately."
+   ],
+   "answerIndex": 1,
+   "explanation": "This request is direct and professional while waiting for the deadline to be available without inventing a need for immediate action.",
+   "difficulty": 2,
+   "skill": "Applying the M-T-A check for tone",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A public-health notice explains OSHA to readers who may not recognize the abbreviation. Which expansion should the notice provide?",
+   "choices": [
+    "Organizational Safety and Health Agency",
+    "Office of Safety and Health Administration",
+    "Occupational Security and Health Association",
+    "Occupational Safety and Health Administration"
+   ],
+   "answerIndex": 3,
+   "explanation": "OSAA is the abbreviation for Occupational Safety and Health Administration.",
+   "difficulty": 3,
+   "skill": "Expanding technical language for a specific audience",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "OSHA stands for Occupational Safety and Health Administration.",
+      "url": "https://en.wikipedia.org/wiki/Occupational_Safety_and_Health_Act",
+      "quote": "The Act created the Occupational Safety and Health Administration (OSHA) and the National Institute for Occupational Safety and Health (NIOSH).",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A character must sound certain and capable while leading an expedition. Which sentence communicates that tone most clearly?",
+   "choices": [
+    "I may know the route, and perhaps I can lead us.",
+    "I know the route, but I cannot lead the expedition.",
+    "I know the route and can lead the expedition.",
+    "I know the route, though someone else should lead us."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence presents the speaker as both certain about the route and able to lead the expedition.",
+   "difficulty": 2,
+   "skill": "Matching diction to a confident tone",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A report states that city officials reviewed the plan and gave it final approval. Which word most precisely completes The council ___ the proposal?",
+   "choices": [
+    "approved",
+    "considered",
+    "discussed",
+    "received"
+   ],
+   "answerIndex": 0,
+   "explanation": "Approved precisely reports the council's decision to give the proposal final approval.",
+   "difficulty": 3,
+   "skill": "Matching a word to the intended meaning",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A recipe instructs the cook to stir a mixture until the sugar dissolves. Which sentence states the action and endpoint most precisely?",
+   "choices": [
+    "Stir the mixture after the sugar has dissolved.",
+    "Stir the mixture until the sugar has melted.",
+    "Stir the mixture before the sugar dissolves.",
+    "Stir the mixture until the sugar has dissolved."
+   ],
+   "answerIndex": 3,
+   "explanation": "This instruction states that the stirring continues until the sugar dissolves in the mixture.",
+   "difficulty": 3,
+   "skill": "Using precise diction to state an endpoint",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A friend has just lost a loved one. Which opening best shows a respectful, supportive tone without offering unwanted advice?",
+   "choices": [
+    "I am very sorry about the news. You should manage the arrangements in the proper way.",
+    "I'm very sorry for your loss. Let me know if there is anything I can do to help.",
+    "I am sorry about the news. You need to contact the funeral provider right away.",
+    "I am sorry about the news. Everyone is surprised, and nobody knows what to say."
+   ],
+   "answerIndex": 1,
+   "explanation": "This response expresses sympathy and offers support while avoiding pressure or unsolicited instructions.",
+   "difficulty": 2,
+   "skill": "Selecting diction for a supportive audience and tone",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A student in a hurry looks quickly at the clock and then keeps walking. Which verb most precisely describes the look?",
+   "choices": [
+    "glanced at",
+    "stared at",
+    "studied",
+    "glared at"
+   ],
+   "answerIndex": 0,
+   "explanation": "Glanced at means to look quickly and briefly, which matches the action without adding sustained attention or anger.",
+   "difficulty": 2,
+   "skill": "Selecting a precise verb",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "glance means a quick look",
+      "url": "https://en.wikipedia.org/wiki/Coup_d'%C5%93il",
+      "quote": "lit. ' glimpse, glance, stroke of [the] eye '",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "In instructions for elementary-school students, which sentence communicates the task most clearly?",
+   "choices": [
+    "Please help us clean the table.",
+    "Please facilitate our table-cleaning duties.",
+    "Please assist with the table-cleaning process.",
+    "Please participate in the table-cleaning procedure."
+   ],
+   "answerIndex": 0,
+   "explanation": "Help us clean the table uses familiar, direct wording suited to younger readers.",
+   "difficulty": 3,
+   "skill": "Matching diction to audience",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A city report says the mayor publicly argued that the proposal had serious flaws. Which verb most precisely conveys that the mayor criticized it without claiming she condemned it?",
+   "choices": [
+    "criticized",
+    "condemned",
+    "applauded",
+    "praised"
+   ],
+   "answerIndex": 0,
+   "explanation": "Criticized expresses strong disapproval through argument without the stronger sense of outright condemnation carried by condemned.",
+   "difficulty": 4,
+   "skill": "Distinguishing degrees of disapproval",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A recipe requires 8 grams of yeast, not an approximate amount. Which instruction follows the requirement exactly?",
+   "choices": [
+    "Add exactly 8 grams of yeast.",
+    "Add about 8 grams of yeast.",
+    "Add roughly 8 grams of yeast.",
+    "Add nearly 8 grams of yeast."
+   ],
+   "answerIndex": 0,
+   "explanation": "Exactly preserves the recipe's precise measurement without introducing an uncertain approximation.",
+   "difficulty": 2,
+   "skill": "Preserving exact measurements",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A weather report says light rain left the pavement damp, with no standing water. Which adjective most precisely describes the pavement?",
+   "choices": [
+    "damp",
+    "flooded",
+    "parched",
+    "frosty"
+   ],
+   "answerIndex": 0,
+   "explanation": "Damp describes a surface lightly moistened by rain without suggesting that it was flooded or dry.",
+   "difficulty": 3,
+   "skill": "Choosing an exact descriptive adjective",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A draft says, The bus leaves soon. The source says, The bus leaves at 4:00 p.m. After the writer spots soon during the S step, which action belongs to the P step?",
+   "choices": [
+    "Use the source to pin down the exact departure time",
+    "Offer several vague alternatives to the word soon",
+    "Test each sentence for grammar and punctuation",
+    "Spot another imprecise word in the source"
+   ],
+   "answerIndex": 0,
+   "explanation": "The P step uses the source to establish the precise meaning, which here is a 4:00 p.m. departure.",
+   "difficulty": 3,
+   "skill": "Apply the P step to source information",
+   "topic": "Diction and Precision: The SPOT Word-Choice Routine",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "After recording 4:00 p.m. as the source-supported meaning of a bus departure, which action belongs to the O step?",
+   "choices": [
+    "Test the alternatives against the intended audience",
+    "Spot a vague word in the source statement",
+    "Pin down what the source actually says",
+    "Offer precise alternatives that state 4:00 p.m."
+   ],
+   "answerIndex": 3,
+   "explanation": "The O step generates precise alternatives based on the source-supported meaning of 4:00 p.m.",
+   "difficulty": 3,
+   "skill": "Identify the O step of the SPOT routine",
+   "topic": "Diction and Precision: The SPOT Word-Choice Routine",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A source says, The keys are under the blue folder. A draft says, The keys are nearby. Which sentence completes the SPOT strategy without adding or removing details?",
+   "choices": [
+    "The keys are somewhere under the blue folder.",
+    "The keys are under the blue folder.",
+    "The keys are under a blue folder.",
+    "The keys might be under the blue folder."
+   ],
+   "answerIndex": 1,
+   "explanation": "This wording preserves the source's exact location while avoiding the draft's vague and uncertain phrasing.",
+   "difficulty": 4,
+   "skill": "Apply the full SPOT strategy to a revision",
+   "topic": "Diction and Precision: The SPOT Word-Choice Routine",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A museum app is designed for visitors who use voice control. Which instruction is clearest for that audience?",
+   "choices": [
+    "Say the number of the artwork you want to hear.",
+    "Enter the artwork's archival number using the keypad.",
+    "Choose the artwork corresponding to the recorded date.",
+    "Press the menu icon and open the collection index."
+   ],
+   "answerIndex": 0,
+   "explanation": "The instruction directly tells a voice-control user what to say to hear a selected artwork.",
+   "difficulty": 3,
+   "skill": "Matching diction to audience",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A student repeatedly skips classes without permission. Which word most precisely describes the student's behavior?",
+   "choices": [
+    "truant",
+    "absent",
+    "disruptive",
+    "withdrawn"
+   ],
+   "answerIndex": 0,
+   "explanation": "Truant specifically describes a student who is absent from school without permission.",
+   "difficulty": 4,
+   "skill": "Distinguishing precise meanings",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the SPOT strategy, the P step pins down an exact detail stated by the source. A sign says the visitor center is 300 meters up the path; a draft says it is nearby. Which sentence carries out the P step?",
+   "choices": [
+    "The visitor center is 300 meters up the path.",
+    "The visitor center is a short distance up the path.",
+    "The visitor center is up the path on the left.",
+    "The visitor center is somewhere up the path."
+   ],
+   "answerIndex": 0,
+   "explanation": "The P step replaces the vague word nearby with the source-supported distance of 300 meters.",
+   "difficulty": 2,
+   "skill": "Pinning down source detail with SPOT",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the SPOT strategy, the O step offers precise alternatives for vague wording. A source says the library opens at 9:00 a.m.; a draft says it opens early. Which option best performs the O step?",
+   "choices": [
+    "The library opens at 9:00 a.m.",
+    "The library opens early in the morning.",
+    "The library opens at nine.",
+    "The library opens soon."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option offers the source-supported time of 9:00 a.m. instead of the vague word early.",
+   "difficulty": 2,
+   "skill": "Offering precise alternatives with SPOT",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the SPOT strategy, the T step tests a precise candidate in its full context. An instruction for young children means to put the red block on the blue shelf. Which sentence communicates it clearly without adding an unsupported instruction?",
+   "choices": [
+    "Place the red block on the blue shelf.",
+    "Carefully place the red block on the blue shelf.",
+    "Using one hand, place the red block on the blue shelf.",
+    "After looking around, place the red block on the blue shelf."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence clearly communicates the original instruction without adding requirements that the source did not provide.",
+   "difficulty": 3,
+   "skill": "Testing wording for a specific audience",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the M-T-A word-choice check, which step changes a sentence so its wording fits the audience without changing the intended meaning?",
+   "choices": [
+    "Test the candidate in the full sentence",
+    "Match the candidate to the intended meaning",
+    "Adjust the candidate for tone and audience",
+    "Replace the candidate with its opposite"
+   ],
+   "answerIndex": 2,
+   "explanation": "The A step is Adjust, which changes wording to suit the audience while preserving the intended meaning.",
+   "difficulty": 3,
+   "skill": "Adjusting a candidate with M-T-A",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A timetable says the train departs at 10:45 a.m. from Platform 6. A draft says, The train departs soon. Which revision best follows SPOT without changing the source-supported details?",
+   "choices": [
+    "The train departs at 10:45 a.m. from Platform 6.",
+    "The train departs at 10:45 a.m. from the main station.",
+    "The train departs around 10:45 a.m. from Platform 6.",
+    "The train departs before 10:45 a.m. from Platform 6."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision replaces the vague word soon with the exact time and platform stated in the timetable.",
+   "difficulty": 4,
+   "skill": "Applying SPOT to a complete sentence",
+   "topic": "Learn the Strategy - Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A schedule places a team meeting on the third floor in Room 314. Which revision communicates both details most precisely?",
+   "choices": [
+    "The team meeting is on the third floor in Room 314.",
+    "The team meeting is on the third floor near Room 314.",
+    "The team meeting is upstairs near Room 314.",
+    "The team meeting is in Room 314 on the ground floor."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision includes the floor and room number stated in the schedule, making the meeting's location precise.",
+   "difficulty": 3,
+   "skill": "Using SPOT to specify a location",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A notice to customers says, Please utilize the online form to apply. Which version is most appropriate for a general audience?",
+   "choices": [
+    "Please use the online form to apply.",
+    "Please use the paper form to apply.",
+    "Please complete the paper form to apply.",
+    "Please use the online form to request a refund."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version uses direct, familiar diction while preserving the instruction to apply with the online form.",
+   "difficulty": 3,
+   "skill": "Adjusting diction for audience",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A coach wants to correct a player firmly but respectfully after the player missed a decisive pass. Which sentence best fits that tone?",
+   "choices": [
+    "You missed the decisive pass, so review the play with me.",
+    "You missed the decisive pass, so you are hopeless.",
+    "You missed the decisive pass, and that was stupid.",
+    "You missed the decisive pass, but there is nothing to improve."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence states the problem clearly and respectfully while directing the player toward a constructive response.",
+   "difficulty": 4,
+   "skill": "Matching diction to tone",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A report says a bridge reopened to pedestrians but remained closed to vehicles. Which sentence states this accurately?",
+   "choices": [
+    "The bridge reopened for pedestrians but remained closed to vehicles.",
+    "The bridge reopened for vehicles but remained closed to pedestrians.",
+    "The bridge reopened for both pedestrians and vehicles.",
+    "The bridge remained closed to both pedestrians and vehicles."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence preserves the report's distinction between access for pedestrians and continued closure to vehicles.",
+   "difficulty": 3,
+   "skill": "Preserving precise meaning",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A ticket booth's posted schedule says it closes at 6:00 p.m. Which sentence communicates the time most precisely?",
+   "choices": [
+    "The ticket booth closes at 6:00 p.m.",
+    "The ticket booth closes at 6:00 a.m.",
+    "The ticket booth opens at 6:00 p.m.",
+    "The ticket booth closes at 9:00 p.m."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence states both the correct closing time and the accurate twelve-hour designation.",
+   "difficulty": 2,
+   "skill": "Pinning down a precise time",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school dashboard displays 87 percent for student attendance on Monday. Which sentence preserves that figure and its meaning?",
+   "choices": [
+    "Attendance was 87 percent on Monday.",
+    "Attendance was nearly 87 percent on Monday.",
+    "Attendance included 87 students on Monday.",
+    "Attendance rose by 87 percent on Monday."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence accurately reports the displayed attendance level without changing the figure or implying an increase.",
+   "difficulty": 3,
+   "skill": "Pinning down a precise percentage",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sequence correctly applies the SPOT strategy when a draft contains vague wording?",
+   "choices": [
+    "Test the candidate in context, spot vague wording, offer precise alternatives, and pin down source details.",
+    "Pin down source details, spot vague wording, test alternatives in context, and offer precise revisions.",
+    "Spot vague wording, pin down source details, offer precise alternatives, and test them in context.",
+    "Spot vague wording, offer precise alternatives before checking the source, pin down source details, and test them in context."
+   ],
+   "answerIndex": 2,
+   "explanation": "SPOT proceeds by spotting vague wording, pinning down the source's exact details, offering precise alternatives, and testing them in context.",
+   "difficulty": 2,
+   "skill": "Applying the SPOT strategy in sequence",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A committee votes 6 to 2 to accept a proposal. Which verb most precisely reports the committee's decision?",
+   "choices": [
+    "received",
+    "approved",
+    "considered",
+    "postponed"
+   ],
+   "answerIndex": 1,
+   "explanation": "Approved states that the committee made the decision to accept the proposal, whereas the other verbs do not report that result.",
+   "difficulty": 2,
+   "skill": "Selecting the exact verb for an action",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the standard verb-preposition combination?",
+   "choices": [
+    "Please refer on the attached document.",
+    "Please refer at the attached document.",
+    "Please refer with the attached document.",
+    "Please refer to the attached document."
+   ],
+   "answerIndex": 3,
+   "explanation": "Refer to is the standard combination for directing someone's attention to a source or document.",
+   "difficulty": 2,
+   "skill": "Using standard verb-preposition combinations",
+   "topic": "Diction and Precision",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A writer begins using the CLIP strategy to revise a draft. What should the writer do first?",
+   "choices": [
+    "Circle vague wording that needs attention.",
+    "List every exact detail from the source.",
+    "Insert precise words into the draft.",
+    "Proofread the revision for tone and audience."
+   ],
+   "answerIndex": 0,
+   "explanation": "The C step begins the strategy by identifying vague or imprecise wording in the draft.",
+   "difficulty": 2,
+   "skill": "Identify the first step of a precision strategy",
+   "topic": "Diction and Precision: The CLIP Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An itinerary says a flight departs at 6:40 a.m., while the draft says the flight departs early. Which action belongs to the L step of CLIP?",
+   "choices": [
+    "Insert the flight's 6:40 a.m. departure time into the draft.",
+    "Circle the word early in the draft.",
+    "List the 6:40 a.m. departure time from the source.",
+    "Proofread the revised sentence for tone and audience."
+   ],
+   "answerIndex": 2,
+   "explanation": "The L step lists the exact 6:40 a.m. departure time stated by the source.",
+   "difficulty": 2,
+   "skill": "Gather source details with a precision strategy",
+   "topic": "Diction and Precision: The CLIP Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A source says an exhibit opens at 10:00 a.m. on weekdays, while the draft says it opens in the morning. Which revision best completes the I step of CLIP?",
+   "choices": [
+    "The exhibit opens during the morning on weekdays.",
+    "The exhibit opens at 10:00 a.m. on weekdays.",
+    "The exhibit opens at 10:00 a.m. every day.",
+    "The exhibit opens at 10:00 a.m. on weekends."
+   ],
+   "answerIndex": 1,
+   "explanation": "The I step inserts the precise 10:00 a.m. time and correctly preserves the word weekdays.",
+   "difficulty": 3,
+   "skill": "Replace vague wording with source-supported details",
+   "topic": "Diction and Precision: The CLIP Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A sign states that playground equipment is intended for children ages 5 to 12, while a draft says it is for children. Which revision best follows the L and I steps of CLIP?",
+   "choices": [
+    "The playground equipment is for children ages 5 to 12.",
+    "The playground equipment is for children under age 12.",
+    "The playground equipment is for children over age 5.",
+    "The playground equipment is for children ages 12 to 16."
+   ],
+   "answerIndex": 0,
+   "explanation": "The L and I steps use the source's exact age range of 5 to 12 in the revision.",
+   "difficulty": 3,
+   "skill": "Use exact source details in a revision",
+   "topic": "Diction and Precision: The CLIP Strategy",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A draft says that a report gave a lot of information, and the source states that the report contained 37 pages of data. Which replacement is most precise?",
+   "choices": [
+    "37 pages of data",
+    "about 37 pages of data",
+    "more than 30 pages of data",
+    "at least 30 pages of data"
+   ],
+   "answerIndex": 0,
+   "explanation": "The exact quantity and the kind of information match the source more precisely than the other options.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the Audience step of the M-T-A check, a writer evaluates whether a word suits the readers' what?",
+   "choices": [
+    "Background knowledge and expectations",
+    "Current mood",
+    "Reading speed",
+    "Preferred font size"
+   ],
+   "answerIndex": 0,
+   "explanation": "The Audience step asks whether the word aligns with what the intended readers know and expect.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Why are the steps of the M-T-A check arranged in the order Match, Tone, Audience?",
+   "choices": [
+    "Because the acronym spells a memorable word",
+    "Because meaning must be established before tone and audience suitability can be judged",
+    "Because audience is the least important factor",
+    "Because tone is easier to assess than meaning"
+   ],
+   "answerIndex": 1,
+   "explanation": "The sequence reflects the logical priority of ensuring correct meaning first.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which statement best describes the overall purpose of the M‑T‑A check?",
+   "choices": [
+    "To ensure each word matches meaning, tone, and audience",
+    "To count the words in a sentence",
+    "To verify grammar rules",
+    "To generate new ideas for a draft"
+   ],
+   "answerIndex": 0,
+   "explanation": "The M‑T‑A check is designed to confirm that every word fits the intended meaning, the desired tone, and the target audience.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A friend sends late for a shared ride. Which reply is clearest about responsibility?",
+   "choices": [
+    "I'm sorry I'm late; I should have left earlier.",
+    "I was delayed by traffic, unfortunately.",
+    "Earlier departure would have improved the timing.",
+    "Lateness occurred despite my careful planning."
+   ],
+   "answerIndex": 0,
+   "explanation": "The reply directly apologizes and acknowledges the speaker's own choice rather than shifting all blame to traffic.",
+   "reason": "explanation-key: the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The S step of the SPOT word-choice routine identifies wording that lacks precision. Which option names that step?",
+   "choices": [
+    "Spot the vague word",
+    "Pin down the source-supported meaning",
+    "Offer precise alternative wording",
+    "Test alternatives within the sentence"
+   ],
+   "answerIndex": 0,
+   "explanation": "The S step is to spot vague or imprecise wording before revising it.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "During the T step, a writer compares two precise alternatives within the full sentence. Which question is most useful for choosing between them?",
+   "choices": [
+    "Which version sounds more technical?",
+    "Which version uses fewer words?",
+    "Which version best preserves the intended meaning without adding facts?",
+    "Which version was proposed first?"
+   ],
+   "answerIndex": 2,
+   "explanation": "Testing alternatives in context identifies the version that preserves the intended meaning without adding unsupported information.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In the M-T-A word-choice check, what does the A stand for?",
+   "choices": [
+    "Audience",
+    "Accuracy",
+    "Action",
+    "Alternatives"
+   ],
+   "answerIndex": 0,
+   "explanation": "A stands for Audience, the check that asks whether a word suits the people who will read or hear it.",
+   "reason": "source: \"The M-T-A word-choice check stands for checking a word's Meaning, Tone, and Audience.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "During a storm, the water level fell from 4 meters to 1 meter in one hour. Which verb most precisely describes this change?",
+   "choices": [
+    "plunged",
+    "climbed",
+    "hovered",
+    "drifted"
+   ],
+   "answerIndex": 0,
+   "explanation": "Plunged precisely describes the rapid, steep fall in the water level from 4 meters to 1 meter.",
+   "reason": "source: \"'Plunged' means to fall suddenly and steeply.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A character spoke through a closed door, making the words difficult to hear. Which verb most precisely describes the speech?",
+   "choices": [
+    "muffled",
+    "shouted",
+    "whispered",
+    "silenced"
+   ],
+   "answerIndex": 0,
+   "explanation": "Muffled most precisely describes speech that was difficult to hear because it passed through a closed door.",
+   "reason": "source: \"'Muffled' means made quieter or less distinct, as by a barrier.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In the M-T-A word-choice check, what does the T stand for?",
+   "choices": [
+    "Tone",
+    "Precision",
+    "Voice",
+    "Register"
+   ],
+   "answerIndex": 0,
+   "explanation": "T stands for Tone, which helps the writer choose a word that suits the sentence's attitude and register.",
+   "reason": "source: \"T stands for Tone in the M-T-A word-choice check.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "What does the T step of the M-T-A word-choice check guide a writer to examine?",
+   "choices": [
+    "The tone of each candidate",
+    "The audience for each candidate",
+    "The grammatical tense of each candidate",
+    "The literal number of words in each candidate"
+   ],
+   "answerIndex": 0,
+   "explanation": "The T step guides the writer to consider whether each candidate creates the appropriate tone.",
+   "reason": "source: \"The T step of the M‑T‑A word‑choice check stands for Tone.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Ice is heated until it changes from a solid into a liquid. Which verb most precisely describes this change?",
+   "choices": [
+    "melted",
+    "boiled",
+    "dissolved",
+    "softened"
+   ],
+   "answerIndex": 0,
+   "explanation": "Melted specifically describes a solid changing into a liquid because of heat.",
+   "reason": "source: \"Melt means to change from a solid to a liquid.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A draft replaces walked with raced, but the source only says that a person moved along a road. Which word-choice principle should guide the revision?",
+   "choices": [
+    "Use only the level of detail supported by the source",
+    "Make every sentence as vivid as possible",
+    "Choose academic words even when they are less exact",
+    "Prefer longer words to demonstrate strong vocabulary"
+   ],
+   "answerIndex": 0,
+   "explanation": "Precise diction uses only the details established by the source rather than adding unsupported implications.",
+   "reason": "source: \"Word‑choice revision should keep only the level of detail that the source provides.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "At which stage of the writing process is the M-T-A word-choice check most effectively applied?",
+   "choices": [
+    "Prewriting",
+    "Drafting",
+    "Revision",
+    "Publishing"
+   ],
+   "answerIndex": 2,
+   "explanation": "The M-T-A check is designed for revision, when a writer refines word choices after a draft is complete.",
+   "reason": "source: \"Word-choice checks and refinement of diction belong to the revision stage of the writing process, after drafting and bef\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "The M-T-A word-choice check can be applied to which of the following?",
+   "choices": [
+    "Only single verbs",
+    "Only nouns and adjectives",
+    "Both single words and multi-word phrases",
+    "Only technical terminology"
+   ],
+   "answerIndex": 2,
+   "explanation": "The strategy works for any lexical unit, including phrases, to ensure precision.",
+   "reason": "source: \"The M-T-A word-choice check can be applied to both single words and multi-word phrases.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "What common writing problem does the M-T-A check help prevent?",
+   "choices": [
+    "Run-on sentences",
+    "Thesaurus syndrome",
+    "Passive voice overuse",
+    "Comma splices"
+   ],
+   "answerIndex": 1,
+   "explanation": "By requiring a match to meaning, tone, and audience, the check discourages swapping in impressive but inappropriate synonyms.",
+   "reason": "source: \"The M‑T‑A check helps prevent thesaurus syndrome.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "The Tone step of the M-T-A check asks whether a candidate word conveys the desired what?",
+   "choices": [
+    "Attitude",
+    "Length",
+    "Complexity",
+    "Frequency"
+   ],
+   "answerIndex": 0,
+   "explanation": "Tone refers to the writer's attitude toward the subject and reader, such as formal, friendly, or urgent.",
+   "reason": "source: \"The tone step of the M‑T‑A check asks whether a candidate word conveys the desired attitude.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "What does the acronym M‑T‑A stand for in the word‑choice check?",
+   "choices": [
+    "Meaning, Tone, Audience",
+    "Match, Tone, Audience",
+    "Match, Text, Audience",
+    "Meaning, Text, Audience"
+   ],
+   "answerIndex": 1,
+   "explanation": "The M‑T‑A check stands for Match, Tone, Audience, guiding writers through those three steps.",
+   "reason": "A: picked 0 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "Which of the following is NOT a step in the M‑T‑A word‑choice check?",
+   "choices": [
+    "Match",
+    "Tone",
+    "Audience",
+    "Structure"
+   ],
+   "answerIndex": 3,
+   "explanation": "The M‑T‑A check consists only of Match, Tone, and Audience; Structure is not a step.",
+   "reason": "source: \"The steps in the M-T-A check are Match, Tone, and Audience, not Structure.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "What is a key benefit of applying the M‑T‑A check during revision?",
+   "choices": [
+    "It speeds up the drafting process",
+    "It reduces vague or mismatched word choices",
+    "It eliminates the need for proofreading",
+    "It guarantees the piece will be published"
+   ],
+   "answerIndex": 1,
+   "explanation": "Using the M‑T‑A check in revision helps catch imprecise or unsuitable words, reducing vague or mismatched choices.",
+   "reason": "source: \"Applying the M-T-A check can help reduce vague or mismatched word choices.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "Which situation shows that a word fails the Audience step of the M‑T‑A check?",
+   "choices": [
+    "The word is too technical for the intended readers",
+    "The word changes the sentence's meaning",
+    "The word carries an unintended sarcastic tone",
+    "The word is misspelled"
+   ],
+   "answerIndex": 0,
+   "explanation": "If a word is too technical for the audience, it fails the Audience step because readers may not understand it.",
+   "reason": "source: \"The Audience step checks whether language is appropriate and understandable for the intended readers.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "A writer wants a neutral, informative tone for a lab report. Which question should they ask during the Tone step?",
+   "choices": [
+    "Does this word match the data?",
+    "Does this word sound objective and unbiased?",
+    "Will my readers know this word?",
+    "Is this word the shortest possible?"
+   ],
+   "answerIndex": 1,
+   "explanation": "The Tone step asks whether the word conveys the desired attitude, such as objectivity for a lab report.",
+   "reason": "source: \"The Tone step checks whether word choice conveys the intended attitude, such as objectivity and impartiality.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The SPOT routine begins by spotting vague wording and ends by testing alternatives in context. Which sequence places the two middle steps correctly?",
+   "choices": [
+    "Spot the vague word → Offer precise alternatives → Pin down the source-supported meaning → Test alternatives in context",
+    "Pin down the source-supported meaning → Spot the vague word → Offer precise alternatives → Test alternatives in context",
+    "Spot the vague word → Pin down the source-supported meaning → Test alternatives in context → Offer precise alternatives",
+    "Spot the vague word → Test alternatives in context → Pin down the source-supported meaning → Offer precise alternatives"
+   ],
+   "answerIndex": 2,
+   "explanation": "A writer should establish the source-supported meaning before generating and testing precise alternatives.",
+   "reason": "A: picked 0 not 2 | B: picked -1 not 2 (No option matches the correct sequence of steps per SPOT routine)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A source describes a door as standing partly open. Which word most precisely describes that condition?",
+   "choices": [
+    "ajar",
+    "shut",
+    "sealed",
+    "bolted"
+   ],
+   "answerIndex": 0,
+   "explanation": "Ajar means partly open rather than completely open or closed.",
+   "reason": "source: \"ajar means slightly open or partially open\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A source says only that the meeting lasted two hours. Which version stays closest to the source without converting the duration or claiming greater exactness?",
+   "choices": [
+    "The meeting lasted two hours.",
+    "The meeting lasted 120 minutes.",
+    "The meeting lasted precisely 120 minutes.",
+    "The meeting lasted exactly two hours and ten minutes."
+   ],
+   "answerIndex": 0,
+   "explanation": "This wording preserves the only duration given without converting it or claiming more precision than the source supports.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A source says that after a storm, crews removed fallen branches and mud from a road. Which revision matches the source without adding a degree of detail?",
+   "choices": [
+    "After the storm, crews removed every fallen branch and all the mud from the road.",
+    "After the storm, crews quickly removed fallen branches and mud from the road.",
+    "After the storm, crews removed several fallen branches and some mud from the road.",
+    "After the storm, crews removed fallen branches and mud from the road."
+   ],
+   "answerIndex": 3,
+   "explanation": "The final sentence preserves exactly the source's details without adding words such as every, several, all, some, or quickly.",
+   "reason": "explanation-key: the explanation describes option 1 (score 2.00) more than the keyed option 4 (score 0.00)"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "Which revision is most concise while preserving the original sentence's meaning: At the present time, the library is temporarily closed due to ongoing renovations.",
+   "choices": [
+    "The library is temporarily closed for renovations.",
+    "The library is currently closed because renovation work is continuing.",
+    "The library remains closed while workers complete the ongoing renovations.",
+    "The library is temporarily closed because construction work is continuing."
+   ],
+   "answerIndex": 0,
+   "explanation": "The shortest revision keeps the key facts—the temporary closure and the reason for it—without adding workers or changing renovations to construction.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.50) more than the keyed option 1 (score 0.50)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A coach's note says a student improved steadily but still needs help with sentence structure. Which sentence communicates the source's encouragement accurately?",
+   "choices": [
+    "Your writing is perfect, so you no longer need help with sentence structure.",
+    "Your sentences are hopeless, and steady improvement is impossible.",
+    "Your sentence structure still needs work, but your steady improvement shows that you are making progress.",
+    "Your improvement proves that you will master sentence structure next week."
+   ],
+   "answerIndex": 2,
+   "explanation": "This sentence preserves both the student's need for help and the evidence of steady progress without making either claim stronger than the source.",
+   "reason": "A: picked 1 not 2"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A coach's draft says, You failed to execute the drill properly. Which revision best completes the P step for a respectful message to young players while preserving the criticism?",
+   "choices": [
+    "You did not complete the drill efficiently.",
+    "You did not complete the drill quickly.",
+    "You did not complete the drill neatly.",
+    "You did not complete the drill correctly."
+   ],
+   "answerIndex": 3,
+   "explanation": "The P step selects clear, age-appropriate wording that correctly identifies the problem with the drill.",
+   "reason": "A: picked 0 not 3"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Why does the CLIP strategy begin by circling vague wording instead of immediately choosing replacement words?",
+   "choices": [
+    "It confirms that every source detail has been included.",
+    "It identifies where the draft lacks precision before details are gathered.",
+    "It checks whether the finished wording suits the audience.",
+    "It determines whether a synonym creates vivid imagery."
+   ],
+   "answerIndex": 1,
+   "explanation": "Circling vague wording first identifies the exact parts of the draft that require more precise source details.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

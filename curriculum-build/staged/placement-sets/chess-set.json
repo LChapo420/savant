@@ -1,0 +1,2222 @@
+{
+ "track_id": "chess",
+ "grade_ids": [
+  "chess_board_explorer",
+  "chess_rules_learner",
+  "chess_beginner_tactician",
+  "chess_novice_club_player",
+  "chess_club_player",
+  "chess_intermediate",
+  "chess_strong_club_player",
+  "chess_advanced_club_player",
+  "chess_expert",
+  "chess_master",
+  "chess_international_master",
+  "chess_grandmaster",
+  "chess_elite_and_world_class",
+  "chess_professional_foundations",
+  "chess_professional_practitioner",
+  "chess_professional_authority",
+  "chess_frontier_literacy",
+  "chess_frontier_research",
+  "chess_frontier_contribution"
+ ],
+ "grades": [
+  {
+   "grade_id": "chess_board_explorer",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Board orientation",
+     "prompt": "When a standard chessboard is set up correctly, which color is the square in the corner nearest to each player's right hand?",
+     "choices": [
+      "A light-colored square",
+      "A dark-colored square",
+      "A square holding a white piece",
+      "A square holding a black piece"
+     ],
+     "answer": "A light-colored square",
+     "rationale": "The rule 'light on right' places a light square in each player's near‑right corner; the other options describe incorrect colors or piece occupancy.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Rook straight-line movement",
+     "prompt": "A rook can slide any number of squares in a straight line but never diagonally. From d4, which of these squares could it reach in ONE move on an empty board?",
+     "choices": [
+      "b6",
+      "a4",
+      "f5",
+      "g7"
+     ],
+     "answer": "a4",
+     "rationale": "a4 lies on the same row as d4, so the rook slides straight along rank 4 to reach it.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Bishops stay on one colour",
+     "prompt": "A bishop begins the game on the light square f1. What is true of every square that bishop can ever land on for the rest of the game?",
+     "choices": [
+      "Every square it can ever reach is dark",
+      "Every square it can ever reach is light",
+      "It can reach squares of both colours as the game goes on",
+      "It can reach squares of both colours, but only one colour on each move"
+     ],
+     "answer": "Every square it can ever reach is light",
+     "rationale": "A bishop always travels along diagonals, and a diagonal never changes colour, so a bishop starting on light stays on light forever.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "King moves one square",
+     "prompt": "The king moves exactly one square in any direction. From e4, which of these squares is a legal single step for a king?",
+     "choices": [
+      "e6",
+      "g4",
+      "d2",
+      "e5"
+     ],
+     "answer": "e5",
+     "rationale": "e5 is one square away from e4, while e6, g4 and d2 are each two squares away.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Pawns capture diagonally forward",
+     "prompt": "A white pawn stands on e4, an enemy pawn on d5, and an enemy bishop on e5. In which direction can the pawn on e4 capture?",
+     "choices": [
+      "Straight forward, onto e5",
+      "Diagonally forward, onto d5",
+      "Diagonally backward, onto d3",
+      "Sideways, onto f4"
+     ],
+     "answer": "Diagonally forward, onto d5",
+     "rationale": "Pawns capture one square diagonally forward, so the pawn on e4 takes on d5 and can never take straight ahead on e5.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Starting position setup",
+     "prompt": "In the standard starting position that players set up from memory, which square does the white queen occupy?",
+     "choices": [
+      "d1",
+      "d8",
+      "e1",
+      "e8"
+     ],
+     "answer": "d1",
+     "rationale": "The queens start on their own colour, which puts the white queen on the light square d1.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Combining attack lines to find safe squares",
+     "prompt": "On an otherwise empty board, a black rook stands on e8 and a black bishop on h5. A white king wants a square that no black piece attacks. Which of these squares is safe for it?",
+     "choices": [
+      "e5",
+      "g6",
+      "f4",
+      "f7"
+     ],
+     "answer": "f4",
+     "rationale": "The rook on e8 attacks the whole e-file and rank 8, and the bishop on h5 attacks the diagonals through g6 and f7, so only f4 lies outside every attack line.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_rules_learner",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Attacking versus capturing / protected pieces",
+     "prompt": "A white knight on f3 attacks a black pawn on e5, which is defended by a black knight on d7. The pawn on e5 is:",
+     "choices": [
+      "Protected once",
+      "Unprotected",
+      "Protected twice",
+      "Attacked but not defended"
+     ],
+     "answer": "Protected once",
+     "rationale": "The black knight on d7 defends the pawn, giving it exactly one defender.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Piece values and counting attackers",
+     "prompt": "According to the standard point system taught in this grade, what is the point value assigned to a rook?",
+     "choices": [
+      "4 points",
+      "5 points",
+      "6 points",
+      "3 points"
+     ],
+     "answer": "5 points",
+     "rationale": "The curriculum assigns the rook a value of five points.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Interpreting the opponent's last move",
+     "prompt": "Black's last move was ...Qh4+. The white king stands on e1, a white pawn on h2, and a white knight on f3. What is the immediate effect of Black's move?",
+     "choices": [
+      "It captures the white pawn on h2",
+      "It threatens mate on h2",
+      "It checks the white king",
+      "It pins the white knight on f3"
+     ],
+     "answer": "It checks the white king",
+     "rationale": "The queen on h4 delivers a direct check to the king on e1 along the e1‑h4 diagonal.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Good trades and bad trades",
+     "prompt": "White has a knight on f3. Black's queen stands on e5 and is not defended by any piece. White plays Nxe5. Which description best matches this trade for White?",
+     "choices": [
+      "You capture a piece of higher value than the piece you lose",
+      "You give up a queen for a rook and a bishop",
+      "You exchange a knight for a pawn and keep the initiative",
+      "You capture a piece of equal value and your opponent cannot recapture"
+     ],
+     "answer": "You capture a piece of higher value than the piece you lose",
+     "rationale": "The knight (3 points) captures the queen (9 points) and Black has no legal recapture, so White gains material. The other options describe different exchanges that do not occur in the given position.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Ways to get out of check",
+     "prompt": "Your king is in check from an enemy rook on the same file with no pieces between. Which of the following moves is illegal?",
+     "choices": [
+      "Castle kingside to escape the check",
+      "Move the king to a safe square",
+      "Capture the checking rook with a piece",
+      "Block the check by interposing a piece"
+     ],
+     "answer": "Castle kingside to escape the check",
+     "rationale": "Castling is prohibited while the king is in check; the other three options are legal ways to answer a rook check.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Checkmate patterns",
+     "prompt": "White king on g6, white queen on h7, black king on h8, black pawn on g7. White to move. Which move delivers checkmate?",
+     "choices": [
+      "Qg7#",
+      "Qh8#",
+      "Qf7#",
+      "Qh6#"
+     ],
+     "answer": "Qg7#",
+     "rationale": "Qg7# captures the pawn on g7, attacks the king on h8 and the square g8, and is protected by the white king on g6; the king cannot capture the queen. Qh8# is illegal because the black king occupies h8, and the other moves do not give mate.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Insufficient material, fifty‑move rule, threefold repetition",
+     "prompt": "Which statement about draws is correct according to the rules covered in this grade?",
+     "choices": [
+      "A game is drawn if the same position occurs three times with the same player to move",
+      "A game is drawn automatically after 50 moves without a capture or pawn move",
+      "A player may claim a draw if they have only a king and a bishop against a lone king",
+      "Stalemate occurs when the player to move is in check but has no legal moves"
+     ],
+     "answer": "A game is drawn if the same position occurs three times with the same player to move",
+     "rationale": "Threefold repetition is a standard draw rule taught in the grade; the other statements misstate the fifty‑move rule, insufficient‑material rule, and stalemate definition.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_beginner_tactician",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Algebraic notation for captures and checks",
+     "prompt": "White plays a knight from g5 capturing a black pawn on e6 and delivering check. Which of the following is the correct algebraic notation for this move?",
+     "choices": [
+      "Nxe6+",
+      "Nxe6#",
+      "Ng5xe6+",
+      "Ne6+"
+     ],
+     "answer": "Nxe6+",
+     "rationale": "In algebraic notation a knight capture is shown by the piece letter N, the destination square, and a '+' for check; the originating file is omitted unless needed for disambiguation.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "The queen fork",
+     "prompt": "White queen on d2. Black knights on a5 and g5. White to move. Which queen move attacks both knights simultaneously?",
+     "choices": [
+      "Qd5",
+      "Qe5",
+      "Qc5",
+      "Qb5"
+     ],
+     "answer": "Qd5",
+     "rationale": "From d5 the queen controls the entire 5th rank, hitting a5 and g5. The other squares do not lie on the same rank or diagonal to hit both knights.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "The knight fork and royal fork",
+     "prompt": "White knight on d5. Black king on e8, black queen on g8. White to move. Which knight move delivers a royal fork, attacking both the king and the queen?",
+     "choices": [
+      "Nf6+",
+      "Ne7+",
+      "Nc7+",
+      "Nb6+"
+     ],
+     "answer": "Nf6+",
+     "rationale": "From d5 the knight reaches f6, which attacks e8 (the king) and g8 (the queen) simultaneously. The other destination squares attack at most one of the two pieces.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "The absolute pin",
+     "prompt": "White bishop on b5. Black king on e8, black knight on c6. The bishop aims along the b5‑e8 diagonal. Which statement correctly describes the pin on the knight?",
+     "choices": [
+      "The knight is absolutely pinned because moving it would expose the king to check",
+      "The knight is relatively pinned because the king is not on the same diagonal",
+      "The knight is not pinned because the bishop does not attack c6",
+      "The knight is absolutely pinned because the bishop attacks the king directly"
+     ],
+     "answer": "The knight is absolutely pinned because moving it would expose the king to check",
+     "rationale": "The bishop on b5, the knight on c6, and the king on e8 lie on the same diagonal; the knight cannot move without placing the king in check, which is the definition of an absolute pin.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Skewer versus pin",
+     "prompt": "On the d‑file the pieces are, from bottom to top: White rook on d1, Black queen on d5, Black rook on d8, Black king on g8. Before White captures on d5, which piece is the front piece that makes the line a skewer?",
+     "choices": [
+      "The black queen",
+      "The black rook",
+      "The black king",
+      "There is no front piece"
+     ],
+     "answer": "The black queen",
+     "rationale": "In a skewer the more valuable piece stands in front of a less valuable one; here the queen on d5 lies ahead of the rook on d8 on the same file.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Removing the defender",
+     "prompt": "A black rook on e5 is attacked by a white rook and defended only by a black knight on c6. White's bishop on b5 can capture that knight, and no black piece or pawn can recapture on c6. What does Bxc6 achieve?",
+     "choices": [
+      "It gives check to Black's king and forces it to move",
+      "It forces a draw, because Black can repeat the position at once",
+      "It pins the rook on e5 against Black's king along the e-file",
+      "It wins the knight and leaves the rook on e5 without a defender"
+     ],
+     "answer": "It wins the knight and leaves the rook on e5 without a defender",
+     "rationale": "Capturing the only defender is 'removing the defender': the knight is won for nothing and the rook is left attacked and undefended.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "0aee1654760a1f17"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Mate in two (capstone)",
+     "prompt": "White: Kg1, Qa5, Rd1, pawns f2, g2, h2. Black: Kg8, Rb8, pawns f7, g7, h7. White to move. Which first move forces mate in two?",
+     "choices": [
+      "Rd8+",
+      "Qa8",
+      "Qc7",
+      "h3"
+     ],
+     "answer": "Rd8+",
+     "rationale": "1.Rd8+ Rxd8 (forced: f8 and h8 are covered along the eighth rank, f7-g7-h7 are Black's own pawns) 2.Qxd8#. 1.Qa8 Rxa8; after 1.Qc7 or 1.h3 Black parries, e.g. with ...h6.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "dc6d36d1ee3b2ee8"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_novice_club_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Discovered check wins material",
+     "prompt": "White: Kg1, Re1, Ne4. Black: Ke8, Qd7. White to move. Which knight move gives a discovered check and also attacks Black's queen?",
+     "choices": [
+      "Nc5+",
+      "Ng5+",
+      "Nd6+",
+      "Nc3+"
+     ],
+     "answer": "Nc5+",
+     "rationale": "Any knight move uncovers check from Re1. From c5 the knight also attacks d7, so after a king move (or ...Qe6 Nxe6, or ...Qe7 Rxe7+) White wins the queen. From d6, g5 and c3 the knight does not attack d7.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "ed9f6ebcdbc3bd78"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Double check: the king must move",
+     "prompt": "White: Kg1, Re1, Bb5. Black: Ke8, Qa6. White's last move, Be2-b5, gave double check. Which reply is legal for Black?",
+     "choices": [
+      "Kf8",
+      "Qc6",
+      "Qe6",
+      "Qxb5"
+     ],
+     "answer": "Kf8",
+     "rationale": "In double check only a king move can be legal: capturing or blocking one checker leaves the other check. Kf8 is not attacked by the rook or the bishop.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "d2246ed0e08ad28c"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Smothered mate pattern",
+     "prompt": "Black king on h8, black rook on g8, black pawn on g7, black bishop on h7. White knight on h6. It is White to move. Which move delivers smothered mate?",
+     "choices": [
+      "Nf7#",
+      "Ng8#",
+      "Nf5#",
+      "Ng4#"
+     ],
+     "answer": "Nf7#",
+     "rationale": "After the forced queen sacrifice on g8 the knight jumps from h6 to f7, checking the king. The king’s only neighbouring squares (g8, h7, g7) are occupied by its own pieces, so the knight gives mate.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Rook and knight mate coordination",
+     "prompt": "In a rook‑and‑knight checkmate against a lone king on g8, the rook gives check on the eighth rank. Which square must the knight occupy to control both of the king’s flight squares h7 and f7?",
+     "choices": [
+      "f6",
+      "g5",
+      "h6",
+      "e6"
+     ],
+     "answer": "g5",
+     "rationale": "A knight on g5 attacks h7 and f7 (and also g7), covering the two diagonal flight squares of the king on g8 while the rook controls the entire eighth rank.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Back-rank mate prophylaxis (luft)",
+     "prompt": "White: Kg1, Rc1, Bb2, pawns f2, g2, h2. Black: Kg8, Rd8, Rd7, pawns f7, g7, h7. Black threatens ...Rd1+ and mate on the back rank. White to move. Which move stops the mate for good?",
+     "choices": [
+      "h3",
+      "Bc3",
+      "Ba3",
+      "Ba1"
+     ],
+     "answer": "h3",
+     "rationale": "After 1.h3 Rd1+ 2.Rxd1 Rxd1+ 3.Kh2 the king escapes. Bc3 and Ba3 can only block later on e1 or c1, where the bishop is taken with mate; Ba1 does nothing.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "dc45a7275557c1d7"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Square of the pawn",
+     "prompt": "White pawn on a5, white king on h1, black king on h8. White to move. Assuming optimal play, will the pawn promote?",
+     "choices": [
+      "Yes, because the black king is outside the square of the pawn.",
+      "No, because the black king can enter the square of the pawn.",
+      "Yes, but only if White moves the king first.",
+      "No, because the pawn is blocked by its own king."
+     ],
+     "answer": "Yes, because the black king is outside the square of the pawn.",
+     "rationale": "The pawn needs three moves to promote. The black king on h8 is seven king moves away from the promotion square a8 and cannot enter the pawn’s square (a5–e8) in time.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Draw claim rules",
+     "prompt": "According to the draw rules taught in this grade, which of the following cannot be used to claim a draw in an over‑the‑board tournament?",
+     "choices": [
+      "Claim a threefold repetition of the position.",
+      "Claim the fifty‑move rule has been reached.",
+      "Claim insufficient material to checkmate.",
+      "Claim a draw because the opponent’s phone rang."
+     ],
+     "answer": "Claim a draw because the opponent’s phone rang.",
+     "rationale": "Threefold repetition, the fifty‑move rule, and insufficient material are all standard legal draw claims. An opponent’s phone ringing is not a rule‑based draw claim.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_club_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Discovered attack combined with check",
+     "prompt": "White: Kg1, Re1, Bc4, Ne5. Black: Kh8, Qe8, pawns g7, h7. White to move. Which move wins Black's queen?",
+     "choices": [
+      "Nc6",
+      "Bd5",
+      "Nd7",
+      "Nf7+"
+     ],
+     "answer": "Nf7+",
+     "rationale": "Nf7+ checks the king and uncovers the rook's attack on e8; f7 is guarded by Bc4, so ...Qxf7 Bxf7, and a king move allows Rxe8+. After Nc6 or Nd7 Black simply plays ...Qxe1+; Bd5 attacks nothing.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "a95cd97967a47043"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Key squares and the sixth‑rank rule in pawn endings (U2)",
+     "prompt": "In a king‑and‑pawn ending, White has a king on e6 and a pawn on e5; Black’s king is on e8. It is White to move. According to the “king on the sixth rank wins whoever moves” rule, what is the correct result with best play?",
+     "choices": [
+      "White wins because the king controls the promotion square.",
+      "The position is a draw because Black can maintain the opposition.",
+      "White wins only if it is Black to move.",
+      "Black can force a stalemate by moving to d7."
+     ],
+     "answer": "White wins because the king controls the promotion square.",
+     "rationale": "With the king on the sixth rank in front of its pawn, White controls the key squares d7, e7, f7 and therefore wins regardless of who moves.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Queen and bishop battery on h7",
+     "prompt": "White: Kg1, Qd1, Bd3, pawns f2, g2, h2. Black: Kg8, Rf8, pawns f7, g7, h7. Which queen move lines up with the bishop on the b1-h7 diagonal, forming a battery aimed at h7?",
+     "choices": [
+      "Qe2",
+      "Qb3",
+      "Qd2",
+      "Qc2"
+     ],
+     "answer": "Qc2",
+     "rationale": "c2 lies on the b1-h7 diagonal behind the bishop on d3 (c2-d3-e4-f5-g6-h7); e2, d2 and b3 do not.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "18a6dc1e82db7ec0"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Key squares in pawn endings",
+     "prompt": "White has a lone pawn on e4 against Black's lone king. Which are the pawn's key squares, the squares where White's king wins whoever is to move?",
+     "choices": [
+      "d5, e5 and f5",
+      "d7, e7 and f7",
+      "d3, e3 and f3",
+      "d6, e6 and f6"
+     ],
+     "answer": "d6, e6 and f6",
+     "rationale": "For a pawn on its second to fourth rank the key squares are the three squares two ranks in front of it: for e4 these are d6, e6 and f6.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "a3f657c3feff2a95"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Decoy sacrifice and fork",
+     "prompt": "White: Kg1, Rd1, Bc4, Nc5, pawns f2, g2, h2. Black: Kf8, Qe7, pawns g7, h7. White to move. Which move wins Black's queen?",
+     "choices": [
+      "Rd8+",
+      "Nd7+",
+      "Ne6+",
+      "Rd7"
+     ],
+     "answer": "Rd8+",
+     "rationale": "1.Rd8+ decoys the queen: 1...Qxd8 2.Ne6+ forks king and queen (e6 is guarded by Bc4), and 1...Qe8 2.Rxe8+ Kxe8 wins the queen for the rook; the king cannot step to f7, which Bc4 covers. 1.Ne6+ does not attack e7; 1.Nd7+ Qxd7; 1.Rd7 Qxd7.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "43538151fd650e4d"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Outposts",
+     "prompt": "Which condition makes a square a true outpost for a knight?",
+     "choices": [
+      "It is on the edge of the board, where the knight cannot be surrounded",
+      "It is protected by one of your pawns and can no longer be attacked by an enemy pawn",
+      "It is on your own second rank, where the knight is safe from all attacks",
+      "It is attacked by two enemy pieces, so the knight draws their fire"
+     ],
+     "answer": "It is protected by one of your pawns and can no longer be attacked by an enemy pawn",
+     "rationale": "An outpost is a square, usually in the opponent's half, supported by your pawn where no enemy pawn can ever drive the piece away.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "28f85e5582d4ddd9"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Pawn breakthrough (capstone)",
+     "prompt": "White: Kg1, pawns a5, b5, c5. Black: Kg8, pawns a7, b7, c7. White to move. Which move breaks through and queens a pawn?",
+     "choices": [
+      "b6",
+      "c6",
+      "Kf2",
+      "a6"
+     ],
+     "answer": "b6",
+     "rationale": "1.b6! axb6 2.c6! bxc6 3.a6 (or 1...cxb6 2.a6! bxa6 3.c6) and the last pawn queens; Black's king on g8 is far too slow. 1.a6 or 1.c6 lets Black block, and a king move gives Black time.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "790316eb0eece651"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_intermediate",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Winning the fight for the opposition",
+     "prompt": "White king on c3, black king on d5. No other pieces. White to move. Which king move gains the direct opposition?",
+     "choices": [
+      "Kd3",
+      "Kc4",
+      "Kb3",
+      "Kd4"
+     ],
+     "answer": "Kd3",
+     "rationale": "Moving to d3 places the white king two squares away from the black king on the same file (d3–d5) with exactly one square (d4) between them – the definition of direct opposition. Kc4 and Kd4 step into check, and Kb3 does not create opposition.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Mobilisation: when a tempo outweighs a pawn",
+     "prompt": "In the opening, a gambit gives up a pawn mainly in return for what?",
+     "choices": [
+      "An extra piece later in the game",
+      "Time: faster development and the initiative",
+      "A guaranteed winning endgame",
+      "The right to castle on both sides"
+     ],
+     "answer": "Time: faster development and the initiative",
+     "rationale": "A gambit trades material for tempi: quicker development, open lines and the initiative. It guarantees nothing about the endgame and gives no extra piece or castling right.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "6570ede207dd8e27"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Queen and rook mates: triangle and kill box",
+     "prompt": "In a rook‑and‑knight versus lone king ending, the attacking side has a rook on a1, a knight on b3, and the enemy king on h8. The attacker to move wants to build a \"kill box\" around the king. Which rook move starts the correct box‑building process?",
+     "choices": [
+      "Ra8",
+      "Rh1",
+      "Ra7",
+      "Rh7"
+     ],
+     "answer": "Ra7",
+     "rationale": "Placing the rook on the seventh rank (a7) restricts the king to the eighth rank and begins the shrink‑wrap that leads to mate.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Windmill and discovered attacks with pins",
+     "prompt": "White has a queen on d4, a knight on f3, and a bishop on c4. Black’s king sits on g8 with pawns on f7, g7, h7, and a rook on f8. White to move. Which move initiates a windmill discovered‑attack sequence that wins material?",
+     "choices": [
+      "Nxe5",
+      "Bxf7+",
+      "Qh4",
+      "Rd1"
+     ],
+     "answer": "Bxf7+",
+     "rationale": "Bxf7+ forces the king to capture, uncovering a discovered check from the queen on d4 that repeats, creating a windmill.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Philidor third-rank defence",
+     "prompt": "In the Philidor defence (Black's king on e8 in front of White's pawn on e5, White's king nearby, rooks on both sides), on which rank does Black's rook stand to keep White's king from advancing?",
+     "choices": [
+      "The eighth rank",
+      "The seventh rank",
+      "The first rank",
+      "The sixth rank"
+     ],
+     "answer": "The sixth rank",
+     "rationale": "Philidor's rook holds the defender's third rank (the sixth for Black) so the white king cannot reach it; only after the pawn reaches that rank does the rook go to the first rank to check from behind.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "293562bed39cc0b7"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Lucena position: building a bridge",
+     "prompt": "In the Lucena position, which technique lets the stronger side shelter its king from checks so the pawn can promote?",
+     "choices": [
+      "Building a bridge with the rook on the fourth rank",
+      "Trading rooks to reach a won pawn ending",
+      "Cutting the enemy king off on the back rank with the rook",
+      "Checking the enemy king from behind the pawn"
+     ],
+     "answer": "Building a bridge with the rook on the fourth rank",
+     "rationale": "In the Lucena the rook goes to the fourth rank so it can later block the checks (the 'bridge'), letting the king come out and the pawn queen.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "993f339d6d427da6"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Outside passed pawn (capstone)",
+     "prompt": "In a king-and-pawn ending, why is an outside passed pawn (one far from the other pawns) usually decisive?",
+     "choices": [
+      "It decoys the enemy king away, so your king can win the pawns on the other side",
+      "It always promotes with check, so it gains the decisive tempo",
+      "It prevents the enemy king from castling for the rest of the game",
+      "It can never be caught by the defending king, whatever the position"
+     ],
+     "answer": "It decoys the enemy king away, so your king can win the pawns on the other side",
+     "rationale": "The defending king must go and stop the distant passer; meanwhile the attacking king eats the remaining pawns. A king inside the square can catch it, so it is not unstoppable.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "0f0baa4b39a51af5"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_strong_club_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Calculation priorities: forcing moves first",
+     "prompt": "When beginning calculation in a middlegame position, which type of move should be examined first according to the grade's calculation priorities?",
+     "choices": [
+      "Quiet positional moves",
+      "Forcing checks, captures, and threats",
+      "Pawn pushes that gain space",
+      "King safety moves such as castling"
+     ],
+     "answer": "Forcing checks, captures, and threats",
+     "rationale": "The grade teaches that forcing moves — checks, captures, and immediate threats — must be evaluated before any quiet alternatives.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Where candidate moves come from",
+     "prompt": "In the Strong Club Player grade, candidate moves are primarily generated from which source?",
+     "choices": [
+      "Random intuition",
+      "Opening memorization",
+      "Imbalances in the position",
+      "Opponent's last move only"
+     ],
+     "answer": "Imbalances in the position",
+     "rationale": "The syllabus stresses that candidate moves arise from recognizing and exploiting positional imbalances rather than rote memory or guesswork.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Triangulation: losing a tempo on purpose",
+     "prompt": "In a king‑and‑pawn endgame where the only way to make progress is to lose a move, which technique does the grade teach?",
+     "choices": [
+      "Direct opposition",
+      "Triangulation",
+      "Zugzwang induction",
+      "Pawn breakthrough"
+     ],
+     "answer": "Triangulation",
+     "rationale": "Triangulation is the deliberate loss of a tempo by maneuvering the king in a three‑square loop to hand the move to the opponent.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Greek Gift sacrifice conditions",
+     "prompt": "In the classic Greek Gift (Bxh7+ followed by Ng5+ and Qh5), which defending piece most often makes the sacrifice unsound, because from f6 it guards h7 and h5?",
+     "choices": [
+      "A black knight on f6",
+      "A black bishop on c8",
+      "A black pawn on a6",
+      "A black rook on a8"
+     ],
+     "answer": "A black knight on f6",
+     "rationale": "A knight on f6 covers h7 and h5 and stops Qh5; that is why the attacker usually first drives it away with e4-e5.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "c847597dc9466f58"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Position evaluation",
+     "prompt": "After calculating a forcing line, the grade advises to assess the resulting position by which method?",
+     "choices": [
+      "Count material alone",
+      "Weigh pawn structure piece activity and king safety",
+      "Compare king safety only",
+      "Assume the line wins because it gains a pawn"
+     ],
+     "answer": "Weigh pawn structure piece activity and king safety",
+     "rationale": "The curriculum teaches evaluating imbalances — pawn structure, piece activity, and king safety — rather than a single factor.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Outflanking a back‑rank king",
+     "prompt": "When the opponent’s king is confined to the back rank, the grade recommends which maneuver to outflank it?",
+     "choices": [
+      "Lift a rook to the seventh rank and then swing it to the h‑file",
+      "Advance central pawns to open lines",
+      "Trade all minor pieces to simplify",
+      "Start a pawn storm on the opposite wing"
+     ],
+     "answer": "Lift a rook to the seventh rank and then swing it to the h‑file",
+     "rationale": "The unit ‘Outflanking: Going Around the Enemy King’ teaches the rook‑lift‑to‑the‑seventh‑then‑h‑file technique as the standard outflanking method; the other options describe unrelated plans.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Combinations built from two motifs",
+     "prompt": "A position features a discovered attack combined with a back‑rank mate threat. According to the grade, the correct way to combine these motifs is to:",
+     "choices": [
+      "Play the discovered attack first, then the mate threat",
+      "Play a forcing move that simultaneously creates both threats",
+      "Ignore the mate threat and win material",
+      "Sacrifice the queen to simplify"
+     ],
+     "answer": "Play a forcing move that simultaneously creates both threats",
+     "rationale": "The capstone emphasizes forcing moves that fuse multiple tactical motifs into a single decisive blow.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_advanced_club_player",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Prophylaxis",
+     "prompt": "Whose writings, above all 'My System', made 'prophylaxis' (stopping the opponent's plans before they start) a central idea of positional chess?",
+     "choices": [
+      "Aron Nimzowitsch",
+      "Frank Marshall",
+      "Adolf Anderssen",
+      "Paul Morphy"
+     ],
+     "answer": "Aron Nimzowitsch",
+     "rationale": "Nimzowitsch introduced and named prophylactic thinking in My System (1925); Morphy, Anderssen and Marshall are known for open attacking play.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "8cc0cd2975e5ce1f"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Pawn Endings With All Pawns on One Wing",
+     "prompt": "In a pawn ending with all pawns on the kingside, White has king on f4, pawns on g4 and h5; Black has king on f7, pawns on g6 and h7. It is White to move. Which move wins by forcing the black king away from the key squares?",
+     "choices": [
+      "1. g5",
+      "1. h6",
+      "1. Kg5",
+      "1. Kh5"
+     ],
+     "answer": "1. g5",
+     "rationale": "1. g5 creates a passed pawn on the g‑file and forces the black king to abandon the defence of h6.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Lasker's double bishop sacrifice",
+     "prompt": "In Lasker's famous double bishop sacrifice (Lasker v Bauer, Amsterdam 1889), White gave up both bishops on which two squares in front of Black's castled king?",
+     "choices": [
+      "g6 and h6",
+      "h7 and g7",
+      "f7 and g7",
+      "h7 and f6"
+     ],
+     "answer": "h7 and g7",
+     "rationale": "Lasker played Bxh7+ and later Bxg7, stripping the king of both pawns; the pattern is named after this game.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "be831fd56517af82"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "King and Pawn Against King and Pawn",
+     "prompt": "In a king‑and‑pawn versus king‑and‑pawn endgame, White has king on d5, pawn on e5; Black king on d7, pawn on e6. White to move. Which technique secures the win by gaining the opposition and advancing the pawn?",
+     "choices": [
+      "1. Kc6",
+      "1. Ke6",
+      "1. e6",
+      "1. Kd6"
+     ],
+     "answer": "1. Kc6",
+     "rationale": "1. Kc6 takes the distant opposition, forcing Black's king away and allowing the e‑pawn to promote.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "The Vancura defence",
+     "prompt": "In the Vancura defence against a rook and a-pawn on a6 (the attacking rook in front of the pawn on a8), where does the defending rook stand?",
+     "choices": [
+      "Behind the pawn on the a-file",
+      "On the sixth rank, attacking the pawn from the side",
+      "On the seventh rank, in front of the pawn",
+      "On the first rank, ready to check from behind"
+     ],
+     "answer": "On the sixth rank, attacking the pawn from the side",
+     "rationale": "Vancura's idea: the defending rook attacks the a6-pawn sideways along the sixth rank (e.g. from f6), with its king on g7 or h7, so it can also check the king from the side.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "6448d9374beeb4cc"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Philidor defence in a rook ending",
+     "prompt": "In the Philidor position (the defending king in front of the pawn, the defending rook on its third rank), when should the defending rook leave that rank to give checks from behind?",
+     "choices": [
+      "As soon as the attacking king reaches the fifth rank",
+      "Only after the pawn reaches the seventh rank",
+      "Never; it must stay on its third rank",
+      "As soon as the pawn advances to the defender's third rank"
+     ],
+     "answer": "As soon as the pawn advances to the defender's third rank",
+     "rationale": "The rook holds its third rank to keep the king out; once the pawn steps onto that rank the king has no shelter in front, so the rook drops to the first rank and checks from behind.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "bf5230ecad9f9d29"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Rook lift to the h-file",
+     "prompt": "What is the usual aim of a rook lift such as Re1-e3-h3?",
+     "choices": [
+      "To support a queenside pawn storm on the a- and b-files",
+      "To bring the rook to the h-file to attack the castled king",
+      "To bring the rook back to defend its own first rank",
+      "To offer a rook exchange and simplify into an ending"
+     ],
+     "answer": "To bring the rook to the h-file to attack the castled king",
+     "rationale": "Lifting the rook along the third rank to h3 brings it into a kingside attack on the h-file (often against h7).",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "e97a4dcd5420ebe8"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_expert",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Forcing moves for both sides",
+     "prompt": "According to the Expert routine, what is the first step when evaluating a position?",
+     "choices": [
+      "Count material balance",
+      "List all forcing moves for both sides",
+      "Identify the opponent's most active piece",
+      "Calculate a five-move variation"
+     ],
+     "answer": "List all forcing moves for both sides",
+     "rationale": "The Expert routine begins by generating all forcing moves for both sides before any other assessment.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Choosing a target among weaknesses",
+     "prompt": "When several enemy weaknesses exist, what does the Expert method advise?",
+     "choices": [
+      "Attack the weakest pawn immediately without delay",
+      "Alternate attacks among weaknesses each successive turn",
+      "Simplify into an endgame where weaknesses diminish",
+      "Calculate which target gives the greatest concrete gain"
+     ],
+     "answer": "Calculate which target gives the greatest concrete gain",
+     "rationale": "Expert play stresses concrete calculation to pick the single most rewarding target rather than heuristic rules.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Corresponding squares",
+     "prompt": "In king-and-pawn endings, what are 'corresponding squares'?",
+     "choices": [
+      "The squares of one colour that a bishop controls, matching the colour of its own pawns",
+      "The squares inside the 'square of the pawn' from which the defending king can still catch it",
+      "The squares that a passed pawn must still cross before it reaches its promotion square",
+      "Pairs of squares: when one king stands on one, the other king must stand on its partner to hold"
+     ],
+     "answer": "Pairs of squares: when one king stands on one, the other king must stand on its partner to hold",
+     "rationale": "Corresponding (or related) squares generalise the opposition: for each square of the attacking king there is a square the defending king must occupy.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "7d771fe0b85a583c"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Kotov's tree: trunk, shrub, debris",
+     "prompt": "In Kotov's calculation tree, the 'trunk' consists of:",
+     "choices": [
+      "The main forced variations arising from checks, captures, and immediate threats",
+      "All quiet moves that improve the position",
+      "The set of candidate moves generated from strategic imbalances",
+      "The final evaluation after a fixed depth search"
+     ],
+     "answer": "The main forced variations arising from checks, captures, and immediate threats",
+     "rationale": "Kotov defines the trunk as the forced, tactical lines that must be examined first.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Rook‑Ending Flowchart (Attacker's First Step)",
+     "prompt": "White has king on g2, rook on a1, passed pawn on h6. Black has king on g7, rook on a8. White to move. Following the rook‑ending flowchart from simple to deep, what is the first strategic step White should aim for?",
+     "choices": [
+      "Advance the pawn to the seventh rank",
+      "Activate the king to the fifth rank",
+      "Offer a rook exchange to simplify",
+      "Bring the rook behind the passed pawn"
+     ],
+     "answer": "Bring the rook behind the passed pawn",
+     "rationale": "The flowchart prescribes that the attacker first place the rook behind its passed pawn (e.g., Rh1) before advancing the pawn or activating the king.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Hedgehog vs Maroczy Bind identification",
+     "prompt": "Which pawn structure is defined by Black pawns on a6, b6, d6, e6 and White pawns on c4 and e4 controlling d5?",
+     "choices": [
+      "Hedgehog",
+      "Maroczy Bind",
+      "Stonewall",
+      "English Chain"
+     ],
+     "answer": "Hedgehog",
+     "rationale": "The described formation – Black’s a6/b6/d6/e6 with White’s c4/e4 – is the classic Hedgehog set‑up; the Maroczy Bind has White c4/e4 against a different Black configuration.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Pawn breaks against the Grünfeld centre",
+     "prompt": "In the Exchange Variation of the Grünfeld Defence (1.d4 Nf6 2.c4 g6 3.Nc3 d5 4.cxd5 Nxd5 5.e4), White builds a big centre with pawns on d4 and e4. Which pawn break is Black's main way to attack it?",
+     "choices": [
+      "...e5",
+      "...b5",
+      "...f5",
+      "...c5"
+     ],
+     "answer": "...c5",
+     "rationale": "The Grünfeld idea is to let White build the centre and then strike at d4 with ...c5, supported by the g7 bishop and pieces on c6 and d8; ...c5 is the thematic lever of the Exchange Variation.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "def195b333e4c665"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_master",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Second Look technique step",
+     "prompt": "In the Second Look technique taught at Master level, after listing candidate moves, what is the next prescribed step?",
+     "choices": [
+      "Play the most forcing move immediately",
+      "Compare each candidate against evaluation criteria",
+      "Calculate each line to ten plies depth",
+      "Ask the opponent for their intention"
+     ],
+     "answer": "Compare each candidate against evaluation criteria",
+     "rationale": "The method requires a systematic comparison of candidates before any calculation or move.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Triangulation and Shouldering",
+     "prompt": "When a king‑and‑pawn endgame requires the side to move to lose a tempo in order to make progress, which technique does the Master grade prescribe?",
+     "choices": [
+      "Triangulation",
+      "Opposition",
+      "Zugzwang induction",
+      "Pawn breakthrough"
+     ],
+     "answer": "Triangulation",
+     "rationale": "Triangulation is the standard maneuver for losing a move while keeping the king’s position, a core Master‑level endgame tool.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Quiet moves inside forcing sequences",
+     "prompt": "During calculation of a forcing sequence, a quiet move appears that neither checks nor captures. According to the Master curriculum, how should the calculator treat this move?",
+     "choices": [
+      "Ignore it because it is not forcing.",
+      "Treat it as a candidate only if it changes the pawn structure.",
+      "Include it in the tree and evaluate the resulting position like any other move.",
+      "Assume the opponent will not reply to it."
+     ],
+     "answer": "Include it in the tree and evaluate the resulting position like any other move.",
+     "rationale": "The grade emphasizes that quiet moves can change the evaluation dramatically and must be examined on par with forcing moves.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Knight endings as pawn endings",
+     "prompt": "In a knight ending where all pawns reside on a single wing, the Master approach evaluates the position primarily as what?",
+     "choices": [
+      "A pure knight versus knight duel.",
+      "A theoretical draw regardless of material.",
+      "A position where the knight’s mobility outweighs pawn structure.",
+      "A pawn race where the king’s activity decides."
+     ],
+     "answer": "A pawn race where the king’s activity decides.",
+     "rationale": "The curriculum reduces such knight endings to pawn‑race logic, with king activity being the decisive factor.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Carlsbad minority attack",
+     "prompt": "In the Carlsbad structure from the Queen’s Gambit Declined, White’s typical minority‑attack plan aims to achieve which strategic goal?",
+     "choices": [
+      "Weaken Black’s c‑pawn and create a target on c6.",
+      "Create a passed pawn on the a‑file.",
+      "Exchange all minor pieces to reach a rook endgame.",
+      "Launch a kingside pawn storm against Black’s king."
+     ],
+     "answer": "Weaken Black’s c‑pawn and create a target on c6.",
+     "rationale": "The minority attack focuses pressure on the c6 pawn, creating a lasting weakness for White to exploit.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Critical‑moment routine – candidate move generation",
+     "prompt": "When a position reaches a critical moment that warrants a long think, the Master‑level routine taught in this grade advises the player to begin by doing what?",
+     "choices": [
+      "Write down every check, capture, and threat for both sides before evaluating the resulting imbalances.",
+      "Simplify immediately by exchanging queens and entering an endgame.",
+      "Launch the most aggressive-looking sacrifice to seize the initiative.",
+      "Consult a tablebase or engine for the objectively best continuation."
+     ],
+     "answer": "Write down every check, capture, and threat for both sides before evaluating the resulting imbalances.",
+     "rationale": "The grade’s first unit teaches the ‘Comparison Method for Choosing Candidates’, which starts with a complete forcing‑move inventory for both players. The other options describe common but inferior reactions: premature simplification, reckless aggression, or reliance on external analysis, each of which a student might plausibly choose.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integrating an isolated queen's pawn with a queenside minority attack",
+     "prompt": "In a typical Master‑level middlegame where White has an isolated queen’s pawn and can start a queenside minority attack, what is the first strategic priority taught at this level?",
+     "choices": [
+      "Secure the isolated pawn with prophylactic piece play while preparing the minority attack and avoiding premature trades.",
+      "Immediately open the kingside with a pawn storm to exploit the space advantage.",
+      "Trade queens to transition into a simplified endgame where the isolated pawn becomes a strength.",
+      "Sacrifice the isolated pawn for rapid development and a lead in development."
+     ],
+     "answer": "Secure the isolated pawn with prophylactic piece play while preparing the minority attack and avoiding premature trades.",
+     "rationale": "The capstone of the Master grade requires synthesising the isolated‑pawn handling from U2 with the minority‑attack plans of U5. The correct answer reflects the prophylactic, patient approach; the distractors are typical but incorrect instincts (kingside attack, early simplification, or speculative sacrifice).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_international_master",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Fortress",
+     "prompt": "In chess, what is a 'fortress'?",
+     "choices": [
+      "A rook on the seventh rank supported by the other rook",
+      "A mating pattern built with two bishops against the king",
+      "A defensive setup the stronger side cannot break, so the game is drawn",
+      "A pawn chain in front of a castled king that keeps every piece out"
+     ],
+     "answer": "A defensive setup the stronger side cannot break, so the game is drawn",
+     "rationale": "A fortress is a defensive formation that holds a draw even against extra material, because the attacker can find no way through.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "0dfb9e9c992d9870"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Long-Term Compensation for a Pawn",
+     "prompt": "In the unit on long‑term compensation for a pawn, which factor is NOT cited as a typical source of compensation when you are a pawn down?",
+     "choices": [
+      "Lasting piece activity that ties down the opponent's forces",
+      "A permanent pawn‑structure weakness in the opponent's camp",
+      "A temporary lead in development that evaporates after a few moves",
+      "King safety problems for the opponent that persist into the endgame"
+     ],
+     "answer": "A temporary lead in development that evaporates after a few moves",
+     "rationale": "The material stresses lasting, structural, or king‑safety compensation, not fleeting development leads.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Fortresses: Recognise, Build and Break",
+     "prompt": "When evaluating a position that may contain a fortress, the grade teaches you to first identify which of the following features?",
+     "choices": [
+      "A closed pawn chain that completely blocks enemy piece entry",
+      "An active enemy queen that can infiltrate any open file",
+      "A surplus of tempos that allows a quick kingside attack",
+      "A material advantage of at least two minor pieces"
+     ],
+     "answer": "A closed pawn chain that completely blocks enemy piece entry",
+     "rationale": "A fortress is defined by an impenetrable pawn barrier that prevents the opponent's pieces from making progress.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "The Bishop Pair in Open Positions",
+     "prompt": "The unit on the bishop pair in open positions states that the pair is most powerful when which condition holds?",
+     "choices": [
+      "Both bishops control complementary colour complexes and the centre is fluid",
+      "The opponent has a knight on a strong outpost supported by a pawn",
+      "Your king is trapped on the back rank with no escape squares",
+      "You have a passed pawn on the seventh rank ready to promote"
+     ],
+     "answer": "Both bishops control complementary colour complexes and the centre is fluid",
+     "rationale": "The grade emphasizes that the bishop pair shines when the centre is open and the bishops dominate both colour complexes.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Rule Independence: When Principles Fail",
+     "prompt": "Rule Independence teaches that a well‑known principle should be ignored when which situation arises?",
+     "choices": [
+      "Concrete calculation shows the principle leads to a losing line",
+      "The opponent has a higher rating and you feel psychological pressure",
+      "The clock shows less than five minutes for the rest of the game",
+      "You have already used the principle successfully in the previous round"
+     ],
+     "answer": "Concrete calculation shows the principle leads to a losing line",
+     "rationale": "The curriculum states that only objective analysis, not psychology or time pressure, justifies breaking a principle.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Queen Against Rook and Pawn: When the Fortress Fails",
+     "prompt": "In queen‑against‑rook‑and‑pawn endings, the fortress fails for the defender when the attacking queen can achieve which configuration?",
+     "choices": [
+      "Centralised queen supported by the king, cutting off the defending rook",
+      "Rook placed on the seventh rank delivering perpetual checks",
+      "Pawn advanced to the sixth rank with the king behind it",
+      "Queen exchanged for the rook leaving a winning king‑and‑pawn endgame"
+     ],
+     "answer": "Centralised queen supported by the king, cutting off the defending rook",
+     "rationale": "The grade explains that a centrally placed queen with king support dismantles the typical rook‑and‑pawn fortress.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Synthesis of Prophylaxis, Fortresses, and Endgame Conversion",
+     "prompt": "You reach a critical middlegame where you have a space advantage, a potential bishop‑pair, and the opponent threatens a counter‑sacrifice that could lead to a fortress. The International Master curriculum requires you to combine prophylactic calculation, fortress recognition, and endgame conversion. Which single plan best integrates all three themes?",
+     "choices": [
+      "Calculate the opponent's best counter‑sacrifice, verify it does not create a fortress, then transition to an endgame where the bishop pair dominates",
+      "Launch an immediate kingside attack ignoring the counter‑sacrifice, hoping the opponent miscalculates",
+      "Simplify immediately by trading queens, then rely on the space advantage alone to win",
+      "Offer a draw because the position contains too many mutual resources to decide"
+     ],
+     "answer": "Calculate the opponent's best counter‑sacrifice, verify it does not create a fortress, then transition to an endgame where the bishop pair dominates",
+     "rationale": "The capstone demands proactive prophylaxis, confirming no fortress arises, and converting the resulting advantage with the bishop pair.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_grandmaster",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "AlphaZero piece values",
+     "prompt": "According to the Grandmaster unit on AlphaZero’s piece values, which statement best reflects the engine’s evaluation of a queen versus two rooks in a typical middlegame?",
+     "choices": [
+      "Queen slightly stronger than two rooks",
+      "Two rooks equal a queen",
+      "Two rooks marginally stronger than a queen",
+      "Queen and two rooks are incomparable"
+     ],
+     "answer": "Two rooks marginally stronger than a queen",
+     "rationale": "AlphaZero values a queen at roughly 9.5 pawns and each rook at about 5.1 pawns, so two rooks together exceed a queen.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Converting extra‑pawn rook endings",
+     "prompt": "In a rook ending where the stronger side has an extra pawn on the same file as the defending rook, the Grandmaster curriculum recommends which first maneuver?",
+     "choices": [
+      "Advance the pawn immediately",
+      "Bring the rook behind the passed pawn",
+      "Cut off the enemy king with the rook",
+      "Exchange rooks to simplify"
+     ],
+     "answer": "Bring the rook behind the passed pawn",
+     "rationale": "Placing the rook behind the passed pawn both supports its advance and restricts the defending king, the standard Philidor technique.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Syzygy DTZ Meaning",
+     "prompt": "When consulting a Syzygy tablebase for a position with a cursed win, what does the DTZ value indicate?",
+     "choices": [
+      "Moves to forced mate",
+      "Moves to convert the win under the 50‑move rule",
+      "Moves until the position becomes drawn",
+      "Moves to a zero‑ing move that resets the 50‑move counter"
+     ],
+     "answer": "Moves to a zero‑ing move that resets the 50‑move counter",
+     "rationale": "DTZ (Distance To Zero) measures the number of plies to a capture or pawn move that resets the 50‑move counter while preserving the win; a cursed win has DTZ > 100.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Mutual zugzwang in tablebase discoveries",
+     "prompt": "In a mutual zugzwang position uncovered by endgame tablebases, which description is accurate?",
+     "choices": [
+      "In a mutual zugzwang, each side would prefer to pass, and the player to move loses.",
+      "The side to move can force a win by gaining a single tempo.",
+      "The position is a forced draw regardless of whose turn it is.",
+      "Only the side with the bishop can exploit the zugzwang."
+     ],
+     "answer": "In a mutual zugzwang, each side would prefer to pass, and the player to move loses.",
+     "rationale": "Mutual zugzwang means any move worsens the mover’s position; both sides would rather pass, so the side to move is lost. The distractors reflect common misconceptions: a single‑tempo win, a forced draw, or a piece‑specific exploitation.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Two bishops against knight (tablebase‑corrected theory)",
+     "prompt": "According to the corrected tablebase theory for the two‑bishops‑versus‑knight ending, what is the typical winning method?",
+     "choices": [
+      "Force the knight to the edge and deliver mate",
+      "Use the bishops to create a barrier and gradually restrict the knight",
+      "Sacrifice a bishop to simplify to a winning king‑and‑bishop ending",
+      "Exchange bishops to reach a winning king‑and‑pawn ending"
+     ],
+     "answer": "Use the bishops to create a barrier and gradually restrict the knight",
+     "rationale": "Tablebases show the winning plan is to dominate squares and shrink the knight’s mobility until it is trapped.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Evaluating an exchange sacrifice (rook for minor piece)",
+     "prompt": "When assessing an exchange sacrifice at Grandmaster level, the curriculum stresses which factor above all?",
+     "choices": [
+      "Long‑term structural compensation such as weakened squares or a pawn majority.",
+      "Immediate material gain from the exchange.",
+      "The opponent’s time trouble on the clock.",
+      "A forced tactical sequence that wins material back."
+     ],
+     "answer": "Long‑term structural compensation such as weakened squares or a pawn majority.",
+     "rationale": "GM‑level instruction (U4/U5) teaches that an exchange sacrifice is justified only by lasting positional gains—weak squares, pawn majorities, or initiative—not by fleeting material, clock pressure, or short tactics. The wrong options are plausible shortcuts a student might favour.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Grandmaster synthesis: prepare and convert",
+     "prompt": "The final synthesis unit teaches that converting a winning position without counterplay requires integrating which three elements?",
+     "choices": [
+      "Opening repertoire, endgame technique, and physical conditioning",
+      "Memorizing engine lines, time‑management tricks, and psychological pressure",
+      "Aggressive king walks, piece sacrifices, and rapid simplification",
+      "Prophylactic thinking, precise calculation of defensive resources, and a concrete plan to restrict opponent’s activity"
+     ],
+     "answer": "Prophylactic thinking, precise calculation of defensive resources, and a concrete plan to restrict opponent’s activity",
+     "rationale": "The capstone emphasizes that conversion blends prophylaxis, exact calculation, and a clear restrictive plan.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_elite_and_world_class",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Only legal move under double check",
+     "prompt": "White: Kg1, Rf1, pawns g2, h2. Black: Kg8, Bc5, Nh3 (Black's knight has just moved from f2 to h3, giving double check). White to move. Which move is legal?",
+     "choices": [
+      "Kh1",
+      "gxh3",
+      "Rf2",
+      "Kf2"
+     ],
+     "answer": "Kh1",
+     "rationale": "The bishop checks along c5-g1 and the knight checks from h3. In double check only a king move can be legal: f2 is attacked by both pieces, f1 is occupied, and h1 is free. gxh3 and Rf2 each meet only one check.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "b3318794f047f6b6"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Draw Death and the Move to Offbeat Lines",
+     "prompt": "During a world‑championship match a player deliberately chooses a rare sideline to avoid the opponent’s deep preparation. This practical decision illustrates which elite‑level concept?",
+     "choices": [
+      "The player is exploiting the draw‑death phenomenon by steering the game into unfamiliar territory.",
+      "The player is following the Berlin Wall strategy to neutralise the opponent’s opening repertoire.",
+      "The player is applying engine‑precision risk assessment to maximise winning chances.",
+      "The player is using the “move to offbeat lines” concept to avoid the opponent’s deep preparation."
+     ],
+     "answer": "The player is using the “move to offbeat lines” concept to avoid the opponent’s deep preparation.",
+     "rationale": "Unit U2 of this grade explicitly names “Draw Death and the Move to Offbeat Lines”; the described choice is a textbook example of that concept.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Philidor defence in World Championship endgame",
+     "prompt": "In Game 12 of the 2018 World Championship, Fabiano Caruana held a draw against Magnus Carlsen in a rook‑and‑pawn versus rook endgame. Which defensive set‑up did Caruana employ?",
+     "choices": [
+      "He moved his rook to the seventh rank and built a fortress behind the pawn chain.",
+      "He placed his rook on the third rank, keeping his king in front of the pawn (the Philidor defence).",
+      "He sacrificed the rook to reach a king‑and‑pawn versus king drawing position.",
+      "He activated his king to the centre and created a perpetual‑check motif with his rook."
+     ],
+     "answer": "He placed his rook on the third rank, keeping his king in front of the pawn (the Philidor defence).",
+     "rationale": "Game 12 ended in a draw after Caruana adopted the classic Philidor defensive set‑up (rook on the third rank, king blocking the pawn), a well‑known drawing method in rook‑and‑pawn versus rook endings.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Engines Plus Tablebases Find New Truths",
+     "prompt": "When preparing for a title match, a grandmaster’s team of seconds analyses the opponent’s recent games with engines and tablebases to uncover ‘new truths’ in critical positions. What is the primary purpose of this engine‑plus‑tablebase work?",
+     "choices": [
+      "To replace human intuition entirely with computer‑generated moves.",
+      "To identify concrete improvements in well‑known theoretical lines that human analysis missed.",
+      "To memorise the exact engine lines for every possible opening variation.",
+      "To verify that the opponent’s opening repertoire contains no hidden novelties."
+     ],
+     "answer": "To identify concrete improvements in well‑known theoretical lines that human analysis missed.",
+     "rationale": "Engine‑tablebase collaboration is used to discover previously unknown resources or refutations in established theory, giving the team a practical edge.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Engine Precision Against Practical Risk",
+     "prompt": "An elite player faces a technically drawn rook‑and‑pawn versus rook ending but, under severe time pressure, chooses a move that maximises practical winning chances rather than the objectively best line. This illustrates the tension between which two concepts?",
+     "choices": [
+      "Engine precision versus practical risk.",
+      "Theoretical draw versus psychological pressure.",
+      "Tablebase accuracy versus human fatigue.",
+      "Opening preparation versus middlegame improvisation."
+     ],
+     "answer": "Engine precision versus practical risk.",
+     "rationale": "The scenario pits the objectively optimal engine move against a riskier, more human‑friendly continuation that exploits the opponent’s time trouble.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Converting a 2700-Level Technical Ending",
+     "prompt": "In a 2700‑level endgame a player converts a minimal advantage by repeatedly improving the position of the king and rook while avoiding any decisive mistake. Which principle guides this conversion process?",
+     "choices": [
+      "Maintain the initiative by constantly posing new problems for the defender.",
+      "Force a pawn breakthrough at the earliest opportunity.",
+      "Simplify to a known theoretical win as quickly as possible.",
+      "Exchange pieces to reach a king‑and‑pawn ending with a passed pawn."
+     ],
+     "answer": "Maintain the initiative by constantly posing new problems for the defender.",
+     "rationale": "At the elite level, conversion of a tiny edge relies on sustained pressure and prophylactic play rather than immediate tactical breakthroughs.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "The Berlin Wall as match strategy",
+     "prompt": "In the 2000 world championship match in London, which opening did Vladimir Kramnik use as Black against Garry Kasparov's 1.e4, earning it the nickname 'the Berlin Wall'?",
+     "choices": [
+      "The Najdorf Sicilian",
+      "The Berlin Defence",
+      "The French Defence",
+      "The Petroff Defence"
+     ],
+     "answer": "The Berlin Defence",
+     "rationale": "Kramnik's 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 held Kasparov to draws as Black and helped him win the title.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "2e89171389631867"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_professional_foundations",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Historical transition from Shatranj to modern chess",
+     "prompt": "Which historical development marks the transition from the medieval game of Shatranj to modern chess?",
+     "choices": [
+      "The vizier was replaced by the queen and the bishop gained its long‑diagonal move.",
+      "The en‑passant capture was introduced into the rules.",
+      "The Staunton piece design became the standard tournament set.",
+      "The fifty‑move rule was formally codified."
+     ],
+     "answer": "The vizier was replaced by the queen and the bishop gained its long‑diagonal move.",
+     "rationale": "The Foundations grade (U2) identifies the replacement of the weak vizier by the powerful queen together with the bishop’s modern long‑range move as the pivotal change. En‑passant, Staunton pieces, and the 50‑move rule arrived later and do not define the Shatranj‑to‑chess transition.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "FIDE trainer title ladder",
+     "prompt": "Which is the entry-level title on FIDE's trainer title ladder?",
+     "choices": [
+      "National Instructor (NI)",
+      "FIDE Instructor (FI)",
+      "FIDE Senior Trainer (FST)",
+      "Developmental Instructor (DI)"
+     ],
+     "answer": "Developmental Instructor (DI)",
+     "rationale": "FIDE's trainer titles, from lowest to highest: Developmental Instructor, National Instructor, FIDE Instructor, FIDE Trainer, FIDE Senior Trainer.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "af7caf17d2ba4c14"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Key, Threat, Try and Refutation",
+     "prompt": "When composing a chess problem, the term \"try\" refers to which element?",
+     "choices": [
+      "The main line that solves the problem",
+      "A move that appears to work but is refuted by a single defence",
+      "The defensive resource that defeats the solver's intention",
+      "The initial position before any moves are played"
+     ],
+     "answer": "A move that appears to work but is refuted by a single defence",
+     "rationale": "A try is a plausible first move that fails to a specific refutation, illustrating the problem's depth.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Illegal Moves and the Two‑Minute Penalty",
+     "prompt": "According to the FIDE Laws, what penalty is applied for a player's first illegal move in a standard game?",
+     "choices": [
+      "Loss of the game",
+      "Two minutes added to the opponent's clock",
+      "A warning and the move must be retracted",
+      "Immediate forfeit of the match"
+     ],
+     "answer": "Two minutes added to the opponent's clock",
+     "rationale": "The first illegal move incurs a two‑minute time penalty for the opponent; a second illegal move loses the game.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Professional Ethics for the Chess Coach",
+     "prompt": "Which ethical guideline from the Professional Ethics unit prohibits a coach from simultaneously representing two players in the same tournament?",
+     "choices": [
+      "Conflict‑of‑interest rule",
+      "Confidentiality clause",
+      "Fair‑play declaration",
+      "Anti‑doping policy"
+     ],
+     "answer": "Conflict‑of‑interest rule",
+     "rationale": "The conflict‑of‑interest rule bars a coach from duties that could compromise impartiality, such as coaching opposing players.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Scoresheets and Draw Offers Under Articles 8 and 9",
+     "prompt": "Under Article 9 of the FIDE Laws, a draw may be claimed by the player whose turn it is when the same position occurs for the third time, provided the claim is made:",
+     "choices": [
+      "Before making the move, after writing it on the scoresheet",
+      "After the move is completed and the clock pressed",
+      "At any time before the opponent's next move",
+      "Only after the arbiter is notified verbally"
+     ],
+     "answer": "Before making the move, after writing it on the scoresheet",
+     "rationale": "The claim must be announced before the move is executed, with the position recorded on the scoresheet.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Building a Lesson Plan / Coaching Online with Shared Boards and Video",
+     "prompt": "A coach preparing a comprehensive lesson plan for a mixed‑ability class must integrate which three pillars taught across the entire Foundations grade?",
+     "choices": [
+      "Opening theory, endgame tablebases, and tournament regulations",
+      "Historical knowledge, pedagogical structure, and arbiter procedures",
+      "Problem‑solving techniques, live‑feed management, and child safeguarding",
+      "Piece‑value memorisation, clock handling, and draw‑claim rules"
+     ],
+     "answer": "Historical knowledge, pedagogical structure, and arbiter procedures",
+     "rationale": "The grade culminates in weaving together history, teaching methodology, and official rules into a coherent lesson plan.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_professional_practitioner",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Steinitz's theory of accumulating small advantages",
+     "prompt": "According to Steinitz’s positional theory, what is the primary purpose of accumulating small advantages?",
+     "choices": [
+      "To build a lasting structural edge that can be converted in the endgame.",
+      "To force an immediate tactical combination.",
+      "To distract the opponent with continual threats.",
+      "To simplify into a drawn king‑and‑pawn ending."
+     ],
+     "answer": "To build a lasting structural edge that can be converted in the endgame.",
+     "rationale": "Steinitz taught that incremental gains create a permanent structural superiority, which is then realised in the endgame. The other options describe tactical or defensive ideas that contradict the positional philosophy.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "The FIDE Dutch System: Halves and Floaters",
+     "prompt": "In the FIDE Dutch pairing system, a 'floater' is best described as:",
+     "choices": [
+      "A player who receives a bye in the first round",
+      "A player who is paired against a higher‑rated opponent to balance the score groups",
+      "A player who withdraws before the tournament ends",
+      "A player who is temporarily moved to a different score group to enable pairings"
+     ],
+     "answer": "A player who is temporarily moved to a different score group to enable pairings",
+     "rationale": "A floater is shifted between score groups to make the pairing algorithm work when groups have odd numbers.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "The Grimshaw and the Organ Pipes",
+     "prompt": "A Grimshaw interference occurs when two black pieces mutually obstruct each other's lines on a single square; what is the typical result of a white move onto that square?",
+     "choices": [
+      "Both black pieces become pinned",
+      "Both black lines are cut, allowing a mate or material gain",
+      "The white piece is captured immediately",
+      "The position simplifies to a drawn endgame"
+     ],
+     "answer": "Both black lines are cut, allowing a mate or material gain",
+     "rationale": "The white occupation removes both defensive lines simultaneously, creating a decisive threat.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Half‑pin defensive resource",
+     "prompt": "In a half‑pin, the pinned piece can move but doing so exposes a more valuable piece behind it. Which of the following is a typical defensive resource for the side that is half‑pinned?",
+     "choices": [
+      "Capture the pinning piece",
+      "Interpose a third piece on the pin line",
+      "Ignore the pin and launch a counterattack",
+      "Move the pinned piece delivering check"
+     ],
+     "answer": "Move the pinned piece delivering check",
+     "rationale": "A standard way to neutralise a half‑pin is to move the pinned piece with check, forcing the opponent to deal with the threat while the rear piece remains protected.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Novotny and Plachutta Interferences",
+     "prompt": "A Novotny interference involves a white sacrifice on a square where two black line‑pieces intersect; what is the strategic aim of the sacrifice?",
+     "choices": [
+      "To force a perpetual check",
+      "To deflect both black pieces from their defensive duties",
+      "To promote a pawn",
+      "To simplify into a winning king‑and‑pawn endgame"
+     ],
+     "answer": "To deflect both black pieces from their defensive duties",
+     "rationale": "The sacrifice removes the intersection, leaving each black piece unable to cover the other's key squares.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Domination study aim",
+     "prompt": "In a domination study, the winning side typically achieves which of the following?",
+     "choices": [
+      "Delivers forced checkmate within three moves despite a material deficit.",
+      "Deprives one or more enemy pieces of all safe squares, forcing material gain or paralysis.",
+      "Gains at least a rook while keeping the enemy king completely safe.",
+      "Creates a stalemate position that is scored as a draw under competition rules."
+     ],
+     "answer": "Deprives one or more enemy pieces of all safe squares, forcing material gain or paralysis.",
+     "rationale": "Domination studies focus on restricting the mobility of enemy pieces until they have no legal moves, leading to material win or total paralysis rather than immediate mate or stalemate.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Promotion Tasks: Allumwandlung, Babson and Excelsior",
+     "prompt": "An Allumwandlung (AUW) problem requires the solution to contain promotions to which set of pieces?",
+     "choices": [
+      "Queen, rook, bishop, and knight each at least once",
+      "Only queen and knight promotions",
+      "Only under‑promotions to rook and bishop",
+      "A single promotion to a queen followed by a forced mate"
+     ],
+     "answer": "Queen, rook, bishop, and knight each at least once",
+     "rationale": "AUW demands that every possible promotion appears in the solution.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_professional_authority",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "FIDE arbiter ladder entry level",
+     "prompt": "Which title is the entry‑level certification on the FIDE arbiter ladder?",
+     "choices": [
+      "National Arbiter (NA)",
+      "FIDE Arbiter (FA)",
+      "International Arbiter (IA)",
+      "Grandmaster Arbiter (GA)"
+     ],
+     "answer": "National Arbiter (NA)",
+     "rationale": "The FIDE arbiter progression is National Arbiter → FIDE Arbiter → International Arbiter; there is no Grandmaster Arbiter title.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "The FIDE Albums",
+     "prompt": "Each FIDE Album of chess compositions (problems and studies) selects the best works published over what period?",
+     "choices": [
+      "Five years",
+      "Ten years",
+      "One year",
+      "Three years"
+     ],
+     "answer": "Three years",
+     "rationale": "FIDE Albums cover three-year periods (for example 2016-2018); points from Album selections count toward the FIDE composition titles.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "10c08dbde35bc771"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Verifying Norms and Processing Title Applications",
+     "prompt": "When reviewing a norm certificate, which omission would make the document invalid?",
+     "choices": [
+      "Missing arbiter signature",
+      "Incorrect tournament name",
+      "Player’s federation code mismatch",
+      "Norm achieved in rapid time control"
+     ],
+     "answer": "Missing arbiter signature",
+     "rationale": "A norm certificate requires the chief arbiter’s signature to be official.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "De Groot, Rowson and Gelfand on Decisions",
+     "prompt": "De Groot’s studies of chess expertise showed that masters differ from amateurs mainly by:",
+     "choices": [
+      "Calculating many more moves ahead",
+      "Recognising familiar patterns and evaluating positions faster",
+      "Memorising a larger opening repertoire",
+      "Spending more time on each move"
+     ],
+     "answer": "Recognising familiar patterns and evaluating positions faster",
+     "rationale": "De Groot found pattern recognition, not depth of calculation, distinguishes masters.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Tablebase verdict on study soundness",
+     "prompt": "If an 8‑piece tablebase line disproves the intended solution of a study, the study is considered:",
+     "choices": [
+      "The study is judged unsound (cooked).",
+      "The study remains sound but exceptionally difficult.",
+      "The study is said to have a dual solution.",
+      "The study requires a different stipulation."
+     ],
+     "answer": "The study is judged unsound (cooked).",
+     "rationale": "A tablebase refutation proves the study is cooked; the other choices describe alternative, incorrect classifications.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Double‑Swiss and Swiss Team Pairing Systems",
+     "prompt": "In a Double‑Swiss team tournament, the pairings for the second Swiss stage are based on:",
+     "choices": [
+      "Reversed colour allocation from the first stage",
+      "The standings after the first stage",
+      "Random draw among equal‑score teams",
+      "Doubling the number of rounds of a single Swiss"
+     ],
+     "answer": "The standings after the first stage",
+     "rationale": "The second Swiss uses the first‑stage rankings as its starting order.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Chief Arbiter of an International Norm Event, Running a Training Camp, Auditing ",
+     "prompt": "The Authority grade states that a senior official who serves as Chief Arbiter of an international norm event, runs a training camp, and audits tiebreaks must master which three domains?",
+     "choices": [
+      "Arbiter regulations, coaching methodology, tiebreak auditing",
+      "Problem composition, historical research, streaming production",
+      "Fair‑play procedures, ethics in journalism, gender statistics",
+      "Tablebase verification, solving championship format, organiser titles"
+     ],
+     "answer": "Arbiter regulations, coaching methodology, tiebreak auditing",
+     "rationale": "These three competencies are explicitly combined in the grade’s capstone synthesis.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_frontier_literacy",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Shannon number",
+     "prompt": "Shannon estimated the number of legal chess positions to be on the order of:",
+     "choices": [
+      "10^40",
+      "10^43",
+      "10^46",
+      "10^50"
+     ],
+     "answer": "10^43",
+     "rationale": "Claude Shannon’s 1950 paper gave an estimate of roughly 10^43 legal positions.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "minimax basics",
+     "prompt": "In a minimax search, a maximizing node returns:",
+     "choices": [
+      "the maximum child value",
+      "the minimum child value",
+      "the average of child values",
+      "the sum of child values"
+     ],
+     "answer": "the maximum child value",
+     "rationale": "By definition a maximizing player chooses the move with the highest evaluated value.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Alpha‑beta beta cutoff condition",
+     "prompt": "During alpha‑beta pruning at a minimizing node, a beta cutoff occurs when:",
+     "choices": [
+      "the node’s value is greater than beta",
+      "the node’s value is less than alpha",
+      "the node’s value equals beta",
+      "the node’s value is less than or equal to alpha"
+     ],
+     "answer": "the node’s value is less than or equal to alpha",
+     "rationale": "At a minimizing node beta = min(beta, value); a cutoff (beta ≤ alpha) is triggered exactly when the node’s value ≤ alpha.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "iterative deepening purpose",
+     "prompt": "The main purpose of iterative deepening in contemporary engines is to:",
+     "choices": [
+      "guarantee the best move at each depth",
+      "improve move ordering for deeper searches",
+      "reduce memory consumption",
+      "enable parallel search threads"
+     ],
+     "answer": "improve move ordering for deeper searches",
+     "rationale": "Iterative deepening reuses the principal variation from shallower depths to order moves better for the next depth.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Components of classical handcrafted evaluation",
+     "prompt": "Which component is NOT normally part of a classical handcrafted evaluation function?",
+     "choices": [
+      "Monte‑Carlo simulation count",
+      "Material balance assessment",
+      "Pawn structure evaluation",
+      "King safety weighting"
+     ],
+     "answer": "Monte‑Carlo simulation count",
+     "rationale": "Classical evaluations use deterministic terms such as material, pawn structure, and king safety; Monte‑Carlo counts belong to stochastic search methods.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "DTZ definition",
+     "prompt": "In tablebase terminology, what does DTZ stand for?",
+     "choices": [
+      "Distance to zero move rule pawn capture",
+      "Distance to mate in current position now",
+      "Distance to conversion of material balance now",
+      "Distance to stalemate under perfect play now"
+     ],
+     "answer": "Distance to zero move rule pawn capture",
+     "rationale": "DTZ = Distance To Zero‑move (the number of plies until a pawn move or capture resets the 50‑move counter).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-2"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "AlphaZero vs Stockfish search",
+     "prompt": "What is a key difference between AlphaZero's search and the search of Stockfish with NNUE?",
+     "choices": [
+      "AlphaZero uses Monte Carlo tree search guided by a policy-value network; Stockfish uses alpha-beta search with an NNUE evaluation",
+      "AlphaZero was trained only on human master games, while Stockfish's NNUE was never trained on any data at all",
+      "AlphaZero uses a handcrafted evaluation with alpha-beta search; Stockfish uses Monte Carlo tree search with a policy network",
+      "AlphaZero searches far more positions per second than Stockfish, which makes up for it with a slower evaluation"
+     ],
+     "answer": "AlphaZero uses Monte Carlo tree search guided by a policy-value network; Stockfish uses alpha-beta search with an NNUE evaluation",
+     "rationale": "AlphaZero (2017) learned by self-play and searches with MCTS steered by its policy and value heads, at tens of thousands of positions per second; Stockfish keeps alpha-beta search and since 2020 evaluates with a small, fast NNUE trained on engine-evaluated positions, searching millions of positions per second.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "dd828464182f89a4"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_frontier_research",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Negamax symmetry",
+     "prompt": "In a negamax implementation, why does a single evaluation function suffice for both players?",
+     "choices": [
+      "Because the evaluation is always returned from the perspective of the side to move, with a sign flip at each ply.",
+      "Because the engine stores separate white and black evaluation tables.",
+      "Because the search depth is halved for the opponent.",
+      "Because the move generator only produces moves for the player whose turn it is."
+     ],
+     "answer": "Because the evaluation is always returned from the perspective of the side to move, with a sign flip at each ply.",
+     "rationale": "Negamax relies on the zero‑sum property, returning scores from the mover’s view and negating them each ply.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Move ordering",
+     "prompt": "Which move is typically tried first after the hash move in modern alpha‑beta searchers?",
+     "choices": [
+      "A random quiet move.",
+      "The highest MVV‑LVA capture.",
+      "The move with the lowest history score.",
+      "The first legal move generated."
+     ],
+     "answer": "The highest MVV‑LVA capture.",
+     "rationale": "MVV‑LVA orders captures by victim value minus attacker value, giving the highest‑value captures priority.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "PVS: null-window re-search",
+     "prompt": "In Principal Variation Search, after the first move at a PV node is searched with a full window, later moves are searched with a null window. If such a null-window search returns a score above alpha but less than beta, what does the engine do?",
+     "choices": [
+      "Prune the move immediately as a fail-low",
+      "Widen the aspiration window at the root and restart the iteration",
+      "Re-search that move with the full window to get its exact score",
+      "Stop the search at this node and return beta"
+     ],
+     "answer": "Re-search that move with the full window to get its exact score",
+     "rationale": "A null-window result above alpha means the move may be better than the current PV, so PVS re-searches it with the full (alpha, beta) window; only a score of at least beta produces a cutoff.",
+     "writer": "claude-opus-5-5 (Claude in-app, stronger-model rewrite)",
+     "rewritten": "stronger-model",
+     "replaced": "a720b86079a30927"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Lazy SMP parallelism",
+     "prompt": "Lazy SMP achieves parallelism mainly by:",
+     "choices": [
+      "Splitting the move list at the root among threads statically.",
+      "Running completely independent searches with no shared data.",
+      "Using a master thread that distributes work via a work‑queue.",
+      "Sharing the transposition table and letting threads search the same tree with different depths."
+     ],
+     "answer": "Sharing the transposition table and letting threads search the same tree with different depths.",
+     "rationale": "Lazy SMP lets all threads walk the same tree, using a shared hash table to avoid duplicate work.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "MTD(f) convergence",
+     "prompt": "MTD(f) finds the exact minimax value by repeatedly calling a zero‑window search with different bounds; what is its typical convergence pattern?",
+     "choices": [
+      "It converges from both sides, alternating fail‑high and fail‑low until the bounds meet.",
+      "It always converges monotonically from below.",
+      "It requires a full‑window search on the first iteration.",
+      "It converges in a single call if the initial guess is exact."
+     ],
+     "answer": "It converges from both sides, alternating fail‑high and fail‑low until the bounds meet.",
+     "rationale": "MTD(f) tightens upper and lower bounds by alternating null‑window searches until they coincide.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Syzygy WDL probing",
+     "prompt": "When an engine probes a Syzygy WDL table during search, what information does it obtain?",
+     "choices": [
+      "Only the exact DTM (distance to mate) value.",
+      "The win/draw/loss result and the distance to zero for the current position.",
+      "A list of all legal moves that preserve the theoretical result.",
+      "The optimal move without any evaluation."
+     ],
+     "answer": "The win/draw/loss result and the distance to zero for the current position.",
+     "rationale": "Syzygy WDL tables store the theoretical result (win/draw/loss) plus DTZ for each position.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "AlphaZero PUCT exploration",
+     "prompt": "In AlphaZero’s Monte‑Carlo Tree Search, the PUCT formula combines the child’s prior probability P with its visit count N; which term encourages exploration of less‑visited moves?",
+     "choices": [
+      "The average value Q of the child node.",
+      "The raw visit count N of the child.",
+      "c_puct * P * sqrt(parent_N) / (1 + N).",
+      "The total simulation budget allocated to the root."
+     ],
+     "answer": "c_puct * P * sqrt(parent_N) / (1 + N).",
+     "rationale": "The PUCT exploration bonus is proportional to the prior P and inversely proportional to 1+N, favouring rarely visited edges.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "chess_frontier_contribution",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Zermelo's theorem outcome guarantee",
+     "prompt": "Zermelo's theorem applied to finite perfect‑information games such as chess guarantees which of the following about the initial position?",
+     "choices": [
+      "The initial position has a determinate outcome (win, loss, or draw) though it is not yet known.",
+      "White possesses a forced win from the starting position.",
+      "Black possesses a forced win from the starting position.",
+      "The game is a forced draw with perfect play from the start."
+     ],
+     "answer": "The initial position has a determinate outcome (win, loss, or draw) though it is not yet known.",
+     "rationale": "Zermelo's theorem proves the existence of a game‑theoretic value (win/loss/draw) but does not specify which; the other options assert a specific result.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Proof‑number search proof number definition",
+     "prompt": "In proof‑number search, what does the proof number of an internal node represent?",
+     "choices": [
+      "The minimum number of leaf nodes that must be proved to prove the node.",
+      "The minimum number of leaf nodes that must be disproved to disprove the node.",
+      "The depth of the deepest forced win from that node.",
+      "The static evaluation score assigned to the position."
+     ],
+     "answer": "The minimum number of leaf nodes that must be proved to prove the node.",
+     "rationale": "By definition, a node’s proof number is the smallest number of leaf proofs required to prove that node; the disproof number handles disproving, while depth and static evaluation are unrelated concepts.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "SPRT hypothesis thresholds for engine testing",
+     "prompt": "When using a Sequential Probability Ratio Test to evaluate a new engine version, which pair of hypotheses is the conventional choice in modern engine‑testing frameworks?",
+     "choices": [
+      "H0: the new engine is no more than 0 Elo stronger; H1: it is at least 10 Elo stronger.",
+      "H0: the new engine is no more than 5 Elo weaker; H1: it is at least 5 Elo stronger.",
+      "H0: the new engine is exactly equal in strength; H1: it is at least 20 Elo stronger.",
+      "H0: the new engine is no more than 2 Elo weaker; H1: it is at least 2 Elo stronger."
+     ],
+     "answer": "H0: the new engine is no more than 0 Elo stronger; H1: it is at least 10 Elo stronger.",
+     "rationale": "The widely adopted SPRT configuration (e.g., in Stockfish Fishtest) sets the null hypothesis at zero Elo gain and the alternative at a 10‑Elo improvement, providing a clear indifference region. The other pairs either overlap or use non‑standard margins.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Cook-check pipeline purpose",
+     "prompt": "Which of the following best describes the purpose of a 'cook‑check pipeline' in computer‑assisted study composition?",
+     "choices": [
+      "To generate new opening novelties for engine tournaments.",
+      "To measure the Elo impact of a proposed rule change.",
+      "To verify that a study's intended solution is unique and free of alternative lines.",
+      "To compress tablebase files for faster distribution."
+     ],
+     "answer": "To verify that a study's intended solution is unique and free of alternative lines.",
+     "rationale": "A cook‑check pipeline automatically searches for unintended solutions (cooks) that would invalidate a composed study.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "NNUE interpretability limitation",
+     "prompt": "What property of the NNUE architecture makes it difficult to determine which positional factors are responsible for a given evaluation?",
+     "choices": [
+      "NNUE weights cannot be visualised because they are stored in compressed format.",
+      "The linear accumulation of feature weights obscures which positional factors drive a given evaluation.",
+      "NNUE networks require GPU acceleration, preventing analysis on CPU‑only hardware.",
+      "The training data must come from human grandmaster games, limiting novelty."
+     ],
+     "answer": "The linear accumulation of feature weights obscures which positional factors drive a given evaluation.",
+     "rationale": "NNUE computes the evaluation as a weighted sum of many sparse feature activations; this linear aggregation hides the contribution of individual concepts, unlike deeper nonlinear nets where attribution methods can isolate factors. The other statements are either false or unrelated to interpretability.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Haworth's law and 50-move rule",
+     "prompt": "What does Haworth's law state about the relationship between depth of tablebase‑proven wins and the 50‑move rule?",
+     "choices": [
+      "Some tablebase wins require more than 50 moves, and the longest known exceeds 500 moves.",
+      "Every tablebase win can be achieved within 50 moves of the last capture or pawn move.",
+      "The 50‑move rule does not apply to positions proven by tablebases.",
+      "Haworth's law predicts that all forced wins are shorter than 100 moves."
+     ],
+     "answer": "Some tablebase wins require more than 50 moves, and the longest known exceeds 500 moves.",
+     "rationale": "Haworth's law observes that maximal DTM in tablebases far exceeds the 50‑move limit, with the current record over 500 moves.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Haworth's Law scaling of forced‑win length",
+     "prompt": "Haworth's Law describes how the maximum depth‑to‑mate of forced wins scales with the number of pieces on the board. What trend does the law predict?",
+     "choices": [
+      "A linear increase in maximum forced‑win length as pieces are added.",
+      "An exponential increase in maximum forced‑win length as pieces are added.",
+      "A logarithmic increase in maximum forced‑win length as pieces are added.",
+      "A constant maximum forced‑win length regardless of piece count."
+     ],
+     "answer": "An exponential increase in maximum forced‑win length as pieces are added.",
+     "rationale": "Empirical tablebase research (e.g., the 584‑move 7‑piece win) shows that the longest forced wins grow roughly exponentially with piece count, which is precisely the claim of Haworth's Law. The other growth models do not match the observed data.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "review"
+    }
+   ]
+  }
+ ],
+ "code_problems": [
+  "chess_international_master#3: all/none of the above",
+  "chess_professional_practitioner#2: all/none of the above"
+ ],
+ "model": "nvidia/nemotron-3-ultra-550b-a55b",
+ "written_at": "2026-10-24T07:32:37.927Z",
+ "complete": true
+}

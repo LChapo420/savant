@@ -1,0 +1,52 @@
+{
+ "collection": "lessons",
+ "row_id": 2040,
+ "shared": false,
+ "user_id": 2860,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P54",
+   "wrong": "Summary: Remember that \\\"less than\\\" and \\\"more than\\\" put the number on the left of the operation (with stray backslashes before the quotation marks).",
+   "correct": "\"7 less than n\" is n - 7 and \"9 more than n\" is n + 9: the number goes on the RIGHT, not the left (and for \"more than\" either order is equal)."
+  }
+ ],
+ "edits": [
+  {
+   "path": "summary",
+   "before": "Give the unknown a letter first, then let the words choose the operation. Remember that \\\"less than\\\" and \\\"more than\\\" put the number on the left of the operation, and that \\\"times,\\\" \\\"product of,\\\" and \\\"twice\\\" write the number right next to the letter.",
+   "after": "Give the unknown a letter first, then let the words choose the operation. Remember that \"less than\" flips the order, so 7 less than n is n - 7, with the number on the right; with \"more than,\" n + 9 and 9 + n are equal. \"Times,\" \"product of,\" and \"twice\" write the number right next to the letter."
+  }
+ ],
+ "diff": [
+  {
+   "path": "summary",
+   "before": "Give the unknown a letter first, then let the words choose the operation. Remember that \\\"less than\\\" and \\\"more than\\\" put the number on the left of the operation, and that \\\"times,\\\" \\\"product of,\\\" and \\\"twice\\\" write the number right next to the letter.",
+   "after": "Give the unknown a letter first, then let the words choose the operation. Remember that \"less than\" flips the order, so 7 less than n is n - 7, with the number on the right; with \"more than,\" n + 9 and 9 + n are equal. \"Times,\" \"product of,\" and \"twice\" write the number right next to the letter."
+  }
+ ],
+ "judge_a": {
+  "index": 3,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 3,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "judge B saw a cut-off excerpt and a stray character; the stored summary really holds backslashes before its quotation marks, now removed",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

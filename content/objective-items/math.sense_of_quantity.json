@@ -1,0 +1,2737 @@
+{
+ "track_id": "math",
+ "grade_id": "sense_of_quantity",
+ "built_at": "2026-10-24T12:51:18.157Z",
+ "items": [
+  {
+   "id": "oi_538b2a5ed9b2",
+   "objective_id": "sense_of_quantity:L10",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which word means “big”?",
+   "choices": [
+    "tiny",
+    "narrow",
+    "large",
+    "empty"
+   ],
+   "answer": "large",
+   "rationale": "“Large” is another word for big.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_592e0f789088",
+   "objective_id": "sense_of_quantity:L10",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Two block towers use blocks of the same size. The first has 2 blocks. The second has 6 blocks. Which tower is taller?",
+   "choices": [
+    "The first tower",
+    "The second tower",
+    "Both equally",
+    "Neither tower"
+   ],
+   "answer": "The second tower",
+   "rationale": "The tower with 6 blocks is taller because all the blocks are the same size.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_b36cfab449b0",
+   "objective_id": "sense_of_quantity:L10",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which word is the opposite of “tall”?",
+   "choices": [
+    "wide",
+    "short",
+    "heavy",
+    "soft"
+   ],
+   "answer": "short",
+   "rationale": "“Short” is the opposite of “tall.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_3d6deaca574b",
+   "objective_id": "sense_of_quantity:L20",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A basket has a red ball, red car, blue block, and blue duck. Their sizes and shapes are unknown. Which rule groups the ball with the car and the block with the duck?",
+   "choices": [
+    "Color: red toys together; blue toys together.",
+    "Size: small toys together; large toys together.",
+    "Shape: round toys together; square toys together.",
+    "Kind: vehicles together; all other toys together."
+   ],
+   "answer": "Color: red toys together; blue toys together.",
+   "rationale": "The ball and car are both red, while the block and duck are both blue, so color makes the two groups.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_fb42bae13de2",
+   "objective_id": "sense_of_quantity:L20",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A child puts the small cup, small ball, and small block together, then the large cup, large ball, and large block together. Which rule was used?",
+   "choices": [
+    "Color: red toys together; blue toys together.",
+    "Size: small toys together; large toys together.",
+    "Shape: round toys together; square toys together.",
+    "Kind: balls together; cups and blocks together."
+   ],
+   "answer": "Size: small toys together; large toys together.",
+   "rationale": "Each group contains either all small toys or all large toys, so the rule used was size.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9f128ec02bc6",
+   "objective_id": "sense_of_quantity:L20",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Four toys are a round ball, a round cup, a square block, and a square box. Ana puts the ball with the cup and the block with the box. Which rule did Ana use?",
+   "choices": [
+    "by color",
+    "by size",
+    "by shape",
+    "by kind"
+   ],
+   "answer": "by shape",
+   "rationale": "The toys are grouped by whether they are round or square, so the rule is shape.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 1,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_dc5632bad8ef",
+   "objective_id": "sense_of_quantity:L20",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A group contains a blue duck and a blue block. Which choice gives another toy that belongs in the group and the sorting rule?",
+   "choices": [
+    "a blue ball; color",
+    "a blue ball; size",
+    "a red ball; color",
+    "a red ball; kind"
+   ],
+   "answer": "a blue ball; color",
+   "rationale": "The duck and block are both blue, so they are grouped by color. The blue ball also belongs.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 1,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_b5d267cc8e48",
+   "objective_id": "sense_of_quantity:L122",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 122,
+   "format": "multiple_choice",
+   "prompt": "Six crayons are in a pile. A teacher says to the learner, \"Give me 3 crayons.\" What should the learner do?",
+   "choices": [
+    "Hand over exactly 3 crayons.",
+    "Hand over exactly 2 crayons.",
+    "Hand over exactly 4 crayons.",
+    "Hand over exactly 6 crayons."
+   ],
+   "answer": "Hand over exactly 3 crayons.",
+   "rationale": "The teacher requests 3 crayons, so handing over exactly 3 crayons fulfills the request. The other counts do not.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9285590d2abc",
+   "objective_id": "sense_of_quantity:L122",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 122,
+   "format": "multiple_choice",
+   "prompt": "Seven toy animals are in a larger pile. A teacher says, \"Give me 4 animals.\" How many toy animals should the learner hand over?",
+   "choices": [
+    "3 toy animals.",
+    "4 toy animals.",
+    "5 toy animals.",
+    "7 toy animals."
+   ],
+   "answer": "4 toy animals.",
+   "rationale": "The teacher asks for 4 animals, so the learner should hand over exactly 4 toy animals.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_6a0dda217bc1",
+   "objective_id": "sense_of_quantity:L122",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 122,
+   "format": "multiple_choice",
+   "prompt": "Five blocks lie in a pile. A friend says, \"Give me 2 blocks.\" Which action should the learner take?",
+   "choices": [
+    "Give the friend exactly 1 block.",
+    "Give the friend exactly 3 blocks.",
+    "Give the friend exactly 2 blocks.",
+    "Give the friend exactly 5 blocks."
+   ],
+   "answer": "Give the friend exactly 2 blocks.",
+   "rationale": "The request is for 2 blocks, so giving the friend exactly 2 blocks matches what was requested.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_f300aa61e075",
+   "objective_id": "sense_of_quantity:L122",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 122,
+   "format": "multiple_choice",
+   "prompt": "Eight buttons are in a pile. The teacher requests, \"Give me 5 buttons.\" Which group belongs in the teacher’s hand?",
+   "choices": [
+    "A group of 4 buttons.",
+    "A group of 6 buttons.",
+    "A group of 8 buttons.",
+    "A group of 5 buttons."
+   ],
+   "answer": "A group of 5 buttons.",
+   "rationale": "The teacher requests 5 buttons, so the learner should hand over a group of exactly 5 buttons.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_8000c30942b1",
+   "objective_id": "sense_of_quantity:L32",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "Mia has a red cup. Which object is the same color as Mia’s cup?",
+   "choices": [
+    "a blue ball",
+    "a green apple",
+    "a red ball",
+    "a yellow car"
+   ],
+   "answer": "a red ball",
+   "rationale": "The red ball is the same color as Mia’s red cup.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_92fde8f76fd9",
+   "objective_id": "sense_of_quantity:L32",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "Which pair has the same kind of object and the same color?",
+   "choices": [
+    "A yellow sock and a blue sock",
+    "A blue hat and a blue sock",
+    "A yellow sock and a yellow sock",
+    "A yellow sock and a yellow hat"
+   ],
+   "answer": "A yellow sock and a yellow sock",
+   "rationale": "Both objects in this pair are yellow socks, so they match in kind and color.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_0fb10783e38a",
+   "objective_id": "sense_of_quantity:L32",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "Leo has a big white plate and a small white plate. Both plates are round. What makes the two plates different?",
+   "choices": [
+    "Their colors are different.",
+    "Their shapes are different.",
+    "Their sizes are different.",
+    "Their kinds are different."
+   ],
+   "answer": "Their sizes are different.",
+   "rationale": "One plate is big and the other is small, so their sizes are different.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_27dc525f9489",
+   "objective_id": "sense_of_quantity:L32",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "Kim wants two things that are the same because both are made of wood. Which pair should she choose?",
+   "choices": [
+    "A wooden spoon and a metal spoon",
+    "A wooden cup and a plastic cup",
+    "A plastic bowl and a metal plate",
+    "A wooden spoon and a wooden bowl"
+   ],
+   "answer": "A wooden spoon and a wooden bowl",
+   "rationale": "Both the wooden spoon and the wooden bowl are made of wood.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_b53c1583ea03",
+   "objective_id": "sense_of_quantity:L44",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 44,
+   "format": "multiple_choice",
+   "prompt": "On the floor, you find a flat tile with four straight sides of the same length and four corners. You touch every side and corner. What do you name the tile’s shape?",
+   "choices": [
+    "a square",
+    "a circle",
+    "a triangle",
+    "a rectangle"
+   ],
+   "answer": "a square",
+   "rationale": "The tile has four equal straight sides and four corners, so its shape is a square.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_939734bad6dc",
+   "objective_id": "sense_of_quantity:L44",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 44,
+   "format": "multiple_choice",
+   "prompt": "You find a round object in the room. It has one curved edge and no corners. You trace its edge with one finger. What do you name its shape?",
+   "choices": [
+    "a square",
+    "a circle",
+    "a triangle",
+    "a rectangle"
+   ],
+   "answer": "a circle",
+   "rationale": "The object has one curved edge and no corners, so its shape is a circle.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_144e5bf024af",
+   "objective_id": "sense_of_quantity:L44",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 44,
+   "format": "multiple_choice",
+   "prompt": "A cushion in the room has three straight sides and three pointed corners. You touch each side and corner. What do you name the cushion’s shape?",
+   "choices": [
+    "a circle",
+    "a rectangle",
+    "a triangle",
+    "a square"
+   ],
+   "answer": "a triangle",
+   "rationale": "The cushion has three sides and three corners, so its shape is a triangle.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_7e08a3815130",
+   "objective_id": "sense_of_quantity:L44",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 44,
+   "format": "multiple_choice",
+   "prompt": "A rug in the room has four straight sides and four corners. Its two long sides match, its two short sides match, and the long sides are longer. What do you name its shape?",
+   "choices": [
+    "a square",
+    "a triangle",
+    "a circle",
+    "a rectangle"
+   ],
+   "answer": "a rectangle",
+   "rationale": "The rug has two pairs of matching sides with different lengths, so its shape is a rectangle.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_271eb3c29d85",
+   "objective_id": "sense_of_quantity:L66",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 66,
+   "format": "multiple_choice",
+   "prompt": "During a flash-and-hide game, a line of toys appears briefly: a car, a ball, and a drum. How many toys do you say while the line is visible?",
+   "choices": [
+    "one toy",
+    "two toys",
+    "three toys",
+    "four toys"
+   ],
+   "answer": "three toys",
+   "rationale": "The line shows a car, a ball, and a drum, making three toys altogether.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_2149c360db69",
+   "objective_id": "sense_of_quantity:L66",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 66,
+   "format": "multiple_choice",
+   "prompt": "A triangle of buttons appears for one second: one button at the top and two buttons below. How many buttons are there?",
+   "choices": [
+    "2 buttons",
+    "3 buttons",
+    "4 buttons",
+    "5 buttons"
+   ],
+   "answer": "3 buttons",
+   "rationale": "There is one top button and two lower buttons, so the triangle contains three buttons.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_7db98e864d96",
+   "objective_id": "sense_of_quantity:L66",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 66,
+   "format": "multiple_choice",
+   "prompt": "A row of leaves appears for one second and then hides. The row has a leaf, another leaf, and one more leaf. Which number tells how many leaves appeared?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "3",
+   "rationale": "The hidden row contained three leaves altogether.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_2cff1b6ed398",
+   "objective_id": "sense_of_quantity:L66",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 66,
+   "format": "multiple_choice",
+   "prompt": "During a flash-and-hide game, a triangle of toy fish appears briefly: one fish is at the top and two are at the bottom. What counting word should you say for the whole group?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answer": "three",
+   "rationale": "The group has one top fish and two lower fish, making three fish altogether.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_3a15f65f4e72",
+   "objective_id": "sense_of_quantity:L76",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 76,
+   "format": "multiple_choice",
+   "prompt": "A chant begins: “___, ___, three, four, five, six, seven, eight, nine, ten.” Which two number words fill the blanks?",
+   "choices": [
+    "one, two",
+    "two, three",
+    "one, three",
+    "three, four"
+   ],
+   "answer": "one, two",
+   "rationale": "The chant starts with one and two, then continues with three, so the missing words are one and two.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_25889f5e97f2",
+   "objective_id": "sense_of_quantity:L76",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 76,
+   "format": "multiple_choice",
+   "prompt": "A child chants: “one, two, three, four, five, ___, seven, eight, nine, ten.” Which number word belongs in the blank?",
+   "choices": [
+    "four",
+    "six",
+    "eight",
+    "nine"
+   ],
+   "answer": "six",
+   "rationale": "The counting words increase by one. Six comes after five and before seven.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9cf97c944e72",
+   "objective_id": "sense_of_quantity:L76",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 76,
+   "format": "multiple_choice",
+   "prompt": "When chanting the counting words from one to ten, which number word comes immediately before nine?",
+   "choices": [
+    "seven",
+    "eight",
+    "ten",
+    "six"
+   ],
+   "answer": "eight",
+   "rationale": "Eight comes immediately before nine in the counting sequence.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5e37ee23c1e3",
+   "objective_id": "sense_of_quantity:L76",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 76,
+   "format": "multiple_choice",
+   "prompt": "Which chant uses all ten counting words in the correct order?",
+   "choices": [
+    "one, two, three, four, five, six, seven, eight, nine, ten",
+    "one, two, four, three, five, six, seven, eight, nine, ten",
+    "one, three, two, four, five, six, seven, eight, nine, ten",
+    "two, one, three, four, five, six, seven, eight, nine, ten"
+   ],
+   "answer": "one, two, three, four, five, six, seven, eight, nine, ten",
+   "rationale": "This option places every number word after the previous one, ending with ten.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9752b62eabcb",
+   "objective_id": "sense_of_quantity:L88",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 88,
+   "format": "multiple_choice",
+   "prompt": "Which action best follows the rule for counting toys on a mat?",
+   "choices": [
+    "Touch the same toy for every counting word.",
+    "Touch and move one toy for each counting word.",
+    "Move all the toys after saying the words.",
+    "Say the words without touching any toy."
+   ],
+   "answer": "Touch and move one toy for each counting word.",
+   "rationale": "This creates a one-to-one match: each counting word is paired with exactly one toy that is touched and moved.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_2737d07b7a52",
+   "objective_id": "sense_of_quantity:L88",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 88,
+   "format": "multiple_choice",
+   "prompt": "Two toys are on a mat. The child says “one” while touching the first toy. What comes next?",
+   "choices": [
+    "Move both toys, then say “two” without touching.",
+    "Leave the first toy, then say “two” without touching.",
+    "Touch the first toy again, then move the second toy.",
+    "Move the first toy, then touch the second and say “two.”"
+   ],
+   "answer": "Move the first toy, then touch the second and say “two.”",
+   "rationale": "After pairing “one” with the first toy, the child moves it, then pairs “two” with a second toy by touching it and saying “two.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5cb0093d4696",
+   "objective_id": "sense_of_quantity:L88",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 88,
+   "format": "multiple_choice",
+   "prompt": "A child says “one, two, three” but keeps touching the same toy on a mat. How can the adult help?",
+   "choices": [
+    "Hold one toy while saying all three words.",
+    "Move every toy after saying all three words.",
+    "Touch and move a new toy for each word.",
+    "Say all three words without touching toys."
+   ],
+   "answer": "Touch and move a new toy for each word.",
+   "rationale": "Restarting with a new toy for each word corrects the repeated match and creates one-to-one counting.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_c9f3ecf29fc6",
+   "objective_id": "sense_of_quantity:L98",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 98,
+   "format": "multiple_choice",
+   "prompt": "A child places a teddy bear, a ball, and a wooden block on the floor. How many toys did the child place?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answer": "three",
+   "rationale": "There are three toys. The last number word said when counting them is “three.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_389204e72a16",
+   "objective_id": "sense_of_quantity:L98",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 98,
+   "format": "multiple_choice",
+   "prompt": "A child touches a single stuffed rabbit and says a number word for it. Which number word should the child say?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answer": "one",
+   "rationale": "There is one toy in the set, so the child says the number word “one.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_e0fdcddc2d98",
+   "objective_id": "sense_of_quantity:L98",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 98,
+   "format": "multiple_choice",
+   "prompt": "Leo counts a blue toy car and a red toy car. He says a number word for each toy. What is the last number word he says?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answer": "two",
+   "rationale": "Leo counts two toys. The last number word in his count is “two.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_3f0d3274ac53",
+   "objective_id": "sense_of_quantity:L98",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 98,
+   "format": "multiple_choice",
+   "prompt": "A child counts toy animals: a fox, a bear, and a rabbit. The child says “one” and “two” while pointing. Which number word should be said for the rabbit?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answer": "three",
+   "rationale": "The rabbit is the third toy counted, so the child says “three.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_39580ac42011",
+   "objective_id": "sense_of_quantity:L110",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 110,
+   "format": "multiple_choice",
+   "prompt": "A toy car is red, another is blue, and another is green. Which action shows the same amount on fingers and says the number last?",
+   "choices": [
+    "Show 2 fingers and say \"three\" last.",
+    "Show 4 fingers and say \"three\" last.",
+    "Show 3 fingers and say \"three\" last.",
+    "Show 3 fingers and say \"two\" last."
+   ],
+   "answer": "Show 3 fingers and say \"three\" last.",
+   "rationale": "There are three cars, so three fingers match the set. Saying \"three\" last tells how many there are.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_825d81bd39d0",
+   "objective_id": "sense_of_quantity:L110",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 110,
+   "format": "multiple_choice",
+   "prompt": "There is one red crayon, one blue crayon, one green crayon, one yellow crayon, and one purple crayon. Which choice counts all of them, shows the same amount on fingers, and says the amount last?",
+   "choices": [
+    "Count \"one, two, three, five\" while showing five fingers.",
+    "Count \"one, two, three, four, five\" while showing five fingers.",
+    "Count \"one, two, three, four\" while showing four fingers.",
+    "Count \"one, two, four, five\" while showing five fingers."
+   ],
+   "answer": "Count \"one, two, three, four, five\" while showing five fingers.",
+   "rationale": "There are five crayons. The complete counting sequence ends with \"five,\" and five fingers match the number of crayons.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_690175e604c7",
+   "objective_id": "sense_of_quantity:L110",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 110,
+   "format": "multiple_choice",
+   "prompt": "A plate holds an apple, a pear, and a banana. Which choice gives the last counting word and the matching number of fingers?",
+   "choices": [
+    "Say \"two\" last and show two fingers.",
+    "Say \"three\" last and show two fingers.",
+    "Say \"four\" last and show four fingers.",
+    "Say \"three\" last and show three fingers."
+   ],
+   "answer": "Say \"three\" last and show three fingers.",
+   "rationale": "There are three fruits. The last counting word should be \"three,\" and three fingers should match the set.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_f16660bb9e70",
+   "objective_id": "sense_of_quantity:L110",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 110,
+   "format": "multiple_choice",
+   "prompt": "The stars are yellow, blue, red, and green. A child counts them, holds up three fingers, and says the wrong amount last. What should the child do?",
+   "choices": [
+    "Show one more finger and say the total last.",
+    "Show one fewer finger and say the total last.",
+    "Keep three fingers and say the total last.",
+    "Show two more fingers and say the total last."
+   ],
+   "answer": "Show one more finger and say the total last.",
+   "rationale": "There are four stars, so the child needs one more finger and should end the count by saying \"four.\"",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_530319c2b5fb",
+   "objective_id": "sense_of_quantity:L144",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 144,
+   "format": "multiple_choice",
+   "prompt": "Ava has 3 balls. Ben has 3 blocks. Ava places one ball beside each block. How many pairs does she make?",
+   "choices": [
+    "2 pairs",
+    "3 pairs",
+    "4 pairs",
+    "6 pairs"
+   ],
+   "answer": "3 pairs",
+   "rationale": "There are 3 balls and 3 blocks, so matching one ball to each block makes 3 one-to-one pairs.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_4a60e63f723f",
+   "objective_id": "sense_of_quantity:L144",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 144,
+   "format": "multiple_choice",
+   "prompt": "There are 2 cookies and 4 crackers. Kim draws one line from each cookie to a different cracker. How many crackers are not matched?",
+   "choices": [
+    "0 crackers",
+    "1 cracker",
+    "2 crackers",
+    "3 crackers"
+   ],
+   "answer": "2 crackers",
+   "rationale": "The 2 cookies match 2 different crackers, leaving 4 minus 2, or 2 crackers unmatched.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9b64230266c8",
+   "objective_id": "sense_of_quantity:L144",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 144,
+   "format": "multiple_choice",
+   "prompt": "Which way is best for checking whether two groups have the same number?",
+   "choices": [
+    "Match one object in each group to one other.",
+    "Match every object to an object of the same kind.",
+    "Put the groups together and choose the bigger one.",
+    "Count only the objects in the first group."
+   ],
+   "answer": "Match one object in each group to one other.",
+   "rationale": "Matching each object in one group with one object in the other shows whether both groups have equal numbers.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_302b2f547976",
+   "objective_id": "sense_of_quantity:L144",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 144,
+   "format": "multiple_choice",
+   "prompt": "Which pair of groups can be lined up one-to-one with nothing left?",
+   "choices": [
+    "2 apples and 2 pears",
+    "2 apples and 3 pears",
+    "3 apples and 2 pears",
+    "4 apples and 3 pears"
+   ],
+   "answer": "2 apples and 2 pears",
+   "rationale": "The groups of 2 apples and 2 pears have the same number, so every object can be matched.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_8490ef23e9ee",
+   "objective_id": "sense_of_quantity:L132",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 132,
+   "format": "multiple_choice",
+   "prompt": "There are three toy kittens and six toy blocks. Which group has less?",
+   "choices": [
+    "The toy kittens have less.",
+    "The toy blocks have less.",
+    "The toy kittens have more.",
+    "The toy blocks have more."
+   ],
+   "answer": "The toy kittens have less.",
+   "rationale": "There are three toy kittens and six toy blocks, so the kittens are less.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_f0d54583e87c",
+   "objective_id": "sense_of_quantity:L132",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 132,
+   "format": "multiple_choice",
+   "prompt": "Ivy has four toy crayons. Luca has two toy crayons. Which statement is true?",
+   "choices": [
+    "Ivy has more crayons.",
+    "Luca has more crayons.",
+    "Ivy has fewer crayons.",
+    "They have equal numbers."
+   ],
+   "answer": "Ivy has more crayons.",
+   "rationale": "Four crayons are more than two crayons, so Ivy has more.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_794aeaefeaa2",
+   "objective_id": "sense_of_quantity:L132",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 132,
+   "format": "multiple_choice",
+   "prompt": "Which sentence compares two toy groups correctly?",
+   "choices": [
+    "Five toy dogs have more than two toy cats.",
+    "Two toy dogs have more than five toy cats.",
+    "Five toy dogs have less than two toy cats.",
+    "Two toy dogs and five toy cats are equal."
+   ],
+   "answer": "Five toy dogs have more than two toy cats.",
+   "rationale": "Five toy dogs are more than two toy cats, so the first statement is correct.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_c6a138467dc3",
+   "objective_id": "sense_of_quantity:L154",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "A basket has three balls. A box has two toy cars. Pair each ball with one car. What is left over?",
+   "choices": [
+    "One ball is left.",
+    "One car is left.",
+    "Two balls are left.",
+    "Nothing is left."
+   ],
+   "answer": "One ball is left.",
+   "rationale": "Two balls pair with the two cars, leaving the third ball unmatched.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_55aa229f7a10",
+   "objective_id": "sense_of_quantity:L154",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "One group has four ducks. Another group has two ducks. Make as many pairs as possible. Which group has more?",
+   "choices": [
+    "The group of four",
+    "The group of two",
+    "Both groups equally",
+    "Neither group"
+   ],
+   "answer": "The group of four",
+   "rationale": "Two pairs can be made, so the group of four has two ducks left over and has more.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5fb2bd9e9a9b",
+   "objective_id": "sense_of_quantity:L154",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "One bowl has five spoons. Another bowl has three forks. Pair each fork with one spoon. Which group has fewer?",
+   "choices": [
+    "The forks have fewer.",
+    "The spoons have fewer.",
+    "The groups have equal amounts.",
+    "No group has fewer."
+   ],
+   "answer": "The forks have fewer.",
+   "rationale": "Three pairs can be made, leaving two spoons unmatched, so the forks have fewer.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_a878bf83fb0c",
+   "objective_id": "sense_of_quantity:L154",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "Jar A has two stars. Jar B has two buttons. Pair each star with one button. What can we say?",
+   "choices": [
+    "Both jars hold equal amounts.",
+    "Jar A holds one more.",
+    "Jar B holds one more.",
+    "One star is left over."
+   ],
+   "answer": "Both jars hold equal amounts.",
+   "rationale": "Two pairs can be made with nothing left over, so the jars hold equal amounts.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_2d5f3aa7748e",
+   "objective_id": "sense_of_quantity:L166",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 166,
+   "format": "multiple_choice",
+   "prompt": "Three cookies are on a plate. You take one cookie away. How many cookies are on the plate now?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "2",
+   "rationale": "Taking one cookie away from 3 leaves 2 cookies.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_24f2b1c0f328",
+   "objective_id": "sense_of_quantity:L166",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 166,
+   "format": "multiple_choice",
+   "prompt": "Ben has two toy cars. Which action makes his group larger by exactly one car?",
+   "choices": [
+    "Add one car to the group",
+    "Take one car from the group",
+    "Add two cars to the group",
+    "Replace one car with another"
+   ],
+   "answer": "Add one car to the group",
+   "rationale": "Adding one car to two cars makes a group of three.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_33b1f9c90ed1",
+   "objective_id": "sense_of_quantity:L166",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 166,
+   "format": "multiple_choice",
+   "prompt": "One ball is under a blanket. You take the ball away and look under the blanket. How many balls are under the blanket now?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "0",
+   "rationale": "Taking away the only ball leaves no balls under the blanket.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_496c46804338",
+   "objective_id": "sense_of_quantity:L176",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 176,
+   "format": "multiple_choice",
+   "prompt": "A child lines up a red counter, a yellow counter, a blue counter, and a green counter. The child then spreads the counters farther apart. How many counters are there?",
+   "choices": [
+    "3 counters",
+    "4 counters",
+    "5 counters",
+    "6 counters"
+   ],
+   "answer": "4 counters",
+   "rationale": "There are four counters. Spreading them farther apart does not change the number.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_17419b457a09",
+   "objective_id": "sense_of_quantity:L176",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 176,
+   "format": "multiple_choice",
+   "prompt": "A bunch contains a ball, a top, and a doll. The toys are placed in a line. Which sentence is true?",
+   "choices": [
+    "The row has more objects than the bunch.",
+    "The row has fewer objects than the bunch.",
+    "The row and bunch have the same number.",
+    "The row has one more object than the bunch."
+   ],
+   "answer": "The row and bunch have the same number.",
+   "rationale": "Moving the toys from a bunch into a row changes their arrangement, not their number.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_e3a2144f6c24",
+   "objective_id": "sense_of_quantity:L176",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 176,
+   "format": "multiple_choice",
+   "prompt": "A bunch contains a ball, a top, and a doll. Which group has the same number of toys?",
+   "choices": [
+    "A spread-out group has a cup and a spoon.",
+    "A lined-up group has a duck, a car, and a kite.",
+    "A bunched group has a drum, a block, a bear, and a coin.",
+    "A spread-out group has a pen, a leaf, a shell, and a stone."
+   ],
+   "answer": "A lined-up group has a duck, a car, and a kite.",
+   "rationale": "The original bunch and the lined-up group each contain three toys, regardless of their arrangements.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_104aacc694b7",
+   "objective_id": "sense_of_quantity:L176",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 176,
+   "format": "multiple_choice",
+   "prompt": "One bunch contains a spoon, a cup, and a plate. One spread-out group contains a sock, a hat, and a book. How many objects are in each group?",
+   "choices": [
+    "2 objects",
+    "3 objects",
+    "4 objects",
+    "5 objects"
+   ],
+   "answer": "3 objects",
+   "rationale": "Each group contains three objects. Bunching or spreading out the objects does not change the number.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_212e040c1cd9",
+   "objective_id": "sense_of_quantity:L200",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 200,
+   "format": "multiple_choice",
+   "prompt": "On a cupboard, a sign shows the numeral 3. Which group should go under the sign?",
+   "choices": [
+    "One toy car",
+    "Two toy cars",
+    "Three toy cars",
+    "Four toy cars"
+   ],
+   "answer": "Three toy cars",
+   "rationale": "The numeral 3 represents three, so three toy cars match the sign.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_feac6d14a053",
+   "objective_id": "sense_of_quantity:L200",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 200,
+   "format": "multiple_choice",
+   "prompt": "A basket holds one red ball. A teacher needs a numeral card for the basket. Which card is correct?",
+   "choices": [
+    "3",
+    "5",
+    "1",
+    "2"
+   ],
+   "answer": "1",
+   "rationale": "There is one ball in the basket, so the numeral card should show 1.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_1842bb37e617",
+   "objective_id": "sense_of_quantity:L200",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 200,
+   "format": "multiple_choice",
+   "prompt": "A party table has a card showing the numeral 5. Which plate has five snacks?",
+   "choices": [
+    "One apple and one pear",
+    "Two apples and one pear",
+    "Two apples and two pears",
+    "Three apples and two pears"
+   ],
+   "answer": "Three apples and two pears",
+   "rationale": "Three apples plus two pears make a group of five snacks.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_47d3025d6ba3",
+   "objective_id": "sense_of_quantity:L200",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 200,
+   "format": "multiple_choice",
+   "prompt": "A storage bin has the numeral 2 on its label. Which action shows the bin's amount?",
+   "choices": [
+    "Place one ball inside",
+    "Place two balls inside",
+    "Place three balls inside",
+    "Place four balls inside"
+   ],
+   "answer": "Place two balls inside",
+   "rationale": "The numeral 2 means two, so placing two balls inside shows the correct amount.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_7b5fe6a09413",
+   "objective_id": "sense_of_quantity:L210",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 210,
+   "format": "multiple_choice",
+   "prompt": "A child traces a single tall, straight line in sand with a finger. What should the child say while tracing?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "five"
+   ],
+   "answer": "one",
+   "rationale": "A single straight line forms the numeral 1, whose matching number word is “one.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_0a33bf57ef0a",
+   "objective_id": "sense_of_quantity:L210",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 210,
+   "format": "multiple_choice",
+   "prompt": "A child uses playdough to make two rounded bumps, one above the other. Which numeral is being formed, and which number word should be said?",
+   "choices": [
+    "1 — “one”",
+    "2 — “two”",
+    "3 — “three”",
+    "5 — “five”"
+   ],
+   "answer": "3 — “three”",
+   "rationale": "Two rounded bumps form the numeral 3, so the matching number word is “three.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_2e3eed3d5907",
+   "objective_id": "sense_of_quantity:L210",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 210,
+   "format": "multiple_choice",
+   "prompt": "Which action shows forming numeral 4 with playdough while saying the matching number word?",
+   "choices": [
+    "Make one tall vertical line with no other strokes; say “one.”",
+    "Make two rounded curves, one above the other; say “three.”",
+    "Make a top bar, left side, and lower curve; say “five.”",
+    "Make a vertical line, a slant, and a crossbar; say “four.”"
+   ],
+   "answer": "Make a vertical line, a slant, and a crossbar; say “four.”",
+   "rationale": "The vertical line, slant, and crossbar form a 4, and the matching number word is “four.”",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_7d2855df5570",
+   "objective_id": "sense_of_quantity:L210",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 210,
+   "format": "multiple_choice",
+   "prompt": "Which activity practices the full numeral-making routine for 1 through 5?",
+   "choices": [
+    "Form each in playdough, trace in sand, and finger-trace while saying its word.",
+    "Count objects aloud, then draw unrelated loops with a crayon instead.",
+    "Make each in playdough, but skip tracing and all number words.",
+    "Trace random lines in sand while saying unrelated number words aloud."
+   ],
+   "answer": "Form each in playdough, trace in sand, and finger-trace while saying its word.",
+   "rationale": "This activity uses playdough, sand, and finger tracing while saying each numeral’s matching number word.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_c594c769db5d",
+   "objective_id": "sense_of_quantity:L222",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 222,
+   "format": "multiple_choice",
+   "prompt": "Ari touches each toy once and says a number for each one: teddy bear, ball, duck, car. How many toys did Ari count?",
+   "choices": [
+    "4 toys",
+    "3 toys",
+    "5 toys",
+    "6 toys"
+   ],
+   "answer": "4 toys",
+   "rationale": "Ari assigns one count to each of the four listed toys, so one-to-one touching gives four toys.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5a58c2757493",
+   "objective_id": "sense_of_quantity:L222",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 222,
+   "format": "multiple_choice",
+   "prompt": "Sam has 7 crayons in a row. Sam touches 3 crayons and places each in a box. How many crayons are still in the row?",
+   "choices": [
+    "3 crayons",
+    "5 crayons",
+    "4 crayons",
+    "6 crayons"
+   ],
+   "answer": "4 crayons",
+   "rationale": "Starting with seven crayons and moving three counted crayons leaves four crayons in the row.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_974d070e17b3",
+   "objective_id": "sense_of_quantity:L222",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 222,
+   "format": "multiple_choice",
+   "prompt": "Mia touches these items in order: apple, pear, plum, peach, grape, lemon, banana, berry, pear, apple. How many objects does she touch before the banana?",
+   "choices": [
+    "7 objects",
+    "5 objects",
+    "8 objects",
+    "6 objects"
+   ],
+   "answer": "6 objects",
+   "rationale": "Six objects—apple, pear, plum, peach, grape, and lemon—are touched before the banana.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_165f3335c4df",
+   "objective_id": "sense_of_quantity:L232",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 232,
+   "format": "multiple_choice",
+   "prompt": "A rocket game begins at five. Which number words should the child say while counting backward to one?",
+   "choices": [
+    "5, 4, 3, 2, 1",
+    "5, 6, 7, 8, 9",
+    "1, 2, 3, 4, 5",
+    "4, 3, 2, 1, 5"
+   ],
+   "answer": "5, 4, 3, 2, 1",
+   "rationale": "Counting backward from five follows 5, 4, 3, 2, 1.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_98a40331e4d0",
+   "objective_id": "sense_of_quantity:L232",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 232,
+   "format": "multiple_choice",
+   "prompt": "A child says “five” for five toy rockets, then takes one away. Which number word comes next in the backward count?",
+   "choices": [
+    "four",
+    "six",
+    "three",
+    "five"
+   ],
+   "answer": "four",
+   "rationale": "Taking one rocket away from five leaves four, so the next number word is four.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_1ab2e958ecd7",
+   "objective_id": "sense_of_quantity:L232",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 232,
+   "format": "multiple_choice",
+   "prompt": "A rocket countdown is missing one number: 5, 4, __, 2, 1. Which number word fills the blank?",
+   "choices": [
+    "three",
+    "six",
+    "zero",
+    "four"
+   ],
+   "answer": "three",
+   "rationale": "The number between four and two is three.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5a53dc4a582c",
+   "objective_id": "sense_of_quantity:L232",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 232,
+   "format": "multiple_choice",
+   "prompt": "Five cookies are on a plate. A child counts backward as each cookie is taken away until one remains. How many cookies were taken away?",
+   "choices": [
+    "Four cookies",
+    "Five cookies",
+    "Three cookies",
+    "One cookie"
+   ],
+   "answer": "Four cookies",
+   "rationale": "Going from five down to one means four cookies were taken away.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_8997a36a5aac",
+   "objective_id": "sense_of_quantity:L244",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "There are no crackers in the bowl. How many crackers are in the bowl?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "0",
+   "rationale": "Zero means there are none, so the empty bowl contains 0 crackers.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_1bb79ddce8d4",
+   "objective_id": "sense_of_quantity:L244",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A cup is empty. Which number tells how many toys are in the cup?",
+   "choices": [
+    "2",
+    "1",
+    "0",
+    "3"
+   ],
+   "answer": "0",
+   "rationale": "Because the cup has no toys, 0 tells how many are inside.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_3e1629dc5be4",
+   "objective_id": "sense_of_quantity:L244",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "In a guessing game, one cup hides no blocks. Which number should the child say for that cup?",
+   "choices": [
+    "1",
+    "0",
+    "2",
+    "4"
+   ],
+   "answer": "0",
+   "rationale": "The cup with no blocks contains zero blocks, so the child should say 0.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_d87c185cdb73",
+   "objective_id": "sense_of_quantity:L244",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A bowl is empty. Which word means how many things are in the bowl?",
+   "choices": [
+    "none",
+    "one",
+    "two",
+    "three"
+   ],
+   "answer": "none",
+   "rationale": "“None” means there are zero things in the empty bowl.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_966043ed80c1",
+   "objective_id": "sense_of_quantity:L254",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Three toy cars are in a line. One more car joins. Which number comes next after counting the cars?",
+   "choices": [
+    "3",
+    "4",
+    "2",
+    "5"
+   ],
+   "answer": "4",
+   "rationale": "Counting the three cars gives 3. One more car makes 4, so the next number is 4.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_68f820e20657",
+   "objective_id": "sense_of_quantity:L254",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Four ducks are standing in a row. What number will be said next if one more duck joins?",
+   "choices": [
+    "6",
+    "5",
+    "4",
+    "7"
+   ],
+   "answer": "5",
+   "rationale": "After counting four ducks, the next duck is the fifth, so the next number is 5.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_2a4e1a452f0a",
+   "objective_id": "sense_of_quantity:L254",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "A child counts six cups in a line: 1, 2, 3, 4, 5, 6. What number comes next when one more cup is added?",
+   "choices": [
+    "7",
+    "6",
+    "8",
+    "5"
+   ],
+   "answer": "7",
+   "rationale": "The cups are counted through 6. One more cup is the seventh, so the next number is 7.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_7e2d2c16d7da",
+   "objective_id": "sense_of_quantity:L254",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "A line of blocks is counted aloud: 1, 2, 3, 4, 5, 6, 7. Which number is said for one more block?",
+   "choices": [
+    "9",
+    "8",
+    "7",
+    "6"
+   ],
+   "answer": "8",
+   "rationale": "The blocks are counted through 7. The next block is the eighth, so the next number is 8.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_53066ec640ba",
+   "objective_id": "sense_of_quantity:L266",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "word_problems",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "A duck is smaller than a horse, and a cat is smaller than a duck. Which choice shows the animals from smallest to biggest?",
+   "choices": [
+    "cat, duck, horse",
+    "duck, cat, horse",
+    "horse, cat, duck",
+    "cat, horse, duck"
+   ],
+   "answer": "cat, duck, horse",
+   "rationale": "The cat is smaller than the duck, and the duck is smaller than the horse, so the order is cat, duck, horse.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_36191e13fd26",
+   "objective_id": "sense_of_quantity:L266",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "word_problems",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "A twig is shorter than a ruler, and a ruler is shorter than a broom. Which object is in the middle when the three are lined up from shortest to longest?",
+   "choices": [
+    "the ruler",
+    "the broom",
+    "the twig",
+    "the pole"
+   ],
+   "answer": "the ruler",
+   "rationale": "The ruler is longer than the twig but shorter than the broom, so it belongs in the middle.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_300a9eac3bc4",
+   "objective_id": "sense_of_quantity:L266",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "word_problems",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "Three cups are placed in a line from smallest to biggest. Which ordering word tells where the biggest cup belongs?",
+   "choices": [
+    "first",
+    "middle",
+    "last",
+    "next"
+   ],
+   "answer": "last",
+   "rationale": "In a smallest-to-biggest line, the biggest cup is last.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_c53460cc48ab",
+   "objective_id": "sense_of_quantity:L278",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "Nora holds a soft toy in her left hand and a wooden block in her right. Her right hand goes farther down. What can she tell?",
+   "choices": [
+    "The object on the right is heavier.",
+    "The object on the left is heavier.",
+    "The two objects weigh the same.",
+    "She cannot compare the weights."
+   ],
+   "answer": "The object on the right is heavier.",
+   "rationale": "The heavier object makes the hand holding it drop farther. Nora's right hand drops farther, so the object in that hand is heavier.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_4117f1becdcb",
+   "objective_id": "sense_of_quantity:L278",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "A simple balance has one small wooden block on the left pan and three small wooden blocks on the right pan. The right pan moves down. What does this show?",
+   "choices": [
+    "The group on the left is heavier.",
+    "The groups have the same weight.",
+    "The group on the right is heavier.",
+    "The balance cannot compare them."
+   ],
+   "answer": "The group on the right is heavier.",
+   "rationale": "A pan that moves down carries the heavier load. Because the right pan moves down, the three blocks are heavier.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_12bbc2f6b9c8",
+   "objective_id": "sense_of_quantity:L278",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "An empty red paper cup is on one pan of a simple balance. A small wooden block is on the other pan. The block's pan is lower. What is true about the cup?",
+   "choices": [
+    "The red cup is heavier.",
+    "The red cup is lighter.",
+    "The cup and block weigh the same.",
+    "The balance cannot compare them."
+   ],
+   "answer": "The red cup is lighter.",
+   "rationale": "The lower pan has the heavier load. Since the block's pan is lower, the cup must be lighter than the block.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_d64d9b84a734",
+   "objective_id": "sense_of_quantity:L278",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 278,
+   "format": "multiple_choice",
+   "prompt": "Two toy cars are placed on a simple balance, one on each pan. The balance stays level. What does this show?",
+   "choices": [
+    "One car is heavier than the other.",
+    "The car on the left is heavier.",
+    "The car on the right is heavier.",
+    "The two cars have equal weight."
+   ],
+   "answer": "The two cars have equal weight.",
+   "rationale": "When a simple balance stays level, the two pans carry equal weight, so the cars weigh the same.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_a9b3870e6af9",
+   "objective_id": "sense_of_quantity:L54",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 54,
+   "format": "multiple_choice",
+   "prompt": "In a quick-look game, the teacher briefly shows a counter on the left and a counter on the right, then hides them. What should the child say at once?",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answer": "two",
+   "rationale": "Two counters are visible at once, so the child recognizes and says two without counting.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9961432ebeb5",
+   "objective_id": "sense_of_quantity:L54",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 54,
+   "format": "multiple_choice",
+   "prompt": "After a quick look into a cup, a child sees a counter in the middle and another beside it. Which group should the child choose to make a matching pair?",
+   "choices": [
+    "A group containing one counter",
+    "A group containing two counters",
+    "A group containing three counters",
+    "A group containing four counters"
+   ],
+   "answer": "A group containing two counters",
+   "rationale": "The quick look shows two counters, so the matching group contains two counters.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_b967dd15617e",
+   "objective_id": "sense_of_quantity:L54",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 54,
+   "format": "multiple_choice",
+   "prompt": "During a matching game, the teacher gives a quick peek into a cup and then covers it. The peek shows a counter in the middle with empty space around it. Which cup should the child choose?",
+   "choices": [
+    "A cup containing one counter",
+    "A cup containing two counters",
+    "A cup containing three counters",
+    "A cup containing four counters"
+   ],
+   "answer": "A cup containing one counter",
+   "rationale": "Only one counter is visible during the peek, so the matching cup contains one counter.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_c8231ed720bb",
+   "objective_id": "sense_of_quantity:L54",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 54,
+   "format": "multiple_choice",
+   "prompt": "A child makes quick looks at cups in turn. The first reveals a counter in the center. The second reveals a counter near the top and a counter near the bottom. Which choice gives the amounts seen, in order?",
+   "choices": [
+    "one and two",
+    "one and one",
+    "two and two",
+    "three and four"
+   ],
+   "answer": "one and two",
+   "rationale": "The first quick look shows one counter, and the second shows two counters.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_1c184b9c17f8",
+   "objective_id": "sense_of_quantity:L288",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "A child places a duck toy at the bottom of an open basket. Which position word tells where the duck is?",
+   "choices": [
+    "on",
+    "in",
+    "under",
+    "over"
+   ],
+   "answer": "in",
+   "rationale": "The duck is in the basket because the basket surrounds it while it rests at the bottom.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9ba60f0094dd",
+   "objective_id": "sense_of_quantity:L288",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "A teacher tells a child to place a teddy bear below the table. Which position word tells where the bear was put?",
+   "choices": [
+    "over",
+    "beside",
+    "under",
+    "behind"
+   ],
+   "answer": "under",
+   "rationale": "Below the table means the teddy bear is under the table.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5d8654c5e8c4",
+   "objective_id": "sense_of_quantity:L288",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "You want your friend to stand next to a chair. Which position word would you use?",
+   "choices": [
+    "behind",
+    "over",
+    "under",
+    "beside"
+   ],
+   "answer": "beside",
+   "rationale": "Next to means beside, so you would use the word beside.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_de247f8c5bc2",
+   "objective_id": "sense_of_quantity:L288",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 288,
+   "format": "multiple_choice",
+   "prompt": "A child moves so another child can see the moving child’s face straight on. Which position word tells where the moving child should be?",
+   "choices": [
+    "in front of the other child",
+    "behind the other child",
+    "beside the other child",
+    "under the other child"
+   ],
+   "answer": "in front of the other child",
+   "rationale": "The moving child should be in front of the other child so the face can be seen straight on.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_1a00556bd441",
+   "objective_id": "sense_of_quantity:L300",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 300,
+   "format": "multiple_choice",
+   "prompt": "Ava puts blocks in this order: red, blue, red, blue. Which block should she put next?",
+   "choices": [
+    "A green block",
+    "A blue block",
+    "A yellow block",
+    "A red block"
+   ],
+   "answer": "A red block",
+   "rationale": "The pattern repeats the pair red-blue, so the next block is red.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_918826ebf7af",
+   "objective_id": "sense_of_quantity:L300",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 300,
+   "format": "multiple_choice",
+   "prompt": "A teacher claps, stomps, claps, stomps. Which action should come next?",
+   "choices": [
+    "Stomp the feet",
+    "Clap the hands",
+    "Clap two times",
+    "Stamp one foot"
+   ],
+   "answer": "Clap the hands",
+   "rationale": "The actions alternate between clapping and stomping, so a clap comes next.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_5f5799f9f04e",
+   "objective_id": "sense_of_quantity:L300",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 300,
+   "format": "multiple_choice",
+   "prompt": "The teacher places a red block, then a blue block, and repeats. Which choice copies this pattern?",
+   "choices": [
+    "red, red, blue",
+    "red, blue, red",
+    "blue, red, blue",
+    "red, blue, blue"
+   ],
+   "answer": "red, blue, red",
+   "rationale": "Copying the repeated pair red-blue gives red, blue, red.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_e86154e7be96",
+   "objective_id": "sense_of_quantity:L300",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 300,
+   "format": "multiple_choice",
+   "prompt": "The blocks go red, blue, red. The actions go clap, stomp, clap. What should come next in each pattern?",
+   "choices": [
+    "red block, clap",
+    "blue block, clap",
+    "blue block, stomp",
+    "red block, stomp"
+   ],
+   "answer": "blue block, stomp",
+   "rationale": "Each pattern alternates between two items, so a blue block and a stomp come next.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_051760810fa8",
+   "objective_id": "sense_of_quantity:L188",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 188,
+   "format": "multiple_choice",
+   "prompt": "Zoe claps one time, then claps two more times, and claps one more time. How many claps does Zoe make?",
+   "choices": [
+    "3 claps",
+    "4 claps",
+    "5 claps",
+    "6 claps"
+   ],
+   "answer": "4 claps",
+   "rationale": "Counting each clap in order gives 1, 2, 3, 4, so Zoe makes 4 claps.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_705b1d8eedf4",
+   "objective_id": "sense_of_quantity:L188",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 188,
+   "format": "multiple_choice",
+   "prompt": "A child jumps five times, saying each number in order. Which number comes after the fifth jump?",
+   "choices": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "answer": "6",
+   "rationale": "After counting five jumps, the next number in order is 6.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_8ffefbe01481",
+   "objective_id": "sense_of_quantity:L188",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "add_sub",
+   "level": 188,
+   "format": "multiple_choice",
+   "prompt": "A child claps two times, then jumps three times, saying one number for each action. Which sequence counts all the actions in order?",
+   "choices": [
+    "1, 2, 3, 4, 5",
+    "2, 2, 3, 3, 4",
+    "1, 1, 2, 2, 3",
+    "1, 2, 2, 3, 4"
+   ],
+   "answer": "1, 2, 3, 4, 5",
+   "rationale": "The child makes two claps and three jumps, so counting each of the five actions once gives 1, 2, 3, 4, 5.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 1,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_59a4e5779a83",
+   "objective_id": "sense_of_quantity:L310",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 310,
+   "format": "multiple_choice",
+   "prompt": "A child has a space with four equal sides and four corners. Which block fits it best?",
+   "choices": [
+    "A round cylinder",
+    "A square block",
+    "A triangle block",
+    "A long rectangle"
+   ],
+   "answer": "A square block",
+   "rationale": "A square block has four equal sides and four corners, so it matches the space.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_11c6a89ee887",
+   "objective_id": "sense_of_quantity:L310",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 310,
+   "format": "multiple_choice",
+   "prompt": "A child is building a tall block tower. Which base block should be chosen to keep it steady?",
+   "choices": [
+    "A tall, thin block",
+    "A small round block",
+    "A narrow, pointed block",
+    "A short, wide block"
+   ],
+   "answer": "A short, wide block",
+   "rationale": "A short, wide block gives the tower a broad base and makes it less likely to topple.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 0,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_8c190315fc04",
+   "objective_id": "sense_of_quantity:L310",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 310,
+   "format": "multiple_choice",
+   "prompt": "A child makes a house from blocks and needs a roof. Which flat shape fits best across the top?",
+   "choices": [
+    "A triangle",
+    "A circle",
+    "A square",
+    "A heart"
+   ],
+   "answer": "A triangle",
+   "rationale": "A triangle has a pointed top and two sloping sides, so it fits a house roof.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 1,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  },
+  {
+   "id": "oi_9b6ece979e8b",
+   "objective_id": "sense_of_quantity:L310",
+   "track_id": "math",
+   "grade_id": "sense_of_quantity",
+   "skill_id": "geometry_area",
+   "level": 310,
+   "format": "multiple_choice",
+   "prompt": "Two square blocks sit side by side. Which flat block can cover both to make one floor?",
+   "choices": [
+    "A narrow rectangle",
+    "A wide rectangle",
+    "A small circle",
+    "A small triangle"
+   ],
+   "answer": "A wide rectangle",
+   "rationale": "A wide rectangle can match the combined width of the two square blocks.",
+   "kept": true,
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b",
+    "round": 1,
+    "source": "curriculum-build/staged/adaptation/objective-items-night/results.jsonl"
+   }
+  }
+ ]
+}

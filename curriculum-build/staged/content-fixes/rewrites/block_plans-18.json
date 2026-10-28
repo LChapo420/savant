@@ -1,0 +1,631 @@
+{
+ "collection": "block_plans",
+ "row_id": 18,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P99",
+   "wrong": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' and the dash. That's a writer's choice, not an accident.",
+   "correct": "The sentence has no dash; only \"Do not\" marks the shift.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' and the dash. That's a writer's choice, not an accident.",
+   "replace": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' alone. That's a writer's choice, not an accident.",
+   "fixes": [
+    "P99"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[1].data.statements[2].feedback",
+   "before": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' and the dash. That's a writer's choice, not an accident.",
+   "after": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' alone. That's a writer's choice, not an accident.",
+   "fixes": [
+    "P99"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Ret_UncuedReconstruct",
+    "purpose": "Free recall from memory: rebuild the definitions of voice (active/passive), mood (indicative/imperative/subjunctive), and what makes a shift inappropriate, with no options shown.",
+    "data": {
+     "answerLabel": "Reconstructed definition",
+     "completeMessage": "That is the whole picture: voice, mood, and the shift rule. Everything after this will ask you to use it, not reread it.",
+     "context": "You learned this in Shifts in Voice and Mood. No hints here — pull it straight from memory.",
+     "contextLabel": "Level 40 — Shifts in Voice and Mood",
+     "feedback": {
+      "correct": "Exactly right.",
+      "explanation": "Voice is active vs passive; mood is the verb's manner (indicative, imperative, subjunctive); a shift is inappropriate when it sneaks in mid-sentence or mid-paragraph with no signal.",
+      "incorrect": "Not quite — rearrange until every slot reads as one complete definition.",
+      "partial": "Some slots are right. Keep going until the whole definition reads smoothly."
+     },
+     "items": [
+      {
+       "chunks": [
+        {
+         "text": "Voice is"
+        },
+        {
+         "text": "whether the subject acts"
+        },
+        {
+         "text": "or is acted upon"
+        },
+        {
+         "text": "Mood is the manner of the verb:"
+        },
+        {
+         "text": "indicative (statement)"
+        },
+        {
+         "text": "imperative (command)"
+        },
+        {
+         "text": "subjunctive (wish or condition)"
+        },
+        {
+         "text": "A shift is inappropriate when it"
+        },
+        {
+         "text": "changes voice or mood"
+        },
+        {
+         "text": "mid-sentence or mid-paragraph"
+        },
+        {
+         "text": "without any signal that it was on purpose"
+        },
+        {
+         "text": "the title of the paragraph"
+        }
+       ],
+       "feedback": {
+        "correct": "Exactly right — active vs passive, and the three moods, all rebuilt from memory.",
+        "explanation": "Voice is active vs passive; mood is the verb's manner (indicative, imperative, subjunctive).",
+        "incorrect": "None of the slots are in place yet — try grouping the voice definition first, then the moods.",
+        "partial": "Some chunks are in the right place. Keep going until the whole definition reads smoothly."
+       },
+       "id": "voice_mood",
+       "label": "Round 1 of 2 — definitions",
+       "solution": [
+        "Voice is",
+        "whether the subject acts",
+        "or is acted upon",
+        "Mood is the manner of the verb:",
+        "indicative (statement)",
+        "imperative (command)",
+        "subjunctive (wish or condition)"
+       ]
+      },
+      {
+       "chunks": [
+        {
+         "text": "A shift is inappropriate when it"
+        },
+        {
+         "text": "changes voice or mood"
+        },
+        {
+         "text": "mid-sentence or mid-paragraph"
+        },
+        {
+         "text": "without any signal that it was on purpose"
+        },
+        {
+         "text": "the title of the paragraph"
+        }
+       ],
+       "feedback": {
+        "correct": "Exactly right — that is the shift rule in one sentence.",
+        "explanation": "A shift is inappropriate when it changes voice or mood mid-sentence or mid-paragraph without any signal that it was on purpose.",
+        "incorrect": "Not yet — one chunk here is a decoy, and the rest must read as one complete sentence.",
+        "partial": "Close. Check the order and drop any chunk that doesn't belong."
+       },
+       "id": "shift_rule",
+       "label": "Round 2 of 2 — the shift rule",
+       "solution": [
+        "A shift is inappropriate when it",
+        "changes voice or mood",
+        "mid-sentence or mid-paragraph",
+        "without any signal that it was on purpose"
+       ]
+      }
+     ],
+     "placeholder": "Drag a chunk here",
+     "prompt": "Rebuild each definition from the chunks below. There are more chunks than you need — the extras are decoys.",
+     "title": "Free Recall: Voice, Mood, and the Shift Rule"
+    },
+    "repaired": true,
+    "index": 0
+   },
+   {
+    "block": "Recall_BinarySwipe",
+    "purpose": "Rapidly sort statements as consistent vs. inappropriate shifts (active-to-passive mid-sentence, statement-to-command, intentional shifts) to retrieve the fix rules from level 40.",
+    "data": {
+     "instruction": "Swipe right if the sentence stays consistent (or the shift is clearly deliberate). Swipe left if it sneaks in an inappropriate shift.",
+     "leftHint": "shift problem",
+     "leftLabel": "Inappropriate shift",
+     "rightHint": "consistent or deliberate",
+     "rightLabel": "Consistent",
+     "statements": [
+      {
+       "correctSide": "right",
+       "feedback": "Clean — active voice and indicative mood from start to finish.",
+       "id": "s1",
+       "tag": "Voice",
+       "text": "The coach blew the whistle, and the players ran to the sidelines."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "Trap: the first half is active (The students built), then the verb goes passive (was abandoned) with no signal. Keep the voice the same unless the shift is deliberate.",
+       "id": "s2",
+       "tag": "Voice",
+       "text": "The students built the float, and then it was abandoned by everyone for two weeks."
+      },
+      {
+       "correctSide": "right",
+       "feedback": "Deliberate shift for effect — a command dropped in after a statement, clearly marked by 'Do not' alone. That's a writer's choice, not an accident.",
+       "id": "s3",
+       "tag": "Mood",
+       "text": "This meeting has been going for ninety minutes. Do not raise your hand until we reach the final item."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "Statement flips to command mid-sentence with no signal. Readers trip because 'please sit down' arrives like it belongs to the movie.",
+       "id": "s4",
+       "tag": "Mood",
+       "text": "The movie ends at nine, so please sit down quietly and leave before the credits finish"
+      },
+      {
+       "correctSide": "right",
+       "feedback": "Passive voice here is on purpose: the machine (not the person) is the point, and the passive keeps the subject consistent.",
+       "id": "s5",
+       "tag": "Voice",
+       "text": "The new door is opened by a sensor, and it is closed again automatically after ten seconds."
+      },
+      {
+       "correctSide": "left",
+       "feedback": "The subject drops out and the tone snaps from formal to casual mid-paragraph — an unmarked shift readers have to decode.",
+       "id": "s6",
+       "tag": "Diction",
+       "text": "Applicants must submit their forms by Friday. Also, don't forget to actually, like, sign the thing, guys."
+      }
+     ],
+     "summaryBody": "The fix rule is the same every time: keep voice and mood consistent unless the shift is clearly marked as intentional. Passive voice and commands are not errors by themselves — sneaky, unmarked changes are.",
+     "summaryHeading": "Deck cleared",
+     "title": "Shift or no shift?"
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Ret_ForensicAudit",
+    "purpose": "Hunt the exact words where voice or mood shifts carelessly in a paragraph, connecting the shift skill to the fragment-and-run-on boundary from rhetorical grammar.",
+    "data": {
+     "artifactLabel": "Book club flyer — draft 1",
+     "artifactType": "essay",
+     "brief": "Click the exact line where the writer slips in an unmarked shift (or blurs structure into a fragment or run-on). The rest of the lines are clean.",
+     "completionMessage": "Caught it. The command slides in without a signal — and notice the line you skipped with no subject is a different problem: a deliberate fragment, which is fine if the writer meant it.",
+     "id": "audit1",
+     "lines": [
+      {
+       "explanation": "Clean: one active voice, indicative mood, consistent formal tone.",
+       "id": "l1",
+       "isError": false,
+       "label": "1",
+       "text": "The Oakview Book Club meets on the first Thursday of every month."
+      },
+      {
+       "explanation": "Clean: still active and indicative, same tone.",
+       "id": "l2",
+       "isError": false,
+       "label": "2",
+       "text": "Members choose one novel each season and discuss it over snacks."
+      },
+      {
+       "explanation": "Clean: active voice, and the short punchy fragment is deliberate — a stylistic choice, not an accident.",
+       "id": "l3",
+       "isError": false,
+       "label": "3",
+       "text": "This month's pick: a mystery set in a lighthouse."
+      },
+      {
+       "explanation": "This is the error: 'Please arrive early' is a command (imperative mood) jammed into a paragraph of statements, with no signal that the writer meant to switch. Fix it by staying consistent: 'New members should arrive ten minutes early.'",
+       "id": "l4",
+       "isError": true,
+       "label": "4",
+       "text": "New members are always welcome, so please arrive ten minutes early and bring a favorite quote."
+      },
+      {
+       "explanation": "Clean: consistent voice and mood.",
+       "id": "l5",
+       "isError": false,
+       "label": "5",
+       "text": "The first meeting of the season starts at 7 p.m. in the library's back room."
+      }
+     ],
+     "maxMisses": 2,
+     "revealLabel": "Show the answer",
+     "title": "Find the careless shift"
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Ret_MisconceptionTrap",
+    "purpose": "Choose the only correct fix among tempting flawed rewrites, confronting the common error of thinking any passive voice or any command is automatically wrong.",
+    "data": {
+     "correctId": "keep_active",
+     "correctLabel": "Survives:",
+     "notQuiteMessage": "That's the trap.",
+     "options": [
+      {
+       "id": "all_passive",
+       "text": "Every sentence should avoid the passive voice completely, so rewrite it as 'The relay team finished the race, and the victory was celebrated by everyone.'",
+       "whyNot": "Tempting, but this makes the second half passive with no reason. Passive is not automatically wrong — an unmarked shift is."
+      },
+      {
+       "id": "keep_active",
+       "text": "Keep the voice the same: 'The relay team won the race, and the whole school celebrated the victory.'",
+       "whyNot": "This one survives: one subject focus, active voice all the way through, and no surprise switch for the reader to decode."
+      },
+      {
+       "id": "split_command",
+       "text": "Break the mood up on purpose: 'The relay team won the race. Celebrate the victory!'",
+       "whyNot": "Nothing in the original signals a deliberate shift to a command, so this invents a mood change the writer never marked."
+      },
+      {
+       "id": "drop_second",
+       "text": "The second half is a fragment, so just delete it: 'The relay team won the race.'",
+       "whyNot": "The second half has its own subject and verb, so it is not a fragment — deleting good content solves nothing."
+      }
+     ],
+     "prompt": "A sports section reads: 'The relay team won the race, and the victory was celebrated by the whole school.' Which fix is actually correct?",
+     "successMessage": "Survives scrutiny."
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Ret_InterleavedMatrix",
+    "purpose": "Mixed grid combining rhetorical grammar (end-focus, fronting, parallel structure) with voice/mood patterns, preventing the two topics from blurring together.",
+    "data": {
+     "cells": [
+      {
+       "answer": "The subject does the action (The chef chopped onions).",
+       "colId": "def",
+       "feedback": "Active keeps the doer up front, which usually reads faster and stronger.",
+       "rowId": "voice",
+       "acceptedAnswers": [
+        "the subject performs the action",
+        "subject acts"
+       ]
+      },
+      {
+       "answer": "The subject receives the action (The onions were chopped by the chef).",
+       "colId": "def",
+       "feedback": "Passive is a legitimate tool when the receiver matters more than the doer.",
+       "rowId": "voice",
+       "acceptedAnswers": [
+        "the subject receives the action",
+        "be + past participle",
+        "subject is acted upon"
+       ]
+      },
+      {
+       "answer": "Statements and questions of fact (She studies every night. Does she study?)",
+       "colId": "def",
+       "feedback": "Indicative is the default mood — the ordinary 'this is happening' mode.",
+       "rowId": "mood_indicative",
+       "acceptedAnswers": [
+        "statement",
+        "fact or question",
+        "states a fact"
+       ]
+      },
+      {
+       "answer": "Commands and requests (Study every night.)",
+       "colId": "def",
+       "feedback": "The subject 'you' is understood and usually left out — that's your cue for imperative.",
+       "rowId": "mood_imperative",
+       "acceptedAnswers": [
+        "command",
+        "command or request",
+        "gives an order"
+       ]
+      },
+      {
+       "answer": "Wishes, demands, or conditions contrary to fact (I suggest that she study every night.)",
+       "colId": "def",
+       "feedback": "Watch for that-clauses after verbs like suggest, demand, insist — the subjunctive drops the normal -s.",
+       "rowId": "mood_subjunctive",
+       "acceptedAnswers": [
+        "wish or unreal condition",
+        "wish, demand, or hypothetical"
+       ]
+      },
+      {
+       "answer": "End-focus: the reader remembers the last words best, so the news lands last (Stolen from the vault, overnight, was the crown itself.)",
+       "colId": "def",
+       "feedback": "Word order is a rhetorical tool: what comes last gets the weight.",
+       "rowId": "end_focus",
+       "acceptedAnswers": [
+        "the end of the sentence carries the emphasis",
+        "save the key information for last"
+       ]
+      },
+      {
+       "answer": "Build suspense: hold the main clause until the end, then release it (After three flat tires, a wrong turn, and a dead phone, we finally reached camp.)",
+       "colId": "def",
+       "feedback": "Periodic = point comes last. Cumulative = its mirror image.",
+       "rowId": "periodic",
+       "acceptedAnswers": [
+        "main clause comes last",
+        "withholds the main clause until the end"
+       ]
+      },
+      {
+       "answer": "Lead with the main clause, then pile on detail (We finally reached camp, after three flat tires, a wrong turn, and a dead phone.)",
+       "colId": "def",
+       "feedback": "Cumulative front-loads the point and accumulates texture after it.",
+       "rowId": "cumulative",
+       "acceptedAnswers": [
+        "main clause first, details after",
+        "main clause comes first"
+       ]
+      }
+     ],
+     "completionMessage": "Full grid cleared. Notice how voice, mood, and rhetorical order are separate dials — a sentence can be active, imperative, and cumulative all at once.",
+     "columns": [
+      {
+       "id": "def",
+       "label": "Recall from memory",
+       "sourceUnit": "Levels 30 and 40"
+      }
+     ],
+     "matrixSubtitle": "Voice, mood, and rhetorical grammar — three different dials on one sentence",
+     "matrixTitle": "Mixed recall grid",
+     "rows": [
+      {
+       "id": "voice",
+       "label": "Active voice",
+       "sourceUnit": "Shifts in Voice and Mood"
+      },
+      {
+       "id": "voice_pass",
+       "label": "Passive voice",
+       "sourceUnit": "Shifts in Voice and Mood"
+      },
+      {
+       "id": "mood_indicative",
+       "label": "Indicative mood",
+       "sourceUnit": "Shifts in Voice and Mood"
+      },
+      {
+       "id": "mood_imperative",
+       "label": "Imperative mood",
+       "sourceUnit": "Shifts in Voice and Mood"
+      },
+      {
+       "id": "mood_subjunctive",
+       "label": "Subjunctive mood",
+       "sourceUnit": "Shifts in Voice and Mood"
+      },
+      {
+       "id": "end_focus",
+       "label": "End-focus",
+       "sourceUnit": "Rhetorical Grammar"
+      },
+      {
+       "id": "periodic",
+       "label": "Periodic sentence",
+       "sourceUnit": "Rhetorical Grammar"
+      },
+      {
+       "id": "cumulative",
+       "label": "Cumulative sentence",
+       "sourceUnit": "Rhetorical Grammar"
+      }
+     ]
+    },
+    "repaired": false,
+    "index": 4
+   },
+   {
+    "block": "Ret_FarTransferWorkbench",
+    "purpose": "Rewrite a flat real-world message so voice and mood stay consistent and a deliberate pattern (periodic, cumulative, or parallel) adds persuasive effect, building a new sentence from old and new rules.",
+    "data": {
+     "contextItems": [
+      {
+       "label": "Draft 1 (flat, shifting voice)",
+       "value": "The bus will leave at 7:30 a.m. sharp. Late students should not be waited for by the driver. Nobody gets left behind. Also, seriously, be on time, okay?"
+      },
+      {
+       "label": "Audience",
+       "value": "Students and families"
+      },
+      {
+       "label": "Length limit",
+       "value": "Two sentences maximum"
+      },
+      {
+       "label": "Rules",
+       "value": "One voice, one mood, plus one deliberate pattern"
+      }
+     ],
+     "decisionKeywords": [
+      "imperative",
+      "command",
+      "active",
+      "consistent",
+      "passive",
+      "parallel"
+     ],
+     "decisionPlaceholder": "Write your two-sentence announcement here...",
+     "decisionPrompt": "Write the new announcement: two sentences maximum, one consistent voice and mood, with one deliberate rhetorical pattern that makes the 7:30 deadline feel urgent.",
+     "eyebrow": "STUDENT GOVERNMENT — FIELD TRIP LOGISTICS",
+     "misconception": {
+      "detail": "You kept the passive voice or mixed a command into statements without marking it. The fix: pick one voice (active) and one mood (imperative works for a directive), and let the parallel phrases carry the emphasis — that's the rhetorical layer doing the persuasive work.",
+      "title": "Voice drifted, or the pattern never appeared"
+     },
+     "nextLabel": "Case closed",
+     "rationaleKeywords": [
+      "end-focus",
+      "parallel",
+      "periodic",
+      "cumulative",
+      "consistent",
+      "active",
+      "imperative"
+     ],
+     "rationalePlaceholder": "Name the voice, the mood, and the rhetorical pattern you chose — and why...",
+     "referenceNote": "You may lean on one line of notes: 'Consistent voice and mood unless the shift is intentional; deliberate patterns carry persuasion.'",
+     "retryLabel": "Revise the announcement",
+     "rule": {
+      "name": "Consistent voice and mood, plus one deliberate pattern",
+      "statement": "Keep the voice and the mood consistent unless the shift is clearly intentional, and use a rhetorical pattern (parallel structure, periodic order, or cumulative detail) so the sentence persuades, not just reports."
+     },
+     "scenarioBody": "Your class is running the annual museum field trip, and last year's announcement confused everyone. The draft above mixes a statement, a passive construction, a command, and casual slang — and nobody knew what they actually had to do. The principal wants a new announcement of at most two sentences that (1) keeps one voice and one mood throughout, and (2) uses one deliberate rhetorical pattern from rhetorical grammar — a periodic build-up, a cumulative detail pile, or a parallel structure — to make the deadline feel urgent. The facts students need: the bus leaves at 7:30 a.m. sharp, students should pack a lunch, bring a signed permission slip, and arrive ten minutes early.",
+     "scenarioTitle": "Rewrite the field trip announcement",
+     "submitLabel": "Lock in decision",
+     "targetAnswer": {
+      "decision": "Students: before 7:30 a.m. on trip day, pack a lunch, sign your permission slip, and arrive ten minutes early — because the bus leaves at 7:30 sharp, and it will not wait.",
+      "rationale": "I kept the voice active throughout (students pack, sign, arrive; the bus leaves) and the mood consistent (imperative-style directive wrapped in indicative statements), so there is no unmarked shift. The parallel list 'pack a lunch, sign your permission slip, and arrive ten minutes early' builds rhythm and makes the demands feel official, and end-focus puts the urgent fact — the bus will not wait — in the last position, where readers remember it."
+     }
+    },
+    "repaired": true,
+    "index": 5
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "Which statement best defines voice in grammar?",
+    "answer": "Whether the subject performs the action or receives it",
+    "rationale": "Voice is specifically about whether the subject acts (active) or is acted upon (passive) — tone and time are different features.",
+    "source": "ai",
+    "hint": "Ask: who is doing the action, and where does that doer sit in the sentence?",
+    "choices": [
+     "Whether the subject performs the action or receives it",
+     "Whether the verb is in the past, present, or future",
+     "Whether the tone is formal or informal",
+     "Whether the sentence states a fact or gives a command"
+    ],
+    "id": "c1",
+    "after": 0,
+    "focus": "Recall definitions of voice and verb moods with no cues"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A draft reads: 'The scouts sold the cookies, and the racks were emptied by the customers in an hour.' What is the best fix for the unmarked voice shift?",
+    "answer": "Keep the second half active: 'The scouts sold the cookies, and the customers emptied the racks in an hour.'",
+    "rationale": "The sentence opens in active voice and slips into passive mid-sentence with no signal, so the fix restores consistent active voice.",
+    "source": "ai",
+    "hint": "Look at who the doer is in each half of the sentence.",
+    "choices": [
+     "Keep the second half active: 'The scouts sold the cookies, and the customers emptied the racks in an hour.'",
+     "Change the first half to passive: 'The cookies were sold by the scouts, and the customers emptied the racks in an hour.'",
+     "Keep it as is, since passive voice is always the more formal choice",
+     "Split it into a fragment: 'The scouts sold the cookies. Emptied by the customers.'"
+    ],
+    "id": "c2",
+    "after": 1,
+    "focus": "Identify and fix an inappropriate active-to-passive shift mid-sentence"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "type_in",
+    "prompt": "In a paragraph of deliberate one-word fragments and punchy sentences, a writer suddenly drops in 'The novel was praised by the critic' where the surrounding sentences are all active. In one word, which voice did this sentence shift into?",
+    "answer": "passive",
+    "rationale": "Surrounding sentences keep the subject as doer; this one makes the subject the receiver of the action, which is the passive voice.",
+    "source": "ai",
+    "accepts": [
+     "passive",
+     "a passive",
+     "passive voice",
+     "it is passive",
+     "passive voice sentence"
+    ],
+    "hint": "Which voice hides the doer behind 'by the critic'?",
+    "id": "c3",
+    "after": 2,
+    "focus": "Distinguish careless shift errors from deliberate fragments in a paragraph"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A memo says: 'Form must be turned in by Friday, so turn it in, ok?' Which rewrite keeps voice and mood consistent throughout?",
+    "answer": "'Turn in your form by Friday, and the office will file it that day.'",
+    "rationale": "Only the first option holds one consistent voice and mood across both halves without an unmarked change.",
+    "source": "ai",
+    "hint": "One mood, one voice — and no casual tag-ons.",
+    "choices": [
+     "'Turn in your form by Friday, and the office will file it that day.'",
+     "'You must turn in your form by Friday, and the form is filed by the office that day.'",
+     "'Turn in your form by Friday, and your form should really be turned in, okay?'",
+     "'Turn in your form by Friday! File your form today!'"
+    ],
+    "id": "c4",
+    "after": 3,
+    "focus": "Choose the rewrite that keeps voice and mood consistent"
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A sentence opens with a string of details — 'After two lost keys, a wrong bus, and a locked gym door — ' and saves its main clause, 'the assembly finally started,' for the very end. Which structure is this?",
+    "answer": "Periodic",
+    "rationale": "Holding the main clause until the end is the definition of a periodic sentence; cumulative does the reverse.",
+    "source": "ai",
+    "hint": "Where does the main clause land — first or last?",
+    "choices": [
+     "Periodic",
+     "Cumulative",
+     "Parallel",
+     "Imperative"
+    ],
+    "id": "c5",
+    "after": 4,
+    "focus": "Match rhetorical structures (periodic, fronting, parallel) to their effects across mixed topics"
+   }
+  ]
+ }
+}

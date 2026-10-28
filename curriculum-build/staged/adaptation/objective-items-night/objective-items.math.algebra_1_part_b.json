@@ -1,0 +1,5398 @@
+{
+ "track_id": "math",
+ "grade_id": "algebra_1_part_b",
+ "generated_at": "2026-10-26T03:38:11.754Z",
+ "items": [
+  {
+   "objective_id": "algebra_1_part_b:L10",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "What are the degree and leading coefficient of the polynomial 3x^4 - 5x + 2x^2 when written in standard form?",
+   "choices": [
+    "Degree 3, leading coefficient -5",
+    "Degree 4, leading coefficient 3",
+    "Degree 2, leading coefficient 2",
+    "Degree 4, leading coefficient 2"
+   ],
+   "answer": "Degree 4, leading coefficient 3",
+   "rationale": "Standard form orders terms by descending exponent: 3x^4 + 2x^2 - 5x. The highest exponent is 4, so the degree is 4, and its coefficient (the leading coefficient) is 3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L10",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Identify the coefficient of the x^2 term in the polynomial 5x^3 - 2x^2 + 7x - 1.",
+   "choices": [
+    "5",
+    "-2",
+    "7",
+    "-1"
+   ],
+   "answer": "-2",
+   "rationale": "The term containing x^2 is -2x^2, so its coefficient is -2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L10",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Write 4 - x^2 + 3x^3 in standard form and state its degree.",
+   "choices": [
+    "3x^3 - x^2 + 4, degree 3",
+    "-x^2 + 3x^3 + 4, degree 2",
+    "4 - x^2 + 3x^3, degree 3",
+    "3x^3 + 4 - x^2, degree 3"
+   ],
+   "answer": "3x^3 - x^2 + 4, degree 3",
+   "rationale": "Standard form arranges terms from highest to lowest exponent: 3x^3 - x^2 + 4. The highest exponent is 3, so the degree is 3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L30",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "What is the simplest product of the monomials 6x⁴ and −3x²?",
+   "choices": [
+    "8x⁶",
+    "−18x⁶",
+    "18x⁶",
+    "−9x⁶"
+   ],
+   "answer": "−18x⁶",
+   "rationale": "Multiply the coefficients: 6(−3) = −18. Add the exponents: 4 + 2 = 6, so the product is −18x⁶.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L30",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which expression is equivalent to (3x + 2)(x + 5)?",
+   "choices": [
+    "3x² + 15x + 10",
+    "3x² + 15x + 2",
+    "3x² + 17x + 10",
+    "3x² + 17x + 2"
+   ],
+   "answer": "3x² + 17x + 10",
+   "rationale": "Distributing gives 3x² + 15x + 2x + 10. Combining like terms produces 3x² + 17x + 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L30",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "In an area model for (x + 2)(x² + 3x + 1), which polynomial results?",
+   "choices": [
+    "x³ + 3x² + 3x + 2",
+    "x³ + 4x² + 7x + 2",
+    "x³ + 5x² + 5x + 2",
+    "x³ + 5x² + 7x + 2"
+   ],
+   "answer": "x³ + 5x² + 7x + 2",
+   "rationale": "The product terms are x³ + 3x² + x + 2x² + 6x + 2. Combining like terms gives x³ + 5x² + 7x + 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L30",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "To check the identity (x − 4)(x + 3) = x² − x − 12, which calculation correctly substitutes x = 2 and evaluates both sides?",
+   "choices": [
+    "(−2)(5) = 10; 4 − 2 − 12 = −10",
+    "(−2)(5) = −10; 4 − 2 − 12 = −10",
+    "(−2)(5) = −10; 4 − 2 − 12 = 14",
+    "(−2)(5) = −10; 4 − 2 − 12 = 6"
+   ],
+   "answer": "(−2)(5) = −10; 4 − 2 − 12 = −10",
+   "rationale": "At x = 2, the left side is (2 − 4)(2 + 3) = −10, and the right side is 2² − 2 − 12 = −10. Both sides agree.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L40",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Divide the polynomial and simplify: (6x^3 + 9x^2 - 3x) ÷ (3x).",
+   "choices": [
+    "2x^2 + 3x - 1",
+    "2x^2 + 3x + 1",
+    "2x^2 - 3x - 1",
+    "2x^2 + 3x - 3"
+   ],
+   "answer": "2x^2 + 3x - 1",
+   "rationale": "Divide each term by 3x: 6x^3/(3x) = 2x^2, 9x^2/(3x) = 3x, and -3x/(3x) = -1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L40",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Which result is correct for (8x^5 - 12x^3 + 4x^2) ÷ (4x)?",
+   "choices": [
+    "2x^4 - 3x^2 + x",
+    "2x^4 - 3x^3 + x",
+    "2x^4 + 3x^2 + x",
+    "2x^4 - 3x^2 - x"
+   ],
+   "answer": "2x^4 - 3x^2 + x",
+   "rationale": "Dividing term by term gives 2x^4 - 3x^2 + x because x^5 divided by x is x^4, x^3 divided by x is x^2, and x^2 divided by x is x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L40",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Apply the quotient rule for exponents to simplify each term in (14x^7 - 21x^5 + 7x^3) ÷ (7x^2).",
+   "choices": [
+    "2x^5 - 3x^3 + x",
+    "2x^5 - 3x^4 + x",
+    "2x^5 - 3x^3 - x",
+    "2x^6 - 3x^4 + x"
+   ],
+   "answer": "2x^5 - 3x^3 + x",
+   "rationale": "Subtract the exponent of x^2 from each power of x and divide the coefficients by 7, giving 2x^5 - 3x^3 + x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L40",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 40,
+   "format": "multiple_choice",
+   "prompt": "Which option correctly rewrites the division using fractions with a common denominator and then simplifies? (10x^4 - 5x^2) ÷ (5x)",
+   "choices": [
+    "10x^4/(5x) - 5x^2/(5x) = 2x^3 - x",
+    "10x^4/(5x) + 5x^2/(5x) = 2x^3 + x",
+    "10x^4/(5x) - 5x^2/(x) = 2x^3 - 5x",
+    "10x^4/(5) - 5x^2/(5x) = 2x^4 - x"
+   ],
+   "answer": "10x^4/(5x) - 5x^2/(5x) = 2x^3 - x",
+   "rationale": "The subtraction becomes two fractions sharing the denominator 5x. Simplifying each fraction gives 2x^3 - x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L62",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "What is the greatest common factor of 12x²y and 18xy³?",
+   "choices": [
+    "6xy",
+    "6xy²",
+    "3x²y",
+    "2xy³"
+   ],
+   "answer": "6xy",
+   "rationale": "The common numerical factor is 6, the common variable factor is xy, and 6xy divides both terms.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L62",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the full factorization of 18x²y − 12xy²?",
+   "choices": [
+    "6xy(3x − 2y)",
+    "3xy(6x − 4y)",
+    "6x(3xy − 2y²)",
+    "6xy(3x² − 2y)"
+   ],
+   "answer": "6xy(3x − 2y)",
+   "rationale": "The greatest common factor is 6xy. Dividing each term by it gives 3x − 2y.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L62",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the full factorization of 15a²b − 25ab² + 10ab?",
+   "choices": [
+    "5ab(3a − 5b + 2)",
+    "5a(3ab − 5b² + 2b)",
+    "5b(3a² − 5ab + 2a)",
+    "10ab(3a − 5b + 2)"
+   ],
+   "answer": "5ab(3a − 5b + 2)",
+   "rationale": "The greatest common factor is 5ab, and dividing the three terms by it gives 3a − 5b + 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L72",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Which factored form is equivalent to x^2 + 5x + 6?",
+   "choices": [
+    "(x + 1)(x + 6)",
+    "(x + 2)(x + 3)",
+    "(x - 1)(x - 6)",
+    "(x + 2)(x - 3)"
+   ],
+   "answer": "(x + 2)(x + 3)",
+   "rationale": "The numbers 2 and 3 multiply to 6 and add to 5, so (x + 2)(x + 3) = x^2 + 5x + 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L72",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "The factors are (x + 3) and (x + 5). Which trinomial is their product?",
+   "choices": [
+    "x^2 + 8x + 15",
+    "x^2 - 8x + 15",
+    "x^2 + 8x - 15",
+    "x^2 + 2x + 15"
+   ],
+   "answer": "x^2 + 8x + 15",
+   "rationale": "Multiplying gives x^2 + 5x + 3x + 15, which combines to x^2 + 8x + 15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L72",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is divided into four regions with areas x^2, 3x, 4x, and 12. Which factored form represents its total area?",
+   "choices": [
+    "(x + 3)(x + 4)",
+    "(x + 1)(x + 12)",
+    "(x + 2)(x + 6)",
+    "(x - 3)(x + 4)"
+   ],
+   "answer": "(x + 3)(x + 4)",
+   "rationale": "The regions combine to x^2 + 7x + 12, and (x + 3)(x + 4) expands to this expression.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L147",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "The quadratic y = x^2 - 6x - 7 has two zeros. Which representation makes the zeros easiest to identify?",
+   "choices": [
+    "(x - 7)(x + 1)",
+    "(x - 3)^2 - 16",
+    "(x + 3)^2 - 16",
+    "(x - 7)(x - 1)"
+   ],
+   "answer": "(x - 7)(x + 1)",
+   "rationale": "The factored form (x - 7)(x + 1) reveals the zeros directly: x = 7 and x = -1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L147",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A parabola is defined by y = x^2 + 4x - 1. Which representation makes its vertex easiest to find without plotting many points?",
+   "choices": [
+    "(x + 2)^2 - 5",
+    "(x + 2)^2 + 5",
+    "(x - 2)^2 - 5",
+    "(x - 2)^2 + 5"
+   ],
+   "answer": "(x + 2)^2 - 5",
+   "rationale": "Completing the square gives y = (x + 2)^2 - 5, so the vertex is (-2, -5).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L147",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Without graphing, which feature of y = 2x^2 - 3x + 7 can be read directly from its standard form?",
+   "choices": [
+    "y-intercept: (0, 7)",
+    "vertex: (0, 7)",
+    "x-intercepts: 0 and 7",
+    "axis of symmetry: x = 0"
+   ],
+   "answer": "y-intercept: (0, 7)",
+   "rationale": "Setting x = 0 gives y = 7, so the y-intercept is (0, 7).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L147",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A student graphing y = x^2 - 4 on a calculator needs its x-intercepts. Which step finds them most directly?",
+   "choices": [
+    "Set X = 0 and read Y.",
+    "Set Y = 0 and solve for X.",
+    "Read the Y-value at X = 1.",
+    "Read the Y-value at X = 2."
+   ],
+   "answer": "Set Y = 0 and solve for X.",
+   "rationale": "X-intercepts occur where y = 0. Solving x^2 - 4 = 0 gives x = -2 and x = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L82",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Factor the trinomial completely: 2x² + 7x + 3.",
+   "choices": [
+    "(2x + 3)(x + 1)",
+    "(2x + 1)(x + 3)",
+    "(2x − 1)(x + 3)",
+    "(2x + 1)(x − 3)"
+   ],
+   "answer": "(2x + 1)(x + 3)",
+   "rationale": "Here ac = 2 × 3 = 6, and the factors 1 and 6 add to 7. Splitting 7x as 6x + x gives 2x(x + 3) + (x + 3), so the factorization is (2x + 1)(x + 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L82",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Which calculation correctly begins the ac method of factoring 5x² + 16x + 3?",
+   "choices": [
+    "Compute 5 + 3 = 8, then use 4 and 4.",
+    "Compute 16 × 3 = 48, then use 6 and 8.",
+    "Compute 5 × 3 = 15, then use 1 and 15.",
+    "Compute 5 × 16 = 80, then use 8 and 10."
+   ],
+   "answer": "Compute 5 × 3 = 15, then use 1 and 15.",
+   "rationale": "The ac method starts with a × c = 5 × 3 = 15. The factors 1 and 15 add to 16, matching b, so they can be used to split the middle term.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L82",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Which expression shows the useful split of the middle term for factoring 6x² + 19x + 10 by grouping?",
+   "choices": [
+    "6x² + 12x + 7x + 10",
+    "6x² + 10x + 9x + 10",
+    "6x² + 20x + 5x + 10",
+    "6x² + 15x + 4x + 10"
+   ],
+   "answer": "6x² + 15x + 4x + 10",
+   "rationale": "Since ac = 60 and 15 + 4 = 19, split 19x into 15x + 4x. Then 6x² + 15x + 4x + 10 groups as 3x(2x + 5) + 2(2x + 5).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L82",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "A rectangular area model for 2x² + 11x + 12 has one dimension split into 2x and 3. Which lengths form the other dimension?",
+   "choices": [
+    "x and 4",
+    "x and 6",
+    "2x and 4",
+    "4x and 1"
+   ],
+   "answer": "x and 4",
+   "rationale": "The other dimension is x + 4 because the four partial areas are 2x², 8x, 3x, and 12. Their sum is 2x² + 11x + 12, giving dimensions (2x + 3) and (x + 4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L95",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Factor the polynomial by grouping: 2x³ + 6x² + x + 3.",
+   "choices": [
+    "(2x² + 1)(x + 3)",
+    "(2x + 1)(x² + 3)",
+    "(2x² + 3)(x + 1)",
+    "(2x² + x)(x + 3)"
+   ],
+   "answer": "(2x² + 1)(x + 3)",
+   "rationale": "Group as 2x²(x + 3) + 1(x + 3). Factoring out (x + 3) gives (2x² + 1)(x + 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L95",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Factor the polynomial by grouping: x³ − 5x² − 2x + 10.",
+   "choices": [
+    "(x + 5)(x² − 2)",
+    "(x − 5)(x² − 2)",
+    "(x − 2)(x² − 5)",
+    "(x + 2)(x² − 5)"
+   ],
+   "answer": "(x − 5)(x² − 2)",
+   "rationale": "Group as x²(x − 5) − 2(x − 5). Factoring out (x − 5) gives (x² − 2)(x − 5).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L95",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Factor the quadratic trinomial by grouping: 2x² + 11x + 12.",
+   "choices": [
+    "(2x + 3)(x + 4)",
+    "(2x + 4)(x + 3)",
+    "(2x + 6)(x + 2)",
+    "(2x + 2)(x + 6)"
+   ],
+   "answer": "(2x + 3)(x + 4)",
+   "rationale": "Group as 2x² + 8x + 3x + 12, then factor to get 2x(x + 4) + 3(x + 4) = (2x + 3)(x + 4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L95",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "A student claims (2x + 3)(x + 1) factors 2x² + 5x + 3. Which multiplication verifies the claim?",
+   "choices": [
+    "(2x + 3)(x + 1) = 2x² + 2x + 3x + 3 = 2x² + 5x + 3",
+    "(2x + 3)(x + 1) = 2x² + 2x + 3x + 1 = 2x² + 5x + 1",
+    "(2x + 3)(x + 1) = 2x² + 2x + 3x + 3 = 2x² + 4x + 3",
+    "(2x + 3)(x + 1) = 2x² + 2x + 3x + 3 = 2x² + 6x + 3"
+   ],
+   "answer": "(2x + 3)(x + 1) = 2x² + 2x + 3x + 3 = 2x² + 5x + 3",
+   "rationale": "Multiplying gives 2x² + 2x + 3x + 3, and combining like terms produces 2x² + 5x + 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L157",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Solve x^2 = 49.",
+   "choices": [
+    "x = 7 or x = -7",
+    "x = 7 only",
+    "x = -7 only",
+    "no real solution"
+   ],
+   "answer": "x = 7 or x = -7",
+   "rationale": "Taking the square root of both sides gives x = ±√49 = ±7, so there are two real solutions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L157",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Solve 4(x - 3)^2 = 64.",
+   "choices": [
+    "x = 7 or x = -1",
+    "x = 7 only",
+    "x = -1 only",
+    "no real solution"
+   ],
+   "answer": "x = 7 or x = -1",
+   "rationale": "Divide by 4 to get (x-3)^2 = 16, then take square roots: x-3 = ±4, so x = 7 or x = -1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L157",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Solve 3(x + 2)^2 = 0.",
+   "choices": [
+    "x = -2",
+    "x = 2",
+    "x = -2 or x = 2",
+    "no real solution"
+   ],
+   "answer": "x = -2",
+   "rationale": "Dividing by 3 gives (x+2)^2 = 0; the square root of 0 is 0, so x+2 = 0 and x = -2 (a single real solution).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L157",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "Solve x^2 = -25.",
+   "choices": [
+    "no real solution",
+    "x = 5 or x = -5",
+    "x = 5i or x = -5i",
+    "x = 5 only"
+   ],
+   "answer": "no real solution",
+   "rationale": "A square of a real number cannot be negative; therefore the equation has no real solutions.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L189",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "For the quadratic equation x² + 4x + 5 = 0, how many real solutions does it have?",
+   "choices": [
+    "Exactly one real solution",
+    "No real solutions",
+    "Two distinct real solutions",
+    "The number cannot be determined"
+   ],
+   "answer": "No real solutions",
+   "rationale": "The discriminant is b² − 4ac = 16 − 20 = −4. Because it is negative, the equation has no real solutions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L189",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "The graph of y = x² − 6x + 9 is a parabola. How does the graph meet the x-axis?",
+   "choices": [
+    "At no point",
+    "At exactly two points",
+    "At exactly one point",
+    "At exactly three points"
+   ],
+   "answer": "At exactly one point",
+   "rationale": "The discriminant is 36 − 36 = 0, so the graph touches the x-axis at exactly one point, (3, 0).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L189",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "Consider the graph of y = x² + 2x − 3. Which statement about the graph is correct?",
+   "choices": [
+    "It touches the x-axis once.",
+    "It never meets the x-axis.",
+    "It overlaps the x-axis.",
+    "It crosses the x-axis twice."
+   ],
+   "answer": "It crosses the x-axis twice.",
+   "rationale": "The discriminant is 4 + 12 = 16, which is positive. The graph has two distinct x-intercepts, −3 and 1, so it crosses the x-axis twice.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L189",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "For what value of k does the graph of y = x² − 4x + k touch the x-axis?",
+   "choices": [
+    "k = 4",
+    "k = −4",
+    "k = 2",
+    "k = 8"
+   ],
+   "answer": "k = 4",
+   "rationale": "Touching the x-axis means the discriminant is zero: 16 − 4k = 0. Solving gives k = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L241",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "A rectangle has positive integer side lengths and perimeter 14. Using simpler cases, which dimensions give the greatest area?",
+   "choices": [
+    "1 by 6",
+    "2 by 5",
+    "3 by 4",
+    "1 by 5"
+   ],
+   "answer": "3 by 4",
+   "rationale": "The possible dimensions are 1 by 6, 2 by 5, and 3 by 4. Their areas are 6, 10, and 12, so 3 by 4 is best.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L241",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "The sum of the first n positive odd integers is conjectured to be n². To test the conjecture with n = 5, what should the sum equal?",
+   "choices": [
+    "15",
+    "20",
+    "30",
+    "25"
+   ],
+   "answer": "25",
+   "rationale": "For n = 5, the conjecture predicts 5² = 25, and 1 + 3 + 5 + 7 + 9 = 25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L241",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "After finding a pattern, which action best completes a strategic solution?",
+   "choices": [
+    "test it on several new cases and explain why it fits",
+    "change the rule whenever one new case disagrees",
+    "check only the first example that suggested the rule",
+    "assume the first example proves it for all inputs"
+   ],
+   "answer": "test it on several new cases and explain why it fits",
+   "rationale": "Testing additional cases checks whether the pattern generalizes, while explaining why it fits supports a justified conclusion.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L251",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "The sums 1, 1 + 2, 1 + 2 + 3, and so on are written. Which formula gives the sum of the first n positive integers?",
+   "choices": [
+    "n(n + 1) / 2",
+    "n(n - 1) / 2",
+    "n^2 + 1",
+    "n(n + 1)"
+   ],
+   "answer": "n(n + 1) / 2",
+   "rationale": "Pairing the first and last integers, then the second and second-to-last, gives n(n + 1) / 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L251",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "A number starts at 3. Each repetition multiplies the current number by 2 and then subtracts 1, giving 5, 9, 17, and so on. Which formula gives the result after n repetitions?",
+   "choices": [
+    "2^(n + 1) + 1",
+    "3n + 2",
+    "2n + 3",
+    "3^n + 1"
+   ],
+   "answer": "2^(n + 1) + 1",
+   "rationale": "Subtracting 1 from each result gives 4, 8, 16, so the result after n repetitions is 2^(n + 1) + 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L251",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 251,
+   "format": "multiple_choice",
+   "prompt": "The first four terms of a sequence are 1, 4, 9, 16. A student claims the rule is to square the position number. Which calculation tests the rule on the next new case?",
+   "choices": [
+    "5^2 = 25",
+    "4^2 + 1 = 17",
+    "(4 + 1)^2 - 1 = 24",
+    "4^2 + 5 = 21"
+   ],
+   "answer": "5^2 = 25",
+   "rationale": "The next position is 5, so squaring it tests the proposed rule and gives 5^2 = 25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L125",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "For the function y = x² − 6x + 5, what is the vertex of its parabola?",
+   "choices": [
+    "(3, −4)",
+    "(3, 4)",
+    "(−3, −4)",
+    "(6, −5)"
+   ],
+   "answer": "(3, −4)",
+   "rationale": "Rewriting in vertex form gives y = (x − 3)² − 4, so the vertex is (3, −4).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L125",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "What is the direction in which the parabola y = −2x² + 8x − 1 opens?",
+   "choices": [
+    "Downward",
+    "Upward",
+    "To the right",
+    "To the left"
+   ],
+   "answer": "Downward",
+   "rationale": "The leading coefficient is negative, so the parabola opens downward.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L125",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "What is the axis of symmetry of the graph of y = x² − 8x + 12?",
+   "choices": [
+    "x = −4",
+    "x = 0",
+    "x = 4",
+    "x = 8"
+   ],
+   "answer": "x = 4",
+   "rationale": "In y = x² − 8x + 12, the axis of symmetry is x = −b/(2a) = 8/2 = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L125",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 125,
+   "format": "multiple_choice",
+   "prompt": "For y = x² − 5x + 6, what are the x-intercepts and y-intercept?",
+   "choices": [
+    "(1, 0), (5, 0), and (0, 6)",
+    "(2, 0), (3, 0), and (0, 6)",
+    "(2, 0), (3, 0), and (0, −6)",
+    "(−2, 0), (3, 0), and (0, 6)"
+   ],
+   "answer": "(2, 0), (3, 0), and (0, 6)",
+   "rationale": "Factoring gives (x − 2)(x − 3) = 0, so the x-intercepts are (2, 0) and (3, 0). Setting x = 0 gives the y-intercept (0, 6).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L115",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Solve the equation (x − 3)(x + 8) = 0.",
+   "choices": [
+    "x = −8 or x = 3",
+    "x = −8 or x = 8",
+    "x = 0 or x = 3",
+    "x = 3 or x = 8"
+   ],
+   "answer": "x = −8 or x = 3",
+   "rationale": "By the zero product property, either x − 3 = 0 or x + 8 = 0, giving x = 3 or x = −8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L115",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "Solve x² + 7x + 12 = 0 by first factoring the quadratic.",
+   "choices": [
+    "x = −3 or x = −4",
+    "x = −2 or x = −6",
+    "x = 3 or x = 4",
+    "x = −1 or x = −12"
+   ],
+   "answer": "x = −3 or x = −4",
+   "rationale": "The quadratic factors as (x + 3)(x + 4) = 0, so x = −3 or x = −4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L115",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = (x + 1)(x − 4), which ordered pairs represent the x-intercepts of the graph?",
+   "choices": [
+    "(−1, 0) and (4, 0)",
+    "(1, 0) and (−4, 0)",
+    "(0, −1) and (0, 4)",
+    "(−4, 0) and (1, 0)"
+   ],
+   "answer": "(−1, 0) and (4, 0)",
+   "rationale": "An x-intercept occurs when f(x) = 0. Setting each factor equal to zero gives x = −1 and x = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L115",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "A ball’s height in meters is h(t) = −16(t − 1)(t − 3), where t is time in seconds. At which times is the ball at ground level?",
+   "choices": [
+    "Only at t = 1 second",
+    "Only at t = 3 seconds",
+    "At t = 1 second and t = 3 seconds",
+    "At t = 0 seconds and t = 4 seconds"
+   ],
+   "answer": "At t = 1 second and t = 3 seconds",
+   "rationale": "The ball is at ground level when h(t) = 0. The zero product property gives t = 1 or t = 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L105",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the complete factorization of x² − 81?",
+   "choices": [
+    "(x − 9)²",
+    "(x − 3)(x + 27)",
+    "(x − 9)(x + 9)",
+    "(x − 1)(x + 81)"
+   ],
+   "answer": "(x − 9)(x + 9)",
+   "rationale": "x² − 81 is a difference of squares, so it factors as (x − 9)(x + 9).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L105",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the complete factorization of x² + 10x + 25?",
+   "choices": [
+    "(x − 5)²",
+    "(x + 5)(x − 5)",
+    "(x + 1)(x + 25)",
+    "(x + 5)²"
+   ],
+   "answer": "(x + 5)²",
+   "rationale": "The trinomial is a perfect square because x² + 10x + 25 = x² + 2(x)(5) + 5², so it factors as (x + 5)².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L105",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "After factoring out the greatest common factor, which expression gives the complete factorization of 4x² − 36?",
+   "choices": [
+    "4(x − 6)(x + 6)",
+    "4(x − 3)(x + 3)",
+    "(2x − 3)(2x + 3)",
+    "4(x − 3)²"
+   ],
+   "answer": "4(x − 3)(x + 3)",
+   "rationale": "Factoring out 4 gives 4(x² − 9), and x² − 9 is a difference of squares, so the result is 4(x − 3)(x + 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L105",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Which expression is the complete factorization of 2x³ + 6x² − 8x − 24?",
+   "choices": [
+    "2(x + 3)(x − 2)(x + 2)",
+    "2(x + 3)(x − 4)(x + 4)",
+    "2(x + 6)(x − 2)(x + 2)",
+    "2(x + 3)(x² − 4)"
+   ],
+   "answer": "2(x + 3)(x − 2)(x + 2)",
+   "rationale": "Factor out 2, group as x²(x + 3) − 4(x + 3), and factor the difference of squares: 2(x + 3)(x − 2)(x + 2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L284",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Solve the equation by writing both sides with the same base: 2^(x+1) = 32.",
+   "choices": [
+    "x = 3",
+    "x = 4",
+    "x = 5",
+    "x = 6"
+   ],
+   "answer": "x = 4",
+   "rationale": "Since 32 = 2^5, matching bases gives x + 1 = 5, so x = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L284",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Solve the equation by matching bases: 5^(x-4) = 1/25.",
+   "choices": [
+    "x = 0",
+    "x = 1",
+    "x = 2",
+    "x = 3"
+   ],
+   "answer": "x = 2",
+   "rationale": "Because 1/25 = 5^(-2), matching bases gives x - 4 = -2, so x = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L284",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "Which substitution confirms that x = 2 solves the equation 3^(x+1) = 27?",
+   "choices": [
+    "3^(2-1) = 27",
+    "3^(2+1) = 27",
+    "3^(2+1) = 81",
+    "3^(2+2) = 27"
+   ],
+   "answer": "3^(2+1) = 27",
+   "rationale": "Substituting x = 2 gives 3^(2+1) = 3^3 = 27, so the equation is confirmed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L284",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "A graph of y = 2^x and the horizontal line y = 16 intersect at one point. What is the x-coordinate of that intersection?",
+   "choices": [
+    "x = 2",
+    "x = 3",
+    "x = 4",
+    "x = 5"
+   ],
+   "answer": "x = 4",
+   "rationale": "The graph shows 2^x = 16 when x = 4, since 2^4 = 16.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L274",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = 3(2^x) − 1, which ordered list gives its horizontal asymptote, domain, range, and y-intercept?",
+   "choices": [
+    "y = −1; all real x; y > −1; (0, 2)",
+    "y = −1; all real x; y < −1; (0, −4)",
+    "y = 1; x > −1; y > −1; (0, 4)",
+    "y = −1; all real x; y > −1; (0, 0)"
+   ],
+   "answer": "y = −1; all real x; y > −1; (0, 2)",
+   "rationale": "The constant −1 gives asymptote y = −1. Since 3(2^x) is positive, the range is y > −1. The domain is all real x, and f(0) = 3(1) − 1 = 2, giving (0, 2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L274",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "Which transformation maps the parent function y = 2^x to y = 2^(−x) + 3?",
+   "choices": [
+    "Shift right 1 and up 3",
+    "Shift left 1 and up 3",
+    "Reflect across the y-axis and up 3",
+    "Reflect across the y-axis and down 3"
+   ],
+   "answer": "Reflect across the y-axis and up 3",
+   "rationale": "Replacing x with −x reflects y = 2^x across the y-axis, and adding 3 shifts the graph up 3 units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L274",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "For g(x) = −2(3^x) + 4, which statement is correct?",
+   "choices": [
+    "Its asymptote is y = 4, and its range is y < 4.",
+    "Its asymptote is y = 4, and its range is y > 4.",
+    "Its asymptote is y = −2, and its range is y < 4.",
+    "Its asymptote is y = 2, and its range is all real numbers."
+   ],
+   "answer": "Its asymptote is y = 4, and its range is y < 4.",
+   "rationale": "The function approaches 4 but never reaches it, so its horizontal asymptote is y = 4 and its range is y < 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L274",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "Which point is the x-intercept of h(x) = 2(4^x) − 8?",
+   "choices": [
+    "(−1, 0)",
+    "(0, 0)",
+    "(1, 0)",
+    "(2, 0)"
+   ],
+   "answer": "(1, 0)",
+   "rationale": "Set h(x) equal to 0: 2(4^x) − 8 = 0, so 4^x = 4. Thus x = 1, and the x-intercept is (1, 0).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L294",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "sequences",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "A geometric sequence starts with 3 and follows aₙ = 2aₙ₋₁ for n ≥ 2. Which explicit rule gives the same sequence?",
+   "choices": [
+    "aₙ = 3·2ⁿ⁻¹",
+    "aₙ = 2ⁿ",
+    "aₙ = 3·2ⁿ",
+    "aₙ = 6ⁿ"
+   ],
+   "answer": "aₙ = 3·2ⁿ⁻¹",
+   "rationale": "The first term is 3, and each term is multiplied by 2, so the nth term is 3·2ⁿ⁻¹.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L294",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "sequences",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "Which recursive rule produces the geometric sequence aₙ = 5(−2)ⁿ⁻¹ for n ≥ 1?",
+   "choices": [
+    "a₁ = 5; aₙ = −2aₙ₋₁",
+    "a₁ = −2; aₙ = 5aₙ₋₁",
+    "a₁ = 5; aₙ = 2aₙ₋₁",
+    "a₁ = −10; aₙ = −2aₙ₋₁"
+   ],
+   "answer": "a₁ = 5; aₙ = −2aₙ₋₁",
+   "rationale": "The initial term is 5, and the common ratio is −2, so each term is −2 times the preceding term.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L294",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "sequences",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "An exponential function is f(x) = 4(3)ˣ⁻¹ for integer x. If f gives a sequence’s terms, what is a₄?",
+   "choices": [
+    "36",
+    "108",
+    "27",
+    "81"
+   ],
+   "answer": "108",
+   "rationale": "Substituting x = 4 gives f(4) = 4(3)³ = 4·27 = 108.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L294",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "sequences",
+   "level": 294,
+   "format": "multiple_choice",
+   "prompt": "A geometric sequence has a₁ = −4 and common ratio 3. Which pair gives its recursive and explicit rules?",
+   "choices": [
+    "aₙ = 3aₙ₋₁; aₙ = −4·3ⁿ⁻¹",
+    "aₙ = −3aₙ₋₁; aₙ = −4·3ⁿ⁻¹",
+    "aₙ = 3aₙ₋₁; aₙ = −12·3ⁿ⁻¹",
+    "aₙ = −4aₙ₋₁; aₙ = −4·3ⁿ⁻¹"
+   ],
+   "answer": "aₙ = 3aₙ₋₁; aₙ = −4·3ⁿ⁻¹",
+   "rationale": "The recursive rule multiplies each term by 3. Starting from −4, the explicit rule is −4·3ⁿ⁻¹.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L326",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "The table gives values for two models. Model L: (0, 5), (1, 8), (2, 11), (3, 14). Model E: (0, 5), (1, 10), (2, 20), (3, 40). Which comparison is correct?",
+   "choices": [
+    "Both models are linear because their values increase.",
+    "Model E is linear, and Model L is exponential.",
+    "Model L is linear, and Model E is exponential.",
+    "Model L is exponential, and Model E has a constant difference."
+   ],
+   "answer": "Model L is linear, and Model E is exponential.",
+   "rationale": "Model L increases by a constant amount of 3, so it is linear. Model E has a constant ratio of 2, so it is exponential.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L326",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "Two populations each start at 10. One grows by 4 each year, while the other doubles each year. Which comparison is correct after 4 years?",
+   "choices": [
+    "One has 40, and the doubling population has 80.",
+    "One has 26, and the doubling population has 160.",
+    "One has 160, and the doubling population has 26.",
+    "Both populations have 160 after 4 years."
+   ],
+   "answer": "One has 26, and the doubling population has 160.",
+   "rationale": "The population growing by 4 each year has 10 + 4(4) = 26. The doubling population has 10(2^4) = 160.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L326",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "A graph shows the models y = 2x + 10 and y = 3^x. Which statement correctly compares their growth?",
+   "choices": [
+    "For large positive x, the exponential model exceeds the linear model.",
+    "For large positive x, the linear model exceeds the exponential model.",
+    "The exponential model is larger for every positive x.",
+    "The models are equal for every positive x."
+   ],
+   "answer": "For large positive x, the exponential model exceeds the linear model.",
+   "rationale": "The exponential function 3^x grows faster than the linear function 2x + 10. For example, at x = 3, their values are 27 and 16, respectively.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L326",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "A linear model starts at 40 and rises by 8 each month. An exponential model starts at 40 and rises by 20% each month. What explains why the exponential model eventually exceeds the linear model?",
+   "choices": [
+    "The linear model’s monthly increase grows as its value grows.",
+    "The exponential model’s initial value is greater than the linear model’s.",
+    "Both models add the same amount each month.",
+    "The exponential model’s monthly increase grows as its value grows."
+   ],
+   "answer": "The exponential model’s monthly increase grows as its value grows.",
+   "rationale": "A percentage increase is applied to an increasingly large value, so the absolute monthly gain grows. The linear model always adds the same amount, 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L410",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 410,
+   "format": "multiple_choice",
+   "prompt": "The data set {4, 7, 9, 10, 12} is entered into a calculator. What is the sample standard deviation (rounded to two decimals)?",
+   "choices": [
+    "2.73",
+    "3.05",
+    "3.50",
+    "4.12"
+   ],
+   "answer": "3.05",
+   "rationale": "The sample variance is 37.2/(5‑1)=9.3; the square root is about 3.05.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L410",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 410,
+   "format": "multiple_choice",
+   "prompt": "Using the 1.5×IQR rule, which value is an outlier in the data set {3, 5, 6, 7, 8, 9, 10, 12, 15, 50}?",
+   "choices": [
+    "3",
+    "12",
+    "15",
+    "50"
+   ],
+   "answer": "50",
+   "rationale": "Q1=6, Q3=12, IQR=6; upper fence = 12+1.5·6=21. Only 50 exceeds this fence.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L410",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 410,
+   "format": "multiple_choice",
+   "prompt": "Data set X has mean 20 and standard deviation 4. Data set Y has mean 22 and standard deviation 8. Which comparison is correct?",
+   "choices": [
+    "X has a higher center and less spread.",
+    "Y has a higher center and more spread.",
+    "X has a higher center and more spread.",
+    "Y has a lower center and less spread."
+   ],
+   "answer": "Y has a higher center and more spread.",
+   "rationale": "Y’s mean (22) is greater than X’s (20), and Y’s SD (8) is larger than X’s (4), indicating both higher center and greater spread.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L378",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A function table has a constant change of 2 in its outputs for each increase of 1 in its input. It shows input 2 → output 11, input 3 → output 13, and input 4 → output 15. Which input produces output 17?",
+   "choices": [
+    "input 2",
+    "input 3",
+    "input 4",
+    "input 5"
+   ],
+   "answer": "input 5",
+   "rationale": "Each increase of 1 in the input increases the output by 2, so input 5 produces output 17.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L378",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A straight-line graph passes through the points (1, 3) and (2, 5). Following the same line, which x-coordinate has a y-coordinate of 9?",
+   "choices": [
+    "x = 2",
+    "x = 3",
+    "x = 4",
+    "x = 5"
+   ],
+   "answer": "x = 4",
+   "rationale": "The line follows y = 2x + 1. When y = 9, 9 = 2x + 1, so x = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L378",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "For the function f(x) = 3x − 2, what input x produces the output 13?",
+   "choices": [
+    "x = 3",
+    "x = 4",
+    "x = 5",
+    "x = 6"
+   ],
+   "answer": "x = 5",
+   "rationale": "Set the output equal to 13: 3x − 2 = 13. Solving gives 3x = 15 and x = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L378",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 378,
+   "format": "multiple_choice",
+   "prompt": "A function is defined by g(x) = x + 7. What is the value of its inverse function g⁻¹(3)?",
+   "choices": [
+    "−4",
+    "−3",
+    "3",
+    "4"
+   ],
+   "answer": "−4",
+   "rationale": "The inverse reverses the function’s input and output. Since g(−4) = 3, g⁻¹(3) = −4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L304",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "A town's population is 5,000 and grows 3% per year. Which function models the population after t years?",
+   "choices": [
+    "P(t)=5000(1.03)^t",
+    "P(t)=5000(0.97)^t",
+    "P(t)=5000+0.03t",
+    "P(t)=5000(1.3)^t"
+   ],
+   "answer": "P(t)=5000(1.03)^t",
+   "rationale": "The population grows 3% per year, so the growth factor is 1+0.03=1.03, and the initial value 5000 is the coefficient.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L304",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "A car worth $20,000 loses 15% of its value each year. Which function gives its value after t years?",
+   "choices": [
+    "V(t)=20000(0.85)^t",
+    "V(t)=20000(1.15)^t",
+    "V(t)=20000-0.15t",
+    "V(t)=20000(0.15)^t"
+   ],
+   "answer": "V(t)=20000(0.85)^t",
+   "rationale": "Losing 15% each year means retaining 85%, so the decay factor is 0.85, multiplied by the initial value 20000.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L304",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "A radioactive substance has half-life 10 years. Initial mass 100 grams. Which function models mass after t years?",
+   "choices": [
+    "M(t)=100(0.5)^(t/10)",
+    "M(t)=100(0.5)^(10t)",
+    "M(t)=100(0.5)^t",
+    "M(t)=100(0.5)^(t/5)"
+   ],
+   "answer": "M(t)=100(0.5)^(t/10)",
+   "rationale": "Half-life of 10 years means the mass halves every 10 years, giving factor 0.5 raised to t/10, times initial mass 100.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L304",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 304,
+   "format": "multiple_choice",
+   "prompt": "In the model P(t)=300(1.04)^t for a bacteria culture, what does 300 represent?",
+   "choices": [
+    "The growth rate per hour",
+    "The initial population",
+    "The population after 1 hour",
+    "The time to double"
+   ],
+   "answer": "The initial population",
+   "rationale": "In an exponential model P(t)=a·b^t, the coefficient a is the initial value when t=0; here 300 is the starting population.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L221",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "A ball is launched so its height is h(t)=-32t^2+128t+64 meters, where t is time in seconds. At what time does the ball reach its maximum height?",
+   "choices": [
+    "1 second",
+    "2 seconds",
+    "3 seconds",
+    "4 seconds"
+   ],
+   "answer": "2 seconds",
+   "rationale": "The vertex occurs at t=-b/(2a)=-128/[2(-32)]=2 seconds, so the ball reaches its maximum height after 2 seconds.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L221",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is cut from a 20-meter strip by turning in x meters at both ends, so its dimensions are x meters by (20-2x) meters. Which dimensions give the greatest area?",
+   "choices": [
+    "2 meters by 16 meters",
+    "4 meters by 12 meters",
+    "5 meters by 10 meters",
+    "6 meters by 8 meters"
+   ],
+   "answer": "5 meters by 10 meters",
+   "rationale": "The area is A(x)=-2x^2+20x, whose vertex is at x=5. The dimensions are then 5 meters by 10 meters, giving an area of 50 square meters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L221",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "A store’s daily revenue is R(p)=-20p^2+600p dollars, for prices from $0 to $30. Which two prices make the modeled daily revenue equal to zero?",
+   "choices": [
+    "$0 and $30",
+    "$10 and $20",
+    "$0 and $15",
+    "$15 and $30"
+   ],
+   "answer": "$0 and $30",
+   "rationale": "Factoring gives R(p)=-20p(p-30). Therefore, the modeled revenue is zero when p=0 or p=30.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L221",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "Using a graphing calculator, a student finds the positive x-intercept of y=-24x^2+96x+32. What is the intercept, to the nearest hundredth?",
+   "choices": [
+    "x = 4.09",
+    "x = 4.31",
+    "x = 5.31",
+    "x = 6.91"
+   ],
+   "answer": "x = 4.31",
+   "rationale": "The equation has roots approximately -0.31 and 4.31, so its positive x-intercept is 4.31 to the nearest hundredth.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L167",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Rewrite f(x) = x² + 6x + 5 in vertex form. Which expression is correct?",
+   "choices": [
+    "(x + 3)² − 4",
+    "(x − 3)² + 4",
+    "(x + 6)² − 31",
+    "(x − 3)² − 4"
+   ],
+   "answer": "(x + 3)² − 4",
+   "rationale": "Complete the square: x² + 6x + 5 = (x + 3)² − 9 + 5 = (x + 3)² − 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L167",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Solve x² + 8x + 3 = 0 by completing the square. What are the solutions?",
+   "choices": [
+    "x = −4 ± √13",
+    "x = 4 ± √13",
+    "x = −4 ± √3",
+    "x = 3 ± √13"
+   ],
+   "answer": "x = −4 ± √13",
+   "rationale": "Completing the square gives (x + 4)² = 13, so x = −4 ± √13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L167",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "What is the maximum value of f(x) = −x² − 4x + 1, and at what x-value does it occur?",
+   "choices": [
+    "5 at x = −2",
+    "−5 at x = −2",
+    "1 at x = 0",
+    "5 at x = 2"
+   ],
+   "answer": "5 at x = −2",
+   "rationale": "The vertex form is f(x) = −(x + 2)² + 5. Since the squared term is subtracted, the maximum is 5 at x = −2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L167",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "The quadratic g(x) = x² − 6x + 2 can be written in vertex form. What is its minimum value?",
+   "choices": [
+    "−7",
+    "−5",
+    "7",
+    "−2"
+   ],
+   "answer": "−7",
+   "rationale": "Complete the square: g(x) = (x − 3)² − 9 + 2 = (x − 3)² − 7. Therefore, its minimum value is −7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L264",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Which equation defines an exponential function?",
+   "choices": [
+    "y = 2x + 4",
+    "y = 4(2^x)",
+    "y = x^2 + 4",
+    "y = 4(2 + x)"
+   ],
+   "answer": "y = 4(2^x)",
+   "rationale": "An exponential function has a constant base raised to a variable exponent. The equation y = 4(2^x) has this form.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L264",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "The function is f(x) = 5(0.8)^x. What is its initial value?",
+   "choices": [
+    "4",
+    "5",
+    "6",
+    "8"
+   ],
+   "answer": "5",
+   "rationale": "The initial value is f(0) = 5(0.8)^0 = 5, since any nonzero number raised to the zeroth power equals 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L264",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "The function is g(x) = 7(0.9)^x. What is its growth or decay factor?",
+   "choices": [
+    "0.7",
+    "0.9",
+    "1.7",
+    "6.3"
+   ],
+   "answer": "0.9",
+   "rationale": "The factor is the multiplier attached to the variable exponent. Because 0.9 is less than 1, it represents decay.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L264",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "A quantity starts at 40 and is multiplied by 1.25 each day. Which expression gives its value after 3 days?",
+   "choices": [
+    "40 + 3(1.25)",
+    "40(1.25) + 3(1.25)",
+    "40(1.25)^3",
+    "40 + 3(1.25)^2"
+   ],
+   "answer": "40(1.25)^3",
+   "rationale": "Repeated multiplication by 1.25 for three days is modeled by 40(1.25)^3. Repeated addition would not apply the factor each day.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L52",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which expression is equivalent to (2x − 5)²?",
+   "choices": [
+    "4x² − 20x + 25",
+    "4x² + 20x + 25",
+    "4x² − 10x + 25",
+    "4x² + 25"
+   ],
+   "answer": "4x² − 20x + 25",
+   "rationale": "Using (a − b)² = a² − 2ab + b² gives (2x)² − 2(2x)(5) + 5² = 4x² − 20x + 25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L52",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "For x = 2 and y = −1, which calculation correctly verifies (x + y)² = x² + 2xy + y²?",
+   "choices": [
+    "1 = 4 − 4 + 1",
+    "9 = 4 + 4 + 1",
+    "1 = 4 + 4 + 1",
+    "5 = 4 − 4 + 1"
+   ],
+   "answer": "1 = 4 − 4 + 1",
+   "rationale": "The left side is (2 − 1)² = 1. The right side is 2² + 2(2)(−1) + (−1)² = 4 − 4 + 1 = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L52",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which calculation correctly verifies the identity (3x + 5)(3x − 5) = 9x² − 25?",
+   "choices": [
+    "(3x + 5)(3x − 5) = (3x)² − 5² = 9x² + 25",
+    "(3x + 5)(3x − 5) = (3x)² − 5² = 9x² − 25",
+    "(3x + 5)(3x − 5) = (3x + 5)² = 9x² + 30x + 25",
+    "(3x + 5)(3x − 5) = (3x − 5)² = 9x² − 30x + 25"
+   ],
+   "answer": "(3x + 5)(3x − 5) = (3x)² − 5² = 9x² − 25",
+   "rationale": "The difference-of-squares pattern gives (a + b)(a − b) = a² − b², so the product is (3x)² − 5² = 9x² − 25.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L20",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "What is the sum of (3x² + 2x − 5) and (x² − 7x + 4)?",
+   "choices": [
+    "4x² − 5x − 9",
+    "4x² − 5x − 1",
+    "4x² − 9x − 1",
+    "4x² + 9x − 1"
+   ],
+   "answer": "4x² − 5x − 1",
+   "rationale": "Combine like terms: 3x² + x² = 4x², 2x + (−7x) = −5x, and −5 + 4 = −1, giving 4x² − 5x − 1. The other options come from sign slips, such as treating −5 + 4 as −9 or mishandling the x terms.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L20",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "What is the difference (5x² + 3x − 8) − (2x² − 4x + 1)?",
+   "choices": [
+    "3x² − x − 9",
+    "3x² + 7x − 7",
+    "3x² + 7x − 9",
+    "3x² − x − 7"
+   ],
+   "answer": "3x² + 7x − 9",
+   "rationale": "Distribute the minus sign: 5x² + 3x − 8 − 2x² + 4x − 1. Then 5x² − 2x² = 3x², 3x + 4x = 7x, and −8 − 1 = −9, so the answer is 3x² + 7x − 9. The distractors forget to change the signs of −4x and/or +1.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L20",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Subtract 4y² − 3y + 6 from 2y² + 5y − 1.",
+   "choices": [
+    "2y² − 8y + 7",
+    "−2y² + 2y + 5",
+    "−2y² − 8y − 7",
+    "−2y² + 8y − 7"
+   ],
+   "answer": "−2y² + 8y − 7",
+   "rationale": "Set it up as (2y² + 5y − 1) − (4y² − 3y + 6) = 2y² + 5y − 1 − 4y² + 3y − 6. Combining gives −2y² + 8y − 7. Reversing the order or missing sign changes when distributing the minus produces the other choices.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L20",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "polynomials",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Polynomials are closed under addition and subtraction. Which statement best explains why?",
+   "choices": [
+    "Like terms combine, so variable parts and exponents stay the same.",
+    "Like terms combine, so every coefficient stays exactly the same.",
+    "Exponents are added whenever two like terms are combined.",
+    "Subtraction always creates terms with negative exponents."
+   ],
+   "answer": "Like terms combine, so variable parts and exponents stay the same.",
+   "rationale": "When like terms are combined, you add or subtract only the coefficients while the variable parts and their exponents are unchanged, so the result is still a polynomial. Shifting coefficients, adding exponents, or creating negative exponents would break closure.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L179",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "In deriving the quadratic formula from ax^2+bx+c=0, after dividing by a and moving c/a to the right side, what term is added to both sides to complete the square?",
+   "choices": [
+    "(b/2a)^2",
+    "(b/a)^2",
+    "(b/2)^2",
+    "(b^2/4a)"
+   ],
+   "answer": "(b/2a)^2",
+   "rationale": "Completing the square requires adding (b/(2a))^2 to both sides after the linear term is isolated.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L179",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Which quadratic equation has irrational real solutions?",
+   "choices": [
+    "x^2 - 5x + 6 = 0",
+    "x^2 - 5x + 4 = 0",
+    "x^2 - 5x = 0",
+    "x^2 - 5x + 5 = 0"
+   ],
+   "answer": "x^2 - 5x + 5 = 0",
+   "rationale": "The discriminant of x^2 - 5x + 5 = 0 is 25 - 20 = 5, a positive non‑perfect square, giving irrational roots; the others have discriminants 1, 9, and 25 (perfect squares).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L179",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "After completing the square in the derivation of the quadratic formula, the quantity under the square root is:",
+   "choices": [
+    "b^2 - 4ac",
+    "b^2 + 4ac",
+    "4ac - b^2",
+    "b^2 - 2ac"
+   ],
+   "answer": "b^2 - 4ac",
+   "rationale": "The completed‑square step produces (x + b/2a)^2 = (b^2 - 4ac)/(4a^2), so the radicand is b^2 - 4ac.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L473",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "A calculator gives the quadratic model y = 1.5x² + 0.5. At the data point (3, 12), what is the residual y − ŷ?",
+   "choices": [
+    "14",
+    "-14",
+    "-2",
+    "2"
+   ],
+   "answer": "-2",
+   "rationale": "The model predicts ŷ = 1.5(3²) + 0.5 = 14, so the residual is 12 − 14 = -2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L473",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "For one dataset, a calculator gives residuals of -1, 0.5, 1, -0.5 for a quadratic model and 0.2, -0.1, 0.1, -0.2 for an exponential model. Which model fits better?",
+   "choices": [
+    "Exponential; its residuals are smaller.",
+    "Quadratic; its residuals are smaller.",
+    "Exponential; its residuals have a clear trend.",
+    "Quadratic; its residuals have no clear trend."
+   ],
+   "answer": "Exponential; its residuals are smaller.",
+   "rationale": "The exponential residuals have a sum of squared residuals of 0.10, while the quadratic residuals have a sum of squared residuals of 2.50.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L473",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 473,
+   "format": "multiple_choice",
+   "prompt": "A bank balance doubles every year. A learner fits linear and exponential models to the balances. Which model should be chosen, and what supports the choice?",
+   "choices": [
+    "An exponential model; the balance grows by a constant percentage.",
+    "A linear model; the balance grows by a constant percentage.",
+    "An exponential model; the balance grows by a constant amount.",
+    "A linear model; the balance grows by a constant amount."
+   ],
+   "answer": "An exponential model; the balance grows by a constant percentage.",
+   "rationale": "Doubling each year represents constant multiplicative growth, which is modeled by an exponential function.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L137",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "The graph of y = x^2 is shifted 3 units right and 2 units down. Which equation represents the resulting parabola?",
+   "choices": [
+    "y = (x - 3)^2 - 2",
+    "y = (x + 3)^2 - 2",
+    "y = (x - 3)^2 + 2",
+    "y = (x + 3)^2 + 2"
+   ],
+   "answer": "y = (x - 3)^2 - 2",
+   "rationale": "Shifting right 3 replaces x with x - 3, and shifting down 2 subtracts 2 from the output.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L137",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which description of y = -2(x + 1)^2 + 5 is correct?",
+   "choices": [
+    "It opens downward, is vertically stretched by factor 2, and has vertex (-1, 5).",
+    "It opens upward, is vertically stretched by factor 2, and has vertex (1, 5).",
+    "It opens downward, is vertically compressed by factor 2, and has vertex (-1, -5).",
+    "It opens upward, is vertically compressed by factor 2, and has vertex (1, -5)."
+   ],
+   "answer": "It opens downward, is vertically stretched by factor 2, and has vertex (-1, 5).",
+   "rationale": "The negative value of a makes the parabola open downward, |a| = 2 gives a vertical stretch, and the vertex is (h, k) = (-1, 5).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L137",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "A parabola has vertex (1, -2) and passes through the point (3, 6). Which equation represents it?",
+   "choices": [
+    "y = 2(x - 1)^2 - 2",
+    "y = (1/2)(x - 1)^2 - 2",
+    "y = 2(x + 1)^2 - 2",
+    "y = -2(x - 1)^2 - 2"
+   ],
+   "answer": "y = 2(x - 1)^2 - 2",
+   "rationale": "Substituting (3, 6) gives 6 = a(3 - 1)^2 - 2, so a = 2 and the equation is y = 2(x - 1)^2 - 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L137",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly compares the graphs of y = x^2 and y = 3x^2?",
+   "choices": [
+    "y = 3x^2 is a vertical stretch by factor 3 and is narrower.",
+    "y = 3x^2 is a vertical compression by factor 3 and is narrower.",
+    "y = 3x^2 is a vertical stretch by factor 3 and is wider.",
+    "y = 3x^2 is a horizontal stretch by factor 3 and is wider."
+   ],
+   "answer": "y = 3x^2 is a vertical stretch by factor 3 and is narrower.",
+   "rationale": "Multiplying the output of y = x^2 by 3 vertically stretches the graph by factor 3, making the parabola narrower.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L336",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Which function family best fits the table?\n\nx: 0, 1, 2, 3\ny: 4, 8, 16, 32",
+   "choices": [
+    "Linear",
+    "Quadratic",
+    "Exponential",
+    "Constant"
+   ],
+   "answer": "Exponential",
+   "rationale": "The output is multiplied by 2 whenever x increases by 1, so the constant ratio identifies an exponential function.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L336",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "Which equation fits the data?\n\nx: 0, 1, 2, 3\ny: 10, 12, 16, 22",
+   "choices": [
+    "y = 10 + x + x²",
+    "y = 10 + 2x",
+    "y = 10 · 2ˣ",
+    "y = 10 − x²"
+   ],
+   "answer": "y = 10 + x + x²",
+   "rationale": "The first differences are 2, 4, and 6, while the second differences are both 2. The equation y = 10 + x + x² produces all four values.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L336",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 336,
+   "format": "multiple_choice",
+   "prompt": "All models start at 20. A adds 5 per unit. B gives 20, 27, 36, 45 for x = 0, 1, 2, 3. C multiplies by 1.1 per unit. Which is true?",
+   "choices": [
+    "Model A has a constant ratio and grows without bound.",
+    "Model B has constant differences and grows exponentially.",
+    "Model C has a constant ratio and eventually exceeds A.",
+    "Model C has constant differences and eventually exceeds A."
+   ],
+   "answer": "Model C has a constant ratio and eventually exceeds A.",
+   "rationale": "Model C has a constant multiplicative ratio of 1.1, so it is exponential and eventually exceeds the linear Model A.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L316",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "percents",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Ms. Patel deposits $1,200 into an account earning 6% annual interest, compounded monthly. What is the balance after 2 years, to the nearest cent?",
+   "choices": [
+    "$1,344.00",
+    "$1,352.59",
+    "$1,347.84",
+    "$1,360.00"
+   ],
+   "answer": "$1,352.59",
+   "rationale": "Using A = 1200(1 + 0.06/12)^(12·2) gives $1,352.5917, which rounds to $1,352.59.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L316",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "percents",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Compare two $1,000 balances over 4 years: a savings account earns 4% annual interest compounded quarterly, while a loan accrues 4.2% annual interest compounded annually. Which final balances are correct?",
+   "choices": [
+    "Savings: $1,172.58; loan: $1,178.88.",
+    "Savings: $1,178.88; loan: $1,172.58.",
+    "Savings: $1,172.88; loan: $1,178.88.",
+    "Savings: $1,178.58; loan: $1,172.88."
+   ],
+   "answer": "Savings: $1,172.58; loan: $1,178.88.",
+   "rationale": "The savings balance is 1000(1.01)^16 = $1,172.58. The loan balance is 1000(1.042)^4 = $1,178.88.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L316",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "percents",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Amir borrows $5,000 at 12% annual interest, compounded monthly, and repays it over 36 equal monthly payments. Using M = Pr/[1 − (1+r)^−36], where P = 5000 and r = 0.01, what is his monthly payment?",
+   "choices": [
+    "$143.06",
+    "$150.00",
+    "$166.07",
+    "$185.19"
+   ],
+   "answer": "$166.07",
+   "rationale": "Substitution gives M = 50/[1 − (1.01)^−36] = $166.0715, which rounds to $166.07.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L316",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "percents",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Devon repays a $2,500 loan with 24 equal monthly payments of $115. How much total interest does Devon pay over the life of the loan?",
+   "choices": [
+    "$240.00",
+    "$250.00",
+    "$260.00",
+    "$275.00"
+   ],
+   "answer": "$260.00",
+   "rationale": "The total repayment is 24 × $115 = $2,760. Subtracting the $2,500 principal gives $260 in interest.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L368",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "Let f(x)=2x+1 and g(x)=x^2−3. What is (f+g)(2)?",
+   "choices": [
+    "1",
+    "4",
+    "5",
+    "6"
+   ],
+   "answer": "6",
+   "rationale": "(f+g)(2)=f(2)+g(2)=5+1=6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L368",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "Two businesses have daily revenues R(x)=3x+5 and S(x)=x^2+1, where x is the number of customers. What is (S−R)(3)?",
+   "choices": [
+    "−4",
+    "4",
+    "24",
+    "140"
+   ],
+   "answer": "−4",
+   "rationale": "(S−R)(3)=S(3)−R(3)=10−14=−4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L368",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 368,
+   "format": "multiple_choice",
+   "prompt": "Let f(x)=x+3 and g(x)=2x−1. What is (f·g)(2)?",
+   "choices": [
+    "3",
+    "5",
+    "10",
+    "15"
+   ],
+   "answer": "15",
+   "rationale": "(f·g)(2)=f(2)g(2)=5·3=15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L346",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "The table shows two linear functions. At which x-value does f(x) = g(x)?\n\nx | f(x) | g(x)\n1 | 1 | 4\n2 | 3 | 3\n3 | 5 | 2",
+   "choices": [
+    "x = 1",
+    "x = 2",
+    "x = 3",
+    "x = 4"
+   ],
+   "answer": "x = 2",
+   "rationale": "When x = 2, both functions have the value 3, so f(x) = g(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L346",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "To solve f(x) = g(x) for f(x) = x² − 2x and g(x) = 4, use x₀ = 3 and the rule xₙ₊₁ = xₙ − (xₙ² − 2xₙ − 4)/(2xₙ − 2). What is x₂?",
+   "choices": [
+    "x₂ ≈ 2.7639",
+    "x₂ ≈ 3.1875",
+    "x₂ ≈ 3.2361",
+    "x₂ ≈ 3.5000"
+   ],
+   "answer": "x₂ ≈ 3.2361",
+   "rationale": "The first approximation is x₁ = 3.25. Applying the rule again gives x₂ ≈ 3.25 − 0.0625/4.5 ≈ 3.2361.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L346",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 346,
+   "format": "multiple_choice",
+   "prompt": "A graphing tool is used for f(x) = |2x − 3| and g(x) = x + 1. Which pair gives the approximate x-coordinates where the graphs intersect?",
+   "choices": [
+    "x ≈ 0.33 and x ≈ 4.00",
+    "x ≈ 0.67 and x ≈ 4.00",
+    "x ≈ 1.00 and x ≈ 3.00",
+    "x ≈ 1.50 and x ≈ 3.50"
+   ],
+   "answer": "x ≈ 0.67 and x ≈ 4.00",
+   "rationale": "Solving |2x − 3| = x + 1 in its two cases gives x = 2/3 and x = 4, which are approximately 0.67 and 4.00.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L505",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "A spreadsheet models a loan: A1 has principal 6000, A2 has annual simple rate 0.06, and A3 has years 3. Which formula should B3 use?",
+   "choices": [
+    "=$A$1*(1+$A$2*A3), showing $7,080",
+    "=$A$1*(1+$A$2)^A3, showing $7,146.10",
+    "=$A$1*(1+$A$2*A3*A3), showing $9,240",
+    "=$A$1*$A$2*A3, showing $1,080"
+   ],
+   "answer": "=$A$1*(1+$A$2*A3), showing $7,080",
+   "rationale": "Simple interest uses A = P(1 + rt), so 6000(1 + 0.06 × 3) = 7080. The first formula correctly references the spreadsheet cells.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L505",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "A spreadsheet compares savings plans for $1,200. Plan A adds $100 monthly. Plan B earns 2% monthly compound interest without deposits. Which plan has the greater balance after 6 months, and why?",
+   "choices": [
+    "Plan A; $1,800 exceeds $1,351.39.",
+    "Plan B; $1,351.39 exceeds $1,800.",
+    "Plan A; $100 monthly equals 2% monthly.",
+    "Plan B; compound growth always beats deposits."
+   ],
+   "answer": "Plan A; $1,800 exceeds $1,351.39.",
+   "rationale": "After six deposits, Plan A has 1200 + 6(100) = 1800 dollars. Plan B has 1200(1.02)^6 ≈ 1351.39 dollars, so Plan A has the greater balance.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L505",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "A spreadsheet uses P=2500(0.9)^t to model population. Which value and interpretation should appear after 2 years?",
+   "choices": [
+    "$2,025; a 10% decrease each year",
+    "$2,250; a 10% decrease each year",
+    "$2,025; a 19% decrease each year",
+    "$2,500; a 0% decrease each year"
+   ],
+   "answer": "$2,025; a 10% decrease each year",
+   "rationale": "The factor 0.9 means the population is multiplied by 0.9 each year, a 10% decrease. After two years, 2500(0.9)^2 = 2025.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L505",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "exponents",
+   "level": 505,
+   "format": "multiple_choice",
+   "prompt": "A spreadsheet compares the same $5,000, four-year loan at 5% annual interest. One model uses simple interest; the other compounds annually. Which recommendation is best supported by total repayment?",
+   "choices": [
+    "Choose simple interest; $6,000 costs less than $6,077.53.",
+    "Choose compound interest; $6,077.53 costs less than $6,000.",
+    "Choose simple interest; the balance grows by $500 yearly.",
+    "Choose compound interest; the balance grows by $250 yearly."
+   ],
+   "answer": "Choose simple interest; $6,000 costs less than $6,077.53.",
+   "rationale": "Simple interest gives 5000(1 + 0.05 × 4) = 6000 dollars. Annual compounding gives 5000(1.05)^4 ≈ 6077.53 dollars, so simple interest costs less.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L495",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "A tutoring center charges $25 per session. Which paragraph best justifies a linear cost model?",
+   "choices": [
+    "Each session adds $25, giving a constant rate of change.",
+    "Each session multiplies cost by 25, giving a constant rate.",
+    "Cost rises $25 per session, giving an increasing rate.",
+    "Cost falls $25 per session, giving a negative rate."
+   ],
+   "answer": "Each session adds $25, giving a constant rate of change.",
+   "rationale": "The total cost increases by the same $25 for every session, so the dependent variable changes at a constant rate. This is the defining feature of a linear model.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L495",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "A $2,000 investment loses 15% of its value each year. Which paragraph best justifies an exponential model?",
+   "choices": [
+    "Value is multiplied by 0.85 yearly; this assumes the percentage loss stays constant.",
+    "Value is multiplied by 1.15 yearly; this assumes the percentage loss stays constant.",
+    "Value loses $300 yearly; this describes a linear model with a constant dollar loss.",
+    "Value loses $15 yearly; this describes a linear model with a constant dollar loss."
+   ],
+   "answer": "Value is multiplied by 0.85 yearly; this assumes the percentage loss stays constant.",
+   "rationale": "Losing 15% means retaining 85% of the previous value each year. The multiplier 0.85 produces exponential decay, and the model assumes that percentage loss remains constant.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L495",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "functions",
+   "level": 495,
+   "format": "multiple_choice",
+   "prompt": "A ball’s height is modeled by h(t)=-16t²+32t+48, where t is seconds. Which limitation should be stated?",
+   "choices": [
+    "Air resistance is ignored in this model.",
+    "Strong wind is included in this model.",
+    "The ball’s mass changes during flight.",
+    "Gravity acts upward throughout flight."
+   ],
+   "answer": "Air resistance is ignored in this model.",
+   "rationale": "The equation uses the standard projectile-motion model, which assumes that air resistance has no effect on the ball’s motion.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Standard projectile‑motion models neglect air resistance.",
+      "url": "https://en.wikipedia.org/wiki/Projectile_Motion",
+      "quote": "In physics, projectile motion describes the motion of an object that is launched into the air and moves under the influence of gravity alone, with air resistance neglected.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L199",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "The roots of 2x² − 3x − 5 = 0 are r and s. What is r + s?",
+   "choices": [
+    "−3/2",
+    "3/2",
+    "5/2",
+    "−5/2"
+   ],
+   "answer": "3/2",
+   "rationale": "By Vieta’s formulas, the sum of the roots is −b/a = −(−3)/2 = 3/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L199",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "A quadratic has roots 3 and −5, named r and s. What is the value of rs?",
+   "choices": [
+    "−15",
+    "15",
+    "−8",
+    "8"
+   ],
+   "answer": "−15",
+   "rationale": "The product of the roots is r × s = 3 × (−5) = −15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L199",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "A monic quadratic has roots −2 and 5. Which equation represents this quadratic?",
+   "choices": [
+    "x² + 3x − 10",
+    "x² + 7x + 10",
+    "x² − 3x + 10",
+    "x² − 3x − 10"
+   ],
+   "answer": "x² − 3x − 10",
+   "rationale": "The quadratic factors as (x + 2)(x − 5), which expands to x² − 3x − 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L199",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Which pair could be the roots of x² − 5x + 6 = 0?",
+   "choices": [
+    "(2, 3)",
+    "(−2, −3)",
+    "(1, 6)",
+    "(−1, −6)"
+   ],
+   "answer": "(2, 3)",
+   "rationale": "The roots of x² − 5x + 6 = 0 have sum 5 and product 6; the pair (2, 3) satisfies both conditions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L400",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "A histogram of test scores is roughly symmetric with no outliers. Which pair of measures best summarizes center and spread?",
+   "choices": [
+    "mean and standard deviation",
+    "median and IQR",
+    "mode and range",
+    "median and standard deviation"
+   ],
+   "answer": "mean and standard deviation",
+   "rationale": "For symmetric distributions without outliers, the mean and standard deviation are the most efficient measures of center and spread because they use all data points and are not unduly influenced by extreme values.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L400",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "Two box plots have these values: Class A: Q1 = 40, median = 60, Q3 = 80; Class B: Q1 = 30, median = 60, Q3 = 75. Which comparison is correct?",
+   "choices": [
+    "The medians are equal; Class A has the smaller IQR.",
+    "The medians are equal; Class A has the larger IQR.",
+    "The medians differ; Class A has the smaller IQR.",
+    "The medians differ; Class A has the larger IQR."
+   ],
+   "answer": "The medians are equal; Class A has the smaller IQR.",
+   "rationale": "Both medians are 60. Class A’s IQR is 80 − 40 = 40, while Class B’s IQR is 75 − 30 = 45, so Class A has less spread.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L400",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "A box plot shows a point far below the lower whisker. Which statement about the data is most accurate?",
+   "choices": [
+    "The median is more resistant to the low outlier than the mean.",
+    "The mean is more resistant to the low outlier than the median.",
+    "The IQR is more affected by the low outlier than the range.",
+    "The median and IQR are both strongly affected by the low outlier."
+   ],
+   "answer": "The median is more resistant to the low outlier than the mean.",
+   "rationale": "An extreme low value pulls the mean downward much more than it affects the median, so the median is more resistant to this outlier.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L400",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "A histogram is strongly right-skewed and has one extreme high value. Which pair of measures is most appropriate for summarizing center and spread?",
+   "choices": [
+    "The median and IQR",
+    "Mean and standard deviation",
+    "The median and range",
+    "Mean and interquartile range"
+   ],
+   "answer": "The median and IQR",
+   "rationale": "The median is resistant to the extreme high value, and the IQR describes the spread of the middle 50% of the data without being greatly affected by it.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Median and IQR are less affected by extreme values than mean and standard deviation.",
+      "url": "https://en.wikipedia.org/wiki/MediaN",
+      "quote": "The median of a set of numbers is the value separating the higher half from the lower half of a data sample , a population , or a probability distribution . For a data set , it may be thought of as the \"middle\" value. The basic feature of the median in describing data compared to the mean (often simply described as the \"average\") is that it is not skewed by a small proportion of extreme values, and therefore provides a better representation of the center. Median income , for example, may be a better way to describe the center of the income distribution because increases in the largest incomes alone have no effect on the median.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L420",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "A student earned grades 3.0 (4 credits), 3.5 (3 credits), and 4.0 (2 credits). What is the weighted GPA?",
+   "choices": [
+    "3.39",
+    "3.33",
+    "3.44",
+    "3.28"
+   ],
+   "answer": "3.39",
+   "rationale": "Weighted GPA = (3.0*4 + 3.5*3 + 4.0*2) / (4+3+2) = 30.5/9 ≈ 3.389, which rounds to 3.39.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L420",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "A student’s final grade is a weighted average of three exams: Exam 1 80% weight 0.4, Exam 2 90% weight 0.35, Exam 3 70% weight 0.25. What is the final grade?",
+   "choices": [
+    "81.0",
+    "80.5",
+    "81.5",
+    "79.8"
+   ],
+   "answer": "81.0",
+   "rationale": "Final = 80*0.4 + 90*0.35 + 70*0.25 = 32 + 31.5 + 17.5 = 81.0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L420",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "A price index compares one fixed basket. Last year, 2 apples at $1.50 each and 1 notebook at $4.00 cost $7.00. This year, apples cost $1.80 each and the notebook costs $4.50. Using last year as the base year, what is this year’s price index?",
+   "choices": [
+    "108.6",
+    "110.0",
+    "115.7",
+    "120.0"
+   ],
+   "answer": "115.7",
+   "rationale": "This year’s basket costs $8.10, so the index is ($8.10 ÷ $7.00) × 100 = 115.7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L420",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 420,
+   "format": "multiple_choice",
+   "prompt": "Two students earn scores of 80 and 100. Student A weights 80 at 0.8 and 100 at 0.2. Student B weights 80 at 0.2 and 100 at 0.8. Whose weighted average is higher, and by how much?",
+   "choices": [
+    "Student A, by 12 points",
+    "Student B, by 12 points",
+    "Student A, by 6 points",
+    "Student B, by 6 points"
+   ],
+   "answer": "Student B, by 12 points",
+   "rationale": "Student A’s average is 84, while Student B’s average is 96. Giving the higher score the greater weight increases the average by 12 points.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L515",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "A function is h(x) = 5(2x - 3). Which expression defines the same function in slope-intercept form?",
+   "choices": [
+    "10x - 15",
+    "7x - 15",
+    "10x - 3",
+    "7x - 3"
+   ],
+   "answer": "10x - 15",
+   "rationale": "Distributing 5 gives h(x) = 10x - 15, which is equivalent to the original function for every real x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L515",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "A function is g(x) = 2(x + 4). At which x-value does g(x) equal x + 14?",
+   "choices": [
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "answer": "6",
+   "rationale": "Writing g(x) as 2x + 8 and solving 2x + 8 = x + 14 gives x = 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L515",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "A gym charges $30 plus $15 per month. Another gym charges $60 plus $10 per month. After how many months are the total charges equal?",
+   "choices": [
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "answer": "6",
+   "rationale": "Set the cost functions equal: 30 + 15m = 60 + 10m. Thus 5m = 30 and m = 6 months.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L515",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "linear_eq",
+   "level": 515,
+   "format": "multiple_choice",
+   "prompt": "Two functions are f(x) = x^2 + 4x and g(x) = 2x - 1. At what x-value do their graphs intersect?",
+   "choices": [
+    "-3",
+    "-1",
+    "1",
+    "3"
+   ],
+   "answer": "-1",
+   "rationale": "Set the functions equal: x^2 + 4x = 2x - 1. This becomes (x + 1)^2 = 0, so x = -1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L443",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "A student enters (1, 3), (2, 5), (3, 6), (4, 8), and (5, 11) into a graphing calculator’s linear regression mode. Which equation does the calculator report?",
+   "choices": [
+    "y = 1.7x + 1.3",
+    "y = 1.9x + 0.9",
+    "y = 1.9x + 1.1",
+    "y = 2.1x + 0.4"
+   ],
+   "answer": "y = 1.9x + 0.9",
+   "rationale": "Using the calculator’s regression feature gives a slope of 1.9 and a y-intercept of 0.9, so the fitted equation is y = 1.9x + 0.9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L443",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "A regression line is y = 2.4x + 16, where x is hours spent studying and y is a test score. How should the slope and intercept be interpreted?",
+   "choices": [
+    "Each extra hour raises the predicted score by 2.4 points; at 0 hours, it is 16.",
+    "Each extra hour lowers the predicted score by 2.4 points; at 0 hours, it is 16.",
+    "Each extra hour raises the predicted score by 16 points; at 0 hours, it is 2.4.",
+    "Each extra hour raises the predicted score by 2.4 points; at 0 hours, it is 2.4."
+   ],
+   "answer": "Each extra hour raises the predicted score by 2.4 points; at 0 hours, it is 16.",
+   "rationale": "The slope 2.4 gives the predicted score increase for each additional hour, while the intercept 16 gives the predicted score when x equals 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L443",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "A scatter plot has a regression line of y = 2.5x + 1. What is the predicted value of y when x = 6?",
+   "choices": [
+    "14",
+    "15",
+    "16",
+    "17"
+   ],
+   "answer": "16",
+   "rationale": "Substitute x = 6 into the regression equation: y = 2.5(6) + 1 = 16.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L443",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 443,
+   "format": "multiple_choice",
+   "prompt": "The x-values in a scatter plot range from 2 through 8. Which prediction should be treated most cautiously because it is an extrapolation?",
+   "choices": [
+    "The prediction for x = 3",
+    "The prediction for x = 5",
+    "The prediction for x = 8",
+    "The prediction for x = 12"
+   ],
+   "answer": "The prediction for x = 12",
+   "rationale": "A prediction at x = 12 lies beyond the observed x-range of 2 through 8, so it is an extrapolation and is less reliable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L453",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "For the points (1,2), (2,1), (3,4), (4,3), and (5,5), what is the correlation coefficient r?",
+   "choices": [
+    "0.20",
+    "0.40",
+    "0.80",
+    "0.96"
+   ],
+   "answer": "0.80",
+   "rationale": "Both means are 3. Using the correlation formula gives r = 8/√(10·10) = 0.80.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L453",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "A dataset has a correlation coefficient of r = −0.8. Which statement best interprets this value?",
+   "choices": [
+    "There is a strong negative linear association.",
+    "There is a weak positive linear association.",
+    "There is a strong negative causal relationship.",
+    "Exactly 80% of changes in y are caused by x."
+   ],
+   "answer": "There is a strong negative linear association.",
+   "rationale": "The negative sign shows that larger x-values tend to accompany smaller y-values, while a magnitude of 0.8 indicates a strong linear association. It does not establish causation.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L453",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 453,
+   "format": "multiple_choice",
+   "prompt": "For a linear model, the residuals for x = 1, 2, 3, 4, and 5 are 3, 1, −1, −1, and −3. What does this residual pattern suggest?",
+   "choices": [
+    "A curved model may fit the data better.",
+    "Random scatter shows the linear model fits well.",
+    "The model predicts every value exactly.",
+    "The model overestimates every observed value."
+   ],
+   "answer": "A curved model may fit the data better.",
+   "rationale": "The residuals form a curved pattern around zero rather than showing random scatter, suggesting that a nonlinear model may better represent the relationship.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L358",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "A linear function is represented by this table:\n| x | 1 | 4 | 7 |\n| y | 5 | 17 | 29 |\nWhat is the average rate of change over 1 ≤ x ≤ 7?",
+   "choices": [
+    "2 units of y per unit of x",
+    "3 units of y per unit of x",
+    "4 units of y per unit of x",
+    "6 units of y per unit of x"
+   ],
+   "answer": "4 units of y per unit of x",
+   "rationale": "Average rate of change is (29 − 5) ÷ (7 − 1) = 24 ÷ 6 = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L358",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "A quadratic function is represented by this table:\n| x | 0 | 1 | 2 | 3 |\n| y | 3 | 7 | 15 | 27 |\nWhat is the average rate of change over 1 ≤ x ≤ 3?",
+   "choices": [
+    "5 units of y per unit of x",
+    "8 units of y per unit of x",
+    "10 units of y per unit of x",
+    "12 units of y per unit of x"
+   ],
+   "answer": "10 units of y per unit of x",
+   "rationale": "Use the endpoints of the interval: (27 − 7) ÷ (3 − 1) = 20 ÷ 2 = 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L358",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "An exponential function is represented by this table:\n| x | 0 | 1 | 2 | 3 |\n| y | 3 | 6 | 12 | 24 |\nWhat is the average rate of change over 1 ≤ x ≤ 3?",
+   "choices": [
+    "3 units of y per unit of x",
+    "6 units of y per unit of x",
+    "9 units of y per unit of x",
+    "18 units of y per unit of x"
+   ],
+   "answer": "9 units of y per unit of x",
+   "rationale": "The average rate of change is (24 − 6) ÷ (3 − 1) = 18 ÷ 2 = 9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L358",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "A quadratic graph contains the points (−2, 15) and (1, 3). Which statement correctly interprets its average rate of change from x = −2 to x = 1?",
+   "choices": [
+    "The y-value decreases by 4 for each 1-unit increase in x.",
+    "The y-value increases by 4 for each 1-unit increase in x.",
+    "The y-value decreases by 12 for each 1-unit increase in x.",
+    "The y-value decreases by 4 for each 3-unit increase in x."
+   ],
+   "answer": "The y-value decreases by 4 for each 1-unit increase in x.",
+   "rationale": "The average rate of change is (3 − 15) ÷ (1 − (−2)) = −12 ÷ 3 = −4, so y decreases by 4 for each 1-unit increase in x.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L485",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A fundraiser’s model gives the number of items sold as N=3h+5 after h hours. At 4 hours, which estimated count is most reasonable?",
+   "choices": [
+    "About 8 items",
+    "About 17 items",
+    "About 32 items",
+    "About 47 items"
+   ],
+   "answer": "About 17 items",
+   "rationale": "The model estimates 3(4)+5=17 items, which is consistent with about three additional items sold each hour after the initial five.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L485",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A water-use model is W=0.8d+12, where W is measured in liters and d is measured in days. Which unit must multiply d to produce W?",
+   "choices": [
+    "liters per day",
+    "liters per hour",
+    "liters per week",
+    "days per liter"
+   ],
+   "answer": "liters per day",
+   "rationale": "Because d is measured in days, the coefficient 0.8 must have units of liters per day so that multiplying by d gives liters.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L485",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A car’s odometer model is D=12t+20, where t is hours and D is kilometers. The odometer reads 20 kilometers at the start. Which starting-time check is correct?",
+   "choices": [
+    "At t=0, the model gives 20 kilometers.",
+    "At t=0, the model gives 12 kilometers.",
+    "At t=1, the model gives 20 kilometers.",
+    "At t=0, the model gives 0 kilometers."
+   ],
+   "answer": "At t=0, the model gives 20 kilometers.",
+   "rationale": "Substituting the starting time t=0 gives D=20, so the model agrees with the initial odometer reading.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L485",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A tank holds 120 liters and drains at 5 liters per minute. A student uses V=120-5t and reports 60 liters remaining after 20 minutes. What is the best reasonableness check?",
+   "choices": [
+    "The remaining amount should be 20 liters.",
+    "The remaining amount should be 220 liters.",
+    "The remaining amount should be 100 liters.",
+    "The remaining amount should be negative."
+   ],
+   "answer": "The remaining amount should be 20 liters.",
+   "rationale": "After 20 minutes, 5(20)=100 liters have drained, so 120-100=20 liters should remain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L463",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "A TV bar chart shows 95% support, with its vertical axis running from 90% to 100%. Which change would best reduce the risk of misleading viewers?",
+   "choices": [
+    "Round all poll percentages to whole numbers.",
+    "Replace percentages with undecided-response counts.",
+    "Start the vertical axis at 0% and label it clearly.",
+    "Use a different color for each percentage."
+   ],
+   "answer": "Start the vertical axis at 0% and label it clearly.",
+   "rationale": "Starting the axis at 90% makes the bar appear much larger relative to its full possible height. A zero baseline shows the percentage more honestly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L463",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "An ad reports a $175,000 average salary for five workers earning $50,000 and one earning $800,000. Which statement best explains the misleading claim?",
+   "choices": [
+    "The mean is pulled up by one high salary.",
+    "The mean is pulled down by low salaries.",
+    "The median is pulled up by one high salary.",
+    "The mode is pulled down by low salaries."
+   ],
+   "answer": "The mean is pulled up by one high salary.",
+   "rationale": "The mean is exactly $175,000, but the $800,000 salary raises it far above what most workers earn. The median is $50,000, so the mean misrepresents a typical salary.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L463",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 463,
+   "format": "multiple_choice",
+   "prompt": "A news story claims, “Most people prefer Brand X because 100 people who called the company’s hotline chose it.” What sampling flaw weakens the claim?",
+   "choices": [
+    "The poll used a self-selected sample of interested callers.",
+    "The poll used a random sample from all residents.",
+    "The poll used a census of every resident.",
+    "The poll used a stratified sample by age."
+   ],
+   "answer": "The poll used a self-selected sample of interested callers.",
+   "rationale": "People who called the hotline chose to respond, so they may differ systematically from other people. This self-selection makes the sample unrepresentative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A self-selected sample is one where participants choose to participate, which can lead to bias.",
+      "url": "https://en.wikipedia.org/wiki/Self-selected_sample",
+      "quote": "In such fields, a poll suffering from such bias is termed a self-selected listener opinion poll or \"SLOP\".",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L209",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Which method is the simplest for solving x² − 14x + 49 = 0?",
+   "choices": [
+    "Factoring the trinomial",
+    "Taking square roots",
+    "Completing the square",
+    "Using the quadratic formula"
+   ],
+   "answer": "Factoring the trinomial",
+   "rationale": "The trinomial is a perfect square: x² − 14x + 49 = (x − 7)². Factoring gives x = 7 directly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L209",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "A student needs approximate solution values rather than exact algebraic expressions. Which method is most useful?",
+   "choices": [
+    "Graphing the quadratic",
+    "Factoring the trinomial",
+    "Using the quadratic formula",
+    "Completing the square"
+   ],
+   "answer": "Graphing the quadratic",
+   "rationale": "Graphing is suited to estimating solutions from a coordinate plane when exact algebraic forms are not required.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L209",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 209,
+   "format": "multiple_choice",
+   "prompt": "Which method is most appropriate for finding exact solutions to 3x^2 + 4x - 2 = 0?",
+   "choices": [
+    "Factoring method",
+    "Square root method",
+    "Completing square",
+    "Quadratic formula"
+   ],
+   "answer": "Quadratic formula",
+   "rationale": "The quadratic 3x^2 + 4x - 2 = 0 has a leading coefficient not equal to 1 and a discriminant of 40, which is not a perfect square. It cannot be factored over the integers, and completing the square would involve fractions. The quadratic formula provides exact solutions efficiently.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L430",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "A survey of 120 students recorded grade (9th, 10th) and preferred sport (Basketball, Soccer). Counts: 9th‑Basketball 30, 9th‑Soccer 20, 10th‑Basketball 25, 10th‑Soccer 45. What is the joint relative frequency for 10th grade and Soccer?",
+   "choices": [
+    "0.375",
+    "0.30",
+    "0.25",
+    "0.45"
+   ],
+   "answer": "0.375",
+   "rationale": "Joint relative frequency = count for 10th‑Soccer (45) divided by total (120) = 0.375.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L430",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "A survey of 200 students recorded gender (Male, Female) and favorite subject (Math, English). Counts: Male‑Math 60, Male‑English 40, Female‑Math 50, Female‑English 50. What is the marginal relative frequency for Math?",
+   "choices": [
+    "0.55",
+    "0.45",
+    "0.60",
+    "0.50"
+   ],
+   "answer": "0.55",
+   "rationale": "The marginal relative frequency for Math is the total count for Math (60+50=110) divided by the grand total (200), which equals 0.55.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L430",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "data_stats",
+   "level": 430,
+   "format": "multiple_choice",
+   "prompt": "Using the same survey, what is the conditional relative frequency of preferring English given the student is female?",
+   "choices": [
+    "0.50",
+    "0.40",
+    "0.55",
+    "0.45"
+   ],
+   "answer": "0.50",
+   "rationale": "Given female, the conditional relative frequency for English is the count of Female‑English (50) divided by the total females (100), which equals 0.50.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L231",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "For the system y = x² + 2 and y = 2x + 1, what can be concluded about the graphs of the line and parabola?",
+   "choices": [
+    "They intersect at one point.",
+    "They have no intersection points.",
+    "They intersect at two points.",
+    "They intersect at infinitely many points."
+   ],
+   "answer": "They intersect at one point.",
+   "rationale": "Substitution gives x² + 2 = 2x + 1, or (x - 1)² = 0. Thus x = 1, and the graphs intersect only at (1, 3).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L231",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "The system y = x^2 - 2x - 3 and y = 2x - 5 has how many intersection points?",
+   "choices": [
+    "No intersection",
+    "One intersection",
+    "Two intersections",
+    "Infinitely many"
+   ],
+   "answer": "Two intersections",
+   "rationale": "Substituting the line equation into the parabola gives x^2 - 4x + 2 = 0. The discriminant is 16 - 8 = 8 > 0, so there are two distinct real solutions, meaning the graphs intersect in two points.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L231",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "The line y = 3x + 1 is tangent to the parabola y = x^2 + 2x + c. What is the value of c?",
+   "choices": [
+    "5/4",
+    "1/4",
+    "3/4",
+    "4/4"
+   ],
+   "answer": "5/4",
+   "rationale": "Setting the equations equal yields x^2 - x + (c - 1) = 0. For tangency the discriminant must be zero: 1 - 4(c - 1) = 0 → 5 - 4c = 0 → c = 5/4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L231",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "If the system y = x^2 + k and y = 2x has no real solutions, what must be true about k?",
+   "choices": [
+    "k > 1",
+    "k < 1",
+    "k = 1",
+    "k = 0"
+   ],
+   "answer": "k > 1",
+   "rationale": "Equating gives x^2 - 2x + k = 0. The discriminant is 4 - 4k. For no real solutions the discriminant must be negative: 4 - 4k < 0 → k > 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L388",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A student simplifies (2x³)² as 2x⁶. Which correction is correct, and which exponent rule explains it?",
+   "choices": [
+    "2x⁶, because the outer exponent applies only to x³",
+    "4x³, because the exponents 2 and 3 should be added",
+    "2x⁵, because the base and inner exponent should be added",
+    "4x⁶, because the outer exponent applies to each factor"
+   ],
+   "answer": "4x⁶, because the outer exponent applies to each factor",
+   "rationale": "Squaring a product squares each factor: (2x³)² = 2²(x³)² = 4x⁶. Writing the rule before substituting helps prevent losing the coefficient.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L388",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A student factors x²+6x+8 as (x−2)(x−4). Which correction and verification are valid?",
+   "choices": [
+    "(x+2)(x+4); 2·4=8 and 2+4=6.",
+    "(x−2)(x−4); (−2)·(−4)=8 and −2−4=−6.",
+    "(x+2)(x+4); 2·4=8 and 2−4=−2.",
+    "(x−2)(x+4); (−2)·4=−8 and −2+4=2."
+   ],
+   "answer": "(x+2)(x+4); 2·4=8 and 2+4=6.",
+   "rationale": "The numbers 2 and 4 multiply to 8 and add to 6, so both signs must be positive. Checking the product and sum before writing the factors prevents sign errors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L388",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A student solves 2x²+7x+3=0 as x=(-7 ± √(49−12))/2. Which correction and prevention are valid?",
+   "choices": [
+    "x=(-7 ± √25)/2; include a in 4ac but not 2a.",
+    "x=(-7 ± √25)/4; include a in both 4ac and 2a.",
+    "x=(-7 ± √37)/4; include a in 2a but not 4ac.",
+    "x=(7 ± √25)/4; include a in 4ac and 2a."
+   ],
+   "answer": "x=(-7 ± √25)/4; include a in both 4ac and 2a.",
+   "rationale": "Here a=2, b=7, and c=3, so b²−4ac=49−24=25 and 2a=4. Writing a, b, and c first and including a in both formula locations prevents both errors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "algebra_1_part_b:L388",
+   "track_id": "math",
+   "grade_id": "algebra_1_part_b",
+   "skill_id": "quadratics",
+   "level": 388,
+   "format": "multiple_choice",
+   "prompt": "A student simplifies 3x²·2x³ as 6x⁶. Which correction and exponent rule are valid?",
+   "choices": [
+    "6x⁶; multiply coefficients and add exponents for the same base.",
+    "6x⁵; multiply exponents and add coefficients for the same base.",
+    "6x⁵; multiply coefficients and add exponents for the same base.",
+    "6x⁶; multiply exponents and add coefficients for the same base."
+   ],
+   "answer": "6x⁵; multiply coefficients and add exponents for the same base.",
+   "rationale": "The coefficients multiply, while exponents on the same base x are added: 3·2=6 and 2+3=5. Keeping coefficients and exponents separate prevents adding exponents incorrectly.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,4995 @@
+{
+ "track_id": "math",
+ "grade_id": "calculus_ii",
+ "generated_at": "2026-10-26T03:38:11.778Z",
+ "items": [
+  {
+   "objective_id": "calculus_ii:L20",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "The region under y = √x and above the x-axis, for 0 ≤ x ≤ 4, is revolved about the x-axis. What is the volume of the resulting solid?",
+   "choices": [
+    "4π",
+    "8π",
+    "8π/3",
+    "16π"
+   ],
+   "answer": "8π",
+   "rationale": "Using disks, V = π∫₀⁴(√x)² dx = π∫₀⁴x dx = 8π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L20",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "The region under y = 2x + 1 and above the x-axis, for 0 ≤ x ≤ 3, is revolved about the x-axis. What is the volume of the resulting solid?",
+   "choices": [
+    "12π",
+    "57π",
+    "57",
+    "39π"
+   ],
+   "answer": "57π",
+   "rationale": "The disk radius is 2x + 1, so V = π∫₀³(2x + 1)² dx = π[x⁴/3 + 2x² + x]₀³ = 57π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L20",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "The base of a solid is the region under y = 9 − x² and above the x-axis, for −3 ≤ x ≤ 3. Perpendicular cross-sections are squares whose side lengths equal the function values. What is the volume?",
+   "choices": [
+    "648/5",
+    "1296π/5",
+    "1296/5",
+    "486/5"
+   ],
+   "answer": "1296/5",
+   "rationale": "Each square has area (9 − x²)², so V = ∫₋₃³(9 − x²)² dx = 1296/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L20",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "The region under y = x³ and above the x-axis, for 0 ≤ x ≤ 2, is revolved about the x-axis. What is the volume of the resulting solid?",
+   "choices": [
+    "64π/7",
+    "32π/7",
+    "128π/7",
+    "64π"
+   ],
+   "answer": "128π/7",
+   "rationale": "Using disks, V = π∫₀²(x³)² dx = π∫₀²x⁶ dx = π[x⁷/7]₀² = 128π/7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L30",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "The region 1 ≤ x ≤ 2 and 0 ≤ y ≤ x² is revolved about the x-axis. Which integral gives its volume using washers?",
+   "choices": [
+    "π∫₁² x² dx",
+    "π∫₁² x⁴ dx",
+    "2π∫₁² x³ dx",
+    "2π∫₁² x² dx"
+   ],
+   "answer": "π∫₁² x⁴ dx",
+   "rationale": "The washer’s outer radius is x² and its inner radius is 0, so its area is π(x²)² = πx⁴. Thus the volume is π∫₁² x⁴ dx.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L30",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "The region 0 ≤ x ≤ 2 and 0 ≤ y ≤ 4 − x² is revolved about the y-axis. Which integral gives its volume using cylindrical shells?",
+   "choices": [
+    "2π∫₀² (4 − x²) dx",
+    "π∫₀² x(4 − x²) dx",
+    "2π∫₀² x²(4 − x²) dx",
+    "2π∫₀² x(4 − x²) dx"
+   ],
+   "answer": "2π∫₀² x(4 − x²) dx",
+   "rationale": "A shell has radius x and height 4 − x². Multiplying by the circumference 2πx gives 2π∫₀² x(4 − x²) dx.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L30",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "The region 0 ≤ x ≤ 1 between y = 0 and y = 4x(1 − x) is revolved about the x-axis. Which method is easier to set up?",
+   "choices": [
+    "Shells, integrating with respect to x",
+    "Washers, integrating with respect to y",
+    "Washers, integrating with respect to x",
+    "Shells, integrating with respect to y"
+   ],
+   "answer": "Washers, integrating with respect to x",
+   "rationale": "Vertical washers use the radius 4x(1 − x) directly. Horizontal shells would require solving a quadratic and accounting for two x-values at many heights.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L30",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "The region 1 ≤ x ≤ 3 and 1 ≤ y ≤ x² is revolved about the horizontal line y = 1. Which integral gives its volume using cylindrical shells?",
+   "choices": [
+    "2π∫₁⁹ (1 − y)(3 − √y) dy",
+    "2π∫₁⁹ (y − 1)(3 − √y) dy",
+    "2π∫₁⁹ (y − 1)(√y − 3) dy",
+    "π∫₁⁹ (y − 1)(3 − √y) dy"
+   ],
+   "answer": "2π∫₁⁹ (y − 1)(3 − √y) dy",
+   "rationale": "For 1 ≤ y ≤ 9, the shell radius is y − 1 and its length is 3 − √y. The shell formula therefore gives 2π∫₁⁹ (y − 1)(3 − √y) dy.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L52",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A particle moves from x = 1 m to x = 3 m while a force F(x) = x² + 2 newtons acts along its direction of motion. What is the work done?",
+   "choices": [
+    "38/3 J",
+    "28/3 J",
+    "40/3 J",
+    "26/3 J"
+   ],
+   "answer": "38/3 J",
+   "rationale": "Work is ∫₁³(x² + 2) dx = [x³/3 + 2x]₁³ = 38/3 J.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L52",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A spring has spring constant 100 N/m. It is compressed from 0.20 m to 0.50 m from its natural length. How much work is done on the spring?",
+   "choices": [
+    "8.0 J",
+    "10.5 J",
+    "12.5 J",
+    "21.0 J"
+   ],
+   "answer": "10.5 J",
+   "rationale": "By Hooke’s law, work is ∫₀.₂⁰.₅100x dx = 50(0.50² − 0.20²) = 10.5 J.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L52",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A square tank with base 2 m by 2 m and depth 4 m is filled with liquid of weight density 9800 N/m³. The liquid is pumped to an outlet 4 m above the tank’s top. What is the pumping work?",
+   "choices": [
+    "940,800 J",
+    "470,400 J",
+    "313,600 J",
+    "1,254,400 J"
+   ],
+   "answer": "940,800 J",
+   "rationale": "At height y, the lift is 8 − y m, so work is ∫₀⁴9800(4)(8 − y) dy = 940,800 J.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L52",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A vertical rectangular plate is 2 m wide. Its top edge is 1 m below the water surface, and its bottom edge is 3 m below it. Using water’s weight density 9800 N/m³, what is the hydrostatic force?",
+   "choices": [
+    "70,400 N",
+    "78,400 N",
+    "88,200 N",
+    "117,600 N"
+   ],
+   "answer": "78,400 N",
+   "rationale": "A strip has force 9800y(2 dy), so the total force is ∫₁³19600y dy = 78,400 N.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L62",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A thin rod lies on the x-axis from x = 0 to x = 4 and has linear density ρ(x) = 3x. What is its moment about the y-axis?",
+   "choices": [
+    "24 units",
+    "32 units",
+    "48 units",
+    "64 units"
+   ],
+   "answer": "64 units",
+   "rationale": "The moment about the y-axis is M_y = ∫₀⁴ xρ(x) dx = ∫₀⁴ 3x² dx = 64. The rod’s total mass is 24, so 64 is the correct moment.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L62",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A thin rectangular plate occupies 0 ≤ x ≤ 6 and 0 ≤ y ≤ 2 and has constant density 4. What is the centroid of the plate?",
+   "choices": [
+    "(3, 1)",
+    "(2, 1)",
+    "(3, 2)",
+    "(4, 1)"
+   ],
+   "answer": "(3, 1)",
+   "rationale": "The mass is 48, the moment about the y-axis is 144, and the moment about the x-axis is 24. Thus x̄ = 144/48 = 3 and ȳ = 24/48 = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L62",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A thin wire forms the upper semicircle x² + y² = 4, where y ≥ 0, and has constant linear density 3. What is the center of mass of the wire?",
+   "choices": [
+    "(0, 0)",
+    "(0, 2/π)",
+    "(0, 4/π)",
+    "(0, π/2)"
+   ],
+   "answer": "(0, 4/π)",
+   "rationale": "Symmetry gives x̄ = 0. Using x = 2cos θ, y = 2sin θ, and ds = 2dθ, the mean height is ∫₀π 4sin θ dθ divided by ∫₀π 2dθ, which equals 4/π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L62",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A uniform triangular plate has vertices (0, 0), (6, 0), and (0, 3), with density 3. Which ordered pair gives its total mass and moment about the y-axis?",
+   "choices": [
+    "(27, 54)",
+    "(27, 27)",
+    "(18, 54)",
+    "(36, 54)"
+   ],
+   "answer": "(27, 54)",
+   "rationale": "The triangle has area 9, so its mass is 3(9) = 27. Its x-coordinate is 2, making the moment about the y-axis 27(2) = 54.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L82",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Starting from the product rule for u(x)v(x), which equation results when the rule is integrated and rearranged?",
+   "choices": [
+    "∫u(x)v′(x) dx = u(x)v(x) − ∫u′(x)v(x) dx",
+    "∫u(x)v′(x) dx = u(x)v(x) + ∫u′(x)v(x) dx",
+    "∫u(x)v′(x) dx = u′(x)v′(x) + ∫u(x)v(x) dx",
+    "∫u(x)v′(x) dx = u(x)v(x) − ∫u′(x)v′(x) dx"
+   ],
+   "answer": "∫u(x)v′(x) dx = u(x)v(x) − ∫u′(x)v(x) dx",
+   "rationale": "The product rule gives u′v + uv′. Integrating and solving for the term containing v′ produces the stated integration-by-parts formula.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L82",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "For ∫x ln(x) dx, which assignment to u and dv follows the usual systematic choice?",
+   "choices": [
+    "u = ln(x), dv = x dx",
+    "u = x, dv = ln(x) dx",
+    "u = 1, dv = x ln(x) dx",
+    "u = x ln(x), dv = dx"
+   ],
+   "answer": "u = ln(x), dv = x dx",
+   "rationale": "The LIATE rule places the logarithmic factor in u. Then dv = x dx, and the remaining integral ∫ln(x) dx is simpler than the original one.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L82",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Using integration by parts more than once, which expression equals ∫x²eˣ dx?",
+   "choices": [
+    "eˣ(x² − 2x + 2) + C",
+    "eˣ(x² + 2x + 2) + C",
+    "eˣ(x² − 2x − 2) + C",
+    "eˣ(x² + 2x − 2) + C"
+   ],
+   "answer": "eˣ(x² − 2x + 2) + C",
+   "rationale": "First take u = x² and dv = eˣ dx. Repeating the process for the remaining ∫xeˣ dx gives eˣ(x² − 2x + 2) + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L82",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 82,
+   "format": "multiple_choice",
+   "prompt": "Using a cyclic integration-by-parts setup, which expression equals ∫eˣ sin(x) dx?",
+   "choices": [
+    "½eˣ(sin(x) − cos(x)) + C",
+    "½eˣ(sin(x) + cos(x)) + C",
+    "½eˣ(cos(x) − sin(x)) + C",
+    "eˣ(sin(x) − cos(x)) + C"
+   ],
+   "answer": "½eˣ(sin(x) − cos(x)) + C",
+   "rationale": "The cyclic equations give I = eˣ sin(x) − J and J = eˣ cos(x) + I. Substituting and solving yields I = ½eˣ(sin(x) − cos(x)) + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L95",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫ sin²(x) dx.",
+   "choices": [
+    "x/2 + sin(2x)/4 + C",
+    "x/2 − sin(2x)/4 + C",
+    "cos(2x)/4 + C",
+    "x − sin(2x)/2 + C"
+   ],
+   "answer": "x/2 − sin(2x)/4 + C",
+   "rationale": "Using sin²(x) = (1 − cos(2x))/2 gives x/2 − sin(2x)/4 + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L95",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫ cos³(x) dx.",
+   "choices": [
+    "sin(x) + cos(x) + C",
+    "cos(x) − cos³(x)/3 + C",
+    "sin(x) − sin³(x)/3 + C",
+    "sin(x) − sin³(x) + C"
+   ],
+   "answer": "sin(x) − sin³(x)/3 + C",
+   "rationale": "Write cos³(x) as cos(x)(1 − sin²(x)); with u = sin(x), the integral is u − u³/3 + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L95",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫ tan²(x) dx.",
+   "choices": [
+    "tan(x) + x + C",
+    "sec²(x) − x + C",
+    "tan(x) − x + C",
+    "tan²(x) + C"
+   ],
+   "answer": "tan(x) − x + C",
+   "rationale": "Since tan²(x) = sec²(x) − 1, integration gives tan(x) − x + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L95",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫ sec⁴(x) dx.",
+   "choices": [
+    "sec⁴(x)/3 + C",
+    "tan³(x)/3 − tan(x) + C",
+    "tan(x) − tan³(x)/3 + C",
+    "tan³(x)/3 + tan(x) + C"
+   ],
+   "answer": "tan³(x)/3 + tan(x) + C",
+   "rationale": "Rewrite sec⁴(x) as sec²(x)(1 + tan²(x)). With u = tan(x), the integral becomes u + u³/3 + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L115",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "For a > 0, which substitution is the standard first step in evaluating ∫√(a² − x²) dx?",
+   "choices": [
+    "x = a tan θ",
+    "x = a sin θ",
+    "x = a sec θ",
+    "x = a cosh θ"
+   ],
+   "answer": "x = a sin θ",
+   "rationale": "With x = a sin θ, the radical becomes √(a² − a²sin²θ) = a cos θ, allowing the integral to be rewritten using trigonometric powers.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L115",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "For a > 0, evaluate the indefinite integral ∫√(a² − x²) dx.",
+   "choices": [
+    "½[x√(a² − x²) − a² arcsin(x/a)] + C",
+    "½[x√(a² − x²) + a² ln|x + √(a² − x²)|] + C",
+    "½[x√(a² − x²) + a² arcsin(x/a)] + C",
+    "½[x√(a² − x²) + a² arctan(x/a)] + C"
+   ],
+   "answer": "½[x√(a² − x²) + a² arcsin(x/a)] + C",
+   "rationale": "Using x = a sin θ and integrating the resulting trigonometric expression gives ½[x√(a² − x²) + a² arcsin(x/a)] + C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L115",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "For a > 0 and x > a, evaluate the indefinite integral ∫√(x² − a²) dx.",
+   "choices": [
+    "½[x√(x² − a²) + a² arcsin(x/a)] + C",
+    "½[x√(x² − a²) − a² ln|x + √(x² − a²)|] + C",
+    "½[x√(x² − a²) − a² arctan(x/a)] + C",
+    "½[x√(x² − a²) + a² ln|x + √(x² − a²)|] + C"
+   ],
+   "answer": "½[x√(x² − a²) − a² ln|x + √(x² − a²)|] + C",
+   "rationale": "The substitution x = a sec θ makes the radical a tan θ. Integration produces the algebraic term and a negative logarithmic term.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L115",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 115,
+   "format": "multiple_choice",
+   "prompt": "For a > 0, evaluate the definite integral ∫₀ᵃ √(a² + x²) dx.",
+   "choices": [
+    "a²/2[√2 − ln(1 + √2)]",
+    "a²/2[1 − ln(1 + √2)]",
+    "a²/2[1 + ln(1 + √2)]",
+    "a²/2[√2 + ln(1 + √2)]"
+   ],
+   "answer": "a²/2[√2 + ln(1 + √2)]",
+   "rationale": "Set x = a tan θ, so the bounds become 0 and π/4. Evaluating ½a²[sec θ tan θ + ln|sec θ + tan θ|] gives the stated value.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L169",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Evaluate the improper integral ∫₀¹ x^(-1/3) dx by taking a limit at 0.",
+   "choices": [
+    "3/2",
+    "2",
+    "1/2",
+    "Diverges"
+   ],
+   "answer": "3/2",
+   "rationale": "The limit of [3/2 x^(2/3)] as the lower endpoint approaches 0 from the right is 3/2, so the improper integral converges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L169",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Evaluate ∫₀² (x−1)^(-2/3) dx, treating the vertical asymptote at x=1 properly.",
+   "choices": [
+    "9",
+    "3",
+    "6",
+    "Diverges"
+   ],
+   "answer": "6",
+   "rationale": "Each side of x=1 contributes 3 because ∫₀¹ t^(-2/3) dt = 3. Their sum is 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L169",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Without finding an antiderivative, decide whether ∫₁^∞ dx/(x³+x) converges.",
+   "choices": [
+    "Converges; 1/(x³+x) ≤ 1/x³ for x ≥ 1.",
+    "Diverges; 1/(x³+x) ≤ 1/x³ for x ≥ 1.",
+    "Converges; the integrand tends to 0 as x tends to infinity.",
+    "Diverges; x³+x grows faster than x³."
+   ],
+   "answer": "Converges; 1/(x³+x) ≤ 1/x³ for x ≥ 1.",
+   "rationale": "For x ≥ 1, 1/(x³+x) ≤ 1/x³, and the comparison integral ∫₁^∞ x^(-3) dx converges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L169",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Without finding an antiderivative, decide whether ∫₂^∞ dx/(x−1) converges.",
+   "choices": [
+    "Diverges; 1/(x−1) ≥ 1/x and ∫₂^∞ dx/x diverges.",
+    "Converges; 1/(x−1) ≤ 1/x and ∫₂^∞ dx/x diverges.",
+    "Converges; the integrand is positive for every x ≥ 2.",
+    "Diverges; the integrand tends to 0 as x tends to infinity."
+   ],
+   "answer": "Diverges; 1/(x−1) ≥ 1/x and ∫₂^∞ dx/x diverges.",
+   "rationale": "For x ≥ 2, 1/(x−1) ≥ 1/x. Since the harmonic integral ∫₂^∞ dx/x diverges, the given integral also diverges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L137",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which substitution transforms ∫ 2x e^(x²) dx directly into ∫ e^u du?",
+   "choices": [
+    "Let u=2x, so du=2 dx",
+    "Let u=x², so du=2x dx",
+    "Let u=x³, so du=3x² dx",
+    "Let u=1/x, so du=−x⁻² dx"
+   ],
+   "answer": "Let u=x², so du=2x dx",
+   "rationale": "With u=x², du=2x dx and e^(x²)=e^u, so the integral becomes ∫e^u du.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L137",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which method is most suitable for evaluating ∫ x²e^x dx?",
+   "choices": [
+    "Set u=x² and continue with a remaining x e^x dx",
+    "Set u=e^x and rewrite the differential using dx=du/u",
+    "Use integration by parts with u=x² and dv=e^x dx",
+    "Use trig substitution x=tanθ to simplify the quadratic"
+   ],
+   "answer": "Use integration by parts with u=x² and dv=e^x dx",
+   "rationale": "A polynomial multiplied by an exponential is normally integrated by parts. Taking dv=e^x dx makes the remaining integral simpler and gives e^x(x²−2x+2)+C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L137",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which method most efficiently handles ∫ (x+2)/(x(x+1)) dx?",
+   "choices": [
+    "Set u=x(x+1), so du=(2x+1) dx",
+    "Use integration by parts with dv=x dx",
+    "Use trig substitution x=tanθ",
+    "Split the rational function into partial fractions"
+   ],
+   "answer": "Split the rational function into partial fractions",
+   "rationale": "The denominator has distinct linear factors, so partial fractions fit: (x+2)/(x(x+1))=2/x−1/(x+1). The result is 2 ln|x|−ln|x+1|+C.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L137",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which row pairs ∫ x/(x²+4) dx and ∫√(25−x²) dx with suitable methods?",
+   "choices": [
+    "x/(x²+4): u-substitution; √(25−x²): trig substitution",
+    "x/(x²+4): trig substitution; √(25−x²): u-substitution",
+    "x/(x²+4): integration by parts; √(25−x²): integration by parts",
+    "x/(x²+4): partial fractions; √(25−x²): partial fractions"
+   ],
+   "answer": "x/(x²+4): u-substitution; √(25−x²): trig substitution",
+   "rationale": "For the first integral, u=x²+4 gives du=2x dx. For the second, x=5 sinθ is a standard trig substitution that converts the radical into a cosine expression.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L189",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A population satisfies dP/dt = 0.04P, with P(0) = 500. What is P(5)?",
+   "choices": [
+    "500e^0.2 ≈ 610.7",
+    "500e^0.04 ≈ 520.4",
+    "500(1.04)^5 ≈ 608.3",
+    "500(1 + 0.2) = 600.0"
+   ],
+   "answer": "500e^0.2 ≈ 610.7",
+   "rationale": "Separating and integrating gives P(t) = Ce^(0.04t). Since P(0) = 500, C = 500, so P(5) = 500e^0.2 ≈ 610.7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L189",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "An object cools according to dT/dt = −0.03(T − 20), with T(0) = 100. What is T(10)?",
+   "choices": [
+    "20 + 80e^(−0.3) ≈ 79.3",
+    "100e^(−0.3) ≈ 74.1",
+    "20 + 80e^(−3) ≈ 24.0",
+    "100e^(−3) ≈ 5.0"
+   ],
+   "answer": "20 + 80e^(−0.3) ≈ 79.3",
+   "rationale": "The solution is T(t) = 20 + Ce^(−0.03t). Using T(0) = 100 gives C = 80, so T(10) = 20 + 80e^(−0.3) ≈ 79.3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L189",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A colony follows dP/dt = 0.1P(1 − P/1000), with P(0) = 100. Which formula gives P(t)?",
+   "choices": [
+    "1000/(1 + 9e^(−0.1t))",
+    "1000/(1 + 9e^(0.1t))",
+    "100/(1 + 9e^(−0.1t))",
+    "1000/(1 + 0.9e^(−0.1t))"
+   ],
+   "answer": "1000/(1 + 9e^(−0.1t))",
+   "rationale": "The logistic solution is P(t) = K/[1 + ((K − P0)/P0)e^(−rt)]. Here K = 1000, P0 = 100, and r = 0.1, giving P(t) = 1000/(1 + 9e^(−0.1t)).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L189",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 189,
+   "format": "multiple_choice",
+   "prompt": "A colony follows dP/dt = 0.2P(1 − P/800), with P(0) = 80. What is P(10)?",
+   "choices": [
+    "800/(1 + 9e^(−2)) ≈ 360.7",
+    "800/(1 + 9e^(−0.2)) ≈ 95.6",
+    "800/(1 + 9e^2) ≈ 10.7",
+    "800/(1 + 0.9e^(−2)) ≈ 713.1"
+   ],
+   "answer": "800/(1 + 9e^(−2)) ≈ 360.7",
+   "rationale": "Using the logistic formula, P(t) = 800/[1 + ((800 − 80)/80)e^(−0.2t)] = 800/(1 + 9e^(−0.2t)). At t = 10, this is approximately 360.7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L199",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "For the differential equation dy/dx = x - y, what is the slope of the direction field at the point (2,1)?",
+   "choices": [
+    "The slope is 1",
+    "The slope is 2",
+    "The slope is 0",
+    "The slope is -1"
+   ],
+   "answer": "The slope is 1",
+   "rationale": "The slope is given by the right-hand side of the differential equation evaluated at the point: 2 - 1 = 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L199",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "A solution curve of dy/dx = y(1 - y) passes through (0, 0.5). As x increases, the solution approaches which value?",
+   "choices": [
+    "It approaches 0",
+    "It approaches 1",
+    "It approaches 0.5",
+    "It approaches 2"
+   ],
+   "answer": "It approaches 1",
+   "rationale": "The logistic equation has stable equilibrium at y = 1; solutions with initial value between 0 and 1 increase toward 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L199",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "Use Euler's method with step size h=0.1 to approximate y(0.1) for dy/dx = x + y, y(0)=1.",
+   "choices": [
+    "The approximation is 1.0",
+    "The approximation is 0.9",
+    "The approximation is 1.1",
+    "The approximation is 1.2"
+   ],
+   "answer": "The approximation is 1.1",
+   "rationale": "Euler's formula gives y1 = y0 + h*f(x0,y0) = 1 + 0.1*(0+1) = 1.1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L199",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 199,
+   "format": "multiple_choice",
+   "prompt": "In a Python loop implementing Euler's method for dy/dx = f(x,y), which line correctly updates y?",
+   "choices": [
+    "y = h * f(x, y)",
+    "y += f(x, y)",
+    "y = y + f(x, y)",
+    "y += h * f(x, y)"
+   ],
+   "answer": "y += h * f(x, y)",
+   "rationale": "Euler's method updates y by adding the product of step size h and the derivative f(x,y).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L72",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A density function is f(x)=2x for 0≤x≤1 and f(x)=0 elsewhere. What is the total mass represented by this density function?",
+   "choices": [
+    "0.50",
+    "1.00",
+    "2.00",
+    "4.00"
+   ],
+   "answer": "1.00",
+   "rationale": "The total mass is ∫₀¹2x dx=[x²]₀¹=1.00.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L72",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A town’s population density is p(x)=5x⁴ for 0≤x≤2, measured in people per unit distance, and 0 elsewhere. What is the total population over this interval?",
+   "choices": [
+    "16 people",
+    "32 people",
+    "40 people",
+    "64 people"
+   ],
+   "answer": "32 people",
+   "rationale": "Integrating the population density gives ∫₀²5x⁴ dx=[x⁵]₀²=32 people.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L72",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A random variable has density f(x)=3x² for 0≤x≤1 and 0 elsewhere. What is the probability P(1/2≤X≤1)?",
+   "choices": [
+    "1/8",
+    "3/8",
+    "5/8",
+    "7/8"
+   ],
+   "answer": "7/8",
+   "rationale": "The probability is ∫₁/₂¹3x² dx=[x³]₁/₂¹=1−1/8=7/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L72",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A random variable has density f(x)=3x² for 0≤x≤1 and 0 elsewhere. What is the mean of this random variable?",
+   "choices": [
+    "1/2",
+    "3/4",
+    "1",
+    "4/3"
+   ],
+   "answer": "3/4",
+   "rationale": "The mean is ∫₀¹x(3x²) dx=∫₀¹3x³ dx=3/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L10",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "The curves y=x² and y=x enclose a region for 0≤x≤1. Using vertical slices, what is its area?",
+   "choices": [
+    "−1/6",
+    "1/6",
+    "1/3",
+    "1/12"
+   ],
+   "answer": "1/6",
+   "rationale": "On [0,1], y=x is above y=x². Thus the area is ∫₀¹(x−x²) dx=[x²/2−x³/3]₀¹=1/6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L10",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "The region is bounded by y=√x, y=4, and the y-axis. Which horizontal-slice integral represents its area?",
+   "choices": [
+    "∫₀⁴(16−y²) dy",
+    "∫₀¹⁶y² dy",
+    "∫₀⁴y² dy",
+    "∫₀¹⁶(16−y²) dy"
+   ],
+   "answer": "∫₀⁴y² dy",
+   "rationale": "At height y, the region runs from x=0 to x=y² because y=√x means x=y². Its width is y² for 0≤y≤4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L10",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Find the total area between y=x and y=x³ for −1≤x≤1.",
+   "choices": [
+    "1",
+    "1/4",
+    "1/2",
+    "3/4"
+   ],
+   "answer": "1/2",
+   "rationale": "The curves cross at x=−1, 0, and 1. Splitting at 0 and using symmetry gives 2∫₀¹(x−x³) dx=2(1/2−1/4)=1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L10",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which single vertical-slice integral represents the entire region enclosed by y=x² and y=1−x²?",
+   "choices": [
+    "∫₋₁/√₂¹/√₂[x²−(1−x²)] dx",
+    "∫₋₁/√₂¹/√₂[(1−x²)+x²] dx",
+    "∫₀¹/√₂[(1−x²)−x²] dx",
+    "∫₋₁/√₂¹/√₂[(1−x²)−x²] dx"
+   ],
+   "answer": "∫₋₁/√₂¹/√₂[(1−x²)−x²] dx",
+   "rationale": "The curves intersect at x=±1/√2. On this interval, 1−x² is above x², so the area uses the upper-minus-lower integrand over the full interval.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L264",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly defines a sequence?",
+   "choices": [
+    "A function from the positive integers to real numbers",
+    "A function from the real numbers to positive integers",
+    "A list of exactly ten ordered real numbers",
+    "An infinite collection of unordered real numbers"
+   ],
+   "answer": "A function from the positive integers to real numbers",
+   "rationale": "A sequence assigns an output term to each index in the positive integers, so it can be viewed as a function whose domain is the positive integers.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L264",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "As n approaches infinity, what is the limit of (3n² + 2n)/(n² − 5)?",
+   "choices": [
+    "3",
+    "0",
+    "2",
+    "5"
+   ],
+   "answer": "3",
+   "rationale": "Dividing the numerator and denominator by n² gives (3 + 2/n)/(1 − 5/n²), which approaches 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L264",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 264,
+   "format": "multiple_choice",
+   "prompt": "Suppose the limit of f(x) as x approaches a is L, and xₙ approaches a with xₙ ≠ a for every n. What is the limit of f(xₙ)?",
+   "choices": [
+    "L",
+    "f(a)",
+    "0",
+    "The limit does not exist"
+   ],
+   "answer": "L",
+   "rationale": "The sequential criterion for function limits states that whenever xₙ approaches a, the values f(xₙ) approach the same limit L.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L296",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "For which series does the nth-term test prove that the series diverges?",
+   "choices": [
+    "∑ from n=1 to ∞ of (1 + 1/n)",
+    "∑ from n=1 to ∞ of (−1)ⁿ/n",
+    "∑ from n=1 to ∞ of n/(n² + 1)",
+    "∑ from n=1 to ∞ of 1/n²"
+   ],
+   "answer": "∑ from n=1 to ∞ of (1 + 1/n)",
+   "rationale": "The terms 1 + 1/n approach 1 rather than 0. Therefore, the nth-term test proves that this series diverges. For each other series, the terms approach 0, so the test is inconclusive.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L296",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "Which argument correctly proves that the harmonic series ∑ from n=1 to ∞ of 1/n diverges?",
+   "choices": [
+    "Dyadic blocks each contribute at least 1/2, making the partial sums unbounded.",
+    "Decreasing positive terms guarantee that the partial sums remain bounded.",
+    "Positive terms guarantee that the partial sums approach a finite limit.",
+    "Terms approaching zero guarantee convergence by the nth-term test."
+   ],
+   "answer": "Dyadic blocks each contribute at least 1/2, making the partial sums unbounded.",
+   "rationale": "Grouping terms from 2ʲ⁻¹ + 1 through 2ʲ gives 2ʲ⁻¹ terms, each at least 1/2ʲ. Thus each block contributes at least 1/2, so the partial sums are unbounded and the series diverges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L296",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "What does the nth-term test establish about the harmonic series?",
+   "choices": [
+    "Its terms approach zero, so the test is inconclusive.",
+    "Its terms fail to approach zero, so the series diverges.",
+    "Its terms approach zero, so the series must converge.",
+    "Its terms are positive, so the series must converge."
+   ],
+   "answer": "Its terms approach zero, so the test is inconclusive.",
+   "rationale": "For the harmonic series, 1/n approaches 0. The nth-term test therefore cannot determine whether the series converges or diverges; another argument is required.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L296",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "If S_N is the sum of the first N terms of the harmonic series, which inequality provides a lower bound that becomes unbounded as N increases?",
+   "choices": [
+    "S_N ≥ 1 + ½ floor(log₂ N)",
+    "S_N ≤ 1 + ½ floor(log₂ N)",
+    "S_N ≥ 1 − N/2",
+    "S_N ≤ N/2"
+   ],
+   "answer": "S_N ≥ 1 + ½ floor(log₂ N)",
+   "rationale": "Taking k = floor(log₂ N), the first 2^k terms can be grouped into dyadic blocks, each contributing at least 1/2. Hence S_N ≥ 1 + k/2, and this lower bound grows without limit.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L231",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "A point has polar coordinates (-2, 2π/3). Which option gives its rectangular coordinates and an equivalent polar coordinate with r > 0 and 0 ≤ θ < 2π?",
+   "choices": [
+    "Rectangular (1, -√3); polar (2, 5π/3)",
+    "Rectangular (1, √3); polar (2, π/3)",
+    "Rectangular (-1, -√3); polar (2, 5π/3)",
+    "Rectangular (-1, √3); polar (2, 2π/3)"
+   ],
+   "answer": "Rectangular (1, -√3); polar (2, 5π/3)",
+   "rationale": "The negative radius reverses the direction, giving x = (-2)cos(2π/3) = 1 and y = (-2)sin(2π/3) = -√3. Its positive radius is 2 at angle 5π/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L231",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "The rose r = 3sin(3θ) is graphed for 0 ≤ θ < 2π. Which description gives its petal count and a line of symmetry?",
+   "choices": [
+    "Three petals; symmetry about the y-axis",
+    "Three petals; symmetry about the x-axis",
+    "Six petals; symmetry about the y-axis",
+    "Three petals; symmetry about the line y = x"
+   ],
+   "answer": "Three petals; symmetry about the y-axis",
+   "rationale": "Because the sine function has odd index 3, the graph has three petals. Replacing θ with π - θ leaves r unchanged, so the y-axis is a line of symmetry.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L231",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "For the limacon r = 2 + 3cos(θ), which description correctly identifies its shape and symmetry?",
+   "choices": [
+    "Inner-loop limacon; symmetric about the x-axis",
+    "Inner-loop limacon; symmetric about the y-axis",
+    "Dimpled limacon; symmetric about the x-axis",
+    "Convex limacon; symmetric about the y-axis"
+   ],
+   "answer": "Inner-loop limacon; symmetric about the x-axis",
+   "rationale": "Since the cosine coefficient 3 exceeds the constant 2, the limacon has an inner loop. The cosine form is symmetric about the polar axis, which is the x-axis.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L231",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 231,
+   "format": "multiple_choice",
+   "prompt": "For the spiral r = θ, where 0 ≤ θ ≤ 2π, which description correctly identifies its direction and symmetry?",
+   "choices": [
+    "Outward counterclockwise spiral; no reflection symmetry",
+    "Outward clockwise spiral; no reflection symmetry",
+    "Inward counterclockwise spiral; x-axis symmetry",
+    "Inward clockwise spiral; y-axis symmetry"
+   ],
+   "answer": "Outward counterclockwise spiral; no reflection symmetry",
+   "rationale": "As θ increases, the angle increases counterclockwise and the radius θ increases, so the spiral moves outward. Reflecting it produces a different branch, so it has no reflection symmetry.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L254",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "An ellipse has eccentricity 2/3. A point P on the ellipse is 5 units from its focus. What is the distance from P to its directrix?",
+   "choices": [
+    "15/2 units",
+    "10/3 units",
+    "5/2 units",
+    "5/3 units"
+   ],
+   "answer": "15/2 units",
+   "rationale": "By the focus-directrix definition, the eccentricity is the focus-distance divided by the directrix-distance. Thus 2/3 = 5/d, so d = 15/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L254",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "What is the eccentricity of the ellipse with equation x²/25 + y²/9 = 1?",
+   "choices": [
+    "4/5",
+    "3/5",
+    "5/4",
+    "4/3"
+   ],
+   "answer": "4/5",
+   "rationale": "Here a = 5 and b = 3, so c = √(a² − b²) = 4. The eccentricity is e = c/a = 4/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L254",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "The polar equation of a conic is r = 6/(1 + sin θ). Which pair correctly gives its eccentricity and type?",
+   "choices": [
+    "e = 1; parabola",
+    "e = 2; ellipse",
+    "e = 1; hyperbola",
+    "e = 1/2; ellipse"
+   ],
+   "answer": "e = 1; parabola",
+   "rationale": "In r = ed/(1 ± e sin θ), the coefficient of sin θ gives the eccentricity. Thus e = 1, which represents a parabola.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L254",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Which focus-directrix pair belongs to the parabola with equation y² = 12x?",
+   "choices": [
+    "(3, 0); x = −3",
+    "(6, 0); x = −6",
+    "(−3, 0); x = 3",
+    "(3, 0); x = 3"
+   ],
+   "answer": "(3, 0); x = −3",
+   "rationale": "Writing the equation as y² = 4px gives p = 3. Therefore, the focus is (p, 0) = (3, 0), and the directrix is x = −p = −3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L306",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "Using the integral test, what can be concluded about the series \\(\\sum_{n=2}^{\\infty}\\frac{1}{n^3+1}\\)?",
+   "choices": [
+    "The series converges.",
+    "The series diverges.",
+    "The integral test is inconclusive.",
+    "Only conditional convergence occurs."
+   ],
+   "answer": "The series converges.",
+   "rationale": "For \\(x\\ge2\\), \\(1/(x^3+1)\\) is positive, continuous, and decreasing. Also, \\(1/(x^3+1)\\le1/x^3\\), whose improper integral converges, so the series converges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L306",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "For which values of \\(p\\) does the \\(p\\)-series \\(\\sum_{n=1}^{\\infty}\\frac{1}{n^p}\\) converge?",
+   "choices": [
+    "Only when \\(p>1\\).",
+    "Only when \\(p\\ge1\\).",
+    "Only when \\(0<p\\le1\\).",
+    "For every real value of \\(p\\)."
+   ],
+   "answer": "Only when \\(p>1\\).",
+   "rationale": "The \\(p\\)-series test states that \\(\\sum 1/n^p\\) converges exactly when \\(p>1\\). It diverges for \\(p\\le1\\), including \\(p=1\\).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L306",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "Using an integral remainder estimate, which bound applies to the remainder after the first 10 terms of \\(\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\)?",
+   "choices": [
+    "At most 0.1.",
+    "At most 0.09.",
+    "At most 1.",
+    "At most 0.01."
+   ],
+   "answer": "At most 0.1.",
+   "rationale": "The integral remainder estimate gives \\(R_{10}\\le\\int_{10}^{\\infty}x^{-2}\\,dx=[-1/x]_{10}^{\\infty}=0.1\\).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L306",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 306,
+   "format": "multiple_choice",
+   "prompt": "What is the smallest \\(N\\) for which the integral-test estimate guarantees that the remainder of \\(\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\) after \\(N\\) terms is at most 0.001?",
+   "choices": [
+    "100 terms",
+    "500 terms",
+    "1000 terms",
+    "2000 terms"
+   ],
+   "answer": "1000 terms",
+   "rationale": "The estimate is \\(R_N\\le\\int_N^{\\infty}x^{-2}\\,dx=1/N\\). Requiring \\(1/N\\le0.001\\) gives \\(N\\ge1000\\), so the smallest such integer is 1000.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L284",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "What is the value of the infinite series ∑ from n = 0 to ∞ of 6(−1/2)^n?",
+   "choices": [
+    "2",
+    "4",
+    "6",
+    "12"
+   ],
+   "answer": "4",
+   "rationale": "This geometric series has first term 6, ratio −1/2, and absolute ratio below 1. Thus its sum is 6/(1−(−1/2)) = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L284",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "What is the value of the infinite series ∑ from n = 1 to ∞ of 1/[n(n + 2)]?",
+   "choices": [
+    "1/2",
+    "2/3",
+    "3/4",
+    "1"
+   ],
+   "answer": "3/4",
+   "rationale": "Since 1/[n(n + 2)] = (1/2)(1/n − 1/(n + 2)), the series telescopes to (1/2)(1 + 1/2) = 3/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L284",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 284,
+   "format": "multiple_choice",
+   "prompt": "A savings account pays $500 at the end of every year forever, at 4% annual interest. Assuming the first payment arrives one year from today, what is the value today of all future payments?",
+   "choices": [
+    "$10,000",
+    "$12,000",
+    "$12,500",
+    "$15,000"
+   ],
+   "answer": "$12,500",
+   "rationale": "The payments form a geometric series with ratio 1/1.04. Their present value is 500/0.04 = $12,500.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L221",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "For the parametric curve x = t^2, y = t^3 - 3t, what is the slope of the tangent line at t = 2?",
+   "choices": [
+    "9/4",
+    "4/9",
+    "3/1",
+    "4/1"
+   ],
+   "answer": "9/4",
+   "rationale": "The slope dy/dx = (dy/dt)/(dx/dt) = (3t^2-3)/(2t). At t=2, this equals (12-3)/4 = 9/4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L221",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "Find the arc length of the parametric curve x = cos t, y = sin t for 0 ≤ t ≤ π.",
+   "choices": [
+    "π units",
+    "2π units",
+    "π/2 units",
+    "π/4 units"
+   ],
+   "answer": "π units",
+   "rationale": "The integrand sqrt((dx/dt)^2+(dy/dt)^2) = sqrt(sin^2 t+cos^2 t)=1, so length = ∫_0^π 1 dt = π.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L221",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "What is the area under the parametric curve x = t^2, y = t^3 from t = 0 to t = 1?",
+   "choices": [
+    "2/5",
+    "1/5",
+    "2/3",
+    "1/2"
+   ],
+   "answer": "2/5",
+   "rationale": "Area = ∫ y dx = ∫_0^1 t^3·2t dt = ∫_0^1 2t^4 dt = 2/5.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L221",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "What is the arc length of one arch of the cycloid x = a(θ - sin θ), y = a(1 - cos θ)?",
+   "choices": [
+    "8a",
+    "4a",
+    "2πa",
+    "πa"
+   ],
+   "answer": "8a",
+   "rationale": "For a cycloid, ds = a√(2-2cosθ) dθ = 2a sin(θ/2) dθ; integrating from 0 to 2π gives 8a.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "One arch of the cycloid is traced over 0 ≤ θ ≤ 2π and has arc length 8a.",
+      "url": "https://en.wikipedia.org/wiki/Cycloid",
+      "quote": "the arc length squared is equal to the height difference multiplied by the full arch length 8 r.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Arc length of one arch of cycloid x = a(θ - sinθ), y = a(1 - cosθ) equals 8a.",
+      "url": "https://en.wikipedia.org/wiki/Cycloid",
+      "quote": "the arc length squared is equal to the height difference multiplied by the full arch length 8 r .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L241",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "What is the total area enclosed by the polar curve r=2 sin θ?",
+   "choices": [
+    "π/2",
+    "π",
+    "2π",
+    "4π"
+   ],
+   "answer": "π",
+   "rationale": "The complete curve is traced for 0≤θ≤π, so A=(1/2)∫₀^π(2 sin θ)²dθ=π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L241",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Find the area inside r=2 cos θ and outside the circle r=1.",
+   "choices": [
+    "π/3+√3/2",
+    "π/3−√3/2",
+    "√3/2",
+    "2π/3"
+   ],
+   "answer": "π/3+√3/2",
+   "rationale": "The curves intersect at θ=±π/3. Thus A=(1/2)∫₋₍π/3₎^₍π/3₎[(2 cos θ)²−1]dθ=π/3+√3/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L241",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "Compute the arc length of the polar curve r=2 sin θ for 0≤θ≤π/2.",
+   "choices": [
+    "π/2",
+    "π",
+    "2π",
+    "π√2"
+   ],
+   "answer": "π",
+   "rationale": "The arc-length integral is L=∫₀^π/2√[(2 sin θ)²+(2 cos θ)²]dθ=∫₀^π/2 2dθ=π.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L241",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "trig_basics",
+   "level": 241,
+   "format": "multiple_choice",
+   "prompt": "What is the area of one petal of the polar rose r=2 cos(2θ)?",
+   "choices": [
+    "π/4",
+    "π/2",
+    "π",
+    "2π"
+   ],
+   "answer": "π/2",
+   "rationale": "One petal is traced from −π/4 to π/4, so A=(1/2)∫₋₍π/4₎^₍π/4₎4 cos²(2θ)dθ=π/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L211",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "For x = t^2 - 1, y = t^3 - t, compute dy/dx at t = 1.",
+   "choices": [
+    "1",
+    "2",
+    "0",
+    "-1"
+   ],
+   "answer": "1",
+   "rationale": "dy/dt = 3t^2 - 1, dx/dt = 2t; at t=1, dy/dx = (3-1)/2 = 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L211",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "A particle follows x = 3 cos t, y = 2 sin t. What is its velocity vector at t = π/2?",
+   "choices": [
+    "(-3, 0)",
+    "(0, 2)",
+    "(3, 0)",
+    "(0, -2)"
+   ],
+   "answer": "(-3, 0)",
+   "rationale": "Velocity is (dx/dt, dy/dt) = (-3 sin t, 2 cos t); at π/2 this is (-3, 0).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L211",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Eliminate t from x = e^t, y = e^{2t} + 1 to express y as a function of x.",
+   "choices": [
+    "y = x^2 + 1",
+    "y = x^2 - 1",
+    "y = 2x + 1",
+    "y = ln(x^2) + 1"
+   ],
+   "answer": "y = x^2 + 1",
+   "rationale": "Since x = e^t, then e^{2t} = (e^t)^2 = x^2, so y = x^2 + 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L211",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Eliminate the parameter t from x = 2 cos t, y = 3 sin t to find the Cartesian equation.",
+   "choices": [
+    "(x/2)^2 + (y/3)^2 = 1",
+    "(x/2)^2 - (y/3)^2 = 1",
+    "(x/2)^2 + (y/3)^2 = -1",
+    "(x/2)^2 - (y/3)^2 = -1"
+   ],
+   "answer": "(x/2)^2 + (y/3)^2 = 1",
+   "rationale": "Using cos^2 t + sin^2 t = 1 gives (x/2)^2 + (y/3)^2 = 1, an ellipse.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "For every real t, cos²(t) + sin²(t) = 1.",
+      "url": "https://en.wiktionary.org/wiki/Pythagorean_trigonometric_identity",
+      "quote": "The equality sin ⁡ ( x ) 2 + cos ⁡ ( x ) 2 = 1 , holding for all real and complex x , equivalent to the application of the Pythagorean theorem to the unit circle .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L179",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Using Simpson’s Rule with n = 4 equal subintervals, approximate the integral from 0 to 2 of x² dx.",
+   "choices": [
+    "8/3",
+    "7/3",
+    "5/2",
+    "3"
+   ],
+   "answer": "8/3",
+   "rationale": "Here h = 0.5. Simpson’s weighted sum is 16, so the approximation is (0.5/3)(16) = 8/3. Simpson’s Rule is exact for quadratic polynomials.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L179",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Assume h = (b-a)/n, n is even, and f is a callable function. Which Python expression correctly computes a Simpson’s Rule approximation?",
+   "choices": [
+    "h/3 * (f(a)+f(b)+4*sum(f(a+i*h) for i in range(1,n,2))+2*sum(f(a+i*h) for i in range(2,n,2)))",
+    "h/3 * (f(a)+f(b)+2*sum(f(a+i*h) for i in range(1,n,2))+4*sum(f(a+i*h) for i in range(2,n,2)))",
+    "h/3 * (f(a)+f(b)+4*sum(f(a+i*h) for i in range(1,n,2))+2*sum(f(a+i*h) for i in range(1,n,2)))",
+    "h/2 * (f(a)+f(b)+4*sum(f(a+i*h) for i in range(1,n,2))+2*sum(f(a+i*h) for i in range(2,n,2)))"
+   ],
+   "answer": "h/3 * (f(a)+f(b)+4*sum(f(a+i*h) for i in range(1,n,2))+2*sum(f(a+i*h) for i in range(2,n,2)))",
+   "rationale": "Simpson’s Rule gives weights 1 to the endpoints, 4 to odd-indexed interior points, and 2 to even-indexed interior points.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L179",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "For a smooth integrand with continuous second and fourth derivatives, how do the standard midpoint, trapezoid, and Simpson error bounds change when n doubles?",
+   "choices": [
+    "Midpoint and trapezoid divide by 4; Simpson divides by 16.",
+    "All three bounds divide by 4.",
+    "Midpoint and trapezoid divide by 16; Simpson divides by 4.",
+    "All three bounds divide by 16."
+   ],
+   "answer": "Midpoint and trapezoid divide by 4; Simpson divides by 16.",
+   "rationale": "Midpoint and trapezoid bounds are proportional to h², while Simpson’s bound is proportional to h⁴. Doubling n halves h, producing factors of 1/4 and 1/16.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L179",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "If |f⁽⁴⁾(x)| ≤ 16 on [0, 4], what is the smallest even n that guarantees a Simpson’s Rule error of at most 0.01?",
+   "choices": [
+    "8",
+    "10",
+    "12",
+    "14"
+   ],
+   "answer": "10",
+   "rationale": "The bound is 4(4/n)⁴(16)/180 = 4096/(45n⁴). It equals about 0.02222 for n = 8 and 0.00910 for n = 10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L326",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "data_stats",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "For the series Σ from n = 1 to ∞ of (−1)^(n−1)/n^(2/3), which conclusion follows directly from the alternating series test?",
+   "choices": [
+    "It converges because the positive terms decrease to zero.",
+    "It diverges because the series terms do not tend to zero.",
+    "It diverges because the positive terms do not decrease.",
+    "It converges only if the positive terms increase to zero."
+   ],
+   "answer": "It converges because the positive terms decrease to zero.",
+   "rationale": "The magnitudes 1/n^(2/3) decrease to zero, so the alternating series test guarantees convergence.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L326",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "data_stats",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "Let S₅ = 1 − 1/2 + 1/3 − 1/4 + 1/5, and let S be the infinite alternating harmonic series. Which error bound is guaranteed?",
+   "choices": [
+    "|S − S₅| ≤ 1/6",
+    "|S − S₅| ≤ 1/5",
+    "|S − S₅| ≤ 1/7",
+    "|S − S₅| ≤ 1/4"
+   ],
+   "answer": "|S − S₅| ≤ 1/6",
+   "rationale": "The first omitted term has magnitude 1/6, so the alternating-series error estimate gives |S − S₅| ≤ 1/6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L326",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "data_stats",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "For S = Σ from n = 1 to ∞ of (−1)^(n−1)/n!, which alternating-series bound applies to the partial sum through n = 6?",
+   "choices": [
+    "|S − S₆| ≤ 1/720",
+    "|S − S₆| ≤ 1/5040",
+    "|S − S₆| ≤ 1/40320",
+    "|S − S₆| ≤ 1/2520"
+   ],
+   "answer": "|S − S₆| ≤ 1/5040",
+   "rationale": "The first omitted term is 1/7! = 1/5040, which bounds the absolute error of the sixth partial sum.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L326",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "data_stats",
+   "level": 326,
+   "format": "multiple_choice",
+   "prompt": "For the alternating harmonic series, how many terms S_N are needed to guarantee an error less than 0.001 using the first omitted term?",
+   "choices": [
+    "999 terms",
+    "1000 terms",
+    "1001 terms",
+    "1002 terms"
+   ],
+   "answer": "1000 terms",
+   "rationale": "The error is at most 1/(N+1). The least N for which 1/(N+1) < 0.001 is N = 1000.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L316",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "For a_n=n/(n²+1) and b_n=1/n, what limit and conclusion follow from the limit comparison test?",
+   "choices": [
+    "L=1; because ∑1/n diverges, ∑a_n also diverges.",
+    "L=0; because ∑1/n diverges, ∑a_n converges.",
+    "L=1; because ∑1/n diverges, ∑a_n converges.",
+    "L=∞; because ∑1/n diverges, ∑a_n converges."
+   ],
+   "answer": "L=1; because ∑1/n diverges, ∑a_n also diverges.",
+   "rationale": "The ratio is (n/(n²+1))/(1/n)=n²/(n²+1), which tends to 1. Since the benchmark series ∑1/n diverges, the given series also diverges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L316",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Which direct comparison is valid for a_n=1/(n²√(n+1)) when n≥1?",
+   "choices": [
+    "a_n≤1/n³; convergence of ∑1/n³ gives convergence.",
+    "a_n≤1/n^(5/2); convergence of ∑1/n^(5/2) gives convergence.",
+    "a_n≥1/n^(5/2); convergence of ∑1/n^(5/2) gives divergence.",
+    "a_n≥1/n^(3/2); convergence of ∑1/n^(3/2) gives divergence."
+   ],
+   "answer": "a_n≤1/n^(5/2); convergence of ∑1/n^(5/2) gives convergence.",
+   "rationale": "Since √(n+1)≥√n, we have a_n≤1/n^(5/2). The benchmark is a p-series with p=5/2>1, so it converges; direct comparison therefore gives convergence.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L316",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "For a_n=1/√n and b_n=1/n, which statement is correct?",
+   "choices": [
+    "The ratio tends to 1; limit comparison proves divergence.",
+    "The ratio tends to 0; limit comparison proves divergence.",
+    "The ratio tends to ∞; limit comparison proves convergence.",
+    "The ratio tends to ∞; limit comparison is inconclusive, but direct comparison proves divergence."
+   ],
+   "answer": "The ratio tends to ∞; limit comparison is inconclusive, but direct comparison proves divergence.",
+   "rationale": "The ratio a_n/b_n=√n tends to infinity, so the standard limit comparison test is inconclusive. However, 1/√n≥1/n, and the divergent benchmark ∑1/n proves divergence by direct comparison.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L157",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "How is the improper integral ∫_a^∞ f(x) dx defined as a limit?",
+   "choices": [
+    "lim_{b→∞} ∫_a^b f(x) dx",
+    "lim_{b→∞} ∫_b^a f(x) dx",
+    "lim_{b→a} ∫_a^b f(x) dx",
+    "lim_{b→∞} ∫_a^{b+1} f(x) dx"
+   ],
+   "answer": "lim_{b→∞} ∫_a^b f(x) dx",
+   "rationale": "By definition an improper integral over an unbounded interval is the limit of the definite integral as the upper bound approaches infinity.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L157",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "What is the value of ∫_1^∞ 1/x^2 dx?",
+   "choices": [
+    "equals 1",
+    "equals 0",
+    "diverges",
+    "equals .5"
+   ],
+   "answer": "equals 1",
+   "rationale": "∫_1^∞ x^{-2} dx = [−x^{-1}]_1^∞ = 0 − (−1) = 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L157",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "For which p does ∫_1^∞ 1/x^p dx converge?",
+   "choices": [
+    "p > 1",
+    "p < 1",
+    "all p",
+    "no p"
+   ],
+   "answer": "p > 1",
+   "rationale": "The p‑test for improper integrals states the integral converges exactly when the exponent p exceeds 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L157",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 157,
+   "format": "multiple_choice",
+   "prompt": "What is the value of ∫_0^∞ e^{-x} dx?",
+   "choices": [
+    "equals 1",
+    "equals 0",
+    "diverges",
+    "equals e"
+   ],
+   "answer": "equals 1",
+   "rationale": "∫_0^∞ e^{-x} dx = [−e^{-x}]_0^∞ = 0 − (−1) = 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L127",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Write the correct partial‑fraction form for 1/[x(x+2)^2].",
+   "choices": [
+    "A/x + B/(x+2) + C/(x+2)^2",
+    "A/x + B/(x+2)^2",
+    "A/x + B/(x+2) + C/(x+2)^3",
+    "A/x + B/(x+2) + C/(x+2)^2 + D/(x+2)^3"
+   ],
+   "answer": "A/x + B/(x+2) + C/(x+2)^2",
+   "rationale": "For a repeated linear factor (x+2)^2 the decomposition requires a term for each power up to the multiplicity, giving A/x + B/(x+2) + C/(x+2)^2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L127",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Give the partial‑fraction template for (2x+3)/(x^2+4x+5).",
+   "choices": [
+    "(Ax+B)/(x^2+4x+5)",
+    "A/(x+2) + B/(x+2)",
+    "A/(x^2+4x+5)",
+    "A/(x+2) + B/(x+2)^2"
+   ],
+   "answer": "(Ax+B)/(x^2+4x+5)",
+   "rationale": "The denominator is an irreducible quadratic, so the numerator must be a linear polynomial Ax+B over that quadratic.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L127",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Integrate 3/(x-1) - 2/(x+2)^2.",
+   "choices": [
+    "3 ln|x-1| + 2/(x+2) + C",
+    "3 ln|x-1| - 2/(x+2) + C",
+    "3 ln|x-1| - 2 ln|x+2| + C",
+    "3/(x-1) + 2/(x+2) + C"
+   ],
+   "answer": "3 ln|x-1| + 2/(x+2) + C",
+   "rationale": "∫3/(x-1)dx = 3 ln|x-1|; ∫-2/(x+2)^2 dx = 2/(x+2). Adding the constant gives the result.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L127",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Find A, B, C so (5x^2+3x+2)/[(x-1)(x^2+1)] = A/(x-1) + (Bx+C)/(x^2+1).",
+   "choices": [
+    "A=5, B=0, C=3",
+    "A=4, B=1, C=2",
+    "A=5, B=1, C=2",
+    "A=3, B=2, C=5"
+   ],
+   "answer": "A=5, B=0, C=3",
+   "rationale": "Equating coefficients yields A=5, B=0, C=3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L465",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 465,
+   "format": "multiple_choice",
+   "prompt": "For the sequence a_n = 1/n, find the smallest integer N such that for all n ≥ N, |1/n - 0| < 0.01.",
+   "choices": [
+    "N = 101",
+    "N = 100",
+    "N = 99",
+    "N = 1000"
+   ],
+   "answer": "N = 101",
+   "rationale": "The inequality 1/n < 0.01 gives n > 100, so the smallest integer N with n ≥ N is 101.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L465",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 465,
+   "format": "multiple_choice",
+   "prompt": "For a_n = (2n+3)/(n+1), find the smallest integer N such that for all n ≥ N, |a_n - 2| < 0.1.",
+   "choices": [
+    "N = 10",
+    "N = 9",
+    "N = 11",
+    "N = 100"
+   ],
+   "answer": "N = 10",
+   "rationale": "|(2n+3)/(n+1) - 2| = 1/(n+1) < 0.1 ⇒ n+1 > 10 ⇒ n > 9, so the smallest integer N is 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L465",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 465,
+   "format": "multiple_choice",
+   "prompt": "In the ε-N proof that lim (a_n + b_n) = L + M, after choosing N1, N2 for ε/2, we set N = max(N1, N2). Which inequality justifies |(a_n+b_n)-(L+M)| < ε?",
+   "choices": [
+    "Triangle inequality",
+    "Reverse triangle inequality",
+    "Cauchy-Schwarz inequality",
+    "Monotonicity property"
+   ],
+   "answer": "Triangle inequality",
+   "rationale": "The triangle inequality gives |(a_n-L)+(b_n-M)| ≤ |a_n-L| + |b_n-M| < ε/2 + ε/2 = ε.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L465",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 465,
+   "format": "multiple_choice",
+   "prompt": "For a_n = (-1)^n / n, find the smallest integer N such that for all n ≥ N, |a_n - 0| < 0.05.",
+   "choices": [
+    "N = 21",
+    "N = 20",
+    "N = 19",
+    "N = 25"
+   ],
+   "answer": "N = 21",
+   "rationale": "|(-1)^n / n| = 1/n < 0.05 ⇒ n > 20, so the smallest integer N is 21.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L455",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "logs",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "For real x, group the Maclaurin series for e^(ix) into its even and odd powers. Which expression results?",
+   "choices": [
+    "cos x + i sin x",
+    "cos x − i sin x",
+    "sin x + i cos x",
+    "sin x − i cos x"
+   ],
+   "answer": "cos x + i sin x",
+   "rationale": "Since e^(ix)=Σ(i^k x^k/k!), the even powers produce the cosine series and the odd powers produce i times the sine series.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L455",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "logs",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "In the power-series expansion of e^(ix), which series represents its real part?",
+   "choices": [
+    "Σ from n=0 to ∞ of ((−1)^n x^(2n))/(2n)!",
+    "Σ from n=0 to ∞ of ((−1)^n x^(2n+1))/(2n+1)!",
+    "Σ from n=0 to ∞ of (x^(2n))/(2n)!",
+    "Σ from n=0 to ∞ of ((−1)^n x^(2n+1))/(2n)!"
+   ],
+   "answer": "Σ from n=0 to ∞ of ((−1)^n x^(2n))/(2n)!",
+   "rationale": "The even-power terms are real and equal the Maclaurin series for cosine; the odd-power terms contain the factor i.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L455",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "logs",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "Using e^(i(a+b)) = e^(ia)e^(ib) and equating real parts, which identity follows?",
+   "choices": [
+    "cos(a+b) = cos a cos b − sin a sin b",
+    "cos(a+b) = cos a cos b + sin a sin b",
+    "cos(a+b) = sin a cos b − cos a sin b",
+    "cos(a+b) = sin a sin b + cos a cos b"
+   ],
+   "answer": "cos(a+b) = cos a cos b − sin a sin b",
+   "rationale": "Multiplying the expressions for e^(ia) and e^(ib), then expanding, makes i² = −1 turn the real part into cos a cos b − sin a sin b.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L455",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "logs",
+   "level": 455,
+   "format": "multiple_choice",
+   "prompt": "Using e^(ix)e^(−ix) = 1 and Euler’s formula, which real trigonometric identity follows?",
+   "choices": [
+    "cos²x + sin²x = 1",
+    "cos²x − sin²x = 1",
+    "sin²x − cos²x = 1",
+    "cos²x + sin²x = −1"
+   ],
+   "answer": "cos²x + sin²x = 1",
+   "rationale": "Multiplying cos x + i sin x by cos x − i sin x cancels the imaginary terms and gives cos²x + sin²x = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L413",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "The third-degree Maclaurin polynomial P₃ for eˣ is used at x = 0.5. What is the sharpest upper bound obtainable from the Lagrange remainder on 0 ≤ ξ ≤ 0.5?",
+   "choices": [
+    "e^0.5(0.5)^4/4!",
+    "e(0.5)^4/4!",
+    "e^0.5(0.5)^3/3!",
+    "(0.5)^4/4!"
+   ],
+   "answer": "e^0.5(0.5)^4/4!",
+   "rationale": "Since the fourth derivative is e^ξ and e^ξ ≤ e^0.5 on the interval, |R₃| ≤ e^0.5(0.5)^4/4! ≈ 0.004294.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L413",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "For the first-degree Maclaurin polynomial of ln(1+x) on 0 ≤ x ≤ 0.2, which value is the smallest valid choice for M in |R₁| ≤ Mx²/2!?",
+   "choices": [
+    "1",
+    "1/(1.2)^2",
+    "(1.2)^2",
+    "e^0.2"
+   ],
+   "answer": "1",
+   "rationale": "The second derivative is −1/(1+x)², whose largest absolute value on [0,0.2] is 1, attained at x = 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L413",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "The second-degree Maclaurin polynomial for ln(1+x) is used at x = 0.1. Does the Lagrange remainder bound guarantee an error of at most 0.001?",
+   "choices": [
+    "Yes; 2(0.1)^3/3! ≈ 0.000333",
+    "No; 2(0.1)^3/3! ≈ 0.000333",
+    "Yes; (0.1)^3/3! ≈ 0.000167",
+    "No; (0.1)^2/2! = 0.005"
+   ],
+   "answer": "Yes; 2(0.1)^3/3! ≈ 0.000333",
+   "rationale": "The third derivative is 2/(1+x)³, so M = 2. Thus |R₂| ≤ 2(0.1)^3/3! ≈ 0.000333, which is below 0.001.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L413",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 413,
+   "format": "multiple_choice",
+   "prompt": "Using the Maclaurin polynomial for eˣ at x = 1 and the bound e^ξ ≤ e, how many terms are needed to guarantee an error of at most 0.01?",
+   "choices": [
+    "4 terms",
+    "5 terms",
+    "6 terms",
+    "7 terms"
+   ],
+   "answer": "6 terms",
+   "rationale": "Five terms give the bound e/5! ≈ 0.0226, which is too large. Six terms give e/6! ≈ 0.00377, so six terms suffice.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L423",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 423,
+   "format": "multiple_choice",
+   "prompt": "Using the Maclaurin series for e^x, evaluate limₓ→0 (e^x − 1 − x)/x².",
+   "choices": [
+    "1/2",
+    "1",
+    "1/6",
+    "0"
+   ],
+   "answer": "1/2",
+   "rationale": "The series is e^x = 1 + x + x²/2 + x³/6 + ⋯. Thus e^x − 1 − x = x²/2 + O(x³), so dividing by x² and taking the limit gives 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L423",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 423,
+   "format": "multiple_choice",
+   "prompt": "Using the first four terms of the Maclaurin series for e^x at x=1 and the bound e<3, which pair gives the approximation and the resulting Lagrange-remainder bound?",
+   "choices": [
+    "8/3, with error less than 1/8",
+    "8/3, with error less than 1/24",
+    "5/2, with error less than 1/8",
+    "5/2, with error less than 1/24"
+   ],
+   "answer": "8/3, with error less than 1/8",
+   "rationale": "The first four terms are 1+1+1/2+1/6=8/3. The Lagrange remainder is e^ξ/4! for 0<ξ<1, so its magnitude is less than 3/24=1/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L423",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 423,
+   "format": "multiple_choice",
+   "prompt": "Using π=4(1−1/3+1/5−1/7+⋯), what is the next-term alternating-series error bound for the approximation to π after four terms?",
+   "choices": [
+    "4/9",
+    "1/9",
+    "4/7",
+    "1/7"
+   ],
+   "answer": "4/9",
+   "rationale": "The series inside the parentheses is the alternating series for arctan(1). After four terms, the next term is 1/9, so the error is at most 1/9 before multiplication by 4 and at most 4/9 afterward.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L423",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 423,
+   "format": "multiple_choice",
+   "prompt": "For ∫₀¹e^(x²)dx, use 1+x²+x⁴/2 and e<3. Which pair gives the approximation and a controlled tail-error bound?",
+   "choices": [
+    "43/30, with error less than 1/14",
+    "43/30, with error less than 1/42",
+    "41/30, with error less than 1/14",
+    "41/30, with error less than 1/42"
+   ],
+   "answer": "43/30, with error less than 1/14",
+   "rationale": "Integrating the three terms gives 1+1/3+1/10=43/30. On [0,1], the omitted tail is less than e·x⁶/6, so the integral error is less than e/42<3/42=1/14.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L348",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 348,
+   "format": "multiple_choice",
+   "prompt": "If A(x)=∑_{n=0}∞ (-1)^n x^{2n}/(2n)! and B(x)=∑_{n=0}∞ (-1)^n x^{2n+1}/(2n+1)!, what is the coefficient of x^3 in A(x)B(x)?",
+   "choices": [
+    "Coeff = -2/3",
+    "Coeff = -1/3",
+    "Coeff = 2/3",
+    "Coeff = 0"
+   ],
+   "answer": "Coeff = -2/3",
+   "rationale": "A(x)=cos x, B(x)=sin x, so A(x)B(x)=½ sin 2x = x - (2/3)x^3 + …; the x^3 coefficient is -2/3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L348",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 348,
+   "format": "multiple_choice",
+   "prompt": "The Cauchy product of the series ∑ x^n/n! and ∑ y^n/n! (as a series in x and y) equals which of the following?",
+   "choices": [
+    "Sum_{k=0}∞ (x+y)^k/k!",
+    "Sum_{k=0}∞ (x-y)^k/k!",
+    "Sum_{k=0}∞ x^k y^k/k!^2",
+    "Sum_{k=0}∞ (xy)^k/k!"
+   ],
+   "answer": "Sum_{k=0}∞ (x+y)^k/k!",
+   "rationale": "The product of the two exponential series is e^x·e^y = e^{x+y} = Σ (x+y)^k/k!.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L348",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 348,
+   "format": "multiple_choice",
+   "prompt": "Let f(x)=\\sum_{n=0}^{\\infty} x^n/(n+1)! and g(x)=\\sum_{n=0}^{\\infty} (-1)^n x^n/n!. What is the coefficient of x^2 in the Cauchy product f(x)g(x)?",
+   "choices": [
+    "one sixth",
+    "one third",
+    "one half",
+    "zero"
+   ],
+   "answer": "one sixth",
+   "rationale": "The coefficient of x^2 is sum_{i=0}^2 f_i g_{2-i} = 1/1! * 1/2! + 1/2! * (-1)/1! + 1/3! * 1 = 1/2 - 1/2 + 1/6 = 1/6, i.e., one sixth.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L274",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "Let (a_n) be increasing and bounded above. Which statement is correct?",
+   "choices": [
+    "It converges to the infimum of the set of its terms.",
+    "It converges to the supremum of the set of its terms.",
+    "It converges to the greatest lower bound of the set of terms.",
+    "It need not converge unless the sequence is strictly increasing."
+   ],
+   "answer": "It converges to the supremum of the set of its terms.",
+   "rationale": "By completeness of the real numbers, every increasing sequence bounded above converges to the supremum of its set of terms.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L274",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 274,
+   "format": "multiple_choice",
+   "prompt": "A sequence (b_n) is decreasing and bounded below by 1. Which argument correctly proves that (b_n) converges?",
+   "choices": [
+    "Boundedness alone is sufficient to prove convergence.",
+    "The monotone convergence theorem proves it converges.",
+    "It converges only if it becomes eventually constant.",
+    "It must diverge because it is decreasing."
+   ],
+   "answer": "The monotone convergence theorem proves it converges.",
+   "rationale": "The monotone convergence theorem states that a decreasing sequence bounded below converges to a real number.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L485",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "An IV delivers a drug at 2 mg/min for 10 minutes, then at 1 mg/min for 20 minutes. The kidneys remove it at a constant 0.2 mg/min throughout. Starting with none, which calculation gives the amount remaining after 30 minutes?",
+   "choices": [
+    "∫₀¹⁰(2−0.2)dt + ∫₁₀³⁰(1−0.2)dt = 34 mg",
+    "∫₀¹⁰(2+0.2)dt + ∫₁₀³⁰(1−0.2)dt = 38 mg",
+    "∫₀³⁰(2−0.2)dt = 54 mg",
+    "∫₀¹⁰(2−0.2)dt + ∫₁₀³⁰(1+0.2)dt = 42 mg"
+   ],
+   "answer": "∫₀¹⁰(2−0.2)dt + ∫₁₀³⁰(1−0.2)dt = 34 mg",
+   "rationale": "Subtract the constant removal rate from each delivery rate, then integrate: 10(1.8)+20(0.8)=34 mg.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L485",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A comet follows the polar path r=2θ for 0≤θ≤1 radian. Which calculation correctly gives the area swept out from the origin?",
+   "choices": [
+    "∫₀¹(2θ)²dθ = 4/3 square units",
+    "½∫₀¹(2θ)²dθ = 2/3 square units",
+    "½∫₀¹2θ dθ = 1/2 square unit",
+    "∫₀¹2θ dθ = 1 square unit"
+   ],
+   "answer": "½∫₀¹(2θ)²dθ = 2/3 square units",
+   "rationale": "Polar area is A=½∫r²dθ. Thus A=½∫₀¹(2θ)²dθ=2/3 square units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L485",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A signal is f(t)=cos t. For |t|≤0.5, which option gives the degree-2 Maclaurin polynomial and the next-term alternating-series error bound?",
+   "choices": [
+    "P₂(t)=1+t²/2; error ≤1/384",
+    "P₂(t)=1−t²/2; error ≤1/24",
+    "P₂(t)=1−t²/2; error ≤1/8",
+    "P₂(t)=1−t²/2; error ≤1/384"
+   ],
+   "answer": "P₂(t)=1−t²/2; error ≤1/384",
+   "rationale": "cos t=1−t²/2+t⁴/24−⋯. The next omitted term has magnitude at most 0.5⁴/4!=1/384.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L485",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 485,
+   "format": "multiple_choice",
+   "prompt": "A patient's first dose is 8 mg. Each later dose is 25% of the preceding dose, and dosing continues indefinitely. Which calculation gives the total amount administered?",
+   "choices": [
+    "8/0.25 = 32 mg",
+    "8+0.25 = 8.25 mg",
+    "8/(1−0.25) = 32/3 mg",
+    "8/(1+0.25) = 32/5 mg"
+   ],
+   "answer": "8/(1−0.25) = 32/3 mg",
+   "rationale": "The doses form a geometric series with first term 8 mg and ratio 0.25, so its sum is 8/(1−0.25)=32/3 mg.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L370",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "Determine the interval of convergence for ∑_{n=0}^{∞} (x-2)^n/(n^2 3^n).",
+   "choices": [
+    "[-1,5]",
+    "(-1,5)",
+    "[-1,5)",
+    "(-1,5]"
+   ],
+   "answer": "[-1,5]",
+   "rationale": "Root/ratio test yields radius 3, giving |x-2|<3 → -1<x<5. At x = -1 the series becomes Σ(-1)^n/n^2 (absolutely convergent). At x = 5 it becomes Σ1/n^2 (also absolutely convergent). Hence the interval is [-1,5].",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L370",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "The series ∑_{n=0}^{∞} n^3 x^n/(2n)! converges for which x?",
+   "choices": [
+    "All real x",
+    "x∈(-1,1)",
+    "x∈[-1,1]",
+    "x∈(0,∞)"
+   ],
+   "answer": "All real x",
+   "rationale": "Using the ratio test, a_{n+1}/a_n = ((n+1)^3/n^3)/[(2n+2)(2n+1)] → 0 for any fixed x, so the radius of convergence is ∞. The series converges for every real x.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L370",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "For ∑_{n=1}∞ x^n/[n(n+1)], radius 1. Which endpoint statement and interval are correct?",
+   "choices": [
+    "Both endpoints converge absolutely; interval [-1, 1].",
+    "x = 1 converges, but x = -1 diverges; interval [-1, 1).",
+    "x = -1 converges, but x = 1 diverges; interval (-1, 1].",
+    "Both endpoints diverge; interval (-1, 1)."
+   ],
+   "answer": "Both endpoints converge absolutely; interval [-1, 1].",
+   "rationale": "At either endpoint, absolute values give ∑1/[n(n+1)], which converges because it is a convergent p-series with p = 2. Therefore both x = -1 and x = 1 are included.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L358",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Determine the best test for \\(\\sum_{n=2}^{\\infty} \\frac{1}{n(\\ln n)^{2}}\\).",
+   "choices": [
+    "Integral test",
+    "Ratio test",
+    "Root test",
+    "Direct comparison with \\(\\frac{1}{n}\\)"
+   ],
+   "answer": "Integral test",
+   "rationale": "The function \\(f(x)=1/[x(\\ln x)^{2}]\\) is positive, continuous, and decreasing for \\(x\\ge2\\); its improper integral converges, so the integral test is the natural choice.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L358",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Which test most efficiently decides convergence of \\(\\sum_{n=0}^{\\infty} \\frac{3^{n}}{n!}\\)?",
+   "choices": [
+    "Ratio test",
+    "Root test",
+    "Comparison with a geometric series",
+    "Alternating series test"
+   ],
+   "answer": "Ratio test",
+   "rationale": "The ratio \\(a_{n+1}/a_n = 3/(n+1)\\) tends to 0, so the ratio test immediately shows absolute convergence; the root test works but is less direct.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L358",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "For the series ∑ from n = 1 to infinity of 1/√(n² + 1), which test is the most efficient first choice, and why?",
+   "choices": [
+    "Limit comparison with 1/n, since n/√(n² + 1) approaches 1.",
+    "Comparison with 1/n², since n² + 1 is squared.",
+    "Ratio test, since a quotient of consecutive terms exists.",
+    "Integral test, since the summand is continuous for n ≥ 1."
+   ],
+   "answer": "Limit comparison with 1/n, since n/√(n² + 1) approaches 1.",
+   "rationale": "Because lim(n→∞) n/√(n² + 1) = 1, the series has the same behavior as the harmonic series and therefore diverges.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L358",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 358,
+   "format": "multiple_choice",
+   "prompt": "Which option correctly determines the convergence behavior of ∑ from n = 1 to infinity of (−1)ⁿ⁺¹/√n using an appropriate test?",
+   "choices": [
+    "Alternating series test: converges conditionally.",
+    "Alternating series test: converges absolutely.",
+    "p-series test: diverges.",
+    "Ratio test: diverges."
+   ],
+   "answer": "Alternating series test: converges conditionally.",
+   "rationale": "The sequence 1/√n decreases to zero, so the alternating series test proves convergence. Its absolute-value series ∑1/√n diverges by the p-series test, so the convergence is conditional.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L338",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 338,
+   "format": "multiple_choice",
+   "prompt": "Consider the series ∑_{n=1}^∞ (-1)^n / n. Which statement correctly describes its convergence?",
+   "choices": [
+    "Absolutely convergent series",
+    "Conditionally convergent series",
+    "Divergent series",
+    "Converges by ratio test"
+   ],
+   "answer": "Conditionally convergent series",
+   "rationale": "The alternating harmonic series converges by the alternating series test, but the series of absolute values ∑ 1/n diverges, so it is conditionally convergent.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The alternating harmonic series converges, while the harmonic series formed by its absolute values diverges.",
+      "url": "https://en.wikipedia.org/wiki/Absolute_convergence",
+      "quote": "If a series is convergent but not absolutely convergent, it is called conditionally convergent . An example of a conditionally convergent series is the alternating harmonic series .",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L338",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 338,
+   "format": "multiple_choice",
+   "prompt": "Consider the alternating series \\(\\sum_{n=1}^\\infty (-1)^n \\frac{n!}{n^n}\\). Applying the Ratio Test yields the limit \\(L = \\lim_{n\\to\\infty} \\frac{a_{n+1}}{a_n}\\). What does the Ratio Test conclude about this series?",
+   "choices": [
+    "Converges absolutely.",
+    "Converges conditionally.",
+    "Diverges.",
+    "Test is inconclusive."
+   ],
+   "answer": "Converges absolutely.",
+   "rationale": "The ratio \\(\\frac{a_{n+1}}{a_n} = \\left(\\frac{n}{n+1}\\right)^n \\to e^{-1} < 1\\), so the series converges absolutely by the Ratio Test.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L338",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 338,
+   "format": "multiple_choice",
+   "prompt": "Use the Root Test on the series \\(\\sum_{n=2}^\\infty \\left(\\frac{\\ln n}{n}\\right)^n\\). What does the Root Test indicate?",
+   "choices": [
+    "Converges absolutely.",
+    "Converges conditionally.",
+    "Diverges.",
+    "Test is inconclusive."
+   ],
+   "answer": "Converges absolutely.",
+   "rationale": "The nth root of the term is \\(\\frac{\\ln n}{n}\\), whose limit as \\(n\\to\\infty\\) is 0 < 1, so the series converges absolutely.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L400",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "Which choice correctly gives the Maclaurin series for ln(1+x) and arctan(x)?",
+   "choices": [
+    "ln(1+x): Σ(n=1 to ∞) (-1)^(n+1)x^n/n; arctan(x): Σ(n=0 to ∞) (-1)^n x^(2n+1)/(2n+1)",
+    "ln(1+x): Σ(n=1 to ∞) (-1)^n x^n/n; arctan(x): Σ(n=0 to ∞) (-1)^n x^(2n+1)/(2n+1)",
+    "ln(1+x): Σ(n=1 to ∞) (-1)^(n+1)x^n/n; arctan(x): Σ(n=0 to ∞) x^(2n+1)/(2n+1)",
+    "ln(1+x): Σ(n=1 to ∞) (-1)^(n+1)x^n/n; arctan(x): Σ(n=0 to ∞) (-1)^n x^(2n+1)/(2n+3)"
+   ],
+   "answer": "ln(1+x): Σ(n=1 to ∞) (-1)^(n+1)x^n/n; arctan(x): Σ(n=0 to ∞) (-1)^n x^(2n+1)/(2n+1)",
+   "rationale": "Integrating 1/(1+x) gives the alternating series for ln(1+x), and integrating 1/(1+x²) gives the alternating odd-power series for arctan(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The Maclaurin series for ln(1+x) is Σ (-1)^(n+1) x^n/n and for arctan(x) is Σ (-1)^n x^(2n+1)/(2n+1).",
+      "url": "https://en.wikipedia.org/wiki/MacLaurin_series",
+      "quote": "\\displaystyle \\arctan x=\\int_{0}^{x}\\frac{dt}{1+t^{2}}=\\sum_{n=0}^{\\infty}\\frac{(-1)^{n}}{2n+1}x^{2n+1},",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L400",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "What is the Maclaurin series for (1+2x)^{−1/2}?",
+   "choices": [
+    "∑_{n=0}^∞ (−1/2 choose n) (2x)^n",
+    "∑_{n=0}^∞ (1/2 choose n) (2x)^n",
+    "∑_{n=0}^∞ (−1/2 choose n) x^n",
+    "∑_{n=0}^∞ (−1/2 choose n) (−2x)^n"
+   ],
+   "answer": "∑_{n=0}^∞ (−1/2 choose n) (2x)^n",
+   "rationale": "The binomial series (1+u)^k = Σ (k choose n) u^n with k = -1/2 and u = 2x yields Σ (−1/2 choose n)(2x)^n.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L400",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 400,
+   "format": "multiple_choice",
+   "prompt": "Which series equals the product of the Maclaurin series of sin x and cos x?",
+   "choices": [
+    "∑_{n=0}^∞ (-1)^n 2^{2n} x^{2n+1}/(2n+1)!",
+    "∑_{n=0}^∞ (-1)^n 2^{2n+1} x^{2n+1}/(2n+1)!",
+    "∑_{n=0}^∞ (-1)^n x^{2n+1}/(2n+1)!",
+    "∑_{n=0}^∞ (-1)^n 2^{n} x^{2n+1}/(2n+1)!"
+   ],
+   "answer": "∑_{n=0}^∞ (-1)^n 2^{2n} x^{2n+1}/(2n+1)!",
+   "rationale": "sin x·cos x = ½ sin 2x. The Maclaurin series of sin 2x is Σ (-1)^n (2x)^{2n+1}/(2n+1)!; multiplying by ½ gives Σ (-1)^n 2^{2n} x^{2n+1}/(2n+1)!.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L390",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 390,
+   "format": "multiple_choice",
+   "prompt": "For f at x=2, the values are f(2)=3, f′(2)=1, f″(2)=−2, and f‴(2)=6. Which expression is the third-degree Taylor polynomial T₃(x) centered at 2?",
+   "choices": [
+    "3+(x−2)−(x−2)²+(x−2)³",
+    "3+2(x−2)−(x−2)²+(x−2)³",
+    "3+(x−2)+(x−2)²+(x−2)³",
+    "3+(x−2)−2(x−2)²+(x−2)³"
+   ],
+   "answer": "3+(x−2)−(x−2)²+(x−2)³",
+   "rationale": "Substituting the derivative values into the Taylor formula gives T₃(x)=3+(x−2)−(x−2)²+(x−2)³, because f″(2)/2!=−1 and f‴(2)/3!=1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L390",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 390,
+   "format": "multiple_choice",
+   "prompt": "For a function f with n+1 derivatives near a, which statement correctly describes the nth-degree Taylor polynomial Tₙ(x) centered at a?",
+   "choices": [
+    "It uniquely matches f’s value and first n derivatives at a.",
+    "It uniquely matches only the value f(a) at the center.",
+    "It can be any polynomial matching f’s value and first n derivatives.",
+    "It minimizes error over an entire closed interval containing a."
+   ],
+   "answer": "It uniquely matches f’s value and first n derivatives at a.",
+   "rationale": "The Taylor polynomial of degree at most n is uniquely determined by requiring its value and derivatives through order n to agree with those of f at a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L390",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 390,
+   "format": "multiple_choice",
+   "prompt": "The second-degree Maclaurin polynomial of a function f is T₂(x)=4−3x+2x². Which values must f have at 0?",
+   "choices": [
+    "f(0)=4, f′(0)=−3, f″(0)=4",
+    "f(0)=4, f′(0)=−3, f″(0)=2",
+    "f(0)=2, f′(0)=−3, f″(0)=4",
+    "f(0)=4, f′(0)=3, f″(0)=4"
+   ],
+   "answer": "f(0)=4, f′(0)=−3, f″(0)=4",
+   "rationale": "Since T₂(x)=f(0)+f′(0)x+[f″(0)/2]x², comparison gives f(0)=4, f′(0)=−3, and f″(0)=4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L390",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 390,
+   "format": "multiple_choice",
+   "prompt": "Using the second-degree Maclaurin polynomial for eˣ, which value best approximates e^0.2?",
+   "choices": [
+    "1.20",
+    "1.22",
+    "1.24",
+    "1.42"
+   ],
+   "answer": "1.22",
+   "rationale": "The second-degree Maclaurin polynomial is 1+x+x²/2. At x=0.2, it gives 1+0.2+0.02=1.22.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L433",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 433,
+   "format": "multiple_choice",
+   "prompt": "For R₁₀ = ∑ from n = 11 to infinity of 1/n², which tail-integral bounds are correct?",
+   "choices": [
+    "1/12 ≤ R₁₀ ≤ 1/11",
+    "1/11 ≤ R₁₀ ≤ 1/10",
+    "1/10 ≤ R₁₀ ≤ 1/9",
+    "1/9 ≤ R₁₀ ≤ 1/8"
+   ],
+   "answer": "1/11 ≤ R₁₀ ≤ 1/10",
+   "rationale": "For a decreasing positive function, ∫ from N+1 to infinity of f(x) dx ≤ Rₙ ≤ ∫ from N to infinity of f(x) dx. With N = 10 and f(x) = 1/x², these integrals are 1/11 and 1/10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L433",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 433,
+   "format": "multiple_choice",
+   "prompt": "For ln 2 = 1 − 1/2 + 1/3 − ⋯, use Euler’s transformation a₁/2 + Δa₁/4 + Δ²a₁/8 + ⋯, where Δaₙ = aₙ − aₙ₊₁. What is the sum of the first three transformed terms?",
+   "choices": [
+    "5/8",
+    "7/12",
+    "2/3",
+    "3/4"
+   ],
+   "answer": "2/3",
+   "rationale": "Here a₁ = 1, Δa₁ = 1/2, and Δ²a₁ = 1/3. Thus the first three terms sum to 1/2 + 1/8 + 1/24 = 2/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L433",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 433,
+   "format": "multiple_choice",
+   "prompt": "For the alternating harmonic series, S₁₀ ≈ 0.645635 and S₁₁ ≈ 0.736544. Which statement correctly gives the average of these partial sums and compares its error with S₁₀?",
+   "choices": [
+    "0.691090; its absolute error is smaller than S₁₀’s.",
+    "0.691090; its absolute error is larger than S₁₀’s.",
+    "0.736544; its absolute error is smaller than S₁₀’s.",
+    "0.645635; its absolute error is larger than S₁₁’s."
+   ],
+   "answer": "0.691090; its absolute error is smaller than S₁₀’s.",
+   "rationale": "The average is (0.645635 + 0.736544)/2 ≈ 0.691090. Its error from ln 2 is about 0.002058, smaller than S₁₀’s error of about 0.047512.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L433",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 433,
+   "format": "multiple_choice",
+   "prompt": "A Python comparison for ln 2 uses ten source terms and reports ordinary partial-sum error 0.047512 and Euler-transformed error 0.000082. What does this indicate about numerical speed?",
+   "choices": [
+    "The Euler transform has a smaller error after ten terms, so it converges faster numerically.",
+    "The ordinary sum has a smaller error after ten terms, so it converges faster numerically.",
+    "Both errors are equal because both methods use ten source terms.",
+    "The Euler transform is slower because it requires the exact value of ln 2."
+   ],
+   "answer": "The Euler transform has a smaller error after ten terms, so it converges faster numerically.",
+   "rationale": "Using the same ten source terms, the Euler-transformed approximation is much closer to ln 2. This indicates that the transformed method reaches a given accuracy with fewer terms.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L147",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "You ask SymPy to integrate ∫ e^(x^2) dx. SymPy returns an expression containing the error function erf(x). Which statement best describes this output?",
+   "choices": [
+    "The integral is elementary and SymPy gave a closed‑form antiderivative.",
+    "SymPy expressed the antiderivative in terms of a special function because no elementary antiderivative exists.",
+    "The result is incomplete; SymPy omitted the constant of integration.",
+    "SymPy incorrectly applied a table entry for ∫ e^(ax) dx."
+   ],
+   "answer": "SymPy expressed the antiderivative in terms of a special function because no elementary antiderivative exists.",
+   "rationale": "e^(x^2) has no elementary antiderivative; SymPy correctly represents it using the error function, a standard special‑function representation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The function e^(x^2) has no elementary antiderivative, so SymPy represents it using the error function erf(x).",
+      "url": "https://en.wikipedia.org/wiki/Elementary_function",
+      "quote": "antiderivatives of elementary functions need not be elementary",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "The antiderivative of e^(x^2) is expressed in terms of the error function erf(x) because the integral has no elementary closed form.",
+      "url": "https://en.wikipedia.org/wiki/Error_Function",
+      "quote": "The defining integral cannot be evaluated in closed form in terms of elementary functions (see Liouville's theorem ), but by expanding the integrand",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L147",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "SymPy returns sqrt(pi)*erf(x)/2 for ∫e^(-x²) dx. Which command directly verifies the result by differentiation?",
+   "choices": [
+    "simplify(diff(sqrt(pi)*erf(x)/2, x) - exp(-x**2))",
+    "simplify(integrate(sqrt(pi)*erf(x)/2, x) - exp(-x**2))",
+    "simplify(diff(exp(-x**2), x) - sqrt(pi)*erf(x)/2)",
+    "simplify(integrate(exp(-x**2), x) - sqrt(pi)*erf(x)/2))"
+   ],
+   "answer": "simplify(diff(sqrt(pi)*erf(x)/2, x) - exp(-x**2))",
+   "rationale": "Differentiating the returned expression and subtracting the original integrand checks the fundamental relationship between an antiderivative and its derivative. The difference simplifies to 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L147",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A table gives ∫x²e^x dx = e^x(x²−2x+2)+C. Using the table, what is the value of ∫₀¹x²e^x dx?",
+   "choices": [
+    "2−e",
+    "e−1",
+    "e−2",
+    "2e−2"
+   ],
+   "answer": "e−2",
+   "rationale": "Evaluate the table entry at both limits: e(1−2+2)−(0−0+2) = e−2. The other choices result from reversing the limits or making arithmetic errors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L147",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "calculus",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "SymPy returns log(x) for ∫(1/x) dx. In real calculus, what does this output mean?",
+   "choices": [
+    "It is valid for all x≠0; CAS output never needs absolute values.",
+    "It is valid for x>0; for x<0, use log(−x), giving log|x|+C.",
+    "It is incomplete only because SymPy omitted the arbitrary constant C.",
+    "It is invalid because 1/x has no antiderivative on either side."
+   ],
+   "answer": "It is valid for x>0; for x<0, use log(−x), giving log|x|+C.",
+   "rationale": "The real expression log(x) applies when x>0. For x<0, log(−x) is the corresponding real antiderivative, so log|x|+C represents the real-valued result.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L105",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "functions",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "What is the derivative of tanh x?",
+   "choices": [
+    "sech^2 x",
+    "-sech^2 x",
+    "csch^2 x",
+    "-csch^2 x"
+   ],
+   "answer": "sech^2 x",
+   "rationale": "d/dx tanh x = sech^2 x, obtained from quotient rule or identity tanh = sinh/cosh.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The derivative of tanh x is sech² x.",
+      "url": "https://en.wikipedia.org/wiki/Hyperbolic_functions",
+      "quote": "{\\frac {d}{dx}}\\tanh x=1-\\tanh ^{2}x=\\operatorname {sech} ^{2}x={\\frac {1}{\\cosh ^{2}x}}",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L105",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "functions",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "What is the derivative of the inverse hyperbolic sine function, arsinh x?",
+   "choices": [
+    "1 / sqrt(x^2 - 1)",
+    "1 / sqrt(x^2 + 1)",
+    "1 / (x sqrt(x^2 + 1))",
+    "1 / (x sqrt(x^2 - 1))"
+   ],
+   "answer": "1 / sqrt(x^2 + 1)",
+   "rationale": "d/dx arsinh x = 1/√(x^2+1); this follows from differentiating the logarithmic definition arsinh x = ln(x + √(x^2+1)).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L105",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "functions",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Evaluate the indefinite integral ∫ tanh x dx.",
+   "choices": [
+    "ln|cosh x| + C",
+    "ln|sinh x| + C",
+    "cosh x + C",
+    "sinh x + C"
+   ],
+   "answer": "ln|cosh x| + C",
+   "rationale": "Since d/dx ln(cosh x) = tanh x, the antiderivative of tanh x is ln|cosh x| + C.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L475",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 475,
+   "format": "multiple_choice",
+   "prompt": "The series 1 − 1/2 + 1/4 − 1/8 + ⋯ is rearranged as −1/2, −1/8, 1, −1/32, −1/128, 1/4, ⋯, using each term once. What is the sum of this rearrangement?",
+   "choices": [
+    "0",
+    "1/3",
+    "2/3",
+    "1"
+   ],
+   "answer": "2/3",
+   "rationale": "The series is absolutely convergent because the sum of the absolute values is 2. Thus every rearrangement converges to the original sum, 1/(1+1/2) = 2/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L475",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 475,
+   "format": "multiple_choice",
+   "prompt": "Suppose a conditionally convergent series has sum 1. A learner rearranges it in finite blocks, adding enough positive terms to move above a value T and then enough negative terms to move below T. What does Riemann’s theorem imply?",
+   "choices": [
+    "The rearranged series converges to the selected value T.",
+    "The rearranged series diverges toward positive infinity.",
+    "The rearranged series retains its original sum of 1.",
+    "The rearranged series converges only for nonnegative target values."
+   ],
+   "answer": "The rearranged series converges to the selected value T.",
+   "rationale": "Because both the positive and negative subseries diverge, finite blocks can repeatedly cross T. The terms approach zero, so the crossings become arbitrarily close to T, and the rearrangement converges to T.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Riemann's rearrangement theorem states that any conditionally convergent series can be rearranged to converge to any desired real number.",
+      "url": "https://en.wikipedia.org/wiki/Riemann_rearrangement_theorem",
+      "quote": "its terms can be arranged in a permutation so that the new series converges to an arbitrary real number",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L475",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "probability",
+   "level": 475,
+   "format": "multiple_choice",
+   "prompt": "An absolutely convergent series ∑aₙ is rearranged so that its terms appear in any chosen order. What must happen?",
+   "choices": [
+    "It converges to the original sum.",
+    "It converges, but its sum may differ.",
+    "It converges only if signs remain grouped.",
+    "It may diverge if positives are grouped first."
+   ],
+   "answer": "It converges to the original sum.",
+   "rationale": "Absolute convergence guarantees that every rearrangement of the series converges and has the same sum as the original series.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "An absolutely convergent series converges to the same sum under any rearrangement.",
+      "url": "https://en.wikipedia.org/wiki/Absolutely_convergent_series",
+      "quote": "The term unconditional convergence is used to refer to a series where any rearrangement of its terms still converges to the same value.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L380",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "Which power series represents f(x)=1/(1+2x) for |x|<1/2, derived from the geometric series?",
+   "choices": [
+    "∑_{n=0}^∞ (-2)^n x^n",
+    "∑_{n=0}^∞ 2^n x^n",
+    "∑_{n=0}^∞ (-1)^n 2^n x^{n+1}",
+    "∑_{n=0}^∞ (-2)^n x^{n+1}"
+   ],
+   "answer": "∑_{n=0}^∞ (-2)^n x^n",
+   "rationale": "The geometric series 1/(1-u)=∑ u^n with u=-2x gives 1/(1+2x)=∑ (-2x)^n = ∑ (-2)^n x^n.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L380",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "Integrate the geometric series 1/(1-x)=∑_{n=0}^∞ x^n term by term from 0 to x to obtain a series for -ln(1-x) with index starting at n=0. Which is the result?",
+   "choices": [
+    "∑_{n=0}^∞ x^{n+1}/(n+1)",
+    "∑_{n=1}^∞ x^n/n",
+    "∑_{n=0}^∞ x^n/(n+1)",
+    "∑_{n=1}^∞ x^{n+1}/n"
+   ],
+   "answer": "∑_{n=0}^∞ x^{n+1}/(n+1)",
+   "rationale": "Integrating ∑ x^n from 0 to x gives ∑ x^{n+1}/(n+1), the series for -ln(1-x) with index starting at 0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "calculus_ii:L380",
+   "track_id": "math",
+   "grade_id": "calculus_ii",
+   "skill_id": "sequences",
+   "level": 380,
+   "format": "multiple_choice",
+   "prompt": "Using the geometric series 1/(1 - u) = ∑_{n=0}^∞ u^n for |u| < 1, which power series represents f(x) = 1/(1 + x^2) for |x| < 1?",
+   "choices": [
+    "∑_{n=0}^∞ (-1)^n x^{2n}",
+    "∑_{n=0}^∞ (-1)^n x^n",
+    "∑_{n=0}^∞ x^{2n}",
+    "∑_{n=0}^∞ (-1)^n x^{2n+1}"
+   ],
+   "answer": "∑_{n=0}^∞ (-1)^n x^{2n}",
+   "rationale": "Substituting u = -x^2 into the geometric series gives 1/(1 + x^2) = ∑_{n=0}^∞ (-x^2)^n = ∑_{n=0}^∞ (-1)^n x^{2n}.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

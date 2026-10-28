@@ -1,0 +1,117 @@
+{
+ "track_id": "math",
+ "grade_id": "volume_coordinates_and_expressions",
+ "generated_at": "2026-10-23T02:32:18.599Z",
+ "items": [
+  {
+   "objective_id": "volume_coordinates_and_expressions:L10",
+   "track_id": "math",
+   "grade_id": "volume_coordinates_and_expressions",
+   "skill_id": "geometry_area",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "A rectangular box is packed with unit cubes: 3 cubes long, 2 cubes wide, and 2 cubes tall. The cubes fit with no gaps and no overlaps. What is the volume of the box?",
+   "choices": [
+    "6",
+    "12",
+    "18",
+    "24"
+   ],
+   "answer": "12",
+   "rationale": "Volume is the number of unit cubes filling the solid: 3 x 2 x 2 = 12 unit cubes. Wrong options come from adding 3+2+2=7-like errors, counting only one layer (6), or multiplying dimensions incorrectly (18 = 3x3x2, 24 = 4x3x2).",
+   "verified": {
+    "code": true,
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b",
+    "judge_b": "z-ai/glm-5.3"
+   }
+  },
+  {
+   "objective_id": "volume_coordinates_and_expressions:L10",
+   "track_id": "math",
+   "grade_id": "volume_coordinates_and_expressions",
+   "skill_id": "geometry_area",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "A student wants to find the volume of a small box by filling it with unit cubes. Which situation shows a correct way to measure volume?",
+   "choices": [
+    "Two cubes in the middle are stacked on top of each other to make the pile taller.",
+    "The cubes cover the bottom of the box, but the space above them is empty.",
+    "Every unit cube inside the box touches others only along faces, filling the box completely.",
+    "The cubes are slightly larger than 1 cubic unit so fewer cubes are needed."
+   ],
+   "answer": "Every unit cube inside the box touches others only along faces, filling the box completely.",
+   "rationale": "Volume is measured by filling a solid completely with unit cubes without gaps or overlaps. The other options describe overlaps, gaps, or using non-unit cubes, all of which give an incorrect volume.",
+   "verified": {
+    "code": true,
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b",
+    "judge_b": "z-ai/glm-5.3"
+   }
+  },
+  {
+   "objective_id": "volume_coordinates_and_expressions:L20",
+   "track_id": "math",
+   "grade_id": "volume_coordinates_and_expressions",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A rectangular prism is built with centimeter cubes. Its bottom layer has 6 cubes, and the prism is 4 layers tall. What is its volume?",
+   "choices": [
+    "12 cubic units",
+    "16 cubic units",
+    "24 cubic units",
+    "36 cubic units"
+   ],
+   "answer": "24 cubic units",
+   "rationale": "Volume = cubes per layer × number of layers = 6 × 4 = 24 cubic centimeters. The other choices come from adding (6+4=10... adjusted), multiplying by wrong layer count, or adding layers.",
+   "verified": {
+    "code": true,
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b",
+    "judge_b": "z-ai/glm-5.3"
+   }
+  },
+  {
+   "objective_id": "volume_coordinates_and_expressions:L20",
+   "track_id": "math",
+   "grade_id": "volume_coordinates_and_expressions",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A rectangular prism is 3 units wide, 2 units long, and 6 units tall. How many unit cubes fill it completely?",
+   "choices": [
+    "30 cubic units",
+    "36 cubic units",
+    "42 cubic units",
+    "11 cubic units"
+   ],
+   "answer": "36 cubic units",
+   "rationale": "Base area is 3 × 2 = 6 cubes per layer, and 6 layers gives 6 × 6 = 36 unit cubes. Other options come from adding the dimensions (11) or multiplying only two of the three numbers.",
+   "verified": {
+    "code": true,
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b",
+    "judge_b": "z-ai/glm-5.3"
+   }
+  },
+  {
+   "objective_id": "volume_coordinates_and_expressions:L20",
+   "track_id": "math",
+   "grade_id": "volume_coordinates_and_expressions",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A box holds 54 unit cubes when full. Its base has 9 cubes and the cubes are packed with no gaps. How many layers of cubes are in the box?",
+   "choices": [
+    "8 cubes in the base",
+    "7 layers",
+    "9 cubes in the base",
+    "6 layers"
+   ],
+   "answer": "6 layers",
+   "rationale": "Layers = total cubes ÷ cubes per layer = 54 ÷ 9 = 6. The wrong choices come from subtracting (9 − 54 mishandled), guessing 7, or using 8 as a near-miss division.",
+   "verified": {
+    "code": true,
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b",
+    "judge_b": "z-ai/glm-5.3"
+   }
+  }
+ ]
+}

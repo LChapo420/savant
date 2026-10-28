@@ -1,0 +1,3079 @@
+{
+ "row_id": 58,
+ "engine_id": "connect-four",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 73,
+ "generated_at": "2026-10-25T05:17:03.355Z",
+ "writer": "nvidia/nemotron-3-ultra-550b-a55b:free, minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 70,
+  "code_rejected": 9,
+  "sent_to_judges": 61,
+  "kept": 50,
+  "keep_rate_of_written": 0.714,
+  "judges": {
+   "both_answered": 61,
+   "picked_same_option": 60,
+   "a_picked_key": 61,
+   "b_picked_key": 60,
+   "models_a": [
+    "minimax/minimax-m3.1-flash",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "minimax/minimax-m3.1-flash",
+    "z-ai/glm-5.3"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "connect-four",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 73,
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "title": "Spot the Pause: Ellipses, Dashes, and Commas",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q29",
+    "prompt": "In the model sentence The experiment worked—barely, what does the dash do?",
+    "choices": [
+     "Set off a final word that qualifies the main clause",
+     "Introduce a list of possible experimental results",
+     "Mark words deliberately left out of the sentence",
+     "Separate a direct address from the rest of the statement"
+    ],
+    "answerIndex": 0,
+    "explanation": "The dash sets off barely, a final word that qualifies the statement that the experiment worked.",
+    "difficulty": 3,
+    "skill": "Identify dashes that set off final qualifiers",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q38",
+    "prompt": "In the model sentence 'We packed water, maps, bandages—and a lantern,' what does the dash do?",
+    "choices": [
+     "It separates the final list item from the rest of the list.",
+     "It sets off and emphasizes the final list item.",
+     "It introduces a direct quotation after the list.",
+     "It marks the first list item as a parenthetical addition."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash sets off and emphasizes the final item in the list, a lantern.",
+    "difficulty": 4,
+    "skill": "Identifying dashes before final list items",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q3",
+    "prompt": "In the sentence \"The team, however, won the game,\" which punctuation marks set off the transitional word \"however\" to show a pause?",
+    "choices": [
+     "ellipsis",
+     "dashes",
+     "commas",
+     "semicolons"
+    ],
+    "answerIndex": 2,
+    "explanation": "The commas surrounding \"however\" create a brief pause in the sentence.",
+    "difficulty": 2,
+    "skill": "Identify punctuation indicating pauses or omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q2",
+    "prompt": "In the sentence \"He said, \\\"I can't believe—\\\" and stopped,\" which punctuation mark marks an abrupt break in speech?",
+    "choices": [
+     "ellipsis",
+     "dash",
+     "comma",
+     "colon"
+    ],
+    "answerIndex": 1,
+    "explanation": "The em dash after \"believe\" marks an abrupt break in speech.",
+    "difficulty": 3,
+    "skill": "Identify punctuation indicating pauses or omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q47",
+    "prompt": "In the sentence \"The memo read, 'Please review the attached...'\", which punctuation mark shows that words have been omitted from the quoted memo?",
+    "choices": [
+     "comma",
+     "dash",
+     "ellipsis",
+     "semicolon"
+    ],
+    "answerIndex": 2,
+    "explanation": "The three periods (ellipsis) indicate that part of the original memo has been left out.",
+    "difficulty": 3,
+    "skill": "Identify punctuation function for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q22",
+    "prompt": "In the sentence \"The road flooded, closing the lower route,\" what does the comma do?",
+    "choices": [
+     "It joins two independent clauses with a coordinating conjunction.",
+     "It separates the main clause from a result phrase.",
+     "It sets off an appositive naming a person.",
+     "It separates items in a series."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma separates the main clause from the participial phrase closing the lower route, which describes the result of the flooding.",
+    "difficulty": 4,
+    "skill": "Identify a comma before a result phrase",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q7",
+    "prompt": "In the model sentence The director announced the delay—because of heavy rain—before the crowd arrived, why are the dashes used?",
+    "choices": [
+     "They show that the sentence should be read as a question.",
+     "They mark a pause where a word has been omitted.",
+     "They set off an explanatory interruption.",
+     "They introduce a quoted speaker's exact words."
+    ],
+    "answerIndex": 2,
+    "explanation": "The dashes set off the reason for the delay as an interruption within the main statement.",
+    "difficulty": 3,
+    "skill": "Recognizing a dash around an interruption",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q12",
+    "prompt": "In the model sentence Hiking boots, wool socks, and a raincoat were lined by the door, what do the commas do?",
+    "choices": [
+     "Mark the end of a direct quotation.",
+     "Separate an introductory clause from the main clause.",
+     "Set off a parenthetical phrase within the sentence.",
+     "Separate three items in the series."
+    ],
+    "answerIndex": 3,
+    "explanation": "The commas separate the three items in the list of hiking gear.",
+    "difficulty": 2,
+    "skill": "Using commas in a series",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q1",
+    "prompt": "In the sentence \"She hesitated... then continued,\" which punctuation mark shows a pause or omission?",
+    "choices": [
+     "ellipsis",
+     "dash",
+     "comma",
+     "semicolon"
+    ],
+    "answerIndex": 0,
+    "explanation": "The three dots (ellipsis) indicate a trailing pause and omitted words in the sentence.",
+    "difficulty": 3,
+    "skill": "Identify punctuation indicating pauses or omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q17",
+    "prompt": "The protester shouted, \"Down with the old system!\" After an editor removed the quoted words, the sentence read: The next morning, the newspaper printed only... in its report. What words do the ellipsis stand for?",
+    "choices": [
+     "Down with the old system",
+     "The next morning",
+     "The newspaper",
+     "The protester"
+    ],
+    "answerIndex": 0,
+    "explanation": "The ellipsis replaces the quoted words \"Down with the old system,\" which the editor removed from the report.",
+    "difficulty": 4,
+    "skill": "Identify omitted words represented by an ellipsis",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q26",
+    "prompt": "In the model sentence The coach, her clipboard in hand, called the team together, what do the commas do?",
+    "choices": [
+     "Join two independent clauses with a conjunction",
+     "Set off an absolute phrase that describes the coach",
+     "Introduce the subject and verb of the sentence",
+     "Mark the end of a direct quotation"
+    ],
+    "answerIndex": 1,
+    "explanation": "The commas set off the absolute phrase her clipboard in hand, which describes the coach.",
+    "difficulty": 3,
+    "skill": "Identify commas around absolute phrases",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q24",
+    "prompt": "In the model sentence The instructions were clear—except the final step, which punctuation mark introduces the exception?",
+    "choices": [
+     "An ellipsis",
+     "A colon",
+     "A comma",
+     "A dash"
+    ],
+    "answerIndex": 3,
+    "explanation": "The dash sets off the phrase except the final step to make the exception clear.",
+    "difficulty": 2,
+    "skill": "Identify dashes that introduce exceptions",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q44",
+    "prompt": "In the sentence \"The alarm sounded—everyone scrambled for the exits,\" which punctuation mark signals an abrupt shift from the alarm to the reaction?",
+    "choices": [
+     "semicolon",
+     "comma",
+     "ellipsis",
+     "dash"
+    ],
+    "answerIndex": 3,
+    "explanation": "The dash links the alarm directly to the immediate, sudden reaction that follows.",
+    "difficulty": 3,
+    "skill": "identify punctuation function",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q4",
+    "prompt": "In the sentence \"We waited... and waited... but no one came,\" which punctuation marks indicate omitted words or trailing pauses?",
+    "choices": [
+     "period",
+     "dash",
+     "comma",
+     "ellipsis"
+    ],
+    "answerIndex": 3,
+    "explanation": "Each set of three dots (ellipsis) shows a pause and omitted continuation.",
+    "difficulty": 3,
+    "skill": "Identify punctuation indicating pauses or omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q10",
+    "prompt": "The full sentence is The twins studied biology, and Maria studied biology. Which shortened version uses ellipsis to omit the repeated word?",
+    "choices": [
+     "The twins studied..., and Maria studied biology.",
+     "The twins studied biology, and Maria studied...",
+     "The twins studied biology..., and Maria studied biology.",
+     "The twins studied...biology, and Maria studied biology."
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis in the second version stands for the repeated word biology at the end of the sentence.",
+    "difficulty": 4,
+    "skill": "Using ellipsis to omit a repeated word",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q33",
+    "prompt": "In the sentence \"I wonder if...\", which punctuation mark shows that the speaker's thought trails off unfinished?",
+    "choices": [
+     "ellipsis",
+     "dash",
+     "comma",
+     "question mark"
+    ],
+    "answerIndex": 0,
+    "explanation": "The ellipsis indicates the speaker leaves the sentence incomplete, suggesting hesitation or an unfinished idea.",
+    "difficulty": 3,
+    "skill": "Identify punctuation function in a sentence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q40",
+    "prompt": "In the sentence The engine purred... then stalled without warning, what does the ellipsis most clearly convey?",
+    "choices": [
+     "A contrast between two complete sentences",
+     "A missing list of engine parts",
+     "A direct quotation left without quotation marks",
+     "A brief hesitation before the sudden change"
+    ],
+    "answerIndex": 3,
+    "explanation": "The ellipsis creates a brief hesitation before the engine's sudden stall.",
+    "difficulty": 2,
+    "skill": "Interpreting ellipses as pauses",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which version correctly uses a comma to separate two independent clauses joined by yet?",
+    "choices": [
+     "The evidence was incomplete yet, the team reached a conclusion.",
+     "The evidence was incomplete, yet the team reached a conclusion.",
+     "The evidence, was incomplete yet the team reached a conclusion.",
+     "The evidence was incomplete, yet, the team reached a conclusion."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma before yet separates the two independent clauses joined by the coordinating conjunction yet.",
+    "difficulty": 3,
+    "skill": "Using a comma before a coordinating conjunction",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q32",
+    "prompt": "In the sentence \"The novel, which won several awards, is on the shelf,\" what do the commas do?",
+    "choices": [
+     "introduce a list",
+     "join two independent clauses",
+     "indicate omitted words",
+     "set off a nonrestrictive clause"
+    ],
+    "answerIndex": 3,
+    "explanation": "The pair of commas encloses the nonrestrictive relative clause that adds extra information about the novel.",
+    "difficulty": 4,
+    "skill": "Identify punctuation function in a sentence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q6",
+    "prompt": "In the sentence \"She whispered, \\\"I... I don't know.\\\"\" which punctuation marks show hesitation within the quoted speech?",
+    "choices": [
+     "dash",
+     "ellipsis",
+     "comma",
+     "question mark"
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis inside the quotation represents the speaker's hesitation.",
+    "difficulty": 3,
+    "skill": "Identify punctuation indicating pauses or omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q16",
+    "prompt": "In the model sentence Wow, that was close! what does the comma after Wow do?",
+    "choices": [
+     "It marks a pause before a list of three items.",
+     "It sets off the name of the person being addressed.",
+     "It separates two independent clauses joined by and.",
+     "It separates an introductory interjection from the main statement."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma separates the introductory interjection Wow from the main statement.",
+    "difficulty": 2,
+    "skill": "Using commas after interjections",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q31",
+    "prompt": "In the sentence \"She was about to leave—then the phone rang,\" which punctuation mark signals an abrupt change in direction?",
+    "choices": [
+     "comma",
+     "ellipsis",
+     "dash",
+     "semicolon"
+    ],
+    "answerIndex": 2,
+    "explanation": "The dash marks a sudden shift from the planned action to the unexpected interruption.",
+    "difficulty": 3,
+    "skill": "Identify punctuation function in a sentence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q5",
+    "prompt": "In the sentence \"The answer—if there is one—remains unknown,\" which punctuation marks set off the parenthetical clause for emphasis and pause?",
+    "choices": [
+     "dashes",
+     "commas",
+     "ellipsis",
+     "parentheses"
+    ],
+    "answerIndex": 0,
+    "explanation": "The pair of em dashes encloses the clause, marking a strong pause on each side.",
+    "difficulty": 4,
+    "skill": "Identify punctuation indicating pauses or omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which sentence correctly uses a comma to join two independent clauses?",
+    "choices": [
+     "The bell rang, and the students entered.",
+     "Although the bell rang, the students entered.",
+     "The bell rang and, the students entered.",
+     "The bell rang; the students entered."
+    ],
+    "answerIndex": 0,
+    "explanation": "The comma before and separates two independent clauses, making the sentence grammatically correct.",
+    "difficulty": 3,
+    "skill": "Joining independent clauses with commas",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q41",
+    "prompt": "In the sentence The instructions were precise—yet the test was confusing, what does the dash signal?",
+    "choices": [
+     "A contrast between precise instructions and a confusing test",
+     "An omission of repeated words",
+     "A pause after an introductory transition",
+     "A separation between three test results"
+    ],
+    "answerIndex": 0,
+    "explanation": "The dash introduces the contrasting word yet to emphasize the difference between the precise instructions and confusing test.",
+    "difficulty": 2,
+    "skill": "Recognizing contrasts signaled by dashes",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q37",
+    "prompt": "In the model sentence 'However, the rain continued,' what does the comma after However do?",
+    "choices": [
+     "It separates an introductory transition from the main clause.",
+     "It introduces a list of three items.",
+     "It marks the end of a direct quotation.",
+     "It separates two coordinate adjectives."
+    ],
+    "answerIndex": 0,
+    "explanation": "The comma separates the introductory transition However from the main clause the rain continued.",
+    "difficulty": 3,
+    "skill": "Identifying commas after sentence-initial transitions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q48",
+    "prompt": "In the sentence \"The team celebrated—victory was finally theirs.\", what does the dash accomplish?",
+    "choices": [
+     "marks a pause before a transition",
+     "separates two independent clauses",
+     "indicates omitted words",
+     "sets off and emphasizes the final clause"
+    ],
+    "answerIndex": 3,
+    "explanation": "The dash isolates the concluding clause, giving it strong emphasis.",
+    "difficulty": 3,
+    "skill": "Identify punctuation function for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q28",
+    "prompt": "In the model sentence He did not call, nor did he write, what does the comma do?",
+    "choices": [
+     "Introduce a dependent clause before the main clause",
+     "Set off a nonessential phrase in the middle of the sentence",
+     "Mark the beginning of a list of three items",
+     "Separate two independent clauses joined by nor"
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma separates the independent clause He did not call from the independent clause nor did he write.",
+    "difficulty": 4,
+    "skill": "Use commas with coordinating conjunctions",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q49",
+    "prompt": "Which sentence uses paired dashes correctly to set off an appositive that identifies a person?",
+    "choices": [
+     "Ms. Iyer—a robotics coach—led the workshop.",
+     "Ms. Iyer—a robotics coach led the workshop.",
+     "Ms. Iyer, a robotics coach—led the workshop.",
+     "Ms. Iyer—a robotics coach, led the workshop."
+    ],
+    "answerIndex": 0,
+    "explanation": "The paired dashes set off the appositive a robotics coach, which identifies Ms. Iyer.",
+    "difficulty": 3,
+    "skill": "Recognizing paired dashes around an appositive",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q36",
+    "prompt": "In the model sentence 'Yes, I will reconsider the offer,' what does the comma after Yes do?",
+    "choices": [
+     "It marks the end of a direct quotation.",
+     "It introduces a list of three items.",
+     "It separates two coordinate adjectives.",
+     "It separates an introductory response from the main statement."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma separates the introductory response Yes from the main statement I will reconsider the offer.",
+    "difficulty": 2,
+    "skill": "Identifying commas after introductory responses",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q35",
+    "prompt": "In the model sentence 'The narrow, winding road led to school,' what does the comma after narrow do?",
+    "choices": [
+     "It introduces a list of three items.",
+     "It marks the end of a direct quotation.",
+     "It separates the first coordinate adjective from the second.",
+     "It sets off a nonrestrictive clause."
+    ],
+    "answerIndex": 2,
+    "explanation": "The comma separates the coordinate adjectives narrow and winding, each of which describes the road.",
+    "difficulty": 3,
+    "skill": "Identifying commas between coordinate adjectives",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which version correctly sets off the appositive that identifies Ms. Patel?",
+    "choices": [
+     "Ms. Patel, our history teacher, led the workshop.",
+     "Ms. Patel our history teacher, led the workshop.",
+     "Ms. Patel our history teacher led the workshop.",
+     "Ms. Patel, our history teacher led the workshop."
+    ],
+    "answerIndex": 0,
+    "explanation": "The two commas correctly set off the appositive our history teacher, which identifies Ms. Patel.",
+    "difficulty": 4,
+    "skill": "Pairing commas around an appositive",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q30",
+    "prompt": "In the sentence \"The sign read, 'Keep off the grass...'\", which punctuation mark shows that words have been omitted from the quoted sign?",
+    "choices": [
+     "dash",
+     "ellipsis",
+     "comma",
+     "period"
+    ],
+    "answerIndex": 1,
+    "explanation": "The three periods together form an ellipsis that marks the omission of words in the quotation.",
+    "difficulty": 3,
+    "skill": "Identify punctuation function in a sentence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q46",
+    "prompt": "In the line \"I thought we had agreed...\", the three dots show that the speaker's thought:",
+    "choices": [
+     "is a direct quote",
+     "trails off unfinished",
+     "contains a list",
+     "is a question"
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis indicates the speaker leaves the sentence incomplete, letting the thought fade.",
+    "difficulty": 2,
+    "skill": "identify punctuation function",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q42",
+    "prompt": "In the model sentence Outside, the rain drummed against the roof, what does the comma after Outside do?",
+    "choices": [
+     "It joins two complete sentences with a coordinating conjunction",
+     "It sets off the introductory adverb from the main clause",
+     "It introduces a quoted phrase before the main clause",
+     "It separates items in a series"
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma sets off the introductory adverb Outside from the main clause.",
+    "difficulty": 3,
+    "skill": "Identifying commas after introductory elements",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q20",
+    "prompt": "In the sentence \"The mural, painted by local students, brightened the hallway,\" what do the commas do?",
+    "choices": [
+     "They introduce a direct quotation.",
+     "They separate three items in a series.",
+     "They join two independent clauses.",
+     "They set off extra information about the mural."
+    ],
+    "answerIndex": 3,
+    "explanation": "The paired commas set off the participial phrase painted by local students, which adds nonessential information about the mural.",
+    "difficulty": 4,
+    "skill": "Identify commas around nonessential information",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q11",
+    "prompt": "In the model sentence The path looked clear—until we saw the fallen tree, what does the dash signal?",
+    "choices": [
+     "It signals that several words have been omitted.",
+     "It signals that the sentence is spoken in a quotation.",
+     "It signals a reversal or unexpected turn in the thought.",
+     "It signals that a list of examples is about to begin."
+    ],
+    "answerIndex": 2,
+    "explanation": "The dash signals the unexpected turn from thinking the path was clear to discovering the fallen tree.",
+    "difficulty": 3,
+    "skill": "Recognizing a dash for an unexpected turn",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q27",
+    "prompt": "In the model sentence Now—stop!, what does the dash do?",
+    "choices": [
+     "Introduce a quotation from another speaker",
+     "Show that a list of items is incomplete",
+     "Emphasize the sudden command that follows",
+     "Separate a subordinate clause from the main clause"
+    ],
+    "answerIndex": 2,
+    "explanation": "The dash places emphasis on the abrupt command stop and strengthens the sense of urgency.",
+    "difficulty": 3,
+    "skill": "Recognize dashes used for emphasis",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q25",
+    "prompt": "In the model sentence He murmured, Perhaps..., what does the ellipsis show?",
+    "choices": [
+     "That the speaker leaves the thought unfinished",
+     "That the speaker introduces a quotation",
+     "That the speaker gives a command",
+     "That the speaker states a cause and effect"
+    ],
+    "answerIndex": 0,
+    "explanation": "The ellipsis after Perhaps shows that the speaker does not complete the thought.",
+    "difficulty": 2,
+    "skill": "Interpret ellipses in dialogue",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q14",
+    "prompt": "In the model sentence The crowd erupted—'Champion!' what does the dash do?",
+    "choices": [
+     "It signals that the speaker has finished.",
+     "It introduces the quoted reaction.",
+     "It shows that a word has been omitted.",
+     "It marks a list of three audience responses."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash introduces the crowd's quoted reaction without a quotation tag.",
+    "difficulty": 3,
+    "skill": "Using dashes before quoted reactions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q34",
+    "prompt": "In the sentence \"He finally agreed—reluctantly,\" what does the dash accomplish?",
+    "choices": [
+     "omits repeated words",
+     "emphasizes the final qualifying word",
+     "separates items in a series",
+     "introduces a quotation"
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash places strong focus on the adverb \"reluctantly\" that qualifies the agreement.",
+    "difficulty": 4,
+    "skill": "Identify punctuation function in a sentence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q8",
+    "prompt": "In the model sentence Before the referee could blow the whistle, the runner crossed the line, what does the comma do?",
+    "choices": [
+     "It joins two independent clauses that could stand alone.",
+     "It shows that a word has been omitted from the sentence.",
+     "It sets off a parenthetical phrase in the middle of the sentence.",
+     "It marks a brief pause after the introductory dependent clause."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma marks a brief pause after the introductory dependent clause Before the referee could blow the whistle.",
+    "difficulty": 3,
+    "skill": "Locating a comma after an introductory clause",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q21",
+    "prompt": "In the sentence \"At midnight, the power finally returned,\" what does the comma after midnight do?",
+    "choices": [
+     "It separates an introductory time phrase from the main clause.",
+     "It sets off a nonessential phrase describing the power.",
+     "It marks a pause between two independent clauses.",
+     "It introduces a quoted word from an earlier source."
+    ],
+    "answerIndex": 0,
+    "explanation": "The comma separates the short introductory phrase At midnight from the main clause, marking a brief pause.",
+    "difficulty": 2,
+    "skill": "Recognize a comma after an introductory phrase",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which punctuation mark in \"The solution was simple—elegant\" gives special emphasis to the final adjective?",
+    "choices": [
+     "dash",
+     "comma",
+     "ellipsis",
+     "colon"
+    ],
+    "answerIndex": 0,
+    "explanation": "The dash isolates \"elegant\" so it receives heightened focus at the end of the sentence.",
+    "difficulty": 3,
+    "skill": "identify punctuation function",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q43",
+    "prompt": "The editor shortened the witness's statement to The car was blue... it sped away. What do the three periods represent in this shortened quotation?",
+    "choices": [
+     "A list of the car's remaining features",
+     "A deliberate silence before the car moved",
+     "Words omitted from the middle of the original statement",
+     "The point at which the statement becomes dialogue"
+    ],
+    "answerIndex": 2,
+    "explanation": "Because the statement is explicitly a shortened quotation, the ellipsis marks words removed from its middle.",
+    "difficulty": 4,
+    "skill": "Recognizing ellipses that represent omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q18",
+    "prompt": "In the sentence \"The bell rang—everyone froze,\" what relationship does the dash help express?",
+    "choices": [
+     "It introduces the title of a work being performed.",
+     "It links the ringing to the immediate reaction.",
+     "It marks an omitted item from a numbered list.",
+     "It separates a quotation from its speaker's name."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dash links the ringing of the bell to the immediate reaction, emphasizing the cause-and-effect relationship.",
+    "difficulty": 3,
+    "skill": "Interpret a dash as showing cause and effect",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q15",
+    "prompt": "In the model title The Journey Begins..., what effect does the ellipsis have?",
+    "choices": [
+     "It marks a question the title asks about the journey.",
+     "It lists additional items connected with the journey.",
+     "It suggests that the journey continues beyond the title.",
+     "It separates the title from a subtitle."
+    ],
+    "answerIndex": 2,
+    "explanation": "The ellipsis in a title suggests an action or journey that continues beyond the words shown.",
+    "difficulty": 3,
+    "skill": "Interpreting ellipses in titles",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which model sentence uses a comma to separate a direct address from the rest of the statement?",
+    "choices": [
+     "Sailor; lower the anchor carefully.",
+     "Sailor lower, the anchor carefully.",
+     "Sailor, lower the anchor carefully.",
+     "Sailor: lower the anchor carefully."
+    ],
+    "answerIndex": 2,
+    "explanation": "The comma marks the pause between the person being addressed and the command that follows.",
+    "difficulty": 2,
+    "skill": "Using commas for direct address",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q39",
+    "prompt": "In the model sentence 'And then... everything changed,' what effect does the ellipsis create?",
+    "choices": [
+     "It suggests that the change happened at a precise, predictable time.",
+     "It makes the change seem less important than the waiting.",
+     "It delays the key change and builds anticipation.",
+     "It indicates that the sentence continues with a list of events."
+    ],
+    "answerIndex": 2,
+    "explanation": "The ellipsis creates a pause before the key change, making the reader wait to learn what changed.",
+    "difficulty": 4,
+    "skill": "Identifying ellipses that build anticipation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q19",
+    "prompt": "In the sentence \"There was only one sensible choice—run,\" what does the dash do?",
+    "choices": [
+     "It introduces the title of a work being read.",
+     "It marks a pause between two quoted speakers.",
+     "It gives special emphasis to the command run.",
+     "It identifies a footnote's corresponding symbol."
+    ],
+    "answerIndex": 2,
+    "explanation": "The dash isolates and emphasizes the command run, making the urgency of the choice stand out.",
+    "difficulty": 3,
+    "skill": "Recognize emphasis created by a dash",
+    "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   }
+  ],
+  "feedback": {
+   "correct": "Nice catch — you marked the pause with the right mark.",
+   "incorrect": "Not quite — think about whether the break is mild, sharp, or trailing off.",
+   "win": "Four in a row! You can spot pauses and omissions like an editor.",
+   "lose": "Tough round — reread the sentence and ask how sharp the break really is.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "In the sentence \"She hesitated... then continued,\" which punctuation mark shows a pause or omission?",
+   "choices": [
+    "ellipsis",
+    "dash",
+    "comma",
+    "semicolon"
+   ],
+   "answerIndex": 0,
+   "explanation": "The three dots (ellipsis) indicate a trailing pause and omitted words in the sentence.",
+   "difficulty": 3,
+   "skill": "Identify punctuation indicating pauses or omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"He said, \\\"I can't believe—\\\" and stopped,\" which punctuation mark marks an abrupt break in speech?",
+   "choices": [
+    "dash",
+    "ellipsis",
+    "comma",
+    "colon"
+   ],
+   "answerIndex": 0,
+   "explanation": "The em dash after \"believe\" marks an abrupt break in speech.",
+   "difficulty": 3,
+   "skill": "Identify punctuation indicating pauses or omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The team, however, won the game,\" which punctuation marks set off the transitional word \"however\" to show a pause?",
+   "choices": [
+    "commas",
+    "dashes",
+    "ellipsis",
+    "semicolons"
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas surrounding \"however\" create a brief pause in the sentence.",
+   "difficulty": 2,
+   "skill": "Identify punctuation indicating pauses or omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"We waited... and waited... but no one came,\" which punctuation marks indicate omitted words or trailing pauses?",
+   "choices": [
+    "ellipsis",
+    "dash",
+    "comma",
+    "period"
+   ],
+   "answerIndex": 0,
+   "explanation": "Each set of three dots (ellipsis) shows a pause and omitted continuation.",
+   "difficulty": 3,
+   "skill": "Identify punctuation indicating pauses or omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The answer—if there is one—remains unknown,\" which punctuation marks set off the parenthetical clause for emphasis and pause?",
+   "choices": [
+    "dashes",
+    "commas",
+    "ellipsis",
+    "parentheses"
+   ],
+   "answerIndex": 0,
+   "explanation": "The pair of em dashes encloses the clause, marking a strong pause on each side.",
+   "difficulty": 4,
+   "skill": "Identify punctuation indicating pauses or omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"She whispered, \\\"I... I don't know.\\\"\" which punctuation marks show hesitation within the quoted speech?",
+   "choices": [
+    "ellipsis",
+    "dash",
+    "comma",
+    "question mark"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis inside the quotation represents the speaker's hesitation.",
+   "difficulty": 3,
+   "skill": "Identify punctuation indicating pauses or omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The director announced the delay—because of heavy rain—before the crowd arrived, why are the dashes used?",
+   "choices": [
+    "They set off an explanatory interruption.",
+    "They mark a pause where a word has been omitted.",
+    "They show that the sentence should be read as a question.",
+    "They introduce a quoted speaker's exact words."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dashes set off the reason for the delay as an interruption within the main statement.",
+   "difficulty": 3,
+   "skill": "Recognizing a dash around an interruption",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Before the referee could blow the whistle, the runner crossed the line, what does the comma do?",
+   "choices": [
+    "It joins two independent clauses that could stand alone.",
+    "It marks a brief pause after the introductory dependent clause.",
+    "It sets off a parenthetical phrase in the middle of the sentence.",
+    "It shows that a word has been omitted from the sentence."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma marks a brief pause after the introductory dependent clause Before the referee could blow the whistle.",
+   "difficulty": 3,
+   "skill": "Locating a comma after an introductory clause",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which version correctly sets off the appositive that identifies Ms. Patel?",
+   "choices": [
+    "Ms. Patel, our history teacher led the workshop.",
+    "Ms. Patel our history teacher, led the workshop.",
+    "Ms. Patel our history teacher led the workshop.",
+    "Ms. Patel, our history teacher, led the workshop."
+   ],
+   "answerIndex": 3,
+   "explanation": "The two commas correctly set off the appositive our history teacher, which identifies Ms. Patel.",
+   "difficulty": 4,
+   "skill": "Pairing commas around an appositive",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The full sentence is The twins studied biology, and Maria studied biology. Which shortened version uses ellipsis to omit the repeated word?",
+   "choices": [
+    "The twins studied..., and Maria studied biology.",
+    "The twins studied biology, and Maria studied...",
+    "The twins studied biology..., and Maria studied biology.",
+    "The twins studied...biology, and Maria studied biology."
+   ],
+   "answerIndex": 1,
+   "explanation": "The ellipsis in the second version stands for the repeated word biology at the end of the sentence.",
+   "difficulty": 4,
+   "skill": "Using ellipsis to omit a repeated word",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The path looked clear—until we saw the fallen tree, what does the dash signal?",
+   "choices": [
+    "It signals that several words have been omitted.",
+    "It signals that the sentence is spoken in a quotation.",
+    "It signals a reversal or unexpected turn in the thought.",
+    "It signals that a list of examples is about to begin."
+   ],
+   "answerIndex": 2,
+   "explanation": "The dash signals the unexpected turn from thinking the path was clear to discovering the fallen tree.",
+   "difficulty": 3,
+   "skill": "Recognizing a dash for an unexpected turn",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Hiking boots, wool socks, and a raincoat were lined by the door, what do the commas do?",
+   "choices": [
+    "Separate three items in the series.",
+    "Separate an introductory clause from the main clause.",
+    "Set off a parenthetical phrase within the sentence.",
+    "Mark the end of a direct quotation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas separate the three items in the list of hiking gear.",
+   "difficulty": 2,
+   "skill": "Using commas in a series",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a comma to join two independent clauses?",
+   "choices": [
+    "The bell rang, and the students entered.",
+    "Although the bell rang, the students entered.",
+    "The bell rang and, the students entered.",
+    "The bell rang; the students entered."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma before and separates two independent clauses, making the sentence grammatically correct.",
+   "difficulty": 3,
+   "skill": "Joining independent clauses with commas",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The crowd erupted—'Champion!' what does the dash do?",
+   "choices": [
+    "It introduces the quoted reaction.",
+    "It signals that the speaker has finished.",
+    "It shows that a word has been omitted.",
+    "It marks a list of three audience responses."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash introduces the crowd's quoted reaction without a quotation tag.",
+   "difficulty": 3,
+   "skill": "Using dashes before quoted reactions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model title The Journey Begins..., what effect does the ellipsis have?",
+   "choices": [
+    "It suggests that the journey continues beyond the title.",
+    "It lists additional items connected with the journey.",
+    "It marks a question the title asks about the journey.",
+    "It separates the title from a subtitle."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis in a title suggests an action or journey that continues beyond the words shown.",
+   "difficulty": 3,
+   "skill": "Interpreting ellipses in titles",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Wow, that was close! what does the comma after Wow do?",
+   "choices": [
+    "It separates an introductory interjection from the main statement.",
+    "It sets off the name of the person being addressed.",
+    "It separates two independent clauses joined by and.",
+    "It marks a pause before a list of three items."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the introductory interjection Wow from the main statement.",
+   "difficulty": 2,
+   "skill": "Using commas after interjections",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The protester shouted, \"Down with the old system!\" After an editor removed the quoted words, the sentence read: The next morning, the newspaper printed only... in its report. What words do the ellipsis stand for?",
+   "choices": [
+    "Down with the old system",
+    "The next morning",
+    "The newspaper",
+    "The protester"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis replaces the quoted words \"Down with the old system,\" which the editor removed from the report.",
+   "difficulty": 4,
+   "skill": "Identify omitted words represented by an ellipsis",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The bell rang—everyone froze,\" what relationship does the dash help express?",
+   "choices": [
+    "It links the ringing to the immediate reaction.",
+    "It introduces the title of a work being performed.",
+    "It marks an omitted item from a numbered list.",
+    "It separates a quotation from its speaker's name."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash links the ringing of the bell to the immediate reaction, emphasizing the cause-and-effect relationship.",
+   "difficulty": 3,
+   "skill": "Interpret a dash as showing cause and effect",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"There was only one sensible choice—run,\" what does the dash do?",
+   "choices": [
+    "It gives special emphasis to the command run.",
+    "It marks a pause between two quoted speakers.",
+    "It introduces the title of a work being read.",
+    "It identifies a footnote's corresponding symbol."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash isolates and emphasizes the command run, making the urgency of the choice stand out.",
+   "difficulty": 3,
+   "skill": "Recognize emphasis created by a dash",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The mural, painted by local students, brightened the hallway,\" what do the commas do?",
+   "choices": [
+    "They set off extra information about the mural.",
+    "They separate three items in a series.",
+    "They join two independent clauses.",
+    "They introduce a direct quotation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired commas set off the participial phrase painted by local students, which adds nonessential information about the mural.",
+   "difficulty": 4,
+   "skill": "Identify commas around nonessential information",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"At midnight, the power finally returned,\" what does the comma after midnight do?",
+   "choices": [
+    "It separates an introductory time phrase from the main clause.",
+    "It sets off a nonessential phrase describing the power.",
+    "It marks a pause between two independent clauses.",
+    "It introduces a quoted word from an earlier source."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the short introductory phrase At midnight from the main clause, marking a brief pause.",
+   "difficulty": 2,
+   "skill": "Recognize a comma after an introductory phrase",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The road flooded, closing the lower route,\" what does the comma do?",
+   "choices": [
+    "It separates the main clause from a result phrase.",
+    "It joins two independent clauses with a coordinating conjunction.",
+    "It sets off an appositive naming a person.",
+    "It separates items in a series."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the main clause from the participial phrase closing the lower route, which describes the result of the flooding.",
+   "difficulty": 4,
+   "skill": "Identify a comma before a result phrase",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which model sentence uses a comma to separate a direct address from the rest of the statement?",
+   "choices": [
+    "Sailor, lower the anchor carefully.",
+    "Sailor lower, the anchor carefully.",
+    "Sailor; lower the anchor carefully.",
+    "Sailor: lower the anchor carefully."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma marks the pause between the person being addressed and the command that follows.",
+   "difficulty": 2,
+   "skill": "Using commas for direct address",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "A comma separates direct address from the rest of the sentence.",
+      "url": "https://en.wikipedia.org/wiki/Noun_of_direct_address",
+      "quote": "it sets nouns of address off from their containing sentence in speech by a particular intonational pattern, and in writing by the use of commas or sometimes dashes.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "In the model sentence The instructions were clear—except the final step, which punctuation mark introduces the exception?",
+   "choices": [
+    "An ellipsis",
+    "A dash",
+    "A comma",
+    "A colon"
+   ],
+   "answerIndex": 1,
+   "explanation": "The dash sets off the phrase except the final step to make the exception clear.",
+   "difficulty": 2,
+   "skill": "Identify dashes that introduce exceptions",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence He murmured, Perhaps..., what does the ellipsis show?",
+   "choices": [
+    "That the speaker leaves the thought unfinished",
+    "That the speaker introduces a quotation",
+    "That the speaker gives a command",
+    "That the speaker states a cause and effect"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis after Perhaps shows that the speaker does not complete the thought.",
+   "difficulty": 2,
+   "skill": "Interpret ellipses in dialogue",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The coach, her clipboard in hand, called the team together, what do the commas do?",
+   "choices": [
+    "Set off an absolute phrase that describes the coach",
+    "Join two independent clauses with a conjunction",
+    "Introduce the subject and verb of the sentence",
+    "Mark the end of a direct quotation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas set off the absolute phrase her clipboard in hand, which describes the coach.",
+   "difficulty": 3,
+   "skill": "Identify commas around absolute phrases",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Now—stop!, what does the dash do?",
+   "choices": [
+    "Emphasize the sudden command that follows",
+    "Show that a list of items is incomplete",
+    "Introduce a quotation from another speaker",
+    "Separate a subordinate clause from the main clause"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash places emphasis on the abrupt command stop and strengthens the sense of urgency.",
+   "difficulty": 3,
+   "skill": "Recognize dashes used for emphasis",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence He did not call, nor did he write, what does the comma do?",
+   "choices": [
+    "Separate two independent clauses joined by nor",
+    "Set off a nonessential phrase in the middle of the sentence",
+    "Mark the beginning of a list of three items",
+    "Introduce a dependent clause before the main clause"
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the independent clause He did not call from the independent clause nor did he write.",
+   "difficulty": 4,
+   "skill": "Use commas with coordinating conjunctions",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The experiment worked—barely, what does the dash do?",
+   "choices": [
+    "Set off a final word that qualifies the main clause",
+    "Introduce a list of possible experimental results",
+    "Mark words deliberately left out of the sentence",
+    "Separate a direct address from the rest of the statement"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash sets off barely, a final word that qualifies the statement that the experiment worked.",
+   "difficulty": 3,
+   "skill": "Identify dashes that set off final qualifiers",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The sign read, 'Keep off the grass...'\", which punctuation mark shows that words have been omitted from the quoted sign?",
+   "choices": [
+    "ellipsis",
+    "dash",
+    "comma",
+    "period"
+   ],
+   "answerIndex": 0,
+   "explanation": "The three periods together form an ellipsis that marks the omission of words in the quotation.",
+   "difficulty": 3,
+   "skill": "Identify punctuation function in a sentence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "Ellipsis indicates omitted words.",
+      "url": "https://en.wikipedia.org/wiki/Three_dots",
+      "quote": "Ellipsis ( ... or . . or U+2026 … HORIZONTAL ELLIPSIS [style guides vary]), indicates an intentional omission of a word",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "In the sentence \"She was about to leave—then the phone rang,\" which punctuation mark signals an abrupt change in direction?",
+   "choices": [
+    "dash",
+    "ellipsis",
+    "comma",
+    "semicolon"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash marks a sudden shift from the planned action to the unexpected interruption.",
+   "difficulty": 3,
+   "skill": "Identify punctuation function in a sentence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The novel, which won several awards, is on the shelf,\" what do the commas do?",
+   "choices": [
+    "set off a nonrestrictive clause",
+    "join two independent clauses",
+    "indicate omitted words",
+    "introduce a list"
+   ],
+   "answerIndex": 0,
+   "explanation": "The pair of commas encloses the nonrestrictive relative clause that adds extra information about the novel.",
+   "difficulty": 4,
+   "skill": "Identify punctuation function in a sentence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"I wonder if...\", which punctuation mark shows that the speaker's thought trails off unfinished?",
+   "choices": [
+    "ellipsis",
+    "dash",
+    "comma",
+    "question mark"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis indicates the speaker leaves the sentence incomplete, suggesting hesitation or an unfinished idea.",
+   "difficulty": 3,
+   "skill": "Identify punctuation function in a sentence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"He finally agreed—reluctantly,\" what does the dash accomplish?",
+   "choices": [
+    "emphasizes the final qualifying word",
+    "omits repeated words",
+    "separates items in a series",
+    "introduces a quotation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash places strong focus on the adverb \"reluctantly\" that qualifies the agreement.",
+   "difficulty": 4,
+   "skill": "Identify punctuation function in a sentence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence 'The narrow, winding road led to school,' what does the comma after narrow do?",
+   "choices": [
+    "It introduces a list of three items.",
+    "It marks the end of a direct quotation.",
+    "It separates the first coordinate adjective from the second.",
+    "It sets off a nonrestrictive clause."
+   ],
+   "answerIndex": 2,
+   "explanation": "The comma separates the coordinate adjectives narrow and winding, each of which describes the road.",
+   "difficulty": 3,
+   "skill": "Identifying commas between coordinate adjectives",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence 'Yes, I will reconsider the offer,' what does the comma after Yes do?",
+   "choices": [
+    "It separates an introductory response from the main statement.",
+    "It introduces a list of three items.",
+    "It separates two coordinate adjectives.",
+    "It marks the end of a direct quotation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the introductory response Yes from the main statement I will reconsider the offer.",
+   "difficulty": 2,
+   "skill": "Identifying commas after introductory responses",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence 'However, the rain continued,' what does the comma after However do?",
+   "choices": [
+    "It separates an introductory transition from the main clause.",
+    "It introduces a list of three items.",
+    "It marks the end of a direct quotation.",
+    "It separates two coordinate adjectives."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the introductory transition However from the main clause the rain continued.",
+   "difficulty": 3,
+   "skill": "Identifying commas after sentence-initial transitions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence 'We packed water, maps, bandages—and a lantern,' what does the dash do?",
+   "choices": [
+    "It separates the final list item from the rest of the list.",
+    "It sets off and emphasizes the final list item.",
+    "It introduces a direct quotation after the list.",
+    "It marks the first list item as a parenthetical addition."
+   ],
+   "answerIndex": 1,
+   "explanation": "The dash sets off and emphasizes the final item in the list, a lantern.",
+   "difficulty": 4,
+   "skill": "Identifying dashes before final list items",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence 'And then... everything changed,' what effect does the ellipsis create?",
+   "choices": [
+    "It delays the key change and builds anticipation.",
+    "It makes the change seem less important than the waiting.",
+    "It suggests that the change happened at a precise, predictable time.",
+    "It indicates that the sentence continues with a list of events."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis creates a pause before the key change, making the reader wait to learn what changed.",
+   "difficulty": 4,
+   "skill": "Identifying ellipses that build anticipation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence The engine purred... then stalled without warning, what does the ellipsis most clearly convey?",
+   "choices": [
+    "A brief hesitation before the sudden change",
+    "A missing list of engine parts",
+    "A direct quotation left without quotation marks",
+    "A contrast between two complete sentences"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis creates a brief hesitation before the engine's sudden stall.",
+   "difficulty": 2,
+   "skill": "Interpreting ellipses as pauses",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence The instructions were precise—yet the test was confusing, what does the dash signal?",
+   "choices": [
+    "A contrast between precise instructions and a confusing test",
+    "An omission of repeated words",
+    "A pause after an introductory transition",
+    "A separation between three test results"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash introduces the contrasting word yet to emphasize the difference between the precise instructions and confusing test.",
+   "difficulty": 2,
+   "skill": "Recognizing contrasts signaled by dashes",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Outside, the rain drummed against the roof, what does the comma after Outside do?",
+   "choices": [
+    "It sets off the introductory adverb from the main clause",
+    "It joins two complete sentences with a coordinating conjunction",
+    "It introduces a quoted phrase before the main clause",
+    "It separates items in a series"
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma sets off the introductory adverb Outside from the main clause.",
+   "difficulty": 3,
+   "skill": "Identifying commas after introductory elements",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The editor shortened the witness's statement to The car was blue... it sped away. What do the three periods represent in this shortened quotation?",
+   "choices": [
+    "Words omitted from the middle of the original statement",
+    "A deliberate silence before the car moved",
+    "A list of the car's remaining features",
+    "The point at which the statement becomes dialogue"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the statement is explicitly a shortened quotation, the ellipsis marks words removed from its middle.",
+   "difficulty": 4,
+   "skill": "Recognizing ellipses that represent omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The alarm sounded—everyone scrambled for the exits,\" which punctuation mark signals an abrupt shift from the alarm to the reaction?",
+   "choices": [
+    "dash",
+    "comma",
+    "ellipsis",
+    "semicolon"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash links the alarm directly to the immediate, sudden reaction that follows.",
+   "difficulty": 3,
+   "skill": "identify punctuation function",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which punctuation mark in \"The solution was simple—elegant\" gives special emphasis to the final adjective?",
+   "choices": [
+    "dash",
+    "comma",
+    "ellipsis",
+    "colon"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash isolates \"elegant\" so it receives heightened focus at the end of the sentence.",
+   "difficulty": 3,
+   "skill": "identify punctuation function",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the line \"I thought we had agreed...\", the three dots show that the speaker's thought:",
+   "choices": [
+    "trails off unfinished",
+    "is a direct quote",
+    "contains a list",
+    "is a question"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis indicates the speaker leaves the sentence incomplete, letting the thought fade.",
+   "difficulty": 2,
+   "skill": "identify punctuation function",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The memo read, 'Please review the attached...'\", which punctuation mark shows that words have been omitted from the quoted memo?",
+   "choices": [
+    "ellipsis",
+    "dash",
+    "comma",
+    "semicolon"
+   ],
+   "answerIndex": 0,
+   "explanation": "The three periods (ellipsis) indicate that part of the original memo has been left out.",
+   "difficulty": 3,
+   "skill": "Identify punctuation function for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The team celebrated—victory was finally theirs.\", what does the dash accomplish?",
+   "choices": [
+    "sets off and emphasizes the final clause",
+    "separates two independent clauses",
+    "indicates omitted words",
+    "marks a pause before a transition"
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash isolates the concluding clause, giving it strong emphasis.",
+   "difficulty": 3,
+   "skill": "Identify punctuation function for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses paired dashes correctly to set off an appositive that identifies a person?",
+   "choices": [
+    "Ms. Iyer—a robotics coach—led the workshop.",
+    "Ms. Iyer—a robotics coach led the workshop.",
+    "Ms. Iyer, a robotics coach—led the workshop.",
+    "Ms. Iyer—a robotics coach, led the workshop."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired dashes set off the appositive a robotics coach, which identifies Ms. Iyer.",
+   "difficulty": 3,
+   "skill": "Recognizing paired dashes around an appositive",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which version correctly uses a comma to separate two independent clauses joined by yet?",
+   "choices": [
+    "The evidence was incomplete, yet the team reached a conclusion.",
+    "The evidence was incomplete yet, the team reached a conclusion.",
+    "The evidence, was incomplete yet the team reached a conclusion.",
+    "The evidence was incomplete, yet, the team reached a conclusion."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma before yet separates the two independent clauses joined by the coordinating conjunction yet.",
+   "difficulty": 3,
+   "skill": "Using a comma before a coordinating conjunction",
+   "topic": "Notice It in a Model Text - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the model sentence Maria, bring your notes to the front, what does the comma after Maria do?",
+   "choices": [
+    "It identifies the person being addressed.",
+    "It introduces an introductory dependent clause.",
+    "It separates the items in a list.",
+    "It joins two independent clauses."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma sets off Maria's name because it identifies the person being addressed.",
+   "reason": "explanation-key: the explanation quotes option 1, not the keyed option 2"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the sentence \"After the rain stopped, we went outside,\" what role does the comma play?",
+   "choices": [
+    "separates an introductory phrase from the main clause",
+    "sets off a parenthetical remark",
+    "marks an omission",
+    "emphasizes the final word"
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma follows the introductory dependent clause and signals a brief pause before the main clause.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the model sentence 'Having checked the map, we took the east path,' what does the comma after map do?",
+   "choices": [
+    "It separates the introductory participial phrase from the main clause.",
+    "It introduces a list of three items.",
+    "It separates two coordinate adjectives.",
+    "It marks the end of a direct quotation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the introductory participial phrase Having checked the map from the main clause we took the east path.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the model sentence \"The committee, after lengthy debate, approved the proposal,\" what do the commas around \"after lengthy debate\" do?",
+   "choices": [
+    "They set off an interrupting prepositional phrase that adds detail.",
+    "They separate the subject from the verb.",
+    "They join two independent clauses.",
+    "They indicate omitted words."
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas set off the interrupting prepositional phrase “after lengthy debate,” marking a pause on each side.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the model sentence \"You're coming, aren't you?\" what does the comma do?",
+   "choices": [
+    "It separates the main clause from the tag question, marking a brief pause.",
+    "It sets off an appositive phrase.",
+    "It joins two independent clauses.",
+    "It indicates omitted words."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the main clause from the tag question, signaling a brief pause before the tag.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In the model sentence The ingredients include salt, pepper, and..., what does the ellipsis after and indicate?",
+   "choices": [
+    "It sets off a phrase that identifies the speaker.",
+    "It separates two independent clauses.",
+    "It marks one or more list items that have been left out.",
+    "It introduces a list that follows a colon."
+   ],
+   "answerIndex": 2,
+   "explanation": "The ellipsis indicates that one or more final list items have been omitted from the ingredient list.",
+   "reason": "source: \"In English grammar, an ellipsis indicates omitted words.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "How many periods are used to form an ellipsis?",
+   "choices": [
+    "Two periods",
+    "Three periods",
+    "Four periods",
+    "Five periods"
+   ],
+   "answerIndex": 1,
+   "explanation": "An ellipsis consists of three consecutive periods.",
+   "reason": "source: \"An ellipsis consists of three periods.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "When a pair of dashes encloses an interruption in the middle of a sentence, how many dashes are used?",
+   "choices": [
+    "One dash",
+    "Two dashes",
+    "Three dashes",
+    "Four dashes"
+   ],
+   "answerIndex": 1,
+   "explanation": "Two dashes enclose a parenthetical interruption when it appears in the middle of a sentence.",
+   "reason": "source: \"A punctuation rule uses two dashes to mark an interruption.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which model sentence correctly uses a dash to join two closely related complete sentences?",
+   "choices": [
+    "The storm passed—we packed our bags and left.",
+    "The storm passed; we packed our bags and left.",
+    "The storm passed: we packed our bags and left.",
+    "The storm passed, we packed our bags and left."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash joins the two complete sentences and creates a strong break between them.",
+   "reason": "source: \"In punctuation, an em dash joins two closely related independent clauses.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which model sentence uses an ellipsis to mark words left out of a quoted sign?",
+   "choices": [
+    "The sign read, \"No phones... during examinations.\"",
+    "The sign read, \"No phones, during examinations.\"",
+    "The sign read, \"No phones—during examinations.\"",
+    "The sign read, \"No phones; during examinations.\""
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis shows that some words have been omitted from the sign's message.",
+   "reason": "source: \"An ellipsis indicates omitted words in a quotation.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "How should the three periods in a standard ellipsis be spaced?",
+   "choices": [
+    "They are written together without spaces.",
+    "They are separated by one space each.",
+    "The first period is followed by a space.",
+    "The last two periods are separated by a space."
+   ],
+   "answerIndex": 0,
+   "explanation": "The three periods of a standard ellipsis are written together without spaces between them.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly avoids a comma that would incorrectly separate its subject from its verb?",
+   "choices": [
+    "The judges reviewed the footage.",
+    "The judges, reviewed the footage.",
+    "The judges reviewed, the footage.",
+    "The judges reviewed the footage, carefully."
+   ],
+   "answerIndex": 0,
+   "explanation": "Standard usage keeps the subject The judges next to the verb reviewed without a comma.",
+   "reason": "B: not exactly one correct (Multiple options (0, 2, 3) correctly avoid a comma separating subject from verb; the question is ambiguous.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "In the sentence She whispered, \"Not yet,\" and turned away, what does the comma after yet do?",
+   "choices": [
+    "It separates the quoted words from the rest of the sentence",
+    "It introduces the quoted words as the speaker's direct speech",
+    "It marks a pause between two items in a list",
+    "It joins two independent clauses without a conjunction"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the quoted words appear within a larger sentence, a comma follows Not yet to separate them from and turned away.",
+   "reason": "B: not exactly one correct (None of the options accurately describe the function of the comma after 'yet' in the given sentence.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "In the model sentence \"She packed snacks, water, and a map—everything needed for the hike,\" what does the dash do?",
+   "choices": [
+    "It introduces a summarizing phrase that restates the list.",
+    "It separates two independent clauses.",
+    "It marks omitted words in a quotation.",
+    "It indicates a pause before a tag question."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dash introduces the summarizing phrase “everything needed for the hike,” which restates the preceding list.",
+   "reason": "source: \"An em dash can be used to introduce an appositive summarizing phrase.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "The editor shortened the witness’s testimony to \"The suspect fled... before police arrived.\" What do the three periods represent in this shortened quotation?",
+   "choices": [
+    "words omitted from the middle of the original statement",
+    "a pause for dramatic effect",
+    "the end of the sentence",
+    "a hesitation by the speaker"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis marks the omission of words that originally appeared between \"fled\" and \"before.\"",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In the sentence \"After the long hike, the group rested by the lake,\" what does the comma after \"hike\" do?",
+   "choices": [
+    "separates an introductory prepositional phrase from the main clause",
+    "sets off a nonrestrictive clause",
+    "indicates omitted words",
+    "creates emphasis on the verb"
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma marks the boundary between the introductory phrase \"After the long hike\" and the main clause.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In the sentence \"The mural, painted by local students, brightened the hallway,\" what do the commas do?",
+   "choices": [
+    "set off a nonrestrictive participial phrase describing the mural",
+    "separate items in a series",
+    "mark an abrupt break in thought",
+    "show omitted words"
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas enclose the extra, nonessential description \"painted by local students.\"",
+   "reason": "the answer is identifiable by its length; repeats a question already in the set"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "In the sentence \"Running late, she grabbed her keys and rushed out.\", what does the comma after \"late\" do?",
+   "choices": [
+    "separates an introductory participial phrase from the main clause",
+    "sets off a nonrestrictive clause",
+    "joins two independent clauses",
+    "marks a direct address"
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma marks the boundary between the opening participial phrase and the main clause.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "In the sentence \"The ancient oak, towering over the playground, provided shade.\", what do the commas do?",
+   "choices": [
+    "set off a nonrestrictive appositive phrase",
+    "separate items in a series",
+    "join two independent clauses",
+    "mark a direct address"
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas enclose the participial phrase that adds extra information about the oak.",
+   "reason": "B: not exactly one correct (Option (0) mislabels “towering over the playground” as an appositive phrase; it is a nonrestrictive participial phrase, so no option is full)"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "Which sentence correctly uses an ellipsis to represent a repeated phrase omitted from the end of a clause?",
+   "choices": [
+    "The kitten chased the yarn, and the kitten...",
+    "...The kitten chased the yarn, and the kitten.",
+    "The kitten chased the yarn, and the kitten—",
+    "The kitten chased the yarn, and the kitten;"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis stands for the repeated words chased the yarn that are omitted after the second mention of the kitten.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  }
+ ],
+ "applied": false
+}

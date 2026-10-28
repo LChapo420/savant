@@ -1,0 +1,5039 @@
+{
+ "track_id": "math",
+ "grade_id": "abstract_algebra_ii",
+ "generated_at": "2026-10-26T03:38:11.810Z",
+ "items": [
+  {
+   "objective_id": "abstract_algebra_ii:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "A commutative ring has an identity 1≠0. Which additional property is required for it to be an integral domain?",
+   "choices": [
+    "Every nonzero element has a unique multiplicative inverse.",
+    "It contains only a finite number of elements.",
+    "It has no nonzero element that is a zero divisor.",
+    "It is closed under addition and under subtraction."
+   ],
+   "answer": "It has no nonzero element that is a zero divisor.",
+   "rationale": "An integral domain is a commutative ring with 1≠0 and no zero divisors. Requiring multiplicative inverses would make the ring a field, not merely an integral domain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Among commutative rings with 1≠0, which statement gives the defining condition for a field?",
+   "choices": [
+    "Every nonzero element has an additive inverse.",
+    "Every nonzero element has a multiplicative inverse.",
+    "Every nonzero element is its own additive inverse.",
+    "Every nonzero element is a zero divisor."
+   ],
+   "answer": "Every nonzero element has a multiplicative inverse.",
+   "rationale": "A field is a commutative ring with 1≠0 in which every nonzero element has a multiplicative inverse. Additive inverses exist in every ring and do not imply that a ring is a field.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Let D be a finite integral domain and let a≠0. Which argument correctly proves that a has a multiplicative inverse in D?",
+   "choices": [
+    "Multiplication by a is injective, hence surjective; therefore 1=ax for some x belonging to D.",
+    "Multiplication by a is not injective, so its image cannot possibly contain the identity 1.",
+    "Cancellation shows that ax=1 for every nonzero x belonging to the integral domain D.",
+    "Finiteness shows that every nonzero x satisfies xa=1, regardless of the particular value of a."
+   ],
+   "answer": "Multiplication by a is injective, hence surjective; therefore 1=ax for some x belonging to D.",
+   "rationale": "Since a≠0 and D has no zero divisors, multiplication by a is injective. An injective map from a finite set to itself is surjective, so some x satisfies ax=1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L30",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which row correctly classifies ℤ, ℚ, ℤ/6ℤ, and ℤ/5ℤ as integral domains, fields, or neither?",
+   "choices": [
+    "ℤ is a field but not a domain; ℚ is a field; ℤ/6ℤ is a domain; ℤ/5ℤ is a domain but not a field.",
+    "ℤ is a domain but not a field; ℚ is a domain but not a field; ℤ/6ℤ is a field; ℤ/5ℤ is neither.",
+    "ℤ is neither a domain nor a field; ℚ is a domain but not a field; ℤ/6ℤ is a field; ℤ/5ℤ is a field.",
+    "ℤ is a domain but not a field; ℚ is a field; ℤ/6ℤ is neither a domain nor a field; ℤ/5ℤ is a field."
+   ],
+   "answer": "ℤ is a domain but not a field; ℚ is a field; ℤ/6ℤ is neither a domain nor a field; ℤ/5ℤ is a field.",
+   "rationale": "The integers have no zero divisors but are not a field. The rationals are a field. In ℤ/6ℤ, the nonzero classes of 2 and 3 multiply to 0, while ℤ/5ℤ is a field.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L42",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Under the convention that ring homomorphisms preserve 1, which condition must a map φ:R→S satisfy?",
+   "choices": [
+    "It preserves addition, multiplication, and maps 1_R to 1_S.",
+    "It preserves addition and multiplication, but need not preserve 1.",
+    "It preserves addition and 1, but not necessarily multiplication.",
+    "It preserves multiplication and 1, but not necessarily addition."
+   ],
+   "answer": "It preserves addition, multiplication, and maps 1_R to 1_S.",
+   "rationale": "A unital ring homomorphism preserves addition, multiplication, and the multiplicative identity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L42",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Let π:Z→Z/6Z be the reduction map defined by π(n)=[n]_6. Which set is the kernel of π?",
+   "choices": [
+    "{6k : k ∈ Z}",
+    "{3k : k ∈ Z}",
+    "{2k : k ∈ Z}",
+    "{0}"
+   ],
+   "answer": "{6k : k ∈ Z}",
+   "rationale": "The kernel is the preimage of the zero class, so it consists exactly of the integers divisible by 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L42",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Suppose φ:R→S is a bijective ring homomorphism. What must be true about its inverse φ⁻¹:S→R?",
+   "choices": [
+    "It is also a ring homomorphism.",
+    "It is only an additive-group homomorphism.",
+    "It preserves multiplication but not addition.",
+    "It is a ring homomorphism only when R=S."
+   ],
+   "answer": "It is also a ring homomorphism.",
+   "rationale": "A bijective ring homomorphism is a ring isomorphism because its inverse also preserves the ring operations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L42",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "For the evaluation map ev₂:Q[x]→Q defined by ev₂(p)=p(2), which ideal is the kernel?",
+   "choices": [
+    "(x−2)Q[x]",
+    "(x+2)Q[x]",
+    "xQ[x]",
+    "Q[x]"
+   ],
+   "answer": "(x−2)Q[x]",
+   "rationale": "A polynomial evaluates to zero at 2 exactly when it is divisible by x−2, so the kernel is the principal ideal (x−2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which conditions define a ring when the multiplication is not required to have an identity?",
+   "choices": [
+    "An abelian group under addition, with associative multiplication satisfying both distributive laws.",
+    "A group under addition, with arbitrary multiplication and no distributive requirements.",
+    "A nonabelian group under addition, with associative multiplication and one distributive law.",
+    "An abelian group under addition, with commutative multiplication and no distributive laws."
+   ],
+   "answer": "An abelian group under addition, with associative multiplication satisfying both distributive laws.",
+   "rationale": "A ring is an additive abelian group with associative multiplication that distributes over addition. Commutativity and a multiplicative identity are not required in this definition.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes the rings ℤ, ℤ₁₂, F[x], and M₂(F)?",
+   "choices": [
+    "ℤ and ℤ₁₂ are commutative with identity; F[x] and M₂(F) have identity, but M₂(F) is not commutative.",
+    "ℤ and ℤ₁₂ are commutative without identity; F[x] and M₂(F) have identity and are noncommutative.",
+    "F[x] and M₂(F) are commutative with identity; ℤ and ℤ₁₂ are not rings.",
+    "M₂(F) is commutative with identity; the other three rings have no multiplicative identity."
+   ],
+   "answer": "ℤ and ℤ₁₂ are commutative with identity; F[x] and M₂(F) have identity, but M₂(F) is not commutative.",
+   "rationale": "ℤ, ℤ₁₂, and F[x] are commutative rings with identity. The matrix ring M₂(F) also has an identity, but matrix multiplication is not generally commutative.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "For an integer n ≥ 2, which element is the multiplicative identity in the ring ℤₙ?",
+   "choices": [
+    "0",
+    "1",
+    "n − 1",
+    "n"
+   ],
+   "answer": "1",
+   "rationale": "The residue class of 1 satisfies 1·a = a·1 = a modulo n for every element a in ℤₙ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L10",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which description correctly identifies the polynomial ring F[x] over a field F?",
+   "choices": [
+    "A commutative ring with identity whose elements are finite sums ∑aᵢxⁱ with aᵢ in F.",
+    "A noncommutative ring without identity whose elements are infinite power series in x.",
+    "A commutative ring without identity whose elements are polynomials of degree at least one.",
+    "A matrix ring whose elements are finite n-by-n arrays of elements from F[x]."
+   ],
+   "answer": "A commutative ring with identity whose elements are finite sums ∑aᵢxⁱ with aᵢ in F.",
+   "rationale": "F[x] consists of all finite sums of powers of x with coefficients in F, including the zero polynomial. Addition and multiplication are commutative, and the constant polynomial 1 is its multiplicative identity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "In an integral domain, which statement correctly compares prime and irreducible elements?",
+   "choices": [
+    "Prime implies irreducible; the converse can fail.",
+    "Irreducible implies prime; the converse can fail.",
+    "Primality and irreducibility coincide for nonunits.",
+    "Primality and irreducibility differ only for units."
+   ],
+   "answer": "Prime implies irreducible; the converse can fail.",
+   "rationale": "In an integral domain, every prime element is irreducible, but an irreducible element need not be prime. For example, 2 is irreducible but not prime in ℤ[√−5].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which condition, besides existence of irreducible factorizations, distinguishes a UFD from an atomic domain?",
+   "choices": [
+    "Uniqueness up to reordering and multiplication by units.",
+    "Every irreducible element generates a maximal ideal.",
+    "Every nonzero ideal has a finite set of generators.",
+    "Every ascending chain of ideals stabilizes."
+   ],
+   "answer": "Uniqueness up to reordering and multiplication by units.",
+   "rationale": "A unique factorization domain requires both existence and uniqueness of irreducible factorizations. The other conditions characterize PIDs or Noetherian domains rather than UFDs.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "In a PID, which argument proves that every nonzero nonunit factors into irreducibles?",
+   "choices": [
+    "Replace reducible factors by proper nonunit factors; ACC terminates the ascending ideal chain.",
+    "Choose a factor of smallest positive norm; its norm proves that factor is irreducible.",
+    "Use maximality of principal ideals to show directly that the original element is irreducible.",
+    "Apply Euclid’s lemma repeatedly to cancel factors between two different factorizations."
+   ],
+   "answer": "Replace reducible factors by proper nonunit factors; ACC terminates the ascending ideal chain.",
+   "rationale": "If a nonunit is reducible, one of its proper nonunit factors generates a strictly larger ideal. Since PIDs satisfy the ascending chain condition, this process must end with irreducible factors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L137",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "Which fact is used to prove uniqueness of irreducible factorization in a PID?",
+   "choices": [
+    "Every irreducible element in a PID is prime.",
+    "Every nonzero principal ideal in a PID is maximal.",
+    "Every PID is equipped with a Euclidean norm.",
+    "Every nonzero ideal in a PID has finitely many elements."
+   ],
+   "answer": "Every irreducible element in a PID is prime.",
+   "rationale": "Irreducible elements in a PID are prime. Euclid’s lemma then forces any two irreducible factorizations to agree up to order and multiplication by units.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In a commutative ring R, which condition characterizes an ideal I?",
+   "choices": [
+    "I is an additive subgroup, and rI is contained in I for every r in R.",
+    "I is an additive subgroup, and I contains the multiplicative identity 1.",
+    "I is a multiplicative subgroup, and r+I is contained in I for every r in R.",
+    "I is an additive subgroup, and rI = {0} for every r in R."
+   ],
+   "answer": "I is an additive subgroup, and rI is contained in I for every r in R.",
+   "rationale": "An ideal is an additive subgroup that also absorbs multiplication by arbitrary elements of the ring: rI is contained in I for every r in R.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In a commutative ring R, which set is the principal ideal generated by an element a?",
+   "choices": [
+    "the set {ra : r in R}",
+    "the set {na : n in Z}",
+    "the set {a+r : r in R}",
+    "the set {r in R : ra = 1}"
+   ],
+   "answer": "the set {ra : r in R}",
+   "rationale": "The principal ideal generated by a consists of all ring multiples of a. This set is already an ideal and is contained in every ideal containing a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "For nonzero integers a and b, which condition is equivalent to the inclusion (a) contained in (b)?",
+   "choices": [
+    "b divides a",
+    "a divides b",
+    "a and b are associates",
+    "a and b are relatively prime"
+   ],
+   "answer": "b divides a",
+   "rationale": "Since (a) = aZ, the inclusion aZ contained in bZ means that a is a multiple of b. Thus b divides a.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L52",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "In a commutative ring R, let N be an additive subgroup. Which condition makes multiplication on R/N well-defined by [r][s] = [rs]?",
+   "choices": [
+    "Exactly when N is an ideal of R.",
+    "Whenever N is closed under multiplication.",
+    "Whenever N contains the identity 1.",
+    "Whenever N is a maximal proper subgroup."
+   ],
+   "answer": "Exactly when N is an ideal of R.",
+   "rationale": "Well-defined quotient multiplication requires N to absorb multiplication by every element of R, which is precisely the ideal condition. This parallels the role of normal subgroups in group quotients.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "What is the characteristic of the ring ℤ/6ℤ?",
+   "choices": [
+    "6",
+    "3",
+    "2",
+    "0"
+   ],
+   "answer": "6",
+   "rationale": "The characteristic is the least positive integer n for which n[0] = [0]. In ℤ/6ℤ, this least integer is 6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "What is the characteristic of the field ℚ(√2)?",
+   "choices": [
+    "2",
+    "0",
+    "12",
+    "1"
+   ],
+   "answer": "0",
+   "rationale": "No positive integer multiple of 1 equals 0 in ℚ(√2), so the additive order of 1 is infinite and the characteristic is 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Which is the prime subfield of the rational-function field F₇(t)?",
+   "choices": [
+    "the integers",
+    "the field with 49 elements",
+    "the full rational-function field",
+    "the field with 7 elements"
+   ],
+   "answer": "the field with 7 elements",
+   "rationale": "Every subfield of F₇(t) contains the prime field F₇, and F₇ itself is a subfield, so the prime subfield is the field with 7 elements.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L95",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Which field is the field of fractions of the integral domain ℤ[x]?",
+   "choices": [
+    "ℚ[x]",
+    "ℝ(x)",
+    "ℤ[x]",
+    "ℚ(x)"
+   ],
+   "answer": "ℚ(x)",
+   "rationale": "Forming fractions from ℤ[x] makes every nonzero integer invertible and then makes every nonzero polynomial invertible, producing the rational-function field ℚ(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L20",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Let S be a subset of Z_12, with operations modulo 12. A subring is a nonempty subset closed under subtraction and multiplication. Which set is a subring?",
+   "choices": [
+    "{0, 2, 4, 6, 8, 10}",
+    "{0, 1, 4, 5, 8, 9}",
+    "{0, 2, 4, 7, 9, 11}",
+    "{0, 3, 6, 8, 9, 11}"
+   ],
+   "answer": "{0, 2, 4, 6, 8, 10}",
+   "rationale": "The even residues are closed under subtraction and multiplication modulo 12. Each other set fails closure under subtraction.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L20",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "In a ring R, let u be a unit. Which argument proves ux=0 implies x=0?",
+   "choices": [
+    "Left-multiply by u^{-1}: x=u^{-1}0=0.",
+    "Right-multiply by u^{-1}: x=xu^{-1}=0.",
+    "Left-multiply by u: x=u(ux)=0.",
+    "Right-multiply by x: x=ux^2=0."
+   ],
+   "answer": "Left-multiply by u^{-1}: x=u^{-1}0=0.",
+   "rationale": "By associativity, u^{-1}(ux)=(u^{-1}u)x=x. Since u^{-1}0=0, multiplying ux=0 on the left by u^{-1} gives x=0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L20",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Let R = Z_6 × Z_9 with componentwise addition and multiplication. Which of the following subsets of R is a subring?",
+   "choices": [
+    "{(0,0), (2,0), (4,0)}",
+    "{(0,0), (1,0), (2,0)}",
+    "{(0,0), (2,0), (2,3)}",
+    "{(0,0), (2,0), (0,3)}"
+   ],
+   "answer": "{(0,0), (2,0), (4,0)}",
+   "rationale": "A subring of a direct product must be a product of subrings of each component. {(0,0), (2,0), (4,0)} = {0,2,4} × {0}; both {0,2,4} ⊆ Z_6 and {0} ⊆ Z_9 are subrings, so the set is closed under subtraction and multiplication. The other options fail closure in at least one component.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L159",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x⁴ + 3x³ + 6x² + 9x + 3, which prime allows Eisenstein’s criterion to prove irreducibility over Q?",
+   "choices": [
+    "2",
+    "3",
+    "5",
+    "7"
+   ],
+   "answer": "3",
+   "rationale": "With p = 3, every nonleading coefficient is divisible by 3, the constant term is not divisible by 9, and the leading coefficient is not divisible by 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L159",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "What does reduction of f(x) = x⁴ + x + 1 modulo 2 imply about f over Q?",
+   "choices": [
+    "f is irreducible over F₂, so it is irreducible over Q.",
+    "f is reducible over F₂, so it is reducible over Q.",
+    "f is irreducible over F₂, so it is reducible over Q.",
+    "f is reducible over F₂, so it is irreducible over Q."
+   ],
+   "answer": "f is irreducible over F₂, so it is irreducible over Q.",
+   "rationale": "The reduction x⁴ + x + 1 has no linear or quadratic factors over F₂, so it is irreducible there. An irreducible primitive reduction implies irreducibility over Q.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L159",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "Which rational root of f(x) = x³ − x² − 4x − 6 proves that f is reducible over Q?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "6"
+   ],
+   "answer": "3",
+   "rationale": "The rational root candidates are ±1, ±2, ±3, and ±6. Substitution gives f(3) = 27 − 9 − 12 − 6 = 0, so x − 3 is a factor.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L159",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 159,
+   "format": "multiple_choice",
+   "prompt": "For f(x) = x³ + 2x + 1, which conclusion is justified by the rational root test?",
+   "choices": [
+    "f is irreducible over Q.",
+    "f is reducible over Q.",
+    "f has the rational root 1.",
+    "f has the rational root −1."
+   ],
+   "answer": "f is irreducible over Q.",
+   "rationale": "The only possible rational roots are ±1. Since f(1) = 4 and f(−1) = −2, the cubic has no rational root and is therefore irreducible over Q.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L117",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "For 414 and 662, divide 662 by 414 first in the Euclidean algorithm. What is the first remainder and the gcd?",
+   "choices": [
+    "First remainder 248; gcd 2.",
+    "First remainder 166; gcd 2.",
+    "First remainder 248; gcd 1.",
+    "First remainder 414; gcd 2."
+   ],
+   "answer": "First remainder 248; gcd 2.",
+   "rationale": "The divisions give 662=414+248, 414=248+166, 248=166+82, 166=2·82+2, and 82=41·2. Thus the first remainder is 248 and the gcd is 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L117",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "Over F3, divide q by p first for p=x²+1 and q=x²+x+1. What is the first remainder and the final monic gcd?",
+   "choices": [
+    "First remainder x; final gcd 1.",
+    "First remainder x+1; final gcd 1.",
+    "First remainder x; final gcd x.",
+    "First remainder x²+1; final gcd 1."
+   ],
+   "answer": "First remainder x; final gcd 1.",
+   "rationale": "Since q−p=x, the first remainder is x. Dividing p by x gives p=x·x+1, so the final monic gcd is 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L117",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "In Z[i], apply the Euclidean algorithm to a=3+13i and b=1+3i. What is a gcd, up to a unit, and a Bézout identity for it?",
+   "choices": [
+    "gcd 1+i; 1−i=(1+i)(3+13i)−(4+5i)(1+3i).",
+    "gcd 1+i; 1−i=(1+i)(3+13i)+(4+5i)(1+3i).",
+    "gcd 1−i; 1+i=(1+i)(3+13i)−(4+5i)(1+3i).",
+    "gcd 2; 2=(3+13i)−(4+i)(1+3i)."
+   ],
+   "answer": "gcd 1+i; 1−i=(1+i)(3+13i)−(4+5i)(1+3i).",
+   "rationale": "The remainders are 2, −1+i, and 0, so the gcd is 1+i up to a unit. Back-substitution gives 1−i=(1+i)(3+13i)−(4+5i)(1+3i), and 1−i is an associate of 1+i.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L244",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "topology",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "Let α be a root of x²−2 in ℚ(α). What is the degree [ℚ(α):ℚ], and which set is a basis for ℚ(α) over ℚ?",
+   "choices": [
+    "Degree 2; basis {1, α}",
+    "Degree 2; basis {1, α, α²}",
+    "Degree 3; basis {1, α, α²}",
+    "Degree 1; basis {1}"
+   ],
+   "answer": "Degree 2; basis {1, α}",
+   "rationale": "The polynomial x²−2 is irreducible over ℚ, so its root α has minimal polynomial of degree 2. Thus {1, α} is a basis and [ℚ(α):ℚ] = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L244",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "topology",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "Let K/F be a finite field extension with F ⊆ E ⊆ K. If [K:F] = 6 and [E:F] = 2, what is [K:E]?",
+   "choices": [
+    "2",
+    "3",
+    "4",
+    "12"
+   ],
+   "answer": "3",
+   "rationale": "The tower law gives [K:F] = [K:E][E:F]. Therefore [K:E] = 6/2 = 3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L244",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "topology",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "In an extension K/F, let A consist of all elements of K that are algebraic over F. Which statement is always true?",
+   "choices": [
+    "A is a subfield of K containing F",
+    "A is a subring of K that need not contain F",
+    "A is a vector subspace not closed under multiplication",
+    "A is an ideal of K containing F"
+   ],
+   "answer": "A is a subfield of K containing F",
+   "rationale": "Sums, differences, products, and inverses of algebraic elements are algebraic, and every element of F is algebraic over F. Hence A is a subfield of K containing F.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L244",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "topology",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "Which condition must an algebraic closure of a field F satisfy?",
+   "choices": [
+    "Each nonconstant polynomial in F[x] is a product of linear factors over it",
+    "Each nonconstant polynomial in F[x] has exactly one root in it",
+    "Each nonconstant polynomial in F[x] remains irreducible over it",
+    "Each polynomial in F[x] has all of its roots outside it"
+   ],
+   "answer": "Each nonconstant polynomial in F[x] is a product of linear factors over it",
+   "rationale": "An algebraic closure is algebraically closed, so every nonconstant polynomial over it factors completely into linear factors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Let R be a commutative ring with identity and I, J be coprime ideals. Which argument proves that I ∩ J = IJ?",
+   "choices": [
+    "Choose x ∈ I and y ∈ J with x+y=1. For a ∈ I ∩ J, both ax and ay belong to IJ, so a belongs to IJ.",
+    "Choose a ∈ I and b ∈ J with ab=1. For x ∈ I ∩ J, both ax and bx belong to IJ, so x belongs to IJ.",
+    "Choose m,n ∈ R with mI=nJ=R. Multiplying elements of I ∩ J shows every such element belongs to R.",
+    "Choose x ∈ I and y ∈ J with xy=1. For a ∈ I ∩ J, writing a=ax+ay shows a belongs to IJ."
+   ],
+   "answer": "Choose x ∈ I and y ∈ J with x+y=1. For a ∈ I ∩ J, both ax and ay belong to IJ, so a belongs to IJ.",
+   "rationale": "Coprimality gives x+y=1 with x∈I and y∈J. If a∈I∩J, then ax∈IJ because a∈J, and ay∈IJ because a∈I. Thus a=ax+ay∈IJ, proving I∩J=IJ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Consider the map φ: ℤ/15ℤ → ℤ/3ℤ × ℤ/5ℤ defined by φ([x]₁₅)=([x]₃,[x]₅). Which statement is correct?",
+   "choices": [
+    "The map is an isomorphism, since the two moduli are coprime.",
+    "The map is surjective, but its kernel contains a nonzero element.",
+    "The map is injective, but it is not surjective.",
+    "The map has kernel (5), so it is not an isomorphism."
+   ],
+   "answer": "The map is an isomorphism, since the two moduli are coprime.",
+   "rationale": "Since gcd(3,5)=1, the Chinese remainder theorem makes the natural map an isomorphism. Its kernel is (15), and every pair of residues modulo 3 and 5 has a unique residue modulo 15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L179",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "Solve the congruences x ≡ 2 (mod 3) and x ≡ 3 (mod 5). What are all solutions?",
+   "choices": [
+    "x ≡ 8 (mod 15)",
+    "x ≡ 5 (mod 15)",
+    "x ≡ 11 (mod 15)",
+    "x ≡ 13 (mod 15)"
+   ],
+   "answer": "x ≡ 8 (mod 15)",
+   "rationale": "The residue 8 satisfies 8≡2 (mod 3) and 8≡3 (mod 5). Because 3 and 5 are coprime, the solution is unique modulo 15.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L105",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "In F[x], let f and g be nonzero polynomials. Which statement gives the degree of their product?",
+   "choices": [
+    "deg(fg) = deg(f) + deg(g)",
+    "deg(fg) = deg(f) · deg(g)",
+    "deg(fg) = max(deg(f), deg(g))",
+    "deg(fg) = deg(f) − deg(g)"
+   ],
+   "answer": "deg(fg) = deg(f) + deg(g)",
+   "rationale": "Over a field, the product of the leading coefficients of f and g is nonzero. Thus the leading terms do not cancel, and deg(fg) = deg(f) + deg(g).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L105",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "Over the real numbers, what is the remainder when x³ + 2x² − x + 4 is divided by x² + 1?",
+   "choices": [
+    "−2x + 2",
+    "2x − 2",
+    "2x + 2",
+    "−2x − 2"
+   ],
+   "answer": "−2x + 2",
+   "rationale": "The quotient is x + 2 because x³ + 2x² − x + 4 = (x² + 1)(x + 2) + (−2x + 2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L105",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "To prove the factor theorem, divide p(x) by x − a to obtain p(x) = (x − a)q(x) + r, where r is constant. Which step proves that p(a) = 0 implies x − a divides p(x)?",
+   "choices": [
+    "Evaluate at a to get 0 = (a − a)q(a) + r, so r = 0.",
+    "Set q(a) = 0, so the constant r must also be zero.",
+    "Compare degrees to get deg(p) = deg(x − a) + deg(q), so r = 0.",
+    "Divide p(x) by q(x), then evaluate the quotient at a."
+   ],
+   "answer": "Evaluate at a to get 0 = (a − a)q(a) + r, so r = 0.",
+   "rationale": "Evaluating the division identity at a gives p(a) = r. If p(a) = 0, then r = 0, so p(x) = (x − a)q(x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L85",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "In a commutative ring R with 1, which quotient results when I is a maximal ideal?",
+   "choices": [
+    "R/I is a nonfield integral domain.",
+    "R/I is a field.",
+    "R/I has zero divisors.",
+    "R/I has nonzero nilpotents."
+   ],
+   "answer": "R/I is a field.",
+   "rationale": "For a maximal ideal I, the quotient R/I is a field. This follows from the ideal correspondence theorem and the fact that a nonzero proper ideal in R/I would correspond to an ideal strictly between I and R.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L85",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "In a commutative ring R with 1, which condition on R/I is equivalent to I being prime?",
+   "choices": [
+    "R/I is a field.",
+    "R/I has a nonzero proper ideal.",
+    "R/I is an integral domain.",
+    "R/I has a nonzero nilpotent element."
+   ],
+   "answer": "R/I is an integral domain.",
+   "rationale": "A proper ideal I is prime exactly when R/I has no zero divisors, equivalently when R/I is an integral domain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L85",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "In R=Z[x], R/(x)≅Z. Which classification of the ideal (x) is correct?",
+   "choices": [
+    "(x) is maximal but not prime.",
+    "(x) is neither prime nor maximal.",
+    "(x) is prime but not maximal.",
+    "(x) is both prime and maximal."
+   ],
+   "answer": "(x) is prime but not maximal.",
+   "rationale": "The quotient Z is an integral domain but not a field, since 2 has no multiplicative inverse in Z. Therefore (x) is prime but not maximal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L328",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly characterizes a finite extension K/F as a Galois extension?",
+   "choices": [
+    "A finite extension is Galois exactly when it is normal and separable over F.",
+    "A finite extension is Galois exactly when it is normal over F but may be inseparable.",
+    "A finite extension is Galois exactly when it is separable over F but may be nonnormal.",
+    "A finite extension is Galois exactly when it is purely inseparable over F but may be nonnormal."
+   ],
+   "answer": "A finite extension is Galois exactly when it is normal and separable over F.",
+   "rationale": "For a finite extension, being normal and separable is equivalent to being Galois; equivalently, the field has [K:F] automorphisms fixing F.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L328",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Let G be a finite subgroup of Aut(K), and let K^G be the field fixed by every element of G. What does Artin’s fixed-field theorem conclude?",
+   "choices": [
+    "The degree [K:K^G] equals |G|, and K/K^G is Galois.",
+    "The degree [K:K^G] equals |G|!, and K/K^G is Galois.",
+    "The degree [K:K^G] equals |G|, but K/K^G need not be Galois.",
+    "The degree [K:K^G] is at most |G|, but K/K^G is Galois."
+   ],
+   "answer": "The degree [K:K^G] equals |G|, and K/K^G is Galois.",
+   "rationale": "Artin’s theorem states that a finite group of |G| automorphisms gives a fixed-field extension of degree exactly |G|, which is Galois with group G.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L328",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "For a finite extension K/F, which condition is equivalent to K/F being normal?",
+   "choices": [
+    "Every irreducible polynomial over F with a root in K splits completely over K.",
+    "Every irreducible polynomial over F with a root in K has repeated roots over K.",
+    "Every minimal polynomial of an element of K splits completely over F.",
+    "Every irreducible polynomial over F with a root in K has exactly one root over K."
+   ],
+   "answer": "Every irreducible polynomial over F with a root in K splits completely over K.",
+   "rationale": "Normality means that every irreducible polynomial over F having one root in K splits into linear factors over K.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L328",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "For a finite extension K/F, which condition is equivalent to K/F being separable?",
+   "choices": [
+    "The number of F-embeddings of K into an algebraic closure equals [K:F].",
+    "The number of F-embeddings of K into an algebraic closure is at least [K:F].",
+    "Every irreducible polynomial over F having a root in K splits completely over K.",
+    "Every minimal polynomial of an element of K has a repeated root in an algebraic closure."
+   ],
+   "answer": "The number of F-embeddings of K into an algebraic closure equals [K:F].",
+   "rationale": "A finite extension is separable precisely when it has [K:F] distinct embeddings into an algebraic closure; repeated roots instead indicate inseparability.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "In the quotient ring ℤ/8ℤ, which element is the multiplicative inverse of 3?",
+   "choices": [
+    "3",
+    "5",
+    "7",
+    "No inverse exists"
+   ],
+   "answer": "3",
+   "rationale": "In ℤ/8ℤ we need a·3 ≡ 1 (mod 8). 3·3 = 9 ≡ 1 (mod 8), so 3 is its own inverse. 5·3 = 15 ≡ 7, 7·3 = 21 ≡ 5, and an inverse does exist, so the other choices are incorrect.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Let R = ℚ[x]/(x²−2). What is the product (x+1)(x−1) in R?",
+   "choices": [
+    "1",
+    "x",
+    "x²−1",
+    "2"
+   ],
+   "answer": "1",
+   "rationale": "In R we have the relation x² = 2. Hence (x+1)(x−1) = x²−1 = 2−1 = 1. The other options ignore the defining relation or mis‑compute the product.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L62",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Consider the ideal I = (2, x) in ℤ[x]. The quotient ring ℤ[x]/I is isomorphic to which ring?",
+   "choices": [
+    "ℤ₂",
+    "ℤ₄",
+    "ℤ₂[x]",
+    "ℤ"
+   ],
+   "answer": "ℤ₂",
+   "rationale": "Modding out by 2 forces coefficients into ℤ₂, and modding out by x forces the polynomial variable to be zero. Thus ℤ[x]/(2,x) ≅ (ℤ/2ℤ)[x]/(x) ≅ ℤ/2ℤ = ℤ₂. The other rings retain either the polynomial variable or a different modulus.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Let φ:R→S be a surjective unital ring homomorphism. Which statement is the First Isomorphism Theorem?",
+   "choices": [
+    "R/ker(φ) is isomorphic to S.",
+    "S/ker(φ) is isomorphic to R.",
+    "R/im(φ) is isomorphic to S.",
+    "ker(φ) is isomorphic to S."
+   ],
+   "answer": "R/ker(φ) is isomorphic to S.",
+   "rationale": "The First Isomorphism Theorem states that a surjective ring homomorphism φ:R→S induces R/ker(φ)≅S.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A proof defines Φ(r+ker(φ))=φ(r). Which checks establish that Φ is a ring isomorphism?",
+   "choices": [
+    "It is well-defined, preserves multiplication, has zero kernel, and is surjective.",
+    "It is well-defined, preserves addition, has zero kernel, and is surjective.",
+    "It is well-defined, preserves operations, has zero kernel, and is surjective.",
+    "It preserves both operations, is injective, and maps onto the codomain."
+   ],
+   "answer": "It is well-defined, preserves operations, has zero kernel, and is surjective.",
+   "rationale": "Well-definedness and preservation of operations establish a homomorphism, zero kernel establishes injectivity, and surjectivity of φ establishes surjectivity of Φ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L72",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Let R=ℤ, I=(4), and J=(2), so I⊆J. Which quotient-ring isomorphism follows from the Second Isomorphism Theorem?",
+   "choices": [
+    "(ℤ/2ℤ)/(4ℤ/2ℤ) ≅ ℤ/4ℤ",
+    "(ℤ/4ℤ)/(4ℤ/2ℤ) ≅ ℤ/2ℤ",
+    "(ℤ/2ℤ)/(2ℤ/4ℤ) ≅ ℤ/4ℤ",
+    "(ℤ/4ℤ)/(2ℤ/4ℤ) ≅ ℤ/2ℤ"
+   ],
+   "answer": "(ℤ/4ℤ)/(2ℤ/4ℤ) ≅ ℤ/2ℤ",
+   "rationale": "The theorem gives (R/I)/(J/I)≅R/J. Here J/I is 2ℤ/4ℤ, so (ℤ/4ℤ)/(2ℤ/4ℤ)≅ℤ/2ℤ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L211",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Let F be a subfield of a field K. Which description correctly states what the extension K/F is?",
+   "choices": [
+    "A field K that contains a subfield F and uses the same operations.",
+    "A vector space K that contains a subgroup F and uses scalar addition.",
+    "A ring K that contains an ideal F and extends multiplication.",
+    "A group K that contains a field F and preserves multiplication."
+   ],
+   "answer": "A field K that contains a subfield F and uses the same operations.",
+   "rationale": "A field extension K/F is a field K containing F as a subfield, with the field operations inherited from K.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L211",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Consider Q(√2) as a vector space over Q. Which ordered set is a basis?",
+   "choices": [
+    "{1, √2}",
+    "{1, 2}",
+    "{√2, 2√2}",
+    "{1, √2, 2}"
+   ],
+   "answer": "{1, √2}",
+   "rationale": "Every element of Q(√2) has the form a+b√2 with a,b in Q, and the vectors 1 and √2 are linearly independent over Q.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L211",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "When is K/F a finite field extension, and how is its degree determined?",
+   "choices": [
+    "It is finite when K has finitely many elements over F; its degree is |K|/|F|.",
+    "It is finite when dim_F K is finite; its degree equals dim_F K.",
+    "It is finite when K is algebraic over F; its degree equals dim_F F.",
+    "It is finite when K contains F; its degree equals dim_K F."
+   ],
+   "answer": "It is finite when dim_F K is finite; its degree equals dim_F K.",
+   "rationale": "The degree of K over F is defined as the dimension of K as an F-vector space, and the extension is finite when this dimension is finite.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L127",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Let R be a Euclidean domain with Euclidean function d. Which argument proves that every ideal I of R is principal?",
+   "choices": [
+    "Choose a nonzero a in I with minimal d(a). For b in I, divide b=qa+r; if r≠0, then d(r)<d(a) and r lies in I, a contradiction.",
+    "Choose a nonzero a in I with maximal d(a). For b in I, divide b=qa+r; the remainder r lies in I, so every b is a multiple of a.",
+    "For each b in I, use Euclidean division of b by a fixed generator c. Since r=b−qc lies in I, every remainder is also in I.",
+    "Use Euclidean division of every pair of elements of I. Repeated division terminates at a common divisor, which generates I."
+   ],
+   "answer": "Choose a nonzero a in I with minimal d(a). For b in I, divide b=qa+r; if r≠0, then d(r)<d(a) and r lies in I, a contradiction.",
+   "rationale": "A nonzero ideal has an element a of minimal Euclidean value. Euclidean division of any b∈I produces a remainder r in I with d(r)<d(a) unless r=0, so minimality forces r=0. Thus every b is a multiple of a and I=(a).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L127",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "In a PID R, which statement correctly gives the defining properties of a greatest common divisor of nonzero elements a and b?",
+   "choices": [
+    "It divides a and b, every common divisor divides it, and any two gcds differ by a unit.",
+    "It is a common multiple of a and b, every common divisor divides it, and any two gcds are equal.",
+    "It divides exactly one of a and b, every common multiple divides it, and any two gcds differ by a unit.",
+    "It divides a and b, every common multiple divides it, and any two gcds differ by a unit."
+   ],
+   "answer": "It divides a and b, every common divisor divides it, and any two gcds differ by a unit.",
+   "rationale": "A gcd is a common divisor that is divisible by every common divisor. Gcds are unique only up to multiplication by a unit, so any two gcds are associates.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L127",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "In a PID R, let p be irreducible. Which argument proves that p is prime?",
+   "choices": [
+    "If p divides ab and p does not divide a, then gcd(p,a)=1. Bézout gives xp+ya=1; multiplying by b shows p divides b.",
+    "If p divides ab and p does not divide a, then gcd(p,a)=p. Bézout gives xp+ya=1; multiplying by b shows p divides b.",
+    "If p divides ab and p does not divide a, then p is a common divisor of a and b. Bézout gives xp+ya=1; multiplying by b shows p divides b.",
+    "If p divides ab, divide a and b by p. Their remainders multiply to zero in the quotient ring, so one remainder must be zero."
+   ],
+   "answer": "If p divides ab and p does not divide a, then gcd(p,a)=1. Bézout gives xp+ya=1; multiplying by b shows p divides b.",
+   "rationale": "Because p is irreducible and does not divide a, its gcd with a is a unit, so Bézout provides xp+ya=1. If p divides ab, multiplying by b shows that p divides b; therefore p is prime.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "linear_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "For finite extensions K ⊆ F ⊆ L, which degree relationship follows from the Tower Law?",
+   "choices": [
+    "[L:K] = [L:F][F:K]",
+    "[L:K] = [L:F] + [F:K]",
+    "[L:F] = [L:K][F:K]",
+    "[F:K] = [L:K][L:F]"
+   ],
+   "answer": "[L:K] = [L:F][F:K]",
+   "rationale": "The Tower Law states that the degree of a tower equals the product of the degrees in its two levels: [L:K] = [L:F][F:K].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "linear_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "Let K ⊆ F ⊆ L be finite. Which argument correctly proves the Tower Law?",
+   "choices": [
+    "A basis of L over F and a basis of F over K together form a K-basis of L.",
+    "A basis of L over K and a basis of F over K together form an F-basis of L.",
+    "A basis of L over F and a basis of F over K together form an L-basis of F.",
+    "A basis of L over F and a basis of F over K together form a K-basis of F."
+   ],
+   "answer": "A basis of L over F and a basis of F over K together form a K-basis of L.",
+   "rationale": "Expanding each F-coefficient in a K-basis of F shows that the two bases together form a K-basis of L, giving [L:K] = [L:F][F:K].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L221",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "linear_algebra",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "Let L/K be a finite extension with [L:K] = 4, and let K ⊆ E ⊆ L. Which value for [E:K] is ruled out by the Tower Law?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "3",
+   "rationale": "The Tower Law gives 4 = [L:E][E:K], so [E:K] must divide 4. Therefore a degree of 3 is impossible.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L318",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "Let K/F be a field extension. Which description defines Aut(K/F)?",
+   "choices": [
+    "The group of field automorphisms of K that fix every element of F.",
+    "The group of field automorphisms of F that fix every element of K.",
+    "The group of field embeddings of K into K that need not fix F.",
+    "The group of permutations of K preserving addition but not multiplication."
+   ],
+   "answer": "The group of field automorphisms of K that fix every element of F.",
+   "rationale": "An F-automorphism of K is a field automorphism K→K whose restriction to the identity on F. These automorphisms, under composition, form Aut(K/F).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L318",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "For a finite field extension K/F, which statement gives the standard bound on its automorphism group?",
+   "choices": [
+    "The order of Aut(K/F) is at most [K:F].",
+    "The order of Aut(K/F) is at least [K:F].",
+    "The order of Aut(K/F) is always exactly [K:F].",
+    "The order of Aut(K/F) is at most twice [K:F]."
+   ],
+   "answer": "The order of Aut(K/F) is at most [K:F].",
+   "rationale": "Each F-automorphism is an F-linear map of the [K:F]-dimensional vector space K over F. Distinct such automorphisms are linearly independent, so |Aut(K/F)| ≤ [K:F].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L318",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "Let K be the splitting field of x³ − 2 over the rational numbers. Which group is Aut(K/Q) isomorphic to?",
+   "choices": [
+    "The cyclic group of order 3",
+    "The Klein four group",
+    "The symmetric group S₃",
+    "The cyclic group of order 6"
+   ],
+   "answer": "The symmetric group S₃",
+   "rationale": "Writing α = ∛2 and ω for a primitive cube root of unity gives K = Q(α,ω). Its degree is 6, and its automorphisms act by α ↦ ωⁱα and ω ↦ ω or ω², yielding S₃.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The Galois group of x^3−2 over ℚ is isomorphic to S3.",
+      "url": "https://en.wikipedia.org/wiki/Galois_group",
+      "quote": "is isomorphic to S 3 , the dihedral group of order 6 , and L is in fact the splitting field of",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L276",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "Let L and M be splitting fields of the same polynomial f over a field F. Which statement is always true?",
+   "choices": [
+    "They are equal as subfields of one fixed field.",
+    "They are isomorphic only when f is separable.",
+    "There is a unique F-isomorphism from L to M.",
+    "There exists an F-isomorphism from L to M."
+   ],
+   "answer": "There exists an F-isomorphism from L to M.",
+   "rationale": "Splitting fields of the same polynomial over F are unique up to F-isomorphism; the isomorphism need not be unique.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L276",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "Over ℚ, which field is the splitting field of x⁴−1?",
+   "choices": [
+    "ℚ",
+    "ℚ(i)",
+    "ℚ(√2)",
+    "ℚ(√3)"
+   ],
+   "answer": "ℚ(i)",
+   "rationale": "The roots are 1, −1, i, and −i, so all roots lie in ℚ(i), which is therefore the splitting field.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L276",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "Let α be a positive real fourth root of 2. The splitting field of x⁴−2 over ℚ is ℚ(α, i). What is its degree over ℚ?",
+   "choices": [
+    "4",
+    "6",
+    "8",
+    "12"
+   ],
+   "answer": "8",
+   "rationale": "Eisenstein’s criterion gives [ℚ(α):ℚ]=4. Since ℚ(α) is real, adjoining i has degree 2, so the total degree is 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L574",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "In SymPy, what value is returned by GF(5)(3)**(-1)?",
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ],
+   "answer": "2",
+   "rationale": "A negative exponent in the nonzero finite field GF(5) requests the multiplicative inverse. Since 3 times 2 is congruent to 1 modulo 5, the result is 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L574",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "In SymPy, what is the minimal polynomial over the rationals of sqrt(2) + sqrt(3)?",
+   "choices": [
+    "x**4 - 10*x**2 + 1",
+    "x**4 - 10*x**2 - 1",
+    "x**4 - 12*x**2 + 1",
+    "x**4 - 10*x**2 + 4"
+   ],
+   "answer": "x**4 - 10*x**2 + 1",
+   "rationale": "If α = sqrt(2) + sqrt(3), then (α**2 - 5)**2 = 24, giving the monic minimal polynomial x**4 - 10*x**2 + 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L574",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "In SageMath, what is the Galois group of x**4 - 2 over the rational numbers?",
+   "choices": [
+    "Dihedral group of order 8",
+    "Cyclic group of order 8",
+    "Klein four group of order 4",
+    "Symmetric group S4 of order 24"
+   ],
+   "answer": "Dihedral group of order 8",
+   "rationale": "The splitting field is Q(2**(1/4), i), which has degree 8. Its Galois group is dihedral, not the full symmetric group S4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L532",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 532,
+   "format": "multiple_choice",
+   "prompt": "Which description correctly defines the category Top of topological spaces?",
+   "choices": [
+    "Spaces are objects, continuous maps are morphisms, and identities and composition satisfy the axioms.",
+    "Open sets are objects, all set inclusions are morphisms, and composition is ordinary inclusion.",
+    "Spaces are objects, all set functions are morphisms, and composition is ordinary function composition.",
+    "Continuous maps are objects, spaces are morphisms, and identities are constant maps."
+   ],
+   "answer": "Spaces are objects, continuous maps are morphisms, and identities and composition satisfy the axioms.",
+   "rationale": "A category consists of objects and morphisms, each object has an identity morphism, and composition is associative. In Top, the objects are topological spaces and the morphisms are continuous maps.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L532",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 532,
+   "format": "multiple_choice",
+   "prompt": "Which assignment defines the usual forgetful functor U from Grp to Set?",
+   "choices": [
+    "Send each group to its automorphism group and each homomorphism to a conjugation action.",
+    "Send each group to its quotient by commutators and each homomorphism to the induced map.",
+    "Send each group to its underlying set and each homomorphism to its underlying function.",
+    "Send each group to its power set and each homomorphism to the inverse-image function."
+   ],
+   "answer": "Send each group to its underlying set and each homomorphism to its underlying function.",
+   "rationale": "The forgetful functor sends a group to its set of elements and a group homomorphism to the corresponding function. This preserves identities and composition.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L532",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 532,
+   "format": "multiple_choice",
+   "prompt": "For functors F,C from Grp to Set and a homomorphism f:G→H, which equation expresses the naturality of a transformation η:F⇒C?",
+   "choices": [
+    "C(f)∘η_Y = η_X∘F(f)",
+    "C(f)∘η_X = η_Y∘F(f)",
+    "η_X∘C(f) = F(f)∘η_Y",
+    "η_Y∘C(f) = F(f)∘η_X"
+   ],
+   "answer": "C(f)∘η_X = η_Y∘F(f)",
+   "rationale": "Naturality requires that applying C to f after η agrees with applying f after η. Thus C(f)∘η_X and η_Y∘F(f) must be equal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L552",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "For a binary Hamming code, the parity-check matrix H has columns 001, 010, 011, 100, 101, 110, 111 in order. Which vector is a codeword?",
+   "choices": [
+    "1101001",
+    "1101010",
+    "1101000",
+    "1100011"
+   ],
+   "answer": "1101001",
+   "rationale": "The columns corresponding to the 1s in 1101001 are 001, 010, 100, and 111; their sum over GF(2) is 000, so Hcᵀ=0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L552",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "A binary [7,4,3] Hamming code has minimum distance 3. What are the greatest numbers of arbitrary bit errors it can correct and detect, respectively?",
+   "choices": [
+    "1 correctable; 2 detectable",
+    "2 correctable; 3 detectable",
+    "1 correctable; 1 detectable",
+    "2 correctable; 2 detectable"
+   ],
+   "answer": "1 correctable; 2 detectable",
+   "rationale": "A code of minimum distance d corrects floor((d−1)/2) errors and detects up to d−1 errors. For d=3, these numbers are 1 and 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L552",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "A Reed–Solomon code evaluates degree-at-most-3 messages over GF(8) at all seven nonzero field elements. Which pair gives its dimension and minimum distance?",
+   "choices": [
+    "[7,4] with d=4",
+    "[7,3] with d=5",
+    "[8,4] with d=4",
+    "[7,4] with d=5"
+   ],
+   "answer": "[7,4] with d=4",
+   "rationale": "Four coefficients give dimension k=4, and n=7 evaluations give length 7. Reed–Solomon codes are MDS, so d=n−k+1=4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L552",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "For a binary Hamming code with parity-check columns 001, 010, 011, 100, 101, 110, 111, the received word is 1101010. What is the syndrome, and which bit should be flipped?",
+   "choices": [
+    "Syndrome 001; flip bit 1",
+    "Syndrome 010; flip bit 2",
+    "Syndrome 100; flip bit 4",
+    "Syndrome 110; flip bit 6"
+   ],
+   "answer": "Syndrome 001; flip bit 1",
+   "rationale": "The 1s occur in positions 1, 2, 4, and 6, whose columns XOR to 001. This identifies an error in position 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L509",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 509,
+   "format": "multiple_choice",
+   "prompt": "Which universal-property statement holds for M ⊗_R N?",
+   "choices": [
+    "Every bilinear g: M × N → A induces a unique linear f: M ⊗_R N → A.",
+    "Every linear f: M ⊗_R N → A induces a unique bilinear g: M × N → A.",
+    "Every bilinear g induces a linear f: M ⊗_R N → A, possibly nonunique.",
+    "Every linear f induces a bilinear g: M × N → A, possibly nonexistent."
+   ],
+   "answer": "Every bilinear g: M × N → A induces a unique linear f: M ⊗_R N → A.",
+   "rationale": "The tensor map f is defined by f(m ⊗ n) = g(m, n). Bilinearity makes f well-defined and linear, and the universal property guarantees its uniqueness.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L509",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 509,
+   "format": "multiple_choice",
+   "prompt": "What is (ℤ/2ℤ) ⊗_ℤ (ℤ/3ℤ)?",
+   "choices": [
+    "The zero abelian group",
+    "The group ℤ/2ℤ",
+    "The group ℤ/3ℤ",
+    "The group ℤ/6ℤ"
+   ],
+   "answer": "The zero abelian group",
+   "rationale": "For integers m and n, (ℤ/mℤ) ⊗_ℤ (ℤ/nℤ) ≅ ℤ/gcd(m,n)ℤ. Since gcd(2,3) = 1, this tensor product is the zero group.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L509",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 509,
+   "format": "multiple_choice",
+   "prompt": "Let M, N, and P be modules over a commutative ring R. Which canonical isomorphism holds?",
+   "choices": [
+    "(M ⊕ N) ⊗_R P ≅ (M ⊗_R P) ⊕ (N ⊗_R P).",
+    "(M ⊕ N) ⊗_R P ≅ M ⊗_R (N ⊕ P).",
+    "(M ⊕ N) ⊗_R P ≅ (M ⊕ P) ⊗_R N.",
+    "(M ⊕ N) ⊗_R P ≅ M ⊗_R N ⊗_R P."
+   ],
+   "answer": "(M ⊕ N) ⊗_R P ≅ (M ⊗_R P) ⊕ (N ⊗_R P).",
+   "rationale": "The universal property and bilinearity show that tensoring over R preserves direct sums in either argument, giving the stated canonical isomorphism.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L509",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 509,
+   "format": "multiple_choice",
+   "prompt": "For a field extension K/F and finite-dimensional F-vector space V, what is V ⊗_F K?",
+   "choices": [
+    "It is a K-vector space with dim_K equal to dim_F V.",
+    "It is a K-vector space with dim_K equal to [K:F] dim_F V.",
+    "It is a K-vector space with dim_K equal to (dim_F V)².",
+    "It is a K-vector space with dim_K equal to dim_F V + [K:F]."
+   ],
+   "answer": "It is a K-vector space with dim_K equal to dim_F V.",
+   "rationale": "If v₁,…,vₙ is an F-basis of V, then v₁⊗1,…,vₙ⊗1 is a K-basis of V ⊗_F K. Thus its K-dimension is n = dim_F V.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L201",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "For ideals I_1 ⊆ I_2 ⊆ ⋯ of a ring R, which condition states the ascending chain condition?",
+   "choices": [
+    "For some N, the chain reaches the zero ideal (0).",
+    "For some N, I_n equals I_N for every n at least N.",
+    "Every ascending chain contains infinitely many distinct ideals in R.",
+    "For some N, the first N ideals agree, but later ideals may differ."
+   ],
+   "answer": "For some N, I_n equals I_N for every n at least N.",
+   "rationale": "The ascending chain condition means that an ascending chain of ideals eventually stabilizes: after some N, every later ideal equals I_N. It does not require the chain to reach the zero ideal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L201",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Let A be a Noetherian ring. What does Hilbert's basis theorem state about the polynomial ring A[x]?",
+   "choices": [
+    "A[x] becomes a field whenever A contains the number 1.",
+    "Every polynomial in A[x] is guaranteed to have degree at most one.",
+    "A[x] is Noetherian, so its ideals satisfy the ascending chain condition.",
+    "Every ideal of A[x] is principal, generated by one polynomial."
+   ],
+   "answer": "A[x] is Noetherian, so its ideals satisfy the ascending chain condition.",
+   "rationale": "Hilbert's basis theorem states that if A is Noetherian, then A[x] is also Noetherian. Consequently, every ascending chain of ideals in A[x] stabilizes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L201",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "In the standard leading-coefficient proof of Hilbert's basis theorem, what does Noetherianity of A guarantee about a chain of coefficient ideals?",
+   "choices": [
+    "The chain reaches the zero ideal after finitely many steps.",
+    "Every ideal appearing in the chain is principal.",
+    "The chain contains infinitely many distinct coefficient ideals.",
+    "The chain stabilizes, allowing the polynomial ideals to stabilize as well."
+   ],
+   "answer": "The chain stabilizes, allowing the polynomial ideals to stabilize as well.",
+   "rationale": "Noetherianity ensures that chains of ideals in A stabilize. The proof uses this stabilization of relevant coefficient ideals to control the associated ideals in A[x].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L201",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Why does Hilbert's basis theorem imply that every ideal of A[x] is finitely generated when A is Noetherian?",
+   "choices": [
+    "The theorem makes A[x] a field, so every nonzero ideal is the whole ring.",
+    "The theorem makes A[x] Noetherian, and every ideal of a Noetherian ring is finitely generated.",
+    "The theorem makes every ideal of A[x] principal, generated by one polynomial.",
+    "The theorem makes every polynomial in A[x] a unit in A[x]."
+   ],
+   "answer": "The theorem makes A[x] Noetherian, and every ideal of a Noetherian ring is finitely generated.",
+   "rationale": "Hilbert's basis theorem gives that A[x] is Noetherian. By the equivalent ideal formulation of Noetherianity, every ideal of A[x], including every polynomial ideal, has a finite generating set.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L425",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "Which defines a unital left R-module M?",
+   "choices": [
+    "An abelian group M with a scalar action obeying distributivity, associativity, and 1m=m.",
+    "An abelian group M with a scalar action obeying only the two distributivity laws.",
+    "A commutative group M with a scalar action obeying associativity and 1m=m.",
+    "A set M with a scalar action obeying associativity but no group structure."
+   ],
+   "answer": "An abelian group M with a scalar action obeying distributivity, associativity, and 1m=m.",
+   "rationale": "A unital left R-module is an abelian group whose scalar action satisfies both distributivity laws, associativity of scalar multiplication, and the identity law 1m=m.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L425",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "Which correctly identifies two modules?",
+   "choices": [
+    "An F-vector space is not an F-module; an abelian group is a Z-module.",
+    "An F-vector space is only a Z-module; an abelian group is only a Q-module.",
+    "An F-vector space is an F-module; an abelian group is a Z-module.",
+    "An F-vector space is an F-module; an abelian group is not a Z-module."
+   ],
+   "answer": "An F-vector space is an F-module; an abelian group is a Z-module.",
+   "rationale": "Vector-space scalar multiplication is exactly a module action over F, and every abelian group naturally has a module action over Z.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L425",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "Why is an ideal I of a ring R an R-module under usual multiplication?",
+   "choices": [
+    "Addition is preserved on I, but nonzero multiplication can leave I.",
+    "Multiplication by each r∈R preserves I and satisfies all module axioms.",
+    "Multiplication by each r∈R preserves I but fails to preserve addition.",
+    "Only zero multiplication can act on I while satisfying the module axioms."
+   ],
+   "answer": "Multiplication by each r∈R preserves I and satisfies all module axioms.",
+   "rationale": "For x∈I, the ideal property gives rx∈I for every r∈R. The usual addition and multiplication on I therefore satisfy all module axioms.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L425",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "For vector spaces V,W over F, which condition makes T:V→W an F-module homomorphism?",
+   "choices": [
+    "T(v+w)=T(v)+T(w) for all v,w∈V, with no scalar condition.",
+    "T(av)=aT(v) for all v∈V and a∈F, with no addition condition.",
+    "T(v+w)=T(v)+T(w) and T(av)=T(a)T(v) for all v,w∈V and a∈F.",
+    "T(v+w)=T(v)+T(w) and T(av)=aT(v) for all v,w∈V and a∈F."
+   ],
+   "answer": "T(v+w)=T(v)+T(w) and T(av)=aT(v) for all v,w∈V and a∈F.",
+   "rationale": "An F-module homomorphism must preserve both the group operation and scalar multiplication. These two requirements are exactly the definition of an F-linear map.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L467",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "Which statement is the structure theorem for a finitely generated module M over a PID R?",
+   "choices": [
+    "M ≅ R^r ⊕ ⊕R/(d_i), where d_1 ∣ ⋯ ∣ d_t are nonzero.",
+    "M ≅ R^r ⊕ ⊕R/(d_i), where every d_i is a unit.",
+    "M ≅ R^r ⊕ ⊕R/(d_i), where the nonzero d_i are pairwise coprime.",
+    "M ≅ R^r ⊕ ⊕R/(d_i), with no divisibility relation among the d_i."
+   ],
+   "answer": "M ≅ R^r ⊕ ⊕R/(d_i), where d_1 ∣ ⋯ ∣ d_t are nonzero.",
+   "rationale": "The theorem gives a free part R^r and finitely many cyclic torsion summands R/(d_i), whose nonzero invariant factors are ordered by divisibility.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L467",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "For M = Z/8Z ⊕ Z/12Z, which pair is its invariant-factor decomposition?",
+   "choices": [
+    "Z/2Z ⊕ Z/48Z",
+    "Z/4Z ⊕ Z/24Z",
+    "Z/6Z ⊕ Z/16Z",
+    "Z/8Z ⊕ Z/12Z"
+   ],
+   "answer": "Z/4Z ⊕ Z/24Z",
+   "rationale": "Combining the primary components gives Z/8Z ⊕ Z/4Z ⊕ Z/3Z, which rearranges to Z/4Z ⊕ Z/24Z; moreover, 4 divides 24.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L467",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "For M = Z²/⟨(2,0),(0,3)⟩, what are the free rank and the order of its torsion subgroup?",
+   "choices": [
+    "(0, 2)",
+    "(0, 3)",
+    "(0, 6)",
+    "(1, 6)"
+   ],
+   "answer": "(0, 6)",
+   "rationale": "The two independent relations have index 6 in Z², so the quotient is finite of order 6 and has free rank 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L467",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "Which is the elementary-divisor decomposition of the finite abelian group Z/12Z ⊕ Z/18Z?",
+   "choices": [
+    "Z/2Z ⊕ Z/2Z ⊕ Z/9Z ⊕ Z/3Z",
+    "Z/4Z ⊕ Z/2Z ⊕ Z/9Z ⊕ Z/3Z",
+    "Z/4Z ⊕ Z/2Z ⊕ Z/9Z ⊕ Z/9Z",
+    "Z/12Z ⊕ Z/18Z"
+   ],
+   "answer": "Z/4Z ⊕ Z/2Z ⊕ Z/9Z ⊕ Z/3Z",
+   "rationale": "Z/12Z splits as Z/4Z ⊕ Z/3Z, and Z/18Z splits as Z/2Z ⊕ Z/9Z, yielding the listed prime-power cyclic factors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L499",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "Which condition defines a Boolean ring?",
+   "choices": [
+    "Every element x satisfies x² = x.",
+    "Every element x satisfies x³ = x.",
+    "Every element x satisfies x² = −x.",
+    "Every element x satisfies x² = 0."
+   ],
+   "answer": "Every element x satisfies x² = x.",
+   "rationale": "A Boolean ring is a ring in which every element is idempotent, meaning x² = x. This condition also forces characteristic 2 and commutativity.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L499",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "In a Boolean ring R with identity 1, which formulas give the lattice meet and join of a and b?",
+   "choices": [
+    "meet: ab; join: a + b + ab",
+    "meet: a + b; join: ab",
+    "meet: a + b + ab; join: ab",
+    "meet: ab; join: a + b"
+   ],
+   "answer": "meet: ab; join: a + b + ab",
+   "rationale": "Multiplication gives the meet, while a + b + ab gives the join. Addition represents symmetric difference in the corresponding Boolean algebra.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L499",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "Let R be a unital Boolean ring and I a maximal ideal. Which statement about R \\ I is correct?",
+   "choices": [
+    "An ultrafilter, meaning a maximal proper filter.",
+    "A principal ideal that is maximal among ideals.",
+    "A maximal ideal containing every proper filter.",
+    "A proper filter that is minimal among filters."
+   ],
+   "answer": "An ultrafilter, meaning a maximal proper filter.",
+   "rationale": "The complement of a maximal ideal in a unital Boolean ring is an ultrafilter. In Boolean-algebra terms, it is a maximal proper filter.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L499",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly gives Stone’s representation theorem?",
+   "choices": [
+    "Every Boolean algebra is isomorphic to the clopen subsets of its Stone space.",
+    "Every Boolean algebra is isomorphic to all subsets of its Stone space.",
+    "Every Boolean algebra is isomorphic to the compact subsets of its Stone space.",
+    "Every Boolean algebra is isomorphic to the open subsets of its Stone space."
+   ],
+   "answer": "Every Boolean algebra is isomorphic to the clopen subsets of its Stone space.",
+   "rationale": "Stone’s theorem identifies each Boolean algebra, up to isomorphism, with the Boolean algebra of clopen subsets of its Stone space.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L266",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "Let α=Σ_{k=1}∞10^{-k!}. Its mth truncation has denominator 10^{m!} and error below 2·10^{-(m+1)!}. For algebraic α of degree d, |α-p/q|>C/q^d. As m grows, what conclusion follows?",
+   "choices": [
+    "α is algebraic of degree d.",
+    "α must be a transcendental number.",
+    "α is rational but not an integer.",
+    "α has algebraic degree d+1."
+   ],
+   "answer": "α must be a transcendental number.",
+   "rationale": "For sufficiently large m, the truncation error is smaller than the Liouville lower bound for any fixed degree d. This contradicts α being algebraic, so α is transcendental.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Liouville's theorem shows numbers like Σ 10^{-k!} are transcendental because they admit too good rational approximations.",
+      "url": "https://en.wikipedia.org/wiki/Liouville_number",
+      "quote": "A Liouville number is irrational but does not have this property, so it cannot be algebraic and must be transcendental.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L266",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "Assume π is algebraic and apply Lindemann–Weierstrass to iπ. Which implication gives a contradiction?",
+   "choices": [
+    "iπ is nonzero algebraic, so e^{iπ} is transcendental; yet e^{iπ}=−1.",
+    "iπ is nonzero algebraic, so e^{iπ} is algebraic; yet e^{iπ}=−1.",
+    "iπ is nonzero transcendental, so e^{iπ} is algebraic; yet e^{iπ}=−1.",
+    "iπ is nonzero transcendental, so e^{iπ} is transcendental; yet e^{iπ}=−1."
+   ],
+   "answer": "iπ is nonzero algebraic, so e^{iπ} is transcendental; yet e^{iπ}=−1.",
+   "rationale": "If π were algebraic, then iπ would be nonzero algebraic. Lindemann–Weierstrass would make e^{iπ} transcendental, contradicting e^{iπ}=−1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Lindemann–Weierstrass: if α≠0 is algebraic then e^α is transcendental; applying to α=iπ gives a contradiction since e^{iπ}=−1 is algebraic.",
+      "url": "https://en.wikipedia.org/wiki/Lindemann%E2%80%93Weierstrass_theorem",
+      "quote": "If π were algebraic, π i would be algebraic as well, and then by the Lindemann–Weierstrass theorem e = −1 (see Euler's identity ) would be transcendental, a contradiction.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L266",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "analysis",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "In Hermite’s factorial-series proof, an auxiliary polynomial makes a certain linear combination an integer. What contradiction appears as the truncation parameter tends to infinity?",
+   "choices": [
+    "The integer tends to zero but remains nonzero.",
+    "The integer grows beyond every fixed bound.",
+    "The integer equals e for every truncation.",
+    "The integer becomes zero at every truncation."
+   ],
+   "answer": "The integer tends to zero but remains nonzero.",
+   "rationale": "Hermite’s construction produces a nonzero integer whose absolute value tends to zero. This is impossible because every nonzero integer has absolute value at least 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Hermite's proof produces a non‑zero integer bounded between 0 and 1, a contradiction.",
+      "url": "https://en.wikipedia.org/wiki/Proof_that_e_is_irrational",
+      "quote": "x must be a positive integer. However, the fast convergence of the series representation implies that x is still strictly smaller than 1. From this contradiction we deduce that e is irrational.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L447",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 447,
+   "format": "multiple_choice",
+   "prompt": "For the Z‑module M = Z ⊕ Z/3Z, which statement is true?",
+   "choices": [
+    "M is a free Z-module",
+    "M has a non‑zero torsion submodule",
+    "M is a torsion module",
+    "M is not finitely generated"
+   ],
+   "answer": "M has a non‑zero torsion submodule",
+   "rationale": "Z ⊕ Z/3Z is finitely generated, contains the torsion submodule 0 ⊕ Z/3Z, and is not free because of that torsion. The other statements are false.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L447",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 447,
+   "format": "multiple_choice",
+   "prompt": "Let M be a free Z-module with basis {e₁, e₂}, and let N = ⟨2e₁, 3e₂⟩. What is rank_Z(N)?",
+   "choices": [
+    "Rank 2",
+    "Rank 1",
+    "Rank 3",
+    "Rank 0"
+   ],
+   "answer": "Rank 2",
+   "rationale": "The elements 2e₁ and 3e₂ form a Z-basis of N, so N ≅ Z ⊕ Z and has rank 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L447",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 447,
+   "format": "multiple_choice",
+   "prompt": "For a finitely generated Z-module M, which condition is equivalent to M being free?",
+   "choices": [
+    "M has no nonzero element of finite order.",
+    "M has a finite set of generators.",
+    "M has some nonzero element of finite order.",
+    "M has exactly one module generator."
+   ],
+   "answer": "M has no nonzero element of finite order.",
+   "rationale": "A finitely generated module over Z is free exactly when it is torsion-free, meaning no nonzero element has finite order.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L447",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 447,
+   "format": "multiple_choice",
+   "prompt": "Let M be generated by x, y with relations 2x + 3y = 0 and 4x − y = 0. Using column relations in Z², which matrix A presents M as Z²/im(A)?",
+   "choices": [
+    "A = [[2, 4], [3, -1]]",
+    "A = [[2, 3], [4, -1]]",
+    "A = [[2, 4], [-3, 1]]",
+    "A = [[3, 1], [2, -4]]"
+   ],
+   "answer": "A = [[2, 4], [3, -1]]",
+   "rationale": "The relation vectors (2, 3)ᵀ and (4, -1)ᵀ are placed as columns, giving A = [[2, 4], [3, -1]].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L308",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "For f(x)=x^3-2 in Q[x], which statement correctly determines whether f is separable?",
+   "choices": [
+    "f is separable because gcd(f,3x^2)=1.",
+    "f is inseparable because f′=3x^2 has degree 2.",
+    "f is inseparable because f′ shares the factor x^3.",
+    "f is separable because its derivative is 3x^2."
+   ],
+   "answer": "f is separable because gcd(f,3x^2)=1.",
+   "rationale": "A common root of f and f′ would be a repeated root. Since f(0)=-2, the only root of f′=3x^2 is 0, so gcd(f,f′)=1 and f is separable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L308",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "Which argument proves that every irreducible polynomial g over a characteristic-zero field is separable?",
+   "choices": [
+    "g′ is nonzero and has smaller degree, so gcd(g,g′)=1.",
+    "g′ has a root in the base field, so g and g′ are coprime.",
+    "In characteristic zero, g′ always equals g.",
+    "Every polynomial over a characteristic-zero field is linear."
+   ],
+   "answer": "g′ is nonzero and has smaller degree, so gcd(g,g′)=1.",
+   "rationale": "In characteristic zero, g′ is nonzero and deg(g′)<deg(g). Since g is irreducible, any common divisor of g and g′ would be g or 1; the degree inequality rules out g.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L308",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "Over a finite field F_q, which statement about irreducible polynomials is correct?",
+   "choices": [
+    "Every irreducible polynomial is separable because finite fields are perfect.",
+    "Some irreducible polynomials are inseparable because their derivatives can vanish.",
+    "Every polynomial with zero derivative is irreducible and separable.",
+    "Irreducible polynomials are inseparable exactly when their degrees are divisible by the characteristic."
+   ],
+   "answer": "Every irreducible polynomial is separable because finite fields are perfect.",
+   "rationale": "Every finite field is perfect: every algebraic extension is separable. Consequently, every irreducible polynomial over F_q has no repeated roots and is separable, even when its degree is divisible by the characteristic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Every finite field is perfect, so all irreducible polynomials over it are separable.",
+      "url": "https://en.wikipedia.org/wiki/Separable_extension",
+      "quote": "A field F is perfect if and only if all irreducible polynomials are separable.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L477",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 477,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly defines a representation of a group G?",
+   "choices": [
+    "A group homomorphism from G into GL(V), where V is a vector space.",
+    "A group homomorphism from V into G, where V is a vector space.",
+    "A linear map from G into a vector space V over the same field.",
+    "An action of V on G that preserves the group operation."
+   ],
+   "answer": "A group homomorphism from G into GL(V), where V is a vector space.",
+   "rationale": "A representation of G on V is precisely a group homomorphism ρ:G→GL(V), equivalently an action of G on V by invertible linear maps.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L477",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 477,
+   "format": "multiple_choice",
+   "prompt": "For a finite group G over a field F, when does Maschke's theorem guarantee that every finite-dimensional representation is completely reducible?",
+   "choices": [
+    "char(F) is positive and divides |G|.",
+    "F is not algebraically closed and char(F) divides |G|.",
+    "char(F)=0 or char(F) does not divide |G|.",
+    "F is algebraically closed, regardless of whether char(F) divides |G|."
+   ],
+   "answer": "char(F)=0 or char(F) does not divide |G|.",
+   "rationale": "Maschke's theorem applies when the field's characteristic is zero or does not divide the order of the finite group.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L477",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 477,
+   "format": "multiple_choice",
+   "prompt": "Over C, what does Schur's lemma imply for an irreducible finite-dimensional representation ρ of a finite group G?",
+   "choices": [
+    "Every G-equivariant endomorphism of V is the identity map.",
+    "Every linear endomorphism of V commutes with ρ(G).",
+    "Every G-equivariant endomorphism of V is a scalar multiple of the identity.",
+    "Every G-equivariant endomorphism of V is the zero map."
+   ],
+   "answer": "Every G-equivariant endomorphism of V is a scalar multiple of the identity.",
+   "rationale": "For an irreducible complex representation, End_G(V)=C·I, so every endomorphism commuting with the group action is scalar.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L435",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Let φ: M → M' be an R‑module homomorphism. By the First Isomorphism Theorem, which module is canonically isomorphic to im φ?",
+   "choices": [
+    "M / ker φ",
+    "ker φ / M",
+    "M' / im φ",
+    "M ⊕ ker φ"
+   ],
+   "answer": "M / ker φ",
+   "rationale": "The First Isomorphism Theorem for modules states that the image of φ is isomorphic to the quotient of the domain by the kernel.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The First Isomorphism Theorem states that M/ker φ is canonically isomorphic to im φ.",
+      "url": "https://en.wiktionary.org/wiki/first_isomorphism_theorem",
+      "quote": "( mathematics , algebra , group theory ) The theorem in group theory that, for any group homomorphism , the quotient group of the group by the kernel of the homomorphism is isomorphic to the image of the homomorphism.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L435",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Let M = ℤ² and H = spanℤ{(2,1), (1,2)}. Which description of the submodule H is correct?",
+   "choices": [
+    "{(x,y) ∈ ℤ² : x − y is divisible by 3}",
+    "{(x,y) ∈ ℤ² : x + y is divisible by 3}",
+    "{(x,y) ∈ ℤ² : x is divisible by 3}",
+    "{(x,y) ∈ ℤ² : x + y is even}"
+   ],
+   "answer": "{(x,y) ∈ ℤ² : x + y is divisible by 3}",
+   "rationale": "The generators satisfy x + y ≡ 0 (mod 3), and the span has index 3 in ℤ², as does this congruence subgroup; hence they are equal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L435",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Let K and N be submodules of an R-module M. Which pair of quotient modules is canonically isomorphic by the Second Isomorphism Theorem?",
+   "choices": [
+    "N/(N ∩ K) ≅ (N + K)/K",
+    "(N + K)/(N ∩ K) ≅ N/K",
+    "N/(N ∩ K) ≅ K/(N + K)",
+    "N/(N + K) ≅ K/(N ∩ K)"
+   ],
+   "answer": "N/(N ∩ K) ≅ (N + K)/K",
+   "rationale": "The canonical map n ↦ n + K from N to (N + K)/K has kernel N ∩ K, so it induces N/(N ∩ K) ≅ (N + K)/K.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L147",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let f in Z[x] be primitive. If f is reducible in Q[x], what follows from Gauss's lemma?",
+   "choices": [
+    "It is reducible in Z[x].",
+    "It is irreducible in Z[x].",
+    "It has no factor in Z[x].",
+    "It is a unit in Z[x]."
+   ],
+   "answer": "It is reducible in Z[x].",
+   "rationale": "Gauss's lemma states that a primitive polynomial is reducible over Q if and only if it is reducible over Z. Thus reducibility in Q[x] implies reducibility in Z[x].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L147",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Let f in Z[x] be nonconstant and primitive. Which condition is equivalent to f being irreducible in Z[x]?",
+   "choices": [
+    "f is irreducible in the polynomial ring Q[x].",
+    "f has positive content and degree greater than zero.",
+    "f factors in Q[x] into two positive-degree polynomials.",
+    "f has no root lying in the rational number field."
+   ],
+   "answer": "f is irreducible in the polynomial ring Q[x].",
+   "rationale": "For a primitive polynomial, Gauss's lemma shows that reducibility in Q[x] is equivalent to reducibility in Z[x]. Hence it is irreducible in Z[x] exactly when it is irreducible in Q[x].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A primitive polynomial in Z[x] is irreducible in Z[x] iff it is irreducible in Q[x] (Gauss's lemma).",
+      "url": "https://en.wikipedia.org/wiki/Gauss's_lemma_(polynomials)",
+      "quote": "a primitive polynomial is irreducible over the integers if and only if it is irreducible over the rational numbers.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L489",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 489,
+   "format": "multiple_choice",
+   "prompt": "Let T:V→V be a linear operator and make V an F[x]-module by defining x·v=T(v). How should a polynomial p(x)=a0+a1x+...+anx^n act on v?",
+   "choices": [
+    "a0v+a1Tv+...+anT^nv",
+    "a0v+a1v+...+anv",
+    "a0Tv+a1T²v+...+anT^(n+1)v",
+    "a0I+a1T+...+anT^n acting on the scalar a0"
+   ],
+   "answer": "a0v+a1Tv+...+anT^nv",
+   "rationale": "By the module definition, x^k·v=T^k(v). Linearity over F then gives p(x)·v=p(T)v=a0v+a1Tv+...+anT^nv.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L489",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 489,
+   "format": "multiple_choice",
+   "prompt": "Over R, let M≅R[x]/(x+1)⊕R[x]/((x+1)(x²+1)). Which companion blocks give the rational canonical form? Write C(f) for the companion matrix of f.",
+   "choices": [
+    "C(x+1) and C((x+1)(x²+1))",
+    "C(x+1), C(x+1), and C(x²+1)",
+    "C(x+1) and C((x+1)²(x²+1))",
+    "C(x²+1) and C((x+1)(x²+1))"
+   ],
+   "answer": "C(x+1) and C((x+1)(x²+1))",
+   "rationale": "The displayed summands already give the invariant factors because x+1 divides (x+1)(x²+1). The structure theorem therefore gives one companion block for each listed invariant factor.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L489",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 489,
+   "format": "multiple_choice",
+   "prompt": "Over C, a C[x]-module has elementary divisors (x−1)², (x−1), and (x−2)³. Which Jordan blocks occur? Let J_k(λ) denote a size-k Jordan block with eigenvalue λ.",
+   "choices": [
+    "J_2(1), J_1(1), and J_3(2)",
+    "J_1(1), J_1(1), and J_3(2)",
+    "J_2(1), J_1(1), and J_2(2)",
+    "J_3(1), J_1(1), and J_3(2)"
+   ],
+   "answer": "J_2(1), J_1(1), and J_3(2)",
+   "rationale": "Each elementary divisor (x−λ)^k corresponds to one Jordan block J_k(λ). Thus the exponents 2, 1, and 3 give J_2(1), J_1(1), and J_3(2), respectively.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L373",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "Over a field, which argument proves that every symmetric polynomial in n variables can be expressed as a polynomial in the elementary symmetric polynomials e₁,…,eₙ?",
+   "choices": [
+    "Use the Chinese remainder theorem on the ideals (xᵢ−xⱼ) in the multivariable polynomial ring.",
+    "Use induction on total degree, replacing symmetric leading terms by homogeneous multiples of elementary symmetric polynomials.",
+    "Find all roots in a splitting field and express the polynomial’s coefficients as functions of those roots.",
+    "Show that the polynomial ring is finite-dimensional over the subring generated by the elementary symmetric polynomials."
+   ],
+   "answer": "Use induction on total degree, replacing symmetric leading terms by homogeneous multiples of elementary symmetric polynomials.",
+   "rationale": "A standard proof uses induction on total degree: suitable elementary symmetric polynomials are subtracted to reduce the degree, eventually expressing the original polynomial in e₁,…,eₙ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Any symmetric polynomial can be expressed by induction on total degree, replacing leading symmetric terms by multiples of elementary symmetric polynomials.",
+      "url": "https://en.wikipedia.org/wiki/Elementary_symmetric_polynomial",
+      "quote": "Now one proves by induction on the leading monomial in lexicographic order, that any nonzero homogeneous symmetric polynomial P of degree d can be written as polynomial in the elementary symmetric polynomials.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L373",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "In an inductive proof of the fundamental theorem of symmetric polynomials, which step completes the reduction to the elementary symmetric polynomials?",
+   "choices": [
+    "Express each monomial symmetric polynomial in the elementary symmetric polynomials.",
+    "Apply the fundamental theorem of algebra to all of the variables involved.",
+    "Average the coefficients over all permutations of the variables involved.",
+    "Factor the polynomial over its splitting field into linear factors."
+   ],
+   "answer": "Express each monomial symmetric polynomial in the elementary symmetric polynomials.",
+   "rationale": "Every symmetric polynomial is a linear combination of monomial symmetric polynomials, and induction expresses each of these in the elementary symmetric polynomials.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L373",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "For the roots r₁, r₂, r₃ of x³ − 2x² + 3x − 4, what is p₂ = r₁² + r₂² + r₃²?",
+   "choices": [
+    "−2",
+    "2",
+    "4",
+    "10"
+   ],
+   "answer": "−2",
+   "rationale": "Newton’s identities give e₁ = 2, e₂ = 3, and p₁ = 2. Thus p₂ − e₁p₁ + 2e₂ = 0, so p₂ = 4 − 6 = −2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L373",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 373,
+   "format": "multiple_choice",
+   "prompt": "Using Disc(f) = ∏ᵢ<ⱼ(rᵢ − rⱼ)², what is the discriminant of f(x) = x³ − 2x − 1?",
+   "choices": [
+    "5",
+    "−5",
+    "27",
+    "59"
+   ],
+   "answer": "5",
+   "rationale": "For x³ + px + q, the discriminant is −4p³ − 27q². Substituting p = −2 and q = −1 gives 32 − 27 = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L191",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "linear_algebra",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "Which condition is required for a relation to be a monomial order on k[x,y]?",
+   "choices": [
+    "It must be a total well-order compatible with multiplication by every monomial.",
+    "It must be a total order compatible only with addition of monomials.",
+    "It must be a well-order but need not compare every pair of monomials.",
+    "It must rank monomials exclusively according to their total degrees."
+   ],
+   "answer": "It must be a total well-order compatible with multiplication by every monomial.",
+   "rationale": "A monomial order is a total, well-defined ordering compatible with multiplication by monomials. These properties ensure that leading terms behave consistently during Gröbner-basis computations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A monomial order on k[x,y] must be a total well‑order compatible with multiplication by every monomial.",
+      "url": "https://en.wikipedia.org/wiki/Lexicographic_order",
+      "quote": "many of the main algorithms for multivariate polynomials are related with Gröbner bases, concept that requires the choice of a monomial order, that is a total order, which is compatible with the monoid structure of the monomials",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L191",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "linear_algebra",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "Over an algebraically closed field k, which description matches the classical definition of an affine variety in A^n_k?",
+   "choices": [
+    "A nonempty irreducible algebraic subset of affine n-space over k.",
+    "A nonempty reducible algebraic subset of affine n-space over k.",
+    "An arbitrary Euclidean-open subset of affine n-space over k.",
+    "A maximal ideal of the polynomial ring k[x_1,...,x_n]."
+   ],
+   "answer": "A nonempty irreducible algebraic subset of affine n-space over k.",
+   "rationale": "An affine variety is classically defined as a nonempty irreducible algebraic set, meaning a Zariski-closed subset that cannot be written as the union of two proper closed subsets.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L191",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "linear_algebra",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "In k[x,y], let I = <x^2+y, xy> and use lexicographic order x>y. Which set is a Gröbner basis of I?",
+   "choices": [
+    "{x^2+y, xy, y^2}",
+    "{x^2+y, xy, x^2y}",
+    "{x^2+y, xy, xy^2}",
+    "{x^2+y, xy, y^3}"
+   ],
+   "answer": "{x^2+y, xy, y^2}",
+   "rationale": "The S-polynomial of x^2+y and xy reduces to y^2, which must be added. The S-polynomials involving y^2 then reduce to zero, so the stated set is a Gröbner basis.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L286",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "To prove uniqueness for a field K of order p^n, which statement supplies the key structural fact about K over its prime field F_p?",
+   "choices": [
+    "K has dimension n, and some element has degree n",
+    "K has dimension n, and every element has degree 1",
+    "K has dimension n+1, and some element has degree n",
+    "K has dimension n, and no element has degree n"
+   ],
+   "answer": "K has dimension n, and some element has degree n",
+   "rationale": "A field of order p^n has dimension n over F_p and contains an element of degree n. Evaluation at that element gives an isomorphism from a degree-n irreducible quotient to K.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L286",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "Two fields K and L each have 16 elements. Which statement correctly expresses the uniqueness theorem’s conclusion for K and L?",
+   "choices": [
+    "K and L are isomorphic, although their underlying sets may differ.",
+    "K and L must have exactly the same elements and operations.",
+    "No relation follows unless their generators are specified.",
+    "K and L need not be isomorphic because uniqueness concerns existence."
+   ],
+   "answer": "K and L are isomorphic, although their underlying sets may differ.",
+   "rationale": "The theorem states that finite fields of the same order are isomorphic. Isomorphism requires a bijective structure-preserving map, not literally identical underlying sets.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L298",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "How many monic irreducible quadratic polynomials are there over F_3?",
+   "choices": [
+    "4",
+    "3",
+    "6",
+    "9"
+   ],
+   "answer": "3",
+   "rationale": "A quadratic over a field is irreducible exactly when it has no root in that field. The number of monic irreducible quadratics over F_q is (q^2-q)/2, so over F_3 it is (9-3)/2=3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L298",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "Let G = F_q^×. After choosing a ∈ G of maximum order d, which step completes a standard proof that G is cyclic?",
+   "choices": [
+    "Every element of G satisfies x^d = 1; a degree-d polynomial has at most d roots, so q − 1 ≤ d.",
+    "Every element of G satisfies x^q = x; a degree-q polynomial has at most q roots, so q − 1 ≤ q.",
+    "Every nonzero polynomial over F_q has exactly q − 1 roots, so its degree must equal d = q − 1.",
+    "The subgroup generated by a is closed under inversion, so it must contain all q − 1 nonzero elements."
+   ],
+   "answer": "Every element of G satisfies x^d = 1; a degree-d polynomial has at most d roots, so q − 1 ≤ d.",
+   "rationale": "In a finite abelian group, the maximum element order d is the exponent, so every element satisfies x^d = 1. Thus q − 1 ≤ d, while d ≤ q − 1 because a generates a subgroup of G. Hence d = q − 1, so G is cyclic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L298",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 298,
+   "format": "multiple_choice",
+   "prompt": "Which list gives all subfields of the finite field F_(2^6), including F_(2^6) itself?",
+   "choices": [
+    "F_2, F_4, F_8, F_64",
+    "F_2, F_4, F_16, F_64",
+    "F_2, F_8, F_16, F_64",
+    "F_2, F_3, F_9, F_64"
+   ],
+   "answer": "F_2, F_4, F_8, F_64",
+   "rationale": "Subfields of F_(p^n) correspond exactly to divisors d of n, with the unique subfield of size p^d. Since the divisors of 6 are 1, 2, 3, and 6, the subfields are F_2, F_4, F_8, and F_64.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L393",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "Let F be the field with 2^6 elements, written F_{64}. Which automorphism over F_2 generates its Galois group?",
+   "choices": [
+    "x ↦ x^2",
+    "x ↦ x^{2^2}",
+    "x ↦ x^{2^3}",
+    "x ↦ x^{2^6}"
+   ],
+   "answer": "x ↦ x^2",
+   "rationale": "The Frobenius automorphism x ↦ x^2 has order 6 on F_{64}, since 2 has order 6 modulo 2^6−1. Thus it generates the cyclic group Gal(F_{64}/F_2).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The Galois group of the extension F_{p^n}/F_p is cyclic of order n and is generated by the Frobenius automorphism φ(x)=x^p.",
+      "url": "https://en.wikipedia.org/wiki/Frobenius_endomorphism",
+      "quote": "The Galois group of an extension of finite fields is generated by an iterate of the Frobenius automorphism.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L234",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Let F⊆L be fields and let α∈L. Which condition defines α as transcendental over F?",
+   "choices": [
+    "α is a root of some nonzero polynomial in F[x].",
+    "α is not a root of any nonzero polynomial in F[x].",
+    "α is a root of every nonzero polynomial in F[x].",
+    "α is a root of a polynomial of degree one in F[x]."
+   ],
+   "answer": "α is not a root of any nonzero polynomial in F[x].",
+   "rationale": "A transcendental element satisfies no nonzero polynomial over the base field F. Satisfying at least one nonzero polynomial instead makes α algebraic over F.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L234",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Let α=i+√2∈Q(i,√2). What is the monic polynomial of least degree in Q[x] having α as a root?",
+   "choices": [
+    "x⁴−2x²+9",
+    "x⁴−2x²−7",
+    "x⁴+2x²+9",
+    "x⁴−2x²+1"
+   ],
+   "answer": "x⁴−2x²+9",
+   "rationale": "Since α²=1+2i√2, we have (α²−1)²=−8 and thus α⁴−2α²+9=0. Also Q(α)=Q(i,√2) has degree 4 over Q, so this quartic is the minimal polynomial.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L234",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Let α be a root of f(x)=x^3+x+1 in ℚ. What can be concluded about α over ℚ?",
+   "choices": [
+    "α is algebraic, and x^3+x+1 is its minimal polynomial.",
+    "α is transcendental, and x^3+x+1 is its minimal polynomial.",
+    "α is algebraic, and x+1 is its minimal polynomial.",
+    "α is transcendental, and it has no polynomial over ℚ."
+   ],
+   "answer": "α is algebraic, and x^3+x+1 is its minimal polynomial.",
+   "rationale": "Since f(α)=0, α is algebraic over ℚ. The cubic f has no rational root, so it is irreducible over ℚ and is therefore α’s minimal polynomial.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L234",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Let F⊆L be fields, let α∈L be algebraic over F, and let mα(x) be its minimal polynomial. Which statement about the evaluation map φ:F[x]→F[α] is correct?",
+   "choices": [
+    "The kernel is (mα(x)), so F[α] ≅ F[x]/(mα(x)).",
+    "The kernel is {0}, so F[α] ≅ F[x].",
+    "The kernel is (x), so F[α] ≅ F[x]/(x).",
+    "The kernel is (mα(x)^2), so F[α] ≅ F[x]/(mα(x)^2)."
+   ],
+   "answer": "The kernel is (mα(x)), so F[α] ≅ F[x]/(mα(x)).",
+   "rationale": "The kernel consists of polynomials g with g(α)=0, so it is the ideal generated by the minimal polynomial. The first isomorphism theorem then gives F[α] ≅ F[x]/(mα(x)).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L522",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 522,
+   "format": "multiple_choice",
+   "prompt": "For q = cos(θ/2) + u sin(θ/2), where u is a unit pure-imaginary quaternion, what does v ↦ qvq⁻¹ do to a pure-imaginary vector v?",
+   "choices": [
+    "It rotates v through angle 2θ about axis u.",
+    "It rotates v through angle θ/2 about axis u.",
+    "It rotates v through angle θ about axis u.",
+    "It reflects v across the plane perpendicular to u."
+   ],
+   "answer": "It rotates v through angle θ about axis u.",
+   "rationale": "The half-angle expression for a unit quaternion represents a rotation through θ about the unit axis u. Quaternion conjugation applies that rotation to vectors.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "For a unit quaternion q = cos(θ/2)+u sin(θ/2), conjugation q v q^{-1} rotates v by angle θ about axis u.",
+      "url": "https://en.wikipedia.org/wiki/Quaternion",
+      "quote": "Conjugation by a unit quaternion (a quaternion of absolute value 1) with real part cos( φ ) is a rotation by an angle 2 φ , the axis of the rotation being the direction of the vector part.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L522",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 522,
+   "format": "multiple_choice",
+   "prompt": "In the standard construction ℍ={a+bi+cj+dk}, which formula gives the inverse of a nonzero quaternion q=a+bi+cj+dk?",
+   "choices": [
+    "q⁻¹=(a−bi−cj−dk)/(a²+b²+c²+d²), because q q̄=N(q)1",
+    "q⁻¹=(a+bi+cj+dk)/(a²+b²+c²+d²), because q²=N(q)1",
+    "q⁻¹=(a−bi−cj−dk)/(a²+b²+c²−d²), because q q̄=N(q)1",
+    "q⁻¹=(a²+b²+c²+d²)/(a+bi+cj+dk), because N(q) is a nonzero real number"
+   ],
+   "answer": "q⁻¹=(a−bi−cj−dk)/(a²+b²+c²+d²), because q q̄=N(q)1",
+   "rationale": "Quaternion conjugation gives q q̄=N(q)1, where N(q)=a²+b²+c²+d². For q≠0, N(q)>0, so multiplying by q̄/N(q) gives q⁻¹. Thus every nonzero quaternion is invertible.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L522",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 522,
+   "format": "multiple_choice",
+   "prompt": "Using the right-hand convention, which unit quaternion represents a 120° rotation about the positive z-axis?",
+   "choices": [
+    "1/2+(√3/2)k",
+    "−1/2+(√3/2)k",
+    "1/2+(√3/2)i",
+    "√3/2+(1/2)k"
+   ],
+   "answer": "1/2+(√3/2)k",
+   "rationale": "The positive z-axis is the imaginary unit k. A 120° rotation uses q=cos(120°/2)+k sin(120°/2)=1/2+(√3/2)k. This quaternion has unit norm.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L522",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 522,
+   "format": "multiple_choice",
+   "prompt": "Which statement is Frobenius’s theorem concerning finite-dimensional associative division algebras over the real numbers?",
+   "choices": [
+    "Every such algebra is isomorphic to ℝ, ℂ, or ℍ as a real algebra.",
+    "Every such algebra is isomorphic to ℝ, ℂ, ℍ, or the octonions.",
+    "Every such algebra is a commutative field, so only ℝ and ℂ occur.",
+    "Every such algebra has dimension 2, 4, or 8, with no further restriction."
+   ],
+   "answer": "Every such algebra is isomorphic to ℝ, ℂ, or ℍ as a real algebra.",
+   "rationale": "Frobenius’s theorem states that the only finite-dimensional associative real division algebras, up to real-algebra isomorphism, are ℝ, ℂ, and ℍ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L383",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 383,
+   "format": "multiple_choice",
+   "prompt": "What is the degree of the cyclotomic extension Q(ζ₁₅) over Q?",
+   "choices": [
+    "4",
+    "6",
+    "8",
+    "12"
+   ],
+   "answer": "8",
+   "rationale": "The degree of Q(ζₙ) over Q equals Euler’s totient function φ(n). Since φ(15) = 15(1−1/3)(1−1/5) = 8, the degree is 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The degree of Q(ζ₁₅) over Q equals φ(15)=8.",
+      "url": "https://en.wikipedia.org/wiki/Root_of_unity",
+      "quote": "The degree of Φ n is given by Euler's totient function , which counts (among other things) the number of primitive n th roots of unity.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L254",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "For a straightedge-and-compass constructible number α over ℚ, which statement must hold about [ℚ(α):ℚ]?",
+   "choices": [
+    "It can be any positive integer.",
+    "It must be either 1 or 2.",
+    "It must be a power of 2.",
+    "It must be a power of 3."
+   ],
+   "answer": "It must be a power of 2.",
+   "rationale": "A constructible number lies in a tower of quadratic extensions, so its degree over ℚ must divide 2ⁿ for some n. Therefore its degree is a power of 2, including 2⁰ = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Constructible numbers have field extension degree a power of 2 over ℚ.",
+      "url": "https://en.wikipedia.org/wiki/Straightedge_and_compass_construction",
+      "quote": "As a corollary of this, one finds that the degree of the minimal polynomial for a constructible point (and therefore of any constructible length) is a power of 2.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L254",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Squaring the circle seeks a radius √π for a unit circle. Why is this impossible with ruler and compass?",
+   "choices": [
+    "π is irrational, but ruler-and-compass numbers must be rational.",
+    "√π has degree 2 over ℚ, so the required radius is constructible.",
+    "π is transcendental, so √π is transcendental and not constructible.",
+    "π has degree 3 over ℚ, which is not a power of 2."
+   ],
+   "answer": "π is transcendental, so √π is transcendental and not constructible.",
+   "rationale": "Since π is transcendental, √π must also be transcendental; otherwise its square π would be algebraic. Every ruler-and-compass constructible number is algebraic, so √π cannot be constructed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "π is transcendental.",
+      "url": "https://en.wikipedia.org/wiki/Straightedge_and_compass_construction",
+      "quote": "π is a transcendental number , and thus that it is impossible by straightedge and compass to construct a square with the same area as a given circle.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L254",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "An angle of 60° is constructible. Why can it not be trisected with ruler and compass?",
+   "choices": [
+    "The 60° angle is not constructible in the first place.",
+    "cos 20° has degree 3 over ℚ, not a power of 2.",
+    "Every trisected angle has degree 6 over ℚ.",
+    "cos 20° is transcendental rather than algebraic."
+   ],
+   "answer": "cos 20° has degree 3 over ℚ, not a power of 2.",
+   "rationale": "A trisection would make 20°, and hence cos 20°, constructible. However, cos 20° satisfies the irreducible cubic 8x³ − 6x − 1 = 0, so its degree over ℚ is 3, contradicting the necessary power-of-2 degree.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "cos(π/9) has degree 3 over ℚ.",
+      "url": "https://en.wikipedia.org/wiki/Angle_trisection",
+      "quote": "the minimal polynomial for cos 20° is of degree 3.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L564",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "Let φ: Z₆[x]→Z₆ send f to f(2). Which argument correctly tests surjectivity?",
+   "choices": [
+    "Its image is (2)={0,2,4}, so it is not surjective.",
+    "Its image contains all constants, so it is surjective.",
+    "Polynomial degrees determine whether every residue is attained.",
+    "The quotient by (x−2) is larger, so surjectivity follows."
+   ],
+   "answer": "Its image contains all constants, so it is surjective.",
+   "rationale": "Every constant c in Z₆ is the image of the constant polynomial c, so φ reaches all six residues.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L564",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "Which plan proves that F[x]/(p) is a field for a cubic p∈F[x]?",
+   "choices": [
+    "Assume p is irreducible because it is cubic, then use the quotient criterion.",
+    "Map F[x] onto F with x↦0, then use the quotient criterion.",
+    "Test roots by degree counting; if p is irreducible, use the quotient criterion.",
+    "Count the quotient's elements, then infer that the quotient is a field."
+   ],
+   "answer": "Test roots by degree counting; if p is irreducible, use the quotient criterion.",
+   "rationale": "A cubic is reducible over F exactly when it has a root in F. An irreducible p makes F[x]/(p) a field.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L564",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "Let p ∈ F[x] be a monic quartic with no root in F. To decide whether F[x]/(p) is a field, what additional check is needed?",
+   "choices": [
+    "Check for an irreducible quadratic factor; a rootless quartic is reducible exactly when one exists.",
+    "Check that p is primitive; a primitive quartic without roots must be irreducible.",
+    "Check that p divides x^q − x for some q; this alone forces p to be irreducible.",
+    "Check for a cubic factor; a rootless quartic with such a factor must be irreducible."
+   ],
+   "answer": "Check for an irreducible quadratic factor; a rootless quartic is reducible exactly when one exists.",
+   "rationale": "A reducible quartic without a linear factor must factor as two irreducible quadratics. Thus p is irreducible exactly when it has no irreducible quadratic factor, and the quotient is then a field.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L564",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "Let φ:R→S be a surjective homomorphism between commutative rings with identity. Which statement correctly combines the quotient and homomorphism strategies?",
+   "choices": [
+    "ker(φ) is an ideal, and the first isomorphism theorem gives R/ker(φ) ≅ S.",
+    "ker(φ) equals S, and the first isomorphism theorem gives R/ker(φ) ≅ R.",
+    "ker(φ) is zero, and the first isomorphism theorem gives R/ker(φ) ≅ R.",
+    "ker(φ) is zero, and the first isomorphism theorem gives R/ker(φ) ≅ S."
+   ],
+   "answer": "ker(φ) is an ideal, and the first isomorphism theorem gives R/ker(φ) ≅ S.",
+   "rationale": "The kernel of a ring homomorphism is an ideal. The first isomorphism theorem states that R/ker(φ) is isomorphic to im(φ), which equals S when φ is surjective.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L457",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 457,
+   "format": "multiple_choice",
+   "prompt": "Let B=Z⊕Z and p:B→Z be p(a,b)=b. Which map s:Z→B is the canonical section of p?",
+   "choices": [
+    "the map n↦(n,0)",
+    "the map n↦(0,0)",
+    "the map n↦(n,2n)",
+    "the map n↦(0,n)"
+   ],
+   "answer": "the map n↦(0,n)",
+   "rationale": "The canonical section includes Z into the second direct-sum factor. It satisfies p(s(n))=p(0,n)=n for every n.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L457",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 457,
+   "format": "multiple_choice",
+   "prompt": "Let 0→A→B→C→0 be short exact. If a module map r:B→A satisfies r∘i=id_A, what follows?",
+   "choices": [
+    "The sequence splits, with A≅C.",
+    "The sequence cannot split when C≠0.",
+    "The sequence splits, with B≅A⊕C.",
+    "The sequence splits, with B≅A⊗C."
+   ],
+   "answer": "The sequence splits, with B≅A⊕C.",
+   "rationale": "The retraction r makes im(i) a direct summand, giving B≅im(i)⊕ker(r)≅A⊕C. Equivalently, the surjection onto C has a section.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L457",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 457,
+   "format": "multiple_choice",
+   "prompt": "A submodule N of a module M is a direct summand of M precisely when which condition holds?",
+   "choices": [
+    "Some submodule K of M satisfies M=N⊕K.",
+    "Some submodule K of M satisfies M=N+K and N∩K≠{0}.",
+    "Some submodule K of M satisfies N+K={0} and N∩K={0}.",
+    "Some submodule K of M satisfies N⊆K and N∩K={0}."
+   ],
+   "answer": "Some submodule K of M satisfies M=N⊕K.",
+   "rationale": "An internal direct sum requires both N+K=M and N∩K={0}. The condition M=N⊕K combines these requirements; the other choices omit or contradict one of them.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L584",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "A field homomorphism φ:F→F satisfies φ(1)=1. A proof says a nonzero a in ker φ gives 1=φ(aa⁻¹)=0. What next step completes it?",
+   "choices": [
+    "Conclude ker φ={0}, so φ is injective.",
+    "Conclude φ is surjective, so its kernel is trivial.",
+    "Repeat the kernel calculation with another element.",
+    "Conclude F is infinite because φ is injective."
+   ],
+   "answer": "Conclude ker φ={0}, so φ is injective.",
+   "rationale": "The contradiction rules out every nonzero element of the kernel, so ker φ={0}. A homomorphism is injective exactly when its kernel is trivial; the other choices assert implications that were not established.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L584",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "Which outline proves every nonzero element of a field F has an inverse without adding assumptions?",
+   "choices": [
+    "Use the fraction field of F, then place the inverse back in F.",
+    "Permute finite F by multiplication, then find b with ab=1.",
+    "For a≠0, choose b∈F with ab=1 by the field axiom.",
+    "Cancel a in ab=ac, then choose b=c=1."
+   ],
+   "answer": "For a≠0, choose b∈F with ab=1 by the field axiom.",
+   "rationale": "The field axiom directly guarantees b∈F with ab=1 for every nonzero a. The fraction-field argument does not establish that the inverse lies in F, the finite-field outline adds an assumption, and cancellation already presupposes the existence of an inverse.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L584",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "Let φ:F→K be a unital field homomorphism. Which sequence gives a complete proof that φ(F) is a subfield of K under the standard subfield criterion?",
+   "choices": [
+    "Show 1_K lies in φ(F); verify closure under subtraction and multiplication; prove every nonzero image has an inverse in φ(F).",
+    "Show φ(F) is nonempty; verify closure under addition and multiplication; prove every image has an additive inverse in φ(F).",
+    "Show 1_K lies in φ(F); verify closure under addition; prove every nonzero image has an inverse in φ(F).",
+    "Show φ(F) is nonempty; verify closure under subtraction and multiplication; prove every image has an additive inverse in φ(F)."
+   ],
+   "answer": "Show 1_K lies in φ(F); verify closure under subtraction and multiplication; prove every nonzero image has an inverse in φ(F).",
+   "rationale": "A subfield must contain 0 and 1, be closed under subtraction and multiplication, and contain the multiplicative inverse of each nonzero element. For φ(a)≠0, a is nonzero, so φ(a)φ(a⁻¹)=φ(1)=1_K.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L584",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "discrete_math",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "A draft proves: if R is a commutative ring with 1 and e²=e, then R≅eR×(1−e)R. It defines r↦(er,(1−e)r) and checks the homomorphism property. Peer feedback says bijectivity is missing. Which revision best addresses this feedback?",
+   "choices": [
+    "Define (a,b)↦a+b as an inverse and check that both compositions return the original element.",
+    "Define (a,b)↦a+b as an inverse and check only that both displayed maps are ring homomorphisms.",
+    "Check that er=0 or (1−e)r=0 for every r∈R, which would establish bijectivity.",
+    "Replace e²=e by e=1; then the displayed map becomes bijective without further checking."
+   ],
+   "answer": "Define (a,b)↦a+b as an inverse and check that both compositions return the original element.",
+   "rationale": "Since e(1−e)=0, the map (a,b)↦a+b is an inverse to r↦(er,(1−e)r). Checking both compositions establishes the bijectivity required by the feedback.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L403",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 403,
+   "format": "multiple_choice",
+   "prompt": "For E=Q(√2, ⁴√3), which checks verify that it is a radical extension of Q?",
+   "choices": [
+    "(√2)²=2∈Q and (⁴√3)⁴=3∈Q(√2)",
+    "(√2)²=2∈Q and (⁴√3)²=√3∈Q(√2)",
+    "(√2)³=2∈Q and (⁴√3)⁴=3∈Q(√2)",
+    "(√2)²=2∈Q and (⁴√3)³=3∈Q(√2)"
+   ],
+   "answer": "(√2)²=2∈Q and (⁴√3)⁴=3∈Q(√2)",
+   "rationale": "A radical extension is formed by successively adjoining elements whose positive integer powers lie in the fields already obtained. Both displayed powers satisfy this requirement in the indicated order.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L403",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 403,
+   "format": "multiple_choice",
+   "prompt": "For a characteristic-zero base field, why does radical solvability imply a solvable Galois group?",
+   "choices": [
+    "The radical extension is Galois, and its group is the normal-closure group.",
+    "Every finite Galois group has an abelian subgroup, so it is solvable.",
+    "Algebraic roots give a permutation group with cyclic composition factors.",
+    "The radical extension’s normal closure is solvable; the Galois group is a quotient."
+   ],
+   "answer": "The radical extension’s normal closure is solvable; the Galois group is a quotient.",
+   "rationale": "In characteristic zero, the normal closure of a radical extension has solvable Galois group. The Galois group of the splitting field is a quotient of that group, and every quotient of a solvable group is solvable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L403",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 403,
+   "format": "multiple_choice",
+   "prompt": "Which condition defines a radical extension K/F through a finite tower F=K₀⊆K₁⊆⋯⊆Kₙ=K?",
+   "choices": [
+    "Each step adjoins αᵢ such that αᵢ^{mᵢ}∈Kᵢ₋₁ for some integer mᵢ>1.",
+    "Each step adjoins αᵢ such that αᵢ²∈Kᵢ₋₁ at every step.",
+    "Each step adjoins αᵢ such that [Kᵢ:Kᵢ₋₁]=2 at every step.",
+    "Each step adjoins αᵢ such that Kᵢ/Kᵢ₋₁ is cyclic of prime degree."
+   ],
+   "answer": "Each step adjoins αᵢ such that αᵢ^{mᵢ}∈Kᵢ₋₁ for some integer mᵢ>1.",
+   "rationale": "A radical extension is built by a tower in which each newly adjoined element has some positive integer power in the preceding field; restricting the powers to 2 or the degrees to 2 is too narrow.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "A radical extension K/F is a field extension obtained by a finite tower F=K0⊆K1⊆⋯⊆Kn=K such that for each i there exists an element αi∈Ki with αi^{mᵢ}∈K_{i-1} for some integer mᵢ>1.",
+      "url": "https://en.wikipedia.org/wiki/Radical_extension",
+      "quote": "is a field extension obtained by a tower of field extensions, each generated by adjoining an nth root of an element from the previous field.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L542",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 542,
+   "format": "multiple_choice",
+   "prompt": "For R-modules M,N and an R-module G, a biadditive map φ:M×N→G induces a unique R-linear map from M⊗_R N exactly when which condition holds?",
+   "choices": [
+    "The map is R-balanced, so φ(rm,n)=rφ(m,n)=φ(m,rn) for every r.",
+    "The map is additive in each variable, with no compatibility with multiplication by R.",
+    "The map is symmetric, so φ(m,n)=φ(n,m) for every pair m,n in M,N.",
+    "The map is bijective, so each value of φ comes from exactly one ordered pair."
+   ],
+   "answer": "The map is R-balanced, so φ(rm,n)=rφ(m,n)=φ(m,rn) for every r.",
+   "rationale": "The universal property of M⊗_R N requires an R-balanced biadditive map; this gives a unique R-linear map to G.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "abstract_algebra_ii:L542",
+   "track_id": "math",
+   "grade_id": "abstract_algebra_ii",
+   "skill_id": "abstract_algebra",
+   "level": 542,
+   "format": "multiple_choice",
+   "prompt": "Let F be the free R-module on symbols [m,n], where m∈M and n∈N. Which subgroup of F should be quotiented out to construct M⊗_R N?",
+   "choices": [
+    "The R-span of coordinate additivity in each argument, r[m,n]−[rm,n], and r[m,n]−[m,rn].",
+    "The R-span of coordinate additivity in each argument, with no R-balancing relation imposed.",
+    "The R-span of coordinate additivity in each argument and the relation [m,n]−[n,m].",
+    "The R-span of [m,n]−[m,0] and [m,n]−[0,n], with no other relation imposed."
+   ],
+   "answer": "The R-span of coordinate additivity in each argument, r[m,n]−[rm,n], and r[m,n]−[m,rn].",
+   "rationale": "The construction must impose additivity in each coordinate to obtain bilinearity and the balancing relations to obtain an R-module tensor product.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  }
+ ]
+}

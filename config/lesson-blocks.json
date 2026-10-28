@@ -1,0 +1,861 @@
+{
+  "_comment": "The lesson-block library, one entry per block. This is the ingest list for scripts/generate_blocks.js: add an entry here (or pass --list <file>) and re-run to grow the library. tag is the file name and registry key (Block_Tag style); category is one of Foundational | Assessment | Game | Utility. Groups as approved: basic -> Foundational, interactive -> Assessment, game -> Game, buttons -> Utility.",
+  "blocks": [
+    {
+      "id": 1,
+      "tag": "Basic_DataTable",
+      "title": "Data Table",
+      "category": "Foundational",
+      "description": "A word data table exactly as it appears in a Word document: one semantic HTML table element (thead + tbody, tr/th/td) styled like a word-processor table - simple borders, a bold header row, plain text cells holding reference data in rows and columns. Display only - no buttons, no sorting, no filters, no interaction of any kind.",
+      "interactive": false
+    },
+    {
+      "id": 2,
+      "tag": "Basic_TextBlock",
+      "title": "Normal Text Block",
+      "category": "Foundational",
+      "description": "Normal text block with fonts and sizes: headings, paragraphs and emphasis — the readable prose primitive of a lesson.",
+      "interactive": false
+    },
+    {
+      "id": 3,
+      "tag": "Basic_VennDiagram",
+      "title": "Venn Diagram",
+      "category": "Foundational",
+      "description": "A static two-circle Venn diagram with labeled regions showing where two groups overlap.",
+      "interactive": false
+    },
+    {
+      "id": 4,
+      "tag": "Basic_Steps",
+      "title": "Steps Block",
+      "category": "Foundational",
+      "description": "A numbered steps block laying a short procedure out in order.",
+      "interactive": false
+    },
+    {
+      "id": 5,
+      "tag": "Hook_Dilemma",
+      "title": "Hook Dilemma",
+      "category": "Foundational",
+      "description": "Split-card presenting two conflicting, plausible real-world choices to spark curiosity.",
+      "interactive": false
+    },
+    {
+      "id": 6,
+      "tag": "Hook_StatShock",
+      "title": "Hook StatShock",
+      "category": "Foundational",
+      "description": "Single massive typographic statistic card with context revealing an unexpected reality.",
+      "interactive": false
+    },
+    {
+      "id": 7,
+      "tag": "Hook_QuoteDissect",
+      "title": "Hook QuoteDissect",
+      "category": "Foundational",
+      "description": "Historic or expert quote with highlighted buzzwords and clickable annotations.",
+      "interactive": true
+    },
+    {
+      "id": 8,
+      "tag": "Theory_RuleCard",
+      "title": "Theory RuleCard",
+      "category": "Foundational",
+      "description": "Clean definition box with a bolded 1-sentence anchor and 3 prerequisite bullet points.",
+      "interactive": false
+    },
+    {
+      "id": 9,
+      "tag": "Theory_ContrastSplit",
+      "title": "Theory ContrastSplit",
+      "category": "Foundational",
+      "description": "Side-by-side comparison column (e.g., \"What it is\" vs. \"What it isn't\").",
+      "interactive": false
+    },
+    {
+      "id": 10,
+      "tag": "Theory_AnatomyCallout",
+      "title": "Theory AnatomyCallout",
+      "category": "Foundational",
+      "description": "SVG/diagram schematic where hovering or tapping parts reveals breakdown cards.",
+      "interactive": true
+    },
+    {
+      "id": 11,
+      "tag": "Theory_FormulaBuilder",
+      "title": "Theory FormulaBuilder",
+      "category": "Foundational",
+      "description": "Visual equation box where variables have color-coded definitions underneath.",
+      "interactive": false
+    },
+    {
+      "id": 12,
+      "tag": "Theory_TimelineSteps",
+      "title": "Theory TimelineSteps",
+      "category": "Foundational",
+      "description": "Horizontal or vertical milestone progression showing chronological or logic order.",
+      "interactive": false
+    },
+    {
+      "id": 13,
+      "tag": "Theory_TaxonomyTree",
+      "title": "Theory TaxonomyTree",
+      "category": "Foundational",
+      "description": "Collapsible node hierarchy classifying concepts from broad family to specific instance.",
+      "interactive": true
+    },
+    {
+      "id": 14,
+      "tag": "Theory_PerspectiveShift",
+      "title": "Theory PerspectiveShift",
+      "category": "Foundational",
+      "description": "Tabbed card showing how two different stakeholders view the exact same event.",
+      "interactive": true
+    },
+    {
+      "id": 15,
+      "tag": "Memory_MnemonicAnchor",
+      "title": "Memory MnemonicAnchor",
+      "category": "Foundational",
+      "description": "Visual badge isolating an acronym, rhyme, or spatial pattern to aid memory.",
+      "interactive": false
+    },
+    {
+      "id": 16,
+      "tag": "Memory_CheatSheet",
+      "title": "Memory CheatSheet",
+      "category": "Foundational",
+      "description": "Compact key-value matrix summarizing all relevant rules for reference.",
+      "interactive": false
+    },
+    {
+      "id": 17,
+      "tag": "Context_HistoricalPivot",
+      "title": "Context HistoricalPivot",
+      "category": "Foundational",
+      "description": "Short story card showing the exact crisis or problem that caused the rule to be invented.",
+      "interactive": false
+    },
+    {
+      "id": 18,
+      "tag": "Context_RealWorldScope",
+      "title": "Context RealWorldScope",
+      "category": "Foundational",
+      "description": "Micro-case study illustrating where this rule directly affects money, safety, or code.",
+      "interactive": false
+    },
+    {
+      "id": 19,
+      "tag": "Concept_ScaleZoom",
+      "title": "Concept ScaleZoom",
+      "category": "Foundational",
+      "description": "Stepped slider zooming from micro view to macro ecosystem view.",
+      "interactive": true
+    },
+    {
+      "id": 20,
+      "tag": "Concept_JargonBuster",
+      "title": "Concept JargonBuster",
+      "category": "Foundational",
+      "description": "Sentence with underlined technical terms that reveal plain-English definitions on hover.",
+      "interactive": true
+    },
+    {
+      "id": 21,
+      "tag": "Concept_BeforeAfter",
+      "title": "Concept BeforeAfter",
+      "category": "Foundational",
+      "description": "Interactive split image/text card comparing a raw flawed state to an optimized state.",
+      "interactive": true
+    },
+    {
+      "id": 22,
+      "tag": "Concept_PrincipleMatrix",
+      "title": "Concept PrincipleMatrix",
+      "category": "Foundational",
+      "description": "2x2 grid sorting ideas by two axes (e.g., High Impact vs. Low Effort).",
+      "interactive": false
+    },
+    {
+      "id": 23,
+      "tag": "Concept_SpectrumBar",
+      "title": "Concept SpectrumBar",
+      "category": "Foundational",
+      "description": "Continuous gradient bar pinning concepts along a spectrum (e.g., Informal to Formal).",
+      "interactive": false
+    },
+    {
+      "id": 24,
+      "tag": "Concept_AudioWave",
+      "title": "Concept AudioWave",
+      "category": "Foundational",
+      "description": "Short audio player paired with synced sentence highlights for pronunciation or rhetoric.",
+      "interactive": true
+    },
+    {
+      "id": 25,
+      "tag": "Concept_StepLadder",
+      "title": "Concept StepLadder",
+      "category": "Foundational",
+      "description": "Progressive stack where higher-order rules visually sit atop foundational rules.",
+      "interactive": false
+    },
+    {
+      "id": 26,
+      "tag": "Concept_CautionFlag",
+      "title": "Concept CautionFlag",
+      "category": "Foundational",
+      "description": "Warning box detailing strict exceptions, non-examples, and illegal rule transfers.",
+      "interactive": false
+    },
+    {
+      "id": 27,
+      "tag": "Concept_AnalogyBridge",
+      "title": "Concept AnalogyBridge",
+      "category": "Foundational",
+      "description": "Split card comparing the abstract academic rule directly to everyday physical objects.",
+      "interactive": false
+    },
+    {
+      "id": 28,
+      "tag": "Concept_FlowDiagram",
+      "title": "Concept FlowDiagram",
+      "category": "Foundational",
+      "description": "Static clean SVG flowchart mapping decision paths from condition to resolution.",
+      "interactive": false
+    },
+    {
+      "id": 29,
+      "tag": "Concept_TakeawayBadge",
+      "title": "Concept TakeawayBadge",
+      "category": "Foundational",
+      "description": "Single high-contrast summary banner marking the conclusion of an exposition sequence.",
+      "interactive": false
+    },
+    {
+      "id": 30,
+      "tag": "Interact_XRay",
+      "title": "XRay",
+      "category": "Assessment",
+      "description": "Click the term to highlight its location in the sentence or equation.",
+      "interactive": true
+    },
+    {
+      "id": 31,
+      "tag": "Interact_MultipleChoice",
+      "title": "Multiple Choice Question",
+      "category": "Assessment",
+      "description": "Multiple choice question with four options and instant right/wrong feedback.",
+      "interactive": true
+    },
+    {
+      "id": 32,
+      "tag": "Interact_TextFill",
+      "title": "Text Fill Out Question",
+      "category": "Assessment",
+      "description": "Text fill-out question where the learner types the answer and checks it.",
+      "interactive": true
+    },
+    {
+      "id": 33,
+      "tag": "Recall_BinarySwipe",
+      "title": "Recall BinarySwipe",
+      "category": "Assessment",
+      "description": "Tinder-style left/right card swipe sorting statements into \"Valid\" or \"Invalid\".",
+      "interactive": true
+    },
+    {
+      "id": 34,
+      "tag": "Recall_SpeedPick",
+      "title": "Recall SpeedPick",
+      "category": "Assessment",
+      "description": "4-choice multiple choice question with an animated countdown dial for rapid fluency.",
+      "interactive": true
+    },
+    {
+      "id": 35,
+      "tag": "Recall_FillTheBlank",
+      "title": "Recall FillTheBlank",
+      "category": "Assessment",
+      "description": "Prose text with inline dropdown selects to complete sentences grammatically or logically.",
+      "interactive": true
+    },
+    {
+      "id": 36,
+      "tag": "Recall_MultiSelect",
+      "title": "Recall MultiSelect",
+      "category": "Assessment",
+      "description": "Question requiring user to identify all 2 or 3 correct answers before continuing.",
+      "interactive": true
+    },
+    {
+      "id": 37,
+      "tag": "Recall_RankSort",
+      "title": "Recall RankSort",
+      "category": "Assessment",
+      "description": "Vertical draggable list requiring users to place items into the correct hierarchical order.",
+      "interactive": true
+    },
+    {
+      "id": 38,
+      "tag": "Trap_CommonError",
+      "title": "Trap CommonError",
+      "category": "Assessment",
+      "description": "A tricky question targeting the #1 typical student mistake, revealing why intuition failed.",
+      "interactive": true
+    },
+    {
+      "id": 39,
+      "tag": "Trap_SpotTheLie",
+      "title": "Trap SpotTheLie",
+      "category": "Assessment",
+      "description": "Four statements displayed on screen where the student must click the single fabricated premise.",
+      "interactive": true
+    },
+    {
+      "id": 40,
+      "tag": "Trap_OverconfidenceCheck",
+      "title": "Trap OverconfidenceCheck",
+      "category": "Assessment",
+      "description": "Confidence slider (0-100%) paired with a quiz choice to measure calibration.",
+      "interactive": true
+    },
+    {
+      "id": 41,
+      "tag": "Interact_ClickToReveal",
+      "title": "Interact ClickToReveal",
+      "category": "Assessment",
+      "description": "Obscured blurred answer cards that clear when tapped to promote self-testing.",
+      "interactive": true
+    },
+    {
+      "id": 42,
+      "tag": "Interact_CategorySort",
+      "title": "Interact CategorySort",
+      "category": "Assessment",
+      "description": "Two or three buckets where user drags mixed items into proper classifications.",
+      "interactive": true
+    },
+    {
+      "id": 43,
+      "tag": "Interact_WordBankMatch",
+      "title": "Interact WordBankMatch",
+      "category": "Assessment",
+      "description": "Draggable chips matched to empty slots in a diagram or argument structure.",
+      "interactive": true
+    },
+    {
+      "id": 44,
+      "tag": "Interact_ErrorHighlighter",
+      "title": "Interact ErrorHighlighter",
+      "category": "Assessment",
+      "description": "Paragraph of text where the user must tap the exact words containing errors.",
+      "interactive": true
+    },
+    {
+      "id": 45,
+      "tag": "Interact_SliderEstimate",
+      "title": "Interact SliderEstimate",
+      "category": "Assessment",
+      "description": "Number slider where the user guesses a quantitative value before seeing the truth.",
+      "interactive": true
+    },
+    {
+      "id": 46,
+      "tag": "Interact_DialThreshold",
+      "title": "Interact DialThreshold",
+      "category": "Assessment",
+      "description": "Rotary dial requiring the user to tune a variable into the optimal safe operating zone.",
+      "interactive": true
+    },
+    {
+      "id": 47,
+      "tag": "Interact_HotspotPin",
+      "title": "Interact HotspotPin",
+      "category": "Assessment",
+      "description": "Image/canvas asset where user clicks the specific region matching a technical prompt.",
+      "interactive": true
+    },
+    {
+      "id": 48,
+      "tag": "Interact_CodeBugFinder",
+      "title": "Interact CodeBugFinder",
+      "category": "Assessment",
+      "description": "Compact code editor snippet where tapping a line flags syntax or logic flaws.",
+      "interactive": true
+    },
+    {
+      "id": 49,
+      "tag": "Interact_TermConnect",
+      "title": "Interact TermConnect",
+      "category": "Assessment",
+      "description": "Canvas string/line drawing connecting terms on the left to definitions on the right.",
+      "interactive": true
+    },
+    {
+      "id": 50,
+      "tag": "Interact_TrueFalseMatrix",
+      "title": "Interact TrueFalseMatrix",
+      "category": "Assessment",
+      "description": "Compact table with a grid of radio buttons testing 4 related propositions at once.",
+      "interactive": true
+    },
+    {
+      "id": 51,
+      "tag": "Interact_ArgumentDeconstruct",
+      "title": "Interact ArgumentDeconstruct",
+      "category": "Assessment",
+      "description": "Blocks representing Claim, Reason, and Evidence that snap into an engine rack.",
+      "interactive": true
+    },
+    {
+      "id": 52,
+      "tag": "Interact_ScrubNumber",
+      "title": "Interact ScrubNumber",
+      "category": "Assessment",
+      "description": "Inline bold number inside a paragraph that can be scrubbed horizontally to mutate text.",
+      "interactive": true
+    },
+    {
+      "id": 53,
+      "tag": "Interact_MatrixToggle",
+      "title": "Interact MatrixToggle",
+      "category": "Assessment",
+      "description": "Logic grid where clicking cells cycles through Yes, No, or Neutral states.",
+      "interactive": true
+    },
+    {
+      "id": 54,
+      "tag": "Interact_SyllogismTester",
+      "title": "Interact SyllogismTester",
+      "category": "Assessment",
+      "description": "Two premises shown where user must select the only valid deductive conclusion.",
+      "interactive": true
+    },
+    {
+      "id": 55,
+      "tag": "Interact_SentenceScramble",
+      "title": "Interact SentenceScramble",
+      "category": "Assessment",
+      "description": "Jumbled phrase chips that must be clicked in sequence to build a coherent thought.",
+      "interactive": true
+    },
+    {
+      "id": 56,
+      "tag": "Interact_Elimination",
+      "title": "Interact Elimination",
+      "category": "Assessment",
+      "description": "Question where clicking an option crosses it out, narrowing down to the last valid answer.",
+      "interactive": true
+    },
+    {
+      "id": 57,
+      "tag": "Interact_HintLadder",
+      "title": "Interact HintLadder",
+      "category": "Assessment",
+      "description": "Question card with 3 progressive hints; reveals cost score points if used.",
+      "interactive": true
+    },
+    {
+      "id": 58,
+      "tag": "Interact_PredictionCard",
+      "title": "Interact PredictionCard",
+      "category": "Assessment",
+      "description": "User commits to a prediction before an interactive video or animation plays out.",
+      "interactive": true
+    },
+    {
+      "id": 59,
+      "tag": "Interact_RubricScore",
+      "title": "Interact RubricScore",
+      "category": "Assessment",
+      "description": "User grades a sample student essay or problem using a mini clickable rubric.",
+      "interactive": true
+    },
+    {
+      "id": 60,
+      "tag": "Interact_FactOrInference",
+      "title": "Interact FactOrInference",
+      "category": "Assessment",
+      "description": "Rapid-fire categorizer marking statements as either observed data or assumptions.",
+      "interactive": true
+    },
+    {
+      "id": 61,
+      "tag": "Interact_VennDiagram",
+      "title": "Interact VennDiagram",
+      "category": "Assessment",
+      "description": "Overlapping 2-circle graphic where items must be placed into Group A, Group B, or Both.",
+      "interactive": true
+    },
+    {
+      "id": 62,
+      "tag": "Interact_FormulaInput",
+      "title": "Interact FormulaInput",
+      "category": "Assessment",
+      "description": "Structured math keypad input block validating numeric or algebraic equivalence.",
+      "interactive": true
+    },
+    {
+      "id": 63,
+      "tag": "Game_CantileverBalance",
+      "title": "Game CantileverBalance",
+      "category": "Game",
+      "description": "Two-sided balance arm where correct answers or evidence add weight to keep it level.",
+      "interactive": true
+    },
+    {
+      "id": 64,
+      "tag": "Game_TugOfWar",
+      "title": "Game TugOfWar",
+      "category": "Game",
+      "description": "Two opposing teams; answering correctly pulls the rope toward the student's anchor flag.",
+      "interactive": true
+    },
+    {
+      "id": 65,
+      "tag": "Game_TicTacToe",
+      "title": "Game TicTacToe",
+      "category": "Game",
+      "description": "3x3 grid; claiming any space requires answering a question; AI plays counter-moves.",
+      "interactive": true
+    },
+    {
+      "id": 66,
+      "tag": "Game_ConnectFour",
+      "title": "Game ConnectFour",
+      "category": "Game",
+      "description": "7x6 board where answering correctly drops a colored token into a column to get 4 in a row.",
+      "interactive": true
+    },
+    {
+      "id": 67,
+      "tag": "Game_BlackjackThreshold",
+      "title": "Game BlackjackThreshold",
+      "category": "Game",
+      "description": "Draw cards representing values/concepts to reach 21 without busting on distractors.",
+      "interactive": true
+    },
+    {
+      "id": 68,
+      "tag": "Game_HangmanGallows",
+      "title": "Game HangmanGallows",
+      "category": "Game",
+      "description": "Guessing conceptual keywords letter-by-letter or clue-by-clue before chances run out.",
+      "interactive": true
+    },
+    {
+      "id": 69,
+      "tag": "Game_FreeThrow",
+      "title": "Game FreeThrow",
+      "category": "Game",
+      "description": "Basketball hoop canvas; answering accurately triggers a clean swish; errors bounce off the rim.",
+      "interactive": true
+    },
+    {
+      "id": 70,
+      "tag": "Game_DuckHunt",
+      "title": "Game DuckHunt",
+      "category": "Game",
+      "description": "Moving target ducks on canvas; user taps the target carrying the correct term or answer.",
+      "interactive": true
+    },
+    {
+      "id": 71,
+      "tag": "Game_CircuitBreaker",
+      "title": "Game CircuitBreaker",
+      "category": "Game",
+      "description": "Connect parallel/series wires by selecting the correct components to power a bulb.",
+      "interactive": true
+    },
+    {
+      "id": 72,
+      "tag": "Game_HazardSweeper",
+      "title": "Game HazardSweeper",
+      "category": "Game",
+      "description": "Grid board where students uncover safe proof tiles while flagging fallacious landmines.",
+      "interactive": true
+    },
+    {
+      "id": 73,
+      "tag": "Game_TowerDefense",
+      "title": "Game TowerDefense",
+      "category": "Game",
+      "description": "Answering questions deploys defensive turrets that stop incoming error waves.",
+      "interactive": true
+    },
+    {
+      "id": 74,
+      "tag": "Game_ConveyorSorter",
+      "title": "Game ConveyorSorter",
+      "category": "Game",
+      "description": "Items move along a factory conveyor; user toggles track switches to guide them to bins.",
+      "interactive": true
+    },
+    {
+      "id": 75,
+      "tag": "Game_PipelinePlumber",
+      "title": "Game PipelinePlumber",
+      "category": "Game",
+      "description": "Rotate pipe segments by answering correctly to create a continuous water flow.",
+      "interactive": true
+    },
+    {
+      "id": 76,
+      "tag": "Game_SpaceDocking",
+      "title": "Game SpaceDocking",
+      "category": "Game",
+      "description": "Tune retro-thrusters using vector inputs to dock a spacecraft into a station module.",
+      "interactive": true
+    },
+    {
+      "id": 77,
+      "tag": "Game_ElevatorWeight",
+      "title": "Game ElevatorWeight",
+      "category": "Game",
+      "description": "Manage elevator payload capacities by solving proportional distribution math.",
+      "interactive": true
+    },
+    {
+      "id": 78,
+      "tag": "Game_MemoryMatch",
+      "title": "Game MemoryMatch",
+      "category": "Game",
+      "description": "Grid of facedown tiles; flip pairs that share a concept and its practical application.",
+      "interactive": true
+    },
+    {
+      "id": 79,
+      "tag": "Game_VaultCracker",
+      "title": "Game VaultCracker",
+      "category": "Game",
+      "description": "3-digit combination lock solved by answering 3 sequential logic riddles.",
+      "interactive": true
+    },
+    {
+      "id": 80,
+      "tag": "Game_CrosswordMini",
+      "title": "Game CrosswordMini",
+      "category": "Game",
+      "description": "Compact 5x5 crossword grid populated entirely with the lesson's key vocabulary.",
+      "interactive": true
+    },
+    {
+      "id": 81,
+      "tag": "Game_CardBattler",
+      "title": "Game CardBattler",
+      "category": "Game",
+      "description": "Play cards with power stats determined by the logical strength of arguments against a bot.",
+      "interactive": true
+    },
+    {
+      "id": 82,
+      "tag": "Game_AsteroidBlaster",
+      "title": "Game AsteroidBlaster",
+      "category": "Game",
+      "description": "Retro space canvas where typing or clicking the correct answer shoots an approaching rock.",
+      "interactive": true
+    },
+    {
+      "id": 83,
+      "tag": "Game_AuctionBidder",
+      "title": "Game AuctionBidder",
+      "category": "Game",
+      "description": "Place valuation bids on assets based on evaluating incomplete balance sheets.",
+      "interactive": true
+    },
+    {
+      "id": 84,
+      "tag": "Game_EscapeRoom",
+      "title": "Game EscapeRoom",
+      "category": "Game",
+      "description": "3 sequential interactive scenes where finding clues requires solving topic puzzles.",
+      "interactive": true
+    },
+    {
+      "id": 85,
+      "tag": "Game_WhackAMole",
+      "title": "Game WhackAMole",
+      "category": "Game",
+      "description": "Moles pop up labeled with valid terms and distractors; tap only the valid terms.",
+      "interactive": true
+    },
+    {
+      "id": 86,
+      "tag": "Game_RhythmTap",
+      "title": "Game RhythmTap",
+      "category": "Game",
+      "description": "Tap falling notes in time with structural cadence (e.g., poetic meter or timing loops).",
+      "interactive": true
+    },
+    {
+      "id": 87,
+      "tag": "Game_LaserMirror",
+      "title": "Game LaserMirror",
+      "category": "Game",
+      "description": "Position reflective mirrors on a grid to bounce an optical beam into the target node.",
+      "interactive": true
+    },
+    {
+      "id": 88,
+      "tag": "Btn_3DTactile",
+      "title": "Btn 3DTactile",
+      "category": "Utility",
+      "description": "Neumorphic, physical push button with distinct 3D depressed travel and click sound.",
+      "interactive": true
+    },
+    {
+      "id": 89,
+      "tag": "Btn_PillToggle",
+      "title": "Btn PillToggle",
+      "category": "Utility",
+      "description": "Segmented horizontal pill switch for flipping states (e.g., \"Beginner\" vs. \"Advanced\").",
+      "interactive": true
+    },
+    {
+      "id": 90,
+      "tag": "Btn_HoldToConfirm",
+      "title": "Btn HoldToConfirm",
+      "category": "Utility",
+      "description": "Long-press button requiring a 1.5-second hold with circular fill gauge to submit.",
+      "interactive": true
+    },
+    {
+      "id": 91,
+      "tag": "Btn_SplitAction",
+      "title": "Btn SplitAction",
+      "category": "Utility",
+      "description": "Dual-action button (primary action on left, dropdown options menu on right).",
+      "interactive": true
+    },
+    {
+      "id": 92,
+      "tag": "Btn_Destructive",
+      "title": "Btn Destructive",
+      "category": "Utility",
+      "description": "High-contrast safety button with a double-tap confirmation pattern (e.g., \"Reset Run\").",
+      "interactive": true
+    },
+    {
+      "id": 93,
+      "tag": "Btn_RevealDrawer",
+      "title": "Btn RevealDrawer",
+      "category": "Utility",
+      "description": "Bottom or side slide-out drawer trigger for accessing formulas and toolbars.",
+      "interactive": true
+    },
+    {
+      "id": 94,
+      "tag": "Tool_Scratchpad",
+      "title": "Tool Scratchpad",
+      "category": "Utility",
+      "description": "Freeform canvas overlay enabling drawing, calculating, or handwriting directly on screen.",
+      "interactive": true
+    },
+    {
+      "id": 95,
+      "tag": "Tool_UnitConverter",
+      "title": "Tool UnitConverter",
+      "category": "Utility",
+      "description": "Embedded floating calculator converting metric, imperial, or currency units.",
+      "interactive": true
+    },
+    {
+      "id": 96,
+      "tag": "Tool_GlossaryModal",
+      "title": "Tool GlossaryModal",
+      "category": "Utility",
+      "description": "Quick-search dictionary overlay searching definitions without leaving the lesson.",
+      "interactive": true
+    },
+    {
+      "id": 97,
+      "tag": "Tool_CaseWorkbench",
+      "title": "Tool CaseWorkbench",
+      "category": "Utility",
+      "description": "Split-pane layout with source text on the left and an annotation ledger on the right.",
+      "interactive": true
+    },
+    {
+      "id": 98,
+      "tag": "Tool_FormulaSheet",
+      "title": "Tool FormulaSheet",
+      "category": "Utility",
+      "description": "Slide-over quick reference panel displaying foundational equations.",
+      "interactive": true
+    },
+    {
+      "id": 99,
+      "tag": "Nav_StickyProgress",
+      "title": "Nav StickyProgress",
+      "category": "Utility",
+      "description": "Pinned top progress bar showing current lesson position and score accumulation.",
+      "interactive": true
+    },
+    {
+      "id": 100,
+      "tag": "Nav_CheckpointJump",
+      "title": "Nav CheckpointJump",
+      "category": "Utility",
+      "description": "Clickable breadcrumb dots allowing jumping back to previously completed sections.",
+      "interactive": true
+    },
+    {
+      "id": 101,
+      "tag": "Nav_BranchPath",
+      "title": "Nav BranchPath",
+      "category": "Utility",
+      "description": "Two-path decision junction allowing the student to choose their learning path forward.",
+      "interactive": true
+    },
+    {
+      "id": 102,
+      "tag": "Feedback_ToastSuccess",
+      "title": "Feedback ToastSuccess",
+      "category": "Utility",
+      "description": "Lightweight sliding notification banner verifying correct input with haptic vibration.",
+      "interactive": true
+    },
+    {
+      "id": 103,
+      "tag": "Feedback_ModalDiagnostic",
+      "title": "Feedback ModalDiagnostic",
+      "category": "Utility",
+      "description": "Full overlay breaking down why an answer failed and presenting an analogy.",
+      "interactive": true
+    },
+    {
+      "id": 104,
+      "tag": "State_StreakCelebration",
+      "title": "State StreakCelebration",
+      "category": "Utility",
+      "description": "Confetti trigger component activating on 5 consecutive correct recall checks.",
+      "interactive": true
+    },
+    {
+      "id": 105,
+      "tag": "State_ReviewLocker",
+      "title": "State ReviewLocker",
+      "category": "Utility",
+      "description": "End-of-lesson card holding all missed questions for review before concluding.",
+      "interactive": true
+    },
+    {
+      "id": 106,
+      "tag": "Action_ShareCard",
+      "title": "Action ShareCard",
+      "category": "Utility",
+      "description": "Generates a shareable visual badge summarizing lesson score and mastery level.",
+      "interactive": true
+    },
+    {
+      "id": 107,
+      "tag": "Action_LessonComplete",
+      "title": "Action LessonComplete",
+      "category": "Utility",
+      "description": "Full-width primary CTA button locking the score, logging progress, and advancing to the next level.",
+      "interactive": true
+    }
+  ]
+}

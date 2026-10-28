@@ -1,0 +1,1398 @@
+<style>
+  #base-lesson-body{
+    --base:#050508;
+    --surface:#0d0d15;
+    --surface-2:#15151f;
+    --line:#26263a;
+    --accent:#F43F5E;
+    --accent-dark:#7f1d33;
+    --accent-glow:rgba(244,63,94,.55);
+    --violet:#A855F7;
+    --violet-dark:#4c1d95;
+    --cyan:#06B6D4;
+    --cyan-dark:#0e4d5c;
+    --amber:#FBBF24;
+    --amber-dark:#7a5410;
+    --ok:#22C55E;
+    --ink:#ECECF6;
+    --muted:#8C8CA6;
+    display:block;
+    position:relative;
+    isolation:isolate;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(168,85,247,.13), transparent 45%),
+      radial-gradient(circle at 92% 2%, rgba(6,182,212,.13), transparent 42%),
+      var(--base);
+    color:var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height:1.6;
+    border-radius:16px;
+    padding:0 0 56px;
+    -webkit-font-smoothing:antialiased;
+  }
+  #base-lesson-body *{box-sizing:border-box;}
+
+  /* ================= HUD ================= */
+  #base-lesson-body .hud{
+    position:sticky; top:0; z-index:60;
+    background:linear-gradient(180deg, rgba(5,5,8,.99) 0%, rgba(13,13,21,.95) 100%);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 10px 30px rgba(0,0,0,.65);
+    padding:10px 14px 12px;
+    border-radius:16px 16px 0 0;
+  }
+  #base-lesson-body .hud-row{
+    display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center;
+  }
+  #base-lesson-body .chip{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+    padding:6px 11px; border-radius:999px;
+    border:1px solid var(--line);
+    background:linear-gradient(180deg,#16161f,#0b0b12);
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  #base-lesson-body .chip b{color:var(--ink); font-weight:700;}
+  #base-lesson-body .chip.accent{
+    border-color:var(--accent); color:#ffd3dc;
+    box-shadow:0 0 14px rgba(244,63,94,.28), inset 0 0 10px rgba(244,63,94,.12);
+  }
+  #base-lesson-body .chip.cyan{
+    border-color:var(--cyan); color:#c2f4ff;
+    box-shadow:0 0 14px rgba(6,182,212,.22);
+  }
+  #base-lesson-body .chip.violet{
+    border-color:var(--violet); color:#e6d4ff;
+    box-shadow:0 0 14px rgba(168,85,247,.22);
+  }
+  #base-lesson-body .gauge{
+    flex:1 1 260px; min-width:210px;
+    display:flex; align-items:center; gap:10px;
+  }
+  #base-lesson-body .gauge-label{
+    font-family:ui-monospace,monospace; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); white-space:nowrap;
+  }
+  #base-lesson-body .gauge-track{
+    position:relative; flex:1; height:15px; border-radius:999px;
+    background:#08080f; border:1px solid var(--line); overflow:hidden;
+  }
+  #base-lesson-body .gauge-track::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 2px, transparent 2px 7px);
+  }
+  #base-lesson-body .gauge-fill{
+    height:100%; width:25%;
+    background:linear-gradient(90deg, var(--cyan), var(--violet), var(--accent));
+    transition:width .7s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 0 16px var(--accent-glow);
+  }
+  #base-lesson-body .gauge-val{
+    font-family:ui-monospace,monospace; font-size:11px; font-weight:700;
+    color:#ffd3dc; min-width:104px; text-align:right;
+  }
+  #base-lesson-body .mission{
+    margin-top:9px; text-align:center;
+    font-size:12.5px; color:#a9a9c2;
+    max-width:900px; margin-left:auto; margin-right:auto;
+  }
+  #base-lesson-body .mission b{color:var(--amber);}
+
+  /* ================= SECTIONS ================= */
+  #base-lesson-body .sec{max-width:1180px; margin:0 auto; padding:34px 16px 0;}
+  #base-lesson-body .sec-head{display:flex; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+  #base-lesson-body .sec-idx{
+    font-family:ui-monospace,monospace; font-size:10.5px; letter-spacing:.16em;
+    padding:5px 10px; border-radius:7px; border:1px solid var(--accent);
+    color:#ffd3dc; background:rgba(244,63,94,.1); white-space:nowrap;
+  }
+  #base-lesson-body h2{font-size:clamp(18px,2.5vw,25px); margin:0; letter-spacing:.01em;}
+  #base-lesson-body h3{
+    font-size:15px; margin:0 0 8px; letter-spacing:.04em; text-transform:uppercase;
+    color:#ffd3dc; font-family:ui-monospace,monospace; font-weight:700;
+  }
+  #base-lesson-body h4{font-size:13.5px; margin:0 0 6px; letter-spacing:.05em; text-transform:uppercase; color:var(--amber);}
+  #base-lesson-body p{margin:0 0 10px;}
+  #base-lesson-body .card{
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 12px 28px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  #base-lesson-body .lead{color:#c3c3d8; font-size:14.5px;}
+  #base-lesson-body .muted{color:var(--muted); font-size:13px;}
+  #base-lesson-body .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  #base-lesson-body .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  #base-lesson-body .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  #base-lesson-body .stack{display:flex; flex-direction:column; gap:14px;}
+  #base-lesson-body .mt{margin-top:14px;}
+
+  @media (max-width:900px){
+    #base-lesson-body .grid-3, #base-lesson-body .grid-4{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:620px){
+    #base-lesson-body .grid-2, #base-lesson-body .grid-3, #base-lesson-body .grid-4{grid-template-columns:1fr;}
+  }
+
+  /* ================= BUTTONS ================= */
+  #base-lesson-body .btn{
+    font:inherit; font-weight:800; letter-spacing:.07em; text-transform:uppercase;
+    font-size:11.5px; color:var(--ink);
+    background:linear-gradient(180deg,#1e1e2c,#111119);
+    border:2px solid var(--line);
+    border-radius:10px;
+    padding:12px 16px;
+    cursor:pointer;
+    box-shadow:0 4px 0 #07070d;
+    transition:transform .08s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease, color .16s ease;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    text-align:center;
+  }
+  #base-lesson-body .btn:hover:not(:disabled){
+    border-color:var(--accent);
+    box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn:active:not(:disabled){
+    transform:translateY(2px);
+    box-shadow:0 2px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn:disabled{opacity:.4; cursor:not-allowed; transform:none;}
+  #base-lesson-body .btn.primary{
+    background:linear-gradient(180deg,var(--accent),#b81f3c);
+    border-color:#ff8098; color:#fff;
+    box-shadow:0 4px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn.primary:hover:not(:disabled){
+    box-shadow:0 4px 22px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn.cyan{
+    background:linear-gradient(180deg,#0b6f85,#06303d);
+    border-color:var(--cyan); color:#d5f8ff;
+    box-shadow:0 4px 0 var(--cyan-dark);
+  }
+  #base-lesson-body .btn.cyan:hover:not(:disabled){box-shadow:0 4px 18px rgba(6,182,212,.5), 0 4px 0 var(--cyan-dark);}
+  #base-lesson-body .btn.cyan:active:not(:disabled){box-shadow:0 2px 0 var(--cyan-dark);}
+  #base-lesson-body .btn.violet{
+    background:linear-gradient(180deg,#6d28d9,#3b1177);
+    border-color:var(--violet); color:#f0e4ff;
+    box-shadow:0 4px 0 var(--violet-dark);
+  }
+  #base-lesson-body .btn.violet:hover:not(:disabled){box-shadow:0 4px 18px rgba(168,85,247,.5), 0 4px 0 var(--violet-dark);}
+  #base-lesson-body .btn.violet:active:not(:disabled){box-shadow:0 2px 0 var(--violet-dark);}
+  #base-lesson-body .btn.amber{
+    background:linear-gradient(180deg,#b45309,#6b3208);
+    border-color:var(--amber); color:#fff4d6;
+    box-shadow:0 4px 0 var(--amber-dark);
+  }
+  #base-lesson-body .btn.amber:hover:not(:disabled){box-shadow:0 4px 18px rgba(251,191,36,.5), 0 4px 0 var(--amber-dark);}
+  #base-lesson-body .btn.amber:active:not(:disabled){box-shadow:0 2px 0 var(--amber-dark);}
+  #base-lesson-body .btn.green{
+    background:linear-gradient(180deg,#15803d,#0a3d1e);
+    border-color:var(--ok); color:#d6ffe6;
+    box-shadow:0 4px 0 #073a1c;
+  }
+  #base-lesson-body .btn.green:hover:not(:disabled){box-shadow:0 4px 18px rgba(34,197,94,.5), 0 4px 0 #073a1c;}
+  #base-lesson-body .btn.green:active:not(:disabled){box-shadow:0 2px 0 #073a1c;}
+  #base-lesson-body .btn.hazard{
+    background:linear-gradient(180deg,#3a1520,#1c0a11);
+    border-color:#5a2130; color:#ffb3c3;
+    box-shadow:0 4px 0 #12060a;
+    font-size:11px;
+  }
+  #base-lesson-body .btn.hazard:hover:not(:disabled){
+    border-color:var(--accent);
+    box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn.hazard.eliminated{opacity:.28; text-decoration:line-through;}
+  #base-lesson-body .btn.wide{width:100%;}
+  #base-lesson-body .btn.big{padding:16px 28px; font-size:14px; border-radius:12px;}
+
+  /* ================= TABLE / MATRIX ================= */
+  #base-lesson-body .matrix{width:100%; border-collapse:collapse; font-size:13px; overflow:hidden; border-radius:12px;}
+  #base-lesson-body .matrix th, #base-lesson-body .matrix td{
+    border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;
+  }
+  #base-lesson-body .matrix thead th{
+    background:linear-gradient(180deg,#1b1b28,#12121b);
+    font-family:ui-monospace,monospace; font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:#ffd3dc;
+  }
+  #base-lesson-body .matrix tbody tr:nth-child(even){background:rgba(255,255,255,.018);}
+  #base-lesson-body .matrix td:first-child{color:#c8f6ff; font-weight:700; width:22%;}
+  #base-lesson-body .matrix td:nth-child(2){color:#ffc9d4; width:30%;}
+  #base-lesson-body .scroll-x{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+
+  /* ================= TAGS / HIGHLIGHTS ================= */
+  #base-lesson-body .tag{
+    display:inline-block; font-family:ui-monospace,monospace; font-size:9.5px;
+    letter-spacing:.09em; text-transform:uppercase; padding:2px 7px; border-radius:6px;
+    border:1px solid currentColor; margin-right:5px; vertical-align:middle; font-weight:700;
+    white-space:nowrap;
+  }
+  #base-lesson-body .tag-grounds{color:var(--cyan);}
+  #base-lesson-body .tag-stance{color:var(--accent);}
+  #base-lesson-body .tag-vehicle{color:var(--violet);}
+  #base-lesson-body .tag-scope{color:var(--amber);}
+  #base-lesson-body .tag-boundary{color:var(--ok);}
+
+  #base-lesson-body .hl-grounds{background:rgba(6,182,212,.15); border-bottom:2px solid var(--cyan); padding:0 2px;}
+  #base-lesson-body .hl-stance{background:rgba(244,63,94,.15); border-bottom:2px solid var(--accent); padding:0 2px;}
+  #base-lesson-body .hl-vehicle{background:rgba(168,85,247,.15); border-bottom:2px solid var(--violet); padding:0 2px;}
+  #base-lesson-body .hl-scope{background:rgba(251,191,36,.15); border-bottom:2px solid var(--amber); padding:0 2px;}
+
+  #base-lesson-body .quote{
+    font-size:14.5px; color:#dedef0; line-height:1.75;
+    border-left:3px solid var(--violet); padding:12px 14px; margin:0 0 12px;
+    background:rgba(168,85,247,.06); border-radius:0 10px 10px 0;
+  }
+  #base-lesson-body .decoder{list-style:none; padding:0; margin:0; font-size:12.5px; color:#b9b9cf;}
+  #base-lesson-body .decoder li{padding:5px 0 5px 14px; position:relative; border-bottom:1px dashed rgba(255,255,255,.06);}
+  #base-lesson-body .decoder li:last-child{border-bottom:none;}
+  #base-lesson-body .decoder li::before{content:"▸"; position:absolute; left:0; color:var(--accent);}
+  #base-lesson-body .decoder b{color:#eaeaff;}
+
+  /* ================= PODS ================= */
+  #base-lesson-body .pod{
+    background:linear-gradient(180deg,#14141e,#0c0c14);
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    box-shadow:0 12px 26px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
+    display:flex; flex-direction:column; gap:8px;
+  }
+  #base-lesson-body .pod.p1{border-top:3px solid var(--accent);}
+  #base-lesson-body .pod.p2{border-top:3px solid var(--amber);}
+  #base-lesson-body .pod.p3{border-top:3px solid var(--violet);}
+  #base-lesson-body .pod.p4{border-top:3px solid var(--cyan);}
+  #base-lesson-body .pod-title{
+    font-family:ui-monospace,monospace; font-size:13px; letter-spacing:.08em;
+    text-transform:uppercase; font-weight:700; margin:0;
+  }
+  #base-lesson-body .pod.p1 .pod-title{color:#ff8ba0;}
+  #base-lesson-body .pod.p2 .pod-title{color:#ffd777;}
+  #base-lesson-body .pod.p3 .pod-title{color:#c99bff;}
+  #base-lesson-body .pod.p4 .pod-title{color:#5fdcf0;}
+  #base-lesson-body .pod-sub{font-size:12px; color:var(--muted); margin:0 0 4px; font-style:italic;}
+  #base-lesson-body .pod h5{
+    font-family:ui-monospace,monospace; font-size:10px; letter-spacing:.13em;
+    text-transform:uppercase; color:#8f8fab; margin:8px 0 4px;
+  }
+  #base-lesson-body .pod ul{margin:0; padding-left:17px; font-size:12.5px; color:#bcbcd2;}
+  #base-lesson-body .pod ul li{margin-bottom:4px;}
+  #base-lesson-body .risk{
+    font-size:12.5px; color:#ffc9d4; background:rgba(244,63,94,.08);
+    border:1px solid rgba(244,63,94,.28); border-radius:9px; padding:9px 11px; margin-top:6px;
+  }
+  #base-lesson-body .excerpt{
+    font-size:12.5px; color:#dedef0; font-style:italic;
+    border-left:3px solid var(--line); padding:8px 10px; margin:6px 0;
+    background:rgba(255,255,255,.02); border-radius:0 8px 8px 0;
+  }
+
+  /* ================= THERMAL GAME ================= */
+  #base-lesson-body .rig{
+    border:1px solid var(--line); border-radius:16px; padding:16px;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(244,63,94,.07), transparent 60%),
+      linear-gradient(180deg,#0e0e17,#08080e);
+    box-shadow:0 16px 40px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  #base-lesson-body .rig-top{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    margin-bottom:14px;
+  }
+  #base-lesson-body .rec{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:ui-monospace,monospace; font-size:10.5px; letter-spacing:.14em;
+    color:#ff8ba0; text-transform:uppercase;
+  }
+  #base-lesson-body .rec .dot{
+    width:9px; height:9px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 10px var(--accent); animation:blip 1.4s infinite;
+  }
+  @keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
+  #base-lesson-body .viewport{position:relative; overflow:hidden; border-radius:14px; padding:2px;}
+  #base-lesson-body .viewport::before{
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:3;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 4px);
+    border-radius:14px;
+  }
+  #base-lesson-body .viewport::after{
+    content:""; position:absolute; left:0; right:0; height:90px; top:-100px;
+    background:linear-gradient(180deg, transparent, rgba(6,182,212,.25), transparent);
+    opacity:0; pointer-events:none; z-index:4;
+  }
+  #base-lesson-body .viewport.scanning::after{opacity:1; animation:sweep 1.05s linear infinite;}
+  @keyframes sweep{from{top:-100px} to{top:110%}}
+
+  #base-lesson-body .node-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px; position:relative; z-index:2;
+  }
+  @media (max-width:860px){#base-lesson-body .node-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){#base-lesson-body .node-grid{grid-template-columns:1fr;}}
+
+  #base-lesson-body .node{
+    position:relative; text-align:left; font:inherit;
+    display:flex; flex-direction:column; gap:8px;
+    min-height:158px; padding:12px;
+    background:#0a0a12;
+    border:2px solid var(--line);
+    border-radius:12px;
+    box-shadow:0 4px 0 #06060c;
+    cursor:pointer; color:var(--ink);
+    transition:border-color .2s ease, box-shadow .2s ease, transform .12s ease, background .2s ease;
+    overflow:hidden;
+  }
+  #base-lesson-body .node:hover{border-color:#3b3b56; transform:translateY(-1px);}
+  #base-lesson-body .node:disabled{cursor:default;}
+  #base-lesson-body .node .node-head{
+    display:flex; justify-content:space-between; align-items:center; gap:6px;
+    font-family:ui-monospace,monospace; font-size:10px; letter-spacing:.1em; color:var(--muted);
+  }
+  #base-lesson-body .node .node-temp{font-weight:700; color:#5f5f7a;}
+  #base-lesson-body .node .node-text{font-size:12.5px; line-height:1.5; color:#a8a8c0;}
+  #base-lesson-body .node .node-foot{
+    margin-top:auto; font-family:ui-monospace,monospace; font-size:9.5px;
+    letter-spacing:.1em; color:#4d4d66; text-transform:uppercase;
+  }
+  #base-lesson-body .node.cool{
+    border-color:var(--cyan);
+    box-shadow:0 0 20px rgba(6,182,212,.28), 0 4px 0 var(--cyan-dark);
+    background:linear-gradient(180deg,#0a1a20,#070d11);
+  }
+  #base-lesson-body .node.cool .node-temp{color:var(--cyan);}
+  #base-lesson-body .node.cool .node-text{color:#bfeef8;}
+  #base-lesson-body .node.hot{
+    border-color:var(--amber);
+    animation:thermalPulse 1.7s ease-in-out infinite;
+    background:linear-gradient(180deg,#221508,#100a04);
+  }
+  #base-lesson-body .node.hot .node-temp{color:#ffd777;}
+  #base-lesson-body .node.hot .node-text{color:#ffe3b0;}
+  #base-lesson-body .node.hot::after{
+    content:""; position:absolute; inset:0; pointer-events:none; border-radius:10px;
+    background:radial-gradient(circle at 76% 14%, rgba(255,255,255,.34), rgba(251,191,36,.2) 34%, transparent 72%);
+    animation:flicker 1.5s ease-in-out infinite;
+  }
+  @keyframes thermalPulse{
+    0%,100%{box-shadow:0 0 8px rgba(251,191,36,.18), 0 4px 0 #3d2a08;}
+    50%{box-shadow:0 0 26px 4px rgba(251,191,36,.6), 0 4px 0 #3d2a08;}
+  }
+  @keyframes flicker{0%,100%{opacity:.75}45%{opacity:.35}70%{opacity:.9}}
+  #base-lesson-body .node.sealed{
+    border-color:var(--ok);
+    box-shadow:0 0 18px rgba(34,197,94,.24), 0 4px 0 #073a1c;
+    background:linear-gradient(180deg,#07170e,#050c08);
+    cursor:default;
+  }
+  #base-lesson-body .node.sealed .node-temp{color:var(--ok);}
+  #base-lesson-body .node.sealed .node-text{color:#a9dcbd;}
+  #base-lesson-body .node.sealed::after{display:none;}
+  #base-lesson-body .node.focused{outline:2px solid var(--violet); outline-offset:2px;}
+  #base-lesson-body .node.shake{animation:shake .45s ease;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    18%{transform:translateX(-7px)}
+    38%{transform:translateX(7px)}
+    58%{transform:translateX(-5px)}
+    78%{transform:translateX(5px)}
+  }
+
+  #base-lesson-body .rig-controls{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:14px;
+  }
+  #base-lesson-body .legend{
+    display:flex; align-items:center; gap:8px; flex:1 1 220px; min-width:200px;
+    font-family:ui-monospace,monospace; font-size:9.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  #base-lesson-body .legend-bar{
+    flex:1; height:11px; border-radius:999px; border:1px solid var(--line);
+    background:linear-gradient(90deg, #062a33 0%, var(--cyan) 22%, #4c1d95 52%, var(--accent) 76%, #fff 100%);
+  }
+
+  #base-lesson-body .console{
+    margin-top:14px; border:1px solid var(--line); border-radius:14px;
+    background:linear-gradient(180deg,#0f0f18,#09090f); padding:16px;
+    min-height:130px;
+    box-shadow:inset 0 0 40px rgba(0,0,0,.5);
+  }
+  #base-lesson-body .console .hint{
+    color:var(--muted); font-family:ui-monospace,monospace; font-size:11.5px; margin:0;
+    letter-spacing:.04em;
+  }
+  #base-lesson-body .console-head{
+    display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;
+    margin-bottom:10px; font-family:ui-monospace,monospace; font-size:10.5px;
+    letter-spacing:.11em; color:#8f8fab; text-transform:uppercase;
+  }
+  #base-lesson-body .console-quote{
+    border-left:3px solid var(--accent); padding:11px 14px; margin:0 0 14px;
+    background:rgba(244,63,94,.06); border-radius:0 10px 10px 0;
+    font-size:14.5px; color:#dedef0; line-height:1.65;
+  }
+  #base-lesson-body .verdict-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px;
+  }
+  @media (max-width:620px){#base-lesson-body .verdict-grid{grid-template-columns:1fr;}}
+  #base-lesson-body .feedback{
+    margin-top:14px; padding:12px 14px; border-radius:10px; font-size:13.5px;
+    border:1px solid; line-height:1.6;
+  }
+  #base-lesson-body .feedback.good{border-color:var(--ok); background:rgba(34,197,94,.1); color:#c3f5d6;}
+  #base-lesson-body .feedback.bad{border-color:var(--accent); background:rgba(244,63,94,.1); color:#ffc9d4;}
+  #base-lesson-body .feedback b{display:block; font-family:ui-monospace,monospace; font-size:11px; letter-spacing:.12em; margin-bottom:5px; text-transform:uppercase;}
+
+  /* ================= DETONATOR ================= */
+  #base-lesson-body .det-wrap{display:flex; flex-direction:column; align-items:center; gap:16px;}
+  #base-lesson-body .det-plate{
+    position:relative; width:100%; max-width:760px;
+    border:2px solid var(--accent); border-radius:16px; padding:22px 20px;
+    background:linear-gradient(180deg,#1b0a11,#0c0509);
+    box-shadow:0 0 34px rgba(244,63,94,.24), inset 0 0 50px rgba(244,63,94,.08);
+    transition:transform .5s ease, opacity .6s ease;
+    overflow:hidden;
+  }
+  #base-lesson-body .det-label{
+    font-family:ui-monospace,monospace; font-size:10px; letter-spacing:.18em;
+    text-transform:uppercase; color:#ff8ba0; margin-bottom:10px;
+  }
+  #base-lesson-body .det-claim{
+    font-size:clamp(14.5px,1.9vw,17.5px); line-height:1.6; color:#ffe9ee; margin:0;
+    font-weight:600;
+  }
+  #base-lesson-body .det-claim .frag{display:inline-block;}
+  #base-lesson-body .det-plate.detonating{animation:detFlash .28s steps(2) 4;}
+  @keyframes detFlash{
+    0%{background:linear-gradient(180deg,#1b0a11,#0c0509); border-color:var(--accent);}
+    100%{background:linear-gradient(180deg,#5a1020,#2a0810); border-color:#fff;}
+  }
+  #base-lesson-body .det-plate.collapsed{
+    transform:scale(.96) rotate(-.6deg);
+    border-color:#4a2030;
+    box-shadow:0 0 8px rgba(244,63,94,.1), inset 0 0 60px rgba(0,0,0,.7);
+    background:linear-gradient(180deg,#0e0a10,#070508);
+  }
+  #base-lesson-body .cracks{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; opacity:0;
+  }
+  #base-lesson-body .det-plate.detonating .cracks{opacity:1;}
+  #base-lesson-body .cracks polyline{
+    fill:none; stroke:#fff; stroke-width:1.6; stroke-linecap:round;
+    stroke-dasharray:400; stroke-dashoffset:400;
+    filter:drop-shadow(0 0 5px rgba(255,255,255,.9));
+  }
+  #base-lesson-body .det-plate.detonating .cracks polyline{animation:draw .55s ease forwards;}
+  #base-lesson-body .cracks polyline:nth-child(2){animation-delay:.08s;}
+  #base-lesson-body .cracks polyline:nth-child(3){animation-delay:.14s;}
+  #base-lesson-body .cracks polyline:nth-child(4){animation-delay:.2s;}
+  #base-lesson-body .cracks polyline:nth-child(5){animation-delay:.26s;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+
+  #base-lesson-body .det-debrief{
+    width:100%; max-width:760px;
+    border:1px solid var(--ok); border-radius:14px; padding:18px;
+    background:linear-gradient(180deg,#07170e,#050c08);
+    box-shadow:0 0 30px rgba(34,197,94,.18);
+    display:none;
+  }
+  #base-lesson-body .det-debrief.show{display:block; animation:popIn .45s cubic-bezier(.2,.8,.2,1);}
+  @keyframes popIn{from{opacity:0; transform:translateY(14px) scale(.98);} to{opacity:1; transform:none;}}
+  #base-lesson-body .det-debrief h4{color:var(--ok); font-size:14px; letter-spacing:.1em;}
+  #base-lesson-body .det-debrief p{color:#c3f5d6; font-size:13.5px;}
+  #base-lesson-body .det-debrief .neg{
+    border-left:3px solid var(--ok); padding:9px 12px; background:rgba(34,197,94,.07);
+    border-radius:0 9px 9px 0; color:#e2ffef; font-family:ui-monospace,monospace; font-size:12px;
+    letter-spacing:.02em;
+  }
+
+  /* ================= FORENSICS ================= */
+  #base-lesson-body .fx-layout{display:grid; grid-template-columns:1.55fr 1fr; gap:14px;}
+  @media (max-width:900px){#base-lesson-body .fx-layout{grid-template-columns:1fr;}}
+  #base-lesson-body .fx{
+    font-size:14.5px; line-height:1.9; color:#b6b6cd; margin:0;
+  }
+  #base-lesson-body .fx span{
+    border-radius:5px; padding:1px 3px; transition:background .3s ease, box-shadow .3s ease, color .3s ease;
+  }
+  #base-lesson-body .fx.mode-grounds .fx-grounds{
+    background:rgba(34,197,94,.18); box-shadow:0 0 0 1px rgba(34,197,94,.6); color:#d6ffe6;
+  }
+  #base-lesson-body .fx.mode-claims .fx-claim{
+    background:rgba(59,130,246,.2); box-shadow:0 0 0 1px rgba(59,130,246,.65); color:#d8e9ff;
+  }
+  #base-lesson-body .fx.mode-warrants .fx-warrant{
+    background:rgba(251,191,36,.18); box-shadow:0 0 0 1px rgba(251,191,36,.6); color:#fff0cc;
+  }
+  #base-lesson-body .mode-bar{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:14px;}
+  #base-lesson-body .btn.mode.active{
+    outline:2px solid #fff; outline-offset:2px;
+  }
+  #base-lesson-body .inspector{
+    border:1px solid var(--line); border-radius:12px; padding:14px;
+    background:linear-gradient(180deg,#101018,#0a0a11); min-height:180px;
+  }
+  #base-lesson-body .inspector h4{color:var(--cyan); font-size:11px;}
+  #base-lesson-body .inspector ul{margin:0; padding-left:16px; font-size:12.5px; color:#bcbcd2;}
+  #base-lesson-body .inspector ul li{margin-bottom:8px;}
+  #base-lesson-body .hypo-grid{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+  #base-lesson-body .hypo{
+    text-align:left; font-size:13px; letter-spacing:.02em; text-transform:none;
+    font-weight:600; line-height:1.5; padding:14px 16px;
+  }
+  #base-lesson-body .clearance{
+    margin-top:14px; border:1px solid var(--ok); border-radius:12px; padding:14px;
+    background:rgba(34,197,94,.08); color:#c3f5d6; font-size:13.5px; display:none;
+  }
+  #base-lesson-body .clearance.show{display:block; animation:popIn .45s cubic-bezier(.2,.8,.2,1);}
+  #base-lesson-body .clearance b{
+    display:block; font-family:ui-monospace,monospace; letter-spacing:.14em;
+    font-size:11.5px; color:var(--ok); margin-bottom:6px; text-transform:uppercase;
+  }
+
+  /* ================= PROTOCOL ================= */
+  #base-lesson-body ol.protocol{
+    counter-reset:step; list-style:none; padding:0; margin:0;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  #base-lesson-body ol.protocol li{
+    counter-increment:step; position:relative; padding:13px 14px 13px 54px;
+    border:1px solid var(--line); border-radius:12px;
+    background:linear-gradient(180deg,#12121b,#0b0b12);
+    font-size:13px; color:#c3c3d8;
+  }
+  #base-lesson-body ol.protocol li::before{
+    content:counter(step);
+    position:absolute; left:13px; top:50%; transform:translateY(-50%);
+    width:28px; height:28px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:ui-monospace,monospace; font-weight:700; font-size:12px;
+    background:linear-gradient(180deg,var(--accent),#a3182f);
+    color:#fff; border:1px solid #ff8098;
+    box-shadow:0 3px 0 var(--accent-dark);
+  }
+  #base-lesson-body ol.protocol li strong{color:#fff;}
+
+  /* ================= FINISH ================= */
+  #base-lesson-body .finish-sec{
+    display:flex; justify-content:center; align-items:center; padding-top:44px;
+  }
+  #base-lesson-body .finish-btn{
+    padding:20px 52px; font-size:15px; border-radius:14px;
+    letter-spacing:.14em;
+    animation:finishGlow 2.6s ease-in-out infinite;
+  }
+  @keyframes finishGlow{
+    0%,100%{box-shadow:0 4px 0 var(--accent-dark), 0 0 18px rgba(244,63,94,.35);}
+    50%{box-shadow:0 4px 0 var(--accent-dark), 0 0 42px rgba(244,63,94,.75);}
+  }
+</style>
+
+<div id="base-lesson-body">
+
+  <!-- ============ HUD ============ -->
+  <header class="hud">
+    <div class="hud-row">
+      <span class="chip accent">◈ <b>LEVEL 105</b></span>
+      <span class="chip cyan">SUBJECT: <b>English — Tone Control in Writing</b></span>
+      <span class="chip">GRADE: <b>9th–10th</b> | AGES <b>12–16</b></span>
+      <span class="chip violet">CALLSIGN: <b>ANALYST-105</b></span>
+      <span class="chip accent">XP: <b id="xpCounter">0 XP</b></span>
+    </div>
+    <div class="hud-row" style="margin-top:9px;">
+      <div class="gauge">
+        <span class="gauge-label" id="gaugeLabel">STRUCTURAL INTEGRITY</span>
+        <div class="gauge-track"><div class="gauge-fill" id="gaugeFill"></div></div>
+        <span class="gauge-val" id="gaugeVal">25%</span>
+      </div>
+    </div>
+    <p class="mission">
+      A student editorial on school start times is under synthetic thermal load, and its tone is leaking heat in four places.
+      <b>Scan all six tonal segments, certify the cool ones, and repair every leak before the piece burns its own reader.</b>
+    </p>
+  </header>
+
+  <!-- ============ SECTION 01 ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-idx">SECTION 01</span>
+      <h2>Comprehensive Foundation — The Structural Model of Tone Control</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead">
+        <strong>Tone</strong> is the writer's attitude toward the subject and the reader, made visible through choices. It is not a mood that simply happens to a draft — it is a structure you build, calibrate, and verify. <strong>Tone control</strong> is the deliberate management of that attitude across a whole piece: choosing a register, sustaining it, and shifting it only where the argument earns the shift. This section gives you the full analytical framework you will operate in the simulator.
+      </p>
+    </div>
+
+    <div class="card mt">
+      <h3>1.1 — The Five-Component Structural Model</h3>
+      <p class="muted">Every controlled piece of writing has five identifiable load-bearing components. If any one of them is missing or unstated, the tone will not hold under a reader's scrutiny.</p>
+      <div class="scroll-x">
+        <table class="matrix">
+          <thead>
+            <tr><th>Component</th><th>What it is in tone control</th><th>Diagnostic question</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Core Stance (Core Assertion / Outcome)</td>
+              <td>The attitude the writer wants the reader to hold by the final line — measured indignation, elegiac respect, dry irony, clinical detachment.</td>
+              <td>Can I state the intended attitude in one sentence, and does the final paragraph deliver it?</td>
+            </tr>
+            <tr>
+              <td>Grounds / Textual Inputs (Empirical Grounds)</td>
+              <td>The concrete, checkable material that justifies the stance: figures, dates, documented events, quoted policy language, observed detail.</td>
+              <td>If I stripped the attitude away, would any verifiable content remain?</td>
+            </tr>
+            <tr>
+              <td>Tonal Vehicles (Connecting Bridges / Mechanisms)</td>
+              <td>The devices that physically carry the attitude: diction, sentence length, fragments, punctuation, rhythm, figurative language, pronoun choice, direct address.</td>
+              <td>Which specific device is doing the emotional work, and is it the one I think it is?</td>
+            </tr>
+            <tr>
+              <td>Register &amp; Audience Calibration (Scope Qualifiers)</td>
+              <td>Formality level, hedging, contractions, jargon, honorifics, inclusive or exclusive pronouns — tuned to a specific reader in a specific occasion.</td>
+              <td>Does the certainty in my tone match the certainty in my evidence?</td>
+            </tr>
+            <tr>
+              <td>Genre &amp; Occasion Constraints (Boundary Conditions)</td>
+              <td>The limits the situation imposes: an editorial may be indignant, a eulogy may not; a lab report may be flat, a college essay may not.</td>
+              <td>Where must the tone shift, and does the piece actually shift there?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card mt">
+      <h3>1.2 — The Four Core Verification Criteria</h3>
+      <p class="muted">Before a tonal choice can be trusted, it must survive all four tests. Three out of four is not a pass.</p>
+      <div class="grid-2">
+        <div class="pod p1">
+          <h4 class="pod-title">1 · Relevance</h4>
+          <p class="pod-sub">Does this tonal choice serve the core stance?</p>
+          <p class="muted">A tonal device is relevant only if it moves the reader toward the stance the piece actually needs. A joke in a piece arguing for urgency is not "adding personality" — it is a leak. Test: delete the device and ask whether the stance weakens. If it does not, the device was decoration.</p>
+        </div>
+        <div class="pod p2">
+          <h4 class="pod-title">2 · Sufficiency</h4>
+          <p class="pod-sub">Is the tone sustained, or a single isolated word?</p>
+          <p class="muted">Tone is a pattern, not an incident. One sardonic adjective inside five hundred words of neutral prose does not make a piece sardonic; it makes it inconsistent. Test: count the tonal signals. A tone claim requires a cluster of converging choices, not one outlier.</p>
+        </div>
+        <div class="pod p3">
+          <h4 class="pod-title">3 · Accuracy</h4>
+          <p class="pod-sub">Does the diction actually carry the intended connotation?</p>
+          <p class="muted">Words carry baggage you did not pack. "Cheap" can mean affordable or shoddy; "policy" can sound neutral or bureaucratic. Test: substitute a near-synonym and see whether the reader's attitude changes. If it does, the original word is doing load-bearing work — and you had better mean it.</p>
+        </div>
+        <div class="pod p4">
+          <h4 class="pod-title">4 · Independence</h4>
+          <p class="pod-sub">Does the tone rest on more than one vehicle?</p>
+          <p class="muted">A tone supported by a single device is a single point of failure. If your entire ironic register depends on one italicized word, a reader who misses it reads the piece straight. Test: name at least three independent vehicles — syntax, diction, and rhythm — that point the same direction.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2 mt">
+      <div class="card">
+        <h3>1.3 — Structural Validity vs. Soundness</h3>
+        <p><strong style="color:var(--violet);">Structural Validity (internal consistency).</strong> The diction, syntax, and imagery all pull in one direction, and every shift is motivated by something in the text. A valid piece is <em>recoverable</em>: a competent reader can reconstruct the intended attitude without guessing.</p>
+        <p><strong style="color:var(--cyan);">Soundness (validity + verified effect).</strong> A sound piece is valid <em>and</em> the tone actually lands on the intended audience in the intended occasion. Validity is a property of the text alone. Soundness requires a reader.</p>
+        <p class="muted" style="margin-bottom:0;">A passage can be perfectly valid and completely unsound: internally consistent, elegantly controlled, and utterly wrong for a grieving audience at a memorial. The simulator's cool tiles are <em>valid</em>; whether they are <em>sound</em> depends on who is reading.</p>
+      </div>
+      <div class="card">
+        <h3>1.4 — Deductive vs. Inductive Tone Systems</h3>
+        <p><strong style="color:var(--accent);">Deductive (truth-preserving).</strong> A single, tightly constrained tonal move that must produce a determinate reading. A formal condolence line cannot be read as flippant, because the register lock forbids it. When the genre constrains the reading, one move is enough.</p>
+        <p><strong style="color:var(--amber);">Inductive (probabilistic).</strong> Cumulative tonal accumulation. The effect is a probability that grows with the number and consistency of signals. This is the normal case in essays: your reader assembles the attitude from twenty small choices, and any three of them can be missed.</p>
+        <p class="muted" style="margin-bottom:0;">Because most student writing runs inductively, <strong>sample robustness matters</strong>: a tonal claim drawn from one sentence is a micro-sample claim, not a reading of the piece.</p>
+      </div>
+    </div>
+
+    <div class="card mt">
+      <h3>1.5 — Presumption Traps Specific to Tone</h3>
+      <ul class="decoder">
+        <li><b>Tonal presumption.</b> Assuming the reader already shares your value ranking, so the attitude arrives before the argument does.</li>
+        <li><b>Unmotivated register shift.</b> Jumping from measured to outraged without supplying the evidence that would justify the heat.</li>
+        <li><b>Ironic mismatch.</b> Deploying irony the audience is not positioned to detect, so the literal reading wins.</li>
+        <li><b>Absolutist diction.</b> "Always," "never," "every," "clearly," "obviously" — words that raise the temperature of a claim without raising its support.</li>
+        <li><b>Tonal drift.</b> A keyword whose connotative weight changes mid-piece, leaving the reader unable to stabilize an attitude.</li>
+        <li><b>Monochrome tone.</b> A single register held for the entire piece, so the reader habituates and the crucial moment registers as no louder than the rest.</li>
+      </ul>
+    </div>
+
+    <div class="mt">
+      <h3 style="font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#ffd3dc;margin-bottom:12px;">1.6 — TWO FULLY ANALYZED WORKED EXAMPLES</h3>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Worked Example A — Successful Control</h4>
+          <p class="quote">
+            The board's proposal adds <span class="hl-grounds">nine minutes</span> to the morning.
+            <span class="hl-vehicle">That is the entire reform.</span>
+            Nine minutes — and <span class="hl-scope">we</span> have spent four meetings debating whether teenagers <span class="hl-stance">deserve</span> to wake up.
+          </p>
+          <p class="muted" style="font-size:12px;margin-bottom:10px;">
+            <span class="tag tag-stance">STANCE</span> measured indignation ·
+            <span class="tag tag-grounds">GROUNDS</span> a specific, checkable number ·
+            <span class="tag tag-vehicle">VEHICLE</span> clipped syntax and a fragment ·
+            <span class="tag tag-scope">SCOPE</span> inclusive "we"
+          </p>
+          <ul class="decoder">
+            <li><b>Relevance:</b> every sentence serves the stance — the reform is modest, the opposition is disproportionate. Nothing is decorative.</li>
+            <li><b>Sufficiency:</b> the cool register is sustained across three sentences <em>before</em> the moral frame lands, so the heat is earned rather than sprayed.</li>
+            <li><b>Accuracy:</b> "deserve" imports exactly the moral weight the writer wants; the near-synonym "need" would have flattened it.</li>
+            <li><b>Independence:</b> the tone rests on three separate vehicles — sentence length, the fragment "That is the entire reform," and the pronoun choice. Removing any one leaves the other two standing.</li>
+            <li><b>Structural callout:</b> the fragment is the load-bearing beam. It converts a number into a verdict without ever raising its voice.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>Worked Example B — Failed Control</h4>
+          <p class="quote">
+            <span class="hl-stance">Everyone knows</span> the schedule is a disaster, and anybody who disagrees has <span class="hl-stance">clearly never taught</span> a first-period class.
+            Obviously, <span class="hl-stance">no serious person</span> defends 7:25 a.m.
+          </p>
+          <p class="muted" style="font-size:12px;margin-bottom:10px;">
+            <span class="tag tag-stance">STANCE</span> accusatory ·
+            <span class="tag tag-scope">SCOPE</span> universal quantifiers ·
+            <span class="tag tag-boundary">BOUNDARY</span> violated — an editorial may be firm, not contemptuous
+          </p>
+          <ul class="decoder">
+            <li><b>Value Trap:</b> "no serious person" presupposes a value hierarchy and pre-assigns the reader's identity. Agreement is now a precondition, not a goal.</li>
+            <li><b>Micro-Sample Mirage:</b> "anybody who disagrees has clearly never taught" treats one experience as conferring authority and disqualifies everyone outside it.</li>
+            <li><b>Accuracy failure:</b> "clearly" and "obviously" raise the temperature without raising the support — the classic absolutist diction signature.</li>
+            <li><b>Catastrophic risk:</b> the reader who was not yet persuaded is now the enemy. The tone burned the bridge it needed to cross.</li>
+            <li><b>Repair:</b> replace the disqualifying clause with a bounded observation — "In my own first-period class, students arrive visibly depleted" — and the same point lands without the heat.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 02 ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-idx">SECTION 02</span>
+      <h2>The Four Hazard Pods — Tone Failure Archetypes</h2>
+    </div>
+
+    <div class="grid-2">
+      <!-- POD 1 -->
+      <div class="pod p1">
+        <h4 class="pod-title">🔥 Pod 1 — The Value Trap</h4>
+        <p class="pod-sub">Presupposing unstated priorities, moral hierarchies, or preferences.</p>
+        <h5>Formal identification rules</h5>
+        <ul>
+          <li>The sentence ranks two goods against each other — convenience vs. children, efficiency vs. fairness — without ever arguing for the ranking.</li>
+          <li>An evaluative word does the work of an argument: "obviously," "clearly," "any decent person," "no serious educator."</li>
+          <li>The reader's agreement is treated as a precondition for reading, not as the goal of the piece.</li>
+          <li>The register rises to a moral key without any moral argument being supplied.</li>
+        </ul>
+        <h5>Catastrophic failure risk</h5>
+        <div class="risk">The reader who has not yet accepted the ranking is converted into an opponent. The tone turns accusatory, the argument loses the audience it needed, and the writer mistakes heat for persuasion.</div>
+        <h5>Field excerpt</h5>
+        <p class="excerpt">"No serious educator would defend a schedule that forces children to eat breakfast in a hallway."</p>
+        <h5>Diagnostic breakdown</h5>
+        <p class="muted" style="margin-bottom:0;">"No serious educator" presupposes a professional identity that is bound to one particular value ranking, so disagreement is redefined as disqualification. The heat is not in the breakfast claim — that part may be perfectly accurate. The heat is in the unstated hierarchy the reader must accept before the sentence can be read at all.</p>
+      </div>
+
+      <!-- POD 2 -->
+      <div class="pod p2">
+        <h4 class="pod-title">🔥 Pod 2 — The Causal Leap</h4>
+        <p class="pod-sub">Conflating correlation or sequence with direct causation; omitted variable bias.</p>
+        <h5>Formal identification rules</h5>
+        <ul>
+          <li>Two things are reported together, and then one is said to "produce," "cause," "drive," or "create" the other.</li>
+          <li>No mechanism is named between the two events — nothing explains <em>how</em> the first reaches the second.</li>
+          <li>The register jumps from descriptive to declarative at exactly the moment the causal verb appears.</li>
+          <li>Intensifiers ("clearly," "undeniably") cluster around the missing bridge.</li>
+        </ul>
+        <h5>Catastrophic failure risk</h5>
+        <div class="risk">The tone overreaches its evidence. When the causal claim is challenged, the confident register reads as bluster — and the surrounding measured passages lose credibility along with it.</div>
+        <h5>Field excerpt</h5>
+        <p class="excerpt">"Districts that moved start times later reported higher attendance; later bells clearly produce better learning."</p>
+        <h5>Diagnostic breakdown</h5>
+        <p class="muted" style="margin-bottom:0;">"Reported higher attendance" is a co-occurrence; "produce" is a causal verb with no mechanism attached. The intensifier "clearly" is the thermal signature — heat rises precisely where the bridge is missing. Hedging the bridge and naming one plausible mechanism ("added sleep may improve attention") drops the temperature without weakening the point.</p>
+      </div>
+
+      <!-- POD 3 -->
+      <div class="pod p3">
+        <h4 class="pod-title">🔥 Pod 3 — The Definitional Shift</h4>
+        <p class="pod-sub">Equivocation; sliding between colloquial and technical definitions mid-argument.</p>
+        <h5>Formal identification rules</h5>
+        <ul>
+          <li>A keyword appears twice in the piece carrying two different senses.</li>
+          <li>The writer's attitude toward that word changes between uses without ever flagging the change.</li>
+          <li>The conclusion depends on the two senses being treated as a single thing.</li>
+          <li>One use of the word is warm and the other cold — so the reader's attitude oscillates.</li>
+        </ul>
+        <h5>Catastrophic failure risk</h5>
+        <div class="risk">The reader cannot stabilize an attitude toward the subject, because the subject keeps changing under the same name. The piece reads as slippery even when every individual sentence is locally true.</div>
+        <h5>Field excerpt</h5>
+        <p class="excerpt">"The handbook promises 'flexibility' — adjustable deadlines. The superintendent's speech promises 'flexibility' — staff accepting whatever schedule they are given."</p>
+        <h5>Diagnostic breakdown</h5>
+        <p class="muted" style="margin-bottom:0;">Two senses of one word, one generous and one coercive. Until the writer names the gap explicitly, the reader's tonal reading oscillates, and the harsher later sense contaminates the kinder earlier one. Naming both definitions in one sentence restores a single stable register.</p>
+      </div>
+
+      <!-- POD 4 -->
+      <div class="pod p4">
+        <h4 class="pod-title">🔥 Pod 4 — The Micro-Sample Mirage</h4>
+        <p class="pod-sub">Generalizing from non-representative samples, voluntary cohorts, or survivor bias.</p>
+        <h5>Formal identification rules</h5>
+        <ul>
+          <li>The evidence base is small, local, or self-selected — one class, one survey, one comment thread.</li>
+          <li>The conclusion uses a universal quantifier: "students," "everyone," "people," "the public."</li>
+          <li>The register becomes sweeping at exactly the point where the sample is narrowest.</li>
+          <li>No mention of who was <em>not</em> asked.</li>
+        </ul>
+        <h5>Catastrophic failure risk</h5>
+        <div class="risk">A confident, generalizing tone built on a handful of voices collapses the first time a reader checks who was left out. The writer's authority is spent on a claim the sample cannot carry.</div>
+        <h5>Field excerpt</h5>
+        <p class="excerpt">"In my third-period class, 38 of 42 students said they would focus better with a later start. Students clearly want this change."</p>
+        <h5>Diagnostic breakdown</h5>
+        <p class="muted" style="margin-bottom:0;">Forty-two students in one period is a non-random, self-selected slice. "Students clearly want" promotes that slice to a population, and the confident register does the promoting. Bounding the claim back to its sample — "in my third period, most students said…" — restores a tone the evidence can actually support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 03 : GAME ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-idx">SECTION 03</span>
+      <h2>Thermal Imaging Heat-Loss Flaw Detector</h2>
+    </div>
+
+    <div class="rig">
+      <div class="rig-top">
+        <span class="rec"><span class="dot"></span> REC · FLIR ARRAY · PASSAGE 105-B</span>
+        <span class="chip cyan">EMISSIVITY 0.95 · SPECTRAL 7.5–13 µm</span>
+      </div>
+
+      <div class="viewport" id="viewport">
+        <div class="node-grid" id="nodeGrid"></div>
+      </div>
+
+      <div class="rig-controls">
+        <button class="btn primary" id="chargeBtn">⚡ CHARGE THERMAL LOAD</button>
+        <button class="btn" id="resetBtn">❄️ RESET SCAN</button>
+        <div class="legend">
+          <span>COOL</span>
+          <div class="legend-bar"></div>
+          <span>WHITE-HOT</span>
+        </div>
+      </div>
+
+      <div class="console" id="consolePanel">
+        <p class="hint">Lens idle. Charge the thermal load to reveal the tonal signature of all six segments.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 04 : DETONATOR ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-idx">SECTION 04</span>
+      <h2>The Negation Detonator — Active Heuristic Destruction</h2>
+    </div>
+
+    <div class="card">
+      <p class="lead" style="margin-bottom:16px;">
+        Below is a scenario argument currently under heavy synthetic load. Its structure depends on one implicit warrant that is never written down. Negate that warrant. If the argument collapses, the warrant was load-bearing.
+      </p>
+
+      <div class="det-wrap">
+        <div class="det-plate" id="detPlate">
+          <div class="det-label">◈ TARGET IMPLICIT WARRANT — LOAD-BEARING ASSUMPTION</div>
+          <p class="det-claim" id="detClaim">A forceful, urgent register can carry a claim on its own — if the tone is hot enough, the reader will accept the conclusion without grounds.</p>
+          <svg class="cracks" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="0,120 60,110 96,128 150,84 196,104 240,60 300,88 400,52" />
+            <polyline points="46,200 72,150 62,110 96,128 88,176 120,200" />
+            <polyline points="196,104 178,150 210,178 190,200" />
+            <polyline points="300,88 330,130 316,172 344,200" />
+            <polyline points="150,0 140,42 168,66 150,84" />
+          </svg>
+        </div>
+
+        <button class="btn primary big" id="detonateBtn">💣 DETONATE NEGATION TEST</button>
+
+        <div class="det-debrief" id="detDebrief">
+          <h4>◈ DETONATION SUCCESSFUL!</h4>
+          <p>By proving the opposite of the implicit assumption, the entire premise collapsed. The Negation Test proves this assumption was a fatal structural dependency.</p>
+          <p class="neg">NEGATED FORM → Register cannot substitute for grounds. A hot tone with no evidence produces resistance, not assent: the reader asks "says who?" and the piece has no answer. Because the argument had no other load path, removing this warrant removed everything.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 05 : FORENSICS ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-idx">SECTION 05</span>
+      <h2>Live Fire Forensics — Interactive Text X-Ray</h2>
+    </div>
+
+    <div class="card">
+      <div class="mode-bar">
+        <button class="btn green mode" data-mode="grounds">🟢 SCAN FOUNDATION / GROUNDS</button>
+        <button class="btn cyan mode" data-mode="claims">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+        <button class="btn amber mode" data-mode="warrants">🟠 DETECT UNSTATED MECHANISMS / WARRANTS</button>
+      </div>
+
+      <div class="fx-layout">
+        <div class="card" style="background:linear-gradient(180deg,#0c0c14,#08080e);">
+          <p class="fx" id="fxPassage">
+            <span class="fx-grounds">Three district audits between 2019 and 2023 found that the ban cut hallway incidents by 14%.</span>
+            <span class="fx-claim">This policy has saved our school.</span>
+            <span class="fx-warrant">Disruptions happen when students have nothing to do, so removing the phones removes the disruptions.</span>
+            <span class="fx-grounds">Teachers reported calmer first periods in a voluntary spring survey; 61 of the 84 respondents agreed.</span>
+            <span class="fx-grounds">The ban has been in place for one semester.</span>
+            <span class="fx-warrant">Calm classrooms and learning are the same thing, so anything that reduces calm must reduce learning.</span>
+            <span class="fx-claim">Therefore any school that keeps phones in classrooms is failing its students.</span>
+            <span class="fx-claim">The experiment is settled; the evidence is overwhelming.</span>
+          </p>
+        </div>
+
+        <div class="inspector" id="inspector">
+          <h4>◈ INSPECTOR NOTES</h4>
+          <p class="hint" style="color:var(--muted);font-size:12px;font-family:ui-monospace,monospace;">No scan mode active. Select a channel above to illuminate the passage.</p>
+        </div>
+      </div>
+
+      <h4 style="margin-top:20px;color:#ffd3dc;font-size:12px;letter-spacing:.14em;">◈ INTERACTIVE CHALLENGE — FIND THE FATAL FLAW</h4>
+      <p class="muted">Three analytical hypotheses. One identifies the structural dependency that carries the entire conclusion. Select it.</p>
+
+      <div class="hypo-grid">
+        <button class="btn hypo" data-correct="false" data-hyp="A">A — The passage is too informal for an editorial; its short sentences and contractions weaken its authority.</button>
+        <button class="btn hypo" data-correct="true" data-hyp="B">B — The passage moves from a bounded, measured finding to an absolute verdict by treating "calm" and "learning" as identical — an undefended bridge carrying the whole conclusion.</button>
+        <button class="btn hypo" data-correct="false" data-hyp="C">C — The passage relies on a single semester of data, so its timeline is simply too short to matter.</button>
+      </div>
+
+      <div class="clearance" id="clearance">
+        <b>◈ STRUCTURAL CLEARANCE GRANTED</b>
+        The fatal flaw is the warrant: "calm classrooms and learning are the same thing" is a definitional collapse that silently converts a hallway metric into an academic outcome. Remove that bridge and the absolute verdict in the next sentence has nothing left to stand on.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 06 : PROTOCOL ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-idx">SECTION 06</span>
+      <h2>Quick-Reference Procedural Protocol</h2>
+    </div>
+
+    <div class="card">
+      <h3>6.1 — Failure Triage Matrix</h3>
+      <div class="scroll-x">
+        <table class="matrix">
+          <thead>
+            <tr><th>Component</th><th>Failure Mode</th><th>Diagnostic Question</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Core Stance</td>
+              <td>Tonal presumption — attitude arrives before the argument</td>
+              <td>Could a skeptical reader state my intended attitude after one pass, or am I assuming they already agree?</td>
+            </tr>
+            <tr>
+              <td>Grounds</td>
+              <td>Micro-Sample Mirage — sweeping register over a narrow base</td>
+              <td>Who was <em>not</em> asked, and does my certainty exceed my sample?</td>
+            </tr>
+            <tr>
+              <td>Tonal Vehicles</td>
+              <td>Single-point-of-failure device; monochrome register</td>
+              <td>If a reader missed one word, would the tone survive? Name three independent vehicles.</td>
+            </tr>
+            <tr>
+              <td>Register &amp; Scope</td>
+              <td>Absolutist diction; unmotivated register shift</td>
+              <td>Where exactly did the heat rise, and what evidence arrived to justify it?</td>
+            </tr>
+            <tr>
+              <td>Genre &amp; Boundary</td>
+              <td>Boundary violation — right tone, wrong occasion</td>
+              <td>Would this register be defensible read aloud to the actual audience on the actual day?</td>
+            </tr>
+            <tr>
+              <td>Bridges / Warrants</td>
+              <td>Causal Leap; Definitional Shift</td>
+              <td>What is the unstated connecting principle, and does it survive negation?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card mt">
+      <h3>6.2 — The Universal 5-Step Deconstruction Protocol</h3>
+      <ol class="protocol">
+        <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark certainty limiters.</li>
+        <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check for sample representation, bias, and source independence.</li>
+        <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle linking inputs to outcomes.</li>
+        <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge; if the outcome collapses, the component is load-bearing.</li>
+        <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, and definitional shifts.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FINISH ============ -->
+  <section class="sec finish-sec">
+    <button class="btn primary finish-btn" id="finishBtn">Finish Lesson</button>
+  </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ============================================================
+     TELEMETRY
+     ============================================================ */
+  let xp = 0;
+  let integrity = 25;
+
+  const xpEl = root.querySelector('#xpCounter');
+  const gaugeFill = root.querySelector('#gaugeFill');
+  const gaugeVal = root.querySelector('#gaugeVal');
+  const gaugeLabel = root.querySelector('#gaugeLabel');
+
+  function renderTelemetry() {
+    xpEl.textContent = xp + ' XP';
+    gaugeFill.style.width = integrity + '%';
+    if (integrity >= 100) {
+      gaugeVal.textContent = '100% SECURED';
+      gaugeLabel.textContent = 'STRUCTURE SECURED & VERIFIED';
+      gaugeLabel.style.color = '#7ef0a6';
+    } else {
+      gaugeVal.textContent = integrity + '%';
+    }
+  }
+
+  function award(points, gauge) {
+    xp += points;
+    integrity = Math.min(100, integrity + gauge);
+    renderTelemetry();
+  }
+
+  renderTelemetry();
+
+  /* ============================================================
+     SECTION 03 — THERMAL IMAGING HEAT-LOSS FLAW DETECTOR
+     ============================================================ */
+  const NODES = [
+    {
+      id: 'N-01',
+      verdict: 'sound',
+      coolTemp: '21.4 °C',
+      hotTemp: '21.4 °C',
+      text: 'Sleep researchers have measured a puberty-driven circadian shift of roughly two hours, a finding replicated across independent studies.',
+      good: 'Correct. The segment grounds its claim in replicated measurement and bounds it with "roughly," so the register stays cool and calibrated to the evidence. A measured tone backed by independent grounds needs no repair.',
+      bad: 'Thermal leak misread. This segment shows no heat: it cites replicated findings and limits its own claim with "roughly." Calling it flawed would itself be an unearned tonal overreach.'
+    },
+    {
+      id: 'N-02',
+      verdict: 'value',
+      coolTemp: '22.0 °C',
+      hotTemp: '742 °C',
+      text: 'Any administrator who defends the current bell schedule is choosing convenience over children.',
+      good: 'Correct. The sentence smuggles in a moral hierarchy — convenience versus children — that the writer never argues for, and the accusatory register turns presumption into heat. Naming the unstated trade-offs (bus logistics, staffing costs) dissipates the leak.',
+      bad: 'Incorrect diagnosis. The heat here is not sampling and not causation — it is an unstated value ranking fused to an accusatory register. Locate the presupposed hierarchy; that is the load path.'
+    },
+    {
+      id: 'N-03',
+      verdict: 'causal',
+      coolTemp: '21.1 °C',
+      hotTemp: '918 °C',
+      text: 'Districts that pushed start times later also reported higher attendance, so later bells produce better learning.',
+      good: 'Correct. Co-occurrence is being converted into production — "also reported" becomes "produce" — with no mechanism and no controls for other district-level changes. Hedging the bridge and naming one plausible mechanism drops the tile to cool.',
+      bad: 'Incorrect diagnosis. Nothing here slides between definitions or leans on a tiny sample. The flaw is a bridge built from sequence alone: two facts reported together are being treated as cause and effect.'
+    },
+    {
+      id: 'N-04',
+      verdict: 'definition',
+      coolTemp: '21.8 °C',
+      hotTemp: '861 °C',
+      text: "The policy's call for 'flexibility' means adjustable deadlines in the handbook, but 'flexibility' in the superintendent's speech means teachers accepting whatever schedule they are given.",
+      good: 'Correct. "Flexibility" carries one sense in the handbook and a colder, coercive sense in the speech, so the reader\'s attitude cannot stabilize. Pinning both senses down explicitly removes the equivocation heat.',
+      bad: 'Incorrect diagnosis. This failure is lexical, not statistical: one word is doing two jobs, and the tone slides along with it. Locate the two competing definitions before repairing anything else.'
+    },
+    {
+      id: 'N-05',
+      verdict: 'sample',
+      coolTemp: '21.6 °C',
+      hotTemp: '795 °C',
+      text: "In my third-period class, 38 of 42 students said they'd focus better with a later start; students clearly want this change.",
+      good: 'Correct. A single class period is a non-representative, self-selected slice, and the leap from 42 students to "students clearly want" converts a local reading into a universal tone. Bounding the claim back to its sample cools it immediately.',
+      bad: 'Incorrect diagnosis. There is no equivocation and no causal verb here — the heat comes from sample size and a universal quantifier. Ask who was not surveyed.'
+    },
+    {
+      id: 'N-06',
+      verdict: 'sound',
+      coolTemp: '20.9 °C',
+      hotTemp: '20.9 °C',
+      text: "The board's proposal deserves a fair hearing. The evidence is suggestive rather than decisive, and the schedule should be reviewed after one semester.",
+      good: 'Correct. The sentence hedges explicitly ("suggestive rather than decisive"), bounds its own timeline, and holds an even register throughout. Cool tiles are not weak writing — they are controlled writing.',
+      bad: 'Incorrect diagnosis. Measured, hedged prose is not a flaw. The tile reads cool because the writer calibrated certainty to evidence. That is tone control working exactly as designed.'
+    }
+  ];
+
+  const nodeGrid = root.querySelector('#nodeGrid');
+  const consolePanel = root.querySelector('#consolePanel');
+  const chargeBtn = root.querySelector('#chargeBtn');
+  const resetBtn = root.querySelector('#resetBtn');
+  const viewport = root.querySelector('#viewport');
+
+  let charged = false;
+  let solvedCount = 0;
+  let focusIndex = -1;
+  let locked = false;
+
+  function buildNodes() {
+    nodeGrid.innerHTML = '';
+    NODES.forEach((n, i) => {
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'node';
+      el.dataset.idx = String(i);
+      el.innerHTML =
+        '<div class="node-head"><span>' + n.id + '</span><span class="node-temp" data-temp>UNSCANNED</span></div>' +
+        '<div class="node-text">' + n.text + '</div>' +
+        '<div class="node-foot" data-foot>▸ AWAITING SCAN</div>';
+      nodeGrid.appendChild(el);
+    });
+  }
+
+  function resetScan() {
+    charged = false;
+    solvedCount = 0;
+    focusIndex = -1;
+    locked = false;
+    buildNodes();
+    viewport.classList.remove('scanning');
+    chargeBtn.disabled = false;
+    consolePanel.innerHTML = '<p class="hint">Lens idle. Charge the thermal load to reveal the tonal signature of all six segments.</p>';
+  }
+
+  buildNodes();
+
+  chargeBtn.addEventListener('click', () => {
+    if (charged) return;
+    charged = true;
+    chargeBtn.disabled = true;
+    viewport.classList.add('scanning');
+
+    NODES.forEach((n, i) => {
+      setTimeout(() => {
+        const el = nodeGrid.children[i];
+        if (!el) return;
+        el.classList.add('scanned');
+        el.classList.add(n.verdict === 'sound' ? 'cool' : 'hot');
+        const temp = el.querySelector('[data-temp]');
+        const foot = el.querySelector('[data-foot]');
+        temp.textContent = n.verdict === 'sound' ? n.coolTemp : n.hotTemp;
+        foot.textContent = '▸ CLICK TO FOCUS LENS';
+      }, 240 + i * 210);
+    });
+
+    setTimeout(() => {
+      viewport.classList.remove('scanning');
+      consolePanel.innerHTML = '<p class="hint">Scan complete. Six tonal signatures logged. Select a tile to lock the lens and issue a diagnostic verdict.</p>';
+    }, 240 + NODES.length * 210 + 250);
+  });
+
+  resetBtn.addEventListener('click', resetScan);
+
+  nodeGrid.addEventListener('click', (e) => {
+    const el = e.target.closest('.node');
+    if (!el || !charged) return;
+    if (el.classList.contains('sealed')) return;
+    focusNode(Number(el.dataset.idx));
+  });
+
+  function focusNode(i) {
+    const n = NODES[i];
+    const el = nodeGrid.children[i];
+    if (!el || el.classList.contains('sealed')) return;
+    focusIndex = i;
+    locked = false;
+
+    Array.prototype.forEach.call(nodeGrid.querySelectorAll('.node'), (x) => x.classList.remove('focused'));
+    el.classList.add('focused');
+
+    consolePanel.innerHTML =
+      '<div class="console-head">' +
+        '<span>LENS LOCKED · ' + n.id + '</span>' +
+        '<span>' + (n.verdict === 'sound' ? 'READING: COOL · ' + n.coolTemp : 'READING: WHITE-HOT · ' + n.hotTemp) + '</span>' +
+      '</div>' +
+      '<p class="console-quote">' + n.text + '</p>' +
+      '<p class="hint">Issue a diagnostic verdict for this segment. Only one is structurally correct.</p>' +
+      '<div style="margin-top:12px;">' +
+        '<button class="btn green wide" data-v="sound">✅ CERTIFY: SOUND TONE</button>' +
+      '</div>' +
+      '<div class="verdict-grid">' +
+        '<button class="btn hazard" data-v="value">🔥 VALUE TRAP</button>' +
+        '<button class="btn hazard" data-v="causal">🔥 CAUSAL LEAP</button>' +
+        '<button class="btn hazard" data-v="definition">🔥 DEFINITIONAL SHIFT</button>' +
+        '<button class="btn hazard" data-v="sample">🔥 MICRO-SAMPLE MIRAGE</button>' +
+      '</div>' +
+      '<div id="fbSlot"></div>';
+  }
+
+  consolePanel.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-v]');
+    if (!btn || locked) return;
+    const i = focusIndex;
+    if (i < 0) return;
+    const n = NODES[i];
+    const el = nodeGrid.children[i];
+    const fbSlot = consolePanel.querySelector('#fbSlot');
+    const chosen = btn.dataset.v;
+
+    if (chosen === n.verdict) {
+      locked = true;
+      el.classList.remove('hot');
+      el.classList.add('sealed', 'cool');
+      el.querySelector('[data-temp]').textContent = n.verdict === 'sound' ? n.coolTemp : 'SEALED · COOL';
+      el.querySelector('[data-foot]').textContent = '✔ VERIFIED · NO LEAK';
+      el.classList.remove('focused');
+
+      fbSlot.innerHTML = '<div class="feedback good"><b>◈ VERDICT ACCEPTED · TILE SEALED</b>' + n.good + '</div>';
+
+      solvedCount++;
+      award(100, 10);
+
+      if (solvedCount === NODES.length) {
+        setTimeout(() => {
+          consolePanel.querySelector('#fbSlot').innerHTML +=
+            '<div class="feedback good" style="margin-top:10px;"><b>◈ FULL ARRAY CLEARED</b>All six tonal segments are now certified or repaired. The editorial holds its register from first line to last.</div>';
+        }, 500);
+      }
+    } else {
+      el.classList.add('shake');
+      setTimeout(() => el.classList.remove('shake'), 500);
+      btn.classList.add('eliminated');
+      btn.disabled = true;
+
+      fbSlot.innerHTML = '<div class="feedback bad"><b>◈ MISDIAGNOSIS · TILE STILL LEAKING</b>' + n.bad + '</div>';
+    }
+  });
+
+  /* ============================================================
+     SECTION 04 — NEGATION DETONATOR
+     ============================================================ */
+  const detPlate = root.querySelector('#detPlate');
+  const detClaim = root.querySelector('#detClaim');
+  const detonateBtn = root.querySelector('#detonateBtn');
+  const detDebrief = root.querySelector('#detDebrief');
+
+  let detonated = false;
+
+  // Fragment the claim into word spans for the collapse effect
+  (function fragmentClaim() {
+    const words = detClaim.textContent.trim().split(/\s+/);
+    detClaim.innerHTML = words.map(w => '<span class="frag">' + w + '</span>').join(' ');
+  })();
+
+  detonateBtn.addEventListener('click', () => {
+    if (detonated) return;
+    detonated = true;
+    detonateBtn.disabled = true;
+    detonateBtn.textContent = '💥 DETONATION IN PROGRESS…';
+
+    detPlate.classList.add('detonating');
+
+    setTimeout(() => {
+      const frags = detClaim.querySelectorAll('.frag');
+      Array.prototype.forEach.call(frags, (s) => {
+        s.style.transition = 'transform .95s cubic-bezier(.2,.8,.2,1), opacity .95s ease';
+        const dx = (Math.random() * 2 - 1) * 130;
+        const dy = (Math.random() * 2 - 1) * 90;
+        const rot = (Math.random() * 2 - 1) * 75;
+        s.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) rotate(' + rot.toFixed(1) + 'deg)';
+        s.style.opacity = '0';
+      });
+      detPlate.classList.remove('detonating');
+      detPlate.classList.add('collapsed');
+    }, 1100);
+
+    setTimeout(() => {
+      detDebrief.classList.add('show');
+      detonateBtn.textContent = '💥 NEGATION CONFIRMED';
+      award(100, 8);
+    }, 1750);
+  });
+
+  /* ============================================================
+     SECTION 05 — LIVE FIRE FORENSICS
+     ============================================================ */
+  const fxPassage = root.querySelector('#fxPassage');
+  const inspector = root.querySelector('#inspector');
+  const modeButtons = root.querySelectorAll('[data-mode]');
+
+  const NOTES = {
+    grounds: '<h4>🟢 CHANNEL: FOUNDATION / GROUNDS</h4><ul>' +
+      '<li><strong>3 ground clusters detected.</strong> Two are bounded and independently sourced: the 2019–2023 district audits and the voluntary spring survey of 84 respondents.</li>' +
+      '<li><strong>One is a duration marker, not evidence.</strong> "The ban has been in place for one semester" tells us how long, not how much — it supports no conclusion on its own.</li>' +
+      '<li><strong>Sufficiency flag:</strong> the survey is voluntary, so its 61-of-84 result is a self-selected cohort. Grounds exist, but they are thinner than the register implies.</li>' +
+      '</ul>',
+    claims: '<h4>🔵 CHANNEL: CORE CLAIMS / OUTCOMES</h4><ul>' +
+      '<li><strong>Node A — bounded:</strong> "cut hallway incidents by 14%" is a specific, checkable outcome.</li>' +
+      '<li><strong>Node B — unbounded:</strong> "any school that keeps phones in classrooms is failing its students" is a universal verdict the grounds cannot reach.</li>' +
+      '<li><strong>Node C — closure claim:</strong> "the experiment is settled; the evidence is overwhelming" asserts certainty where the evidence is suggestive. Watch the temperature rise as the claims widen.</li>' +
+      '</ul>',
+    warrants: '<h4>🟠 CHANNEL: UNSTATED MECHANISMS / WARRANTS</h4><ul>' +
+      '<li><strong>Bridge 1:</strong> "disruptions happen when students have nothing to do, so removing the phones removes the disruptions." Asserted, never tested — and it ignores every other cause of disruption.</li>' +
+      '<li><strong>Bridge 2:</strong> "calm classrooms and learning are the same thing." A definitional collapse that silently converts a hallway metric into an academic outcome.</li>' +
+      '<li><strong>Load path:</strong> the absolute verdict in the next sentence rests entirely on Bridge 2. Remove it and the conclusion has no support at all.</li>' +
+      '</ul>'
+  };
+
+  modeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      modeButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      fxPassage.classList.remove('mode-grounds', 'mode-claims', 'mode-warrants');
+      fxPassage.classList.add('mode-' + btn.dataset.mode);
+      inspector.innerHTML = NOTES[btn.dataset.mode];
+    });
+  });
+
+  const clearance = root.querySelector('#clearance');
+  const hypoButtons = root.querySelectorAll('.hypo');
+  let flawSolved = false;
+
+  hypoButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (flawSolved) return;
+      if (btn.dataset.correct === 'true') {
+        flawSolved = true;
+        btn.classList.add('green');
+        clearance.classList.add('show');
+        hypoButtons.forEach((b) => { if (b !== btn) b.disabled = true; });
+        award(100, 7);
+      } else {
+        btn.classList.add('hazard');
+        btn.textContent = btn.textContent + '  ✖ REJECTED';
+        btn.disabled = true;
+        if (btn.dataset.hyp === 'A') {
+          inspector.innerHTML = '<h4>◈ REJECTED — HYPOTHESIS A</h4><ul><li>Register consistency is not the failure here; the diction stays controlled throughout.</li><li>The leak is structural, not stylistic: the conclusion depends on a bridge the piece never defends.</li></ul>';
+        } else {
+          inspector.innerHTML = '<h4>◈ REJECTED — HYPOTHESIS C</h4><ul><li>Partly true, and deliberately planted as a decoy. A one-semester timeline weakens the evidence — that is a sufficiency problem.</li><li>But it is not the fatal dependency: with ten semesters of data, the absolute conclusion would still be unsupported, because the bridge would still be missing.</li></ul>';
+        }
+      }
+    });
+  });
+
+  /* ============================================================
+     FINISH
+     ============================================================ */
+  const finishBtn = root.querySelector('#finishBtn');
+  finishBtn.addEventListener('click', () => {
+    if (typeof window.polymathFinishLesson === 'function') {
+      window.polymathFinishLesson();
+    }
+  });
+});
+</script>

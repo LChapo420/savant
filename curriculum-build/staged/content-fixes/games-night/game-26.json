@@ -1,0 +1,2986 @@
+{
+ "row_id": 26,
+ "engine_id": "hot-air-balloon",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 34,
+ "generated_at": "2026-10-24T20:57:25.910Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 65,
+  "code_rejected": 4,
+  "sent_to_judges": 61,
+  "kept": 50,
+  "keep_rate_of_written": 0.769,
+  "judges": {
+   "both_answered": 61,
+   "picked_same_option": 55,
+   "a_picked_key": 57,
+   "b_picked_key": 55,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "z-ai/glm-5.3",
+    "qwen/qwen3.8-max:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "hot-air-balloon",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 34,
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "title": "Combining Three Sentences with Rhetorical Grammar",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q25",
+    "prompt": "The bridge froze. The organizers canceled the event. No one wanted to risk the ice. Which option combines the three ideas and gives an accurate one-sentence reason for the cancellation?",
+    "choices": [
+     "The organizers canceled the event because the bridge froze and no one wanted to risk the ice.",
+     "Although the bridge froze, the organizers canceled the event because no one wanted to risk the ice.",
+     "The organizers canceled the event because no one wanted to risk the ice, but the bridge froze.",
+     "The bridge froze, so the organizers canceled the event, and no one wanted to risk the ice."
+    ],
+    "answerIndex": 0,
+    "explanation": "Because introduces the cancellation’s cause, and and coordinates the two stated reasons without adding a contrast.",
+    "difficulty": 6,
+    "skill": "Combining sentences and explaining logical relationships",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which sentence combines all three ideas using a nonrestrictive appositive without adding any new information? My aunt owned a violin. It was made in 1920. She rarely played it.",
+    "choices": [
+     "My aunt owned a violin; it was made in 1920, and she rarely played it.",
+     "My aunt owned a violin, an instrument made in 1920 that she rarely played.",
+     "My aunt owned a violin, although she rarely played the 1920 instrument.",
+     "My aunt owned a violin, a rare instrument made in 1920 that she rarely played."
+    ],
+    "answerIndex": 1,
+    "explanation": "The appositive phrase identifies the violin as an instrument made in 1920, while the relative clause preserves the fact that his aunt rarely played it.",
+    "difficulty": 5,
+    "skill": "Nonrestrictive appositive",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q2",
+    "prompt": "Combine the three sentences into one using parallel structure: She checked the weather. She packed a jacket. She locked the door. Which option is correct?",
+    "choices": [
+     "She checked the weather, she packed a jacket, and she locked the door.",
+     "She checked the weather, packed a jacket, and locked the door.",
+     "She checked the weather, packed a jacket, and locking the door.",
+     "She checked the weather, packed a jacket, and the door was locked."
+    ],
+    "answerIndex": 1,
+    "explanation": "This option gives the three actions parallel form by using the same subject and a matching -ed verb in each coordinated phrase.",
+    "difficulty": 4,
+    "skill": "Combining sentences with parallel structure",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q49",
+    "prompt": "Combine the three sentences into one using not because...but because: Marina chose the longer route. It was not because she missed the bus. She wanted to see the lake.",
+    "choices": [
+     "Marina chose the longer route not because she missed the bus but because she wanted to see the lake.",
+     "Marina chose the longer route because she wanted to see the lake, and she did not choose it because she missed the bus.",
+     "Marina chose the longer route not only because she missed the bus but also because she wanted to see the lake.",
+     "Marina chose the longer route not because she wanted to see the lake but because she missed the bus."
+    ],
+    "answerIndex": 0,
+    "explanation": "The paired not because and but because clauses contrast Marina's actual reason with the reason she explicitly rejects.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a not because...but because structure",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q6",
+    "prompt": "Which sentence uses because for the first causal link and so for the second while combining all three ideas: The power failed. The elevators stopped. Staff directed visitors to the stairs.",
+    "choices": [
+     "Although the power failed, the elevators stopped, so staff directed visitors to the stairs.",
+     "Because the power failed, the elevators stopped, so staff directed visitors to the stairs.",
+     "The power failed because the elevators stopped, so staff directed visitors to the stairs.",
+     "Because the power failed, although the elevators stopped, staff directed visitors to the stairs."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option presents the power failure as the cause of the stopped elevators and the stopped elevators as the reason for directing visitors to the stairs.",
+    "difficulty": 5,
+    "skill": "Combining sentences with causal conjunctions",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q15",
+    "prompt": "Combine the three ideas in their original order with a because clause that makes the reason for calling the manager explicit: The office was closed. The gate was locked. We called the manager.",
+    "choices": [
+     "The office was closed, the gate was locked, so we called the manager.",
+     "The office was closed and the gate was locked; we called the manager.",
+     "Because the office was closed and the gate was locked, we called the manager.",
+     "Because the office was closed but the gate was locked, we called the manager."
+    ],
+    "answerIndex": 2,
+    "explanation": "The because clause presents the two conditions as the reason the group called the manager without adding a contrast.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a because clause",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q43",
+    "prompt": "Combine the three sentences into one using a when‑clause to introduce the supporting details: The deadline approached. The team collaborated. They delivered the project on time.",
+    "choices": [
+     "The deadline approached, so the team collaborated and delivered the project on time.",
+     "Because the deadline approached, the team collaborated and delivered the project on time.",
+     "When the deadline approached, the team collaborated and delivered the project on time.",
+     "The deadline approached; the team collaborated, and they delivered the project on time."
+    ],
+    "answerIndex": 2,
+    "explanation": "The when‑clause fronted as an adverbial sets the temporal context for the two coordinated actions that follow.",
+    "difficulty": 5,
+    "skill": "Adverbial Clauses of Time in Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q19",
+    "prompt": "The committee finished its review. It sent a summary. The mayor thanked the committee. Which sentence uses a fronted having plus past-participle phrase to show that one action was completed before another while preserving all three events in order?",
+    "choices": [
+     "Finishing its review, the committee sent a summary, and the mayor thanked the committee.",
+     "Having sent a summary, the committee finished its review, and the mayor thanked the committee.",
+     "Having finished its review, the committee sent a summary, and the mayor thanked the committee.",
+     "After the committee finished its review, it sent a summary, and the mayor thanked the committee."
+    ],
+    "answerIndex": 2,
+    "explanation": "The having plus past-participle phrase shows that the review was completed before the summary was sent, and the final clause preserves the mayor's thanks.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a perfect participial phrase",
+    "topic": "Combine Three Sentences: Participial Phrases"
+   },
+   {
+    "id": "q32",
+    "prompt": "Combine the three sentences into one sentence using parallel structure and omitting repeated subjects: The members met. The members listened. They decided.",
+    "choices": [
+     "The members met, listened; and they decided.",
+     "The members met, they listened, and they decided.",
+     "The members met and listened, but they decided.",
+     "The members met, listened, and decided."
+    ],
+    "answerIndex": 3,
+    "explanation": "The shared subject applies to all three parallel predicates while preserving the original actions and their order.",
+    "difficulty": 4,
+    "skill": "Parallel structure with ellipsis",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q18",
+    "prompt": "The rain tapped the window. The radio played softly. The dog fell asleep. Which sentence combines the three ideas using while to group the first two simultaneous actions without adding a cause or contrast?",
+    "choices": [
+     "Because the rain tapped the window, the radio played softly, and the dog fell asleep.",
+     "While the rain tapped the window and the radio played softly, the dog fell asleep.",
+     "While the rain tapped the window, the radio played softly, but the dog fell asleep.",
+     "Although the rain tapped the window, the radio played softly, and the dog fell asleep."
+    ],
+    "answerIndex": 1,
+    "explanation": "The while clause groups the first two simultaneous actions, while the main clause presents the dog's action without inventing a cause or contrast.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a while clause",
+    "topic": "Combine Three Sentences: While Clauses"
+   },
+   {
+    "id": "q21",
+    "prompt": "Rain poured down. The final bus was nearly gone. The runner reached the checkpoint. Which sentence combines all three ideas with a single fronted with-phrase containing two absolute constructions?",
+    "choices": [
+     "With rain pouring down and the final bus nearly gone, the runner reached the checkpoint.",
+     "With rain poured down and the final bus nearly gone, the runner reached the checkpoint.",
+     "With rain pouring down and with the final bus nearly gone, the runner reached the checkpoint.",
+     "With rain pour down and the final bus nearly gone, the runner reached the checkpoint."
+    ],
+    "answerIndex": 0,
+    "explanation": "The single opening with-phrase contains two absolute constructions and places the difficult circumstances before the main action, creating emphasis and suspense.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a fronted with-phrase",
+    "topic": "Combine Three Sentences: With-Phrases and Rhetorical Effect"
+   },
+   {
+    "id": "q14",
+    "prompt": "Combine the three sentences into one using a colon to show that the last two ideas support the first: The evidence was clear. The witness had checked the clock. The camera had recorded the entrance.",
+    "choices": [
+     "The evidence was clear; the witness had checked the clock, and the camera had recorded the entrance.",
+     "The evidence was clear: the witness had checked the clock, and the camera had recorded the entrance.",
+     "The evidence was clear, the witness had checked the clock, and the camera had recorded the entrance.",
+     "Although the evidence was clear, the witness had checked the clock, and the camera had recorded the entrance."
+    ],
+    "answerIndex": 1,
+    "explanation": "The colon appropriately introduces two specific details that explain why the evidence was clear.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a colon",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which one-sentence explanation accurately identifies the logical work of both conjunctions in this combined sentence: The room was bright, whereas the hallway was dim, so we chose the room?",
+    "choices": [
+     "Whereas signals a cause-and-effect relationship, while so introduces an example of the room's brightness.",
+     "Whereas marks the contrast, while so indicates that we chose the room before seeing either space.",
+     "Whereas joins two actions happening at the same time, while so marks a reason for the contrast.",
+     "Whereas marks the contrast between the two spaces, while so explains why we chose the room."
+    ],
+    "answerIndex": 3,
+    "explanation": "Whereas introduces the contrast between the spaces, and so presents the choice of the room as the result of that contrast.",
+    "difficulty": 7,
+    "skill": "Explaining the logic of combined sentences",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q22",
+    "prompt": "We had no map. We had no compass. We still found the path. Which sentence combines the three ideas using neither...nor for the two missing items and yet to contrast that lack with the final outcome?",
+    "choices": [
+     "We had neither a map or a compass, yet we still found the path.",
+     "We had neither a map nor a compass, yet we still found the path.",
+     "Neither we had a map nor a compass, yet we still found the path.",
+     "We had not a map nor a compass, yet we still found the path."
+    ],
+    "answerIndex": 1,
+    "explanation": "The neither...nor construction correctly joins the two missing items, while yet adds a contrast without changing the original outcome.",
+    "difficulty": 6,
+    "skill": "Combining sentences with neither...nor and yet",
+    "topic": "Combine Three Sentences: Neither...Nor and Contrast"
+   },
+   {
+    "id": "q44",
+    "prompt": "Combine the three sentences into one using a fronted prepositional phrase that shows cause, followed by two coordinated verbs: Traffic was heavy. We left early. We arrived on time.",
+    "choices": [
+     "The traffic was heavy, so we left early and arrived on time.",
+     "Because the traffic was heavy, we left early and arrived on time.",
+     "Heavy traffic caused us to leave early, and we arrived on time.",
+     "Because of the heavy traffic, we left early and arrived on time."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence begins with the prepositional phrase “Because of the heavy traffic” to indicate cause, then coordinates the two actions with “and.”",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q41",
+    "prompt": "Combine the three sentences with a fronted adverbial clause that keeps the actions in order: The engine sputtered. The mechanic tightened the bolt. The car started.",
+    "choices": [
+     "After the engine sputtered, the mechanic tightened the bolt, and the car started.",
+     "Because the engine sputtered, the mechanic tightened the bolt, and the car started.",
+     "While the engine sputtered, the mechanic tightened the bolt, and the car started.",
+     "The engine sputtered, the mechanic tightened the bolt, and the car started."
+    ],
+    "answerIndex": 0,
+    "explanation": "The fronted adverbial clause “After the engine sputtered” establishes the temporal sequence before the two coordinated main clauses.",
+    "difficulty": 6,
+    "skill": "Fronted Adverbial Clauses in Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q26",
+    "prompt": "The wind was fierce. The hikers pressed forward. They reached the shelter. Which option combines all three ideas using despite followed by a noun phrase?",
+    "choices": [
+     "Despite the wind was fierce, the hikers pressed forward and reached the shelter.",
+     "Despite the fierce wind, the hikers pressed forward and reached the shelter.",
+     "Despite of the fierce wind, the hikers pressed forward and reached the shelter.",
+     "Despite the hikers pressed forward, the fierce wind did not stop them from reaching the shelter."
+    ],
+    "answerIndex": 1,
+    "explanation": "The preposition despite introduces the noun phrase the fierce wind, while the compound predicate presents the hikers’ two actions in order.",
+    "difficulty": 4,
+    "skill": "Combining sentences with despite and a noun phrase",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q36",
+    "prompt": "Which sentence combines all three ideas in a balanced three-part structure with parallel clauses? The mayor spoke. The audience listened. The votes changed.",
+    "choices": [
+     "The mayor spoke and the audience listened because the votes changed.",
+     "The mayor spoke while the audience listened; the votes changed.",
+     "The mayor spoke, but the audience listened, so the votes changed.",
+     "The mayor spoke, the audience listened, and the votes changed."
+    ],
+    "answerIndex": 3,
+    "explanation": "The three simple past-tense clauses share the same grammatical structure and create a balanced sequence that preserves the original order.",
+    "difficulty": 5,
+    "skill": "Balanced sentence structure",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q50",
+    "prompt": "The judges reviewed the entries. The audience became still. The results were announced. Which option combines all three ideas in order using an inverted clause beginning with only after?",
+    "choices": [
+     "Only after the judges reviewed the entries and the audience became still the results were announced.",
+     "Only after the judges reviewed the entries and the audience became still were the results announced.",
+     "Only after the judges reviewed the entries, the audience became still, were the results announced.",
+     "Only the judges reviewed the entries and the audience became still were the results announced."
+    ],
+    "answerIndex": 1,
+    "explanation": "The option preserves the original order and uses subject-verb inversion after the opening only after clause for emphasis.",
+    "difficulty": 6,
+    "skill": "Combining sentences with an inverted adverbial clause",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which sentence combines the three ideas as a three-part series of parallel predicates without adding a contrast or changing their order: We packed snacks. We found the trail. We reached the summit.",
+    "choices": [
+     "We reached the summit, found the trail, and packed snacks.",
+     "After we packed snacks and found the trail, we reached the summit.",
+     "We packed snacks, found the trail, and reached the summit.",
+     "We packed snacks, we found the trail, but we reached the summit."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option places the three parallel verbs in one series and keeps the actions in their original order.",
+    "difficulty": 5,
+    "skill": "Combining sentences into a tricolon",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q37",
+    "prompt": "Combine the three sentences into one sentence using the too...to construction: The path was steep. The bags were heavy. We could not finish quickly.",
+    "choices": [
+     "The path was too steep and the bags were too heavy for us to finish quickly.",
+     "The path was very steep, and the bags were very heavy, so we could not finish quickly.",
+     "The path was too steep, but the bags were too heavy, so we could not finish quickly.",
+     "The path was so steep and the bags were so heavy that we could not finish quickly."
+    ],
+    "answerIndex": 0,
+    "explanation": "The too...to construction links the steep path and heavy bags to the inability to finish quickly without changing the original ideas.",
+    "difficulty": 6,
+    "skill": "Correlative construction with too...to",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q5",
+    "prompt": "Combine the three sentences into one using parallel structure without adding a contrast: Priya opened the window. She folded the map. She turned on the lamp.",
+    "choices": [
+     "Priya opened the window, folded the map, and turned on the lamp.",
+     "Priya opened the window, while folding the map and turned on the lamp.",
+     "Priya opened the window, folded the map, but she turned on the lamp.",
+     "Opening the window, Priya folded the map and turned on the lamp."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option uses three parallel predicates that share the subject Priya and preserve the original order of actions.",
+    "difficulty": 4,
+    "skill": "Combining sentences with parallel structure",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q30",
+    "prompt": "The road was flooded. The delivery driver slowed down. The driver reached the depot. Which sentence uses although to introduce the first idea while keeping both driver actions in the main clause?",
+    "choices": [
+     "Although the road was flooded, but the delivery driver slowed down and reached the depot.",
+     "Although the road was flooded, the delivery driver slowed down and reached the depot.",
+     "Because the road was flooded, the delivery driver slowed down and reached the depot.",
+     "Although the road was flooded and the delivery driver slowed down, the driver reached the depot."
+    ],
+    "answerIndex": 1,
+    "explanation": "Although introduces the flooded road as a concession, and the main clause retains the slowing and arrival as parallel actions.",
+    "difficulty": 5,
+    "skill": "Concessive clauses",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q35",
+    "prompt": "Which sentence combines all three sentences with a cleft sentence that focuses on the club? The club hosted the cleanup. It arrived early. It assigned teams.",
+    "choices": [
+     "It was the cleanup that the club hosted, arrived early, and assigned teams.",
+     "It was the club hosted the cleanup, arrived early, and assigned teams.",
+     "It was the club that hosted the cleanup, arrived early, and assigned teams.",
+     "It was because the club hosted the cleanup that it arrived early and assigned teams."
+    ],
+    "answerIndex": 2,
+    "explanation": "The construction It was the club that foregrounds the club while keeping the three actions as parallel predicates.",
+    "difficulty": 6,
+    "skill": "Cleft sentence",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q17",
+    "prompt": "The team worked late. It completed the survey. The mayor thanked the team. Which sentence combines all three ideas in a cleft sentence beginning with It was because while preserving the original order and tenses?",
+    "choices": [
+     "It was because the team worked late and completed the survey that the mayor thanked it.",
+     "It was because the team worked late and completed the survey the mayor thanked it.",
+     "It was because the team worked late and completed the survey that the mayor thanked.",
+     "It was because the team had worked late and completed the survey that the mayor thanked it."
+    ],
+    "answerIndex": 0,
+    "explanation": "The cleft construction emphasizes the reasons for the mayor's thanks while preserving the order and past tense of all three original ideas.",
+    "difficulty": 6,
+    "skill": "Combining sentences with an It was because...that cleft",
+    "topic": "Combine Three Sentences: Cleft Sentences"
+   },
+   {
+    "id": "q33",
+    "prompt": "Combine the three sentences into one sentence using an absolute construction: The wind died down. The flags hung still. We started the race.",
+    "choices": [
+     "The wind dying down and the flags hanging still, we started the race.",
+     "The wind was dying down and the flags were hanging still, so we started the race.",
+     "The wind dying down and the flags hanging still, so we started the race.",
+     "The wind was down and the flags were still when we started the race."
+    ],
+    "answerIndex": 0,
+    "explanation": "The absolute construction uses two present-participle clauses to describe the conditions that accompanied the start of the race.",
+    "difficulty": 5,
+    "skill": "Absolute construction",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q42",
+    "prompt": "Combine the three sentences using the correlative pair not only … but also while preserving order: We planted seeds. We watered them daily. The garden bloomed.",
+    "choices": [
+     "We both planted seeds and watered them daily, so the garden bloomed.",
+     "We not only planted seeds but also watered them daily, and the garden bloomed.",
+     "We either planted seeds or watered them daily, and the garden bloomed.",
+     "We planted seeds, watered them daily, so the garden bloomed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correlative “not only … but also” correctly links the first two actions, and the final clause adds the result without altering order.",
+    "difficulty": 6,
+    "skill": "Correlative Conjunctions in Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q39",
+    "prompt": "Combine the three sentences into one using parallel predicates: She reviewed the data. She wrote the report. She submitted it before noon.",
+    "choices": [
+     "She reviewed the data, so she wrote the report and submitted it before noon.",
+     "She reviewed the data and wrote the report, then she submitted it before noon.",
+     "She reviewed the data, wrote the report, and submitted it before noon.",
+     "While she reviewed the data, she wrote the report and submitted it before noon."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option presents three parallel past‑tense verbs in a single series, keeping the original sequence.",
+    "difficulty": 5,
+    "skill": "Parallel Structure in Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q13",
+    "prompt": "Combine these three sentences into one using parallel structure without adding a contrast: I opened the letter. I read it twice. I answered the question.",
+    "choices": [
+     "I opened the letter, read it twice, and answered the question.",
+     "I opened the letter and read it twice, but I answered the question.",
+     "I opened the letter, I read it twice, and I answered the question.",
+     "I opened the letter, read it twice, and answering the question."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option uses three parallel verb phrases in the same compound subject structure to preserve the original sequence of actions.",
+    "difficulty": 4,
+    "skill": "Combining sentences with parallel structure",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which option combines all three sentences in order as a tricolon without changing their verb tenses? Sunflowers faced the sun. Bees gathered pollen. The garden will bloom in July.",
+    "choices": [
+     "Sunflowers face the sun, bees gather pollen, and the garden will bloom in July.",
+     "Sunflowers faced the sun, bees gathered pollen, and the garden bloomed in July.",
+     "Sunflowers faced the sun, and bees gathered pollen; the garden will bloom in July.",
+     "Sunflowers faced the sun, bees gathered pollen, and the garden will bloom in July."
+    ],
+    "answerIndex": 3,
+    "explanation": "The tricolon preserves the original clause order and the past, past, and future verb tenses of the three sentences.",
+    "difficulty": 6,
+    "skill": "Preserving tense while forming a tricolon",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q9",
+    "prompt": "Combine these three sentences into one using a colon: The trail was narrow. We proceeded carefully. We reached the ridge.",
+    "choices": [
+     "The trail was narrow: we proceeded carefully, and we reached the ridge.",
+     "The trail was narrow, we proceeded carefully, and we reached the ridge.",
+     "The trail was narrow; we proceeded carefully, and we reached the ridge.",
+     "The trail was narrow because we proceeded carefully, and we reached the ridge."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon introduces the two related actions that follow the description of the narrow trail.",
+    "difficulty": 5,
+    "skill": "Using a colon to introduce related actions",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q23",
+    "prompt": "The silver trophy stood on the table. It was a gift from the team. The team celebrated its victory. Which option combines all three ideas using a nonrestrictive appositive?",
+    "choices": [
+     "The silver trophy, which was a gift from the team, stood on the table, and the team celebrated its victory.",
+     "The silver trophy was a gift from the team, and it stood on the table while the team celebrated its victory.",
+     "The silver trophy, a gift from the team, stood on the table, and the team celebrated its victory.",
+     "The silver trophy, a gift from the team that celebrated its victory, stood on the table."
+    ],
+    "answerIndex": 2,
+    "explanation": "The nonrestrictive appositive identifies the trophy while the coordinated clauses preserve the original three ideas.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a nonrestrictive appositive",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q24",
+    "prompt": "Why rush? We began early. We finished early. Which option combines the three ideas into one rhetorical question using when to introduce the supporting details?",
+    "choices": [
+     "Why rush although we began early and finished early?",
+     "Why rush if we began early and finished early?",
+     "Why rush because we began early and finished early?",
+     "Why rush when we began early and finished early?"
+    ],
+    "answerIndex": 3,
+    "explanation": "The rhetorical question combines the urgency of the original question with the supporting facts introduced by when.",
+    "difficulty": 5,
+    "skill": "Combining sentences into a rhetorical question",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q1",
+    "prompt": "Combine the three sentences without changing their meaning: The library was quiet. I found a book. I began reading. Which sentence does this best?",
+    "choices": [
+     "The library was quiet; I found a book, and I began reading.",
+     "The library was quiet because I found a book and began reading.",
+     "The library was quiet, I found a book, and I began reading.",
+     "The library was quiet, and I found a book, but I began reading."
+    ],
+    "answerIndex": 0,
+    "explanation": "This option uses a semicolon to join two independent clauses and a coordinating conjunction to combine the second and third sentences without changing their relationships.",
+    "difficulty": 4,
+    "skill": "Combining sentences with semicolons and conjunctions",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which one-sentence explanation accurately describes the rhetorical effect of this combined sentence: Maya checked the schedule, packed a pencil, and chose a quiet seat.",
+    "choices": [
+     "The sentence creates chiasmus by reversing the order of subject and object in adjacent clauses.",
+     "The sentence is periodic because its main clause appears only after the opening dependent phrase.",
+     "The sentence uses anaphora because the subject Maya precedes every verb in the series.",
+     "The sentence uses a cumulative structure, presenting a sequence of parallel actions that build toward the final action."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct explanation identifies the sequence of parallel actions as a cumulative structure that builds toward the final action.",
+    "difficulty": 6,
+    "skill": "Explaining cumulative sentence structure",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q48",
+    "prompt": "Combine the three sentences into one using an infinitive phrase to express the travelers' purpose: The train leaves at noon. We are buying tickets. We want to travel together.",
+    "choices": [
+     "We are buying tickets to travel on the train leaving at noon, but we want to be together.",
+     "We are buying tickets because the train leaves at noon, and we want to travel together.",
+     "To travel separately on the train leaving at noon, we are buying tickets.",
+     "We are buying tickets to travel together before the train leaves at noon."
+    ],
+    "answerIndex": 3,
+    "explanation": "The infinitive phrase to travel together explains the purpose of buying the tickets.",
+    "difficulty": 5,
+    "skill": "Combining sentences with an infinitive of purpose",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence combines the three ideas with the correlative pair not only and but also? We recycled the containers. We reduced waste. We saved money.",
+    "choices": [
+     "By recycling the containers, we not only reduced waste, but also we saved money.",
+     "By recycling the containers, we not only reduced waste but also saved money.",
+     "By recycling the containers, we reduced waste, but we also saved money.",
+     "By recycling the containers, we not only reduced waste, but saved money."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correlative pair not only and but also frames two parallel effects of recycling the containers.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a correlative conjunction",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which response combines the three sentences without adding a contrast and gives an accurate one-sentence explanation of the structure? The train was delayed. Passengers waited on the platform. Announcements explained the change.",
+    "choices": [
+     "The train was delayed, passengers waited on the platform, and announcements explained the change; the three clauses are correctly joined by commas.",
+     "Although the train was delayed, passengers waited on the platform while announcements explained the change; the subordinating conjunction creates a contrast between the delay and the waiting.",
+     "The train was delayed; passengers waited on the platform, while announcements explained the change; the semicolon makes the delay the cause of the announcements.",
+     "Because the train was delayed, passengers waited on the platform while announcements explained the change; the subordinating conjunction shows why the passengers waited."
+    ],
+    "answerIndex": 3,
+    "explanation": "This response uses because to show why the passengers waited and while to add the information about the announcements without adding a contrast.",
+    "difficulty": 7,
+    "skill": "Combining sentences and explaining rhetorical choices",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q46",
+    "prompt": "Combine the three sentences into one using a nonrestrictive appositive for the first idea and coordinating the remaining two clauses: The medal was a symbol of courage. It shone brightly. The crowd cheered.",
+    "choices": [
+     "The medal was a symbol of courage; it shone brightly, and the crowd cheered.",
+     "The medal, a symbol of courage, shone brightly, and the crowd cheered.",
+     "A symbol of courage, the medal shone brightly, and the crowd cheered.",
+     "The medal, which was a symbol of courage, shone brightly, and the crowd cheered."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence uses a nonrestrictive appositive “a symbol of courage” to rename “The medal” and then coordinates the two remaining clauses with “and.”",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q40",
+    "prompt": "Combine the three sentences using a colon to show that the last two ideas support the first: The lecture was long. The students took notes. They asked questions afterward.",
+    "choices": [
+     "The lecture was long, but the students took notes and asked questions afterward.",
+     "The lecture was long; the students took notes and asked questions afterward.",
+     "Because the lecture was long, the students took notes and asked questions afterward.",
+     "The lecture was long: the students took notes and asked questions afterward."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon correctly signals that the following clause explains or elaborates on the first independent clause.",
+    "difficulty": 6,
+    "skill": "Using Colons for Elaboration",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which explanation accurately describes the rhetorical effect of this combined sentence: The captain called the play, the guard set a screen, and the center finished the pass at the rim?",
+    "choices": [
+     "The sentence uses a colon to introduce a list of equipment used during a basketball game.",
+     "The sentence creates anaphora by repeating the same subject before each of three actions.",
+     "The three parallel clauses create a balanced, cumulative account of a basketball play unfolding in sequence.",
+     "The sentence establishes cause and effect by explaining why the center completed the pass."
+    ],
+    "answerIndex": 2,
+    "explanation": "The three parallel clauses create a balanced, cumulative account of a basketball play unfolding in sequence.",
+    "difficulty": 5,
+    "skill": "Explaining the effect of parallel clauses",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q27",
+    "prompt": "Combine the three sentences with a fronted past-participle phrase that shows the first action happened before the other two: The drummer adjusted the snare. He tightened the stand. He tuned the drum.",
+    "choices": [
+     "While adjusting the snare, the drummer tightened the stand and tuned the drum.",
+     "By adjusting the snare, the drummer tightened the stand and tuned the drum.",
+     "Having adjusted the snare, the drummer tightened the stand and tuned the drum.",
+     "Adjusting the snare, the drummer tightened the stand and tuned the drum."
+    ],
+    "answerIndex": 2,
+    "explanation": "The opening participial phrase makes the snare adjustment occur before the two later actions, while the main clause preserves the original order.",
+    "difficulty": 4,
+    "skill": "Fronted participial phrases",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q45",
+    "prompt": "Combine the three sentences into one using a fronted present‑participle phrase that describes the first two actions, then a main clause for the third: The runner checked her watch. She adjusted her pace. She crossed the finish line.",
+    "choices": [
+     "Checking her watch and adjusting her pace, the runner crossed the finish line.",
+     "After checking her watch and adjusting her pace, the runner crossed the finish line.",
+     "The runner checked her watch, adjusted her pace, and crossed the finish line.",
+     "Having checked her watch and adjusted her pace, the runner crossed the finish line."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence opens with the present‑participle phrase “Checking her watch and adjusting her pace” to show the two prior actions, followed by the main clause.",
+    "difficulty": 6,
+    "skill": "Sentence Combining",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q47",
+    "prompt": "Combine the three sentences into one without changing their meaning, using a relative clause to identify the novel: The librarian recommended a novel. It had won an award. I read it over the weekend.",
+    "choices": [
+     "The librarian recommended a novel whose award I read over the weekend.",
+     "The librarian recommended a novel because I had read it over the weekend.",
+     "The librarian recommended a novel that had won an award, and I read it over the weekend.",
+     "The librarian recommended a novel and read it over the weekend after it won an award."
+    ],
+    "answerIndex": 2,
+    "explanation": "The relative clause identifies the novel as the one that had won an award while preserving the reader's action.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a relative clause",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which sentence uses a conjunction of result to show why the volunteers acted? The old theater was scheduled for demolition. Local volunteers gathered. They saved the building.",
+    "choices": [
+     "The old theater was scheduled for demolition; although local volunteers gathered, they saved the building.",
+     "The old theater was scheduled for demolition because local volunteers gathered and saved the building.",
+     "The old theater was scheduled for demolition, so local volunteers gathered and saved the building.",
+     "The old theater was scheduled for demolition, but local volunteers gathered and saved the building."
+    ],
+    "answerIndex": 2,
+    "explanation": "The coordinating conjunction so presents the threatened demolition as the reason the volunteers gathered and saved the building.",
+    "difficulty": 6,
+    "skill": "Combining sentences to show cause and result",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q20",
+    "prompt": "We can walk home. We can take the bus. We cannot drive. Which sentence combines all three ideas using either...or to present the first two choices as alternatives and but to introduce the final limitation?",
+    "choices": [
+     "We can neither walk home nor take the bus, but we cannot drive.",
+     "We can either walk home or take the bus, and we cannot drive.",
+     "We can both walk home and take the bus, but we cannot drive.",
+     "We can either walk home or take the bus, but we cannot drive."
+    ],
+    "answerIndex": 3,
+    "explanation": "The either...or pair presents walking and taking the bus as alternatives, while but introduces the final limitation that driving is unavailable.",
+    "difficulty": 5,
+    "skill": "Combining sentences with either...or and but",
+    "topic": "Combine Three Sentences: Alternatives and Limitations"
+   },
+   {
+    "id": "q31",
+    "prompt": "The survey results were confusing. The researcher sorted the responses. The main pattern appeared. Which sentence combines the ideas in their original order and uses a colon before the supporting details?",
+    "choices": [
+     "The survey results were confusing because the researcher sorted the responses, and the main pattern appeared.",
+     "The survey results were confusing; the researcher sorted the responses, and the main pattern appeared.",
+     "The survey results were confusing: the researcher sorted the responses, and the main pattern appeared.",
+     "The survey results were confusing, for the researcher sorted the responses, and the main pattern appeared."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon introduces the sorting and discovery as details that support the opening statement while keeping all three ideas in order.",
+    "difficulty": 6,
+    "skill": "Colons and sentence combination",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q28",
+    "prompt": "We must research the issue. We must revise the draft. We must submit the report. Which sentence combines the ideas into a single why-question with parallel actions?",
+    "choices": [
+     "Where should we research the issue, revise the draft, and submit the report?",
+     "How should we research the issue, revise the draft, and submit the report?",
+     "When should we research the issue, revise the draft, and submit the report?",
+     "Why should we research the issue, revise the draft, and submit the report?"
+    ],
+    "answerIndex": 3,
+    "explanation": "The why-question presents the three actions in parallel and rhetorically challenges the necessity of completing each one.",
+    "difficulty": 4,
+    "skill": "Rhetorical questions and parallelism",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q38",
+    "prompt": "Combine the three sentences into one without adding a contrast or changing their order: The sun set. The temperature dropped. The campers lit a fire.",
+    "choices": [
+     "The sun set because the temperature dropped, and the campers lit a fire.",
+     "The sun set; the temperature dropped, and the campers lit a fire.",
+     "The sun set, but the temperature dropped, and the campers lit a fire.",
+     "The sun set, the temperature dropped, and the campers lit a fire."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence uses a semicolon to join the first two independent clauses and a coordinating conjunction to add the third, preserving order and meaning.",
+    "difficulty": 5,
+    "skill": "Sentence Combining with Semicolons and Conjunctions",
+    "topic": "Combine Three Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q29",
+    "prompt": "The volunteer checked the supply list. The volunteer organized the shelves. The volunteer labeled each bin. Which sentence combines all three actions with not only before the first action, but also before the second action, and and before the third?",
+    "choices": [
+     "The volunteer not only checked the supply list but also organized the shelves and labeled each bin.",
+     "The volunteer not only checked the supply list and organized the shelves but also labeled each bin.",
+     "The volunteer checked not only the supply list but also organized the shelves and labeled each bin.",
+     "The volunteer not only checked the supply list but also organized and labeled the shelves and bins."
+    ],
+    "answerIndex": 0,
+    "explanation": "Placing not only before checked and but also before organized gives the three original actions a parallel structure without changing their order.",
+    "difficulty": 6,
+    "skill": "Correlative conjunctions",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar"
+   }
+  ],
+  "feedback": {
+   "correct": "Strong grammar choice — the balloon climbs.",
+   "incorrect": "That structure slips — the balloon loses altitude.",
+   "win": "Summit reached! You combined sentences with real rhetorical control.",
+   "lose": "Back below the clouds. Review rhetorical grammar choices and try again.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Combine the three sentences without changing their meaning: The library was quiet. I found a book. I began reading. Which sentence does this best?",
+   "choices": [
+    "The library was quiet, I found a book, and I began reading.",
+    "The library was quiet because I found a book and began reading.",
+    "The library was quiet; I found a book, and I began reading.",
+    "The library was quiet, and I found a book, but I began reading."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option uses a semicolon to join two independent clauses and a coordinating conjunction to combine the second and third sentences without changing their relationships.",
+   "difficulty": 4,
+   "skill": "Combining sentences with semicolons and conjunctions",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using parallel structure: She checked the weather. She packed a jacket. She locked the door. Which option is correct?",
+   "choices": [
+    "She checked the weather, she packed a jacket, and she locked the door.",
+    "She checked the weather, packed a jacket, and locking the door.",
+    "She checked the weather, packed a jacket, and locked the door.",
+    "She checked the weather, packed a jacket, and the door was locked."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option gives the three actions parallel form by using the same subject and a matching -ed verb in each coordinated phrase.",
+   "difficulty": 4,
+   "skill": "Combining sentences with parallel structure",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a conjunction of result to show why the volunteers acted? The old theater was scheduled for demolition. Local volunteers gathered. They saved the building.",
+   "choices": [
+    "The old theater was scheduled for demolition, so local volunteers gathered and saved the building.",
+    "The old theater was scheduled for demolition because local volunteers gathered and saved the building.",
+    "The old theater was scheduled for demolition; although local volunteers gathered, they saved the building.",
+    "The old theater was scheduled for demolition, but local volunteers gathered and saved the building."
+   ],
+   "answerIndex": 0,
+   "explanation": "The coordinating conjunction so presents the threatened demolition as the reason the volunteers gathered and saved the building.",
+   "difficulty": 6,
+   "skill": "Combining sentences to show cause and result",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which response combines the three sentences without adding a contrast and gives an accurate one-sentence explanation of the structure? The train was delayed. Passengers waited on the platform. Announcements explained the change.",
+   "choices": [
+    "Because the train was delayed, passengers waited on the platform while announcements explained the change; the subordinating conjunction shows why the passengers waited.",
+    "Although the train was delayed, passengers waited on the platform while announcements explained the change; the subordinating conjunction creates a contrast between the delay and the waiting.",
+    "The train was delayed; passengers waited on the platform, while announcements explained the change; the semicolon makes the delay the cause of the announcements.",
+    "The train was delayed, passengers waited on the platform, and announcements explained the change; the three clauses are correctly joined by commas."
+   ],
+   "answerIndex": 0,
+   "explanation": "This response uses because to show why the passengers waited and while to add the information about the announcements without adding a contrast.",
+   "difficulty": 7,
+   "skill": "Combining sentences and explaining rhetorical choices",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using parallel structure without adding a contrast: Priya opened the window. She folded the map. She turned on the lamp.",
+   "choices": [
+    "Priya opened the window, folded the map, and turned on the lamp.",
+    "Priya opened the window, while folding the map and turned on the lamp.",
+    "Priya opened the window, folded the map, but she turned on the lamp.",
+    "Opening the window, Priya folded the map and turned on the lamp."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option uses three parallel predicates that share the subject Priya and preserve the original order of actions.",
+   "difficulty": 4,
+   "skill": "Combining sentences with parallel structure",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses because for the first causal link and so for the second while combining all three ideas: The power failed. The elevators stopped. Staff directed visitors to the stairs.",
+   "choices": [
+    "Because the power failed, the elevators stopped, so staff directed visitors to the stairs.",
+    "Although the power failed, the elevators stopped, so staff directed visitors to the stairs.",
+    "The power failed because the elevators stopped, so staff directed visitors to the stairs.",
+    "Because the power failed, although the elevators stopped, staff directed visitors to the stairs."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option presents the power failure as the cause of the stopped elevators and the stopped elevators as the reason for directing visitors to the stairs.",
+   "difficulty": 5,
+   "skill": "Combining sentences with causal conjunctions",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines the three ideas as a three-part series of parallel predicates without adding a contrast or changing their order: We packed snacks. We found the trail. We reached the summit.",
+   "choices": [
+    "We packed snacks, found the trail, and reached the summit.",
+    "After we packed snacks and found the trail, we reached the summit.",
+    "We reached the summit, found the trail, and packed snacks.",
+    "We packed snacks, we found the trail, but we reached the summit."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option places the three parallel verbs in one series and keeps the actions in their original order.",
+   "difficulty": 5,
+   "skill": "Combining sentences into a tricolon",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation accurately describes the rhetorical effect of this combined sentence: Maya checked the schedule, packed a pencil, and chose a quiet seat.",
+   "choices": [
+    "The sentence uses a cumulative structure, presenting a sequence of parallel actions that build toward the final action.",
+    "The sentence is periodic because its main clause appears only after the opening dependent phrase.",
+    "The sentence uses anaphora because the subject Maya precedes every verb in the series.",
+    "The sentence creates chiasmus by reversing the order of subject and object in adjacent clauses."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct explanation identifies the sequence of parallel actions as a cumulative structure that builds toward the final action.",
+   "difficulty": 6,
+   "skill": "Explaining cumulative sentence structure",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine these three sentences into one using a colon: The trail was narrow. We proceeded carefully. We reached the ridge.",
+   "choices": [
+    "The trail was narrow: we proceeded carefully, and we reached the ridge.",
+    "The trail was narrow, we proceeded carefully, and we reached the ridge.",
+    "The trail was narrow; we proceeded carefully, and we reached the ridge.",
+    "The trail was narrow because we proceeded carefully, and we reached the ridge."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the two related actions that follow the description of the narrow trail.",
+   "difficulty": 5,
+   "skill": "Using a colon to introduce related actions",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines the three ideas with the correlative pair not only and but also? We recycled the containers. We reduced waste. We saved money.",
+   "choices": [
+    "By recycling the containers, we not only reduced waste but also saved money.",
+    "By recycling the containers, we not only reduced waste, but also we saved money.",
+    "By recycling the containers, we reduced waste, but we also saved money.",
+    "By recycling the containers, we not only reduced waste, but saved money."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correlative pair not only and but also frames two parallel effects of recycling the containers.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a correlative conjunction",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation accurately describes the rhetorical effect of this combined sentence: The captain called the play, the guard set a screen, and the center finished the pass at the rim?",
+   "choices": [
+    "The three parallel clauses create a balanced, cumulative account of a basketball play unfolding in sequence.",
+    "The sentence creates anaphora by repeating the same subject before each of three actions.",
+    "The sentence uses a colon to introduce a list of equipment used during a basketball game.",
+    "The sentence establishes cause and effect by explaining why the center completed the pass."
+   ],
+   "answerIndex": 0,
+   "explanation": "The three parallel clauses create a balanced, cumulative account of a basketball play unfolding in sequence.",
+   "difficulty": 5,
+   "skill": "Explaining the effect of parallel clauses",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option combines all three sentences in order as a tricolon without changing their verb tenses? Sunflowers faced the sun. Bees gathered pollen. The garden will bloom in July.",
+   "choices": [
+    "Sunflowers faced the sun, bees gathered pollen, and the garden will bloom in July.",
+    "Sunflowers faced the sun, bees gathered pollen, and the garden bloomed in July.",
+    "Sunflowers faced the sun, and bees gathered pollen; the garden will bloom in July.",
+    "Sunflowers face the sun, bees gather pollen, and the garden will bloom in July."
+   ],
+   "answerIndex": 0,
+   "explanation": "The tricolon preserves the original clause order and the past, past, and future verb tenses of the three sentences.",
+   "difficulty": 6,
+   "skill": "Preserving tense while forming a tricolon",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine these three sentences into one using parallel structure without adding a contrast: I opened the letter. I read it twice. I answered the question.",
+   "choices": [
+    "I opened the letter, read it twice, and answered the question.",
+    "I opened the letter and read it twice, but I answered the question.",
+    "I opened the letter, I read it twice, and I answered the question.",
+    "I opened the letter, read it twice, and answering the question."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option uses three parallel verb phrases in the same compound subject structure to preserve the original sequence of actions.",
+   "difficulty": 4,
+   "skill": "Combining sentences with parallel structure",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a colon to show that the last two ideas support the first: The evidence was clear. The witness had checked the clock. The camera had recorded the entrance.",
+   "choices": [
+    "The evidence was clear: the witness had checked the clock, and the camera had recorded the entrance.",
+    "The evidence was clear; the witness had checked the clock, and the camera had recorded the entrance.",
+    "The evidence was clear, the witness had checked the clock, and the camera had recorded the entrance.",
+    "Although the evidence was clear, the witness had checked the clock, and the camera had recorded the entrance."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon appropriately introduces two specific details that explain why the evidence was clear.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a colon",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three ideas in their original order with a because clause that makes the reason for calling the manager explicit: The office was closed. The gate was locked. We called the manager.",
+   "choices": [
+    "Because the office was closed and the gate was locked, we called the manager.",
+    "The office was closed and the gate was locked; we called the manager.",
+    "The office was closed, the gate was locked, so we called the manager.",
+    "Because the office was closed but the gate was locked, we called the manager."
+   ],
+   "answerIndex": 0,
+   "explanation": "The because clause presents the two conditions as the reason the group called the manager without adding a contrast.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a because clause",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation accurately identifies the logical work of both conjunctions in this combined sentence: The room was bright, whereas the hallway was dim, so we chose the room?",
+   "choices": [
+    "Whereas marks the contrast between the two spaces, while so explains why we chose the room.",
+    "Whereas marks the contrast, while so indicates that we chose the room before seeing either space.",
+    "Whereas joins two actions happening at the same time, while so marks a reason for the contrast.",
+    "Whereas signals a cause-and-effect relationship, while so introduces an example of the room's brightness."
+   ],
+   "answerIndex": 0,
+   "explanation": "Whereas introduces the contrast between the spaces, and so presents the choice of the room as the result of that contrast.",
+   "difficulty": 7,
+   "skill": "Explaining the logic of combined sentences",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The team worked late. It completed the survey. The mayor thanked the team. Which sentence combines all three ideas in a cleft sentence beginning with It was because while preserving the original order and tenses?",
+   "choices": [
+    "It was because the team worked late and completed the survey that the mayor thanked.",
+    "It was because the team worked late and completed the survey the mayor thanked it.",
+    "It was because the team worked late and completed the survey that the mayor thanked it.",
+    "It was because the team had worked late and completed the survey that the mayor thanked it."
+   ],
+   "answerIndex": 2,
+   "explanation": "The cleft construction emphasizes the reasons for the mayor's thanks while preserving the order and past tense of all three original ideas.",
+   "difficulty": 6,
+   "skill": "Combining sentences with an It was because...that cleft",
+   "topic": "Combine Three Sentences: Cleft Sentences",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The rain tapped the window. The radio played softly. The dog fell asleep. Which sentence combines the three ideas using while to group the first two simultaneous actions without adding a cause or contrast?",
+   "choices": [
+    "While the rain tapped the window and the radio played softly, the dog fell asleep.",
+    "Because the rain tapped the window, the radio played softly, and the dog fell asleep.",
+    "While the rain tapped the window, the radio played softly, but the dog fell asleep.",
+    "Although the rain tapped the window, the radio played softly, and the dog fell asleep."
+   ],
+   "answerIndex": 0,
+   "explanation": "The while clause groups the first two simultaneous actions, while the main clause presents the dog's action without inventing a cause or contrast.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a while clause",
+   "topic": "Combine Three Sentences: While Clauses",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The committee finished its review. It sent a summary. The mayor thanked the committee. Which sentence uses a fronted having plus past-participle phrase to show that one action was completed before another while preserving all three events in order?",
+   "choices": [
+    "Finishing its review, the committee sent a summary, and the mayor thanked the committee.",
+    "Having sent a summary, the committee finished its review, and the mayor thanked the committee.",
+    "After the committee finished its review, it sent a summary, and the mayor thanked the committee.",
+    "Having finished its review, the committee sent a summary, and the mayor thanked the committee."
+   ],
+   "answerIndex": 3,
+   "explanation": "The having plus past-participle phrase shows that the review was completed before the summary was sent, and the final clause preserves the mayor's thanks.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a perfect participial phrase",
+   "topic": "Combine Three Sentences: Participial Phrases",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "We can walk home. We can take the bus. We cannot drive. Which sentence combines all three ideas using either...or to present the first two choices as alternatives and but to introduce the final limitation?",
+   "choices": [
+    "We can neither walk home nor take the bus, but we cannot drive.",
+    "We can either walk home or take the bus, but we cannot drive.",
+    "We can both walk home and take the bus, but we cannot drive.",
+    "We can either walk home or take the bus, and we cannot drive."
+   ],
+   "answerIndex": 1,
+   "explanation": "The either...or pair presents walking and taking the bus as alternatives, while but introduces the final limitation that driving is unavailable.",
+   "difficulty": 5,
+   "skill": "Combining sentences with either...or and but",
+   "topic": "Combine Three Sentences: Alternatives and Limitations",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rain poured down. The final bus was nearly gone. The runner reached the checkpoint. Which sentence combines all three ideas with a single fronted with-phrase containing two absolute constructions?",
+   "choices": [
+    "With rain pouring down and the final bus nearly gone, the runner reached the checkpoint.",
+    "With rain poured down and the final bus nearly gone, the runner reached the checkpoint.",
+    "With rain pouring down and with the final bus nearly gone, the runner reached the checkpoint.",
+    "With rain pour down and the final bus nearly gone, the runner reached the checkpoint."
+   ],
+   "answerIndex": 0,
+   "explanation": "The single opening with-phrase contains two absolute constructions and places the difficult circumstances before the main action, creating emphasis and suspense.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a fronted with-phrase",
+   "topic": "Combine Three Sentences: With-Phrases and Rhetorical Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "We had no map. We had no compass. We still found the path. Which sentence combines the three ideas using neither...nor for the two missing items and yet to contrast that lack with the final outcome?",
+   "choices": [
+    "We had neither a map or a compass, yet we still found the path.",
+    "We had not a map nor a compass, yet we still found the path.",
+    "Neither we had a map nor a compass, yet we still found the path.",
+    "We had neither a map nor a compass, yet we still found the path."
+   ],
+   "answerIndex": 3,
+   "explanation": "The neither...nor construction correctly joins the two missing items, while yet adds a contrast without changing the original outcome.",
+   "difficulty": 6,
+   "skill": "Combining sentences with neither...nor and yet",
+   "topic": "Combine Three Sentences: Neither...Nor and Contrast",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The silver trophy stood on the table. It was a gift from the team. The team celebrated its victory. Which option combines all three ideas using a nonrestrictive appositive?",
+   "choices": [
+    "The silver trophy, a gift from the team, stood on the table, and the team celebrated its victory.",
+    "The silver trophy was a gift from the team, and it stood on the table while the team celebrated its victory.",
+    "The silver trophy, which was a gift from the team, stood on the table, and the team celebrated its victory.",
+    "The silver trophy, a gift from the team that celebrated its victory, stood on the table."
+   ],
+   "answerIndex": 0,
+   "explanation": "The nonrestrictive appositive identifies the trophy while the coordinated clauses preserve the original three ideas.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a nonrestrictive appositive",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Why rush? We began early. We finished early. Which option combines the three ideas into one rhetorical question using when to introduce the supporting details?",
+   "choices": [
+    "Why rush when we began early and finished early?",
+    "Why rush if we began early and finished early?",
+    "Why rush because we began early and finished early?",
+    "Why rush although we began early and finished early?"
+   ],
+   "answerIndex": 0,
+   "explanation": "The rhetorical question combines the urgency of the original question with the supporting facts introduced by when.",
+   "difficulty": 5,
+   "skill": "Combining sentences into a rhetorical question",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The bridge froze. The organizers canceled the event. No one wanted to risk the ice. Which option combines the three ideas and gives an accurate one-sentence reason for the cancellation?",
+   "choices": [
+    "The organizers canceled the event because no one wanted to risk the ice, but the bridge froze.",
+    "Although the bridge froze, the organizers canceled the event because no one wanted to risk the ice.",
+    "The organizers canceled the event because the bridge froze and no one wanted to risk the ice.",
+    "The bridge froze, so the organizers canceled the event, and no one wanted to risk the ice."
+   ],
+   "answerIndex": 2,
+   "explanation": "Because introduces the cancellation’s cause, and and coordinates the two stated reasons without adding a contrast.",
+   "difficulty": 6,
+   "skill": "Combining sentences and explaining logical relationships",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The wind was fierce. The hikers pressed forward. They reached the shelter. Which option combines all three ideas using despite followed by a noun phrase?",
+   "choices": [
+    "Despite the fierce wind, the hikers pressed forward and reached the shelter.",
+    "Despite the wind was fierce, the hikers pressed forward and reached the shelter.",
+    "Despite of the fierce wind, the hikers pressed forward and reached the shelter.",
+    "Despite the hikers pressed forward, the fierce wind did not stop them from reaching the shelter."
+   ],
+   "answerIndex": 0,
+   "explanation": "The preposition despite introduces the noun phrase the fierce wind, while the compound predicate presents the hikers’ two actions in order.",
+   "difficulty": 4,
+   "skill": "Combining sentences with despite and a noun phrase",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences with a fronted past-participle phrase that shows the first action happened before the other two: The drummer adjusted the snare. He tightened the stand. He tuned the drum.",
+   "choices": [
+    "Having adjusted the snare, the drummer tightened the stand and tuned the drum.",
+    "By adjusting the snare, the drummer tightened the stand and tuned the drum.",
+    "While adjusting the snare, the drummer tightened the stand and tuned the drum.",
+    "Adjusting the snare, the drummer tightened the stand and tuned the drum."
+   ],
+   "answerIndex": 0,
+   "explanation": "The opening participial phrase makes the snare adjustment occur before the two later actions, while the main clause preserves the original order.",
+   "difficulty": 4,
+   "skill": "Fronted participial phrases",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "We must research the issue. We must revise the draft. We must submit the report. Which sentence combines the ideas into a single why-question with parallel actions?",
+   "choices": [
+    "Why should we research the issue, revise the draft, and submit the report?",
+    "How should we research the issue, revise the draft, and submit the report?",
+    "When should we research the issue, revise the draft, and submit the report?",
+    "Where should we research the issue, revise the draft, and submit the report?"
+   ],
+   "answerIndex": 0,
+   "explanation": "The why-question presents the three actions in parallel and rhetorically challenges the necessity of completing each one.",
+   "difficulty": 4,
+   "skill": "Rhetorical questions and parallelism",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The volunteer checked the supply list. The volunteer organized the shelves. The volunteer labeled each bin. Which sentence combines all three actions with not only before the first action, but also before the second action, and and before the third?",
+   "choices": [
+    "The volunteer not only checked the supply list but also organized the shelves and labeled each bin.",
+    "The volunteer not only checked the supply list and organized the shelves but also labeled each bin.",
+    "The volunteer checked not only the supply list but also organized the shelves and labeled each bin.",
+    "The volunteer not only checked the supply list but also organized and labeled the shelves and bins."
+   ],
+   "answerIndex": 0,
+   "explanation": "Placing not only before checked and but also before organized gives the three original actions a parallel structure without changing their order.",
+   "difficulty": 6,
+   "skill": "Correlative conjunctions",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The road was flooded. The delivery driver slowed down. The driver reached the depot. Which sentence uses although to introduce the first idea while keeping both driver actions in the main clause?",
+   "choices": [
+    "Although the road was flooded, the delivery driver slowed down and reached the depot.",
+    "Although the road was flooded, but the delivery driver slowed down and reached the depot.",
+    "Because the road was flooded, the delivery driver slowed down and reached the depot.",
+    "Although the road was flooded and the delivery driver slowed down, the driver reached the depot."
+   ],
+   "answerIndex": 0,
+   "explanation": "Although introduces the flooded road as a concession, and the main clause retains the slowing and arrival as parallel actions.",
+   "difficulty": 5,
+   "skill": "Concessive clauses",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The survey results were confusing. The researcher sorted the responses. The main pattern appeared. Which sentence combines the ideas in their original order and uses a colon before the supporting details?",
+   "choices": [
+    "The survey results were confusing: the researcher sorted the responses, and the main pattern appeared.",
+    "The survey results were confusing; the researcher sorted the responses, and the main pattern appeared.",
+    "The survey results were confusing because the researcher sorted the responses, and the main pattern appeared.",
+    "The survey results were confusing, for the researcher sorted the responses, and the main pattern appeared."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the sorting and discovery as details that support the opening statement while keeping all three ideas in order.",
+   "difficulty": 6,
+   "skill": "Colons and sentence combination",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence using parallel structure and omitting repeated subjects: The members met. The members listened. They decided.",
+   "choices": [
+    "The members met, listened, and decided.",
+    "The members met, they listened, and they decided.",
+    "The members met and listened, but they decided.",
+    "The members met, listened; and they decided."
+   ],
+   "answerIndex": 0,
+   "explanation": "The shared subject applies to all three parallel predicates while preserving the original actions and their order.",
+   "difficulty": 4,
+   "skill": "Parallel structure with ellipsis",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence using an absolute construction: The wind died down. The flags hung still. We started the race.",
+   "choices": [
+    "The wind dying down and the flags hanging still, we started the race.",
+    "The wind was dying down and the flags were hanging still, so we started the race.",
+    "The wind dying down and the flags hanging still, so we started the race.",
+    "The wind was down and the flags were still when we started the race."
+   ],
+   "answerIndex": 0,
+   "explanation": "The absolute construction uses two present-participle clauses to describe the conditions that accompanied the start of the race.",
+   "difficulty": 5,
+   "skill": "Absolute construction",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines all three ideas using a nonrestrictive appositive without adding any new information? My aunt owned a violin. It was made in 1920. She rarely played it.",
+   "choices": [
+    "My aunt owned a violin; it was made in 1920, and she rarely played it.",
+    "My aunt owned a violin, although she rarely played the 1920 instrument.",
+    "My aunt owned a violin, an instrument made in 1920 that she rarely played.",
+    "My aunt owned a violin, a rare instrument made in 1920 that she rarely played."
+   ],
+   "answerIndex": 2,
+   "explanation": "The appositive phrase identifies the violin as an instrument made in 1920, while the relative clause preserves the fact that his aunt rarely played it.",
+   "difficulty": 5,
+   "skill": "Nonrestrictive appositive",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines all three sentences with a cleft sentence that focuses on the club? The club hosted the cleanup. It arrived early. It assigned teams.",
+   "choices": [
+    "It was the club that hosted the cleanup, arrived early, and assigned teams.",
+    "It was the club hosted the cleanup, arrived early, and assigned teams.",
+    "It was the cleanup that the club hosted, arrived early, and assigned teams.",
+    "It was because the club hosted the cleanup that it arrived early and assigned teams."
+   ],
+   "answerIndex": 0,
+   "explanation": "The construction It was the club that foregrounds the club while keeping the three actions as parallel predicates.",
+   "difficulty": 6,
+   "skill": "Cleft sentence",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines all three ideas in a balanced three-part structure with parallel clauses? The mayor spoke. The audience listened. The votes changed.",
+   "choices": [
+    "The mayor spoke, the audience listened, and the votes changed.",
+    "The mayor spoke while the audience listened; the votes changed.",
+    "The mayor spoke, but the audience listened, so the votes changed.",
+    "The mayor spoke and the audience listened because the votes changed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The three simple past-tense clauses share the same grammatical structure and create a balanced sequence that preserves the original order.",
+   "difficulty": 5,
+   "skill": "Balanced sentence structure",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence using the too...to construction: The path was steep. The bags were heavy. We could not finish quickly.",
+   "choices": [
+    "The path was so steep and the bags were so heavy that we could not finish quickly.",
+    "The path was very steep, and the bags were very heavy, so we could not finish quickly.",
+    "The path was too steep, but the bags were too heavy, so we could not finish quickly.",
+    "The path was too steep and the bags were too heavy for us to finish quickly."
+   ],
+   "answerIndex": 3,
+   "explanation": "The too...to construction links the steep path and heavy bags to the inability to finish quickly without changing the original ideas.",
+   "difficulty": 6,
+   "skill": "Correlative construction with too...to",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one without adding a contrast or changing their order: The sun set. The temperature dropped. The campers lit a fire.",
+   "choices": [
+    "The sun set; the temperature dropped, and the campers lit a fire.",
+    "The sun set because the temperature dropped, and the campers lit a fire.",
+    "The sun set, but the temperature dropped, and the campers lit a fire.",
+    "The sun set, the temperature dropped, and the campers lit a fire."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses a semicolon to join the first two independent clauses and a coordinating conjunction to add the third, preserving order and meaning.",
+   "difficulty": 5,
+   "skill": "Sentence Combining with Semicolons and Conjunctions",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using parallel predicates: She reviewed the data. She wrote the report. She submitted it before noon.",
+   "choices": [
+    "She reviewed the data, wrote the report, and submitted it before noon.",
+    "She reviewed the data and wrote the report, then she submitted it before noon.",
+    "She reviewed the data, so she wrote the report and submitted it before noon.",
+    "While she reviewed the data, she wrote the report and submitted it before noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option presents three parallel past‑tense verbs in a single series, keeping the original sequence.",
+   "difficulty": 5,
+   "skill": "Parallel Structure in Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using a colon to show that the last two ideas support the first: The lecture was long. The students took notes. They asked questions afterward.",
+   "choices": [
+    "The lecture was long: the students took notes and asked questions afterward.",
+    "The lecture was long; the students took notes and asked questions afterward.",
+    "Because the lecture was long, the students took notes and asked questions afterward.",
+    "The lecture was long, but the students took notes and asked questions afterward."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon correctly signals that the following clause explains or elaborates on the first independent clause.",
+   "difficulty": 6,
+   "skill": "Using Colons for Elaboration",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences with a fronted adverbial clause that keeps the actions in order: The engine sputtered. The mechanic tightened the bolt. The car started.",
+   "choices": [
+    "After the engine sputtered, the mechanic tightened the bolt, and the car started.",
+    "Because the engine sputtered, the mechanic tightened the bolt, and the car started.",
+    "While the engine sputtered, the mechanic tightened the bolt, and the car started.",
+    "The engine sputtered, the mechanic tightened the bolt, and the car started."
+   ],
+   "answerIndex": 0,
+   "explanation": "The fronted adverbial clause “After the engine sputtered” establishes the temporal sequence before the two coordinated main clauses.",
+   "difficulty": 6,
+   "skill": "Fronted Adverbial Clauses in Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using the correlative pair not only … but also while preserving order: We planted seeds. We watered them daily. The garden bloomed.",
+   "choices": [
+    "We not only planted seeds but also watered them daily, and the garden bloomed.",
+    "We both planted seeds and watered them daily, so the garden bloomed.",
+    "We either planted seeds or watered them daily, and the garden bloomed.",
+    "We planted seeds, watered them daily, so the garden bloomed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correlative “not only … but also” correctly links the first two actions, and the final clause adds the result without altering order.",
+   "difficulty": 6,
+   "skill": "Correlative Conjunctions in Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a when‑clause to introduce the supporting details: The deadline approached. The team collaborated. They delivered the project on time.",
+   "choices": [
+    "When the deadline approached, the team collaborated and delivered the project on time.",
+    "Because the deadline approached, the team collaborated and delivered the project on time.",
+    "The deadline approached, so the team collaborated and delivered the project on time.",
+    "The deadline approached; the team collaborated, and they delivered the project on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The when‑clause fronted as an adverbial sets the temporal context for the two coordinated actions that follow.",
+   "difficulty": 5,
+   "skill": "Adverbial Clauses of Time in Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a fronted prepositional phrase that shows cause, followed by two coordinated verbs: Traffic was heavy. We left early. We arrived on time.",
+   "choices": [
+    "Because of the heavy traffic, we left early and arrived on time.",
+    "Because the traffic was heavy, we left early and arrived on time.",
+    "Heavy traffic caused us to leave early, and we arrived on time.",
+    "The traffic was heavy, so we left early and arrived on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence begins with the prepositional phrase “Because of the heavy traffic” to indicate cause, then coordinates the two actions with “and.”",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a fronted present‑participle phrase that describes the first two actions, then a main clause for the third: The runner checked her watch. She adjusted her pace. She crossed the finish line.",
+   "choices": [
+    "Checking her watch and adjusting her pace, the runner crossed the finish line.",
+    "After checking her watch and adjusting her pace, the runner crossed the finish line.",
+    "The runner checked her watch, adjusted her pace, and crossed the finish line.",
+    "Having checked her watch and adjusted her pace, the runner crossed the finish line."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence opens with the present‑participle phrase “Checking her watch and adjusting her pace” to show the two prior actions, followed by the main clause.",
+   "difficulty": 6,
+   "skill": "Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a nonrestrictive appositive for the first idea and coordinating the remaining two clauses: The medal was a symbol of courage. It shone brightly. The crowd cheered.",
+   "choices": [
+    "The medal, a symbol of courage, shone brightly, and the crowd cheered.",
+    "The medal was a symbol of courage; it shone brightly, and the crowd cheered.",
+    "A symbol of courage, the medal shone brightly, and the crowd cheered.",
+    "The medal, which was a symbol of courage, shone brightly, and the crowd cheered."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses a nonrestrictive appositive “a symbol of courage” to rename “The medal” and then coordinates the two remaining clauses with “and.”",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one without changing their meaning, using a relative clause to identify the novel: The librarian recommended a novel. It had won an award. I read it over the weekend.",
+   "choices": [
+    "The librarian recommended a novel that had won an award, and I read it over the weekend.",
+    "The librarian recommended a novel because I had read it over the weekend.",
+    "The librarian recommended a novel whose award I read over the weekend.",
+    "The librarian recommended a novel and read it over the weekend after it won an award."
+   ],
+   "answerIndex": 0,
+   "explanation": "The relative clause identifies the novel as the one that had won an award while preserving the reader's action.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a relative clause",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using an infinitive phrase to express the travelers' purpose: The train leaves at noon. We are buying tickets. We want to travel together.",
+   "choices": [
+    "We are buying tickets to travel together before the train leaves at noon.",
+    "We are buying tickets because the train leaves at noon, and we want to travel together.",
+    "To travel separately on the train leaving at noon, we are buying tickets.",
+    "We are buying tickets to travel on the train leaving at noon, but we want to be together."
+   ],
+   "answerIndex": 0,
+   "explanation": "The infinitive phrase to travel together explains the purpose of buying the tickets.",
+   "difficulty": 5,
+   "skill": "Combining sentences with an infinitive of purpose",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using not because...but because: Marina chose the longer route. It was not because she missed the bus. She wanted to see the lake.",
+   "choices": [
+    "Marina chose the longer route not because she missed the bus but because she wanted to see the lake.",
+    "Marina chose the longer route because she wanted to see the lake, and she did not choose it because she missed the bus.",
+    "Marina chose the longer route not only because she missed the bus but also because she wanted to see the lake.",
+    "Marina chose the longer route not because she wanted to see the lake but because she missed the bus."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired not because and but because clauses contrast Marina's actual reason with the reason she explicitly rejects.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a not because...but because structure",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The judges reviewed the entries. The audience became still. The results were announced. Which option combines all three ideas in order using an inverted clause beginning with only after?",
+   "choices": [
+    "Only after the judges reviewed the entries and the audience became still were the results announced.",
+    "Only after the judges reviewed the entries and the audience became still the results were announced.",
+    "Only after the judges reviewed the entries, the audience became still, were the results announced.",
+    "Only the judges reviewed the entries and the audience became still were the results announced."
+   ],
+   "answerIndex": 0,
+   "explanation": "The option preserves the original order and uses subject-verb inversion after the opening only after clause for emphasis.",
+   "difficulty": 6,
+   "skill": "Combining sentences with an inverted adverbial clause",
+   "topic": "Combine Three Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which option combines all three sentences with a semicolon after the first complete statement? The bell rang. Students packed up. The coach checked the clock.",
+   "choices": [
+    "The bell rang; students packed up, and the coach checked the clock.",
+    "The bell rang, students packed up, and the coach checked the clock.",
+    "The bell rang; packing up, the coach checked the clock.",
+    "The bell rang: students packed up, and the coach checked the clock."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon separates the bell statement from the following coordinated clauses about packing up and checking the clock.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The game may be canceled. If it rains, we will cancel it. The players will receive updates. Which option combines the three ideas with a conditional clause while preserving their order?",
+   "choices": [
+    "If it rains, we may cancel the game, and the players will receive updates.",
+    "If it rains, the players will receive updates, and we may cancel the game.",
+    "Unless it rains, we may cancel the game, and the players will receive updates.",
+    "If the players receive updates, it will rain, and we may cancel the game."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option presents rain as the condition for canceling the game and retains the original order of the three ideas.",
+   "reason": "explanation-key: the explanation describes option 4 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Rewrite these three sentences as one with a fronted adverbial clause that keeps the actions in order: The printer stopped working. The office waited. The technician repaired it.",
+   "choices": [
+    "After the printer stopped working, the office waited, and the technician repaired it.",
+    "Before the printer stopped working, the office waited, and the technician repaired it.",
+    "While the printer stopped working, the office waited, and the technician repaired it.",
+    "After the office waited, the printer stopped working, and the technician repaired it."
+   ],
+   "answerIndex": 0,
+   "explanation": "The fronted clause places the printer failure before the office's wait and the technician's repair.",
+   "reason": "explanation-key: the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three ideas in their original order without inventing a cause or contrast: The alarm rang. The students rushed out. The hallway filled with smoke. Which sentence is correct?",
+   "choices": [
+    "The alarm rang, the students rushed out, and the hallway filled with smoke.",
+    "The alarm rang; the students rushed out, and the hallway filled with smoke.",
+    "Because the alarm rang, the students rushed out, and the hallway filled with smoke.",
+    "The alarm rang; the students rushed out, but the hallway filled with smoke."
+   ],
+   "answerIndex": 1,
+   "explanation": "This option uses a semicolon and a coordinating conjunction to join all three ideas while preserving their original sequence and relationships.",
+   "reason": "B: picked 0 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly combines the ideas with a semicolon while preserving their original meaning? The committee reviewed the proposal. Members asked questions. The chair called for a vote.",
+   "choices": [
+    "The committee reviewed the proposal and asked questions; the chair called for a vote.",
+    "The committee reviewed the proposal, asked questions; the chair called for a vote.",
+    "The committee reviewed the proposal and asked questions, and the chair called for a vote.",
+    "The committee reviewed the proposal and asked questions; the chair called for a vote, too."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon separates the committee's actions from the chair's action, and the second clause preserves the original meaning.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which combination repeats the same opening phrase to create anaphora while preserving all three ideas: I wanted courage. I relied on courage. I found courage.",
+   "choices": [
+    "Courage was what I wanted, what I relied on, and what I found.",
+    "Courage was what I wanted, what I needed, and what I found.",
+    "I wanted courage, I relied on courage, and I found courage.",
+    "Courage was something I wanted, something I relied on, and something I found."
+   ],
+   "answerIndex": 0,
+   "explanation": "The repeated phrase what I begins each relative clause, creating anaphora while retaining the three original ideas.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which one-sentence explanation correctly identifies and explains the rhetorical structure of this combined sentence: The child loved the dog, and the dog loved the child.",
+   "choices": [
+    "The sentence reverses an A-B structure to form a balanced A-B / B-A chiasmus.",
+    "The sentence repeats a subject before each independent clause to create anaphora.",
+    "The sentence joins two independent clauses with a conjunction to create parallelism.",
+    "The sentence builds through three coordinated actions in order of increasing importance."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct explanation identifies the reversal of the subject and object between the clauses as chiasmus.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which option uses although with the first two sentences while keeping the third sentence in the main clause? Lightning flickered. The soccer match continued. Players watched the sky.",
+   "choices": [
+    "Although lightning flickered, the soccer match continued, and players watched the sky.",
+    "Although lightning flickered, the soccer match continued while players watched the sky.",
+    "Although lightning flickered and the soccer match continued, players watched the sky.",
+    "The soccer match continued although lightning flickered, and players watched the sky."
+   ],
+   "answerIndex": 0,
+   "explanation": "Although makes the lightning clause depend on the main clause, while and keeps the players' action in that main clause.",
+   "reason": "A: picked 2 not 0 | B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence combines all three actions with the correlative pair not only and but also while preserving their original order? Mina packed the supplies. She checked the map. She left before sunrise.",
+   "choices": [
+    "Mina not only packed the supplies but also checked the map and left before sunrise.",
+    "Mina not only packed the supplies but also checked the map, and she left before sunrise.",
+    "Mina either packed the supplies or checked the map, but she left before sunrise.",
+    "Mina packed the supplies, checked the map, and also left before sunrise."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correlative pair coordinates all three original actions in a single sentence without changing their order.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence combines all three ideas and uses anadiplosis, repeating the final word of one clause at the beginning of the next? Work hard. Hard work pays. Success follows.",
+   "choices": [
+    "Work hard, and hard work pays, so success follows.",
+    "Work hard, hard work pays, and success follows.",
+    "Although work is hard, hard work pays, and success follows.",
+    "To work hard, and hard work pays, so success follows."
+   ],
+   "answerIndex": 0,
+   "explanation": "The repetition of hard from the end of the first clause to the start of the second creates anadiplosis and links the three ideas in a cause-and-effect chain.",
+   "reason": "A: picked 1 not 0 | B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The storm ended. The crew cleared the branches. The road reopened. Which option combines all three ideas with a fronted adverbial clause and a compound predicate?",
+   "choices": [
+    "After the storm ended, the crew cleared the branches, and the road reopened.",
+    "Because the storm ended, the crew cleared the branches, and the road reopened.",
+    "After clearing the branches, the storm ended, and the road reopened.",
+    "Although the storm ended, the crew cleared the branches, and the road reopened."
+   ],
+   "answerIndex": 0,
+   "explanation": "The fronted clause establishes when the work occurred, and the compound predicate joins the crew’s action with the road reopening.",
+   "reason": "A: not exactly one correct (Multiple options (0, 1, 3) share the same fronted adverbial clause and compound predicate structure; the question is ambiguous.)"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "Combine the three ideas into one sentence while preserving the conditional relationship: The power may fail. The server keeps running on its backup battery. The lights may flicker.",
+   "choices": [
+    "If the power fails, the server keeps running on its backup battery, and the lights may flicker.",
+    "Because the power may fail, the server keeps running on its backup battery, and the lights may flicker.",
+    "Even if the power fails, the server keeps running on its backup battery, and the lights may flicker.",
+    "If the server's backup battery fails, the power may fail, and the lights may flicker."
+   ],
+   "answerIndex": 0,
+   "explanation": "The if-clause makes the server's response and the flickering lights depend on the possible power failure.",
+   "reason": "explanation-key: the explanation describes option 4 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Combine all three ideas in one sentence using a nonrestrictive relative clause about the mural: The mural was painted by a local artist. It brightened the alley. Visitors lingered near it.",
+   "choices": [
+    "Visitors lingered near the mural, which was painted by a local artist and had brightened the alley.",
+    "The mural that was painted by a local artist brightened the alley, and visitors lingered near it.",
+    "The mural, which was painted by a local artist and brightened the alley, was visited by visitors who lingered near it.",
+    "Visitors lingered near the mural that was painted by a local artist, and it had brightened the alley."
+   ],
+   "answerIndex": 0,
+   "explanation": "The nonrestrictive relative clause adds information about the mural while combining all three ideas in their original order.",
+   "reason": "A: picked 2 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one using rather than and an infinitive phrase to state Jordan's purpose: Jordan chose to send a message. Jordan did not call. Jordan wanted to reach the office before it closed.",
+   "choices": [
+    "To reach the office before it closed, Jordan sent a message rather than calling.",
+    "To reach the office before it closed, Jordan called rather than sending a message.",
+    "Jordan sent a message rather than calling because the office closed before he reached it.",
+    "Rather than to call, Jordan sent a message to reach the office before it closed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The infinitive phrase states Jordan's purpose, while rather than calling identifies the alternative action he rejected.",
+   "reason": "B: not exactly one correct (Option 0 uses the gerund 'calling' after 'rather than', which contradicts the instruction to use an infinitive phrase; option 3 uses the inf)"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "Sam did not argue. He explained his reasons calmly. He left the meeting. Which option combines all three ideas in order using rather than followed by the base form of the first verb?",
+   "choices": [
+    "Rather than argue, Sam explained his reasons calmly and left the meeting.",
+    "Rather than arguing, Sam explained his reasons calmly and left the meeting.",
+    "Rather than argued, Sam explained his reasons calmly and left the meeting.",
+    "Rather than to argue, Sam explained his reasons calmly and left the meeting."
+   ],
+   "answerIndex": 0,
+   "explanation": "The fronted rather than phrase makes the base form argue fit the construction while the compound predicate presents the remaining actions in order.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  }
+ ],
+ "applied": false
+}

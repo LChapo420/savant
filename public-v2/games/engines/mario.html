@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<base href="/games/mario/">
+<link rel="stylesheet" href="css/game.css">
+<title>Mario</title>
+<style>
+  /* game.css already scales the canvas to fit. These make the injected question
+     choices read as text and add the portrait rotate guide. */
+  .math-option { font-size: 15px; padding: 12px 10px; white-space: normal; word-break: break-word; line-height: 1.35; text-align: left; }
+  .math-question { font-size: 19px; line-height: 1.35; }
+  .math-next { margin-top: 12px; padding: 11px 16px; font-size: 16px; font-weight: bold; border: 2px solid #6c6cae; border-radius: 10px; background: #2d2d4f; color: #fff; cursor: pointer; }
+  #mx3m-rotate { position: fixed; inset: 0; z-index: 2147483647; display: none; align-items: center; justify-content: center; flex-direction: column; background: #0b1626; color: #eaf6ff; font-family: monospace; text-align: center; }
+  #mx3m-rotate.show { display: flex; }
+  .mx3m-rotate-card { padding: 30px; }
+  .mx3m-rotate-phone { width: 66px; height: 116px; border: 5px solid #6ec1ff; border-radius: 14px; margin: 0 auto 14px; position: relative; }
+  .mx3m-rotate-phone::after { content: ''; position: absolute; left: 50%; bottom: 7px; width: 22px; height: 3px; background: #6ec1ff; border-radius: 2px; transform: translateX(-50%); }
+  .mx3m-rotate-arrow { font-size: 46px; line-height: 1; }
+  .mx3m-rotate-title { margin-top: 12px; font-size: 20px; font-weight: bold; }
+  .mx3m-rotate-sub { margin-top: 6px; opacity: .85; }
+</style>
+<script>
+window.GAME_ID = 'mario'; window.GAME_DATA = [/* __DATA_INJECTION__ */][0];
+// The game plays sounds before a user gesture; browsers block autoplay and the
+// rejected play() promise would surface as an error. Catch it so the game runs
+// quietly until the player interacts (audio then works normally).
+(function () {
+  var origPlay = window.Audio && Audio.prototype.play;
+  if (origPlay) {
+    Audio.prototype.play = function () {
+      var p = origPlay.apply(this, arguments);
+      if (p && p.catch) p.catch(function () {});
+      return p;
+    };
+  }
+})();
+</script>
+</head>
+<body data-engine="mario">
+<script src="js/util.js"></script>
+<script src="js/input.js"></script>
+<script src="js/resources.js"></script>
+<script src="js/sprite.js"></script>
+<script src="js/entity.js"></script>
+<script src="js/pipe.js"></script>
+<script src="js/mushroom.js"></script>
+<script src="js/fireflower.js"></script>
+<script src="js/star.js"></script>
+<script src="js/fireball.js"></script>
+<script src="js/coin.js"></script>
+<script src="js/bcoin.js"></script>
+<script src="js/goomba.js"></script>
+<script src="js/koopa.js"></script>
+<script src="js/floor.js"></script>
+<script src="js/block.js"></script>
+<script src="js/rubble.js"></script>
+<script src="js/prop.js"></script>
+<script src="js/player.js"></script>
+<script src="js/flag.js"></script>
+<script src="js/levels/level.js"></script>
+<script src="js/levels/11.js"></script>
+<script src="js/levels/11tunnel.js"></script>
+<script src="js/mathRevive.js"></script>
+<script src="js/mobile.js"></script>
+<script src="js/game.js"></script>
+<script src="mobile-fit.js"></script>
+</body>
+</html>

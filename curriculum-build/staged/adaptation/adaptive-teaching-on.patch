@@ -1,0 +1,124 @@
+diff -ru a/services/block-levels.js b/services/block-levels.js
+--- a/services/block-levels.js	2026-10-23 10:08:35.070148700 -0500
++++ b/services/block-levels.js	2026-10-23 10:08:35.927530600 -0500
+@@ -731,7 +731,17 @@
+   }
+   // eslint-disable-next-line global-require
+   const details = require('./details');
+-  const text = details.brief(userId, where);
++  let text = details.brief(userId, where);
++  // How this level should teach this learner (services/adaptation.js), only with
++  // ADAPTIVE_TEACHING=on. It restates the objective word for word and changes
++  // none of what the level covers.
++  // eslint-disable-next-line global-require
++  const adaptation = require('./adaptation');
++  if (adaptation.mode() === 'on') {
++    const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === where.trackId && e.grade_id === where.gradeId);
++    const lines = adaptation.promptLines(enrollment ? adaptation.planForLevel({ userId, enrollment, level: where.level }) : null);
++    if (lines.length) text = `${text}\n${lines.join('\n')}`;
++  }
+   return experiment ? `${text}\nFOR THIS LEVEL SPECIFICALLY: ${experiment.text}` : text;
+ }
+ 
+diff -ru a/services/learner-path.js b/services/learner-path.js
+--- a/services/learner-path.js	2026-10-23 10:08:35.195350800 -0500
++++ b/services/learner-path.js	2026-10-23 10:08:35.927530600 -0500
+@@ -570,6 +570,48 @@
+  * Without a plan or a bank, the next level, as it always was.
+  */
+ function nextLevelAfter(enrollment, grade, level) {
++  const next = unitNextLevelAfter(enrollment, grade, level);
++  return compressProven(enrollment, grade, next);
++}
++
++/**
++ * Practice ends on proof (services/adaptation.js, only with
++ * ADAPTIVE_TEACHING=on): the path steps over the remaining practice levels of
++ * an objective the learner has already proven (services/coverage.js). Its
++ * retention levels are never stepped over, and nothing is marked cleared: the
++ * coverage gate still holds graduation until every objective is proven and
++ * kept. The owner's account follows the sheet (docs/PRODUCT-DECISIONS.md).
++ */
++function compressProven(enrollment, grade, next) {
++  // eslint-disable-next-line global-require
++  const adaptation = require('./adaptation');
++  if (adaptation.mode() !== 'on' || !enrollment || !enrollment.user_id) return next;
++  try {
++    // eslint-disable-next-line global-require
++    const blockLevels = require('./block-levels');
++    if (process.env.ADAPT_OWNER !== '1' && blockLevels.isOwner(db.byId('users', enrollment.user_id))) return next;
++    // eslint-disable-next-line global-require
++    const coverage = require('./coverage');
++    const report = coverage.forEnrollment(enrollment.user_id, enrollment);
++    if (!report) return next;
++    let at = next;
++    for (let guard = 0; guard < 60; guard++) {
++      const e = report.model.levelMap[at];
++      if (!e || e.kind !== 'activity' || e.retention) break;
++      const s = report.states[e.direct];
++      if (!(s.status === 'proven' || s.status === 'retained')) break;
++      const after = unitNextLevelAfter(enrollment, grade, at);
++      if (after <= at) break;
++      at = after;
++    }
++    return at;
++  } catch (err) {
++    console.warn(`learner-path: compress failed: ${err.message}`);
++    return next;
++  }
++}
++
++function unitNextLevelAfter(enrollment, grade, level) {
+   const end = grade.pathLength;
+   const plan = planFor(enrollment);
+   const units = plan ? unitsOf(enrollment) : null;
+diff -ru a/services/level-editor.js b/services/level-editor.js
+--- a/services/level-editor.js	2026-10-23 10:08:35.328499900 -0500
++++ b/services/level-editor.js	2026-10-23 10:08:35.793715300 -0500
+@@ -201,6 +201,23 @@
+       'is decided by the app, not by the page.',
+     ].join('\n');
+ 
++  // How this level should teach this learner, from their own record on its
++  // objective (services/adaptation.js): worked examples or problems first, how
++  // long, which earlier objectives to bring back. Only with
++  // ADAPTIVE_TEACHING=on; it restates what the level must cover word for word,
++  // and changes none of it.
++  // eslint-disable-next-line global-require
++  const adaptation = require('./adaptation');
++  let howLines = [];
++  if (adaptation.mode() === 'on') {
++    // eslint-disable-next-line global-require
++    const db = require('../config/db');
++    const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === where.trackId && e.grade_id === where.gradeId);
++    const adapted = enrollment ? adaptation.planForLevel({ userId, enrollment, level: where.level }) : null;
++    howLines = adaptation.promptLines(adapted);
++  }
++  const how = howLines.length ? `${howLines.join('\n')}\n` : '';
++
+   // One way of teaching tried on purpose for this level, and judged by the result.
+   const trial = experiment
+     ? `FOR THIS LEVEL SPECIFICALLY (this overrides any instruction above on the same point):\n${experiment.text}\n`
+@@ -210,6 +227,7 @@
+     head,
+     brief,
+     '',
++    how,
+     trial,
+     task,
+     '',
+diff -ru a/services/mastery.js b/services/mastery.js
+--- a/services/mastery.js	2026-10-23 10:08:35.462123500 -0500
++++ b/services/mastery.js	2026-10-23 10:08:35.793715300 -0500
+@@ -231,7 +231,10 @@
+ function advance(enrollment, grade, extra = {}) {
+   const from = enrollment.current_level;
+   if (!learnerPath.planFor(enrollment)) {
+-    return moveTo(enrollment, grade, from + 1, {
++    // learnerPath.nextLevelAfter is from + 1 on a path with no unit plan, except
++    // that with ADAPTIVE_TEACHING=on it steps over the remaining practice of a
++    // proven objective (never a retention level, never a checkpoint).
++    return moveTo(enrollment, grade, learnerPath.nextLevelAfter(enrollment, grade, from), {
+       levels_completed: (enrollment.levels_completed || 0) + 1,
+       ...extra,
+     });

@@ -1,0 +1,2 @@
+// eval helper: capture the current state at 1280 and 375 (light), as sk3-shots/<name>-1280.png / -375.png
+window.__snap2 = async (name, full) => { snap(JSON.stringify({ file: `sk3-shots/${name}-1280.png`, w: 1280, full: !!full })); await new Promise((r) => setTimeout(r, 1500)); snap(JSON.stringify({ file: `sk3-shots/${name}-375.png`, w: 375, full: !!full })); await new Promise((r) => setTimeout(r, 1500)); };

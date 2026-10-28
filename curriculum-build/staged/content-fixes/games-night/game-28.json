@@ -1,0 +1,3240 @@
+{
+ "row_id": 28,
+ "engine_id": "ping-pong",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 37,
+ "generated_at": "2026-10-24T20:54:51.727Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b, qwen/qwen3.8-max:free",
+ "stats": {
+  "written": 71,
+  "code_rejected": 1,
+  "sent_to_judges": 70,
+  "kept": 50,
+  "keep_rate_of_written": 0.704,
+  "judges": {
+   "both_answered": 70,
+   "picked_same_option": 65,
+   "a_picked_key": 65,
+   "b_picked_key": 64,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "z-ai/glm-5.3",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-max:free"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-max:free",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "ping-pong",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 37,
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "title": "Rhetorical Grammar Rubric Check Rally",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 7,
+    "end": 9,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q8",
+    "prompt": "A rubric requires a periodic sentence that places the main clause at the very end after two subordinate clauses, and uses third‑person point of view. Which sentence meets the rubric?",
+    "choices": [
+     "The community rebuilt its homes because the storm had passed and the floodwaters receded.",
+     "Because the storm had passed, the community rebuilt its homes.",
+     "Because the storm had passed, since the floodwaters receded, I rebuilt my home.",
+     "Because the storm had passed, since the floodwaters receded, the community rebuilt its homes."
+    ],
+    "answerIndex": 3,
+    "explanation": "The third option opens with two subordinate clauses and places the main clause at the end in third person.",
+    "difficulty": 8,
+    "skill": "Rubric-based rhetorical sentence construction",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q37",
+    "prompt": "A rubric requires a single sentence that begins and ends with the same word.",
+    "choices": [
+     "Freedom is the breath of life, Freedom.",
+     "Hope fuels the journey, despair.",
+     "Courage guides the heart, bravery.",
+     "Wisdom lights the path, knowledge."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence opens with “Freedom” and closes with the identical word “Freedom.”",
+    "difficulty": 8,
+    "skill": "Epanalepsis",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q6",
+    "prompt": "A rubric requires a balanced sentence with two independent clauses joined by a semicolon, each clause containing a pair of parallel nouns. Which sentence meets the rubric?",
+    "choices": [
+     "Freedom demands courage; justice requires fairness.",
+     "Freedom demands courage and responsibility; justice requires fairness and integrity.",
+     "Freedom demands courage and responsibility, justice requires fairness and integrity.",
+     "Freedom demands courage and responsibility; justice requires fairness and integrity; peace requires hope and trust."
+    ],
+    "answerIndex": 1,
+    "explanation": "The third option uses a semicolon to join two independent clauses, each with a pair of parallel nouns.",
+    "difficulty": 8,
+    "skill": "Rubric-based rhetorical sentence construction",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q46",
+    "prompt": "One criterion calls for a rhetorical apostrophe that directly addresses an abstract entity in a second-person command and then gives the speaker's response. Which sentence satisfies it?",
+    "choices": [
+     "We will answer history with our actions, and history will hear us.",
+     "History, hear us; we will answer with our actions.",
+     "We remember, History, that we must answer with our actions.",
+     "The historians hear us, and we answer with our actions."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence directly addresses the abstract entity History with the second-person command hear, then gives the speaker's response, so it is an apostrophe.",
+    "difficulty": 8,
+    "skill": "Detecting rhetorical apostrophe",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q48",
+    "prompt": "The activity requires one sentence containing two onomatopoeic words, each directly imitating a sound. Which choice fulfills that requirement?",
+    "choices": [
+     "The rain darkened the window while the wind strained the shutters.",
+     "The child watched sunlight move across the floor until the lamps flickered on.",
+     "The kettle sent steam across the counter as the pastry cooled on a plate.",
+     "The buzzer buzzed, and the kettle clanged in the quiet kitchen."
+    ],
+    "answerIndex": 3,
+    "explanation": "The verbs buzzed and clanged imitate the sounds of a buzzer and a kettle, making the sentence an example of onomatopoeia.",
+    "difficulty": 7,
+    "skill": "Identifying onomatopoeia",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q24",
+    "prompt": "A rubric requires a single sentence that employs inverted OSV word order (object–subject–verb) for rhetorical emphasis, with no auxiliary verbs. Which sentence fulfills this pattern?",
+    "choices": [
+     "The prize was awarded by the judges.",
+     "Awarded the judges the prize.",
+     "The judges awarded the prize.",
+     "The prize the judges awarded."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence places the direct object “the prize” before the subject “the judges” and the verb “awarded,” creating an OSV inversion without auxiliaries.",
+    "difficulty": 8,
+    "skill": "Inverted syntax (OSV)",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q35",
+    "prompt": "A rubric requires a single sentence that uses aporia by posing a rhetorical question beginning with \"What if\" and ending with a question mark. Which sentence satisfies the rubric?",
+    "choices": [
+     "What happened yesterday?",
+     "What is the plan?",
+     "What if the plan fails?",
+     "What are you doing?"
+    ],
+    "answerIndex": 2,
+    "explanation": "Only the first option opens with \"What if\" and ends with a question mark, expressing doubt without seeking an answer.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check)"
+   },
+   {
+    "id": "q50",
+    "prompt": "A rubric requires a single sentence that uses chiasmus by reversing the grammatical structure of two parallel phrases without repeating the exact words. Which choice meets the rubric?",
+    "choices": [
+     "He loved the music and the music moved him.",
+     "She gave her life to art, and to science she devoted her mind.",
+     "They walked in silence and in silence they returned home.",
+     "We fought for peace and we won our peace."
+    ],
+    "answerIndex": 1,
+    "explanation": "The second option reverses the verb-object-prepositional phrase pattern into a prepositional phrase-verb-object pattern while using different words, fulfilling the requirement for chiasmus without exact repetition.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q42",
+    "prompt": "A rubric requires a single sentence that uses antimetabole: two clauses where the key words are repeated in reverse order. Which sentence meets the rubric?",
+    "choices": [
+     "You can take the boy out of the country, but the country cannot take the boy out of you.",
+     "You can take the boy out of the country, but you cannot take the country out of the boy.",
+     "Take the boy out of the country, and the country will take the boy out of you.",
+     "The boy leaves the country, and the country leaves the boy."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct sentence repeats the phrase \"take the boy out of the country\" in reverse order across the two clauses, satisfying the antimetabole pattern.",
+    "difficulty": 8,
+    "skill": "Antimetabole",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q40",
+    "prompt": "A rubric requires a single sentence that deliberately trails off, ending with an ellipsis to indicate an unfinished thought (aposiopesis).",
+    "choices": [
+     "More time would help us.",
+     "If only we had more time.",
+     "We wish we had more time.",
+     "If only we had more time..."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence ends with three periods, signaling an intentional pause and an incomplete idea.",
+    "difficulty": 8,
+    "skill": "Aposiopesis",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q2",
+    "prompt": "A rubric requires a periodic sentence with a fronted dependent modifier, one main clause at the end, and third-person point of view. Which choice satisfies all three conditions?",
+    "choices": [
+     "After months of difficult rehearsals, we finally took the stage and performed our new routine flawlessly.",
+     "After months of difficult rehearsals, the dancers finally took the stage and performed their new routine flawlessly.",
+     "The dancers finally took the stage, and months of difficult rehearsals had tested their resolve.",
+     "The dancers' confidence grew, their coach watched them closely, and the audience waited in suspense."
+    ],
+    "answerIndex": 1,
+    "explanation": "The fronted dependent modifier delays the single main clause, which appears at the end and uses third-person nouns.",
+    "difficulty": 9,
+    "skill": "Recognizing periodic sentences",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q32",
+    "prompt": "A rubric requires a sentence that uses metonymy by naming a closely associated place to stand for an institution or its leaders. Which sentence meets the rubric?",
+    "choices": [
+     "The residents of the White House announced a new policy on housing.",
+     "I visited the White House after the housing policy was announced.",
+     "The White House was painted white before it was opened to visitors.",
+     "The White House announced a new policy on housing."
+    ],
+    "answerIndex": 3,
+    "explanation": "White House stands for the president or the executive institution announcing the policy, which is an example of metonymy.",
+    "difficulty": 8,
+    "skill": "Identify metonymy",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q9",
+    "prompt": "A rubric requires three independent clauses of equal length joined only by semicolons, with no coordinating conjunction. Which choice meets every requirement?",
+    "choices": [
+     "We prepare; we practice; we perform.",
+     "After we prepare, we practice, and then we perform.",
+     "We prepare; we practice; and we perform.",
+     "We prepare: we practice; we perform."
+    ],
+    "answerIndex": 0,
+    "explanation": "This option uses three equal independent clauses joined only by semicolons and contains no coordinating conjunction.",
+    "difficulty": 8,
+    "skill": "Identifying parataxis",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q18",
+    "prompt": "A rubric requires a sentence that illustrates procatalepsis: it opens with a concessive clause acknowledging a counterargument and follows with a main clause that refutes it. Which choice fits the rubric?",
+    "choices": [
+     "Some claim the policy is costly, but the long‑term savings outweigh the expense.",
+     "Although some claim the policy is costly, the long‑term savings outweigh the expense.",
+     "Although the policy is costly, the long‑term savings outweigh the expense.",
+     "The policy is costly; however, the long‑term savings outweigh the expense."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option begins with a concessive \"Although\" clause that states the opposing view and follows with a main clause that directly refutes it.",
+    "difficulty": 8,
+    "skill": "Procatalepsis",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q1",
+    "prompt": "A rubric asks for a single sentence with an ABBA pattern in which corresponding elements reverse their grammatical roles. Which choice follows that pattern?",
+    "choices": [
+     "The teacher praised the student's effort, and the student praised the teacher's patience.",
+     "The teacher praised the student's effort, and the teacher praised the student's patience.",
+     "The teacher praised the student's effort, and the student later wrote a thank-you note.",
+     "With steady practice, the student improved, and with steady encouragement, the teacher inspired."
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence reverses the teacher-student relationship in corresponding positions, creating the required ABBA pattern.",
+    "difficulty": 8,
+    "skill": "Identifying chiasmus",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q5",
+    "prompt": "A rubric requires a cumulative sentence that begins with an independent clause and adds three modifying phrases, each beginning with a present participle. Which sentence meets the rubric?",
+    "choices": [
+     "The scientist published her findings, revealing new data, challenging old theories, and inspiring further research.",
+     "The scientist published her findings, revealing new data and challenging old theories.",
+     "The scientist published her findings, which revealed new data, challenged old theories, and inspired further research.",
+     "The scientist published her findings, to reveal new data, to challenge old theories, and to inspire further research."
+    ],
+    "answerIndex": 0,
+    "explanation": "The second option adds three present‑participle phrases after the main clause, matching the cumulative structure required.",
+    "difficulty": 8,
+    "skill": "Rubric-based rhetorical sentence construction",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q44",
+    "prompt": "A rubric requires a single sentence that uses gapping: two coordinated clauses where the verb is omitted in the second clause, leaving only its subject and object. Which sentence fulfills the rubric?",
+    "choices": [
+     "She loves chocolate; he does too.",
+     "She loves chocolate; he loves vanilla.",
+     "She loves chocolate, he vanilla.",
+     "She loves chocolate; he, vanilla."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence omits the verb \"loves\" in the second clause, leaving only \"he, vanilla,\" which is the defining feature of gapping.",
+    "difficulty": 8,
+    "skill": "Gapping",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q41",
+    "prompt": "A rubric asks for a sentence that demonstrates polyptoton by using the same root word in at least three different grammatical forms. Which choice meets the rubric?",
+    "choices": [
+     "The runner runs, and running builds stamina.",
+     "The painter paints, painting vividly.",
+     "The writer writes, writing daily.",
+     "The teacher teaches, teaching kindly."
+    ],
+    "answerIndex": 0,
+    "explanation": "Option A includes the noun 'runner', the verb 'runs', and the gerund 'running', providing three distinct forms of the same root.",
+    "difficulty": 8,
+    "skill": "Polyptoton",
+    "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q10",
+    "prompt": "A rubric requires one imperative sentence containing four coordinated verbs separated by commas, with no conjunction. Which choice meets the rubric?",
+    "choices": [
+     "Listen and question, compare, but decide.",
+     "Listen, question, compare, decide.",
+     "Listen, question, compare, and decide.",
+     "Listen; question; compare; decide."
+    ],
+    "answerIndex": 1,
+    "explanation": "This option presents four imperative verbs as an asyndetic list separated by commas without a conjunction.",
+    "difficulty": 7,
+    "skill": "Identifying asyndeton",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q7",
+    "prompt": "A rubric requires a sentence that uses epistrophe with three clauses ending in the phrase 'for justice', correctly punctuated with semicolons. Which sentence meets the rubric?",
+    "choices": [
+     "We fight for justice; we speak for justice.",
+     "We fight for justice; we speak for freedom; we stand for justice.",
+     "We fight for justice; we speak for justice; we stand for justice.",
+     "We fight for justice, we speak for justice, we stand for justice."
+    ],
+    "answerIndex": 2,
+    "explanation": "The fourth option contains three independent clauses each ending with 'for justice' and correctly separates them with semicolons.",
+    "difficulty": 8,
+    "skill": "Rubric-based rhetorical sentence construction",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q34",
+    "prompt": "A rubric requires a single sentence that uses ellipsis by omitting a repeated verb in a coordinated structure, leaving the verb understood. Which sentence follows the rubric?",
+    "choices": [
+     "She likes apples; he likes oranges.",
+     "She likes apples; he, oranges.",
+     "She likes apples, and he likes oranges.",
+     "She likes apples; he does too."
+    ],
+    "answerIndex": 1,
+    "explanation": "The second clause drops the verb \"likes,\" which is understood from the first clause, creating an elliptical construction.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check)"
+   },
+   {
+    "id": "q21",
+    "prompt": "A rubric calls for a sentence that uses epizeuxis, repeating the same word three times in immediate succession for emphasis. Which option matches the rubric?",
+    "choices": [
+     "Never, never, never give up.",
+     "Never give up, never give up, never give up.",
+     "Never give up; never give up; never give up.",
+     "Never give up, ever."
+    ],
+    "answerIndex": 0,
+    "explanation": "The word \"never\" is repeated three times consecutively, which is the hallmark of epizeuxis.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q20",
+    "prompt": "A rubric requires a single sentence that demonstrates diacope by repeating a key noun with only a few intervening words. Which sentence fulfills the rubric?",
+    "choices": [
+     "Enduring love is true love.",
+     "True love endures forever.",
+     "Love endures, true and deep.",
+     "Love, true love, endures."
+    ],
+    "answerIndex": 3,
+    "explanation": "The noun \"love\" appears twice with only \"true\" between them, creating the diacope figure.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q27",
+    "prompt": "A rubric calls for a single sentence that uses a counterfactual conditional: the if‑clause employs the past subjunctive “were” and the main clause uses the modal “would” + base verb. Which sentence satisfies this?",
+    "choices": [
+     "If she were here, she will help us.",
+     "If she was here, she would help us.",
+     "If she were here, she would help us.",
+     "If she is here, she would help us."
+    ],
+    "answerIndex": 2,
+    "explanation": "The if‑clause uses the past subjunctive “were” for a counterfactual condition, and the main clause uses “would help” as required.",
+    "difficulty": 8,
+    "skill": "Counterfactual conditional (subjunctive)",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q3",
+    "prompt": "A rubric requires antithesis in a concession that states a limitation first and says what can be done in the second clause. Which sentence fits the rubric?",
+    "choices": [
+     "Because no storm can be prevented, every journey can be prepared for.",
+     "Every journey can be prepared for, although no storm can be prevented.",
+     "Although no storm can be prevented, every journey can be prepared for.",
+     "No storm can be prevented, yet every journey deserves careful preparation."
+    ],
+    "answerIndex": 2,
+    "explanation": "The although-clause states the limitation first, and the main clause contrasts it with what can be accomplished.",
+    "difficulty": 8,
+    "skill": "Recognizing antithesis",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q12",
+    "prompt": "A rubric requires a single sentence in which one verb is used with two different meanings, creating a zeugma. Which choice meets the rubric?",
+    "choices": [
+     "She entered the competition and left the hospital.",
+     "She entered the competition and the race.",
+     "She competed in the competition and entered the hospital.",
+     "She entered the competition and the hospital."
+    ],
+    "answerIndex": 3,
+    "explanation": "Entered means participated in the competition but moved into the hospital, so the repeated verb carries two distinct senses.",
+    "difficulty": 9,
+    "skill": "Identifying zeugma",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q39",
+    "prompt": "A rubric requires a single sentence that begins with one syntactic structure and abruptly shifts to another, creating a deliberate syntactic break (anacoluthon).",
+    "choices": [
+     "I read the book yesterday.",
+     "The book was read by me yesterday.",
+     "The book, I read it yesterday.",
+     "Yesterday I read the book."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence starts with a noun phrase “The book,” then switches to an independent clause “I read it yesterday.”",
+    "difficulty": 8,
+    "skill": "Anacoluthon",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q47",
+    "prompt": "For a sentence demonstrating paronomasia, which option plays on two different words with the same sound in clearly different senses?",
+    "choices": [
+     "The crew inspected the deck and found that the crew was whole.",
+     "The whole crew inspected the deck carefully before the workers arrived.",
+     "The whole crew spotted the hole in the deck before the hole widened.",
+     "The hole in the deck was checked before the workers arrived."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence plays on the homophones whole and hole, using them in distinct senses to create paronomasia.",
+    "difficulty": 8,
+    "skill": "Recognizing paronomasia",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q17",
+    "prompt": "A rubric requires a sentence that uses asyndeton: three verbs appear in a series separated only by commas, with no coordinating conjunction. Which choice meets the rubric?",
+    "choices": [
+     "She ran, jumped, climbed.",
+     "She ran, jumped, and climbed.",
+     "She ran; jumped; climbed.",
+     "She ran, jumped."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option presents three verbs in a comma‑separated series without any conjunction, satisfying the asyndeton requirement.",
+    "difficulty": 8,
+    "skill": "Asyndeton",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q30",
+    "prompt": "A rubric requires a sentence that begins grandly and ends with an anticlimactic detail, creating bathos. Which sentence meets the rubric?",
+    "choices": [
+     "The volunteers carried banners for the championship parade.",
+     "The city prepared for the grand championship parade, which began with one tired volunteer carrying a banner.",
+     "After the championship parade, one volunteer carried the banner.",
+     "The city celebrated the championship with a parade, and the mayor spoke."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence starts with a grand public event and ends with the anticlimactic image of one tired volunteer, creating bathos.",
+    "difficulty": 8,
+    "skill": "Identify bathos",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q4",
+    "prompt": "A rubric requires a single sentence that uses anaphora with three independent clauses each beginning with 'We must', correctly punctuated. Which sentence meets the rubric?",
+    "choices": [
+     "We must protect the forest, we must preserve the rivers, we must defend the wildlife.",
+     "We must protect the forest, and we must preserve the rivers.",
+     "We must protect the forest; we must preserve the rivers; we must defend the wildlife; we must act now.",
+     "We must protect the forest; we must preserve the rivers; we must defend the wildlife."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first option contains three independent clauses each starting with 'We must' and correctly separates them with semicolons.",
+    "difficulty": 8,
+    "skill": "Rubric-based rhetorical sentence construction",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q29",
+    "prompt": "A rubric requires a sentence containing three consecutive words that begin with the same sound. Which sentence meets the rubric?",
+    "choices": [
+     "The silent stars streamed across the sky.",
+     "The calm child read a quiet story.",
+     "A large lion guarded the quiet barn.",
+     "The bright birds floated over the lake."
+    ],
+    "answerIndex": 0,
+    "explanation": "Silent, stars, and streamed share the /s/ sound and occur consecutively, satisfying the alliteration requirement.",
+    "difficulty": 7,
+    "skill": "Recognize alliteration",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q36",
+    "prompt": "A rubric requires a single sentence that uses the same root word in at least three different grammatical forms (e.g., noun, verb, adjective).",
+    "choices": [
+     "The writer writes stories daily.",
+     "The teacher taught the lesson clearly.",
+     "The artist paints a picture vividly.",
+     "The judge judged the judgment fairly."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence repeats the root “judge” as a noun (judge), a verb (judged), and a derived noun (judgment).",
+    "difficulty": 8,
+    "skill": "Polyptoton",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q23",
+    "prompt": "A rubric requires a single sentence that opens with a nominative absolute (a noun followed by a participial phrase) and then continues with a main clause in the indicative mood. Which sentence satisfies the rubric?",
+    "choices": [
+     "The storm passed, and the crew resumed their voyage.",
+     "Having passed the storm, the crew resumed their voyage.",
+     "The storm having passed, the crew resumed their voyage.",
+     "Because the storm had passed, the crew resumed their voyage."
+    ],
+    "answerIndex": 2,
+    "explanation": "The nominative absolute consists of a noun (“storm”) and a participle (“having passed”) standing grammatically independent of the main clause.",
+    "difficulty": 8,
+    "skill": "Nominative absolute construction",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q33",
+    "prompt": "A rubric requires a single sentence that uses pleonasm by pairing a perception verb with the exact phrase \"with my own eyes\". Which sentence matches the rubric?",
+    "choices": [
+     "I saw it with my own eyes.",
+     "She heard the news with her own ears.",
+     "He felt the texture with his own hands.",
+     "They tasted the soup with their own tongues."
+    ],
+    "answerIndex": 0,
+    "explanation": "Only the first sentence combines the perception verb \"saw\" with the precise redundant phrase \"with my own eyes\" as specified.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check)"
+   },
+   {
+    "id": "q38",
+    "prompt": "A rubric requires a single sentence that omits a repeated verb understood from context, using only a comma to mark the omission.",
+    "choices": [
+     "She loves coffee, and he loves tea.",
+     "She loves coffee, he tea.",
+     "She loves coffee; he loves tea.",
+     "She loves coffee, he loves tea."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence drops the verb “loves” after “he,” marking the ellipsis with a single comma.",
+    "difficulty": 8,
+    "skill": "Ellipsis",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q31",
+    "prompt": "A rubric requires a sentence in which the same word appears with two distinctly different meanings. Which sentence meets the rubric?",
+    "choices": [
+     "She locked the gate and locked the storage shed.",
+     "The team practiced the drill and practiced the speeches.",
+     "He opened the door and opened his mind.",
+     "The editor revised the draft and revised the plans."
+    ],
+    "answerIndex": 2,
+    "explanation": "Opened refers first to physically opening a door and then to opening a mind, so the repeated word has different meanings.",
+    "difficulty": 8,
+    "skill": "Identify antanaclasis",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q22",
+    "prompt": "A rubric asks for a single sentence containing an oxymoron, pairing contradictory terms for effect. Which choice meets the rubric?",
+    "choices": [
+     "Silent room was peaceful.",
+     "Deafening silence filled the room.",
+     "The room was filled with soft sound.",
+     "A hush settled over the room."
+    ],
+    "answerIndex": 1,
+    "explanation": "The phrase \"deafening silence\" combines opposite descriptors, forming an oxymoron.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q11",
+    "prompt": "A rubric requires three adjectives in increasing order of intensity, all modifying the same noun, followed by a colon and a final emphatic statement. Which choice meets the rubric?",
+    "choices": [
+     "The response was fearless, determined, hesitant: we chose to act.",
+     "The response was hesitant, determined, fearless; we chose to act.",
+     "The response was hesitant, determined, fearless: we chose to act.",
+     "The response was hesitant, determined, fearless, and calm: we chose to act."
+    ],
+    "answerIndex": 2,
+    "explanation": "The adjectives move from hesitant to determined to fearless, and the colon introduces a final emphatic statement.",
+    "difficulty": 8,
+    "skill": "Creating rhetorical climax",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q13",
+    "prompt": "A rubric requires litotes in the form not plus the opposite of a positive adjective, so the sentence affirms the positive quality indirectly. Which choice matches that exact form?",
+    "choices": [
+     "The achievement was not insignificant.",
+     "The achievement was very significant.",
+     "The achievement was not important.",
+     "The achievement was hardly significant."
+    ],
+    "answerIndex": 0,
+    "explanation": "By negating insignificant, the sentence indirectly affirms that the achievement was significant, producing the understatement called litotes.",
+    "difficulty": 9,
+    "skill": "Identifying litotes",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q25",
+    "prompt": "A rubric asks for a sentence that inserts an explanatory parenthetical clause between em‑dashes, preserving the flow of the main clause. Which option does this correctly?",
+    "choices": [
+     "The conference—originally scheduled for June—was postponed until September.",
+     "The conference—originally scheduled for June, was postponed until September.",
+     "The conference, originally scheduled for June—was postponed until September.",
+     "The conference—originally scheduled for June—was postponed, until September."
+    ],
+    "answerIndex": 0,
+    "explanation": "The explanatory clause “originally scheduled for June” is set off by a pair of em‑dashes, leaving the main clause grammatically intact.",
+    "difficulty": 8,
+    "skill": "Parenthetical dash insertion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q16",
+    "prompt": "A rubric requires a sentence that employs polysyndeton: three nouns are joined by the repeated conjunction \"and\" with no commas. Which choice fulfills the requirement?",
+    "choices": [
+     "We need courage or wisdom and patience.",
+     "We need courage, wisdom, and patience.",
+     "We need courage and wisdom, patience.",
+     "We need courage and wisdom and patience."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option links three nouns using the conjunction \"and\" repeatedly and omits commas, matching the polysyndeton pattern.",
+    "difficulty": 8,
+    "skill": "Polysyndeton",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q45",
+    "prompt": "When checking a short rubric, which sentence uses an it-cleft that focuses an object by placing it after It was and completing the sentence with a that-clause?",
+    "choices": [
+     "It was the championship that the team finally won.",
+     "The championship was finally won by the team.",
+     "It was when the team finally won that they received the championship.",
+     "The team finally won the championship yesterday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The construction It was the championship that the team finally won is an it-cleft that focuses the object the championship and uses a that-clause.",
+    "difficulty": 8,
+    "skill": "Identifying an it-cleft under a rubric",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q26",
+    "prompt": "A rubric requires a single sentence in which three prepositional phrases modify the verb in asyndeton (no conjunctions, only commas). Which sentence meets the rubric?",
+    "choices": [
+     "She arrived in the morning, by train, and with a smile.",
+     "She arrived, in the morning, by train, with a smile.",
+     "She arrived in the morning by train with a smile.",
+     "She arrived, in the morning, by train and with a smile."
+    ],
+    "answerIndex": 1,
+    "explanation": "Three prepositional phrases (“in the morning”, “by train”, “with a smile”) are linked solely by commas, satisfying asyndeton.",
+    "difficulty": 8,
+    "skill": "Asyndeton with prepositional phrases",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q14",
+    "prompt": "A rubric requires a single sentence that uses hypophora: it poses a question and immediately answers it within the same sentence, using a dash to join the two parts. Which choice meets the rubric?",
+    "choices": [
+     "Why do we study history? It teaches us to avoid past mistakes.",
+     "Why do we study history— it teaches us to avoid past mistakes.",
+     "Why do we study history, it teaches us to avoid past mistakes.",
+     "Why do we study history; it teaches us to avoid past mistakes."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option poses a question and answers it in the same sentence, linking the parts with a dash as required.",
+    "difficulty": 8,
+    "skill": "Hypophora",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q28",
+    "prompt": "A rubric requires a sentence that uses verbal irony by saying the opposite of what the writer means. Which sentence meets the rubric?",
+    "choices": [
+     "The printer worked perfectly all afternoon.",
+     "The printer jammed right after I saved the final draft.",
+     "I enjoy replacing ink cartridges in small offices.",
+     "Great, another delay, just what I needed before the deadline."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence says that another delay is exactly what the writer needed, although the delay clearly creates a problem, so the praise is ironic.",
+    "difficulty": 7,
+    "skill": "Identify verbal irony",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q49",
+    "prompt": "A proposed sentence must state an apparent contradiction that nevertheless reveals a deeper truth about writing or reading. Which option qualifies as a paradox?",
+    "choices": [
+     "Less may be more when careful editing makes every word count.",
+     "The essay was both too short and too long, and no reason was given.",
+     "The map marked the broad river narrow, although every measurement disagreed.",
+     "Careful editing removes unnecessary words because brevity improves clarity."
+    ],
+    "answerIndex": 0,
+    "explanation": "Less may be more appears contradictory, but its claim about careful editing reveals the deeper truth that concision can strengthen a sentence.",
+    "difficulty": 8,
+    "skill": "Distinguishing paradox from contradiction",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q19",
+    "prompt": "A rubric asks for a sentence that uses symploce, repeating the same opening word and the same closing word across three parallel clauses separated by semicolons. Which choice meets the requirement?",
+    "choices": [
+     "Together we rise; together we strive; together we succeed.",
+     "We rise together, we strive together, we succeed together.",
+     "We rise together; we strive together; we succeed together.",
+     "We rise, we strive, and we succeed together."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence begins each clause with \"We\" and ends each clause with \"together,\" fulfilling the symploce pattern.",
+    "difficulty": 8,
+    "skill": "Rhetorical Grammar",
+    "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar"
+   },
+   {
+    "id": "q43",
+    "prompt": "A rubric requires a single sentence that presents three parallel phrases in increasing order of intensity (climax), separated by commas. Which sentence fulfills the rubric?",
+    "choices": [
+     "Good, better, best was the proposal.",
+     "The proposal was good, better, and excellent.",
+     "The proposal was good, better, best.",
+     "The proposal was good, better, and it was best."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence lists three parallel adjectives — good, better, best — in strict ascending intensity, meeting the climax requirement.",
+    "difficulty": 8,
+    "skill": "Climax (Gradatio)",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q15",
+    "prompt": "A rubric requires a sentence that demonstrates anadiplosis across three clauses: the last word of each clause repeats as the first word of the next clause, with clauses separated by commas. Which choice satisfies the rubric?",
+    "choices": [
+     "We strive for excellence, drives innovation, innovation shapes the future.",
+     "We strive for excellence, excellence drives innovation and innovation shapes the future.",
+     "We strive for excellence, excellence drives innovation, innovation shapes the future.",
+     "We strive for excellence; excellence drives innovation; innovation shapes the future."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option chains three clauses by repeating the final word of each clause as the opening word of the next, using commas as separators.",
+    "difficulty": 8,
+    "skill": "Anadiplosis",
+    "topic": "Rhetorical Grammar"
+   }
+  ],
+  "feedback": {
+   "correct": "Good eye — that choice serves the sentence's purpose.",
+   "incorrect": "Not this time — reread the purpose the structure is meant to serve.",
+   "win": "Strong finish — you understand how grammar choices persuade.",
+   "lose": "The rally got away. Study which grammatical choices carry persuasive weight, then try again.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "A rubric asks for a single sentence with an ABBA pattern in which corresponding elements reverse their grammatical roles. Which choice follows that pattern?",
+   "choices": [
+    "The teacher praised the student's effort, and the teacher praised the student's patience.",
+    "The teacher praised the student's effort, and the student praised the teacher's patience.",
+    "The teacher praised the student's effort, and the student later wrote a thank-you note.",
+    "With steady practice, the student improved, and with steady encouragement, the teacher inspired."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence reverses the teacher-student relationship in corresponding positions, creating the required ABBA pattern.",
+   "difficulty": 8,
+   "skill": "Identifying chiasmus",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a periodic sentence with a fronted dependent modifier, one main clause at the end, and third-person point of view. Which choice satisfies all three conditions?",
+   "choices": [
+    "After months of difficult rehearsals, the dancers finally took the stage and performed their new routine flawlessly.",
+    "After months of difficult rehearsals, we finally took the stage and performed our new routine flawlessly.",
+    "The dancers finally took the stage, and months of difficult rehearsals had tested their resolve.",
+    "The dancers' confidence grew, their coach watched them closely, and the audience waited in suspense."
+   ],
+   "answerIndex": 0,
+   "explanation": "The fronted dependent modifier delays the single main clause, which appears at the end and uses third-person nouns.",
+   "difficulty": 9,
+   "skill": "Recognizing periodic sentences",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires antithesis in a concession that states a limitation first and says what can be done in the second clause. Which sentence fits the rubric?",
+   "choices": [
+    "Because no storm can be prevented, every journey can be prepared for.",
+    "Every journey can be prepared for, although no storm can be prevented.",
+    "Although no storm can be prevented, every journey can be prepared for.",
+    "No storm can be prevented, yet every journey deserves careful preparation."
+   ],
+   "answerIndex": 2,
+   "explanation": "The although-clause states the limitation first, and the main clause contrasts it with what can be accomplished.",
+   "difficulty": 8,
+   "skill": "Recognizing antithesis",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses anaphora with three independent clauses each beginning with 'We must', correctly punctuated. Which sentence meets the rubric?",
+   "choices": [
+    "We must protect the forest; we must preserve the rivers; we must defend the wildlife.",
+    "We must protect the forest, and we must preserve the rivers.",
+    "We must protect the forest; we must preserve the rivers; we must defend the wildlife; we must act now.",
+    "We must protect the forest, we must preserve the rivers, we must defend the wildlife."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option contains three independent clauses each starting with 'We must' and correctly separates them with semicolons.",
+   "difficulty": 8,
+   "skill": "Rubric-based rhetorical sentence construction",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a cumulative sentence that begins with an independent clause and adds three modifying phrases, each beginning with a present participle. Which sentence meets the rubric?",
+   "choices": [
+    "The scientist published her findings, revealing new data and challenging old theories.",
+    "The scientist published her findings, revealing new data, challenging old theories, and inspiring further research.",
+    "The scientist published her findings, which revealed new data, challenged old theories, and inspired further research.",
+    "The scientist published her findings, to reveal new data, to challenge old theories, and to inspire further research."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second option adds three present‑participle phrases after the main clause, matching the cumulative structure required.",
+   "difficulty": 8,
+   "skill": "Rubric-based rhetorical sentence construction",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a balanced sentence with two independent clauses joined by a semicolon, each clause containing a pair of parallel nouns. Which sentence meets the rubric?",
+   "choices": [
+    "Freedom demands courage; justice requires fairness.",
+    "Freedom demands courage and responsibility, justice requires fairness and integrity.",
+    "Freedom demands courage and responsibility; justice requires fairness and integrity.",
+    "Freedom demands courage and responsibility; justice requires fairness and integrity; peace requires hope and trust."
+   ],
+   "answerIndex": 2,
+   "explanation": "The third option uses a semicolon to join two independent clauses, each with a pair of parallel nouns.",
+   "difficulty": 8,
+   "skill": "Rubric-based rhetorical sentence construction",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that uses epistrophe with three clauses ending in the phrase 'for justice', correctly punctuated with semicolons. Which sentence meets the rubric?",
+   "choices": [
+    "We fight for justice; we speak for justice.",
+    "We fight for justice; we speak for freedom; we stand for justice.",
+    "We fight for justice, we speak for justice, we stand for justice.",
+    "We fight for justice; we speak for justice; we stand for justice."
+   ],
+   "answerIndex": 3,
+   "explanation": "The fourth option contains three independent clauses each ending with 'for justice' and correctly separates them with semicolons.",
+   "difficulty": 8,
+   "skill": "Rubric-based rhetorical sentence construction",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a periodic sentence that places the main clause at the very end after two subordinate clauses, and uses third‑person point of view. Which sentence meets the rubric?",
+   "choices": [
+    "The community rebuilt its homes because the storm had passed and the floodwaters receded.",
+    "Because the storm had passed, the community rebuilt its homes.",
+    "Because the storm had passed, since the floodwaters receded, the community rebuilt its homes.",
+    "Because the storm had passed, since the floodwaters receded, I rebuilt my home."
+   ],
+   "answerIndex": 2,
+   "explanation": "The third option opens with two subordinate clauses and places the main clause at the end in third person.",
+   "difficulty": 8,
+   "skill": "Rubric-based rhetorical sentence construction",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires three independent clauses of equal length joined only by semicolons, with no coordinating conjunction. Which choice meets every requirement?",
+   "choices": [
+    "We prepare; we practice; we perform.",
+    "After we prepare, we practice, and then we perform.",
+    "We prepare; we practice; and we perform.",
+    "We prepare: we practice; we perform."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option uses three equal independent clauses joined only by semicolons and contains no coordinating conjunction.",
+   "difficulty": 8,
+   "skill": "Identifying parataxis",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires one imperative sentence containing four coordinated verbs separated by commas, with no conjunction. Which choice meets the rubric?",
+   "choices": [
+    "Listen and question, compare, but decide.",
+    "Listen, question, compare, and decide.",
+    "Listen, question, compare, decide.",
+    "Listen; question; compare; decide."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option presents four imperative verbs as an asyndetic list separated by commas without a conjunction.",
+   "difficulty": 7,
+   "skill": "Identifying asyndeton",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires three adjectives in increasing order of intensity, all modifying the same noun, followed by a colon and a final emphatic statement. Which choice meets the rubric?",
+   "choices": [
+    "The response was fearless, determined, hesitant: we chose to act.",
+    "The response was hesitant, determined, fearless; we chose to act.",
+    "The response was hesitant, determined, fearless, and calm: we chose to act.",
+    "The response was hesitant, determined, fearless: we chose to act."
+   ],
+   "answerIndex": 3,
+   "explanation": "The adjectives move from hesitant to determined to fearless, and the colon introduces a final emphatic statement.",
+   "difficulty": 8,
+   "skill": "Creating rhetorical climax",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence in which one verb is used with two different meanings, creating a zeugma. Which choice meets the rubric?",
+   "choices": [
+    "She entered the competition and left the hospital.",
+    "She entered the competition and the race.",
+    "She competed in the competition and entered the hospital.",
+    "She entered the competition and the hospital."
+   ],
+   "answerIndex": 3,
+   "explanation": "Entered means participated in the competition but moved into the hospital, so the repeated verb carries two distinct senses.",
+   "difficulty": 9,
+   "skill": "Identifying zeugma",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires litotes in the form not plus the opposite of a positive adjective, so the sentence affirms the positive quality indirectly. Which choice matches that exact form?",
+   "choices": [
+    "The achievement was not insignificant.",
+    "The achievement was very significant.",
+    "The achievement was not important.",
+    "The achievement was hardly significant."
+   ],
+   "answerIndex": 0,
+   "explanation": "By negating insignificant, the sentence indirectly affirms that the achievement was significant, producing the understatement called litotes.",
+   "difficulty": 9,
+   "skill": "Identifying litotes",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses hypophora: it poses a question and immediately answers it within the same sentence, using a dash to join the two parts. Which choice meets the rubric?",
+   "choices": [
+    "Why do we study history— it teaches us to avoid past mistakes.",
+    "Why do we study history? It teaches us to avoid past mistakes.",
+    "Why do we study history, it teaches us to avoid past mistakes.",
+    "Why do we study history; it teaches us to avoid past mistakes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option poses a question and answers it in the same sentence, linking the parts with a dash as required.",
+   "difficulty": 8,
+   "skill": "Hypophora",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that demonstrates anadiplosis across three clauses: the last word of each clause repeats as the first word of the next clause, with clauses separated by commas. Which choice satisfies the rubric?",
+   "choices": [
+    "We strive for excellence, excellence drives innovation, innovation shapes the future.",
+    "We strive for excellence, excellence drives innovation and innovation shapes the future.",
+    "We strive for excellence, drives innovation, innovation shapes the future.",
+    "We strive for excellence; excellence drives innovation; innovation shapes the future."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option chains three clauses by repeating the final word of each clause as the opening word of the next, using commas as separators.",
+   "difficulty": 8,
+   "skill": "Anadiplosis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that employs polysyndeton: three nouns are joined by the repeated conjunction \"and\" with no commas. Which choice fulfills the requirement?",
+   "choices": [
+    "We need courage and wisdom and patience.",
+    "We need courage, wisdom, and patience.",
+    "We need courage and wisdom, patience.",
+    "We need courage or wisdom and patience."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option links three nouns using the conjunction \"and\" repeatedly and omits commas, matching the polysyndeton pattern.",
+   "difficulty": 8,
+   "skill": "Polysyndeton",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that uses asyndeton: three verbs appear in a series separated only by commas, with no coordinating conjunction. Which choice meets the rubric?",
+   "choices": [
+    "She ran, jumped, climbed.",
+    "She ran, jumped, and climbed.",
+    "She ran; jumped; climbed.",
+    "She ran, jumped."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option presents three verbs in a comma‑separated series without any conjunction, satisfying the asyndeton requirement.",
+   "difficulty": 8,
+   "skill": "Asyndeton",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that illustrates procatalepsis: it opens with a concessive clause acknowledging a counterargument and follows with a main clause that refutes it. Which choice fits the rubric?",
+   "choices": [
+    "Although some claim the policy is costly, the long‑term savings outweigh the expense.",
+    "Some claim the policy is costly, but the long‑term savings outweigh the expense.",
+    "Although the policy is costly, the long‑term savings outweigh the expense.",
+    "The policy is costly; however, the long‑term savings outweigh the expense."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option begins with a concessive \"Although\" clause that states the opposing view and follows with a main clause that directly refutes it.",
+   "difficulty": 8,
+   "skill": "Procatalepsis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric asks for a sentence that uses symploce, repeating the same opening word and the same closing word across three parallel clauses separated by semicolons. Which choice meets the requirement?",
+   "choices": [
+    "We rise together; we strive together; we succeed together.",
+    "We rise together, we strive together, we succeed together.",
+    "Together we rise; together we strive; together we succeed.",
+    "We rise, we strive, and we succeed together."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence begins each clause with \"We\" and ends each clause with \"together,\" fulfilling the symploce pattern.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that demonstrates diacope by repeating a key noun with only a few intervening words. Which sentence fulfills the rubric?",
+   "choices": [
+    "Love, true love, endures.",
+    "True love endures forever.",
+    "Love endures, true and deep.",
+    "Enduring love is true love."
+   ],
+   "answerIndex": 0,
+   "explanation": "The noun \"love\" appears twice with only \"true\" between them, creating the diacope figure.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric calls for a sentence that uses epizeuxis, repeating the same word three times in immediate succession for emphasis. Which option matches the rubric?",
+   "choices": [
+    "Never, never, never give up.",
+    "Never give up, never give up, never give up.",
+    "Never give up; never give up; never give up.",
+    "Never give up, ever."
+   ],
+   "answerIndex": 0,
+   "explanation": "The word \"never\" is repeated three times consecutively, which is the hallmark of epizeuxis.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric asks for a single sentence containing an oxymoron, pairing contradictory terms for effect. Which choice meets the rubric?",
+   "choices": [
+    "Deafening silence filled the room.",
+    "Silent room was peaceful.",
+    "The room was filled with soft sound.",
+    "A hush settled over the room."
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase \"deafening silence\" combines opposite descriptors, forming an oxymoron.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that opens with a nominative absolute (a noun followed by a participial phrase) and then continues with a main clause in the indicative mood. Which sentence satisfies the rubric?",
+   "choices": [
+    "The storm having passed, the crew resumed their voyage.",
+    "Having passed the storm, the crew resumed their voyage.",
+    "The storm passed, and the crew resumed their voyage.",
+    "Because the storm had passed, the crew resumed their voyage."
+   ],
+   "answerIndex": 0,
+   "explanation": "The nominative absolute consists of a noun (“storm”) and a participle (“having passed”) standing grammatically independent of the main clause.",
+   "difficulty": 8,
+   "skill": "Nominative absolute construction",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that employs inverted OSV word order (object–subject–verb) for rhetorical emphasis, with no auxiliary verbs. Which sentence fulfills this pattern?",
+   "choices": [
+    "The prize the judges awarded.",
+    "Awarded the judges the prize.",
+    "The judges awarded the prize.",
+    "The prize was awarded by the judges."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence places the direct object “the prize” before the subject “the judges” and the verb “awarded,” creating an OSV inversion without auxiliaries.",
+   "difficulty": 8,
+   "skill": "Inverted syntax (OSV)",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric asks for a sentence that inserts an explanatory parenthetical clause between em‑dashes, preserving the flow of the main clause. Which option does this correctly?",
+   "choices": [
+    "The conference—originally scheduled for June—was postponed until September.",
+    "The conference—originally scheduled for June, was postponed until September.",
+    "The conference, originally scheduled for June—was postponed until September.",
+    "The conference—originally scheduled for June—was postponed, until September."
+   ],
+   "answerIndex": 0,
+   "explanation": "The explanatory clause “originally scheduled for June” is set off by a pair of em‑dashes, leaving the main clause grammatically intact.",
+   "difficulty": 8,
+   "skill": "Parenthetical dash insertion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence in which three prepositional phrases modify the verb in asyndeton (no conjunctions, only commas). Which sentence meets the rubric?",
+   "choices": [
+    "She arrived, in the morning, by train, with a smile.",
+    "She arrived in the morning, by train, and with a smile.",
+    "She arrived in the morning by train with a smile.",
+    "She arrived, in the morning, by train and with a smile."
+   ],
+   "answerIndex": 0,
+   "explanation": "Three prepositional phrases (“in the morning”, “by train”, “with a smile”) are linked solely by commas, satisfying asyndeton.",
+   "difficulty": 8,
+   "skill": "Asyndeton with prepositional phrases",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric calls for a single sentence that uses a counterfactual conditional: the if‑clause employs the past subjunctive “were” and the main clause uses the modal “would” + base verb. Which sentence satisfies this?",
+   "choices": [
+    "If she were here, she would help us.",
+    "If she was here, she would help us.",
+    "If she were here, she will help us.",
+    "If she is here, she would help us."
+   ],
+   "answerIndex": 0,
+   "explanation": "The if‑clause uses the past subjunctive “were” for a counterfactual condition, and the main clause uses “would help” as required.",
+   "difficulty": 8,
+   "skill": "Counterfactual conditional (subjunctive)",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that uses verbal irony by saying the opposite of what the writer means. Which sentence meets the rubric?",
+   "choices": [
+    "The printer worked perfectly all afternoon.",
+    "The printer jammed right after I saved the final draft.",
+    "Great, another delay, just what I needed before the deadline.",
+    "I enjoy replacing ink cartridges in small offices."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence says that another delay is exactly what the writer needed, although the delay clearly creates a problem, so the praise is ironic.",
+   "difficulty": 7,
+   "skill": "Identify verbal irony",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence containing three consecutive words that begin with the same sound. Which sentence meets the rubric?",
+   "choices": [
+    "The bright birds floated over the lake.",
+    "The calm child read a quiet story.",
+    "A large lion guarded the quiet barn.",
+    "The silent stars streamed across the sky."
+   ],
+   "answerIndex": 3,
+   "explanation": "Silent, stars, and streamed share the /s/ sound and occur consecutively, satisfying the alliteration requirement.",
+   "difficulty": 7,
+   "skill": "Recognize alliteration",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that begins grandly and ends with an anticlimactic detail, creating bathos. Which sentence meets the rubric?",
+   "choices": [
+    "The volunteers carried banners for the championship parade.",
+    "The city celebrated the championship with a parade, and the mayor spoke.",
+    "After the championship parade, one volunteer carried the banner.",
+    "The city prepared for the grand championship parade, which began with one tired volunteer carrying a banner."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence starts with a grand public event and ends with the anticlimactic image of one tired volunteer, creating bathos.",
+   "difficulty": 8,
+   "skill": "Identify bathos",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence in which the same word appears with two distinctly different meanings. Which sentence meets the rubric?",
+   "choices": [
+    "She locked the gate and locked the storage shed.",
+    "He opened the door and opened his mind.",
+    "The team practiced the drill and practiced the speeches.",
+    "The editor revised the draft and revised the plans."
+   ],
+   "answerIndex": 1,
+   "explanation": "Opened refers first to physically opening a door and then to opening a mind, so the repeated word has different meanings.",
+   "difficulty": 8,
+   "skill": "Identify antanaclasis",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a sentence that uses metonymy by naming a closely associated place to stand for an institution or its leaders. Which sentence meets the rubric?",
+   "choices": [
+    "The residents of the White House announced a new policy on housing.",
+    "I visited the White House after the housing policy was announced.",
+    "The White House was painted white before it was opened to visitors.",
+    "The White House announced a new policy on housing."
+   ],
+   "answerIndex": 3,
+   "explanation": "White House stands for the president or the executive institution announcing the policy, which is an example of metonymy.",
+   "difficulty": 8,
+   "skill": "Identify metonymy",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses pleonasm by pairing a perception verb with the exact phrase \"with my own eyes\". Which sentence matches the rubric?",
+   "choices": [
+    "I saw it with my own eyes.",
+    "She heard the news with her own ears.",
+    "He felt the texture with his own hands.",
+    "They tasted the soup with their own tongues."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only the first sentence combines the perception verb \"saw\" with the precise redundant phrase \"with my own eyes\" as specified.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses ellipsis by omitting a repeated verb in a coordinated structure, leaving the verb understood. Which sentence follows the rubric?",
+   "choices": [
+    "She likes apples; he likes oranges.",
+    "She likes apples; he, oranges.",
+    "She likes apples, and he likes oranges.",
+    "She likes apples; he does too."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second clause drops the verb \"likes,\" which is understood from the first clause, creating an elliptical construction.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses aporia by posing a rhetorical question beginning with \"What if\" and ending with a question mark. Which sentence satisfies the rubric?",
+   "choices": [
+    "What if the plan fails?",
+    "What is the plan?",
+    "What happened yesterday?",
+    "What are you doing?"
+   ],
+   "answerIndex": 0,
+   "explanation": "Only the first option opens with \"What if\" and ends with a question mark, expressing doubt without seeking an answer.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Write Your Own (Rubric Check)",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses the same root word in at least three different grammatical forms (e.g., noun, verb, adjective).",
+   "choices": [
+    "The judge judged the judgment fairly.",
+    "The teacher taught the lesson clearly.",
+    "The artist paints a picture vividly.",
+    "The writer writes stories daily."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence repeats the root “judge” as a noun (judge), a verb (judged), and a derived noun (judgment).",
+   "difficulty": 8,
+   "skill": "Polyptoton",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that begins and ends with the same word.",
+   "choices": [
+    "Freedom is the breath of life, Freedom.",
+    "Hope fuels the journey, despair.",
+    "Courage guides the heart, bravery.",
+    "Wisdom lights the path, knowledge."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence opens with “Freedom” and closes with the identical word “Freedom.”",
+   "difficulty": 8,
+   "skill": "Epanalepsis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that omits a repeated verb understood from context, using only a comma to mark the omission.",
+   "choices": [
+    "She loves coffee, he tea.",
+    "She loves coffee, and he loves tea.",
+    "She loves coffee; he loves tea.",
+    "She loves coffee, he loves tea."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence drops the verb “loves” after “he,” marking the ellipsis with a single comma.",
+   "difficulty": 8,
+   "skill": "Ellipsis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that begins with one syntactic structure and abruptly shifts to another, creating a deliberate syntactic break (anacoluthon).",
+   "choices": [
+    "The book, I read it yesterday.",
+    "The book was read by me yesterday.",
+    "I read the book yesterday.",
+    "Yesterday I read the book."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence starts with a noun phrase “The book,” then switches to an independent clause “I read it yesterday.”",
+   "difficulty": 8,
+   "skill": "Anacoluthon",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": [
+     {
+      "claim": "Anacoluthon is a syntactic break in which a sentence begins with one structure and shifts to another.",
+      "url": "https://en.wikipedia.org/wiki/Anacoluthon",
+      "quote": "Anacolutha are often sentences interrupted midway, where there is a change in the syntactical structure of the sentence and of intended meaning following the interruption.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that deliberately trails off, ending with an ellipsis to indicate an unfinished thought (aposiopesis).",
+   "choices": [
+    "If only we had more time...",
+    "If only we had more time.",
+    "We wish we had more time.",
+    "More time would help us."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence ends with three periods, signaling an intentional pause and an incomplete idea.",
+   "difficulty": 8,
+   "skill": "Aposiopesis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric asks for a sentence that demonstrates polyptoton by using the same root word in at least three different grammatical forms. Which choice meets the rubric?",
+   "choices": [
+    "The runner runs, and running builds stamina.",
+    "The painter paints, painting vividly.",
+    "The writer writes, writing daily.",
+    "The teacher teaches, teaching kindly."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A includes the noun 'runner', the verb 'runs', and the gerund 'running', providing three distinct forms of the same root.",
+   "difficulty": 8,
+   "skill": "Polyptoton",
+   "topic": "Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses antimetabole: two clauses where the key words are repeated in reverse order. Which sentence meets the rubric?",
+   "choices": [
+    "You can take the boy out of the country, but you cannot take the country out of the boy.",
+    "You can take the boy out of the country, but the country cannot take the boy out of you.",
+    "Take the boy out of the country, and the country will take the boy out of you.",
+    "The boy leaves the country, and the country leaves the boy."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence repeats the phrase \"take the boy out of the country\" in reverse order across the two clauses, satisfying the antimetabole pattern.",
+   "difficulty": 8,
+   "skill": "Antimetabole",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that presents three parallel phrases in increasing order of intensity (climax), separated by commas. Which sentence fulfills the rubric?",
+   "choices": [
+    "The proposal was good, better, best.",
+    "The proposal was good, better, and excellent.",
+    "Good, better, best was the proposal.",
+    "The proposal was good, better, and it was best."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence lists three parallel adjectives — good, better, best — in strict ascending intensity, meeting the climax requirement.",
+   "difficulty": 8,
+   "skill": "Climax (Gradatio)",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": [
+     {
+      "claim": "The sequence “good, better, best” conventionally marks increasing intensity.",
+      "url": "https://en.wikipedia.org/wiki/Climax_(rhetoric)",
+      "quote": "\"X is good, Y is better, Z is best\" is a standard format.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses gapping: two coordinated clauses where the verb is omitted in the second clause, leaving only its subject and object. Which sentence fulfills the rubric?",
+   "choices": [
+    "She loves chocolate; he, vanilla.",
+    "She loves chocolate; he loves vanilla.",
+    "She loves chocolate, he vanilla.",
+    "She loves chocolate; he does too."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence omits the verb \"loves\" in the second clause, leaving only \"he, vanilla,\" which is the defining feature of gapping.",
+   "difficulty": 8,
+   "skill": "Gapping",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "When checking a short rubric, which sentence uses an it-cleft that focuses an object by placing it after It was and completing the sentence with a that-clause?",
+   "choices": [
+    "The championship was finally won by the team.",
+    "It was the championship that the team finally won.",
+    "It was when the team finally won that they received the championship.",
+    "The team finally won the championship yesterday."
+   ],
+   "answerIndex": 1,
+   "explanation": "The construction It was the championship that the team finally won is an it-cleft that focuses the object the championship and uses a that-clause.",
+   "difficulty": 8,
+   "skill": "Identifying an it-cleft under a rubric",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "One criterion calls for a rhetorical apostrophe that directly addresses an abstract entity in a second-person command and then gives the speaker's response. Which sentence satisfies it?",
+   "choices": [
+    "We will answer history with our actions, and history will hear us.",
+    "We remember, History, that we must answer with our actions.",
+    "History, hear us; we will answer with our actions.",
+    "The historians hear us, and we answer with our actions."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence directly addresses the abstract entity History with the second-person command hear, then gives the speaker's response, so it is an apostrophe.",
+   "difficulty": 8,
+   "skill": "Detecting rhetorical apostrophe",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "For a sentence demonstrating paronomasia, which option plays on two different words with the same sound in clearly different senses?",
+   "choices": [
+    "The whole crew spotted the hole in the deck before the hole widened.",
+    "The whole crew inspected the deck carefully before the workers arrived.",
+    "The crew inspected the deck and found that the crew was whole.",
+    "The hole in the deck was checked before the workers arrived."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence plays on the homophones whole and hole, using them in distinct senses to create paronomasia.",
+   "difficulty": 8,
+   "skill": "Recognizing paronomasia",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Paronomasia is a pun playing on words that sound alike but differ in meaning (e.g., 'whole' and 'hole').",
+      "url": "https://en.wiktionary.org/wiki/paronomasia",
+      "quote": "A figure of speech ; pun or play on words which sound alike but have different meanings, paronomasia .",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "The activity requires one sentence containing two onomatopoeic words, each directly imitating a sound. Which choice fulfills that requirement?",
+   "choices": [
+    "The rain darkened the window while the wind strained the shutters.",
+    "The buzzer buzzed, and the kettle clanged in the quiet kitchen.",
+    "The kettle sent steam across the counter as the pastry cooled on a plate.",
+    "The child watched sunlight move across the floor until the lamps flickered on."
+   ],
+   "answerIndex": 1,
+   "explanation": "The verbs buzzed and clanged imitate the sounds of a buzzer and a kettle, making the sentence an example of onomatopoeia.",
+   "difficulty": 7,
+   "skill": "Identifying onomatopoeia",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Onomatopoeia refers to words that imitate natural sounds, such as 'buzz' and 'clang'.",
+      "url": "https://en.wikipedia.org/wiki/Onomatopoeia",
+      "quote": "Words that imitate sounds can thus be said to be onomatopoeic, onomatopoetic, imitative, or echoic.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A proposed sentence must state an apparent contradiction that nevertheless reveals a deeper truth about writing or reading. Which option qualifies as a paradox?",
+   "choices": [
+    "Less may be more when careful editing makes every word count.",
+    "The essay was both too short and too long, and no reason was given.",
+    "The map marked the broad river narrow, although every measurement disagreed.",
+    "Careful editing removes unnecessary words because brevity improves clarity."
+   ],
+   "answerIndex": 0,
+   "explanation": "Less may be more appears contradictory, but its claim about careful editing reveals the deeper truth that concision can strengthen a sentence.",
+   "difficulty": 8,
+   "skill": "Distinguishing paradox from contradiction",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "A paradox is a statement that seems self-contradictory yet reveals a deeper truth (e.g., 'less is more').",
+      "url": "https://en.wikipedia.org/wiki/PARADOX",
+      "quote": "A paradox is a logically self-contradictory statement or a statement that runs contrary to expectations.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A rubric requires a single sentence that uses chiasmus by reversing the grammatical structure of two parallel phrases without repeating the exact words. Which choice meets the rubric?",
+   "choices": [
+    "He loved the music and the music moved him.",
+    "She gave her life to art, and to science she devoted her mind.",
+    "They walked in silence and in silence they returned home.",
+    "We fought for peace and we won our peace."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second option reverses the verb-object-prepositional phrase pattern into a prepositional phrase-verb-object pattern while using different words, fulfilling the requirement for chiasmus without exact repetition.",
+   "difficulty": 8,
+   "skill": "Rhetorical Grammar",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A rubric requires a single sentence that employs epanalepsis, repeating the same word at the beginning and at the end of the sentence. Which option fulfills the rubric?",
+   "choices": [
+    "Peace begins with peace.",
+    "War brings destruction and destruction brings war.",
+    "Hope shines bright, and bright shines hope.",
+    "Courage leads to victory, and victory follows courage."
+   ],
+   "answerIndex": 0,
+   "explanation": "\"Peace\" appears as the first word and the final word of the sentence, satisfying the epanalepsis pattern.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires one persuasive sentence that begins with a rhetorical question, addresses the reader directly, and ends with a clear call to action. Which sentence satisfies all three requirements?",
+   "choices": [
+    "Will you protect the river, and will you join your neighbors in restoring its habitat?",
+    "The river needs protection, so will you join your neighbors in restoring its habitat?",
+    "Will you protect the river, because you and your neighbors can restore its habitat together?",
+    "Please protect the river and join your neighbors in restoring its habitat."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence opens with a rhetorical question, addresses the reader with the word you, and ends with a call to action.",
+   "reason": "A: picked -1 not 0 (No option satisfies all three requirements (rhetorical question beginning, direct address to reader, and ending with a clear call to action)) | B: picked -1 not 0 (None of the options meet all requirements of the rubric.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which term names the three-part structure in the sentence We came, we saw, we conquered?",
+   "choices": [
+    "Anaphora names this structure because each clause begins with the same word.",
+    "Tricolon names this structure because it arranges three parallel clauses.",
+    "Epanalepsis names this structure because a phrase returns at the end.",
+    "Polysyndeton names this structure because conjunctions repeat between items."
+   ],
+   "answerIndex": 1,
+   "explanation": "Tricolon names the arrangement of three parallel clauses, which is the feature highlighted in this sentence.",
+   "reason": "source: \"A tricolon is a rhetorical structure of three parallel clauses or phrases, as in \"We came, we saw, we conquered.\"\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires three parallel imperatives followed by a reason at the end, with no faulty punctuation. Which choice meets the rubric?",
+   "choices": [
+    "Because small habits matter, reduce waste, reuse what you can, and recycle the rest.",
+    "Reduce waste, reuse what you can, and recycle the rest; small habits matter.",
+    "Reducing waste, reusing what you can, and recycling the rest because small habits matter.",
+    "Reduce waste, reuse what you can, and recycle the rest because small habits matter."
+   ],
+   "answerIndex": 3,
+   "explanation": "This choice uses three coordinated imperative verbs in parallel and ends with a properly attached reason.",
+   "reason": "B: picked 1 not 3"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a sentence that employs chiasmus (ABBA structure) with nouns and verbs reversed, and includes a concessive clause at the beginning. Which sentence meets the rubric?",
+   "choices": [
+    "The stars shone bright, and bright shone the stars.",
+    "Although the night was dark, the stars shone bright, and bright shone the stars.",
+    "Although the night was dark, the stars shone bright, and the stars shone bright.",
+    "Although the night was dark, the stars shone bright, and the stars were bright."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second option begins with a concessive clause and follows with a chiasmus reversing the noun and verb order.",
+   "reason": "B: not exactly one correct (The rubric requires nouns and verbs reversed in the chiasmus, but option 1 reverses only an adjective and a verb ('stars shone bright' / 'br)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires an apostrophe in which a sentence directly addresses an absent person, a nonhuman entity, or an abstract idea rather than the audience. Which choice meets it?",
+   "choices": [
+    "Students, you must submit your essays by Friday.",
+    "The river, the trees, and the stones formed a quiet boundary.",
+    "I asked what freedom meant.",
+    "Liberty, you have called us to your cause."
+   ],
+   "answerIndex": 3,
+   "explanation": "This sentence personifies the abstract idea of liberty and directly addresses it, making the address an apostrophe.",
+   "reason": "B: picked -1 not 3 (None of the options contains an apostrophe directly addressing an absent person, nonhuman entity, or abstract idea.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a sentence that builds a climax (gradatio) by presenting three parallel phrases of increasing intensity, each beginning with \"more\". Which choice satisfies the rubric?",
+   "choices": [
+    "We need more effort, more dedication, more triumph.",
+    "We need more effort, more dedication, less triumph.",
+    "We need effort, dedication, triumph.",
+    "We need more effort and more dedication and more triumph."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option lists three parallel \"more\" phrases that rise in intensity, fulfilling the climax structure.",
+   "reason": "A: not exactly one correct (Multiple options (0 and 3) satisfy the rubric.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that employs antimetabole, repeating the same clause in reverse word order. Which sentence satisfies the rubric?",
+   "choices": [
+    "Ask not what your country can do for you, ask what you can do for your country.",
+    "Ask what your country can do for you, and you should ask what you can do for your country.",
+    "Do not ask what your country can do for you; instead, ask what you can do for your country.",
+    "Ask not what your country can do for you, but ask what you can do for your country."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence repeats the identical clause in reverse order, which is the definition of antimetabole.",
+   "reason": "B: not exactly one correct (Option 0 contains a comma splice, making it grammatically incorrect as a single sentence; options 2 and 3 are grammatical but add words that)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a sentence that employs paralipsis (apophasis), mentioning a topic by explicitly stating that it will not be mentioned. Which sentence satisfies this rubric?",
+   "choices": [
+    "I will not mention the countless hours you volunteered.",
+    "I mention the countless hours you volunteered.",
+    "The countless hours you volunteered are noteworthy.",
+    "I refuse to talk about the countless hours you volunteered."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence declares it will not mention the hours and then proceeds to mention them, illustrating paralipsis.",
+   "reason": "B: not exactly one correct (Options 0 and 3 both satisfy the definition of paralipsis (apophasis) by mentioning something while stating it will not be mentioned or disc)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric calls for one sentence that uses the correlative pair “not only … but also” to join two independent clauses with perfectly parallel structure. Which choice meets the requirement?",
+   "choices": [
+    "Not only did the committee approve the proposal, but also it allocated additional funds.",
+    "Not only does the plan reduce costs, but it also improves efficiency.",
+    "Not only did the plan reduce costs, but also did it improve efficiency.",
+    "The plan not only reduces costs but also improves efficiency."
+   ],
+   "answerIndex": 2,
+   "explanation": "Both independent clauses are inverted with the auxiliary “did” and the correlative conjunctions are correctly placed, preserving parallelism.",
+   "reason": "A: picked 1 not 2 (Choice uses correct parallel ‘not only … but also’ structure with two independent clauses.) | B: picked 1 not 2 (Options 0 and 1 both join two independent clauses with 'not only … but also'; option 1 has slightly better parallelism, but option 0 is also)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A rubric requires a single sentence that uses deliberate exaggeration for emphasis through an obviously inflated comparison. Which sentence meets the rubric?",
+   "choices": [
+    "The wait for the concert was longer than the wait for the moon landing.",
+    "The wait for the concert was longer than the wait for a train from Denver.",
+    "The concert hall was larger than the old stadium nearby.",
+    "The singer sang longer than the bell rang at noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The answer exaggerates the concert wait by comparing it with the famously long wait for a moon landing, making the comparison hyperbolic.",
+   "reason": "source: \"The moon landing was a historically significant event that took place in 1969.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that uses polyptoton by repeating the same root word in at least three different forms. Which sentence satisfies the rubric?",
+   "choices": [
+    "The writer writes writing that writes history.",
+    "The judge judged the judgment justly.",
+    "She sings a song that sings sweetly.",
+    "They run the race and run quickly."
+   ],
+   "answerIndex": 1,
+   "explanation": "The judge judged the judgment justly repeats the root \"judge\" as judge, judged, and judgment, providing three distinct forms.",
+   "reason": "A: picked 0 not 1 | B: picked 0 not 1 (Two options satisfy the rubric: (0) 'writer/writes/writing' and (1) 'judge/judged/judgment' each repeat one root in at least three different)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that uses hendiadys: two nouns joined by \"and\" that together express a single idea. Which sentence meets the rubric?",
+   "choices": [
+    "The thunder and lightning frightened the campers.",
+    "The sound and fury of the storm overwhelmed us.",
+    "She bought apples and oranges at the market.",
+    "He ran and jumped over the fence."
+   ],
+   "answerIndex": 1,
+   "explanation": "\"Sound and fury\" functions as a single combined concept describing the storm's intensity, which is the hallmark of hendiadys.",
+   "reason": "A: picked 0 not 1 (none of the options correctly exemplify hendiadys as defined in the rubric)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "A rubric requires a single sentence that uses a part to represent the whole (synecdoche).",
+   "choices": [
+    "All hands were needed to finish the project.",
+    "All workers were needed to finish the project.",
+    "Every employee was needed to finish the project.",
+    "The team was needed to finish the project."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses “hands” as a synecdoche for the workers themselves.",
+   "reason": "source: \"Synecdoche is a figure of speech in which a part is used to represent the whole.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that uses epanalepsis, repeating the exact same word at the very beginning and the very end of the sentence. Which sentence satisfies the rubric?",
+   "choices": [
+    "Freedom guides us, and freedom ends the debate.",
+    "Courage leads the way, courage.",
+    "Hope shines bright, and hope fades not.",
+    "Wisdom teaches, and learning follows."
+   ],
+   "answerIndex": 1,
+   "explanation": "Option B repeats the word 'courage' at both the start and the finish, fulfilling the epanalepsis requirement.",
+   "reason": "B: not exactly one correct (Option 1 is not a grammatical sentence; none of the options form a proper single sentence with epanalepsis as defined.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A rubric requires a sentence that employs hendiadys, expressing a single complex idea through two nouns joined by 'and' rather than a noun‑adjective pair. Which sentence fulfills the rubric?",
+   "choices": [
+    "The storm brought wind and rain.",
+    "She spoke with grace and eloquence.",
+    "He faced danger and peril.",
+    "They sought freedom and liberty."
+   ],
+   "answerIndex": 1,
+   "explanation": "Option B uses the two nouns 'grace' and 'eloquence' joined by 'and' to convey one unified quality of speaking style, which is the hallmark of hendiadys.",
+   "reason": "A: picked 0 not 1 (More than one option satisfies the rubric) | B: not exactly one correct (Options 1, 2, and 3 are all defensible examples of hendiadys, so more than one option works.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that uses paralipsis by explicitly stating a topic will not be mentioned and then mentioning it. Which sentence meets the rubric?",
+   "choices": [
+    "I will not mention his past failures, yet his past failures explain the current problem.",
+    "I will not mention his past failures, and his past failures are irrelevant.",
+    "His past failures will not be mentioned, but they are important.",
+    "I won't talk about his past failures, so I will talk about his past failures."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence declares it will not mention the failures and then immediately refers to them, exemplifying paralipsis.",
+   "reason": "B: not exactly one correct (Options 0 and 3 both explicitly state that the topic will not be mentioned and then mention it, so there are two defensible answers.)"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "A rubric requires a single sentence that uses synecdoche, substituting a part for the whole. Which sentence satisfies the rubric?",
+   "choices": [
+    "The sails appeared on the horizon.",
+    "The ships appeared on the horizon.",
+    "The vessels appeared on the horizon.",
+    "The boats appeared on the horizon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses \"sails\" — a part of a ship — to stand for the entire ships, fulfilling the synecdoche requirement.",
+   "reason": "source: \"In synecdoche, 'sails' is a part of a ship used to refer to the whole ship.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that includes an appositive phrase set off by commas renaming a noun. Which sentence meets the rubric?",
+   "choices": [
+    "My brother, a talented pianist, performed last night.",
+    "My brother a talented pianist performed last night.",
+    "My brother, who is a talented pianist, performed last night.",
+    "My brother performed last night, a talented pianist."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence places the noun phrase \"a talented pianist\" in commas directly after \"My brother,\" creating a proper appositive.",
+   "reason": "B: not exactly one correct (Option 0 is the standard appositive construction, but option 3 also contains a comma-delimited noun phrase renaming “My brother,” creating a)"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A learner must write one sentence in which hendiadys expresses a single idea, historical development, through the coordinated nouns history and development. Which option fits?",
+   "choices": [
+    "The book traces the history and development of the city.",
+    "The book traces the history, and it also traces the development of the city.",
+    "The book traces the history and character of the city.",
+    "The book presents the historical development of the city."
+   ],
+   "answerIndex": 0,
+   "explanation": "In The book traces the history and development of the city, the coordinated nouns history and development jointly name the single process of historical development.",
+   "reason": "source: \"Hendiadys is a figure of speech in which a single complex idea is expressed by two coordinated nouns (e.g., 'history and\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "A rubric requires a single sentence that employs epanalepsis by beginning and ending with the identical word, containing at least one independent clause between those repetitions. Which choice satisfies the rubric?",
+   "choices": [
+    "Courage demands courage from those who lead others into danger.",
+    "Hope is the anchor of hope when storms arrive without warning.",
+    "Fear conquers all who allow fear to dictate their choices.",
+    "Truth will always reveal truth if given enough time to emerge."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option begins and ends with the word courage while maintaining a complete independent clause in between, correctly demonstrating epanalepsis as defined by the rubric.",
+   "reason": "B: picked -1 not 0 (No option begins and ends with the identical word.)"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "minimax/minimax-m3.1-flash"
+  }
+ ],
+ "applied": false
+}

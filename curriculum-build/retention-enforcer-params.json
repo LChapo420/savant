@@ -1,0 +1,371 @@
+{
+  "name": "retention-enforcer-params",
+  "version": "1.2.0",
+  "generated": "2026-10-24",
+  "changes_1_2_0": "2026-10-25, from curriculum-build/evidence-article/02-retention-review.md: (P1) difficulty window d(p_now) = 1.0 up to p_now 0.95, no 0.65 step for 0.90-0.95 (eglington2020: practice at 0.86 and 0.94 equal-best, 0.98 worse; switch ENFORCER_DIFFICULTY_WINDOW_95); (P5) the eligible_but_left_out_last_time flag is now built and read (ENFORCER_LEFT_OUT_FLAG); (P3) new flag wobbled_in_deferred_sitting_set for skills whose end-of-sitting retention set is left to the session enforcer (ENFORCER_DEFER_SITTING_RETENTION).",
+  "changes_1_1_0": "Owner clarification 2026-10-24: semi-weekly strictly 3/4/3/4 from the anchor (no offset); on a shared day the widest enforcer absorbs the narrower ones and the end-of-day enforcer (one combined enforcer); a combined enforcer is ONE optimised plan, not the sum of its scopes. New: the allocation section (retrievals per topic per sitting) and the combined budget. New sources: pyc2007, vaughn2013, rawson2020end, karpicke2011spaced, rawson2013relearn (retention-sources.json); lyle2020 and rawson2011 re-checked against their abstracts.",
+  "evidence_report": "curriculum-build/RETENTION-ENFORCER-EVIDENCE.md",
+  "sources": "curriculum-build/retention-sources.json (new, verified) plus ids from curriculum-build/scorecard-sources.json (listed under reused_from_scorecard in retention-sources.json)",
+  "owner_design_fixed": "Start/pause/end session; at the end the learner picks quick, medium, full or none; full < 10% of the covered study time; end session covers that session, end day session covers the day; semi-weekly (strictly alternating 3/4-day gaps from the anchor; on a weekly day the weekly absorbs it), weekly (every 7 days, the week), the widest enforcer on a day absorbs the narrower ones and that day's end-of-day enforcer, bi-weekly (~14 days, at least a day from semi-weekly/weekly), monthly (~30 days, in a pocket day with no other enforcer, nearer the easier enforcer); unfinished or unchosen enforcers can be resumed or chosen on return. These parameters do not change any of that; the calendar itself is the builder's.",
+  "basis_legend": {
+    "evidence": "directly supported by the cited verified sources",
+    "model": "follows from the app's own forgetting model (services/scorecard/forgetting.js)",
+    "assumption": "a design choice inside the evidence's range; tune with real-learner data (see validation)"
+  },
+
+  "global": {
+    "covered_study_seconds": {
+      "definition": "Active study time in the scope's window: session time minus pauses, excluding time spent in enforcers, the daily review and placement. Each scope uses the study time of the window it covers.",
+      "basis": "assumption"
+    },
+    "hard_rule": {
+      "full_share_max_exclusive": 0.10,
+      "applied_as": "planned_full_seconds <= 0.095 * covered_study_seconds for every scope; if it does not fit one item, that scope's enforcer is not offered and its items roll into the next scope (recorded as rolled, not skipped)",
+      "basis": "owner rule; the 0.095 margin keeps actual time under 10% when answers run slow"
+    },
+    "tier_multipliers_of_full_budget": { "quick": 0.35, "medium": 0.65, "full": 1.0, "none": 0, "basis": "assumption" },
+    "item_cost_seconds": {
+      "defaults": {
+        "multiple_choice": 20,
+        "cloze": 25,
+        "short_answer": 35,
+        "problem": 60,
+        "varied_application": 60,
+        "explain_why": 75,
+        "worked_example_completion": 60,
+        "predict_then_see": 40
+      },
+      "feedback_seconds": { "correct_fast_confident": 3, "correct_slow_or_unsure": 10, "wrong": 15, "elaborated_extra": 10 },
+      "use_learner_median_after_answers": 20,
+      "planning_cost": "cost(item) = learner median (or default) for its format + expected feedback = p_now*3 + (1-p_now)*(15+10) + (tier allows retry ? (1-p_now)*retry_cost : 0)",
+      "consistency_note": "The default mix averages about 45 s per item, matching ADAPT_ITEM_MINUTES = 0.75.",
+      "basis": "assumption; calibrate from logged times"
+    },
+    "forgetting_curve": {
+      "source": "services/scorecard/contract.js read(...).memory (scorecard.forgettingCurve; DEFAULT_CURVE until fitted)",
+      "p_now": "forgetting.recallAt(rc, {days: days_since_last_practice, right, wrong, spacedRight, spacedWrong, fresh: 0.95, guess: item guess rate})",
+      "p_H": "the same call with days = days_since_last_practice + horizon_days(scope)",
+      "spaced_counts": "spacedRight/spacedWrong count only answers given >= 1 day after the objective was last practised (as adaptation.predictedRecall does with checks/check_misses). Session and day enforcer answers never add to spaced counts.",
+      "basis": "model"
+    },
+    "target_first_try_accuracy": {
+      "band": [0.70, 0.85],
+      "use": "selection aims the expected first-try accuracy of the planned set into this band (mean p_now of chosen items); outside it for two enforcers in a row, see overload_guards",
+      "basis": "evidence (effortful but successful retrieval: fazio2019, karpicke2007, kornell2009 with feedback; wilson2019 is a model result for ~85% training accuracy); exact band is an assumption"
+    },
+    "rapid_answer_ms": "coverage OBJ_RAPID_MS (1200): faster answers are not evidence",
+    "retention_target": { "recall_at_horizon": 0.90, "durable": "adaptation.durableRecall >= ADAPT_DURABLE_AT (0.9) at ADAPT_DURABLE_DAYS (30)", "basis": "model (existing app targets)" },
+    "applies_to": "Knowledge objectives with gradable items (services/objective-items.js, then the bank's question on the skill). Motor skills (piano, basketball, chess play) keep skill-dose plans; their quiz-able objectives (rules, theory, openings as positions) are eligible."
+  },
+
+  "scopes": {
+    "session": {
+      "trigger": "End session",
+      "covers": "objectives taught or practised in this session (lesson, practice, games)",
+      "eligible_pool": "covered objectives; plus objectives answered wrong in this session even if taught earlier",
+      "horizon_days": 1,
+      "min_lag_minutes_since_last_exposure": 5,
+      "budget": { "full_share": 0.095, "full_cap_minutes": 8, "full_floor": "none: if one item does not fit, the session's items roll into the day enforcer" },
+      "counts_as_spaced": false,
+      "what_it_does": "Completes initial learning: each new objective gets one delayed, unaided retrieval with feedback; misses get a spaced retry (medium/full). It does not drill to a high criterion; extra correct recalls now are wiped out by later relearning (vaughn2016, rohrer2007pashler) and the time is better spent in later scopes.",
+      "order": "oldest exposure first (largest lag), interleaved by objective; retries at least 3 items later",
+      "tiers": {
+        "quick": { "attempts_per_item": 1, "retry_on_miss": false, "mix": { "recall": 1.0, "varied_application": 0.0, "explain_or_complete": 0.0 }, "formats": ["cloze", "short_answer", "multiple_choice"] },
+        "medium": { "attempts_per_item": 2, "retry_on_miss": "once, at least 3 items later, different item for the objective when the bank has one", "mix": { "recall": 0.80, "varied_application": 0.15, "explain_or_complete": 0.05 } },
+        "full": { "attempts_per_item": 3, "retry_on_miss": "until 1 correct (drop-out), at most 3 attempts, retries spaced >= 3 items", "mix": { "recall": 0.70, "varied_application": 0.20, "explain_or_complete": 0.10 } }
+      }
+    },
+    "day": {
+      "trigger": "End day session",
+      "covers": "every objective taught or practised today",
+      "eligible_pool": "today's objectives; objectives missed in any of today's enforcers; items rolled from session enforcers that did not fit; any objective due by the curve (p_H < 0.90) and not yet reviewed today",
+      "horizon_days": 3.5,
+      "min_lag_minutes_since_last_exposure": 30,
+      "budget": { "full_share": 0.095, "full_cap_minutes": 10, "full_floor_minutes": "min(2, 0.095 * covered)" },
+      "dedupe": "objectives answered correctly on first try in a session enforcer today at >= 5 min lag get weight 0.5 on need (they can still be picked; a second same-day retrieval at a longer lag still helps, but less than tomorrow's)",
+      "counts_as_spaced": false,
+      "timing_advice": "Offer it as the last thing of the day; tell the learner it works best when done in the evening (sleep soon after learning helps keep it). Never block it by clock time.",
+      "tiers": {
+        "quick": { "attempts_per_item": 1, "retry_on_miss": false, "mix": { "recall": 1.0, "varied_application": 0.0, "explain_or_complete": 0.0 } },
+        "medium": { "attempts_per_item": 2, "retry_on_miss": "once, >= 3 items later", "mix": { "recall": 0.75, "varied_application": 0.15, "explain_or_complete": 0.10 } },
+        "full": { "attempts_per_item": 3, "retry_on_miss": "until 1 correct, at most 3, spaced >= 3 items", "mix": { "recall": 0.60, "varied_application": 0.25, "explain_or_complete": 0.15 } }
+      }
+    },
+    "semi_weekly": {
+      "trigger": "calendar (owner's alternating 3/4-day gaps from the anchor: days 3, 7, 10, 14, ...; on a weekly day it is absorbed by the weekly)",
+      "covers": "objectives studied since the previous semi-weekly or weekly enforcer (3-4 days)",
+      "eligible_pool": "covered objectives + all-time objectives with p_H < 0.90 (overdue share at most 0.25 of items)",
+      "horizon_days": 7,
+      "min_lag_days": 1,
+      "budget": { "full_share": 0.06, "full_cap_minutes": 12, "full_floor_minutes": "min(3, 0.095 * covered)" },
+      "counts_as_spaced": true,
+      "tiers": {
+        "quick": { "attempts_per_item": 1, "retry_on_miss": false, "mix": { "recall": 0.9, "varied_application": 0.1, "explain_or_complete": 0.0 } },
+        "medium": { "attempts_per_item": 2, "retry_on_miss": "once, different item", "mix": { "recall": 0.65, "varied_application": 0.25, "explain_or_complete": 0.10 } },
+        "full": { "attempts_per_item": 3, "retry_on_miss": "until 1 correct, at most 3", "mix": { "recall": 0.55, "varied_application": 0.25, "explain_or_complete": 0.20 } }
+      }
+    },
+    "weekly": {
+      "trigger": "calendar (every 7 days)",
+      "covers": "objectives studied in the past 7 days (cumulative)",
+      "eligible_pool": "covered objectives + all-time objectives with p_H < 0.90 (overdue share at most 0.30)",
+      "horizon_days": 14,
+      "min_lag_days": 1,
+      "budget": { "full_share": 0.05, "full_cap_minutes": 15, "full_floor_minutes": "min(3, 0.095 * covered)" },
+      "counts_as_spaced": true,
+      "tiers": {
+        "quick": { "attempts_per_item": 1, "retry_on_miss": false, "mix": { "recall": 0.85, "varied_application": 0.15, "explain_or_complete": 0.0 } },
+        "medium": { "attempts_per_item": 2, "retry_on_miss": "once, different item", "mix": { "recall": 0.60, "varied_application": 0.30, "explain_or_complete": 0.10 } },
+        "full": { "attempts_per_item": 3, "retry_on_miss": "until 1 correct, at most 3", "mix": { "recall": 0.50, "varied_application": 0.30, "explain_or_complete": 0.20 } }
+      }
+    },
+    "bi_weekly": {
+      "trigger": "calendar (~14 days, >= 1 day from semi-weekly/weekly)",
+      "covers": "objectives studied in the past 14 days (cumulative)",
+      "eligible_pool": "covered objectives + all-time objectives with p_H < 0.90 (overdue share at most 0.35)",
+      "horizon_days": 30,
+      "min_lag_days": 1,
+      "budget": { "full_share": 0.04, "full_cap_minutes": 15, "full_floor_minutes": "min(4, 0.095 * covered)" },
+      "counts_as_spaced": true,
+      "tiers": {
+        "quick": { "attempts_per_item": 1, "retry_on_miss": false, "mix": { "recall": 0.80, "varied_application": 0.20, "explain_or_complete": 0.0 } },
+        "medium": { "attempts_per_item": 2, "retry_on_miss": "once, different item", "mix": { "recall": 0.55, "varied_application": 0.30, "explain_or_complete": 0.15 } },
+        "full": { "attempts_per_item": 3, "retry_on_miss": "until 1 correct, at most 3", "mix": { "recall": 0.45, "varied_application": 0.35, "explain_or_complete": 0.20 } }
+      }
+    },
+    "monthly": {
+      "trigger": "calendar (~30 days, pocket day with no other enforcer)",
+      "covers": "objectives studied in the past 30 days (cumulative) and every older objective that is due",
+      "eligible_pool": "covered objectives + all-time objectives with p_H < 0.90 (overdue share at most 0.40)",
+      "horizon_days": 60,
+      "min_lag_days": 1,
+      "budget": { "full_share": 0.03, "full_cap_minutes": 20, "full_floor_minutes": "min(5, 0.095 * covered)" },
+      "counts_as_spaced": true,
+      "tiers": {
+        "quick": { "attempts_per_item": 1, "retry_on_miss": false, "mix": { "recall": 0.80, "varied_application": 0.20, "explain_or_complete": 0.0 } },
+        "medium": { "attempts_per_item": 2, "retry_on_miss": "once, different item", "mix": { "recall": 0.55, "varied_application": 0.30, "explain_or_complete": 0.15 } },
+        "full": { "attempts_per_item": 3, "retry_on_miss": "until 1 correct, at most 3", "mix": { "recall": 0.45, "varied_application": 0.35, "explain_or_complete": 0.20 } }
+      }
+    },
+    "scope_basis": "Gaps and horizons: evidence (cepeda2006, cepeda2008 ridgeline: optimal gap ~20-40% of a 1-week and ~5-10% of a 1-year retention interval; the calendar's gaps of hours, 3-4, 7, 14 and 30 days follow that shape for 1-week to 1-year horizons, though 3-4 days is 43-57% of a 1-week horizon, a little above the 20-40% band; the exact days are the owner's design, not a study's). Expanding vs equal gaps: no difference for the final test (latimier2021 g = 0.034; karpicke2007; kang2014 found higher recall during training with expanding). Several short relearning sessions: rawson2011, rawson2013power, janes2020, higham2022, rawson2018. Exact shares and caps: assumption."
+  },
+
+  "item_count": {
+    "formula": "n = number of items chosen by the greedy budget fill below; it equals min(floor(B / mean_cost), eligible_count) when costs are equal",
+    "budget_seconds": "B = tier_multiplier * min(full_share * covered_study_seconds, full_cap_minutes * 60), and never more than 0.095 * covered_study_seconds",
+    "minimums": "quick: at least 1 item; medium and full: at least 2 items when they fit; otherwise offer only the tiers that fit",
+    "examples_at_45s_per_item": {
+      "session_40min": { "full": 4, "medium": 3, "quick": 2 },
+      "day_120min": { "full": "10 min cap -> about 12", "medium": "about 8", "quick": "about 4" },
+      "weekly_7h": { "full": "15 min cap -> about 18", "medium": "about 12", "quick": "about 6" },
+      "monthly_30h": { "full": "20 min cap -> about 24", "medium": "about 16", "quick": "about 8" }
+    },
+    "basis": "assumption built on the owner's 10% rule"
+  },
+
+  "allocation": {
+    "what": "How many retrievals each topic (objective) gets in one enforcer sitting, and of which format, when one enforcer covers several scopes (an absorbed day, a late merge) or just one. One plan over the union pool of window topics, never a per-scope quota added up (the owner's 'daily 5, semi-weekly 3, weekly 2 per topic' is explicitly not the rule).",
+    "unit": "topic = objective (else skill) worked in the covered window; questions only from the window (owner rule)",
+    "first_tries_per_topic": {
+      "base": 1,
+      "max": { "session": 1, "day": 2, "semi_weekly": 2, "weekly": 2, "bi_weekly": 2, "monthly": 2 },
+      "second_only_on_tiers": ["medium", "full"],
+      "second_only_if_fragile": true,
+      "basis": "evidence for 1 per relearning session: rawson2011 (relearning to 1 correct recall per session; initial criterion and relearning are subadditive; prescription: 3 correct recalls initially, then 3 widely spaced relearning sessions), rawson2013power, higham2022 (correct items dropped), rawson2013relearn, vaughn2016 (extra initial criterion does not persist after relearning). Evidence for a cap: rohrer2005over (overlearning fades), lyle2020 (more practice helped within a semester, less robustly than spacing; only spacing helped 4 weeks later), rawson2020end (for math procedures, one correct solve in each of three sessions beat three in one session by only d = 0.28). The number 2 itself: assumption."
+    },
+    "fragile": {
+      "rule": "last answer wrong (a confident error is one), or a window miss rate >= 1/3 over >= 2 answers, or recall now p_now < 0.50 (hard for this learner now). Low recall at the horizon alone is NOT fragile: a topic that is secure now but will fade is what the next spaced enforcer is for (relearning to 1 correct per session: rawson2011), so it raises the score, not the number of tries",
+      "p_now_below": 0.5,
+      "miss_rate_at_least": 0.34,
+      "min_answers": 2,
+      "never_fragile": "mature topics: >= 3 delayed memory checks and p_now >= 0.90 with the last answer right",
+      "mature_checks_at_least": 3,
+      "mature_p_now_at_least": 0.9,
+      "basis": "direction: vaughn2013 (difficult items stay behind even at equal numbers of correct recalls, 1 to 11), pyc2007 (dropout schedules most effective for initially incorrect items), pashler2005 and butterfield2001 (errors and confident errors need feedback and another try), kornell2009. Difficulty is read from the learner's own record (misses, p): the bank's 1-10 difficulty is not comparable across grades. Thresholds: assumption"
+    },
+    "value": {
+      "first": "score = (1 - p_H) * d(p_now) + flags (selection.step_2_score)",
+      "second": "second_value_factor * score of the same topic (a second retrieval in the same sitting is worth a fraction of the first)",
+      "second_value_factor": 0.35,
+      "basis": "diminishing returns of same-session retrievals: rawson2011, pyc2007, vaughn2016, lyle2020, rohrer2005over; the factor itself is an assumption (no source gives a per-retrieval marginal gain that transfers to this app)"
+    },
+    "fill": "greedy over all (topic, 1st) and (topic, 2nd) slots by value / planned cost, eligible topics first, inside the tier budget; a 2nd only after its topic's 1st is in; on medium and full each first try keeps its drop-out retry (until 1 correct, at most 2 or 3 attempts: pyc2007, higham2022)",
+    "age": {
+      "new": "no delayed memory check yet: +0.15 flag; on an absorbed day, today's topics use the day scope's 30-minute minimum lag rather than the scheduled scope's 1 day, so they are not pushed to the back",
+      "young": "1-2 delayed checks: 1 try; a 2nd only when fragile",
+      "mature": ">= 3 delayed checks, p_now >= 0.90, last right: 1 try at most and only when its score earns it (d(p_now) = 0.3 above 0.95); never a 2nd",
+      "basis": "model (the fitted forgetting curve sets p_now and p_H, adaptation.predictedRecall) plus cepeda2008 and rawson2011 for spacing the relearning; band edges: assumption"
+    },
+    "formats": {
+      "first": "a recall question written for the objective (objective-items), else the bank's question on its skill, else the learner's own window check (scheduled scopes: only when nothing else exists)",
+      "second": "a different question on the same objective, a new example rather than the one just answered (varied application), never the learner's own check again; no varied item, no second",
+      "basis": "butler2017 (different application questions beat the same question three times on transfer), pan2018 (transfer d = 0.40), agarwal2019 (higher-order quizzes for higher-order tests), butler2010. Only multiple-choice objective items exist today, so 'varied' is a new instance, not a new format: an honest limit"
+    },
+    "spacing_within_sitting": {
+      "rule": "all first tries first (interleaved by skill), then the second tries in the same topic order, so a topic's two tries are as far apart as the sitting allows (about the number of first tries); retries at least 3 questions after the miss; close on a question the curve expects right",
+      "basis": "karpicke2011spaced (longer absolute spacing between repeated tests: about 200% better long-term retention than no spacing; expanding vs equal did not matter), pyc2007 (efficiency depends critically on the interval between presentations), pyc2009 (direction), rohrer2015 and brunmair2019 (interleaving)"
+    },
+    "budget": {
+      "single_scope": "B(tier) = multiplier * min(full_share * covered, full_cap), never more than 0.095 * covered",
+      "combined": "B_full = min(largest part + 0.5 * the other parts, the largest part's cap, 0.095 * union covered time); a part is one absorbed scope on its own window and active time (the end-of-day part is the scheduled day itself, at the day scope's share and cap); B(tier) = multiplier * B_full; inside the 20-minute daily cap",
+      "others_weight": 0.5,
+      "basis": "owner rule (full < 10%) and choice_resume_merge.merge_rule (assumption)"
+    },
+    "owner_base": "unchanged: the owner's base version gets 1 try per topic, in time order, spread evenly, standard question times; no fragility, no second tries"
+  },
+
+  "selection": {
+    "unit": "objective (the record's unit); an item is one question instance for an objective",
+    "step_1_eligibility": [
+      "objective is in the scope's eligible_pool",
+      "lag since last exposure >= scope min lag",
+      "status lapsed (adaptation reviewQueue reteach) -> not a retrieval item: list it as 're-teach' (lesson) outside the budget, at most ADAPT_RETEACH (3)",
+      "not answered in another enforcer in the last 20 hours unless it was missed there"
+    ],
+    "step_2_score": {
+      "need": "1 - p_H",
+      "difficulty_window": "d(p_now) = 1.0 if 0.50 <= p_now <= 0.95; 0.6 if p_now < 0.50 (likely miss, still useful with feedback); 0.3 if p_now > 0.95 (too easy). Built in services/retention-params.js (window, windowOf); this text is documentation, the code does not read it. ENFORCER_DIFFICULTY_WINDOW_95=off restores the old 1.0 up to 0.90 and 0.65 for 0.90-0.95.",
+      "difficulty_window_basis": "eglington2020 (practice aimed at predicted recall 0.86 and 0.94 gave higher 3-day recall than 0.40 and 0.98, time costs counted; 0.70 did not differ from 0.86 or 0.94); pyc2009, fazio2019 (effortful but successful retrieval); kornell2009 (failed retrievals still teach with feedback); wilson2019 (85% optimum, model only). Weights 0.6 and 0.3: assumption.",
+      "flags": {
+        "last_attempt_wrong_within_14_days": 0.30,
+        "high_confidence_error": 0.25,
+        "correct_but_slow_or_low_confidence": 0.20,
+        "no_delayed_retrieval_yet": 0.15,
+        "eligible_but_left_out_last_time": "0.10 * min(1, times_left_out / 2)",
+        "wobbled_in_deferred_sitting_set": 0.20,
+        "prerequisite_of_next_objectives": 0.10
+      },
+      "flags_notes": {
+        "eligible_but_left_out_last_time": "built 2026-10-25 (ENFORCER_LEFT_OUT_FLAG): times_left_out = the learner's latest planned enforcers in a row that had the topic eligible but did not ask it (each plan stores left_out); a plan that asked it ends the run",
+        "wobbled_in_deferred_sitting_set": "built 2026-10-25 (ENFORCER_DEFER_SITTING_RETENTION): while a study session is running the end-of-sitting retention set is not asked; its skills that were missed in the sitting get this flag in the session (or day) enforcer, only when no answer flag (last wrong, slow or unsure) already fired. Weight: the same as correct_but_slow_or_low_confidence (assumption)",
+        "prerequisite_of_next_objectives": "not built",
+        "last_attempt_wrong_within_14_days": "the 14-day limit is not built: any last answer wrong counts"
+      },
+      "score": "need * d(p_now) + sum(flags)",
+      "slow_means": "response time > 2x the learner's median for that format",
+      "basis": "need and flags: evidence for direction (lindsey2014, settles2016, tabibian2019 for scheduling by predicted recall; pashler2005 and butler2008 for errors and low-confidence correct answers; butterfield2001, metcalfe2017 for high-confidence errors; anderson1994 and murayama2014 for rotation, with chan2006 as counter-evidence; karpicke2007, rohrer2006, rohrer2005over, vaughn2016, rohrer2007pashler for deferring the sitting set to the later session enforcer); difficulty window: eglington2020 (see difficulty_window_basis); weights: assumption"
+    },
+    "step_3_fill": {
+      "method": "greedy by score / planning_cost until the tier budget is used",
+      "constraints": [
+        "at most 1 first-attempt item per objective (full tier on scopes >= weekly may add a second, varied item for objectives whose first is answered right fast, only if budget remains)",
+        "format quotas from the tier mix (recall / varied_application / explain_or_complete), each +-1 item",
+        "overdue (out-of-window) share at most the scope's limit",
+        "mean p_now of the chosen set inside target_first_try_accuracy band; if above, swap in lower-p items; if below, swap in higher-p items",
+        "at least 2 distinct skills when the pool has them"
+      ]
+    },
+    "step_4_order": [
+      "interleave by objective and skill (no two items of one objective adjacent)",
+      "for math, science concepts and visual categories, put confusable objectives near each other (discrimination); for word/vocabulary items do not force similar items together",
+      "session scope: oldest exposure first",
+      "retries at least 3 items after the miss, with a different item for the objective when the bank has one",
+      "close with an item the curve expects right (p_now >= 0.8) when one is available"
+    ],
+    "item_instance": "For scopes >= semi_weekly, never reuse the exact instance from the objective's last exposure when another verified item exists (objective-items, then bank). Quick tier may reuse when the bank is thin.",
+    "learner_cannot_hand_pick_items": true,
+    "basis_order": "interleaving: evidence (rohrer2015, rohrer2020, brunmair2019 including g = -0.39 for words, firth2021); retry spacing: evidence (pyc2009 direction, karpicke2007); closing on success: assumption"
+  },
+
+  "item_mix": {
+    "recall": "Produce the answer: cloze, short answer, numeric answer, or multiple choice with plausible lures (recall tests show larger effects than recognition: rowland2014; well-built MC also works: little2012, smith2014). MC always with feedback (roediger2005mc, butler2008mc).",
+    "varied_application": "A new example, context or problem for the same objective, not the practised instance (butler2017, pan2018 d = 0.40, agarwal2019, jensen2014, kapler2015).",
+    "explain_or_complete": {
+      "concepts": "explain-why or self-explanation prompt after the answer, graded by the existing typed-grading cascade, or a choose-the-best-explanation MC (bisra2018, endres2017, chi1989)",
+      "procedures": "worked-example completion (one faded step) or predict-then-see (yeo2019, vanmerrienboer1990, renkl2003, kang2011func)",
+      "high_complexity_material": "prefer completion and varied problems over bare recall (vangog2015; counterpoint karpicke2015aue)"
+    },
+    "covert_think_then_reveal": "Allowed only in quick tier when no gradable item exists; it can help learning (smith2013covert) but never counts as evidence or as 'kept' (self-scoring is overconfident: dunlosky2012).",
+    "age_notes": "Preschool/K: taps plus saying it aloud (current oral-task design), recall share as tiers say but no explain_or_complete; replace with a 'show me' tap item. Children benefit from retrieval and spacing (fazio2019, vlach2012, carpenter2009hist, emeny2021)."
+  },
+
+  "feedback": {
+    "timing": "immediate after every item, plus an end-of-enforcer recap of missed items (a delayed second look)",
+    "after_wrong": "correct answer + 1-2 line explanation; for MC, why the chosen lure is wrong; for high-confidence errors say so plainly (they are corrected well)",
+    "after_correct_fast_confident": "brief tick; explanation on tap",
+    "after_correct_slow_or_unsure": "show the explanation",
+    "after_failed_retrieval": "feedback now, never deferred (hays2013)",
+    "transfer_items": "explanation feedback, not answer-only (butler2013, vanderkleij2015: elaborated 0.49 vs correct-answer 0.32 vs right/wrong 0.05)",
+    "tone": "no grades, no penalties, no ability praise; process words ('you got it back after a week'); show kept X of Y and when it comes back",
+    "confidence_rating": "optional one-tap sure/unsure on full tier only (feeds high_confidence_error and correct_but_low_confidence); off by default if it costs > 2 s per item",
+    "basis": "pashler2005 (+494% after errors; little effect after correct), butler2008 (feedback doubles retention of low-confidence correct answers), butler2007, smith2010kimball, metcalfe2009 (delayed feedback benefits), kulik1988, mullet2014, hays2013, kluger1996 (a third of feedback interventions hurt), mueller1998, henderlong2002"
+  },
+
+  "retained_rule": {
+    "kept_item": "first attempt correct, unaided (no hint, coach or peek), not rapid (>= OBJ_RAPID_MS), auto-graded or cascade-graded (not self-scored)",
+    "session_and_day": "a kept item is 'consolidated' (in-sitting evidence: nc/nw), not a memory check; it never moves proven -> retained",
+    "semi_weekly_and_up": "a kept item at >= 1 day lag is a memory test: forgetting row with review = true and spaced counts; coverage counts it as the objective's memory check (proven -> retained under RETAIN_DAYS)",
+    "objective_in_enforcer": "kept if all its first attempts in this enforcer are kept; missed otherwise",
+    "missed_objective": "status stays; flag last_attempt_wrong; if it is the second spaced miss in a row, or p_now < 0.35 after the miss, mark lapsed -> re-teach (existing adaptation path)",
+    "enforcer_result": "retention_rate = kept first attempts / first attempts; shown to the learner and stored",
+    "durable": "unchanged app rule: durableRecall >= 0.9 at 30 days"
+  },
+
+  "record_updates": [
+    "every enforcer answer -> forgetting.row({dt, nc, nw, pk, g, y, day, open, review: true, ns, nsw}) on the objective's skill, tagged objective_id (coverage.attribute)",
+    "spaced counts (ns/nsw; state.checks/check_misses) only for answers >= 1 day after last practice",
+    "misses -> priority flag for the next enforcer of any scope and for tomorrow's daily review",
+    "retries and recap views are logged but are not new evidence (a retry right after feedback is not a retrieval from memory)",
+    "time per item per format -> learner median for planning_cost",
+    "tier chosen, none, skipped, resumed, abandoned -> enforcer log (validation)",
+    "the daily review (services/review-session.js) skips objectives answered in any enforcer in the last 20 hours unless missed there; enforcers and the daily review read the same due list (adaptation.reviewQueue / durability)",
+    "learner multiplier m still comes from adaptation.memoryAdjust over checks; enforcer memory tests feed it"
+  ],
+
+  "choice_resume_merge": {
+    "default_preselected_tier": {
+      "rule": "medium; full if the pool has >= 2 objectives with last_attempt_wrong or mean p_H < 0.75; quick if the session was < 15 min or the learner chose quick the last 3 times",
+      "learner_can_change": true,
+      "none_always_available": true,
+      "basis": "jachimowicz2019 (defaults d = 0.68), johnson2003; patall2008 and ryan2000 (choice and autonomy); trumbo2016 and kibble2007 (optional quizzes are taken far less)"
+    },
+    "unchosen_on_return": "show the pending enforcer(s) once at the start of the next visit with the default preselected; one tap starts, one tap dismisses (= none)",
+    "unfinished": "store plan (item ids), tier, pointer, created_at; on resume re-score the unanswered items with the current time and drop any now answered elsewhere; never re-ask answered items",
+    "validity": {
+      "session": "until the day enforcer is started or 24 h, then merged into the day enforcer",
+      "day": "48 h, then merged into the next calendar enforcer",
+      "calendar": "until the next enforcer of the same or a larger scope is due, then merged"
+    },
+    "merge_rule": "one combined enforcer: pool = union (deduped), budget = largest pending budget + 0.5 * the others, capped at the largest scope's full_cap_minutes and at 0.095 * union covered time. The same rule sizes an absorbed day (weekly + semi-weekly + end of day; any scheduled enforcer + its end of day) and a late merge; what goes in it is the allocation rule, over the union pool as one plan",
+    "none_effect": "nothing is marked reviewed; items stay due and their need rises with time, so they surface in the next enforcer or daily review. Choosing none is never penalised.",
+    "basis": "assumption, constrained by the owner's design"
+  },
+
+  "overload_guards": {
+    "daily_enforcer_minutes_cap": 20,
+    "one_calendar_enforcer_per_day": "owner calendar; if two fall on one day after a gap in use, merge",
+    "too_hard": "first-try retention_rate < 0.60 in 2 enforcers in a row -> next enforcer shifts 0.10 of mix from varied/explain to recall, lowers d(p_now) floor so fewer p_now < 0.5 items are picked, and lists lapsed objectives for re-teach",
+    "too_easy": "retention_rate > 0.95 in 3 enforcers in a row -> shorten: require p_H < 0.85 for eligibility (fewer, harder items)",
+    "progress": "show a progress bar with the item count fixed at the start; never add items mid-enforcer except tier retries, which are shown as 'one more try'",
+    "basis": "kivetz2006 (goal gradient), sievertsen2016 (fatigue later in the day), higham2022 (relearning lowered anxiety and was enjoyed), agarwal2014anx, khanna2015, smith2016stress; thresholds: assumption"
+  },
+
+  "not_supported": [
+    { "practice": "massed review or cramming before a test", "sources": ["kornell2009cram", "cepeda2006", "donovan1999", "kornell2009spacing"] },
+    { "practice": "overlearning in one sitting / drilling the session enforcer to a high criterion", "sources": ["rohrer2005over", "rohrer2006", "vaughn2016"] },
+    { "practice": "rereading or restudy instead of retrieval", "sources": ["roediger2006", "karpicke2008", "callender2009", "dunlosky2013", "rowland2014"] },
+    { "practice": "expanding gaps as a requirement (they are fine, not better for the final test)", "sources": ["latimier2021", "karpicke2007", "kang2014"] },
+    { "practice": "letting learners drop items they feel they know", "sources": ["kornell2009spacing", "karpicke2008", "dunlosky2012"] },
+    { "practice": "self-scored covert recall as evidence of retention", "sources": ["dunlosky2012", "smith2013covert"] },
+    { "practice": "learning-style matching of enforcer formats", "sources": ["pashler2008", "rogowsky2015", "rogowsky2020"] },
+    { "practice": "right/wrong-only feedback, or MC without feedback", "sources": ["vanderkleij2015", "roediger2005mc", "butler2008mc"] },
+    { "practice": "fact-only quizzing expecting conceptual transfer", "sources": ["agarwal2019", "pan2019clicker"] },
+    { "practice": "grades, penalties or ability praise on enforcers", "sources": ["khanna2015", "kluger1996", "mueller1998"] },
+    { "practice": "forcing bedtime timing (sleep helps, but no evidence that a clock-time gate beats an evening suggestion)", "sources": ["gais2006", "payne2012", "bauml2014"] }
+  ],
+
+  "validation": {
+    "telemetry": [
+      "per enforcer: scope, tier, planned/answered items, seconds, retention_rate, abandoned, resumed",
+      "tier choice distribution and none rate by scope and age band",
+      "actual share of covered time (must stay < 0.10 for full)",
+      "per objective: next memory-check result after an enforcer vs predicted p"
+    ],
+    "experiments_needing_owner_approval": [
+      "randomise the preselected default tier (quick/medium/full) per learner-week; outcome: next spaced memory-check accuracy and 30-day durable share",
+      "small within-learner holdout (e.g. 5% of eligible objectives skipped by enforcers but still in the daily review), only with consent; outcome: memory-check accuracy difference",
+      "refit the forgetting curve with spaced features (SCORECARD_FORGET_FEATURES=spaced) once enforcer memory tests exist; the basic curve credits a right answer the same whenever it came, so the model alone cannot show the spacing benefit"
+    ],
+    "confirm_or_refute": "If enforcer-reviewed objectives do not beat held-out ones on later memory checks by at least the small classroom effects (g ~0.3-0.5), or none/quick dominate choices, revisit budgets and defaults."
+  }
+}

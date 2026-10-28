@@ -1,0 +1,29 @@
+Chess in Savant: data and programs from others
+================================================
+
+Data shipped with the app
+-------------------------
+Lichess puzzle database (content/chess-puzzles-lichess.js)
+  https://database.lichess.org/ - released under Creative Commons CC0 1.0.
+  A curated subset, each puzzle re-checked by us. Each puzzle links to its page
+  on lichess.org once it has been played. Thank you, Lichess and its players.
+
+Lichess opening names (content/chess-openings-data.js)
+  https://github.com/lichess-org/chess-openings - CC0 1.0 ("As a collection of
+  facts, this data set is in the public domain").
+
+Programs that run on our servers only (never sent to your browser)
+------------------------------------------------------------------
+Stockfish 19 - https://stockfishchess.org/ - GNU GPL v3.
+  Reviews games and checks puzzles and lessons. It runs as its own program on
+  our machines; it is not distributed with or inside this app. Its source code
+  is at https://github.com/official-stockfish/Stockfish.
+
+Leorik 3.2 - https://github.com/lithander/Leorik - MIT licence,
+  Copyright (c) 2023 Thomas Jahn. A second engine used when Stockfish is absent.
+
+Maia-2 - https://github.com/CSSLab/maia2 - MIT licence, Copyright (c) 2024 CSSLab
+  (University of Toronto). Plays the human-like sparring opponent.
+
+Everything else in the chess pages (rules, board, practice bot, lessons, puzzle
+trainer, move trainer) is Savant's own code.

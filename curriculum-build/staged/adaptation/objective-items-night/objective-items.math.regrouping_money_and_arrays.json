@@ -1,0 +1,3556 @@
+{
+ "track_id": "math",
+ "grade_id": "regrouping_money_and_arrays",
+ "generated_at": "2026-10-26T03:38:11.655Z",
+ "items": [
+  {
+   "objective_id": "regrouping_money_and_arrays:L10",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "A drawing shows 2 hundreds blocks, 4 tens rods, and 3 ones cubes. Another drawing shows 1 hundred block, 5 tens rods, and 6 ones cubes. If you combine the blocks without regrouping, how many hundreds, tens, and ones are there in total?",
+   "choices": [
+    "3 hundreds, 9 tens, 9 ones",
+    "3 hundreds, 9 tens, 8 ones",
+    "3 hundreds, 8 tens, 9 ones",
+    "2 hundreds, 9 tens, 9 ones"
+   ],
+   "answer": "3 hundreds, 9 tens, 9 ones",
+   "rationale": "Adding the hundreds (2+1=3), tens (4+5=9), and ones (3+6=9) gives 3 hundreds, 9 tens, and 9 ones with no regrouping needed.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L10",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Using base‑ten blocks, Maria models 342 and 215. She puts the blocks together but does not trade any. What number does the combined model represent?",
+   "choices": [
+    "557",
+    "567",
+    "547",
+    "657"
+   ],
+   "answer": "557",
+   "rationale": "342 + 215 = 557 (3+2=5 hundreds, 4+1=5 tens, 2+5=7 ones) and no regrouping occurs.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L10",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which set of base‑ten blocks shows the sum of 128 + 341 without any regrouping?",
+   "choices": [
+    "4 hundreds, 6 tens, 9 ones",
+    "4 hundreds, 5 tens, 9 ones",
+    "4 hundreds, 6 tens, 8 ones",
+    "3 hundreds, 6 tens, 9 ones"
+   ],
+   "answer": "4 hundreds, 6 tens, 9 ones",
+   "rationale": "128 + 341 = 469, which is 4 hundreds, 6 tens, and 9 ones; each place value stays under 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L10",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "A teacher draws 5 hundreds, 2 tens, and 4 ones. Then she draws 2 hundreds, 6 tens, and 3 ones. She asks students to write the total in standard form without regrouping. What should they write?",
+   "choices": [
+    "787",
+    "786",
+    "777",
+    "797"
+   ],
+   "answer": "787",
+   "rationale": "5+2=7 hundreds, 2+6=8 tens, 4+3=7 ones → 787, with no regrouping required.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L30",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Use compensation to find 398 + 247 mentally.",
+   "choices": [
+    "645",
+    "647",
+    "635",
+    "655"
+   ],
+   "answer": "645",
+   "rationale": "Compensation changes 398 to 400 (+2), adds 247 to get 647, then subtracts the extra 2 to get 645.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L30",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Break apart the addends to add 274 + 315 mentally.",
+   "choices": [
+    "589",
+    "579",
+    "599",
+    "569"
+   ],
+   "answer": "589",
+   "rationale": "Separate hundreds (200+300=500), tens (70+10=80), and ones (4+5=9); 500+80+9 = 589.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L30",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Starting at 450, count on 300 then 60. What is the total?",
+   "choices": [
+    "810",
+    "760",
+    "870",
+    "800"
+   ],
+   "answer": "810",
+   "rationale": "450 + 300 = 750; 750 + 60 = 810.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L30",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Use compensation to add 562 + 389 mentally.",
+   "choices": [
+    "951",
+    "961",
+    "941",
+    "971"
+   ],
+   "answer": "951",
+   "rationale": "Adjust 389 to 400 (+11), add to 562 to get 962, then subtract the extra 11 to get 951.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L42",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Using base‑ten blocks, which step shows the regrouping of ten ones into one ten when adding 467 + 389?",
+   "choices": [
+    "Combine 7 ones and 9 ones, exchange ten ones for a ten rod.",
+    "Add the tens column first, then the ones column.",
+    "Write the sum 856 without using any blocks.",
+    "Count all blocks after writing the total."
+   ],
+   "answer": "Combine 7 ones and 9 ones, exchange ten ones for a ten rod.",
+   "rationale": "Regrouping in the standard algorithm corresponds to exchanging ten one‑blocks for one ten‑rod; this is exactly what the first choice describes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L42",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "When adding 523 + 278 with the column algorithm, what does the ‘1’ written above the tens column represent in place‑value blocks?",
+   "choices": [
+    "One hundred block carried from the ones column.",
+    "One ten rod exchanged from ten ones.",
+    "One thousand cube from the hundreds column.",
+    "One extra one block added to the total."
+   ],
+   "answer": "One ten rod exchanged from ten ones.",
+   "rationale": "The small ‘1’ above the tens column records the ten ones that were regrouped into one ten rod.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L42",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Which block model correctly represents the sum 642 + 359 after all regroupings are done?",
+   "choices": [
+    "1 thousand cube, 0 hundred blocks, 0 ten rods, 1 one block.",
+    "10 hundred blocks, 0 ten rods, 1 one block.",
+    "9 hundred blocks, 10 ten rods, 1 one block.",
+    "1 thousand cube, 0 hundred blocks, 10 ten rods, 1 one block."
+   ],
+   "answer": "1 thousand cube, 0 hundred blocks, 0 ten rods, 1 one block.",
+   "rationale": "642 + 359 = 1001, which is shown with one thousand cube and one one block, with no hundreds or tens.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L52",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Using base‑ten blocks, what is 432 − 210? (No trades needed.)",
+   "choices": [
+    "2 hundreds, 2 tens, 2 ones",
+    "2 hundreds, 1 ten, 2 ones",
+    "1 hundred, 2 tens, 2 ones",
+    "2 hundreds, 2 tens, 1 one"
+   ],
+   "answer": "2 hundreds, 2 tens, 2 ones",
+   "rationale": "Subtract each place value: 4−2=2 hundreds, 3−1=2 tens, 2−0=2 ones.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L52",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "What does 560 − 230 equal when modeled with base‑ten blocks without regrouping?",
+   "choices": [
+    "3 hundreds, 3 tens, 0 ones",
+    "3 hundreds, 2 tens, 0 ones",
+    "2 hundreds, 3 tens, 0 ones",
+    "3 hundreds, 3 tens, 1 one"
+   ],
+   "answer": "3 hundreds, 3 tens, 0 ones",
+   "rationale": "Hundreds: 5−2=3; Tens: 6−3=3; Ones: 0−0=0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L52",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Subtract 700 − 400 using base‑ten blocks (no trades). Which block count matches the difference?",
+   "choices": [
+    "3 hundreds, 0 tens, 0 ones",
+    "2 hundreds, 10 tens, 0 ones",
+    "3 hundreds, 1 ten, 0 ones",
+    "4 hundreds, 0 tens, 0 ones"
+   ],
+   "answer": "3 hundreds, 0 tens, 0 ones",
+   "rationale": "Only hundreds change: 7−4=3 hundreds; tens and ones stay zero.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L52",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Find the result of 845 − 321 with base‑ten blocks, assuming no regrouping is required.",
+   "choices": [
+    "5 hundreds, 2 tens, 4 ones",
+    "5 hundreds, 1 ten, 4 ones",
+    "4 hundreds, 2 tens, 4 ones",
+    "5 hundreds, 2 tens, 3 ones"
+   ],
+   "answer": "5 hundreds, 2 tens, 4 ones",
+   "rationale": "Hundreds: 8−3=5; Tens: 4−2=2; Ones: 5−1=4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L65",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "What is 500 − 273?",
+   "choices": [
+    "227",
+    "237",
+    "247",
+    "257"
+   ],
+   "answer": "227",
+   "rationale": "Subtracting 273 from 500 requires regrouping 1 hundred as 10 tens (making 4 hundreds, 10 tens) and then regrouping 1 ten as 10 ones. The correct difference is 227.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L65",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "What is 402 − 158?",
+   "choices": [
+    "244",
+    "254",
+    "234",
+    "264"
+   ],
+   "answer": "244",
+   "rationale": "402 has 0 tens, so you regroup 1 hundred into 10 tens, then regroup 1 ten into 10 ones to subtract 158. The result is 244.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L65",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "What is 700 − 368?",
+   "choices": [
+    "332",
+    "342",
+    "322",
+    "352"
+   ],
+   "answer": "332",
+   "rationale": "Regroup 1 hundred as 10 tens (making 6 hundreds, 10 tens), then regroup 1 ten as 10 ones to subtract 368. The correct difference is 332.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L65",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "What is 805 − 469?",
+   "choices": [
+    "336",
+    "346",
+    "326",
+    "356"
+   ],
+   "answer": "336",
+   "rationale": "805 has 0 tens; regroup 1 hundred into 10 tens, then regroup 1 ten into 10 ones to subtract 469. The answer is 336.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L85",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "What is the difference of 432 − 157 using the standard column method?",
+   "choices": [
+    "275",
+    "285",
+    "265",
+    "375"
+   ],
+   "answer": "275",
+   "rationale": "Subtracting ones: 2−7 requires borrowing, making 12−7=5. Tens: after borrowing, 2−5 requires another borrow, giving 12−5=7. Hundreds: 3−1=2. Result 275.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L85",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "Which addition sentence correctly checks the subtraction 642 − 319 = 323?",
+   "choices": [
+    "323 + 319 = 642",
+    "323 + 642 = 319",
+    "319 + 642 = 323",
+    "323 + 319 = 962"
+   ],
+   "answer": "323 + 319 = 642",
+   "rationale": "Adding the difference (323) to the subtrahend (319) must return the minuend (642).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L85",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "In the problem 800 − 465, which regrouping step for the hundreds is correct?",
+   "choices": [
+    "Change 8 hundreds to 7 hundreds and 10 tens",
+    "Change 8 hundreds to 8 hundreds and 10 tens",
+    "Change 8 hundreds to 6 hundreds and 20 tens",
+    "Change 8 hundreds to 7 hundreds and 9 tens"
+   ],
+   "answer": "Change 8 hundreds to 7 hundreds and 10 tens",
+   "rationale": "Borrow one hundred, turning 8 hundreds into 7 hundreds and creating 10 tens for the next column.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L107",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 107,
+   "format": "multiple_choice",
+   "prompt": "Lena had 761 crayons. She lost 234 crayons. Which equation matches the story?",
+   "choices": [
+    "761 - 234 = ?",
+    "761 - 243 = ?",
+    "761 + 234 = ?",
+    "234 - 761 = ?"
+   ],
+   "answer": "761 - 234 = ?",
+   "rationale": "The story describes starting with 761 crayons and losing 234, so the correct model is 761 minus 234.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L107",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 107,
+   "format": "multiple_choice",
+   "prompt": "A farmer collected 489 eggs on Monday and 312 eggs on Tuesday. Which equation shows the total number of eggs?",
+   "choices": [
+    "489 + 312 = ?",
+    "489 - 312 = ?",
+    "312 - 489 = ?",
+    "489 + 321 = ?"
+   ],
+   "answer": "489 + 312 = ?",
+   "rationale": "The problem asks for the combined total from two days, which is found by adding 489 and 312.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L107",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 107,
+   "format": "multiple_choice",
+   "prompt": "Tom had 645 marbles. He gave 128 to his brother and then received 97 from his sister. Which equation shows how many marbles Tom has now?",
+   "choices": [
+    "645 - 128 + 97 = ?",
+    "645 + 128 - 97 = ?",
+    "645 - 128 - 97 = ?",
+    "645 + 128 + 97 = ?"
+   ],
+   "answer": "645 - 128 + 97 = ?",
+   "rationale": "Tom starts with 645, subtracts the 128 he gave away, then adds the 97 he received, giving 645 - 128 + 97.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L107",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 107,
+   "format": "multiple_choice",
+   "prompt": "The library bought 378 new books in January and 264 new books in February. Which equation shows the total books bought?",
+   "choices": [
+    "378 + 264 = ?",
+    "378 - 264 = ?",
+    "264 - 378 = ?",
+    "378 + 246 = ?"
+   ],
+   "answer": "378 + 264 = ?",
+   "rationale": "The total number of books bought across the two months is the sum of 378 and 264.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L97",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Round 467 and 289 each to the nearest hundred, then add. What is the estimated sum?",
+   "choices": [
+    "700",
+    "800",
+    "850",
+    "900"
+   ],
+   "answer": "800",
+   "rationale": "467 rounds to 500 and 289 rounds to 300; 500 + 300 = 800.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L97",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Round 532 and 174 each to the nearest ten, then add. What is the estimated sum?",
+   "choices": [
+    "690",
+    "700",
+    "710",
+    "720"
+   ],
+   "answer": "700",
+   "rationale": "532 rounds to 530 and 174 rounds to 170; 530 + 170 = 700.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L97",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Round 845 and 312 each to the nearest hundred, then subtract. What is the estimated difference?",
+   "choices": [
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "answer": "500",
+   "rationale": "845 rounds to 800 and 312 rounds to 300; 800 - 300 = 500.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L97",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Sam calculated 921 - 487 = 600. Rounding each number to the nearest hundred gives an estimate of 400. Which statement about Sam's answer is correct?",
+   "choices": [
+    "The estimate shows the answer is reasonable.",
+    "The estimate shows the answer is likely wrong.",
+    "The estimate is 500, so the answer is close.",
+    "Rounding cannot check subtraction."
+   ],
+   "answer": "The estimate shows the answer is likely wrong.",
+   "rationale": "The estimate (400) is far from Sam's exact answer (600), indicating a probable error.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L194",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "A rope is 45 cm long. Sam cuts off 12 cm. How many centimeters long is the piece that remains? Let x = length of remaining piece.",
+   "choices": [
+    "33 cm",
+    "57 cm",
+    "37 cm",
+    "43 cm"
+   ],
+   "answer": "33 cm",
+   "rationale": "Subtract the cut length from the original length: 45 cm - 12 cm = 33 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L194",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "Two pieces of tape measure 28 in. and 35 in. What is their total length? Let y = total length.",
+   "choices": [
+    "63 in",
+    "53 in",
+    "67 in",
+    "58 in"
+   ],
+   "answer": "63 in",
+   "rationale": "Add the two lengths together: 28 in + 35 in = 63 in.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L194",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "A garden path is 120 cm. Maria adds a 45 cm extension. How long is the path now? Let z = new length.",
+   "choices": [
+    "165 cm",
+    "155 cm",
+    "175 cm",
+    "145 cm"
+   ],
+   "answer": "165 cm",
+   "rationale": "Add the extension to the original path: 120 cm + 45 cm = 165 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L194",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 194,
+   "format": "multiple_choice",
+   "prompt": "A ribbon is 80 cm. Lily uses 27 cm for a bow. How much ribbon is left? Let w = remaining length.",
+   "choices": [
+    "53 cm",
+    "43 cm",
+    "63 cm",
+    "57 cm"
+   ],
+   "answer": "53 cm",
+   "rationale": "Subtract the used portion from the total: 80 cm - 27 cm = 53 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L206",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 206,
+   "format": "multiple_choice",
+   "prompt": "On a number line with marks every 1 unit, which point shows the number 47?",
+   "choices": [
+    "The point labeled 45",
+    "The point labeled 47",
+    "The point labeled 49",
+    "The point labeled 50"
+   ],
+   "answer": "The point labeled 47",
+   "rationale": "The whole number 47 is represented by the point labeled 47 on a number line with equal unit spaces.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L206",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 206,
+   "format": "multiple_choice",
+   "prompt": "Starting at 23 on a number line with equal spaces, you move forward 15 spaces. Which number do you land on?",
+   "choices": [
+    "38",
+    "37",
+    "39",
+    "40"
+   ],
+   "answer": "38",
+   "rationale": "Adding 15 to 23 gives 38, so the point reached after moving 15 spaces forward from 23 is 38.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L206",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 206,
+   "format": "multiple_choice",
+   "prompt": "To show 68 minus 24 on a number line, you start at 68 and move back 24 spaces. What number do you reach?",
+   "choices": [
+    "44",
+    "42",
+    "46",
+    "48"
+   ],
+   "answer": "44",
+   "rationale": "Subtracting 24 from 68 yields 44; moving 24 spaces backward from 68 lands on 44.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L206",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 206,
+   "format": "multiple_choice",
+   "prompt": "The distance between the marks for 30 and 55 on a number line with equal spacing is how many units?",
+   "choices": [
+    "25",
+    "24",
+    "26",
+    "27"
+   ],
+   "answer": "25",
+   "rationale": "The difference between 55 and 30 is 25, so the distance on a uniformly spaced number line is 25 units.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L258",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 258,
+   "format": "multiple_choice",
+   "prompt": "A growing pattern starts with 2 and adds 3 each step: 2, 5, 8, 11, … What is the 10th number in the pattern?",
+   "choices": [
+    "29",
+    "30",
+    "31",
+    "32"
+   ],
+   "answer": "29",
+   "rationale": "The rule is start at 2 and add 3 repeatedly. The nth term = 2 + 3·(n‑1). For n = 10: 2 + 3·9 = 29.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L258",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 258,
+   "format": "multiple_choice",
+   "prompt": "The table shows the number of squares in each figure of a pattern: Figure 1 has 1 square, Figure 2 has 4, Figure 3 has 7, Figure 4 has 10. How many squares does Figure 6 have?",
+   "choices": [
+    "16",
+    "17",
+    "18",
+    "19"
+   ],
+   "answer": "16",
+   "rationale": "Each figure adds 3 squares. Figure n = 1 + 3·(n‑1). For n = 6: 1 + 3·5 = 16 squares.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L258",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 258,
+   "format": "multiple_choice",
+   "prompt": "Maria saves $1.00 the first week and adds $0.25 each following week. The table lists week and total saved. What is the total after week 8?",
+   "choices": [
+    "$2.75",
+    "$2.50",
+    "$3.00",
+    "$3.25"
+   ],
+   "answer": "$2.75",
+   "rationale": "Week 1 = $1.00. Each later week adds $0.25. After week 8 she added $0.25 seven times: 1.00 + 0.25·7 = $2.75.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L258",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "geometry_area",
+   "level": 258,
+   "format": "multiple_choice",
+   "prompt": "A pattern begins 3, 7, 11, 15, … (add 4 each time). Using a table, what is the sum of the first five terms?",
+   "choices": [
+    "55",
+    "50",
+    "60",
+    "45"
+   ],
+   "answer": "55",
+   "rationale": "The first five terms are 3, 7, 11, 15, 19. Their sum = 3+7+11+15+19 = 55.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L367",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 367,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is partitioned into two equal shares. Which phrase names the size of each share?",
+   "choices": [
+    "one third of the rectangle",
+    "one fourth of the rectangle",
+    "one half of the rectangle",
+    "two thirds of the rectangle"
+   ],
+   "answer": "one half of the rectangle",
+   "rationale": "Two equal shares make one whole, so each share is one half of the rectangle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L367",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 367,
+   "format": "multiple_choice",
+   "prompt": "A circle is partitioned into three equal sectors. Which phrase names the size of one sector?",
+   "choices": [
+    "one third of the circle",
+    "one half of the circle",
+    "one fourth of the circle",
+    "two thirds of the circle"
+   ],
+   "answer": "one third of the circle",
+   "rationale": "A circle partitioned into three equal sectors has three thirds, so one sector is one third.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L367",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 367,
+   "format": "multiple_choice",
+   "prompt": "A circle is partitioned into four equal sectors. Which phrase names the size of one sector?",
+   "choices": [
+    "one third of the circle",
+    "one half of the circle",
+    "one fourth of the circle",
+    "two fourths of the circle"
+   ],
+   "answer": "one fourth of the circle",
+   "rationale": "Four equal sectors make one whole circle, so each sector is one fourth.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L367",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 367,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is partitioned into four equal columns. Two of the columns are selected. What part of the rectangle is selected?",
+   "choices": [
+    "one fourth",
+    "one third",
+    "one half",
+    "three fourths"
+   ],
+   "answer": "one half",
+   "rationale": "Two of four equal columns make one half of the rectangle.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L270",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "facts_within_20",
+   "level": 270,
+   "format": "multiple_choice",
+   "prompt": "What is 15 - 7? Think of the addition fact that helps you subtract.",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "8",
+   "rationale": "Since 7 + 8 = 15, the missing addend is 8, so 15 - 7 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L270",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "facts_within_20",
+   "level": 270,
+   "format": "multiple_choice",
+   "prompt": "Use think‑addition to find 12 - 5.",
+   "choices": [
+    "7",
+    "8",
+    "6",
+    "9"
+   ],
+   "answer": "7",
+   "rationale": "Ask what plus 5 makes 12; 5 + 7 = 12, therefore 12 - 5 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L270",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "facts_within_20",
+   "level": 270,
+   "format": "multiple_choice",
+   "prompt": "Given 7 + 9 = 16 and 16 - 7 = 9, which subtraction equation completes the fact family?",
+   "choices": [
+    "16 - 9 = 7",
+    "16 - 9 = 8",
+    "16 - 7 = 8",
+    "16 - 8 = 9"
+   ],
+   "answer": "16 - 9 = 7",
+   "rationale": "A fact family with 7, 9, and 16 includes the two subtraction facts 16 - 7 = 9 and 16 - 9 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L280",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 280,
+   "format": "multiple_choice",
+   "prompt": "You have 12 marbles. You pair them up. How many marbles are left without a partner?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "0",
+   "rationale": "12 is an even number, so all marbles can be paired with none left over.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L280",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 280,
+   "format": "multiple_choice",
+   "prompt": "Which addition sentence shows 12 as two equal addends?",
+   "choices": [
+    "6+6",
+    "5+7",
+    "4+8",
+    "7+5"
+   ],
+   "answer": "6+6",
+   "rationale": "12 divided into two equal groups gives 6 and 6, so 6+6 = 12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L280",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 280,
+   "format": "multiple_choice",
+   "prompt": "There are 15 stickers. If you make pairs, how many stickers will be unpaired?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "1",
+   "rationale": "15 is odd; pairing leaves one sticker without a partner.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L280",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 280,
+   "format": "multiple_choice",
+   "prompt": "Write 10 as a sum of two equal addends.",
+   "choices": [
+    "5+5",
+    "4+6",
+    "3+7",
+    "6+4"
+   ],
+   "answer": "5+5",
+   "rationale": "10 split into two equal parts is 5 and 5, so 5+5 = 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L293",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 293,
+   "format": "multiple_choice",
+   "prompt": "There are 4 groups of 5 apples. Write a repeated addition sentence and find the total.",
+   "choices": [
+    "5 + 5 + 5 + 5 = 20",
+    "4 + 4 + 4 + 4 = 16",
+    "5 + 5 + 5 = 15",
+    "4 + 5 + 5 + 5 = 19"
+   ],
+   "answer": "5 + 5 + 5 + 5 = 20",
+   "rationale": "Four equal groups of 5 means adding 5 four times, which equals 20.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L293",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 293,
+   "format": "multiple_choice",
+   "prompt": "Which repeated addition shows 6 groups of 3?",
+   "choices": [
+    "3 + 3 + 3 + 3 + 3 + 3 = 18",
+    "6 + 6 + 6 = 18",
+    "3 + 3 + 3 + 3 + 3 = 15",
+    "6 + 3 + 3 + 3 = 15"
+   ],
+   "answer": "3 + 3 + 3 + 3 + 3 + 3 = 18",
+   "rationale": "Six equal groups of 3 is written as 3 added six times, giving 18.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L293",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 293,
+   "format": "multiple_choice",
+   "prompt": "Skip count by 4 to find the total of 5 equal groups of 4.",
+   "choices": [
+    "4, 8, 12, 16, 20 → total 20",
+    "4, 8, 12, 16 → total 16",
+    "5, 10, 15, 20, 25 → total 25",
+    "4, 7, 10, 13, 16 → total 16"
+   ],
+   "answer": "4, 8, 12, 16, 20 → total 20",
+   "rationale": "Counting by 4 five times (4,8,12,16,20) gives a total of 20.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L293",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 293,
+   "format": "multiple_choice",
+   "prompt": "A teacher makes 3 rows of 7 chairs. Write the repeated addition and total.",
+   "choices": [
+    "7 + 7 + 7 = 21",
+    "3 + 3 + 3 + 3 + 3 + 3 + 3 = 21",
+    "7 + 7 = 14",
+    "3 + 7 + 7 = 17"
+   ],
+   "answer": "7 + 7 + 7 = 21",
+   "rationale": "Three equal groups of 7 chairs is written as 7 added three times, totaling 21.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L412",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "word_problems",
+   "level": 412,
+   "format": "multiple_choice",
+   "prompt": "An art room has 38 markers. The teacher buys 24 more, then gives 9 to another class. How many markers are there now? Use a bar model.",
+   "choices": [
+    "41 markers",
+    "53 markers",
+    "62 markers",
+    "71 markers"
+   ],
+   "answer": "53 markers",
+   "rationale": "The bar model shows 38 + 24 = 62, followed by 62 − 9 = 53. There are 53 markers now.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L412",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "word_problems",
+   "level": 412,
+   "format": "multiple_choice",
+   "prompt": "Team A scored 36 points. Team B scored 18 more points. How many points did the two teams score altogether? Use a bar model.",
+   "choices": [
+    "54 points",
+    "72 points",
+    "90 points",
+    "108 points"
+   ],
+   "answer": "90 points",
+   "rationale": "Team B scored 36 + 18 = 54 points. The combined bar is 36 + 54 = 90 points.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L412",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "word_problems",
+   "level": 412,
+   "format": "multiple_choice",
+   "prompt": "There are 84 students. Twenty-nine join art, and 18 join music. How many students are in neither group? Use a bar model.",
+   "choices": [
+    "37 students",
+    "47 students",
+    "55 students",
+    "66 students"
+   ],
+   "answer": "37 students",
+   "rationale": "Subtract both groups from the total: 84 − 29 = 55, and 55 − 18 = 37 students.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L412",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "word_problems",
+   "level": 412,
+   "format": "multiple_choice",
+   "prompt": "A library had 425 books. It received 286 more, then lent 147 books. How many books does it have now? Use a bar model to track the changes.",
+   "choices": [
+    "433 books",
+    "564 books",
+    "572 books",
+    "711 books"
+   ],
+   "answer": "564 books",
+   "rationale": "The bar model shows 425 + 286 = 711, followed by 711 − 147 = 564 books remaining.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L20",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "When adding 473 + 286, which shows the correct trade(s) and total?",
+   "choices": [
+    "Trade 10 tens for 1 hundred; total 759",
+    "Trade 10 ones for 1 ten; total 759",
+    "Trade 10 tens for 1 hundred; total 749",
+    "No trades needed; total 759"
+   ],
+   "answer": "Trade 10 tens for 1 hundred; total 759",
+   "rationale": "Adding the ones (3+6) gives 9, no trade. Adding the tens (7+8) gives 15, so we trade 10 tens for 1 hundred, leaving 5 tens. The hundreds become 4+2+1=7. The sum is 759, and only a tens‑to‑hundreds trade occurs.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L20",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "When adding 528 + 374, which shows the correct trade(s) and total?",
+   "choices": [
+    "Trade 10 ones for 1 ten and 10 tens for 1 hundred; total 902",
+    "Trade 10 ones for 1 ten only; total 902",
+    "Trade 10 tens for 1 hundred only; total 902",
+    "No trades needed; total 902"
+   ],
+   "answer": "Trade 10 ones for 1 ten and 10 tens for 1 hundred; total 902",
+   "rationale": "Ones: 8+4=12 → trade 10 ones for 1 ten (write 2, carry 1). Tens: 2+7+1=10 → trade 10 tens for 1 hundred (write 0, carry 1). Hundreds: 5+3+1=9. The sum is 902 with both a ones‑to‑tens and a tens‑to‑hundreds trade.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L20",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "In 614 + 287, where do trades occur?",
+   "choices": [
+    "Ones and tens",
+    "Ones only",
+    "Tens only",
+    "None"
+   ],
+   "answer": "Ones and tens",
+   "rationale": "Ones: 4+7=11 → trade ten ones for a ten. Tens: 1+8+1=10 → trade ten tens for a hundred. Hundreds: 6+2+1=9. Thus trades happen in both the ones and tens columns.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L184",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 184,
+   "format": "multiple_choice",
+   "prompt": "A standard paperclip is about 3 centimeters long. About how many paperclips would line up to equal a 30‑centimeter ruler?",
+   "choices": [
+    "5",
+    "8",
+    "10",
+    "12"
+   ],
+   "answer": "10",
+   "rationale": "10 paperclips × 3 cm = 30 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L184",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 184,
+   "format": "multiple_choice",
+   "prompt": "A toy car is 8 cm long. A toy truck is 13 cm long. How much longer is the truck than the car?",
+   "choices": [
+    "4 cm",
+    "5 cm",
+    "6 cm",
+    "7 cm"
+   ],
+   "answer": "5 cm",
+   "rationale": "13 cm – 8 cm = 5 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L184",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 184,
+   "format": "multiple_choice",
+   "prompt": "A standard pencil is about 18 centimeters long. About how many pencils would you need to reach a 90‑centimeter table?",
+   "choices": [
+    "4 pencils",
+    "5 pencils",
+    "6 pencils",
+    "7 pencils"
+   ],
+   "answer": "5 pencils",
+   "rationale": "Dividing the table length (90 cm) by the pencil length (18 cm) gives 5 pencils exactly.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L184",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 184,
+   "format": "multiple_choice",
+   "prompt": "A book is 22 centimeters wide. A notebook is 15 centimeters wide. How much wider is the book than the notebook?",
+   "choices": [
+    "5 cm",
+    "6 cm",
+    "7 cm",
+    "8 cm"
+   ],
+   "answer": "7 cm",
+   "rationale": "Subtracting the notebook width (15 cm) from the book width (22 cm) yields a difference of 7 cm.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L238",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 238,
+   "format": "multiple_choice",
+   "prompt": "Sam's birthday is on June 10. Today is June 3. How many days until his birthday?",
+   "choices": [
+    "5 days",
+    "6 days",
+    "7 days",
+    "8 days"
+   ],
+   "answer": "7 days",
+   "rationale": "From June 3 to June 10 is 7 days (4,5,6,7,8,9,10).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L238",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 238,
+   "format": "multiple_choice",
+   "prompt": "November has 30 days. If today is November 22, how many days are left in November?",
+   "choices": [
+    "6 days",
+    "7 days",
+    "8 days",
+    "9 days"
+   ],
+   "answer": "8 days",
+   "rationale": "Days remaining = 30 - 22 = 8 days (23 through 30).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L238",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 238,
+   "format": "multiple_choice",
+   "prompt": "Today is March 5. The school field trip is on March 12. How many days are there until the field trip?",
+   "choices": [
+    "5 days",
+    "6 days",
+    "7 days",
+    "8 days"
+   ],
+   "answer": "7 days",
+   "rationale": "Counting each day after March 5 up to and including March 12 gives 7 days (Mar 6‑12).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L238",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 238,
+   "format": "multiple_choice",
+   "prompt": "If today is July 14, what will the date be one week (7 days) later?",
+   "choices": [
+    "July 20",
+    "July 21",
+    "July 22",
+    "July 23"
+   ],
+   "answer": "July 21",
+   "rationale": "Adding 7 days to July 14 lands on July 21.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L434",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 434,
+   "format": "multiple_choice",
+   "prompt": "What is 487 + 256?",
+   "choices": [
+    "733",
+    "743",
+    "753",
+    "643"
+   ],
+   "answer": "743",
+   "rationale": "Adding the hundreds (400+200=600), tens (80+50=130), and ones (7+6=13) gives 600+130+13 = 743.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L434",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 434,
+   "format": "multiple_choice",
+   "prompt": "Mia has 612 marbles. She gives 198 to her friend and then buys 135 more. How many marbles does she have now?",
+   "choices": [
+    "539",
+    "559",
+    "449",
+    "549"
+   ],
+   "answer": "549",
+   "rationale": "First 612 - 198 = 414; then 414 + 135 = 549 marbles.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L434",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "add_sub",
+   "level": 434,
+   "format": "multiple_choice",
+   "prompt": "Find the missing number: 735 = ___ + 286.",
+   "choices": [
+    "449",
+    "459",
+    "439",
+    "549"
+   ],
+   "answer": "449",
+   "rationale": "Subtract 286 from 735: 735 - 286 = 449, so the missing addend is 449.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L303",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 303,
+   "format": "multiple_choice",
+   "prompt": "There are 2 rows of 6 squares each. Which addition sentence shows the total when counting by rows?",
+   "choices": [
+    "6 + 6 = 12",
+    "2 + 2 + 2 + 2 + 2 + 2 = 12",
+    "6 + 6 + 6 = 18",
+    "2 + 2 + 2 = 6"
+   ],
+   "answer": "6 + 6 = 12",
+   "rationale": "Two rows with 6 squares each give a total of 6 added twice, so the correct sentence is 6 + 6 = 12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L303",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 303,
+   "format": "multiple_choice",
+   "prompt": "Which array uses 12 buttons with 3 rows and 4 columns, and what addition sentence counts by rows?",
+   "choices": [
+    "3 rows of 4; 4 + 4 + 4 = 12",
+    "4 rows of 3; 3 + 3 + 3 + 3 = 12",
+    "2 rows of 6; 6 + 6 = 12",
+    "6 rows of 2; 2 + 2 + 2 + 2 + 2 + 2 = 12"
+   ],
+   "answer": "3 rows of 4; 4 + 4 + 4 = 12",
+   "rationale": "The described array has 3 rows and 4 columns. Counting by rows adds the row size (4) three times, giving 4 + 4 + 4 = 12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L303",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 303,
+   "format": "multiple_choice",
+   "prompt": "There are 3 columns of 4 triangles each. Which addition sentence shows the total when counting by columns?",
+   "choices": [
+    "4 + 4 + 4 = 12",
+    "3 + 3 + 3 + 3 = 12",
+    "4 + 3 + 4 + 3 = 14",
+    "3 + 4 + 3 + 4 = 14"
+   ],
+   "answer": "4 + 4 + 4 = 12",
+   "rationale": "Counting by columns means adding the number of triangles in each column. Each column has 4 triangles and there are 3 columns, so the sum is 4 + 4 + 4 = 12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L303",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 303,
+   "format": "multiple_choice",
+   "prompt": "An array has 5 rows of 2 circles each. Which addition sentence shows the total when counting by rows?",
+   "choices": [
+    "2 + 2 + 2 + 2 + 2 = 10",
+    "5 + 5 = 10",
+    "2 + 5 + 2 + 5 = 14",
+    "5 + 2 + 5 + 2 = 14"
+   ],
+   "answer": "2 + 2 + 2 + 2 + 2 = 10",
+   "rationale": "Counting by rows means adding the number of circles in each row. Each row has 2 circles and there are 5 rows, giving 2 + 2 + 2 + 2 + 2 = 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L399",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "place_value",
+   "level": 399,
+   "format": "multiple_choice",
+   "prompt": "Maria solves 73 – 28 by drawing 7 tens rods and 3 ones cubes, then crossing out 2 tens and 8 ones. She says the answer is 45. Which justification shows the correct reasoning?",
+   "choices": [
+    "She regrouped one ten into ten ones, then subtracted 8 ones from 13 ones leaving 5 ones and 4 tens = 45.",
+    "She subtracted tens and ones separately: 70–20=50 and 3–8=−5, then 50−5=45.",
+    "She should have added 28 to 73 to get 101, then subtracted 56.",
+    "She misread 73 as 63, so the correct answer is 35."
+   ],
+   "answer": "She regrouped one ten into ten ones, then subtracted 8 ones from 13 ones leaving 5 ones and 4 tens = 45.",
+   "rationale": "To subtract 8 ones from 3 ones, Maria must regroup one ten into ten ones, making 13 ones; 13−8=5 ones and 6 tens remain, giving 45.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L399",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "place_value",
+   "level": 399,
+   "format": "multiple_choice",
+   "prompt": "A teacher asks: “Show 4 × 6 using an array.” Luis draws 4 rows of 5 dots and writes 4×5=20. Which critique correctly identifies the error?",
+   "choices": [
+    "The array should have 6 dots in each of the 4 rows, giving 4×6=24.",
+    "He used multiplication instead of addition; 4+6=10 is the answer.",
+    "The drawing is correct; 4×5=20 matches the problem.",
+    "He should have drawn 6 rows of 4 dots, which also equals 20."
+   ],
+   "answer": "The array should have 6 dots in each of the 4 rows, giving 4×6=24.",
+   "rationale": "The problem asks for 4 groups of 6, so each of the 4 rows must contain 6 dots; 4 rows of 5 dots represents 4×5, not 4×6.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L399",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "place_value",
+   "level": 399,
+   "format": "multiple_choice",
+   "prompt": "Jenna has $1.20 and buys a snack for $0.68. She writes $1.20 – $0.68 = $0.52 and says, “I subtracted 68 from 120.” Which explanation justifies the correct difference?",
+   "choices": [
+    "Convert to cents: 120¢ – 68¢ = 52¢, which is $0.52.",
+    "Subtract dollars and cents separately: $1 – $0 = $1 and 20¢ – 68¢ = –48¢, then $1 – $0.48 = $0.52.",
+    "Add $0.68 to $0.52 to check: $0.68 + $0.52 = $1.30, so the difference is right.",
+    "Round $0.68 to $0.70, then $1.20 – $0.70 = $0.50, close enough."
+   ],
+   "answer": "Convert to cents: 120¢ – 68¢ = 52¢, which is $0.52.",
+   "rationale": "Changing both amounts to cents avoids borrowing across the decimal point; 120¢ minus 68¢ equals 52¢, which is $0.52.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "One dollar equals 100 cents.",
+      "url": "https://en.wikipedia.org/wiki/Bahamian_dollar",
+      "quote": "It is divided into 100 cents.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L444",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 444,
+   "format": "multiple_choice",
+   "prompt": "A baker arranges 4 rows of 5 cupcakes each. Each cupcake costs 25¢. How much money for all cupcakes?",
+   "choices": [
+    "$4.00",
+    "$5.00",
+    "$6.00",
+    "$5.25"
+   ],
+   "answer": "$5.00",
+   "rationale": "4 rows × 5 cupcakes = 20 cupcakes. 20 × $0.25 = $5.00.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L444",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 444,
+   "format": "multiple_choice",
+   "prompt": "Lena buys 2 meters of ribbon at $1.50 per meter and 3 stickers at 20¢ each. How much does she spend in total?",
+   "choices": [
+    "$3.40",
+    "$3.60",
+    "$3.80",
+    "$3.20"
+   ],
+   "answer": "$3.60",
+   "rationale": "Ribbon: 2 × $1.50 = $3.00. Stickers: 3 × $0.20 = $0.60. Total = $3.60.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L444",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 444,
+   "format": "multiple_choice",
+   "prompt": "A class makes 5 arrays of 4 pencils each. Each pencil is 7 inches long and costs 10¢. What are the total cost and total length in inches?",
+   "choices": [
+    "$2.00, 140 in",
+    "$2.00, 130 in",
+    "$1.80, 140 in",
+    "$2.20, 130 in"
+   ],
+   "answer": "$2.00, 140 in",
+   "rationale": "5 × 4 = 20 pencils. Cost: 20 × $0.10 = $2.00. Length: 20 × 7 in = 140 in.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L454",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "place_value",
+   "level": 454,
+   "format": "multiple_choice",
+   "prompt": "Which comparison is true?",
+   "choices": [
+    "618 is less than 681",
+    "724 is greater than 742",
+    "509 equals 590 exactly",
+    "831 is less than 813"
+   ],
+   "answer": "618 is less than 681",
+   "rationale": "618 < 681 is a true statement; 724 > 742 is false, 509 = 590 is false, and 831 < 813 is false.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L454",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "place_value",
+   "level": 454,
+   "format": "multiple_choice",
+   "prompt": "Which list orders 342, 423, 234 from least to greatest?",
+   "choices": [
+    "234, 342, 423",
+    "342, 234, 423",
+    "423, 342, 234",
+    "234, 423, 342"
+   ],
+   "answer": "234, 342, 423",
+   "rationale": "The numbers in increasing order are 234, then 342, then 423; the other sequences are not correctly ordered.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L454",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "place_value",
+   "level": 454,
+   "format": "multiple_choice",
+   "prompt": "On a number line marked every 100 from 0 to 1000, where does 560 belong?",
+   "choices": [
+    "Between 500 and 600",
+    "Between 400 and 500",
+    "Between 600 and 700",
+    "Exactly at 500"
+   ],
+   "answer": "Between 500 and 600",
+   "rationale": "560 is greater than 500 and less than 600, so it falls between the 500 and 600 marks.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L389",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 389,
+   "format": "multiple_choice",
+   "prompt": "Which sequence shows the first six numbers when skip counting by 4 starting at 0?",
+   "choices": [
+    "0, 4, 8, 12, 16, 20",
+    "0, 4, 8, 12, 16, 18",
+    "0, 4, 8, 12, 14, 18",
+    "0, 4, 8, 10, 14, 18"
+   ],
+   "answer": "0, 4, 8, 12, 16, 20",
+   "rationale": "Skip counting by 4 from 0 adds 4 each time: 0, 4, 8, 12, 16, 20. The other sequences either miss a multiple of 4 or include a non‑multiple.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L389",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 389,
+   "format": "multiple_choice",
+   "prompt": "On a hundred chart, a student shades every 3rd number starting at 0. Which number will be shaded 5th?",
+   "choices": [
+    "12",
+    "15",
+    "9",
+    "6"
+   ],
+   "answer": "12",
+   "rationale": "The shaded numbers are 0 (1st), 3 (2nd), 6 (3rd), 9 (4th), 12 (5th). Thus the 5th shaded number is 12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L389",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 389,
+   "format": "multiple_choice",
+   "prompt": "A number line shows marks for skip counting by 5 from 0. If the marks are labeled 0, 5, 10, 15, 20, what is the label of the 8th mark?",
+   "choices": [
+    "35",
+    "30",
+    "40",
+    "25"
+   ],
+   "answer": "35",
+   "rationale": "Marks correspond to multiples of 5: 0 (1st), 5 (2nd), 10 (3rd), 15 (4th), 20 (5th), 25 (6th), 30 (7th), 35 (8th).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L389",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 389,
+   "format": "multiple_choice",
+   "prompt": "When skip counting by 2 from 0, a student writes the numbers on a hundred chart. Which of the following numbers will NOT appear in the list?",
+   "choices": [
+    "14",
+    "18",
+    "21",
+    "22"
+   ],
+   "answer": "21",
+   "rationale": "Skip counting by 2 produces only even numbers. 21 is odd, so it never appears; 14, 18, and 22 are all even multiples of 2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L313",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 313,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is 4 squares long and 3 squares wide. How many unit squares cover it?",
+   "choices": [
+    "12 squares",
+    "7 squares",
+    "10 squares",
+    "14 squares"
+   ],
+   "answer": "12 squares",
+   "rationale": "Multiplying the length (4) by the width (3) gives 4 × 3 = 12 unit squares.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L313",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 313,
+   "format": "multiple_choice",
+   "prompt": "You have a rectangle covered by 5 rows of unit squares. Each row has 6 squares. What is the total number of squares?",
+   "choices": [
+    "30 squares",
+    "11 squares",
+    "25 squares",
+    "35 squares"
+   ],
+   "answer": "30 squares",
+   "rationale": "5 rows times 6 squares per row equals 5 × 6 = 30 squares.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L313",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 313,
+   "format": "multiple_choice",
+   "prompt": "A rectangle uses 2 rows and 8 columns of unit squares. Which multiplication sentence shows the total?",
+   "choices": [
+    "2 × 8 = 16",
+    "2 + 8 = 10",
+    "8 ÷ 2 = 4",
+    "2 × 7 = 14"
+   ],
+   "answer": "2 × 8 = 16",
+   "rationale": "Rows times columns gives the area: 2 × 8 = 16 unit squares.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L313",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 313,
+   "format": "multiple_choice",
+   "prompt": "If a rectangle is covered by 3 rows of 4 squares each, how many squares are there altogether?",
+   "choices": [
+    "12 squares",
+    "7 squares",
+    "9 squares",
+    "15 squares"
+   ],
+   "answer": "12 squares",
+   "rationale": "3 rows multiplied by 4 squares per row gives 3 × 4 = 12 squares.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L226",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 226,
+   "format": "multiple_choice",
+   "prompt": "Which phrase means 45 minutes after the hour?",
+   "choices": [
+    "quarter past",
+    "half past",
+    "forty five",
+    "quarter to"
+   ],
+   "answer": "quarter to",
+   "rationale": "Forty‑five minutes after the hour is the same as a quarter of an hour before the next hour, so we say \"quarter to\" the next hour.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Quarter to the next hour is 45 minutes after the current hour.",
+      "url": "https://en.wiktionary.org/wiki/dreiviertel",
+      "quote": "\"quarter to , a quarter-hour before, 15 minutes before ( used with the number of the following hour )\"",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L226",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 226,
+   "format": "multiple_choice",
+   "prompt": "An analog clock shows the minute hand on the 9 and the hour hand just past 4. Which phrase describes this time?",
+   "choices": [
+    "quarter past four",
+    "quarter to five",
+    "half past four",
+    "quarter to four"
+   ],
+   "answer": "quarter to five",
+   "rationale": "The minute hand on 9 indicates 45 minutes after the hour, which is described as quarter to the next hour (5).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "On an analog clock, the minute hand pointing to 9 means 45 minutes, so an hour hand past 4 at that moment indicates quarter to five.",
+      "url": "https://en.wiktionary.org/wiki/quarter_of",
+      "quote": "Synonym of quarter to ; fifteen minutes before a certain hour.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L226",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 226,
+   "format": "multiple_choice",
+   "prompt": "If the minute hand points to the 3 and the hour hand is between 2 and 3, which phrase matches?",
+   "choices": [
+    "half past two",
+    "quarter to three",
+    "quarter past two",
+    "quarter to two"
+   ],
+   "answer": "quarter past two",
+   "rationale": "Minute hand on 3 shows 15 minutes after the hour; hour hand between 2 and 3 means it's after 2, so quarter past two.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A minute hand pointing to 3 means 15 minutes past the hour.",
+      "url": "https://en.wiktionary.org/wiki/quarter",
+      "quote": "( time ) A fourth part of an hour ; a period of fifteen minutes , especially with reference to the quarter before or after the hour.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L119",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 119,
+   "format": "multiple_choice",
+   "prompt": "Count by 5s starting at 5¢. What is the 6th number you say?",
+   "choices": [
+    "30¢",
+    "25¢",
+    "35¢",
+    "20¢"
+   ],
+   "answer": "30¢",
+   "rationale": "Sequence: 5, 10, 15, 20, 25, 30 → the 6th number is 30¢.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L216",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 216,
+   "format": "multiple_choice",
+   "prompt": "The hour hand is just before the 8 and the minute hand points to the 11. What time does the clock show in the morning?",
+   "choices": [
+    "7:55 a.m.",
+    "7:55 p.m.",
+    "8:55 a.m.",
+    "6:55 a.m."
+   ],
+   "answer": "7:55 a.m.",
+   "rationale": "The minute hand on the 11 means 55 minutes past the hour; the hour hand just before 8 indicates the hour is 7. Morning time is written as 7:55 a.m.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L216",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 216,
+   "format": "multiple_choice",
+   "prompt": "A digital clock shows 09:10 in the morning. How do you write this time using a.m. or p.m.?",
+   "choices": [
+    "9:10 a.m.",
+    "9:10 p.m.",
+    "10:10 a.m.",
+    "8:10 a.m."
+   ],
+   "answer": "9:10 a.m.",
+   "rationale": "Morning times use a.m.; the digital time 09:10 is written as 9:10 a.m. (leading zero omitted).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L347",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "data_stats",
+   "level": 347,
+   "format": "multiple_choice",
+   "prompt": "You measured five crayons: 3 cm, 4 cm, 4 cm, 5 cm, 3 cm. Which description matches the correct line plot?",
+   "choices": [
+    "Two X’s above 3, two X’s above 4, one X above 5.",
+    "One X above 3, three X’s above 4, one X above 5.",
+    "Two X’s above 3, one X above 4, two X’s above 5.",
+    "Three X’s above 3, one X above 4, one X above 5."
+   ],
+   "answer": "Two X’s above 3, two X’s above 4, one X above 5.",
+   "rationale": "The data contain two 3‑cm crayons, two 4‑cm crayons, and one 5‑cm crayon, so the line plot must show exactly those counts.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L347",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "data_stats",
+   "level": 347,
+   "format": "multiple_choice",
+   "prompt": "You measured six sticks: 7, 8, 7, 9, 8, 7. Which length occurs most often on the line plot?",
+   "choices": [
+    "7",
+    "8",
+    "9",
+    "6"
+   ],
+   "answer": "7",
+   "rationale": "The length 7 appears three times, more than any other measurement, so it is the mode shown on the plot.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L347",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "data_stats",
+   "level": 347,
+   "format": "multiple_choice",
+   "prompt": "A line plot for five pencils shows two X’s above 4 and one X above 5. The remaining two pencils are both 6 cm. Which description completes the plot?",
+   "choices": [
+    "Add two X’s above 6.",
+    "Add one X above 4 and one above 6.",
+    "Add two X’s above 5.",
+    "Add one X above 5 and one above 6."
+   ],
+   "answer": "Add two X’s above 6.",
+   "rationale": "The two missing pencils are both 6 cm, so the plot needs two additional X’s above the 6 mark.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L171",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 171,
+   "format": "multiple_choice",
+   "prompt": "Measuring the same table with centimeters gives a larger number than measuring it with meters. Why?",
+   "choices": [
+    "Centimeters are smaller units.",
+    "Centimeters are larger units.",
+    "Meters have more tick marks.",
+    "A centimeter ruler is longer."
+   ],
+   "answer": "Centimeters are smaller units.",
+   "rationale": "A smaller unit (centimeter) requires more units to cover the same length, so the count is larger.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A centimeter is smaller than a meter, so the same length has a larger numerical count when measured in centimeters.",
+      "url": "https://en.wikipedia.org/wiki/Meter_(unit_of_length)",
+      "quote": "SI prefixes can be used to denote decimal multiples and submultiples of the metre, as shown in the table below.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L171",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 171,
+   "format": "multiple_choice",
+   "prompt": "A book is 25 centimeters long. If you measure it to the nearest centimeter, what number do you record?",
+   "choices": [
+    "25 cm",
+    "0.25 m",
+    "250 mm",
+    "2.5 dm"
+   ],
+   "answer": "25 cm",
+   "rationale": "Measuring to the nearest centimeter means reporting the length in whole centimeters; 25 cm is the direct reading, whereas the other choices are equivalent conversions, not the nearest‑centimeter measurement.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L171",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "measurement",
+   "level": 171,
+   "format": "multiple_choice",
+   "prompt": "A hallway measures 8 meters with a meter stick. About how many centimeters would you count if you measured the same hallway with a centimeter ruler?",
+   "choices": [
+    "800 cm",
+    "80 cm",
+    "8000 cm",
+    "8 cm"
+   ],
+   "answer": "800 cm",
+   "rationale": "1 meter equals 100 centimeters, so 8 meters correspond to 8 × 100 = 800 centimeters; the smaller unit yields a larger count.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "1 meter equals 100 centimeters.",
+      "url": "https://en.wiktionary.org/wiki/meter",
+      "quote": "( Podhale ) alternative form of metr ( “ metre , meter ” ) ( one hundred centimeters )",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L325",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 325,
+   "format": "multiple_choice",
+   "prompt": "Which even number can be shown as an array of 5 equal rows?",
+   "choices": [
+    "10",
+    "12",
+    "14",
+    "16"
+   ],
+   "answer": "10",
+   "rationale": "An array of 5 equal rows represents 5 × n. For the total to be even, n must be even; 5 × 2 = 10 is the only even option.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L325",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 325,
+   "format": "multiple_choice",
+   "prompt": "Which equal‑addend sentence represents an even number using exactly two equal addends?",
+   "choices": [
+    "6+6 = 12",
+    "5+5+5 = 15",
+    "7+7+7+7 = 28",
+    "4+4+4 = 12"
+   ],
+   "answer": "6+6 = 12",
+   "rationale": "An even number expressed with exactly two equal addends is a double; 6+6 = 12 uses two equal addends, while the others use three or four addends.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L325",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 325,
+   "format": "multiple_choice",
+   "prompt": "An array has 4 rows with 3 objects in each row. Which equal‑addend sentence shows the total?",
+   "choices": [
+    "3+3+3+3=12",
+    "4+4+4=12",
+    "3+3+3=9",
+    "4+4+4+4=16"
+   ],
+   "answer": "3+3+3+3=12",
+   "rationale": "The array has 4 rows of 3, so the total is 3 added four times, which equals 12.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L325",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "mul_div",
+   "level": 325,
+   "format": "multiple_choice",
+   "prompt": "Which equal‑addend sentence uses three equal addends greater than 4 to make an even total?",
+   "choices": [
+    "6+6+6=18",
+    "5+5+5=15",
+    "4+4+4=12",
+    "3+3+3=9"
+   ],
+   "answer": "6+6+6=18",
+   "rationale": "Only 6+6+6=18 has three equal addends each greater than 4 and yields an even sum.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L379",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 379,
+   "format": "multiple_choice",
+   "prompt": "Which statement about equal shares of the same whole is true?",
+   "choices": [
+    "Equal shares must always have the same shape.",
+    "Equal shares can look different yet be equal size.",
+    "Equal shares are only ever called halves.",
+    "Equal shares cannot be given any name."
+   ],
+   "answer": "Equal shares can look different yet be equal size.",
+   "rationale": "Equal shares need not share the same shape; they only need to have the same size, and they are named according to the number of shares (halves, thirds, fourths, etc.).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Equal shares of the same whole have equal size even when they have different shapes.",
+      "url": "https://en.wiktionary.org/wiki/equal",
+      "quote": "A cube drawn face-on versus from one edge looks different, though we understand the two shapes to be the same.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L379",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 379,
+   "format": "multiple_choice",
+   "prompt": "A rectangle is divided into three equal parts. One division makes three long strips; another makes three L‑shaped pieces. What must be true about the three parts?",
+   "choices": [
+    "Each part has the same area.",
+    "The strips have more area than the L‑shapes.",
+    "The L‑shapes have more area than the strips.",
+    "Only the strips are equal shares."
+   ],
+   "answer": "Each part has the same area.",
+   "rationale": "Equal shares of the same whole must have equal area; the shape of the pieces (strips or L‑shapes) does not change the size of each share.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L357",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 357,
+   "format": "multiple_choice",
+   "prompt": "Which shape has five sides and five angles?",
+   "choices": [
+    "Pentagon",
+    "Hexagon",
+    "Quadrilateral",
+    "Triangle"
+   ],
+   "answer": "Pentagon",
+   "rationale": "A pentagon is defined by five sides and five angles; hexagons have six, quadrilaterals four, and triangles three.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A pentagon has five sides and five angles.",
+      "url": "https://en.wiktionary.org/wiki/femkant",
+      "quote": "pentagon (a polygon with five sides and five angles)",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "regrouping_money_and_arrays:L357",
+   "track_id": "math",
+   "grade_id": "regrouping_money_and_arrays",
+   "skill_id": "shapes",
+   "level": 357,
+   "format": "multiple_choice",
+   "prompt": "A flat shape has six sides and six angles. What is its name?",
+   "choices": [
+    "Hexagon",
+    "Pentagon",
+    "Quadrilateral",
+    "Triangle"
+   ],
+   "answer": "Hexagon",
+   "rationale": "A hexagon is defined as a polygon with six sides and six angles, matching the description.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A hexagon is a flat shape with six sides and angles.",
+      "url": "https://en.wiktionary.org/wiki/hexagon",
+      "quote": "( geometry ) A polygon with six sides and six angles.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "A polygon with six sides and six angles is a hexagon.",
+      "url": "https://en.wiktionary.org/wiki/hexagon",
+      "quote": "A polygon with six sides and six angles.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

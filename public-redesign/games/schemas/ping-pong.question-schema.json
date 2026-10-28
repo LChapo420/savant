@@ -1,0 +1,28 @@
+{
+  "engineId": "ping-pong",
+  "displayName": "Ping Pong",
+  "difficulty": "high",
+  "mechanic": "Question-gated restarts of a table-tennis rally. The user answers a question to restart the game, then one Serve & rally tap plays a rally over the court until the point is lost, and the next question gates the restart: correct restarts the serve, incorrect asks a new question with no restart. The session is open-ended (it keeps playing past 3 correct answers) and is quit through the Finish control, which ends the game reporting a draw.",
+  "questionType": "multiple_choice",
+  "questionCount": 50,
+  "questionCountNote": "50 unique questions per level. A round only ever moves forward through them: losing, answering wrong, or pressing Play again continues at the next unseen question, so the pool must outlast many rounds.",
+  "choicesPerQuestion": 4,
+  "answerIndexRange": [0, 3],
+  "difficultyScale": { "start": 7, "end": 9, "curve": "flat", "label": "high" },
+  "requiresExplanation": true,
+  "requiresTopicTag": true,
+  "plainTextOnly": true,
+  "distractorRules": "Wrong options must be the same kind of thing as the right one — same units, same part of speech, same level of detail, similar length. No option may be identifiable by its shape or position; each must be a mistake somebody at this level would actually make.",
+  "payloadShape": {
+    "schemaVersion": 1,
+    "meta": ["subject", "grade", "level", "topic", "title", "ageRange"],
+    "settings": {
+      "questionCount": 50,
+      "choicesPerTurn": 4,
+      "difficulty": { "start": 7, "end": 9, "curve": "flat" },
+      "timeLimitSec": null
+    },
+    "questions": ["id", "prompt", "choices[4]", "answerIndex", "explanation", "difficulty", "skill", "topic"],
+    "feedback": ["correct", "incorrect", "win", "lose", "draw", "outOfQuestions"]
+  }
+}

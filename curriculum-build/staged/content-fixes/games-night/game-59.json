@@ -1,0 +1,3242 @@
+{
+ "row_id": 59,
+ "engine_id": "coin-flip",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 79,
+ "generated_at": "2026-10-25T05:11:00.032Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 73,
+  "code_rejected": 2,
+  "sent_to_judges": 71,
+  "kept": 50,
+  "keep_rate_of_written": 0.685,
+  "judges": {
+   "both_answered": 71,
+   "picked_same_option": 62,
+   "a_picked_key": 66,
+   "b_picked_key": 67,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "coin-flip",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 79,
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "title": "Rubric Check: Pauses and Omissions",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 7,
+    "end": 9,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q36",
+    "prompt": "Which sentence follows the rubric requiring a comma after an introductory dependent clause, an ellipsis to indicate a trailing thought at the end of a sentence, and an em dash to add emphasis before a final independent clause?",
+    "choices": [
+     "After the storm passed, she stared at the horizon... the sun finally broke through.",
+     "After the storm passed she stared at the horizon...—the sun finally broke through.",
+     "After the storm passed, she stared at the horizon.—the sun finally broke through.",
+     "After the storm passed, she stared at the horizon...—the sun finally broke through."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence uses a comma after the introductory dependent clause, ends the main clause with an ellipsis to show a trailing thought, and follows it with an em dash that emphasizes the final independent clause.",
+    "difficulty": 8,
+    "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q46",
+    "prompt": "Choose the sentence that follows a rubric demanding a pair of commas to set off a nonrestrictive clause, an ellipsis omitting words in the middle of a quotation, and a dash to add emphasis before the final clause.",
+    "choices": [
+     "The author who won the prize, said, \"The story... matters\"—and the audience listened.",
+     "The author, who won the prize, said, \"The story... matters\"—and the audience listened.",
+     "The author, who won the prize said, \"The story... matters\"—and the audience listened.",
+     "The author, who won the prize, said, \"The story... matters\" and the audience listened."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first option correctly uses commas around the nonrestrictive clause, an ellipsis inside the quotation to show omitted words, and an em dash before the final clause for emphasis.",
+    "difficulty": 9,
+    "skill": "punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q43",
+    "prompt": "Choose the sentence that follows a rubric requiring an ellipsis to show an omission at the end of a clause, a dash to add emphasis before the final clause, and commas separating items in a series where the last item is omitted and marked by the ellipsis.",
+    "choices": [
+     "She gathered apples, oranges, bananas...—the fruit was fresh, and served them.",
+     "She gathered apples, oranges, bananas... the fruit was fresh—and served them.",
+     "She gathered apples, oranges, bananas...—the fruit was fresh—and served them.",
+     "She gathered apples, oranges, bananas—the fruit was fresh...—and served them."
+    ],
+    "answerIndex": 2,
+    "explanation": "Only the first sentence includes the series commas, the terminal ellipsis, and the emphatic dash before the concluding clause.",
+    "difficulty": 8,
+    "skill": "Rubric-based punctuation evaluation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which sentence correctly uses an ellipsis to stand for an omitted alternative within a quoted question?",
+    "choices": [
+     "Do you have the map, the printed version?",
+     "Do you have the map; the printed version?",
+     "Do you have the map—the printed version?",
+     "Do you have the map... the printed version?"
+    ],
+    "answerIndex": 3,
+    "explanation": "The ellipsis represents the omitted alternative expressed by or before the second option, the printed version.",
+    "difficulty": 8,
+    "skill": "Using ellipses for omitted alternatives",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q1",
+    "prompt": "Which sentence uses an ellipsis to show that the end of a list has been deliberately omitted?",
+    "choices": [
+     "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and...",
+     "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and—",
+     "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and,",
+     "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and:"
+    ],
+    "answerIndex": 0,
+    "explanation": "The ellipsis after and indicates that the list of forgotten items is deliberately left unfinished.",
+    "difficulty": 7,
+    "skill": "Recognizing ellipses for omitted endings",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which sentence correctly uses a dash to mark an abrupt break within a quotation and a comma to separate two independent clauses joined by a coordinating conjunction?",
+    "choices": [
+     "\"We need to move—now,\" Priya said, and the team grabbed its equipment.",
+     "\"We need to move now,\" Priya said—and the team grabbed its equipment.",
+     "\"We need to move—now,\" Priya said and the team grabbed its equipment.",
+     "\"We need to move... now,\" Priya said, and the team grabbed its equipment."
+    ],
+    "answerIndex": 0,
+    "explanation": "The em dash creates an abrupt break within the quotation, and the comma before and correctly separates two independent clauses.",
+    "difficulty": 8,
+    "skill": "Combining an internal dash with coordinating-clause punctuation",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which sentence uses an ellipsis to indicate an omission at the end of a clause, an em dash to insert an abrupt interruption, and a comma before a coordinating conjunction?",
+    "choices": [
+     "She promised to finish the report... the deadline passed—and the client called.",
+     "She promised to finish the report... the deadline passed, and the client called.",
+     "She promised to finish the report—... the deadline passed, and the client called.",
+     "She promised to finish the report...—the deadline passed, and the client called."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first option contains an ellipsis at the end of the clause, an em dash that abruptly interrupts the flow, and a comma before the coordinating conjunction \"and.\"",
+    "difficulty": 8,
+    "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q6",
+    "prompt": "Choose the sentence that follows the rubric by using an ellipsis for omitted material in the middle of a sentence, a pair of dashes to set off an appositive, and a comma before a coordinating conjunction.",
+    "choices": [
+     "The manuscript—an early draft... was revised, and the editor approved it.",
+     "The manuscript—an early draft...—was revised, and the editor approved it.",
+     "The manuscript—an early draft...—was revised and the editor approved it.",
+     "The manuscript—an early draft...—was revised; and the editor approved it."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option A encloses the appositive with a pair of em dashes, places an ellipsis inside the appositive to show omitted material, and uses a comma before the coordinating conjunction joining two independent clauses.",
+    "difficulty": 9,
+    "skill": "Punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which sentence correctly punctuates a question within a quotation and uses a dash to introduce an interrupting action?",
+    "choices": [
+     "'Did you finish the map,' the guide asked—then he pointed north.",
+     "'Did you finish the map?' the guide asked—then he pointed north.",
+     "'Did you finish the map' the guide asked—then he pointed north.",
+     "'Did you finish the map?' the guide asked, then he pointed north."
+    ],
+    "answerIndex": 1,
+    "explanation": "A question mark completes the quoted question, no comma is needed before the attribution, and the em dash introduces the interrupting action.",
+    "difficulty": 8,
+    "skill": "Punctuating quotations and introducing interruptions with dashes",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which sentence follows the rubric requiring a pair of commas to set off a nonrestrictive clause, an ellipsis to omit the final item in a series, and a dash to introduce an abrupt interruption?",
+    "choices": [
+     "My sister, who loves hiking, packed water, snacks, maps...—then the trail vanished.",
+     "My sister who loves hiking packed water, snacks, maps...—then the trail vanished.",
+     "My sister, who loves hiking, packed water, snacks, maps—then the trail vanished.",
+     "My sister, who loves hiking, packed water, snacks, maps... then the trail vanished."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence sets off the nonrestrictive clause with commas, uses an ellipsis to omit the last item in the series, and employs a dash to introduce the abrupt interruption.",
+    "difficulty": 8,
+    "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which sentence correctly uses a comma before a coordinating conjunction that joins two contrasting independent clauses?",
+    "choices": [
+     "The runners reached the hill but, the storm forced them to stop.",
+     "The runners reached the hill; but the storm forced them to stop.",
+     "The runners reached the hill, but the storm forced them to stop.",
+     "The runners reached the hill: but the storm forced them to stop."
+    ],
+    "answerIndex": 2,
+    "explanation": "The comma before but correctly separates the two independent clauses while showing their contrast.",
+    "difficulty": 8,
+    "skill": "Applying commas between independent clauses",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which sentence meets a rubric requiring a comma after an introductory dependent clause, a dash for an abrupt interruption, and an ellipsis showing omitted words in a quotation?",
+    "choices": [
+     "When the lights flickered the projector stopped—the audience groaned—and the teacher said, “Wait... give me a minute.”",
+     "When the lights flickered, the projector stopped, the audience groaned, and the teacher said, “Wait... give me a minute.”",
+     "When the lights flickered, the projector stopped—the audience groaned—and the teacher said, “Wait, give me a minute.”",
+     "When the lights flickered, the projector stopped—the audience groaned—and the teacher said, “Wait... give me a minute.”"
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence correctly includes a comma after the introductory clause, uses paired em dashes around the interruption, and shows omitted words with an ellipsis in the quotation.",
+    "difficulty": 9,
+    "skill": "Selecting punctuation that fulfills multiple criteria",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q44",
+    "prompt": "Identify the sentence that meets a rubric calling for matching commas around a nonrestrictive clause, an ellipsis omitting words in the middle of a quotation, and an em dash setting off an explanatory interruption after the quotation.",
+    "choices": [
+     "The author, who won the prize, said, 'The story... ends quietly', a reminder that silence speaks.",
+     "The author who won the prize, said, 'The story... ends quietly'—a reminder that silence speaks.",
+     "The author, who won the prize, said, 'The story ends quietly'—a reminder that silence speaks.",
+     "The author, who won the prize, said, 'The story... ends quietly'—a reminder that silence speaks."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence correctly encloses the nonrestrictive clause in commas, uses an ellipsis inside the quote, and follows the quote with an em dash introducing the explanation.",
+    "difficulty": 8,
+    "skill": "Rubric-based punctuation evaluation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q21",
+    "prompt": "Evaluate Example 3: My neighbor, a retired pilot, called, 'The sky is clearing—wait, the storm is coming!' Which rubric feedback is accurate?",
+    "choices": [
+     "The sentence uses matching commas for the nonrestrictive appositive and a dash to mark the interruption in the quoted speech.",
+     "The sentence uses matching dashes for the nonrestrictive appositive and a comma to mark the interruption in the quoted speech.",
+     "The sentence uses matching commas for the restrictive appositive and an ellipsis to mark the interruption in the quoted speech.",
+     "The sentence needs no commas around the nonrestrictive appositive and uses a dash to mark an omission in the quoted speech."
+    ],
+    "answerIndex": 0,
+    "explanation": "The feedback correctly recognizes both the matching commas around the nonrestrictive appositive and the dash indicating an interruption in the quoted speech.",
+    "difficulty": 8,
+    "skill": "Evaluating punctuation against a writing rubric",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q31",
+    "prompt": "Which sentence correctly uses matching commas to set off a nonrestrictive clause that adds information?",
+    "choices": [
+     "The river, which flooded the lower road forced the hikers to turn back.",
+     "The river which flooded the lower road, forced the hikers to turn back.",
+     "The river, which flooded the lower road, forced the hikers to turn back.",
+     "The river which flooded the lower road forced the hikers to turn back."
+    ],
+    "answerIndex": 2,
+    "explanation": "The clause which flooded the lower road is nonrestrictive, so matching commas correctly set it off as additional information.",
+    "difficulty": 7,
+    "skill": "Distinguishing restrictive and nonrestrictive clauses",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q39",
+    "prompt": "A student writes: After the storm passed, the guide—a retired ranger—said, “We should continue...” Which rubric feedback is accurate?",
+    "choices": [
+     "The sentence misses the rubric because the ellipsis shows that the speaker completed the thought rather than leaving it unfinished.",
+     "The sentence misses the rubric because the appositive is correctly enclosed by paired commas, making the em dashes unnecessary.",
+     "The sentence meets the rubric because the introductory dependent clause is followed by a comma, the appositive is enclosed by paired em dashes, and the ellipsis marks an unfinished thought.",
+     "The sentence misses the rubric because the introductory dependent clause is correctly followed by a dash rather than a comma."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence satisfies all three rubric requirements by using the required comma, paired em dashes, and ellipsis in their intended functions.",
+    "difficulty": 8,
+    "skill": "Checking a written sentence against punctuation criteria",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q18",
+    "prompt": "The draft reads: The guide said, 'Take the north trail... it is clearer,' and when rain began the hikers followed the map. Which revision best fixes it so it meets the rubric for an ellipsis showing omitted words, paired dashes setting off an interruption, and a comma joining two independent clauses?",
+    "choices": [
+     "The guide said, 'Take the north trail... it is clearer' and when rain began the hikers followed the map.",
+     "The guide said, 'Take the north trail... it is clearer,' and—when the rain began—the hikers followed the map.",
+     "The guide said, 'Take the north trail... it is clearer,' and when rain began, the hikers followed the map.",
+     "The guide said, 'Take the north trail... it is clearer,' and when rain began the hikers—followed the map."
+    ],
+    "answerIndex": 1,
+    "explanation": "This revision uses the ellipsis to leave a connection unstated, pairs dashes around the interruption, and places a comma before and to join the two independent clauses.",
+    "difficulty": 9,
+    "skill": "Rubric check combining ellipses, dashes, and commas",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which sentence correctly follows a rubric requiring a comma after an introductory dependent clause, paired dashes around an appositive, and an ellipsis showing hesitation?",
+    "choices": [
+     "Before the audition Lena said, 'I am ready... probably.' The judge—the sponsor's assistant—watched from the balcony.",
+     "Before the audition, Lena said, 'I am ready... probably.' The judge, the sponsor's assistant, watched from the balcony.",
+     "Before the audition, Lena said, 'I am ready... probably.' The judge—the sponsor's assistant—watched from the balcony.",
+     "Before the audition, Lena said, 'I am ready... probably.' The judge—the sponsor's assistant watched from the balcony."
+    ],
+    "answerIndex": 2,
+    "explanation": "The comma after the introductory dependent clause, the paired dashes around the appositive, and the ellipsis inside the quotation each meet the stated rubric.",
+    "difficulty": 8,
+    "skill": "Rubric check for dependent-clause commas, paired dashes, and hesitation ellipses",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which sentence correctly uses commas to separate items in a series where the final item is omitted and indicated by an ellipsis, and a pair of dashes to insert a parenthetical comment?",
+    "choices": [
+     "She packed socks, shirts, pants... (the essentials) and left.",
+     "She packed socks, shirts, pants...—the essentials, and left.",
+     "She packed socks, shirts, pants...—the essentials—and left.",
+     "She packed socks, shirts, pants... the essentials—and left."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option A shows a series separated by commas with an ellipsis indicating the omitted final item, and it correctly surrounds the parenthetical comment with a pair of em dashes.",
+    "difficulty": 8,
+    "skill": "Punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which sentence uses an ellipsis immediately after an opening quotation mark to represent omitted introductory words?",
+    "choices": [
+     "Lena said, \"We can meet at seven if the library is open...\"",
+     "Lena said... \"We can meet at seven if the library is open.\"",
+     "Lena said, \"We can meet at seven if the library is open.\"",
+     "Lena said, \"...we can meet at seven if the library is open.\""
+    ],
+    "answerIndex": 3,
+    "explanation": "The ellipsis appears directly after the opening quotation mark and signals that introductory words have been omitted before we can meet at seven.",
+    "difficulty": 8,
+    "skill": "Showing omitted words with an ellipsis",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence shows an ellipsis marking a pause within a quoted thought, a pair of dashes signaling an abrupt shift, and a comma setting off a nonrestrictive clause?",
+    "choices": [
+     "'I wonder...' she paused—if the train will arrive, which is uncertain, on time.",
+     "'I wonder...'—she paused—if the train will arrive, which is uncertain, on time.",
+     "'I wonder...'—she paused if the train will arrive, which is uncertain, on time.",
+     "'I wonder...'—she paused—if the train will arrive which is uncertain on time."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first option contains an ellipsis inside the quotation, a pair of dashes surrounding \"she paused\" to mark an abrupt shift, and commas that set off the nonrestrictive clause \"which is uncertain.\"",
+    "difficulty": 9,
+    "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which sentence correctly encloses a nonrestrictive appositive in a matching pair of commas?",
+    "choices": [
+     "Her brother a medical student, volunteered to demonstrate the procedure.",
+     "Her brother; a medical student, volunteered to demonstrate the procedure.",
+     "Her brother, a medical student, volunteered to demonstrate the procedure.",
+     "Her brother, a medical student volunteered to demonstrate the procedure."
+    ],
+    "answerIndex": 2,
+    "explanation": "The appositive a medical student is nonrestrictive, so it is correctly enclosed by a matching pair of commas.",
+    "difficulty": 8,
+    "skill": "Commas with a nonrestrictive appositive",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q49",
+    "prompt": "Which sentence correctly uses a comma after an introductory dependent clause, paired dashes to set off an appositive, and an ellipsis to show omitted words in the middle of a quotation?",
+    "choices": [
+     "After the briefing ended, the coordinator—the visiting archivist—said, 'We begin... the second phase.'",
+     "After the briefing ended the coordinator—the visiting archivist—said, 'We begin... the second phase.'",
+     "After the briefing ended, the coordinator—the visiting archivist said, 'We begin... the second phase.'",
+     "After the briefing ended, the coordinator—the visiting archivist—said, 'We begin the second phase...'"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence has the required comma after the introductory dependent clause, matching dashes around the appositive, and an ellipsis showing omitted words inside the quotation.",
+    "difficulty": 8,
+    "skill": "Applying punctuation to a writing rubric",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which sentence correctly uses a comma after an introductory interjection and a dash to emphasize an urgent instruction?",
+    "choices": [
+     "Oh; the train is approaching—turn around!",
+     "Oh the train is approaching—turn around!",
+     "Oh, the train is approaching—turn around!",
+     "Oh, the train is approaching - turn around!"
+    ],
+    "answerIndex": 2,
+    "explanation": "The comma correctly follows the introductory interjection Oh, and the em dash emphasizes the urgent instruction turn around.",
+    "difficulty": 7,
+    "skill": "Punctuation after interjections and dashes for emphasis",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q41",
+    "prompt": "Which sentence satisfies a rubric that requires a comma after an introductory dependent clause, a pair of dashes around an appositive, and an ellipsis at the end of a quotation to show a trailing thought?",
+    "choices": [
+     "After the meeting ended, the manager—a seasoned pilot—said, 'We will review the data...'",
+     "After the meeting ended, the manager, a seasoned pilot, said, 'We will review the data...'",
+     "After the meeting ended the manager—a seasoned pilot—said, 'We will review the data...'",
+     "After the meeting ended, the manager—a seasoned pilot—said, 'We will review the data.'"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first option includes the required introductory comma, the appositive set off by matching dashes, and an ellipsis at the end of the quoted material.",
+    "difficulty": 8,
+    "skill": "Rubric-based punctuation evaluation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which sentence best follows the rubric by using an ellipsis for an omission, a dash for an interruption, and a comma to mark a pause?",
+    "choices": [
+     "Maya said, Come to the station at eight... She checked the map—the north entrance was closed—and chose another route, then headed toward the south gate.",
+     "Maya said, Come to the station at eight... She checked the map, the north entrance was closed, and chose another route, then headed toward the south gate.",
+     "Maya said, Come to the station at eight: She checked the map—the north entrance was closed—and chose another route, then headed toward the south gate.",
+     "Maya said, Come to the station at eight— She checked the map—the north entrance was closed—and chose another route, then headed toward the south gate."
+    ],
+    "answerIndex": 0,
+    "explanation": "This version uses an ellipsis for the unfinished instruction, a dash to interrupt with route information, and a comma before then to mark a brief pause.",
+    "difficulty": 9,
+    "skill": "Combining ellipses, dashes, and commas in original writing",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q27",
+    "prompt": "Which revision best follows a rubric requiring a comma after an introductory dependent clause and a dash to set off an explanatory interruption?",
+    "choices": [
+     "Although the lights flickered the projection continued—barely visible on the screen.",
+     "Although the lights flickered, the projection continued, barely visible on the screen.",
+     "Although the lights flickered, the projection continued—barely visible on the screen.",
+     "Although the lights flickered the projection continued, barely visible on the screen."
+    ],
+    "answerIndex": 2,
+    "explanation": "This revision correctly separates the introductory dependent clause with a comma and uses a dash to set off the explanatory phrase.",
+    "difficulty": 8,
+    "skill": "Revising introductory clauses and explanatory dashes",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q11",
+    "prompt": "Select the sentence that uses a comma after an introductory prepositional phrase, an ellipsis to show a trailing thought, and an em dash to insert an abrupt interruption before the final clause.",
+    "choices": [
+     "In the quiet hallway she whispered...—the lights flickered, and the door slammed.",
+     "At dawn the hikers paused...—the storm broke, yet they continued.",
+     "In the quiet hallway, she whispered...—the lights flickered, and the door slammed.",
+     "In the quiet hallway, she whispered... the lights flickered, and the door slammed."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence begins with the introductory prepositional phrase \"In the quiet hallway,\" follows it with a comma, uses an ellipsis after \"whispered\" to indicate a trailing thought, and employs a single em dash before the final clause \"the lights flickered, and the door slammed.\"",
+    "difficulty": 8,
+    "skill": "Identify correct punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which candidate fully satisfies a rubric requiring a comma after an introductory dependent clause, paired dashes around an appositive, and an ellipsis for omitted material in the middle of a quotation?",
+    "choices": [
+     "Before the interview began, the candidate—a nervous junior—said, “I studied chemistry, biology, and physics...”",
+     "Before the interview began the candidate—a nervous junior—said, “I studied chemistry, biology... and physics.”",
+     "Before the interview began, the candidate, a nervous junior, said, “I studied chemistry, biology... and physics.”",
+     "Before the interview began, the candidate—a nervous junior—said, “I studied chemistry, biology... and physics.”"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct candidate places a comma after the introductory dependent clause, uses paired dashes around the appositive, and puts an ellipsis between omitted and stated items in the quotation.",
+    "difficulty": 8,
+    "skill": "Checking a sentence against a punctuation rubric",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which candidate best follows a rubric requiring a comma after an introductory participial phrase, an em dash to set off an explanatory interruption, and an ellipsis for a trailing thought in dialogue?",
+    "choices": [
+     "Staring at the error message Maya whispered, \"We should restart...\"—the laptop had frozen.",
+     "Staring at the error message, Maya whispered, \"We should restart...\"—the laptop had frozen.",
+     "Staring at the error message, Maya whispered—\"We should restart...\" the laptop had frozen.",
+     "Staring at the error message, Maya whispered, \"We should restart\"—the laptop had frozen..."
+    ],
+    "answerIndex": 1,
+    "explanation": "The introductory participial phrase is followed by a comma, the ellipsis marks the trailing quoted thought, and the em dash sets off the explanatory interruption.",
+    "difficulty": 9,
+    "skill": "Checking introductory, dialogue, and explanatory punctuation",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q14",
+    "prompt": "Select the sentence that uses a comma after an introductory dependent clause, an ellipsis to omit words in the middle of a quotation, and a pair of dashes to enclose an interrupting phrase.",
+    "choices": [
+     "After the meeting ended she said, 'We must decide... now'—the deadline loomed—and the team agreed.",
+     "After the meeting ended, she said, 'We must decide... now'—the deadline loomed—and the team agreed.",
+     "After the meeting ended, she said, 'We must decide now'—the deadline loomed—and the team agreed.",
+     "After the meeting ended, she said, 'We must decide... now'—the deadline loomed, and the team agreed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence begins with the dependent clause \"After the meeting ended,\" follows it with a comma, includes an ellipsis inside the quotation to show omitted words, and surrounds the interrupting phrase \"the deadline loomed\" with a pair of dashes.",
+    "difficulty": 8,
+    "skill": "Identify correct punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which sentence uses a comma after an introductory clause, an ellipsis to show hesitation, and an em dash to add emphasis before the final clause?",
+    "choices": [
+     "After the meeting ended, she hesitated...—the decision was final.",
+     "After the meeting ended she hesitated...—the decision was final.",
+     "After the meeting ended, she hesitated—the decision was final...",
+     "After the meeting ended, she hesitated... the decision was final."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first option places a comma after the introductory clause, uses an ellipsis to indicate hesitation, and follows it with an em dash that emphasizes the concluding clause.",
+    "difficulty": 8,
+    "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which sentence correctly uses a comma before a coordinating conjunction joining two independent clauses and a dash to emphasize the final phrase?",
+    "choices": [
+     "The rehearsal ran late but the choir still finished—exactly on time.",
+     "The rehearsal, ran late, but the choir still finished—exactly on time.",
+     "The rehearsal ran late, but the choir still finished - exactly on time.",
+     "The rehearsal ran late, but the choir still finished—exactly on time."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma joins two independent clauses with but, and the em dash emphasizes the phrase exactly on time.",
+    "difficulty": 8,
+    "skill": "Comma splices, coordinating conjunctions, and dashes for emphasis",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which sentence uses an em dash to mark an interruption inside a quotation?",
+    "choices": [
+     "\"We need to le—\" Lina grabbed her coat and ran.",
+     "\"We need to leave:\" Lina grabbed her coat and ran.",
+     "\"We need to leave,\" Lina grabbed her coat and ran.",
+     "\"We need to leave.\" Lina grabbed her coat—and ran."
+    ],
+    "answerIndex": 0,
+    "explanation": "The em dash inside the quotation captures the speaker's abrupt interruption after le and also functions as the closing punctuation.",
+    "difficulty": 9,
+    "skill": "Em dash for an interrupted quotation",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q13",
+    "prompt": "Identify the sentence that uses commas to separate items in a series, an ellipsis to omit the final item, and a pair of dashes to set off an appositive describing the series.",
+    "choices": [
+     "She packed socks, shirts, pants...—her essential clothing—and left for the trip.",
+     "She packed socks, shirts, pants...—her essential clothing, and left for the trip.",
+     "She packed socks, shirts, pants—her essential clothing... and left for the trip.",
+     "She packed socks, shirts, pants... her essential clothing—and left for the trip."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence lists three items separated by commas, uses an ellipsis after \"pants\" to show the omitted final item, and encloses the appositive \"her essential clothing\" with a pair of dashes.",
+    "difficulty": 8,
+    "skill": "Identify correct punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which sentence correctly leaves a restrictive clause unpunctuated by commas and uses a dash to add emphasis to the final phrase?",
+    "choices": [
+     "The students, who studied for the exam, passed easily—some in record time.",
+     "The students who studied for the exam, passed easily—some in record time.",
+     "The students who studied for the exam passed easily - some in record time.",
+     "The students who studied for the exam passed easily—some in record time."
+    ],
+    "answerIndex": 3,
+    "explanation": "The restrictive clause who studied for the exam correctly takes no commas, and the em dash adds emphasis to some in record time.",
+    "difficulty": 7,
+    "skill": "Distinguishing restrictive clauses from nonrestrictive clauses",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which sentence uses an ellipsis to mark words left unstated at the end of a speaker's thought?",
+    "choices": [
+     "Either you apologize, or— Eli said, though he did not finish the warning.",
+     "Either you apologize, or, Eli said, though he did not finish the warning.",
+     "Either you apologize, or: Eli said, though he did not finish the warning.",
+     "Either you apologize, or... Eli said, though he did not finish the warning."
+    ],
+    "answerIndex": 3,
+    "explanation": "The ellipsis marks the unstated alternative that Eli leaves unexpressed in his warning.",
+    "difficulty": 8,
+    "skill": "Using ellipses in unfinished speech",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which sentence correctly uses a pair of commas to set off a nonrestrictive clause, an ellipsis to omit words at the end of a quotation, and a dash to add emphasis before a final independent clause?",
+    "choices": [
+     "The professor, who had taught for decades, said, 'Remember the deadline...' the class fell silent, and everyone took notes.",
+     "The professor who had taught for decades, said, 'Remember the deadline...'—the class fell silent, and everyone took notes.",
+     "The professor, who had taught for decades, said, 'Remember the deadline'—the class fell silent, and everyone took notes.",
+     "The professor, who had taught for decades, said, 'Remember the deadline...'—the class fell silent, and everyone took notes."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence surrounds the nonrestrictive clause \"who had taught for decades\" with a pair of commas, ends the quotation with an ellipsis, and places an em dash before the final independent clause \"the class fell silent, and everyone took notes.\"",
+    "difficulty": 8,
+    "skill": "Identify correct punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which sentence correctly uses a comma before a coordinating conjunction joining two independent clauses, a dash to mark an interruption, and an ellipsis to show a speaker's trailing thought?",
+    "choices": [
+     "The technician said, 'We can begin the survey now but the antenna needs checking...'—she grabbed the antenna.",
+     "The technician said, 'We can begin the survey now, but the antenna needs checking...'—she grabbed the antenna.",
+     "The technician said, 'We can begin the survey now; but the antenna needs checking...'—she grabbed the antenna.",
+     "The technician said, 'We can begin the survey now, but the antenna needs checking'—she grabbed the antenna."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma joins two independent clauses with but, the ellipsis marks the technician's trailing thought, and the dash introduces the interrupting action.",
+    "difficulty": 9,
+    "skill": "Distinguishing commas, dashes, and ellipses",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which sentence meets a rubric that requires a comma after an introductory prepositional phrase, an ellipsis indicating hesitation within a quotation, and an em dash marking an abrupt interruption?",
+    "choices": [
+     "In the quiet hallway, she whispered, \"I don't know...\"—the lights flickered.",
+     "In the quiet hallway she whispered, \"I don't know...\"—the lights flickered.",
+     "In the quiet hallway, she whispered \"I don't know...\"—the lights flickered.",
+     "In the quiet hallway, she whispered, \"I don't know...\" the lights flickered."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first option includes the required comma after the introductory prepositional phrase, an ellipsis showing hesitation inside the quotation, and an em dash that introduces the abrupt interruption.",
+    "difficulty": 8,
+    "skill": "punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which sentence correctly uses a pair of dashes to interrupt the main sentence with relevant information?",
+    "choices": [
+     "The novel, which won several awards, examines the effects of public scrutiny.",
+     "The novel—which won several awards—examines the effects of public scrutiny.",
+     "The novel—which won several awards, examines the effects of public scrutiny.",
+     "The novel; which won several awards—examines the effects of public scrutiny."
+    ],
+    "answerIndex": 1,
+    "explanation": "The paired dashes correctly set off the nonessential clause which won several awards from the main sentence.",
+    "difficulty": 8,
+    "skill": "Using dashes for interruptions",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which sentence correctly uses a dash to mark an interruption in a quoted thought and correctly punctuates the dialogue tag?",
+    "choices": [
+     "The pilot said, 'We are landing now'—then the dashboard flashed red.",
+     "The pilot said, 'We are landing now,' then the dashboard flashed red.",
+     "The pilot said 'We are landing now'—then the dashboard flashed red.",
+     "The pilot said, 'We are landing now'; then the dashboard flashed red."
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence places the dash at the abrupt shift from the pilot's statement to the dashboard alert and correctly punctuates the dialogue tag.",
+    "difficulty": 8,
+    "skill": "Showing interruptions in dialogue",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q30",
+    "prompt": "A student writes: The botanist, who had collected the samples for years, opened the case, and a sealed envelope waited inside. Which feedback is accurate if the rubric requires paired dashes, an ellipsis for omission, and a comma before a coordinating conjunction?",
+    "choices": [
+     "The sentence has paired dashes and an ellipsis, so it meets the full rubric.",
+     "The sentence has the required comma before and, but it needs paired dashes and an ellipsis to meet the full rubric.",
+     "The comma before and is unnecessary because the first independent clause is incomplete.",
+     "The commas around the who clause correctly satisfy the requirement for paired dashes."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence includes the required comma before and, but it uses paired commas rather than dashes and lacks an ellipsis for omission.",
+    "difficulty": 9,
+    "skill": "Evaluating whether a sentence meets a rubric",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q25",
+    "prompt": "Which candidate best follows a rubric requiring a comma after an introductory dependent clause, paired dashes around an appositive, and an ellipsis at the end of a quotation?",
+    "choices": [
+     "After the rehearsal ended, the director—the guest coach—said, 'We will try again...'",
+     "After the rehearsal ended the director—the guest coach—said, 'We will try again...'",
+     "After the rehearsal ended, the director—the guest coach—said, 'We will try again'",
+     "After the rehearsal ended, the director—the guest coach said, 'We will try again...'"
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence uses a comma after the introductory dependent clause, paired dashes around the appositive, and an ellipsis to leave the quoted thought unfinished.",
+    "difficulty": 8,
+    "skill": "Applying a three-part punctuation rubric",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q35",
+    "prompt": "Which sentence follows the rubric requiring an ellipsis to omit words in the middle of a quotation, a pair of dashes to set off an appositive, and a comma before a coordinating conjunction joining two independent clauses?",
+    "choices": [
+     "The reporter said, 'The evidence... was missing', the key witness, and the editor demanded a retraction.",
+     "The reporter said, 'The evidence was missing'—the key witness—, and the editor demanded a retraction.",
+     "The reporter said, 'The evidence... was missing'—the key witness—, and the editor demanded a retraction.",
+     "The reporter said, 'The evidence... was missing'—the key witness— and the editor demanded a retraction."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence includes an ellipsis inside the quotation, encloses the appositive 'the key witness' with a pair of dashes, and places a comma before the coordinating conjunction 'and' that joins two independent clauses.",
+    "difficulty": 8,
+    "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q26",
+    "prompt": "A student writes: Mina explained the delay, then added, 'The repairs will take two days...' Which rubric feedback is accurate?",
+    "choices": [
+     "The ellipsis indicates that a word has been omitted from the middle of the quoted sentence.",
+     "The ellipsis shows that the speaker leaves the end of the quoted thought unstated.",
+     "The comma after delay is required to show that two independent clauses are joined.",
+     "The quotation requires a period because the ellipsis is being used as a decorative pause."
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis at the end of the quotation shows that the speaker leaves the remainder of the thought unstated.",
+    "difficulty": 7,
+    "skill": "Checking ellipses in quoted thoughts",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q38",
+    "prompt": "Which sentence follows a rubric requiring a comma after an introductory dependent clause, paired em dashes around an appositive, and an ellipsis showing hesitation in dialogue?",
+    "choices": [
+     "Before the trial began, the witness, clearly nervous, said, “I only remember the red door...”",
+     "Before the trial began, the witness—clearly nervous—said, “I only remember the red door...”",
+     "Before the trial began, the witness—clearly nervous—said, “I only remember the red door.”",
+     "Before the trial began the witness—clearly nervous—said, “I only remember the red door...”"
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence places a comma after the introductory dependent clause, encloses the appositive in paired em dashes, and uses an ellipsis to show the speaker’s hesitation.",
+    "difficulty": 8,
+    "skill": "Applying punctuation requirements from a rubric",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which sentence fulfills a rubric that asks for a comma after an introductory prepositional phrase, an ellipsis indicating the omitted final item in a series, and a pair of dashes setting off a nonrestrictive clause?",
+    "choices": [
+     "In the quiet hallway she packed pens, notebooks, folders...—the essential supplies—before heading out.",
+     "In the quiet hallway, she packed pens, notebooks, folders...—the essential supplies—before heading out.",
+     "In the quiet hallway, she packed pens, notebooks, folders... the essential supplies—before heading out.",
+     "In the quiet hallway, she packed pens, notebooks, folders—the essential supplies—before heading out."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first option correctly places the introductory comma, uses an ellipsis to omit the last listed item, and encloses the nonrestrictive clause in matching dashes.",
+    "difficulty": 8,
+    "skill": "Rubric-based punctuation evaluation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q47",
+    "prompt": "Which sentence satisfies a rubric requiring a comma after an introductory dependent clause, a pair of em dashes around an appositive, and an ellipsis showing omission at the end of a quoted question?",
+    "choices": [
+     "Before the interview started, the candidate—a nervous applicant asked, \"May I begin...\"",
+     "Before the interview started the candidate—a nervous applicant—asked, \"May I begin...\"",
+     "Before the interview started, the candidate—a nervous applicant—asked, \"May I begin...\"",
+     "Before the interview started, the candidate—a nervous applicant—asked \"May I begin...\""
+    ],
+    "answerIndex": 2,
+    "explanation": "The first option includes the comma after the introductory dependent clause, matching em dashes around the appositive \"a nervous applicant\", and an ellipsis at the end of the quoted question.",
+    "difficulty": 9,
+    "skill": "punctuation for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which sentence uses a pair of em dashes to set off an appositive without introducing a comma?",
+    "choices": [
+     "The dancer, a first-year student—performed the difficult routine without a mistake.",
+     "The dancer—a first-year student, performed the difficult routine without a mistake.",
+     "The dancer; a first-year student—performed the difficult routine without a mistake.",
+     "The dancer—a first-year student—performed the difficult routine without a mistake."
+    ],
+    "answerIndex": 3,
+    "explanation": "The paired em dashes correctly set off the appositive a first-year student from the main sentence.",
+    "difficulty": 8,
+    "skill": "Paired em dashes around an appositive",
+    "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   }
+  ],
+  "feedback": {
+   "correct": "Sharp eye! That one doubles your stake.",
+   "incorrect": "Half lost. Re-read the pause before you flip again.",
+   "win": "One hundred points! Your sentences pass every rubric check.",
+   "lose": "The pot ran dry. Remember: comma for mild, dash for sharp, ellipsis for trailing or omitted.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Which sentence uses an ellipsis to show that the end of a list has been deliberately omitted?",
+   "choices": [
+    "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and...",
+    "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and—",
+    "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and,",
+    "After packing her sketchbook, Maya realized she had also forgotten her eraser, colored pencils, and:"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis after and indicates that the list of forgotten items is deliberately left unfinished.",
+   "difficulty": 7,
+   "skill": "Recognizing ellipses for omitted endings",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a pair of dashes to interrupt the main sentence with relevant information?",
+   "choices": [
+    "The novel, which won several awards, examines the effects of public scrutiny.",
+    "The novel—which won several awards—examines the effects of public scrutiny.",
+    "The novel—which won several awards, examines the effects of public scrutiny.",
+    "The novel; which won several awards—examines the effects of public scrutiny."
+   ],
+   "answerIndex": 1,
+   "explanation": "The paired dashes correctly set off the nonessential clause which won several awards from the main sentence.",
+   "difficulty": 8,
+   "skill": "Using dashes for interruptions",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a comma before a coordinating conjunction that joins two contrasting independent clauses?",
+   "choices": [
+    "The runners reached the hill but, the storm forced them to stop.",
+    "The runners reached the hill; but the storm forced them to stop.",
+    "The runners reached the hill, but the storm forced them to stop.",
+    "The runners reached the hill: but the storm forced them to stop."
+   ],
+   "answerIndex": 2,
+   "explanation": "The comma before but correctly separates the two independent clauses while showing their contrast.",
+   "difficulty": 8,
+   "skill": "Applying commas between independent clauses",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to mark words left unstated at the end of a speaker's thought?",
+   "choices": [
+    "Either you apologize, or— Eli said, though he did not finish the warning.",
+    "Either you apologize, or, Eli said, though he did not finish the warning.",
+    "Either you apologize, or: Eli said, though he did not finish the warning.",
+    "Either you apologize, or... Eli said, though he did not finish the warning."
+   ],
+   "answerIndex": 3,
+   "explanation": "The ellipsis marks the unstated alternative that Eli leaves unexpressed in his warning.",
+   "difficulty": 8,
+   "skill": "Using ellipses in unfinished speech",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best follows the rubric by using an ellipsis for an omission, a dash for an interruption, and a comma to mark a pause?",
+   "choices": [
+    "Maya said, Come to the station at eight— She checked the map—the north entrance was closed—and chose another route, then headed toward the south gate.",
+    "Maya said, Come to the station at eight... She checked the map, the north entrance was closed, and chose another route, then headed toward the south gate.",
+    "Maya said, Come to the station at eight: She checked the map—the north entrance was closed—and chose another route, then headed toward the south gate.",
+    "Maya said, Come to the station at eight... She checked the map—the north entrance was closed—and chose another route, then headed toward the south gate."
+   ],
+   "answerIndex": 3,
+   "explanation": "This version uses an ellipsis for the unfinished instruction, a dash to interrupt with route information, and a comma before then to mark a brief pause.",
+   "difficulty": 9,
+   "skill": "Combining ellipses, dashes, and commas in original writing",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Choose the sentence that follows the rubric by using an ellipsis for omitted material in the middle of a sentence, a pair of dashes to set off an appositive, and a comma before a coordinating conjunction.",
+   "choices": [
+    "The manuscript—an early draft...—was revised, and the editor approved it.",
+    "The manuscript—an early draft... was revised, and the editor approved it.",
+    "The manuscript—an early draft...—was revised and the editor approved it.",
+    "The manuscript—an early draft...—was revised; and the editor approved it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A encloses the appositive with a pair of em dashes, places an ellipsis inside the appositive to show omitted material, and uses a comma before the coordinating conjunction joining two independent clauses.",
+   "difficulty": 9,
+   "skill": "Punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses commas to separate items in a series where the final item is omitted and indicated by an ellipsis, and a pair of dashes to insert a parenthetical comment?",
+   "choices": [
+    "She packed socks, shirts, pants...—the essentials—and left.",
+    "She packed socks, shirts, pants...—the essentials, and left.",
+    "She packed socks, shirts, pants... (the essentials) and left.",
+    "She packed socks, shirts, pants... the essentials—and left."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A shows a series separated by commas with an ellipsis indicating the omitted final item, and it correctly surrounds the parenthetical comment with a pair of em dashes.",
+   "difficulty": 8,
+   "skill": "Punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to indicate an omission at the end of a clause, an em dash to insert an abrupt interruption, and a comma before a coordinating conjunction?",
+   "choices": [
+    "She promised to finish the report...—the deadline passed, and the client called.",
+    "She promised to finish the report... the deadline passed, and the client called.",
+    "She promised to finish the report—... the deadline passed, and the client called.",
+    "She promised to finish the report... the deadline passed—and the client called."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option contains an ellipsis at the end of the clause, an em dash that abruptly interrupts the flow, and a comma before the coordinating conjunction \"and.\"",
+   "difficulty": 8,
+   "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a comma after an introductory clause, an ellipsis to show hesitation, and an em dash to add emphasis before the final clause?",
+   "choices": [
+    "After the meeting ended, she hesitated...—the decision was final.",
+    "After the meeting ended she hesitated...—the decision was final.",
+    "After the meeting ended, she hesitated—the decision was final...",
+    "After the meeting ended, she hesitated... the decision was final."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option places a comma after the introductory clause, uses an ellipsis to indicate hesitation, and follows it with an em dash that emphasizes the concluding clause.",
+   "difficulty": 8,
+   "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence shows an ellipsis marking a pause within a quoted thought, a pair of dashes signaling an abrupt shift, and a comma setting off a nonrestrictive clause?",
+   "choices": [
+    "'I wonder...'—she paused—if the train will arrive, which is uncertain, on time.",
+    "'I wonder...' she paused—if the train will arrive, which is uncertain, on time.",
+    "'I wonder...'—she paused if the train will arrive, which is uncertain, on time.",
+    "'I wonder...'—she paused—if the train will arrive which is uncertain on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option contains an ellipsis inside the quotation, a pair of dashes surrounding \"she paused\" to mark an abrupt shift, and commas that set off the nonrestrictive clause \"which is uncertain.\"",
+   "difficulty": 9,
+   "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Select the sentence that uses a comma after an introductory prepositional phrase, an ellipsis to show a trailing thought, and an em dash to insert an abrupt interruption before the final clause.",
+   "choices": [
+    "In the quiet hallway, she whispered...—the lights flickered, and the door slammed.",
+    "At dawn the hikers paused...—the storm broke, yet they continued.",
+    "In the quiet hallway she whispered...—the lights flickered, and the door slammed.",
+    "In the quiet hallway, she whispered... the lights flickered, and the door slammed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence begins with the introductory prepositional phrase \"In the quiet hallway,\" follows it with a comma, uses an ellipsis after \"whispered\" to indicate a trailing thought, and employs a single em dash before the final clause \"the lights flickered, and the door slammed.\"",
+   "difficulty": 8,
+   "skill": "Identify correct punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a pair of commas to set off a nonrestrictive clause, an ellipsis to omit words at the end of a quotation, and a dash to add emphasis before a final independent clause?",
+   "choices": [
+    "The professor, who had taught for decades, said, 'Remember the deadline...'—the class fell silent, and everyone took notes.",
+    "The professor who had taught for decades, said, 'Remember the deadline...'—the class fell silent, and everyone took notes.",
+    "The professor, who had taught for decades, said, 'Remember the deadline'—the class fell silent, and everyone took notes.",
+    "The professor, who had taught for decades, said, 'Remember the deadline...' the class fell silent, and everyone took notes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence surrounds the nonrestrictive clause \"who had taught for decades\" with a pair of commas, ends the quotation with an ellipsis, and places an em dash before the final independent clause \"the class fell silent, and everyone took notes.\"",
+   "difficulty": 8,
+   "skill": "Identify correct punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Identify the sentence that uses commas to separate items in a series, an ellipsis to omit the final item, and a pair of dashes to set off an appositive describing the series.",
+   "choices": [
+    "She packed socks, shirts, pants...—her essential clothing—and left for the trip.",
+    "She packed socks, shirts, pants...—her essential clothing, and left for the trip.",
+    "She packed socks, shirts, pants—her essential clothing... and left for the trip.",
+    "She packed socks, shirts, pants... her essential clothing—and left for the trip."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence lists three items separated by commas, uses an ellipsis after \"pants\" to show the omitted final item, and encloses the appositive \"her essential clothing\" with a pair of dashes.",
+   "difficulty": 8,
+   "skill": "Identify correct punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Select the sentence that uses a comma after an introductory dependent clause, an ellipsis to omit words in the middle of a quotation, and a pair of dashes to enclose an interrupting phrase.",
+   "choices": [
+    "After the meeting ended, she said, 'We must decide... now'—the deadline loomed—and the team agreed.",
+    "After the meeting ended she said, 'We must decide... now'—the deadline loomed—and the team agreed.",
+    "After the meeting ended, she said, 'We must decide now'—the deadline loomed—and the team agreed.",
+    "After the meeting ended, she said, 'We must decide... now'—the deadline loomed, and the team agreed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence begins with the dependent clause \"After the meeting ended,\" follows it with a comma, includes an ellipsis inside the quotation to show omitted words, and surrounds the interrupting phrase \"the deadline loomed\" with a pair of dashes.",
+   "difficulty": 8,
+   "skill": "Identify correct punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly encloses a nonrestrictive appositive in a matching pair of commas?",
+   "choices": [
+    "Her brother a medical student, volunteered to demonstrate the procedure.",
+    "Her brother; a medical student, volunteered to demonstrate the procedure.",
+    "Her brother, a medical student, volunteered to demonstrate the procedure.",
+    "Her brother, a medical student volunteered to demonstrate the procedure."
+   ],
+   "answerIndex": 2,
+   "explanation": "The appositive a medical student is nonrestrictive, so it is correctly enclosed by a matching pair of commas.",
+   "difficulty": 8,
+   "skill": "Commas with a nonrestrictive appositive",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a pair of em dashes to set off an appositive without introducing a comma?",
+   "choices": [
+    "The dancer, a first-year student—performed the difficult routine without a mistake.",
+    "The dancer—a first-year student, performed the difficult routine without a mistake.",
+    "The dancer; a first-year student—performed the difficult routine without a mistake.",
+    "The dancer—a first-year student—performed the difficult routine without a mistake."
+   ],
+   "answerIndex": 3,
+   "explanation": "The paired em dashes correctly set off the appositive a first-year student from the main sentence.",
+   "difficulty": 8,
+   "skill": "Paired em dashes around an appositive",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an em dash to mark an interruption inside a quotation?",
+   "choices": [
+    "\"We need to leave:\" Lina grabbed her coat and ran.",
+    "\"We need to le—\" Lina grabbed her coat and ran.",
+    "\"We need to leave,\" Lina grabbed her coat and ran.",
+    "\"We need to leave.\" Lina grabbed her coat—and ran."
+   ],
+   "answerIndex": 1,
+   "explanation": "The em dash inside the quotation captures the speaker's abrupt interruption after le and also functions as the closing punctuation.",
+   "difficulty": 9,
+   "skill": "Em dash for an interrupted quotation",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The draft reads: The guide said, 'Take the north trail... it is clearer,' and when rain began the hikers followed the map. Which revision best fixes it so it meets the rubric for an ellipsis showing omitted words, paired dashes setting off an interruption, and a comma joining two independent clauses?",
+   "choices": [
+    "The guide said, 'Take the north trail... it is clearer,' and—when the rain began—the hikers followed the map.",
+    "The guide said, 'Take the north trail... it is clearer' and when rain began the hikers followed the map.",
+    "The guide said, 'Take the north trail... it is clearer,' and when rain began, the hikers followed the map.",
+    "The guide said, 'Take the north trail... it is clearer,' and when rain began the hikers—followed the map."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision uses the ellipsis to leave a connection unstated, pairs dashes around the interruption, and places a comma before and to join the two independent clauses.",
+   "difficulty": 9,
+   "skill": "Rubric check combining ellipses, dashes, and commas",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly follows a rubric requiring a comma after an introductory dependent clause, paired dashes around an appositive, and an ellipsis showing hesitation?",
+   "choices": [
+    "Before the audition Lena said, 'I am ready... probably.' The judge—the sponsor's assistant—watched from the balcony.",
+    "Before the audition, Lena said, 'I am ready... probably.' The judge—the sponsor's assistant—watched from the balcony.",
+    "Before the audition, Lena said, 'I am ready... probably.' The judge, the sponsor's assistant, watched from the balcony.",
+    "Before the audition, Lena said, 'I am ready... probably.' The judge—the sponsor's assistant watched from the balcony."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma after the introductory dependent clause, the paired dashes around the appositive, and the ellipsis inside the quotation each meet the stated rubric.",
+   "difficulty": 8,
+   "skill": "Rubric check for dependent-clause commas, paired dashes, and hesitation ellipses",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly leaves a restrictive clause unpunctuated by commas and uses a dash to add emphasis to the final phrase?",
+   "choices": [
+    "The students, who studied for the exam, passed easily—some in record time.",
+    "The students who studied for the exam, passed easily—some in record time.",
+    "The students who studied for the exam passed easily - some in record time.",
+    "The students who studied for the exam passed easily—some in record time."
+   ],
+   "answerIndex": 3,
+   "explanation": "The restrictive clause who studied for the exam correctly takes no commas, and the em dash adds emphasis to some in record time.",
+   "difficulty": 7,
+   "skill": "Distinguishing restrictive clauses from nonrestrictive clauses",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Evaluate Example 3: My neighbor, a retired pilot, called, 'The sky is clearing—wait, the storm is coming!' Which rubric feedback is accurate?",
+   "choices": [
+    "The sentence uses matching commas for the nonrestrictive appositive and a dash to mark the interruption in the quoted speech.",
+    "The sentence uses matching dashes for the nonrestrictive appositive and a comma to mark the interruption in the quoted speech.",
+    "The sentence uses matching commas for the restrictive appositive and an ellipsis to mark the interruption in the quoted speech.",
+    "The sentence needs no commas around the nonrestrictive appositive and uses a dash to mark an omission in the quoted speech."
+   ],
+   "answerIndex": 0,
+   "explanation": "The feedback correctly recognizes both the matching commas around the nonrestrictive appositive and the dash indicating an interruption in the quoted speech.",
+   "difficulty": 8,
+   "skill": "Evaluating punctuation against a writing rubric",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly punctuates a question within a quotation and uses a dash to introduce an interrupting action?",
+   "choices": [
+    "'Did you finish the map?' the guide asked—then he pointed north.",
+    "'Did you finish the map,' the guide asked—then he pointed north.",
+    "'Did you finish the map' the guide asked—then he pointed north.",
+    "'Did you finish the map?' the guide asked, then he pointed north."
+   ],
+   "answerIndex": 0,
+   "explanation": "A question mark completes the quoted question, no comma is needed before the attribution, and the em dash introduces the interrupting action.",
+   "difficulty": 8,
+   "skill": "Punctuating quotations and introducing interruptions with dashes",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a comma after an introductory interjection and a dash to emphasize an urgent instruction?",
+   "choices": [
+    "Oh, the train is approaching—turn around!",
+    "Oh the train is approaching—turn around!",
+    "Oh; the train is approaching—turn around!",
+    "Oh, the train is approaching - turn around!"
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma correctly follows the introductory interjection Oh, and the em dash emphasizes the urgent instruction turn around.",
+   "difficulty": 7,
+   "skill": "Punctuation after interjections and dashes for emphasis",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a comma before a coordinating conjunction joining two independent clauses and a dash to emphasize the final phrase?",
+   "choices": [
+    "The rehearsal ran late but the choir still finished—exactly on time.",
+    "The rehearsal, ran late, but the choir still finished—exactly on time.",
+    "The rehearsal ran late, but the choir still finished - exactly on time.",
+    "The rehearsal ran late, but the choir still finished—exactly on time."
+   ],
+   "answerIndex": 3,
+   "explanation": "The comma joins two independent clauses with but, and the em dash emphasizes the phrase exactly on time.",
+   "difficulty": 8,
+   "skill": "Comma splices, coordinating conjunctions, and dashes for emphasis",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which candidate best follows a rubric requiring a comma after an introductory dependent clause, paired dashes around an appositive, and an ellipsis at the end of a quotation?",
+   "choices": [
+    "After the rehearsal ended, the director—the guest coach—said, 'We will try again'",
+    "After the rehearsal ended the director—the guest coach—said, 'We will try again...'",
+    "After the rehearsal ended, the director—the guest coach—said, 'We will try again...'",
+    "After the rehearsal ended, the director—the guest coach said, 'We will try again...'"
+   ],
+   "answerIndex": 2,
+   "explanation": "This sentence uses a comma after the introductory dependent clause, paired dashes around the appositive, and an ellipsis to leave the quoted thought unfinished.",
+   "difficulty": 8,
+   "skill": "Applying a three-part punctuation rubric",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A student writes: Mina explained the delay, then added, 'The repairs will take two days...' Which rubric feedback is accurate?",
+   "choices": [
+    "The ellipsis shows that the speaker leaves the end of the quoted thought unstated.",
+    "The ellipsis indicates that a word has been omitted from the middle of the quoted sentence.",
+    "The comma after delay is required to show that two independent clauses are joined.",
+    "The quotation requires a period because the ellipsis is being used as a decorative pause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis at the end of the quotation shows that the speaker leaves the remainder of the thought unstated.",
+   "difficulty": 7,
+   "skill": "Checking ellipses in quoted thoughts",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which revision best follows a rubric requiring a comma after an introductory dependent clause and a dash to set off an explanatory interruption?",
+   "choices": [
+    "Although the lights flickered the projection continued—barely visible on the screen.",
+    "Although the lights flickered, the projection continued, barely visible on the screen.",
+    "Although the lights flickered, the projection continued—barely visible on the screen.",
+    "Although the lights flickered the projection continued, barely visible on the screen."
+   ],
+   "answerIndex": 2,
+   "explanation": "This revision correctly separates the introductory dependent clause with a comma and uses a dash to set off the explanatory phrase.",
+   "difficulty": 8,
+   "skill": "Revising introductory clauses and explanatory dashes",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses an ellipsis to stand for an omitted alternative within a quoted question?",
+   "choices": [
+    "Do you have the map, the printed version?",
+    "Do you have the map... the printed version?",
+    "Do you have the map—the printed version?",
+    "Do you have the map; the printed version?"
+   ],
+   "answerIndex": 1,
+   "explanation": "The ellipsis represents the omitted alternative expressed by or before the second option, the printed version.",
+   "difficulty": 8,
+   "skill": "Using ellipses for omitted alternatives",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a dash to mark an interruption in a quoted thought and correctly punctuates the dialogue tag?",
+   "choices": [
+    "The pilot said, 'We are landing now,' then the dashboard flashed red.",
+    "The pilot said, 'We are landing now'—then the dashboard flashed red.",
+    "The pilot said 'We are landing now'—then the dashboard flashed red.",
+    "The pilot said, 'We are landing now'; then the dashboard flashed red."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence places the dash at the abrupt shift from the pilot's statement to the dashboard alert and correctly punctuates the dialogue tag.",
+   "difficulty": 8,
+   "skill": "Showing interruptions in dialogue",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A student writes: The botanist, who had collected the samples for years, opened the case, and a sealed envelope waited inside. Which feedback is accurate if the rubric requires paired dashes, an ellipsis for omission, and a comma before a coordinating conjunction?",
+   "choices": [
+    "The sentence has paired dashes and an ellipsis, so it meets the full rubric.",
+    "The comma before and is unnecessary because the first independent clause is incomplete.",
+    "The sentence has the required comma before and, but it needs paired dashes and an ellipsis to meet the full rubric.",
+    "The commas around the who clause correctly satisfy the requirement for paired dashes."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence includes the required comma before and, but it uses paired commas rather than dashes and lacks an ellipsis for omission.",
+   "difficulty": 9,
+   "skill": "Evaluating whether a sentence meets a rubric",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses matching commas to set off a nonrestrictive clause that adds information?",
+   "choices": [
+    "The river, which flooded the lower road, forced the hikers to turn back.",
+    "The river which flooded the lower road, forced the hikers to turn back.",
+    "The river, which flooded the lower road forced the hikers to turn back.",
+    "The river which flooded the lower road forced the hikers to turn back."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause which flooded the lower road is nonrestrictive, so matching commas correctly set it off as additional information.",
+   "difficulty": 7,
+   "skill": "Distinguishing restrictive and nonrestrictive clauses",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis immediately after an opening quotation mark to represent omitted introductory words?",
+   "choices": [
+    "Lena said, \"We can meet at seven if the library is open...\"",
+    "Lena said... \"We can meet at seven if the library is open.\"",
+    "Lena said, \"We can meet at seven if the library is open.\"",
+    "Lena said, \"...we can meet at seven if the library is open.\""
+   ],
+   "answerIndex": 3,
+   "explanation": "The ellipsis appears directly after the opening quotation mark and signals that introductory words have been omitted before we can meet at seven.",
+   "difficulty": 8,
+   "skill": "Showing omitted words with an ellipsis",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a dash to mark an abrupt break within a quotation and a comma to separate two independent clauses joined by a coordinating conjunction?",
+   "choices": [
+    "\"We need to move... now,\" Priya said, and the team grabbed its equipment.",
+    "\"We need to move now,\" Priya said—and the team grabbed its equipment.",
+    "\"We need to move—now,\" Priya said and the team grabbed its equipment.",
+    "\"We need to move—now,\" Priya said, and the team grabbed its equipment."
+   ],
+   "answerIndex": 3,
+   "explanation": "The em dash creates an abrupt break within the quotation, and the comma before and correctly separates two independent clauses.",
+   "difficulty": 8,
+   "skill": "Combining an internal dash with coordinating-clause punctuation",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which candidate best follows a rubric requiring a comma after an introductory participial phrase, an em dash to set off an explanatory interruption, and an ellipsis for a trailing thought in dialogue?",
+   "choices": [
+    "Staring at the error message, Maya whispered, \"We should restart...\"—the laptop had frozen.",
+    "Staring at the error message Maya whispered, \"We should restart...\"—the laptop had frozen.",
+    "Staring at the error message, Maya whispered—\"We should restart...\" the laptop had frozen.",
+    "Staring at the error message, Maya whispered, \"We should restart\"—the laptop had frozen..."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory participial phrase is followed by a comma, the ellipsis marks the trailing quoted thought, and the em dash sets off the explanatory interruption.",
+   "difficulty": 9,
+   "skill": "Checking introductory, dialogue, and explanatory punctuation",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence follows the rubric requiring an ellipsis to omit words in the middle of a quotation, a pair of dashes to set off an appositive, and a comma before a coordinating conjunction joining two independent clauses?",
+   "choices": [
+    "The reporter said, 'The evidence... was missing'—the key witness—, and the editor demanded a retraction.",
+    "The reporter said, 'The evidence was missing'—the key witness—, and the editor demanded a retraction.",
+    "The reporter said, 'The evidence... was missing', the key witness, and the editor demanded a retraction.",
+    "The reporter said, 'The evidence... was missing'—the key witness— and the editor demanded a retraction."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence includes an ellipsis inside the quotation, encloses the appositive 'the key witness' with a pair of dashes, and places a comma before the coordinating conjunction 'and' that joins two independent clauses.",
+   "difficulty": 8,
+   "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence follows the rubric requiring a comma after an introductory dependent clause, an ellipsis to indicate a trailing thought at the end of a sentence, and an em dash to add emphasis before a final independent clause?",
+   "choices": [
+    "After the storm passed, she stared at the horizon...—the sun finally broke through.",
+    "After the storm passed she stared at the horizon...—the sun finally broke through.",
+    "After the storm passed, she stared at the horizon.—the sun finally broke through.",
+    "After the storm passed, she stared at the horizon... the sun finally broke through."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses a comma after the introductory dependent clause, ends the main clause with an ellipsis to show a trailing thought, and follows it with an em dash that emphasizes the final independent clause.",
+   "difficulty": 8,
+   "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence follows the rubric requiring a pair of commas to set off a nonrestrictive clause, an ellipsis to omit the final item in a series, and a dash to introduce an abrupt interruption?",
+   "choices": [
+    "My sister, who loves hiking, packed water, snacks, maps...—then the trail vanished.",
+    "My sister who loves hiking packed water, snacks, maps...—then the trail vanished.",
+    "My sister, who loves hiking, packed water, snacks, maps—then the trail vanished.",
+    "My sister, who loves hiking, packed water, snacks, maps... then the trail vanished."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence sets off the nonrestrictive clause with commas, uses an ellipsis to omit the last item in the series, and employs a dash to introduce the abrupt interruption.",
+   "difficulty": 8,
+   "skill": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence follows a rubric requiring a comma after an introductory dependent clause, paired em dashes around an appositive, and an ellipsis showing hesitation in dialogue?",
+   "choices": [
+    "Before the trial began, the witness—clearly nervous—said, “I only remember the red door...”",
+    "Before the trial began, the witness, clearly nervous, said, “I only remember the red door...”",
+    "Before the trial began, the witness—clearly nervous—said, “I only remember the red door.”",
+    "Before the trial began the witness—clearly nervous—said, “I only remember the red door...”"
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence places a comma after the introductory dependent clause, encloses the appositive in paired em dashes, and uses an ellipsis to show the speaker’s hesitation.",
+   "difficulty": 8,
+   "skill": "Applying punctuation requirements from a rubric",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A student writes: After the storm passed, the guide—a retired ranger—said, “We should continue...” Which rubric feedback is accurate?",
+   "choices": [
+    "The sentence meets the rubric because the introductory dependent clause is followed by a comma, the appositive is enclosed by paired em dashes, and the ellipsis marks an unfinished thought.",
+    "The sentence misses the rubric because the appositive is correctly enclosed by paired commas, making the em dashes unnecessary.",
+    "The sentence misses the rubric because the ellipsis shows that the speaker completed the thought rather than leaving it unfinished.",
+    "The sentence misses the rubric because the introductory dependent clause is correctly followed by a dash rather than a comma."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence satisfies all three rubric requirements by using the required comma, paired em dashes, and ellipsis in their intended functions.",
+   "difficulty": 8,
+   "skill": "Checking a written sentence against punctuation criteria",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric requiring a comma after an introductory dependent clause, a dash for an abrupt interruption, and an ellipsis showing omitted words in a quotation?",
+   "choices": [
+    "When the lights flickered the projector stopped—the audience groaned—and the teacher said, “Wait... give me a minute.”",
+    "When the lights flickered, the projector stopped, the audience groaned, and the teacher said, “Wait... give me a minute.”",
+    "When the lights flickered, the projector stopped—the audience groaned—and the teacher said, “Wait, give me a minute.”",
+    "When the lights flickered, the projector stopped—the audience groaned—and the teacher said, “Wait... give me a minute.”"
+   ],
+   "answerIndex": 3,
+   "explanation": "This sentence correctly includes a comma after the introductory clause, uses paired em dashes around the interruption, and shows omitted words with an ellipsis in the quotation.",
+   "difficulty": 9,
+   "skill": "Selecting punctuation that fulfills multiple criteria",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric that requires a comma after an introductory dependent clause, a pair of dashes around an appositive, and an ellipsis at the end of a quotation to show a trailing thought?",
+   "choices": [
+    "After the meeting ended, the manager—a seasoned pilot—said, 'We will review the data...'",
+    "After the meeting ended, the manager, a seasoned pilot, said, 'We will review the data...'",
+    "After the meeting ended the manager—a seasoned pilot—said, 'We will review the data...'",
+    "After the meeting ended, the manager—a seasoned pilot—said, 'We will review the data.'"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option includes the required introductory comma, the appositive set off by matching dashes, and an ellipsis at the end of the quoted material.",
+   "difficulty": 8,
+   "skill": "Rubric-based punctuation evaluation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence fulfills a rubric that asks for a comma after an introductory prepositional phrase, an ellipsis indicating the omitted final item in a series, and a pair of dashes setting off a nonrestrictive clause?",
+   "choices": [
+    "In the quiet hallway, she packed pens, notebooks, folders...—the essential supplies—before heading out.",
+    "In the quiet hallway she packed pens, notebooks, folders...—the essential supplies—before heading out.",
+    "In the quiet hallway, she packed pens, notebooks, folders... the essential supplies—before heading out.",
+    "In the quiet hallway, she packed pens, notebooks, folders—the essential supplies—before heading out."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option correctly places the introductory comma, uses an ellipsis to omit the last listed item, and encloses the nonrestrictive clause in matching dashes.",
+   "difficulty": 8,
+   "skill": "Rubric-based punctuation evaluation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Choose the sentence that follows a rubric requiring an ellipsis to show an omission at the end of a clause, a dash to add emphasis before the final clause, and commas separating items in a series where the last item is omitted and marked by the ellipsis.",
+   "choices": [
+    "She gathered apples, oranges, bananas...—the fruit was fresh—and served them.",
+    "She gathered apples, oranges, bananas... the fruit was fresh—and served them.",
+    "She gathered apples, oranges, bananas...—the fruit was fresh, and served them.",
+    "She gathered apples, oranges, bananas—the fruit was fresh...—and served them."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only the first sentence includes the series commas, the terminal ellipsis, and the emphatic dash before the concluding clause.",
+   "difficulty": 8,
+   "skill": "Rubric-based punctuation evaluation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Identify the sentence that meets a rubric calling for matching commas around a nonrestrictive clause, an ellipsis omitting words in the middle of a quotation, and an em dash setting off an explanatory interruption after the quotation.",
+   "choices": [
+    "The author, who won the prize, said, 'The story... ends quietly'—a reminder that silence speaks.",
+    "The author who won the prize, said, 'The story... ends quietly'—a reminder that silence speaks.",
+    "The author, who won the prize, said, 'The story ends quietly'—a reminder that silence speaks.",
+    "The author, who won the prize, said, 'The story... ends quietly', a reminder that silence speaks."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence correctly encloses the nonrestrictive clause in commas, uses an ellipsis inside the quote, and follows the quote with an em dash introducing the explanation.",
+   "difficulty": 8,
+   "skill": "Rubric-based punctuation evaluation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a rubric that requires a comma after an introductory prepositional phrase, an ellipsis indicating hesitation within a quotation, and an em dash marking an abrupt interruption?",
+   "choices": [
+    "In the quiet hallway, she whispered, \"I don't know...\"—the lights flickered.",
+    "In the quiet hallway she whispered, \"I don't know...\"—the lights flickered.",
+    "In the quiet hallway, she whispered \"I don't know...\"—the lights flickered.",
+    "In the quiet hallway, she whispered, \"I don't know...\" the lights flickered."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option includes the required comma after the introductory prepositional phrase, an ellipsis showing hesitation inside the quotation, and an em dash that introduces the abrupt interruption.",
+   "difficulty": 8,
+   "skill": "punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Choose the sentence that follows a rubric demanding a pair of commas to set off a nonrestrictive clause, an ellipsis omitting words in the middle of a quotation, and a dash to add emphasis before the final clause.",
+   "choices": [
+    "The author, who won the prize, said, \"The story... matters\"—and the audience listened.",
+    "The author who won the prize, said, \"The story... matters\"—and the audience listened.",
+    "The author, who won the prize said, \"The story... matters\"—and the audience listened.",
+    "The author, who won the prize, said, \"The story... matters\" and the audience listened."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option correctly uses commas around the nonrestrictive clause, an ellipsis inside the quotation to show omitted words, and an em dash before the final clause for emphasis.",
+   "difficulty": 9,
+   "skill": "punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence satisfies a rubric requiring a comma after an introductory dependent clause, a pair of em dashes around an appositive, and an ellipsis showing omission at the end of a quoted question?",
+   "choices": [
+    "Before the interview started, the candidate—a nervous applicant—asked, \"May I begin...\"",
+    "Before the interview started the candidate—a nervous applicant—asked, \"May I begin...\"",
+    "Before the interview started, the candidate—a nervous applicant asked, \"May I begin...\"",
+    "Before the interview started, the candidate—a nervous applicant—asked \"May I begin...\""
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option includes the comma after the introductory dependent clause, matching em dashes around the appositive \"a nervous applicant\", and an ellipsis at the end of the quoted question.",
+   "difficulty": 9,
+   "skill": "punctuation for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which candidate fully satisfies a rubric requiring a comma after an introductory dependent clause, paired dashes around an appositive, and an ellipsis for omitted material in the middle of a quotation?",
+   "choices": [
+    "Before the interview began, the candidate—a nervous junior—said, “I studied chemistry, biology... and physics.”",
+    "Before the interview began the candidate—a nervous junior—said, “I studied chemistry, biology... and physics.”",
+    "Before the interview began, the candidate, a nervous junior, said, “I studied chemistry, biology... and physics.”",
+    "Before the interview began, the candidate—a nervous junior—said, “I studied chemistry, biology, and physics...”"
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct candidate places a comma after the introductory dependent clause, uses paired dashes around the appositive, and puts an ellipsis between omitted and stated items in the quotation.",
+   "difficulty": 8,
+   "skill": "Checking a sentence against a punctuation rubric",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a comma after an introductory dependent clause, paired dashes to set off an appositive, and an ellipsis to show omitted words in the middle of a quotation?",
+   "choices": [
+    "After the briefing ended, the coordinator—the visiting archivist—said, 'We begin... the second phase.'",
+    "After the briefing ended the coordinator—the visiting archivist—said, 'We begin... the second phase.'",
+    "After the briefing ended, the coordinator—the visiting archivist said, 'We begin... the second phase.'",
+    "After the briefing ended, the coordinator—the visiting archivist—said, 'We begin the second phase...'"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence has the required comma after the introductory dependent clause, matching dashes around the appositive, and an ellipsis showing omitted words inside the quotation.",
+   "difficulty": 8,
+   "skill": "Applying punctuation to a writing rubric",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a comma before a coordinating conjunction joining two independent clauses, a dash to mark an interruption, and an ellipsis to show a speaker's trailing thought?",
+   "choices": [
+    "The technician said, 'We can begin the survey now but the antenna needs checking...'—she grabbed the antenna.",
+    "The technician said, 'We can begin the survey now, but the antenna needs checking...'—she grabbed the antenna.",
+    "The technician said, 'We can begin the survey now; but the antenna needs checking...'—she grabbed the antenna.",
+    "The technician said, 'We can begin the survey now, but the antenna needs checking'—she grabbed the antenna."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma joins two independent clauses with but, the ellipsis marks the technician's trailing thought, and the dash introduces the interrupting action.",
+   "difficulty": 9,
+   "skill": "Distinguishing commas, dashes, and ellipses",
+   "topic": "Write Your Own (Rubric Check) - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which rubric feedback is accurate for this sentence: After the storm passed, the researchers reopened the observatory, and the first clear images appeared.",
+   "choices": [
+    "The introductory dependent clause is correctly separated from the main clause by a comma.",
+    "The comma before the coordinating conjunction should be replaced with a semicolon.",
+    "The second independent clause should be enclosed in dashes because it explains the first.",
+    "The opening time phrase should be enclosed in a pair of commas."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dependent introductory clause After the storm passed is correctly followed by a comma before the main clause.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "Which sentence correctly uses an ellipsis to indicate a trailing thought, an em dash to insert an abrupt interruption, and a comma before a coordinating conjunction joining two independent clauses?",
+   "choices": [
+    "The timer counted down...—the alarm blared, and everyone jumped.",
+    "The timer counted down... the alarm blared— and everyone jumped.",
+    "The timer counted down, ...—the alarm blared and everyone jumped.",
+    "The timer counted down... the alarm blared, and everyone jumped."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A correctly uses an ellipsis to show a pause, an em dash to insert an abrupt interruption, and a comma before the coordinating conjunction joining two independent clauses.",
+   "reason": "source: \"Citing rule for ellipsis at end of quote: placed inside closing quotation marks.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence uses a pair of dashes to set off a nonrestrictive clause and an ellipsis to omit words at the end of a quotation?",
+   "choices": [
+    "The coach shouted, 'Give it your all...'—the team responded— and the game began.",
+    "The coach shouted, 'Give it your all...'—the team responded—and the game began.",
+    "The coach shouted, 'Give it your all...'—the team responded, and the game began.",
+    "The coach shouted, 'Give it your all...' the team responded— and the game began."
+   ],
+   "answerIndex": 1,
+   "explanation": "Option B encloses the nonrestrictive clause with a pair of em dashes and includes an ellipsis to show omitted words at the end of the quotation.",
+   "reason": "A: not exactly one correct (Options 0 and 1 both use an ellipsis and a pair of em dashes as described; they differ only in em-dash spacing, for which the question gives)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly uses a comma after an introductory participial phrase, an ellipsis to indicate hesitation, and an em dash to add emphasis before the final clause?",
+   "choices": [
+    "Running late, she whispered...—I'll be there soon.",
+    "Running late she whispered...—I'll be there soon.",
+    "Running late, she whispered... I'll be there soon.",
+    "Running late, she whispered...— I'll be there soon."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A includes a comma after the introductory participial phrase, an ellipsis to show hesitation, and an em dash to add emphasis before the final clause.",
+   "reason": "A: not exactly one correct (Options 0 and 3 both contain the required introductory comma, hesitation ellipsis, and emphasis em dash; they differ only in em-dash spacing)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Identify the sentence that uses an ellipsis to show a pause within a quoted thought, a pair of dashes to indicate an abrupt shift, and a comma to set off a nonessential clause.",
+   "choices": [
+    "I thought...—maybe tomorrow— I'll call, if I remember.",
+    "I thought...—maybe tomorrow, I'll call if I remember.",
+    "I thought... maybe tomorrow— I'll call, if I remember.",
+    "I thought...—maybe tomorrow— I'll call if I remember."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A includes an ellipsis for a pause, a pair of em dashes around the abrupt shift, and a comma before the nonessential conditional clause.",
+   "reason": "A: not exactly one correct (No option contains an actual quotation, so none places the ellipsis within a quoted thought as required; option 0 is only the closest match.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Select the sentence that correctly uses a pair of dashes to set off a nonrestrictive clause, an ellipsis to omit words in the middle of a quotation, and a comma before a coordinating conjunction.",
+   "choices": [
+    "The teacher said, 'Read chapters one... three'—the syllabus changed—and the students groaned.",
+    "The teacher said, 'Read chapters one... three' the syllabus changed—and the students groaned.",
+    "The teacher said, 'Read chapters one three'—the syllabus changed—and the students groaned.",
+    "The teacher said, 'Read chapters one... three'—the syllabus changed, the students groaned."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option includes an ellipsis inside the quoted material, a pair of dashes surrounding the nonrestrictive clause \"the syllabus changed,\" and a comma before the coordinating conjunction \"and.\"",
+   "reason": "A: not exactly one correct (No option satisfies all three requirements; option (0) has the paired dashes and ellipsis but lacks a comma before the coordinating conjunct) | B: picked -1 not 0 (No option uses a pair of dashes to set off a nonrestrictive clause while also containing an ellipsis and a comma before a coordinating conju)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Identify the sentence that separates items in a series with commas, omits the final item using an ellipsis, and sets off an appositive with a pair of dashes.",
+   "choices": [
+    "He bought apples, oranges, bananas...—his favorite fruits—and left.",
+    "He bought apples, oranges, bananas... his favorite fruits—and left.",
+    "He bought apples, oranges, bananas—his favorite fruits... and left.",
+    "He bought apples, oranges, bananas...—his favorite fruits, and left."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option lists three items with commas, uses an ellipsis to indicate the omitted final item, and encloses the appositive \"his favorite fruits\" in a pair of dashes.",
+   "reason": "B: picked -1 not 0 (No option uses a pair of dashes to set off an appositive while also having the required series, ellipsis, and comma placement.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Choose the sentence that uses an ellipsis to omit words at the end of a quotation, a dash to add emphasis before a final independent clause, and a comma before a coordinating conjunction joining two independent clauses.",
+   "choices": [
+    "He whispered, 'I can't believe...'—the lights flickered, and the room fell silent.",
+    "He whispered, 'I can't believe...' the lights flickered, and the room fell silent.",
+    "He whispered, 'I can't believe...'—the lights flickered and the room fell silent.",
+    "He whispered, 'I can't believe...'—the lights flickered, the room fell silent."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option ends the quotation with an ellipsis, follows it with an em dash that emphasizes the next clause, and includes a comma before the coordinating conjunction \"and\" linking two independent clauses.",
+   "reason": "B: picked -1 not 0 (No option contains an ellipsis at the end of a quotation, a dash immediately before a final independent clause, and a comma before a coordin)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly uses an ellipsis to indicate omitted words in the middle of a quoted sentence, a pair of dashes to set off an appositive, and a comma before a coordinating conjunction joining two independent clauses?",
+   "choices": [
+    "She whispered, 'I never expected...'—the surprise party— and he laughed, so we celebrated.",
+    "'We should leave... now,' he said—his tone urgent—and the group agreed, but the bus had already gone.",
+    "The letter read, 'Dear friend...'—the writer paused— and I replied, yet I hesitated.",
+    "He muttered, 'Maybe tomorrow...'—the plan changed— so we waited, and nothing happened."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second sentence places an ellipsis inside the quotation to show omitted words, uses a pair of dashes around the appositive \"his tone urgent,\" and includes a comma before the coordinating conjunction \"but\" linking two independent clauses.",
+   "reason": "A: not exactly one correct (No option fully satisfies the prompt. Option 1 is closest, but \"his tone urgent\" is an absolute construction, not an appositive.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence correctly uses an ellipsis to indicate a pause within a quoted thought, a single em dash to signal an abrupt shift, and a comma to set off a nonrestrictive clause?",
+   "choices": [
+    "'I wonder...'—she paused, which was unexpected, if the train will arrive.",
+    "'I wonder...'—she paused if the train will arrive, which is unexpected.",
+    "'I wonder'—she paused... which was unexpected, if the train will arrive.",
+    "'I wonder...' she paused— which was unexpected, if the train will arrive."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence places an ellipsis inside the quotation to show a pause, follows the quotation with an em dash for an abrupt shift, and uses commas around the nonrestrictive clause \"which was unexpected.\"",
+   "reason": "A: not exactly one correct (Both options 0 and 1 use an ellipsis, a single em dash, and a comma to set off a nonrestrictive clause, so the answer is ambiguous.) | B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which sentence correctly uses a comma to set off a direct address?",
+   "choices": [
+    "Parents and guardians, please remain in the lobby until the dismissal bell.",
+    "Parents and guardians please remain in the lobby until the dismissal bell.",
+    "Parents and guardians; please remain in the lobby until the dismissal bell.",
+    "Parents and guardians: please remain in the lobby until the dismissal bell."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma after Parents and guardians correctly sets off the direct address from the command that follows.",
+   "reason": "source: \"A comma is used after a noun phrase used as direct address.\": offline retrieval: nothing found"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence uses an ellipsis to omit repeated words while preserving the speaker's complete thought?",
+   "choices": [
+    "\"We should... leave right now,\" Maya said.",
+    "\"We should leave, right now...\" Maya said.",
+    "\"We should leave... right now,\" Maya said.",
+    "\"We should leave... right now...\" Maya said."
+   ],
+   "answerIndex": 2,
+   "explanation": "The ellipsis replaces the repeated phrase we should leave, preserving the complete thought We should leave right now.",
+   "reason": "A: picked 0 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which candidate best meets a rubric requiring a comma after an introductory dependent clause, paired em dashes around an appositive, and an ellipsis for omitted words in a quotation?",
+   "choices": [
+    "After the bell rang, the judge—the visiting mentor—announced, \"The finalists are...\"",
+    "After the bell rang the judge—the visiting mentor—announced, \"The finalists are...\"",
+    "After the bell rang, the judge, the visiting mentor, announced, \"The finalists are...\"",
+    "After the bell rang, the judge—the visiting mentor—announced \"The finalists are...\""
+   ],
+   "answerIndex": 0,
+   "explanation": "This candidate includes all three required marks: the introductory clause is followed by a comma, the appositive is enclosed by em dashes, and the quotation ends with an ellipsis indicating omitted material.",
+   "reason": "B: not exactly one correct (Both option (0) and option (3) satisfy the rubric's three requirements (comma after the introductory dependent clause, paired em dashes arou)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which candidate best follows a rubric requiring an ellipsis for an unfinished quoted thought, paired em dashes around a nonrestrictive clause, and a comma before a coordinating conjunction joining two independent clauses?",
+   "choices": [
+    "Jonah said, \"We should...\"—the team was exhausted—and practice continued but the players left early.",
+    "Jonah said, \"We should...\"—the team was exhausted—and practice continued, but the players left early.",
+    "Jonah said, \"We should,\"—the team was exhausted—and practice continued, but the players left early.",
+    "Jonah said, \"We should...\" the team was exhausted—and practice continued, but the players left early."
+   ],
+   "answerIndex": 1,
+   "explanation": "This version uses an ellipsis for the unfinished quotation, matching em dashes around extra information, and a comma before but between two independent clauses.",
+   "reason": "B: not exactly one correct (None of the options correctly uses paired em dashes around a nonrestrictive clause while also including an ellipsis for unfinished quoted th)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence follows the rubric requiring an ellipsis to show a pause within a quoted thought, a single em dash to signal an abrupt shift, and a comma to set off a direct address?",
+   "choices": [
+    "'We should...'—the lights flickered, Sam, we must leave.",
+    "'We should'—the lights flickered, Sam, we must leave.",
+    "'We should...' the lights flickered, Sam, we must leave.",
+    "'We should...'—the lights flickered Sam, we must leave."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence includes an ellipsis inside the quotation to mark a pause, uses a single em dash to signal an abrupt shift, and places a comma before the direct address 'Sam'.",
+   "reason": "A: not exactly one correct (Option 0 has the three requested marks, but “the lights flickered, Sam, we must leave” is a comma splice between two independent clauses; th)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence follows the rubric requiring a comma after an introductory prepositional phrase, an ellipsis to omit repeated words in a quotation, and a pair of dashes to enclose an explanatory phrase?",
+   "choices": [
+    "In the quiet room, the teacher said, 'Read the first... last paragraph'—the assignment— and the students began.",
+    "In the quiet room the teacher said, 'Read the first... last paragraph'—the assignment— and the students began.",
+    "In the quiet room, the teacher said, 'Read the first last paragraph'—the assignment— and the students began.",
+    "In the quiet room, the teacher said, 'Read the first... last paragraph' the assignment and the students began."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence places a comma after the introductory prepositional phrase, uses an ellipsis in the quotation to omit repeated words, and encloses the explanatory phrase 'the assignment' with a pair of dashes.",
+   "reason": "A: not exactly one correct (Option 0 has the three requested marks, but it lacks the required comma before “and” joining the independent clauses “the teacher said ...” )"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence follows the rubric requiring a comma before a coordinating conjunction joining two independent clauses, an ellipsis to indicate an omission at the end of a clause, and an em dash to insert an abrupt interruption?",
+   "choices": [
+    "The team practiced hard, but the coach hesitated...—the whistle blew and the game started.",
+    "The team practiced hard but the coach hesitated...—the whistle blew and the game started.",
+    "The team practiced hard, but the coach hesitated— the whistle blew and the game started.",
+    "The team practiced hard, but the coach hesitated... the whistle blew and the game started."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence includes a comma before the coordinating conjunction 'but', ends the clause with an ellipsis to show an omission, and uses an em dash to insert the abrupt interruption 'the whistle blew'.",
+   "reason": "A: not exactly one correct (Option 0 has the three requested marks, but “the whistle blew and the game started” requires a comma before “and” to separate two independen)"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "Select the sentence that satisfies a rubric calling for a comma before a coordinating conjunction joining two independent clauses, an ellipsis omitting the final item in a series, and a pair of dashes surrounding a nonrestrictive clause.",
+   "choices": [
+    "The team packed water, snacks, maps...—which were essential—and left before sunrise.",
+    "The team packed water, snacks, maps...—which were essential, and left before sunrise.",
+    "The team packed water, snacks, maps... which were essential—and left before sunrise.",
+    "The team packed water, snacks, maps...—which were essential—and left before sunrise."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option correctly places a comma before the coordinating conjunction \"and\" (implicit in the compound predicate), uses an ellipsis to omit the final series item, and encloses the nonrestrictive clause in matching dashes.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "Select the sentence that fulfills a rubric asking for a comma before a coordinating conjunction joining two independent clauses, an ellipsis to omit the final item of a series, and a dash to set off an explanatory interruption.",
+   "choices": [
+    "The hikers carried water, food, tents...—the map was lost—and they turned back.",
+    "The hikers carried water, food, tents... the map was lost—and they turned back.",
+    "The hikers carried water, food, tents...—the map was lost, and they turned back.",
+    "The hikers carried water, food, tents...—the map was lost—and they turned back."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option correctly places a comma before the coordinating conjunction \"and\" (in the compound predicate), uses an ellipsis to omit the final series item, and encloses the explanatory interruption in dashes.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Select the sentence that meets a rubric calling for a comma before a coordinating conjunction joining two independent clauses, an em dash marking an abrupt interruption inside a quotation, and an ellipsis omitting words in the middle of that quotation.",
+   "choices": [
+    "The team finished early, but the coach shouted, 'We must... win'—then the buzzer sounded.",
+    "The team finished early but the coach shouted, 'We must... win'—then the buzzer sounded.",
+    "The team finished early, but the coach shouted, 'We must win'—then the buzzer sounded.",
+    "The team finished early, but the coach shouted, 'We must... win', then the buzzer sounded."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only the first sentence contains the required comma before “but,” the em dash after the quotation, and the ellipsis inside the quoted text.",
+   "reason": "A: picked -1 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Which sentence satisfies a rubric that demands a comma after an introductory interjection, a dash to emphasize an urgent instruction, and an ellipsis inside the quotation to convey hesitation?",
+   "choices": [
+    "Oh, the alarm is ringing—evacuate now...\" she whispered.",
+    "Oh the alarm is ringing—evacuate now...\" she whispered.",
+    "Oh, the alarm is ringing, evacuate now...\" she whispered.",
+    "Oh, the alarm is ringing—evacuate now.\" she whispered."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option provides the required interjection comma, the emphatic dash before the command, and the ellipsis showing the speaker’s hesitation.",
+   "reason": "A: picked -1 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Which sentence follows a rubric that requires a comma after an introductory dependent clause, an ellipsis to show a trailing thought at the end of a quotation, and an em dash to set off an appositive?",
+   "choices": [
+    "After the bell rang, the teacher said, \"We will continue...\"—the principal, a former coach, nodded.",
+    "After the bell rang the teacher said, \"We will continue...\"—the principal a former coach nodded.",
+    "After the bell rang, the teacher said \"We will continue...\" the principal—a former coach—nodded.",
+    "After the bell rang, the teacher said, \"We will continue...\" the principal, a former coach, nodded."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option includes a comma after the introductory dependent clause, an ellipsis at the end of the quoted thought, and an em dash that introduces the appositive \"the principal, a former coach\".",
+   "reason": "A: picked 2 not 0 | B: not exactly one correct (In option 0, the em dash sets off the independent clause \"the principal, a former coach, nodded,\" while the appositive \"a former coach\" is s)"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "Which sentence correctly uses commas to set off a nonrestrictive clause, an ellipsis to omit a final item in a series, and a dash to emphasize the final phrase?",
+   "choices": [
+    "The survey team which had checked the maps carried binoculars, ropes, and...—before the fog lifted.",
+    "The survey team, which had checked the maps, carried binoculars, ropes, and... before the fog lifted.",
+    "The survey team, which had checked the maps, carried binoculars, ropes, and...—before the fog lifted.",
+    "The survey team, which had checked the maps, carried binoculars, ropes, and a compass—before the fog lifted."
+   ],
+   "answerIndex": 2,
+   "explanation": "The paired commas set off the nonrestrictive clause, the ellipsis replaces the final item in the series, and the dash emphasizes the final phrase.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  }
+ ],
+ "applied": false
+}

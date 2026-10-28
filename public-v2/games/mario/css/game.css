@@ -1,0 +1,199 @@
+html, body, ul, li {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  touch-action: none;
+}
+
+/* Scale the game to fit the screen while keeping the 762x720 aspect ratio.
+   The game is anchored to the bottom edge (align-items: flex-end) and the touch
+   buttons (mobile.js) are fixed over that edge, so they overlay the play area
+   instead of reserving a strip below it. 100dvh fits the visible mobile screen
+   (100vh would reach behind the address bar and get cut off). */
+canvas {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100vh;
+  max-height: 100dvh;
+  background-color: blue;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  touch-action: none;
+}
+
+p {
+  text-align: center;
+}
+
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 6px 8px;
+  color: #fff;
+  font: 12px/1.4 monospace;
+  text-shadow: 1px 1px 0 #000;
+  pointer-events: none;
+}
+.info .controls {
+  text-align: left;
+  margin: 0 0 4px;
+}
+.info .links {
+  text-align: left;
+  pointer-events: auto;
+}
+.info a {
+  color: #ffe9a8;
+}
+
+/* ---------- Math revive overlay ---------- */
+#math-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.78);
+  z-index: 100;
+}
+#math-overlay.hidden {
+  display: none;
+}
+
+.math-dialog {
+  width: 100%;
+  max-width: 340px;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 3px solid #fff;
+  border-radius: 10px;
+  background: #17172e;
+  color: #fff;
+  text-align: center;
+  font-family: monospace;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+.math-dialog h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: #ff6b6b;
+}
+.math-dialog p {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: #cfcfe6;
+}
+.math-question {
+  margin: 12px 0 16px;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.math-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.math-option {
+  padding: 16px 8px;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: monospace;
+  color: #fff;
+  background: #2d2d4f;
+  border: 2px solid #6c6cae;
+  border-radius: 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.math-option:active {
+  background: #4caf50;
+  border-color: #4caf50;
+}
+.math-feedback {
+  min-height: 18px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #ffb3b3;
+}
+
+/* ---------- Touch controls ---------- */
+.mobile-controls {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  z-index: 50;
+  pointer-events: none;
+}
+.mobile-controls.show {
+  display: flex;
+}
+
+.mobile-controls .cluster {
+  display: flex;
+  gap: 2vw;
+  pointer-events: auto;
+}
+
+.ctrl-btn {
+  width: 14vw;
+  height: 14vw;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 64px;
+  max-height: 64px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  background: rgba(20, 20, 40, 0.45);
+  color: #fff;
+  font: bold 20px monospace;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+.ctrl-btn.active {
+  background: rgba(255, 255, 255, 0.7);
+  color: #111;
+}
+.ctrl-btn.run {
+  background: rgba(255, 120, 60, 0.5);
+}
+.ctrl-btn.jump {
+  background: rgba(70, 130, 255, 0.5);
+}
+
+/* On touch devices the keyboard hint is irrelevant. */
+.touch .info .controls {
+  display: none;
+}

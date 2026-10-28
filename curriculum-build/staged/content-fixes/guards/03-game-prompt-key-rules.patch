@@ -1,0 +1,12 @@
+--- a/scripts/lib/game-prompt.js
++++ b/scripts/lib/game-prompt.js
+@@ -117,6 +117,9 @@
+ - The wrong options are as good as the right one to somebody who does not know the material: the same kind of thing, the same units, the same part of speech, the same level of detail and the same length shape. An absurd or vaguer option can be eliminated without knowing anything, and the game becomes guessable.
+ - Do not repeat anything: not a phrasing, not a fact, not an example. The questions are played one after another and a learner will notice.
+ - Write for the level's own topic and the age given. The level is a serious piece of work, not a quiz on its title.
++- Decide the correct option first, write the explanation about that option, then set answerIndex to its position (0-based). The explanation describes the option at answerIndex, never another one. (An audit of earlier games found 119 questions whose explanation described the right option while answerIndex pointed at a wrong one.)
++- The options are all different texts: never the same option twice, even with different capitals.
++- If two options could be defended (a comma splice is also a run-on; a dash both adds emphasis and sets off extra information), rewrite the options until exactly one is right. No question rests on a false premise.
+ - Plain text only.
+ 
+ Reply only through the tool.`;

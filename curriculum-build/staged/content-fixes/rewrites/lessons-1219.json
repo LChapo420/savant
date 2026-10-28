@@ -1,0 +1,52 @@
+{
+ "collection": "lessons",
+ "row_id": 1219,
+ "shared": false,
+ "user_id": 1728,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 1
+ },
+ "errors": [
+  {
+   "ref": "P38",
+   "wrong": "Reading x - 7 = 5 and subtracting 7 from both sides, getting x = -2.",
+   "correct": "Subtracting 7 from both sides of x - 7 = 5 gives x - 14 = -2 (x = 12), not x = -2; the slip that gives -2 is subtracting 7 from 5."
+  }
+ ],
+ "edits": [
+  {
+   "path": "common_mistakes[3]",
+   "before": "Reading x - 7 = 5 and subtracting 7 from both sides, getting x = -2. Subtracting makes the minus 7 bigger; adding 7 is what makes it vanish, giving x = 12.",
+   "after": "Undoing the - 7 in x - 7 = 5 by subtracting 7 from 5 and writing x = 5 - 7 = -2. Subtracting does not cancel a subtraction; adding 7 to both sides cancels the - 7 and gives x = 12."
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[3]",
+   "before": "Reading x - 7 = 5 and subtracting 7 from both sides, getting x = -2. Subtracting makes the minus 7 bigger; adding 7 is what makes it vanish, giving x = 12.",
+   "after": "Undoing the - 7 in x - 7 = 5 by subtracting 7 from 5 and writing x = 5 - 7 = -2. Subtracting does not cancel a subtraction; adding 7 to both sides cancels the - 7 and gives x = 12."
+  }
+ ],
+ "judge_a": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "the rewritten mistake still said \"subtracting 7 from both sides, and getting x = -2\", which the math check rightly flags (that move keeps x = 12)",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

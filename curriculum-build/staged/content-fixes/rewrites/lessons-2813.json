@@ -1,0 +1,153 @@
+{
+ "collection": "lessons",
+ "row_id": 2813,
+ "shared": false,
+ "user_id": 3865,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P57",
+   "wrong": "The top 12x is 12 times x, so the 3 divides both the 12 and the x.",
+   "correct": "12x/3 = (12/3)x = 4x: dividing a product divides ONE factor; the 3 does not divide both the 12 and the x.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Rule: a bar like the one in 12x/3 means divide everything on top by everything on the bottom. The top 12x is 12 times x, so the 3 divides both the 12 and the x. Let's see it work: 12 divided by 3 is 4, so 12x/3 = 4x. Check with x = 2: 12 times 2 is 24, and 24 divided by 3 is 8. And 4x with x = 2 is 8 too.",
+   "replace": "Rule: a bar like the one in 12x/3 means divide everything on top by everything on the bottom. The top 12x is 12 times x, so 12x/3 = (12/3)x = 4x: dividing a product divides one factor; the 3 does not divide both the 12 and the x. Let's see how it works: 12 divided by 3 is 4, so 12x/3 = 4x. Check with x = 2: 12 times 2 is 24, and 24 divided by 3 is 8. And 4x with x = 2 is 8 too.",
+   "fixes": [
+    "P57 [rewrite_text]"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[1].body",
+   "before": "Rule: a bar like the one in 12x/3 means divide everything on top by everything on the bottom. The top 12x is 12 times x, so the 3 divides both the 12 and the x. Let's see it work: 12 divided by 3 is 4, so 12x/3 = 4x. Check with x = 2: 12 times 2 is 24, and 24 divided by 3 is 8. And 4x with x = 2 is 8 too.",
+   "after": "Rule: a bar like the one in 12x/3 means divide everything on top by everything on the bottom. The top 12x is 12 times x, so 12x/3 = (12/3)x = 4x: dividing a product divides one factor; the 3 does not divide both the 12 and the x. Let's see how it works: 12 divided by 3 is 4, so 12x/3 = 4x. Check with x = 2: 12 times 2 is 24, and 24 divided by 3 is 8. And 4x with x = 2 is 8 too.",
+   "fixes": [
+    "P57 [rewrite_text]"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax-m3.1-flash:free",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Reading Multiplication and Division in Algebra",
+  "intro": "Algebra uses short writing. A number next to a letter and a fraction bar both stand for multiplication and division. You will learn to read them and rewrite them so the structure is clear.",
+  "sections": [
+   {
+    "heading": "A number next to a letter means multiply",
+    "body": "Rule: when a number sits directly next to a letter with nothing between them, multiply. So 3x means 3 times x. This is a product, not a sum. Let's see it work: if x = 5, then 3x = 3 times 5 = 15. The sum 3 + x would give 8 instead, which is a different value.",
+    "example": "x = 5.  3x = 3 times 5 = 15.  3 + x = 3 + 5 = 8."
+   },
+   {
+    "heading": "The fraction bar divides the whole top by the whole bottom",
+    "body": "Rule: a bar like the one in 12x/3 means divide everything on top by everything on the bottom. The top 12x is 12 times x, so 12x/3 = (12/3)x = 4x: dividing a product divides one factor; the 3 does not divide both the 12 and the x. Let's see how it works: 12 divided by 3 is 4, so 12x/3 = 4x. Check with x = 2: 12 times 2 is 24, and 24 divided by 3 is 8. And 4x with x = 2 is 8 too.",
+    "example": "12x/3 = (12/3)x = 4x.  Check with x = 2: 12(2)/3 = 24/3 = 8, and 4(2) = 8."
+   },
+   {
+    "heading": "Grouping numbers together shows the structure",
+    "body": "Rule: in a product you may group the plain numbers first. So 4(2x) means 4 times (2 times x), and 4 times 2 is 8, giving 8x. Let's see it work with x = 3: 4(2 times 3) = 4 times 6 = 24, and 8x = 8 times 3 = 24. Same value, shorter writing.",
+    "example": "4(2x) = (4 times 2)x = 8x.  Check with x = 3: both give 24."
+   }
+  ],
+  "worked_example": {
+   "problem": "Simplify 18x/3.",
+   "steps": [
+    "Read the top: 18x means 18 times x.",
+    "Read the bar: /3 means divide the whole top by 3.",
+    "The top is 18 times x, so divide the number part: 18 divided by 3 is 6.",
+    "The x stays multiplied, so the result is 6x.",
+    "Check with x = 2: 18 times 2 is 36, and 36 divided by 3 is 12. And 6 times 2 is 12. The two agree."
+   ],
+   "answer": "6x"
+  },
+  "common_mistakes": [
+   "Writing 3x as 3 + x. That move swaps multiplication for addition, so with x = 5 you get 8 instead of the correct 15.",
+   "Dropping the x when you divide. Writing 18x/3 as 6 throws the letter away, so the expression no longer depends on x at all.",
+   "Dividing only part of the top. In (18 + x)/3, writing 18 + x/3 divides only the x by 3 and leaves the 18 out, which gives a much bigger number than the correct (18 + x)/3.",
+   "Treating 4(2x) as 4 + 2x. The parentheses mean multiply, so this move gives a sum and the wrong value; with x = 3 it gives 10 instead of 24."
+  ],
+  "summary": "A number next to a letter means multiply, so 3x is 3 times x. A fraction bar divides the whole top by the whole bottom, so 12x/3 = 4x. Grouping plain numbers first, as in 4(2x) = 8x, keeps the same value with shorter writing.",
+  "check_questions": [
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "Which expression means 3 times x?",
+    "answer": "3x",
+    "rationale": "The rule is that a number sitting directly next to a letter means multiply, so 3x is the product 3 times x.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "3 + x",
+     "3x",
+     "x/3",
+     "3^x"
+    ]
+   },
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "Simplify 15x/5.",
+    "answer": "3x",
+    "rationale": "The bar divides the whole top by 5, and 15 divided by 5 is 3, so the result is 3x with the x still multiplied.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "In (8 + y)/4, what does the fraction bar do?",
+    "answer": "It divides the whole sum 8 + y by 4.",
+    "rationale": "The rule is that the bar divides everything on top by everything on the bottom, and the whole top here is the sum 8 + y.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "It divides only the 8 by 4.",
+     "It divides only the y by 4.",
+     "It divides the whole sum 8 + y by 4.",
+     "It means multiply 8 + y by 4."
+    ]
+   },
+   {
+    "skill_id": "mul_div",
+    "skill_name": "Multiplication and division",
+    "difficulty": 1.1566731141199227,
+    "prompt": "Write 4(2x) as a single term.",
+    "answer": "8x",
+    "rationale": "The parentheses mean multiply, so group the plain numbers: 4 times 2 is 8, and the x stays multiplied, giving 8x.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

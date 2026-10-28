@@ -1,0 +1,935 @@
+diff --git a/services/skill-adaptation.js b/services/skill-adaptation.js
+new file mode 100644
+index 0000000..a378bf5
+--- /dev/null
++++ b/services/skill-adaptation.js
+@@ -0,0 +1,261 @@
++/**
++ * Skill adaptation: HOW MUCH and WHEN a chess, piano or basketball
++ * learner practises each exit-battery metric of their stage, never WHAT the
++ * stage must prove. The same split as services/adaptation.js: the stage and
++ * its metrics come from skill-coverage.js, and checkPlan() proves a plan
++ * leaves every unproven metric in.
++ *
++ * Levers (SKILL-CURRICULA.md section 6, as code):
++ *   dose        a session's practice minutes are shared among the stage's
++ *               unproven metrics by how far each is from its target on the
++ *               learner's own recent warm sets (more for the weak spots), and
++ *               practice on a metric ENDS on its proof (proven metrics get only
++ *               a short maintenance set every MAINT_DAYS days and their
++ *               retention sitting when due). Every unproven metric gets at
++ *               least one set a session: none is starved or dropped.
++ *   stage test  a cold sitting (first of the day, 20+ hours after its last
++ *               practice) is scheduled for an unproven metric when the
++ *               learner's warm sets say it is likely to pass (READY of the
++ *               last 3 at target), or every CHECK_DAYS days regardless, so a
++ *               learner whose warm sets under-state them is not held.
++ *   retention   the stage's retention sitting ("again after 7+ days") once due.
++ *   knowledge   while the stage's knowledge gate (coverage.js) is open, a share
++ *               of the session (the stage's own lesson share) goes to its
++ *               lessons, taught by services/adaptation.js.
++ *
++ * Brought into the app by the staged patch skills-round3/04-practice-dose
++ * from curriculum-build/staged/adaptation/skills/skill-adaptation.js (the same
++ * code; round 3 added the maintenance share). services/skill-dose.js runs it
++ * on the learner's skill record.
++ *
++ * Inputs are the learner's own record. Confident scorecard directives may
++ * change session length (as for every subject); they cannot change the
++ * metrics, the cold rule or the two-day rule.
++ */
++'use strict';
++
++const sc = require('./skill-coverage');
++
++function knobs() {
++  const num = (name, fallback) => {
++    const v = Number(process.env[name]);
++    return process.env[name] !== undefined && process.env[name] !== '' && Number.isFinite(v) ? v : fallback;
++  };
++  return {
++    READY: num('SKILL_READY', 3),           // warm sets at target, of the last 3, before a cold sitting
++    CHECK_DAYS: num('SKILL_CHECK_DAYS', 5), // a cold sitting at least this often while unproven
++    MAINT_DAYS: num('SKILL_MAINT_DAYS', 1), // a maintenance set on a proven metric (1: every session)
++    SET_MIN: num('SKILL_SET_MIN', 4),       // minutes of one practice set
++    SIT_MIN: num('SKILL_SIT_MIN', 4),       // minutes of one test sitting
++    FILL: num('SKILL_FILL', 1),             // 1: spare session minutes consolidate proven metrics
++    // Round 3: the maintenance share. While a stage still has unproven metrics,
++    // proven metrics that have not yet had their over-learning dose (OVERLEARN
++    // times the sets it took to prove them, at least OVERLEARN_MIN, practised
++    // after the proof) keep a share of the session's practice sets: by default
++    // ("even", -1) the share even practice would give them (proven-short /
++    // provable), or a fixed fraction (0..1); each gets at least one set.
++    // 0 gives round 2's plan (practice ends on proof; one maintenance set).
++    MAINT_SHARE: process.env.SKILL_MAINT_SHARE === 'even' ? -1 : num('SKILL_MAINT_SHARE', -1),
++    OVERLEARN: num('SKILL_OVERLEARN', 2),
++    OVERLEARN_MIN: num('SKILL_OVERLEARN_MIN', 4),
++    // Carry-over (round 3): once a stage is left, its metrics keep one
++    // maintenance set every CARRY_DAYS in the later stages' sessions, at most
++    // CARRY_MAX sets a session, longest-unpractised first. Off (0) by default:
++    // the audit's truth model has no spacing benefit, and there sparse sets
++    // cost minutes and kept less (round 3 README).
++    CARRY_DAYS: num('SKILL_CARRY_DAYS', 0),
++    CARRY_MAX: num('SKILL_CARRY_MAX', 2),
++  };
++}
++
++/** Warm practice sets are kept on the record: {at, atTarget}. */
++function practiseSet(rec, metricId, at, atTarget) {
++  sc.practise(rec, metricId, at);
++  const m = rec.metrics[metricId];
++  const proven = m.status === 'proven' || m.status === 'retained';
++  // Sets counted for the over-learning dose: how many it took to prove the
++  // metric (fixed at its first set after the proof), and how many since.
++  m.sets = (m.sets || 0) + 1;
++  if (!proven) m.sets_at_proof = null;
++  else if (m.sets_at_proof === null || m.sets_at_proof === undefined) m.sets_at_proof = m.sets - 1;
++  m.warm = m.warm || [];
++  m.warm.push({ at, atTarget: !!atTarget });
++  if (m.warm.length > 12) m.warm.shift();
++}
++
++/** How close a metric looks on the learner's last three warm sets (0..1). */
++function readiness(m) {
++  const last = (m.warm || []).slice(-3);
++  if (!last.length) return 0;
++  return last.filter((x) => x.atTarget).length / last.length;
++}
++
++/**
++ * Sets a proven metric still needs for its over-learning dose (0 when it has
++ * had them, or is not proven). Over-learning beyond the bar is what keeps a
++ * motor or board skill a month on (Driskell, Willis & Copper 1992); round 2's
++ * plan stopped practice at proof and kept less at 30 days than even practice.
++ */
++function overlearnDeficit(m, k = knobs()) {
++  if (!m || !(m.status === 'proven' || m.status === 'retained') || !k.OVERLEARN) return 0;
++  const atProof = m.sets_at_proof === null || m.sets_at_proof === undefined ? (m.sets || 0) : m.sets_at_proof;
++  const since = (m.sets || 0) - atProof;
++  return Math.max(0, Math.ceil(k.OVERLEARN * Math.max(k.OVERLEARN_MIN, atProof)) - since);
++}
++
++/**
++ * One session's plan for one learner on one stage.
++ *
++ * @param {object} a
++ * @param {object} a.stage      skill-coverage stagesFor()[i]
++ * @param {object} a.rec        the learner's skill record
++ * @param {number} a.now        session start (ms)
++ * @param {number} a.minutes    session length the learner has (after any confident length directive)
++ * @param {boolean} a.knowledgeOpen  the stage's knowledge gate is not yet complete
++ * @param {number} [a.lessonShare]   share of the session for lessons while knowledge is open
++ * @returns {{sittings: object[], practice: object[], lesson_minutes: number, what: object, reasons: string[]}}
++ */
++function planSession({ stage, rec, now, minutes, knowledgeOpen = false, lessonShare = 0.3 }) {
++  const k = knobs();
++  const reasons = [];
++  const sittings = [];
++  const unproven = [];
++  const attest = [];
++  const maintenance = [];
++  for (const mt of stage.metrics) {
++    if (!mt.source.provable) { attest.push(mt.id); continue; }
++    const m = rec.metrics[mt.id];
++    const proven = m.status === 'proven' || m.status === 'retained';
++    if (!proven) {
++      unproven.push(mt.id);
++      const cold = sc.isCold(m, now);
++      const lastSit = m.sittings.length ? m.sittings[m.sittings.length - 1].at : null;
++      const overdue = lastSit === null ? (m.warm || []).length >= 3 : now - lastSit >= k.CHECK_DAYS * sc.DAY;
++      const ready = (m.warm || []).length >= 3 && (m.warm || []).slice(-3).filter((x) => x.atTarget).length >= k.READY;
++      if (cold && (ready || overdue)) {
++        sittings.push({ metric: mt.id, kind: 'stage_test' });
++        reasons.push(`${mt.metric}: cold stage test — ${ready ? 'warm sets are at target' : `no cold test for ${k.CHECK_DAYS}+ days`}`);
++      }
++    } else {
++      const staleAt = sc.knobs().STALE_DAYS * sc.DAY;
++      if (m.status === 'proven' && stage.retention_days && now - m.proven_at >= stage.retention_days * sc.DAY && sc.isCold(m, now)) {
++        sittings.push({ metric: mt.id, kind: 'retention_test' });
++        reasons.push(`${mt.metric}: retention test — ${stage.retention_days}+ days since its proof`);
++      } else if (m.status === 'retained' && now - sc.lastCountingPass(m) > staleAt && sc.isCold(m, now)) {
++        sittings.push({ metric: mt.id, kind: 'stands_test' });
++        reasons.push(`${mt.metric}: cold re-sit — its last pass is over ${sc.knobs().STALE_DAYS} days old; the battery must stand when the stage is left`);
++      } else if (now - Math.max(m.last_practice_at || 0, m.last_sat_at || 0) >= k.MAINT_DAYS * sc.DAY) {
++        maintenance.push(mt.id);
++      }
++    }
++  }
++  let left = minutes - sittings.length * k.SIT_MIN;
++  const lessonMinutes = knowledgeOpen ? Math.max(0, Math.round(left * lessonShare)) : 0;
++  left -= lessonMinutes;
++  const practice = [];
++  // The maintenance share (round 3): proven metrics short of their
++  // over-learning dose share up to MAINT_SHARE of the practice sets, by how
++  // many they still need, while unproven metrics remain. Every unproven
++  // metric still keeps at least one set.
++  const share = new Map();
++  if (unproven.length && k.MAINT_SHARE !== 0) {
++    const need = stage.metrics.filter((mt) => mt.source.provable).map((mt) => [mt.id, overlearnDeficit(rec.metrics[mt.id], k)]).filter((x) => x[1] > 0);
++    const practiceSets = Math.floor(left / k.SET_MIN);
++    const provable = stage.metrics.filter((mt) => mt.source.provable).length;
++    const frac = k.MAINT_SHARE < 0 ? need.length / Math.max(1, provable) : k.MAINT_SHARE;
++    // At least one set for each metric short of its dose, as even practice would give it.
++    const budget = Math.min(need.reduce((a, x) => a + x[1], 0), Math.max(Math.round(frac * practiceSets), need.length));
++    need.sort((a, b) => b[1] - a[1]);
++    const total = need.reduce((a, x) => a + x[1], 0);
++    for (const [id, d] of need) { const n = Math.min(d, Math.floor((budget * d) / total)); if (n > 0) share.set(id, n); }
++    let spare = budget - [...share.values()].reduce((a, b) => a + b, 0);
++    for (let j = 0; spare > 0 && j < need.length * 4; j++) { const [id, d] = need[j % need.length]; if ((share.get(id) || 0) < d) { share.set(id, (share.get(id) || 0) + 1); spare--; } }
++    for (const [id, n] of share) { practice.push({ metric: id, sets: n, kind: 'overlearn' }); left -= n * k.SET_MIN; }
++    if (share.size) reasons.push(`maintenance share: ${[...share.values()].reduce((a, b) => a + b, 0)} set(s) to ${share.size} proven metric(s) still short of their over-learning dose`);
++  }
++  // Maintenance: one short set per proven metric due one (MAINT_DAYS).
++  for (const id of maintenance) {
++    if (share.has(id)) continue;
++    if (left < k.SET_MIN) break;
++    practice.push({ metric: id, sets: 1, kind: 'maintenance' });
++    left -= k.SET_MIN;
++  }
++  // Dose: unproven metrics share the rest by their distance from target; each
++  // gets at least one set.
++  if (unproven.length) {
++    const weight = unproven.map((id) => 1 + 2 * (1 - readiness(rec.metrics[id])));
++    const totalSets = Math.max(unproven.length, Math.floor(left / k.SET_MIN));
++    const wsum = weight.reduce((a, b) => a + b, 0);
++    const sets = weight.map((w) => Math.max(1, Math.floor((totalSets * w) / wsum)));
++    let spare = totalSets - sets.reduce((a, b) => a + b, 0);
++    const order = weight.map((w, i) => [w, i]).sort((a, b) => b[0] - a[0]).map((x) => x[1]);
++    for (let j = 0; spare > 0; j = (j + 1) % order.length, spare--) sets[order[j]] += 1;
++    unproven.forEach((id, i) => practice.push({ metric: id, sets: sets[i], kind: 'practice', readiness: readiness(rec.metrics[id]) }));
++    reasons.push(`dose: ${unproven.length} unproven metric(s) share ${totalSets} sets by distance from target; proven metrics get no practice beyond maintenance`);
++  } else {
++    if (!knowledgeOpen) reasons.push('every provable metric is proven: the stage waits only on retention tests and the knowledge gate');
++    // FILL: the session's remaining minutes go to the proven metrics, evenly
++    // (consolidation beyond the bar; over-practice helps motor retention,
++    // Driskell, Willis & Copper 1992). 0 ends the session early instead.
++    const proven = stage.metrics.filter((mt) => mt.source.provable).map((mt) => mt.id);
++    if (k.FILL && proven.length && left >= k.SET_MIN) {
++      const each = Math.floor(left / k.SET_MIN / proven.length);
++      if (each > 0) {
++        for (const id of proven) practice.push({ metric: id, sets: each, kind: 'consolidation' });
++        reasons.push(`consolidation: the session's other ${each * proven.length} sets go to the proven metrics`);
++      }
++    }
++  }
++  return {
++    stage: stage.id,
++    sittings,
++    practice,
++    lesson_minutes: lessonMinutes,
++    what: { stage: stage.id, unproven, attest, metrics: stage.metrics.map((x) => x.id) },
++    reasons,
++  };
++}
++
++/**
++ * Carry-over maintenance (round 3): the metrics of stages already left, due a
++ * maintenance set (CARRY_DAYS or more since last practised), longest first,
++ * at most CARRY_MAX. `left` is [{stage, rec}] for the learner's earlier stages
++ * of this subject (the record is per subject, so usually the same rec).
++ * Practice only: it never sits a test and never changes a stage's status.
++ */
++function carryOver(left, now) {
++  const k = knobs();
++  if (!k.CARRY_DAYS || !k.CARRY_MAX) return [];
++  const due = [];
++  for (const { stage, rec } of left) {
++    for (const mt of stage.metrics) {
++      if (!mt.source.provable) continue;
++      const m = rec.metrics[mt.id];
++      if (!m) continue;
++      const last = Math.max(m.last_practice_at || 0, m.last_sat_at || 0);
++      if (now - last >= k.CARRY_DAYS * sc.DAY) due.push({ metric: mt.id, stage: stage.id, sets: 1, kind: 'carry', last });
++    }
++  }
++  return due.sort((a, b) => a.last - b.last).slice(0, k.CARRY_MAX);
++}
++
++/**
++ * The WHAT invariant for skill plans: the plan's stage and metric list are the
++ * stage's own, every unproven provable metric is listed as unproven and gets
++ * practice or a sitting, and nothing unproven is marked done.
++ */
++function checkPlan(stage, rec, plan) {
++  const problems = [];
++  if (plan.stage !== stage.id || plan.what.stage !== stage.id) problems.push('stage changed');
++  if (JSON.stringify(plan.what.metrics) !== JSON.stringify(stage.metrics.map((x) => x.id))) problems.push('metric list changed');
++  for (const mt of stage.metrics) {
++    if (!mt.source.provable) continue;
++    const m = rec.metrics[mt.id];
++    const proven = m.status === 'proven' || m.status === 'retained';
++    if (!proven && !plan.what.unproven.includes(mt.id)) problems.push(`${mt.id} unproven but not listed`);
++    if (!proven && !plan.practice.some((p) => p.metric === mt.id) && !plan.sittings.some((s) => s.metric === mt.id)) problems.push(`${mt.id} unproven but given no practice or sitting`);
++  }
++  return problems;
++}
++
++module.exports = { knobs, practiseSet, readiness, overlearnDeficit, planSession, carryOver, checkPlan };
+diff --git a/services/skill-dose.js b/services/skill-dose.js
+new file mode 100644
+index 0000000..c917415
+--- /dev/null
++++ b/services/skill-dose.js
+@@ -0,0 +1,263 @@
++/**
++ * The practice-dose plan for chess, piano and basketball (staged patch
++ * skills-round3/04-practice-dose; SKILL_DOSE=on, needs SKILL_RECORD=on and
++ * patch 01; its drills are patch 02's checks played warm, so it needs 02 for
++ * anything but logged sets).
++ *
++ * Each day's practice comes from services/skill-adaptation.js planSession on
++ * the learner's own skill record. It decides HOW MUCH and WHEN, never WHAT:
++ *   - the session's sets go to the stage's unproven metrics by their distance
++ *     from target on the learner's recent warm sets; every unproven metric
++ *     gets at least one (checkPlan proves none is dropped);
++ *   - the maintenance share (round 3): proven metrics that have not had their
++ *     over-learning dose (twice the sets it took to prove them) keep the share
++ *     even practice would give them, so a proven skill is not left to fade
++ *     while the others catch up (round 2 kept less at 30 days without it);
++ *   - a cold stage test is called when the last three warm sets were at the
++ *     target, or every 5 days (patch 02 shows it on the stage check);
++ *   - retention and re-sit tests when due.
++ * Warm sets never prove anything: they make the next sitting warm for 20
++ * hours and tell the plan when a cold test is worth sitting.
++ *
++ * A set is the metric's own check played warm with feedback: 5 questions, one
++ * piano part, or one logged basketball set, judged against the same bar. A
++ * metric whose check is not built yet (games, play-outs) is practised where
++ * the app has it and logged by the learner: a self-report, so it only times
++ * the next cold test.
++ */
++'use strict';
++
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const record = require('./skill-record');
++const sa = require('./skill-adaptation');
++const sc = require('./skill-coverage');
++
++const ITEMS_PER_SET = 5;
++const DAY = sc.DAY;
++
++function enabled() {
++  return record.enabled() && String(process.env.SKILL_DOSE || 'off').toLowerCase() === 'on';
++}
++
++function checksPart() {
++  try {
++    // eslint-disable-next-line global-require
++    return { checks: require('./skill-checks'), content: require('../content/skill-stage-checks') };
++  } catch (err) {
++    if (err && err.code === 'MODULE_NOT_FOUND') return null;
++    throw err;
++  }
++}
++
++/** Minutes of a session: the stage's own range, its middle. */
++function sessionMinutes(stage) {
++  const m = /(\d+)\s*-\s*(\d+)/.exec(String(stage.session_minutes || ''));
++  return m ? Math.round((Number(m[1]) + Number(m[2])) / 2) : 30;
++}
++
++function atFinal(enrollment) {
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const final = grade && (grade.levels.find((l) => l.kind === 'graduation') || {}).level;
++  return !!final && enrollment.current_level >= final;
++}
++
++const dayOf = (t) => Math.floor(t / DAY);
++
++/** Where a metric is practised and how a set is judged. */
++function drillFor(metricId, part) {
++  const def = part ? part.content.checkFor(metricId) : { how: 'not_wired' };
++  if (def.how === 'items') return { how: 'items', says: def.says, set: `${ITEMS_PER_SET} questions with the answer after each` };
++  if (def.how === 'take') return { how: 'take', says: def.says, set: 'one part, played warm' };
++  if (def.how === 'count') return { how: 'count', says: def.says, set: 'one logged set, judged against the bar', fields: def.fields.map(([name, label, min, max]) => ({ name, label, min, max })), hands: !!def.hands };
++  if (def.how === 'puzzles') return { how: 'log', says: def.says, set: 'rated puzzles in the trainer, then log the set', href: '/engine/chess/puzzles.html' };
++  const chess = /^CH/.test(metricId);
++  return { how: 'log', says: def.needs ? `Not checkable in the app yet (${def.needs}).` : null, set: 'practise it, then log the set', href: chess ? (/game|hung/.test(metricId) ? '/engine/chess/spar.html' : '/engine/chess/drills.html') : null };
++}
++
++/**
++ * Today's plan for an enrollment's stage. Fixed for the day once made (kept on
++ * the enrollment), so the sets done today count down against it.
++ */
++function planFor(userId, enrollment, now = Date.now()) {
++  const stage = record.stageFor(enrollment.track_id, enrollment.grade_id);
++  if (!stage) return null;
++  const today = dayOf(now);
++  let cached = enrollment.skill_practice_plan;
++  if (!cached || cached.day !== today || cached.stage !== stage.id) {
++    const rec = record.recordFor(userId, enrollment.track_id);
++    const minutes = sessionMinutes(stage);
++    const knowledgeOpen = !atFinal(enrollment);
++    const plan = sa.planSession({ stage, rec, now, minutes, knowledgeOpen, lessonShare: 0.3 });
++    const problems = sa.checkPlan(stage, rec, plan);
++    cached = { day: today, stage: stage.id, made_at: new Date(now).toISOString(), minutes, knowledge_open: knowledgeOpen, plan, problems };
++    db.update('enrollments', enrollment.id, { skill_practice_plan: cached });
++  }
++  const part = checksPart();
++  const rows = db.find(record.COLLECTION, (r) => r.user_id === userId && r.subject === enrollment.track_id);
++  const doneToday = (id) => {
++    const r = rows.find((x) => x.metric_id === id);
++    return r ? (r.warm || []).filter((w) => dayOf(w.at) === today).length : 0;
++  };
++  const metric = (id) => stage.metrics.find((m) => m.id === id);
++  const title = (name) => (part && part.content.titleOf ? part.content.titleOf(name) : name.replace(/_/g, ' '));
++  const practice = cached.plan.practice.map((p) => {
++    const done = doneToday(p.metric);
++    return { ...p, name: metric(p.metric).metric, title: title(metric(p.metric).metric), test: metric(p.metric).test, done: Math.min(done, p.sets), left: Math.max(0, p.sets - done), drill: drillFor(p.metric, part), open: !!((rows.find((x) => x.metric_id === p.metric) || {}).practice_open) };
++  });
++  return {
++    stage: { id: stage.id, name: stage.name },
++    minutes: cached.minutes,
++    knowledge_open: cached.knowledge_open,
++    lesson_minutes: cached.plan.lesson_minutes,
++    set_minutes: sa.knobs().SET_MIN,
++    sittings: cached.plan.sittings.map((s) => ({ ...s, name: metric(s.metric).metric, title: title(metric(s.metric).metric) })),
++    practice,
++    reasons: cached.plan.reasons,
++    problems: cached.problems,
++    sets: practice.reduce((a, p) => a + p.sets, 0),
++    left: practice.reduce((a, p) => a + p.left, 0),
++    checks_applied: !!part,
++  };
++}
++
++/** The cold tests today's plan calls (read by patch 02 for the stage check). */
++function scheduledTests(userId, enrollment, now = Date.now()) {
++  const p = planFor(userId, db.byId('enrollments', enrollment.id) || enrollment, now);
++  return p ? p.sittings.map((s) => s.metric) : [];
++}
++
++function planned(userId, enrollment, metricId, now) {
++  const p = planFor(userId, enrollment, now);
++  return p && p.practice.find((x) => x.metric === metricId);
++}
++
++/** Start a warm set of a metric's own check (items or one piano part). */
++function startSet(userId, enrollment, metricId, now = Date.now()) {
++  const part = checksPart();
++  const entry = planned(userId, enrollment, metricId, now);
++  if (!entry) return { status: 404, error: 'That is not in today\'s practice.' };
++  if (!part) return { status: 409, error: 'The practice drills come with the stage checks (patch 02); log the set instead.' };
++  const def = part.content.checkFor(metricId);
++  const row = record.ensureRow(userId, enrollment.track_id, metricId);
++  if (row.practice_open && now - row.practice_open.started_at < 3 * 3600 * 1000) return { set: forPage(row.practice_open), resumed: true };
++  const seed = (userId * 104729 + now) >>> 0;
++  let a = seed;
++  const rnd = () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
++  let open;
++  if (def.how === 'items') {
++    const small = { ...def, count: Math.min(ITEMS_PER_SET, def.count), mates: def.mates ? Math.min(3, def.mates) : def.mates };
++    const items = part.checks.BUILDERS[def.build](small, rnd, `p:${userId}:${metricId}:${now}`).slice(0, ITEMS_PER_SET);
++    open = { how: 'items', metric_id: metricId, started_at: now, items, answers: items.map(() => null) };
++  } else if (def.how === 'take') {
++    const parts = part.checks.takeParts(def, rnd, userId).slice(0, 1);
++    if (!parts.length) return { status: 409, error: 'Nothing to play for this one yet.' };
++    open = { how: 'take', metric_id: metricId, started_at: now, parts, takes: [[]] };
++  } else {
++    return { status: 400, error: 'This one is logged, not played here.' };
++  }
++  db.update(record.COLLECTION, row.id, { practice_open: open });
++  return { set: forPage(open), resumed: false };
++}
++
++function forPage(open) {
++  const part = checksPart();
++  if (open.how === 'items') return { metric: open.metric_id, how: 'items', items: part.checks.itemsForPage(open.items), answered: open.answers.map((x) => x !== null) };
++  return { metric: open.metric_id, how: 'take', parts: open.parts.map((p, i) => ({ index: i, label: p.label, tempo: p.tempo, hands: p.hands || null, names: p.names || null, chords: p.chords || null, any_key: !!p.any_key, count_in: p.count_in || 4, target: p.chords ? null : (p.target || []).map((t) => ({ midi: t.midi, beat: t.beat })) })) };
++}
++
++/** One answer in a warm items set: marked straight away, with the answer. */
++function answerSet(userId, enrollment, metricId, { index, answer, source }) {
++  const part = checksPart();
++  const row = record.rowFor(userId, enrollment.track_id, metricId);
++  if (!part || !row || !row.practice_open || row.practice_open.how !== 'items') return { status: 404, error: 'No practice set is open.' };
++  const open = row.practice_open;
++  const i = Number(index);
++  if (!Number.isInteger(i) || !open.items[i]) return { status: 400, error: 'No such question.' };
++  if (open.answers[i] !== null) return { status: 409, error: 'Already answered.' };
++  const graded = part.checks.gradeItem(open.items[i], answer);
++  const key = open.items[i].key;
++  const shown = key.answer || (key.accepts && key.accepts[0]) || (key.set && key.set.join(' ')) || (key.type === 'mate_or_none' ? (key.mate ? 'a mate exists' : 'no mate') : null) || (key.notes ? key.notes.map((m) => require('../public/engine/piano/piano-core').midiToName(m)).join(' ') : null) || (key.type === 'midi' ? 'middle C' : key.type === 'pc' ? `any ${['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'][key.pc]}` : null);
++  const answers = open.answers.map((x, k) => (k === i ? { ...graded, source: source || null } : x));
++  db.update(record.COLLECTION, row.id, { practice_open: { ...open, answers } });
++  return { correct: graded.correct, answer: shown, key_midi: key.type === 'midi' ? key.midi : null, key_pc: key.type === 'pc' ? key.pc : null };
++}
++
++function takeSet(userId, enrollment, metricId, { part: idx, played, origin }) {
++  const part = checksPart();
++  const row = record.rowFor(userId, enrollment.track_id, metricId);
++  if (!part || !row || !row.practice_open || row.practice_open.how !== 'take') return { status: 404, error: 'No practice set is open.' };
++  const open = row.practice_open;
++  const p = open.parts[Number(idx) || 0];
++  const scored = part.checks.scoreTake(part.content.checkFor(metricId), p, played, origin === undefined ? null : origin);
++  if (scored.error) return { status: 400, error: scored.error };
++  db.update(record.COLLECTION, row.id, { practice_open: { ...open, takes: [[...open.takes[0], scored]] } });
++  return scored;
++}
++
++/** Close a warm set: at the target or not, by the check's own bar; recorded as practice. */
++function finishSet(userId, enrollment, metricId, now = Date.now()) {
++  const part = checksPart();
++  const row = record.rowFor(userId, enrollment.track_id, metricId);
++  if (!part || !row || !row.practice_open) return { status: 404, error: 'No practice set is open.' };
++  const open = row.practice_open;
++  const def = part.content.checkFor(metricId);
++  let atTarget;
++  let score;
++  if (open.how === 'items') {
++    const graded = open.answers.map((x) => x || { correct: false });
++    const r = part.checks.itemsResult({ ...def, rule: def.rule.right !== undefined ? { share: def.rule.right / def.count } : def.rule }, graded);
++    atTarget = r.pass;
++    score = r.score;
++  } else {
++    const t = open.takes[0][open.takes[0].length - 1];
++    if (!t) return { status: 409, error: 'Play it first.' };
++    atTarget = !!t.pass;
++    score = t.notes;
++  }
++  db.update(record.COLLECTION, row.id, { practice_open: null });
++  record.practise(userId, { subject: enrollment.track_id, metricId, atTarget, at: now });
++  return { at_target: atTarget, score, plan: planFor(userId, db.byId('enrollments', enrollment.id), now) };
++}
++
++/**
++ * A logged set: a basketball set judged by the check's rule, or, for a metric
++ * not checkable in the app, the learner's own word (it only times the next
++ * cold test; warm sets never prove).
++ */
++function logSet(userId, enrollment, metricId, body, now = Date.now()) {
++  const entry = planned(userId, enrollment, metricId, now);
++  if (!entry) return { status: 404, error: 'That is not in today\'s practice.' };
++  const part = checksPart();
++  const def = part ? part.content.checkFor(metricId) : { how: 'not_wired' };
++  let atTarget;
++  let note = null;
++  if (def.how === 'count') {
++    const row = record.ensureRow(userId, enrollment.track_id, metricId);
++    const r = part.checks.countResult(def, body, row.baseline);
++    if (r.error) return { status: 400, error: r.error };
++    atTarget = r.pass === true;
++    note = r.note || null;
++  } else if (def.how === 'items' || def.how === 'take') {
++    return { status: 400, error: 'This one is played here: start the set.' };
++  } else {
++    atTarget = !!(body && body.at_target === true);
++    note = 'your own word: it only times the next cold test';
++  }
++  record.practise(userId, { subject: enrollment.track_id, metricId, atTarget, at: now });
++  return { at_target: atTarget, note, plan: planFor(userId, db.byId('enrollments', enrollment.id), now) };
++}
++
++/** The path's "Today's practice" row. */
++function pathNode(userId, enrollment) {
++  if (!enabled() || enrollment.status !== 'active') return null;
++  const p = planFor(userId, enrollment);
++  if (!p) return null;
++  const href = `/skill-practice?enrollment=${enrollment.id}`;
++  if (!p.sets) return null;
++  if (!p.left) return { kind: 'practice', badge: 'Today', title: "Today's practice is done", kind_label: 'Practice', detail: `${p.sets} set${p.sets === 1 ? '' : 's'} done.`, href, action: 'See it', done: true };
++  const names = [...new Set(p.practice.filter((x) => x.left).map((x) => x.title || x.name.replace(/_/g, ' ')))];
++  return { kind: 'practice', badge: 'Today', title: "Today's practice", kind_label: 'Practice', detail: `${p.left} set${p.left === 1 ? '' : 's'} of about ${p.set_minutes} min: ${names.slice(0, 4).join(', ')}${names.length > 4 ? ', and more' : ''}.`, href, action: p.left < p.sets ? 'Carry on' : 'Practise', next: true };
++}
++
++module.exports = { enabled, sessionMinutes, planFor, scheduledTests, startSet, answerSet, takeSet, finishSet, logSet, pathNode, drillFor };
+diff --git a/routes/skill-dose.js b/routes/skill-dose.js
+new file mode 100644
+index 0000000..82a058b
+--- /dev/null
++++ b/routes/skill-dose.js
+@@ -0,0 +1,83 @@
++/**
++ * Today's practice for chess, piano and basketball (services/skill-dose.js;
++ * staged patch skills-round3/04-practice-dose). Mounted by routes/skills.js
++ * (patch 01) when this file is present; answers 404 unless SKILL_RECORD=on and
++ * SKILL_DOSE=on.
++ *
++ *   GET  /api/skills/practice/:enrollmentId                   today's plan: which drills, how many sets, why
++ *   POST /api/skills/practice/:enrollmentId/:metric/start     a warm set of the metric's own check
++ *   POST /api/skills/practice/:enrollmentId/:metric/answer    one answer, marked with the answer shown
++ *   POST /api/skills/practice/:enrollmentId/:metric/take      one piano take
++ *   POST /api/skills/practice/:enrollmentId/:metric/finish    close the set: at the target or not
++ *   POST /api/skills/practice/:enrollmentId/:metric/log       a logged set (basketball counts, or a drill done elsewhere)
++ */
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const record = require('../services/skill-record');
++const dose = require('../services/skill-dose');
++const { requireAuth } = require('../middleware/auth');
++const { limit } = require('../utils/rate-limit');
++
++const router = express.Router();
++
++router.use('/skills/practice', (req, res, next) => {
++  if (!dose.enabled()) return res.status(404).json({ error: 'No such endpoint.' });
++  next();
++});
++
++function own(req) {
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return null;
++  if (!record.stageFor(enrollment.track_id, enrollment.grade_id)) return null;
++  return enrollment;
++}
++function reply(res, out) {
++  if (out && out.error) return res.status(out.status || 400).json({ error: out.error });
++  return res.json(out);
++}
++const setLimit = limit('skill-practice', 400, 60 * 60 * 1000);
++
++router.get('/skills/practice/:enrollmentId', requireAuth, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const track = curriculum.getTrack(enrollment.track_id);
++  res.json({
++    enrollment: { id: enrollment.id, status: enrollment.status },
++    track: { id: track.id, name: track.name },
++    grade: { id: grade.id, name: grade.name },
++    practice: dose.planFor(req.user.id, enrollment),
++  });
++});
++
++router.post('/skills/practice/:enrollmentId/:metric/start', requireAuth, setLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  reply(res, dose.startSet(req.user.id, enrollment, req.params.metric));
++});
++router.post('/skills/practice/:enrollmentId/:metric/answer', requireAuth, setLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const b = req.body || {};
++  reply(res, dose.answerSet(req.user.id, enrollment, req.params.metric, { index: b.index, answer: b.answer, source: typeof b.source === 'string' ? b.source.slice(0, 12) : null }));
++});
++router.post('/skills/practice/:enrollmentId/:metric/take', requireAuth, setLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  reply(res, dose.takeSet(req.user.id, enrollment, req.params.metric, req.body || {}));
++});
++router.post('/skills/practice/:enrollmentId/:metric/finish', requireAuth, setLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  reply(res, dose.finishSet(req.user.id, enrollment, req.params.metric));
++});
++router.post('/skills/practice/:enrollmentId/:metric/log', requireAuth, setLimit, (req, res) => {
++  const enrollment = own(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  reply(res, dose.logSet(req.user.id, enrollment, req.params.metric, req.body || {}));
++});
++
++router.pathNode = (userId, enrollment) => dose.pathNode(userId, enrollment);
++
++module.exports = router;
+diff --git a/public/skill-practice.html b/public/skill-practice.html
+new file mode 100644
+index 0000000..be7b23c
+--- /dev/null
++++ b/public/skill-practice.html
+@@ -0,0 +1,32 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>Today's practice | Savant</title>
++  <meta name="color-scheme" content="light dark">
++  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
++  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
++  <link rel="stylesheet" href="/fonts/fonts.css">
++  <link rel="stylesheet" href="/css/style.css">
++  <link rel="stylesheet" href="/css/skills.css">
++</head>
++<body>
++  <header class="site-header" id="header"></header>
++  <main class="page">
++    <div class="wrap">
++      <div id="skill-practice">
++        <div class="loading"><span class="spinner"></span>Reading your record</div>
++      </div>
++    </div>
++  </main>
++  <script src="/js/icons.js"></script>
++  <script src="/js/app.js"></script>
++  <script src="/engine/chess/chess-core.js"></script>
++  <script src="/engine/chess/board.js"></script>
++  <script src="/engine/piano/piano-core.js"></script>
++  <script src="/engine/piano/piano-io.js"></script>
++  <script src="/js/skill-kit.js"></script>
++  <script src="/js/skill-practice.js"></script>
++</body>
++</html>
+diff --git a/public/js/skill-practice.js b/public/js/skill-practice.js
+new file mode 100644
+index 0000000..2687c14
+--- /dev/null
++++ b/public/js/skill-practice.js
+@@ -0,0 +1,146 @@
++/* Today's practice for chess, piano and basketball (staged skills round 3,
++ * patch 04; SKILL_DOSE): the plan from the learner's own skill record, which
++ * says which drills, how many sets and why. Sets go to the skills furthest
++ * from their bar, every unproven skill gets at least one, and proven skills
++ * keep a share until they have had their over-learning dose, so they do not
++ * fade while the others catch up. Warm sets never prove a skill; the cold
++ * stage check does.
++ *
++ * Network: GET and POST to /api/skills/practice only.
++ */
++App.mount(async () => {
++  const user = await App.currentUser({ require: true });
++  if (!user) return;
++  App.header(user, 'dashboard');
++  const host = document.getElementById('skill-practice');
++  const enrollmentId = Number(App.query('enrollment'));
++  const esc = App.escapeHtml;
++  if (!enrollmentId) {
++    host.innerHTML = '<div class="notice notice-error">No subject selected. <a href="/dashboard">Back to dashboard</a>.</div>';
++    return;
++  }
++  const pathHref = `/path?enrollment=${enrollmentId}`;
++  const api = `/api/skills/practice/${enrollmentId}`;
++  const name = (s) => String(s || '').replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
++  const KIND = { practice: 'To prove', overlearn: 'Make it last', maintenance: 'Keep it', consolidation: 'Keep it' };
++  const KIND_LONG = {
++    practice: 'Not proven yet: sets go to it by how far your recent sets are from the bar.',
++    overlearn: 'Proven: a share of sets until it has had twice the practice it took to prove, so it lasts.',
++    maintenance: 'Proven and practised enough: one set keeps it going.',
++    consolidation: 'Everything is proven: spare time keeps it all standing.',
++  };
++  let data;
++
++  async function load() {
++    try { data = await App.api.get(api); } catch (err) {
++      host.innerHTML = `<div class="notice notice-error">${esc(err.status === 404 ? 'There is no practice plan on this subject.' : err.message)}
++        <div style="margin-top:10px"><a class="btn btn-sm" href="${pathHref}">Back to your path</a></div></div>`;
++      return;
++    }
++    draw();
++  }
++
++  function draw() {
++    const p = data.practice;
++    const [gradeMain] = App.gradeParts(data.grade.name);
++    const first = p.practice.find((x) => x.left);
++    const done = p.sets - p.left;
++    host.innerHTML = `
++      <div class="path-top skill-top" data-subject="${esc(data.track.id)}">
++        <div>
++          <a class="back-link" href="${pathHref}">${window.icon('arrow-left')}Your path</a>
++          <div class="track-heading">
++            ${App.symbol(data.track, { size: 'lg' })}
++            <div>
++              <h1>Today's practice</h1>
++              <span class="tiny">${esc(data.track.name)}, ${esc(gradeMain)}. Stage ${esc(p.stage.id)}: ${esc(p.stage.name)}.</span>
++            </div>
++          </div>
++        </div>
++      </div>
++      <div class="skill-now">
++        <div>
++          <p class="skill-lede">${p.left ? `<span class="num">${p.left}</span> set${p.left === 1 ? '' : 's'} left today, about <span class="num">${p.set_minutes}</span> minutes each.` : `${window.mark('tick')}Done for today.`}${p.lesson_minutes ? ` Plus about <span class="num">${p.lesson_minutes}</span> minutes of this grade's lessons.` : ''}</p>
++          ${p.sittings.length ? `<p class="notice notice-review">First, the stage check: ${p.sittings.map((s) => esc(s.title || name(s.name))).join(', ')} ${p.sittings.length === 1 ? 'is' : 'are'} ready to sit cold. Practising first would make ${p.sittings.length === 1 ? 'it' : 'them'} warm for 20 hours. <a href="/stage-check?enrollment=${enrollmentId}">Go to the stage check</a>.</p>` : ''}
++          <p class="small muted skill-note">A set is the skill's own check, played warm with the answer after each question. It never proves a skill: it tells the plan when a cold check is worth sitting.</p>
++        </div>
++        <div class="tmeters">${App.tmeter({ label: 'Sets done today', value: done, target: p.sets, max: p.sets || 1, unit: 'count' })}</div>
++      </div>
++      <section class="skill-section" aria-labelledby="plan-h">
++        <h2 class="section-title" id="plan-h">The plan</h2>
++        <ol class="skill-list">${p.practice.map((x) => `
++          <li class="skill-row${x.left ? '' : ' is-done'}">
++            <span class="skill-mark">${x.left ? '' : window.mark('tick', 'mark-plain')}</span>
++            <span class="skill-main">
++              <span class="skill-title">${esc(x.title || name(x.name))}<span class="skill-tag">${esc(KIND[x.kind] || '')}</span></span>
++              <span class="skill-why">${esc(KIND_LONG[x.kind] || '')}</span>
++              <span class="skill-meta"><span class="num">${x.done}</span> of <span class="num">${x.sets}</span> set${x.sets === 1 ? '' : 's'}. ${esc(x.drill.set)}${x.drill.how === 'log' && x.drill.says ? `. ${esc(x.drill.says)}` : ''}</span>
++            </span>
++            <span class="skill-act">${x.left ? actionFor(x, first && x.metric === first.metric) : ''}</span>
++          </li>`).join('')}</ol>
++      </section>
++      ${p.reasons.length ? `<details class="skill-review"><summary>Why this plan</summary><ul>${p.reasons.map((r) => `<li>${esc(r)}</li>`).join('')}</ul></details>` : ''}`;
++    host.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', () => run(b.getAttribute('data-set'))));
++  }
++
++  function actionFor(x, primary) {
++    const cls = `btn btn-sm${primary ? ' btn-primary' : ''}`;
++    if (x.drill.how === 'items' || x.drill.how === 'take') return `<button class="${cls}" type="button" data-set="${esc(x.metric)}">${x.open ? 'Carry on' : 'Practise'}<span class="visually-hidden">: ${esc(name(x.name))}</span></button>`;
++    return `${x.drill.href ? `<a class="btn btn-sm btn-ghost" href="${esc(x.drill.href)}" target="_blank" rel="noopener">Open the drill</a>` : ''}<button class="${cls}" type="button" data-set="${esc(x.metric)}">Log a set</button>`;
++  }
++
++  function frame(x) {
++    host.innerHTML = `
++      <div class="player skill-player" data-subject="${esc(data.track.id)}">
++        <div class="player-head">
++          <a class="icon-btn player-close" href="#" data-leave title="Back to the plan" aria-label="Back to the plan">${window.icon('x')}</a>
++          <div class="player-titles"><h1 id="title">${esc(x.title || name(x.name))}</h1><div id="subtitle">Practice set. ${esc(x.test)}</div></div>
++        </div>
++        <div class="card" id="runner"></div>
++      </div>`;
++    host.querySelector('[data-leave]').addEventListener('click', (e) => { e.preventDefault(); load(); });
++    return host.querySelector('#runner');
++  }
++
++  function after(runner, r) {
++    runner.innerHTML = `<p class="skill-verdict ${r.at_target ? 'is-right' : 'is-wrong'}">${window.mark(r.at_target ? 'tick' : 'cross')}<span>${r.at_target ? 'That set was at the bar.' : 'That set was below the bar.'}</span></p>
++      ${r.note ? `<p class="small muted">${esc(r.note)}</p>` : ''}
++      <div class="path-actions"><button class="btn btn-primary" type="button" data-back>Back to the plan</button></div>`;
++    runner.querySelector('[data-back]').addEventListener('click', load);
++    runner.querySelector('[data-back]').focus();
++  }
++
++  async function run(metric) {
++    const x = data.practice.practice.find((y) => y.metric === metric);
++    const runner = frame(x);
++    const base = `${api}/${encodeURIComponent(metric)}`;
++    const finish = async () => {
++      try { after(runner, await App.api.post(`${base}/finish`, {})); } catch (err) { App.toast(err.message, 'error'); load(); }
++    };
++    if (x.drill.how === 'count') {
++      SkillKit.count(runner, {
++        fields: x.drill.fields, hands: x.drill.hands, cameraOk: false, submitLabel: 'Log the set',
++        onSubmit: async (body) => { try { after(runner, await App.api.post(`${base}/log`, body)); } catch (err) { App.toast(err.message, 'error'); } },
++      });
++      return;
++    }
++    if (x.drill.how === 'log') {
++      runner.innerHTML = `<p class="skill-stem">How did the set go?</p>
++        <p class="small muted">Your own word: it only times the next cold check, and never proves anything.</p>
++        <div class="path-actions"><button class="btn btn-primary" type="button" data-yes>At the bar</button><button class="btn" type="button" data-no>Not yet</button></div>`;
++      const log = async (at) => { try { after(runner, await App.api.post(`${base}/log`, { at_target: at })); } catch (err) { App.toast(err.message, 'error'); } };
++      runner.querySelector('[data-yes]').addEventListener('click', () => log(true));
++      runner.querySelector('[data-no]').addEventListener('click', () => log(false));
++      return;
++    }
++    let s;
++    try { s = (await App.api.post(`${base}/start`, {})).set; } catch (err) { App.toast(err.message, 'error'); load(); return; }
++    if (s.how === 'items') {
++      SkillKit.items(runner, { items: s.items, answered: s.answered, subject: data.track.id, feedback: true, onAnswer: (index, answer, source) => App.api.post(`${base}/answer`, { index, answer, source }), onDone: finish });
++    } else {
++      SkillKit.takes(runner, { parts: s.parts, practice: true, onTake: (part, played, origin) => App.api.post(`${base}/take`, { part, played, origin }), onDone: finish });
++    }
++  }
++
++  load();
++});
+diff --git a/scripts/skills-r3-dose-test.js b/scripts/skills-r3-dose-test.js
+new file mode 100644
+index 0000000..aa5f75f
+--- /dev/null
++++ b/scripts/skills-r3-dose-test.js
+@@ -0,0 +1,114 @@
++/**
++ * Tests for the practice-dose plan (staged skills round 3, patch
++ * 04-practice-dose): services/skill-adaptation.js (with the maintenance share),
++ * services/skill-dose.js and routes/skill-dose.js. Needs patch 01; the played
++ * drills need patch 02.
++ *
++ *   node scripts/skills-r3-dose-test.js
++ *
++ * Throwaway data file, keys blanked, no model call, no network.
++ */
++const F = require('./lib/skills-r3-fixture');
++
++const { db, check, learner, serve, fresh, HOUR, DAY, at, later, now } = F;
++const record = require('../services/skill-record');
++const sa = require('../services/skill-adaptation');
++const sc = require('../services/skill-coverage');
++
++let checksApplied = true;
++try { require.resolve('../services/skill-checks'); } catch { checksApplied = false; }
++
++(async () => {
++  console.log('skills round 3, patch 04: the practice-dose plan');
++
++  // ── the plan itself (skill-adaptation), on records built by hand ──
++  const stage = sc.stagesFor('chess')[3]; // CH3: four metrics, all provable
++  const t0 = Date.UTC(2026, 9, 1, 9);
++  let rec = sc.blankRecord('chess');
++  let plan = sa.planSession({ stage, rec, now: t0, minutes: 30, knowledgeOpen: true });
++  check('a blank record: every metric gets practice, none is dropped (checkPlan)', sa.checkPlan(stage, rec, plan).length === 0 && plan.practice.filter((p) => p.kind === 'practice').length === 4, plan.practice);
++  check('...no cold test yet (no warm sets say any is ready)', plan.sittings.length === 0);
++  // One metric proven quickly (3 sets), one far from target, two in between.
++  const [m0, m1, m2, m3] = stage.metrics.map((m) => m.id);
++  for (let i = 0; i < 3; i++) sa.practiseSet(rec, m0, t0 - (5 - i) * DAY, true);
++  rec.metrics[m0].status = 'proven'; rec.metrics[m0].proven_at = t0 - DAY; rec.metrics[m0].sittings.push({ at: t0 - DAY, pass: true, cold: true, counts: true, source: 'exact' });
++  for (let i = 0; i < 3; i++) { sa.practiseSet(rec, m1, t0 - (4 - i) * DAY, false); sa.practiseSet(rec, m2, t0 - (4 - i) * DAY, i > 0); sa.practiseSet(rec, m3, t0 - (4 - i) * DAY, i === 2); }
++  plan = sa.planSession({ stage, rec, now: t0, minutes: 40, knowledgeOpen: false });
++  const setsOf = (id, kind) => plan.practice.filter((p) => p.metric === id && (!kind || p.kind === kind)).reduce((a, p) => a + p.sets, 0);
++  check('dose: the metric furthest from target gets the most sets', setsOf(m1) >= setsOf(m2) && setsOf(m1) >= setsOf(m3) && setsOf(m1) > 1, plan.practice);
++  check('the maintenance share: the proven metric short of its over-learning dose keeps sets ("overlearn")', setsOf(m0, 'overlearn') >= 1 && sa.overlearnDeficit(rec.metrics[m0]) > 0, { plan: plan.practice, deficit: sa.overlearnDeficit(rec.metrics[m0]) });
++  check('...and every unproven metric still has practice (checkPlan)', sa.checkPlan(stage, rec, plan).length === 0);
++  process.env.SKILL_MAINT_SHARE = '0';
++  const r2 = sa.planSession({ stage, rec, now: t0, minutes: 40, knowledgeOpen: false });
++  check("SKILL_MAINT_SHARE=0 is round 2's plan: the proven metric gets one maintenance set", r2.practice.filter((p) => p.metric === m0).every((p) => p.kind === 'maintenance' && p.sets === 1), r2.practice);
++  delete process.env.SKILL_MAINT_SHARE;
++  // Dose done: once a proven metric has had twice its proof's sets, it drops to maintenance.
++  for (let i = 0; i < 8; i++) sa.practiseSet(rec, m0, t0 - DAY + (i + 1) * 60000, true);
++  check('after twice the sets it took to prove it, its over-learning dose is done', sa.overlearnDeficit(rec.metrics[m0]) === 0, { sets: rec.metrics[m0].sets, at: rec.metrics[m0].sets_at_proof });
++  plan = sa.planSession({ stage, rec, now: t0 + DAY, minutes: 40, knowledgeOpen: false });
++  check('...and it gets only its maintenance set', plan.practice.filter((p) => p.metric === m0).every((p) => p.kind === 'maintenance'), plan.practice);
++  // A cold test when the warm sets say it is ready.
++  for (let i = 0; i < 3; i++) sa.practiseSet(rec, m2, t0 - 3 * DAY + i * 60000, true);
++  plan = sa.planSession({ stage, rec, now: t0 + DAY, minutes: 40, knowledgeOpen: false });
++  check('three warm sets at target in a row call a cold stage test', plan.sittings.some((s) => s.metric === m2 && s.kind === 'stage_test'), plan.sittings);
++
++  // ── the app: routes, the day's plan, sets ──
++  const routes = fresh('routes/skills');
++  const app = await serve([routes]);
++  const bb = learner('basketball', 'basketball_mini_starter');
++  const base = `/api/skills/practice/${bb.enrollment.id}`;
++  let r = await app.get(base, bb.user.id);
++  check('off: the practice plan answers 404', r.status === 404);
++  process.env.SKILL_RECORD = 'on';
++  process.env.SKILL_DOSE = 'on';
++  if (checksApplied) process.env.SKILL_STAGE_TESTS = 'on';
++  at(Date.UTC(2026, 9, 10, 9));
++  r = await app.get(base, bb.user.id);
++  const p = r.json.practice;
++  check('on: today\'s plan for BB1 gives every provable skill sets, from the stage\'s session length', r.status === 200 && p.stage.id === 'BB1' && p.practice.length === 4 && p.sets >= 4 && !p.problems.length, p);
++  check('...and says why', p.reasons.some((x) => /dose/.test(x)));
++  r = await app.get(`/api/skills/path/${bb.enrollment.id}`, bb.user.id);
++  check("the path shows Today's practice", r.json.nodes.some((n) => n.kind === 'practice' && n.next), r.json.nodes);
++  const lay = 'BB1:layup_both_hands';
++  if (checksApplied) {
++    r = await app.post(`${base}/${lay}/log`, { left: { makes: 9, attempts: 10 }, right: { makes: 10, attempts: 10 } }, bb.user.id);
++    check('a logged lay-up set is judged by the check\'s own rule (at the bar)', r.json.at_target === true, r.json);
++  } else {
++    r = await app.post(`${base}/${lay}/log`, { at_target: true }, bb.user.id);
++    check('without patch 02 a set is logged on the learner\'s word', r.json.at_target === true && /own word/.test(r.json.note), r.json);
++  }
++  const row = db.findOne('skill_records', (x) => x.user_id === bb.user.id && x.metric_id === lay);
++  check('the set is recorded as warm practice, not a sitting', row.warm.length === 1 && row.sittings.length === 0 && row.last_practice_at === now());
++  check('...so a sitting of that skill today would be warm', !sc.isCold(row, now() + HOUR));
++  r = await app.get(base, bb.user.id);
++  check('the day\'s plan counts the set down', r.json.practice.practice.find((x) => x.metric === lay).done === 1);
++
++  if (checksApplied) {
++    // A warm items set: answers marked straight away.
++    const rules = 'BB1:rules_basics';
++    r = await app.post(`${base}/${rules}/start`, {}, bb.user.id);
++    check('a warm set of the rules check: 5 questions, no key sent', r.json.set && r.json.set.items.length === 5 && !JSON.stringify(r.json).includes('"key"'), r.json);
++    const items = db.findOne('skill_records', (x) => x.user_id === bb.user.id && x.metric_id === rules).practice_open.items;
++    r = await app.post(`${base}/${rules}/answer`, { index: 0, answer: 'not this' }, bb.user.id);
++    check('a wrong answer is marked at once, with the answer shown', r.json.correct === false && r.json.answer === items[0].key.answer, r.json);
++    for (let i = 1; i < 5; i++) await app.post(`${base}/${rules}/answer`, { index: i, answer: items[i].key.answer }, bb.user.id);
++    r = await app.post(`${base}/${rules}/finish`, {}, bb.user.id);
++    check('4 of 5 is at the check\'s bar (8 of 10), recorded as practice', r.json.at_target === true && db.findOne('skill_records', (x) => x.user_id === bb.user.id && x.metric_id === rules).warm.length === 1, r.json);
++    // The plan calls a cold test early, and the stage check shows it before the Final.
++    const pi = learner('piano', 'piano_keyboard_explorer');
++    at(Date.UTC(2026, 9, 11, 9));
++    for (let i = 0; i < 3; i++) record.practise(pi.user.id, { subject: 'piano', metricId: 'PI0:find_keys', atTarget: true, at: now() - 2 * DAY + i * 60000 });
++    r = await app.get(`/api/skills/checks/${pi.enrollment.id}`, pi.user.id);
++    check('with the plan on, a skill whose warm sets are ready is due on the stage check before the Final', r.json.checks.due.includes('PI0:find_keys') && !r.json.checks.battery_open, r.json.checks.due);
++    r = await app.get(`/api/skills/practice/${pi.enrollment.id}`, pi.user.id);
++    check("...and today's practice says to sit it first, cold", r.json.practice.sittings.some((s) => s.metric === 'PI0:find_keys'));
++  }
++  const ch = learner('chess', 'chess_novice_club_player');
++  r = await app.post(`/api/skills/practice/${ch.enrollment.id}/CH3:games/log`, { at_target: true }, ch.user.id);
++  check('a skill not checkable in the app (games) is logged on the learner\'s word, which only times the next test', r.json.at_target === true && /own word/.test(r.json.note), r.json);
++  r = await app.post(`/api/skills/practice/${ch.enrollment.id}/CH9:tasks/log`, { at_target: true }, ch.user.id);
++  check("a skill outside today's plan is refused", r.status === 404);
++
++  app.close();
++  F.done();
++})().catch((err) => { console.error(err); process.exit(1); });

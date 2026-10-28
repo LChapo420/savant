@@ -1,0 +1,915 @@
+{
+ "generated_at": "2026-10-26T03:38:11.602Z",
+ "rule": "kept = code checks pass AND two blind judges of two different families, neither the writer family, both pick the key and say on-objective, one correct, grade-suitable AND any fact the key depends on is quoted verbatim from offline Wikipedia/Wiktionary (before 14:10 UTC 2026-10-24: writer MiniMax, judge A MiniMax in a separate blind pass, judge B another family)",
+ "writers": {
+  "minimax/minimax-m3.1-flash": {
+   "written": 15090,
+   "code_pass": 14055,
+   "judged": 13283,
+   "a_key": 12845,
+   "b_key": 12689,
+   "both_key": 12075,
+   "judges_same_pick": 12645,
+   "fact_claims": 2197,
+   "sourced": 416,
+   "kept": 8772,
+   "family": "minimax",
+   "keep_rate": 0.581,
+   "keep_estimate": 0.847,
+   "judge_agreement": 0.909,
+   "judges_same_pick_rate": 0.952,
+   "on": true
+  },
+  "nvidia/nemotron-3-ultra-550b-a55b": {
+   "written": 9412,
+   "code_pass": 8211,
+   "judged": 7549,
+   "a_key": 7094,
+   "b_key": 7147,
+   "both_key": 5863,
+   "judges_same_pick": 7012,
+   "fact_claims": 3329,
+   "sourced": 646,
+   "kept": 2975,
+   "family": "nemotron",
+   "keep_rate": 0.316,
+   "keep_estimate": 0.678,
+   "judge_agreement": 0.777,
+   "judges_same_pick_rate": 0.929,
+   "on": true
+  },
+  "z-ai/glm-5.3": {
+   "written": 146,
+   "code_pass": 103,
+   "judged": 64,
+   "a_key": 52,
+   "b_key": 52,
+   "both_key": 50,
+   "judges_same_pick": 62,
+   "fact_claims": 17,
+   "sourced": 2,
+   "kept": 35,
+   "family": "glm",
+   "keep_rate": 0.24,
+   "keep_estimate": 0.551,
+   "judge_agreement": 0.781,
+   "judges_same_pick_rate": 0.969,
+   "on": false
+  },
+  "nvidia/nemotron-3-ultra-550b-a55b:free": {
+   "written": 6667,
+   "code_pass": 5982,
+   "judged": 5532,
+   "a_key": 5282,
+   "b_key": 5321,
+   "both_key": 4652,
+   "judges_same_pick": 5244,
+   "fact_claims": 2578,
+   "sourced": 539,
+   "kept": 2526,
+   "family": "nemotron",
+   "keep_rate": 0.379,
+   "keep_estimate": 0.755,
+   "judge_agreement": 0.841,
+   "judges_same_pick_rate": 0.948,
+   "on": true
+  },
+  "deepseek-ai/deepseek-v4.1-flash": {
+   "written": 136,
+   "code_pass": 124,
+   "judged": 120,
+   "a_key": 119,
+   "b_key": 116,
+   "both_key": 99,
+   "judges_same_pick": 115,
+   "fact_claims": 46,
+   "sourced": 18,
+   "kept": 71,
+   "family": "deepseek",
+   "keep_rate": 0.522,
+   "keep_estimate": 0.752,
+   "judge_agreement": 0.825,
+   "judges_same_pick_rate": 0.958,
+   "on": true
+  },
+  "qwen/qwen3.8-max:free": {
+   "written": 1615,
+   "code_pass": 1462,
+   "judged": 1462,
+   "a_key": 1396,
+   "b_key": 1409,
+   "both_key": 1267,
+   "judges_same_pick": 1403,
+   "fact_claims": 868,
+   "sourced": 243,
+   "kept": 641,
+   "family": "qwen",
+   "keep_rate": 0.397,
+   "keep_estimate": 0.785,
+   "judge_agreement": 0.867,
+   "judges_same_pick_rate": 0.96,
+   "on": true
+  }
+ },
+ "grades": {
+  "math:volume_coordinates_and_expressions": {
+   "objectives_done": 41,
+   "objectives_total": 41,
+   "written": 123,
+   "kept": 112,
+   "with_3_plus": 30,
+   "with_none": 0,
+   "from_pilot": 41
+  },
+  "english:intermediate": {
+   "objectives_done": 57,
+   "objectives_total": 57,
+   "written": 171,
+   "kept": 149,
+   "with_3_plus": 40,
+   "with_none": 1,
+   "from_pilot": 57
+  },
+  "math:sense_of_quantity": {
+   "objectives_done": 28,
+   "objectives_total": 28,
+   "written": 117,
+   "kept": 105,
+   "with_3_plus": 28,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "english:basics": {
+   "objectives_done": 33,
+   "objectives_total": 33,
+   "written": 147,
+   "kept": 116,
+   "with_3_plus": 32,
+   "with_none": 1,
+   "from_pilot": 0
+  },
+  "reading:foundations": {
+   "objectives_done": 40,
+   "objectives_total": 40,
+   "written": 177,
+   "kept": 139,
+   "with_3_plus": 37,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:counting_and_comparing": {
+   "objectives_done": 35,
+   "objectives_total": 35,
+   "written": 151,
+   "kept": 133,
+   "with_3_plus": 35,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "english:grammar": {
+   "objectives_done": 45,
+   "objectives_total": 45,
+   "written": 200,
+   "kept": 155,
+   "with_3_plus": 42,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "reading:early_decoder": {
+   "objectives_done": 41,
+   "objectives_total": 41,
+   "written": 183,
+   "kept": 143,
+   "with_3_plus": 39,
+   "with_none": 1,
+   "from_pilot": 0
+  },
+  "math:numbers_to_10": {
+   "objectives_done": 34,
+   "objectives_total": 34,
+   "written": 162,
+   "kept": 102,
+   "with_3_plus": 28,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "english:reading": {
+   "objectives_done": 49,
+   "objectives_total": 49,
+   "written": 296,
+   "kept": 109,
+   "with_3_plus": 28,
+   "with_none": 16,
+   "from_pilot": 0
+  },
+  "reading:beginning_reader": {
+   "objectives_done": 32,
+   "objectives_total": 32,
+   "written": 192,
+   "kept": 60,
+   "with_3_plus": 15,
+   "with_none": 12,
+   "from_pilot": 0
+  },
+  "math:numbers_to_20_and_teen_numbers": {
+   "objectives_done": 40,
+   "objectives_total": 40,
+   "written": 192,
+   "kept": 131,
+   "with_3_plus": 35,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "english:developing": {
+   "objectives_done": 57,
+   "objectives_total": 57,
+   "written": 321,
+   "kept": 150,
+   "with_3_plus": 37,
+   "with_none": 8,
+   "from_pilot": 0
+  },
+  "reading:developing_reader": {
+   "objectives_done": 31,
+   "objectives_total": 31,
+   "written": 161,
+   "kept": 87,
+   "with_3_plus": 23,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "math:add_and_subtract_within_20": {
+   "objectives_done": 36,
+   "objectives_total": 36,
+   "written": 172,
+   "kept": 120,
+   "with_3_plus": 32,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "reading:intermediate_reader": {
+   "objectives_done": 36,
+   "objectives_total": 36,
+   "written": 202,
+   "kept": 91,
+   "with_3_plus": 22,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:place_value_to_100_and_measurement": {
+   "objectives_done": 39,
+   "objectives_total": 39,
+   "written": 207,
+   "kept": 111,
+   "with_3_plus": 28,
+   "with_none": 7,
+   "from_pilot": 0
+  },
+  "english:upper_intermediate": {
+   "objectives_done": 49,
+   "objectives_total": 49,
+   "written": 281,
+   "kept": 137,
+   "with_3_plus": 35,
+   "with_none": 6,
+   "from_pilot": 0
+  },
+  "reading:upper_intermediate_reader": {
+   "objectives_done": 35,
+   "objectives_total": 35,
+   "written": 203,
+   "kept": 93,
+   "with_3_plus": 23,
+   "with_none": 7,
+   "from_pilot": 0
+  },
+  "math:place_value_to_1_000_and_fluent_addition": {
+   "objectives_done": 37,
+   "objectives_total": 37,
+   "written": 169,
+   "kept": 135,
+   "with_3_plus": 35,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "english:advanced_intermediate": {
+   "objectives_done": 48,
+   "objectives_total": 48,
+   "written": 289,
+   "kept": 113,
+   "with_3_plus": 27,
+   "with_none": 11,
+   "from_pilot": 0
+  },
+  "reading:advanced_intermediate_reader": {
+   "objectives_done": 41,
+   "objectives_total": 41,
+   "written": 221,
+   "kept": 113,
+   "with_3_plus": 27,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "math:regrouping_money_and_arrays": {
+   "objectives_done": 42,
+   "objectives_total": 42,
+   "written": 225,
+   "kept": 116,
+   "with_3_plus": 30,
+   "with_none": 8,
+   "from_pilot": 0
+  },
+  "english:proficient": {
+   "objectives_done": 48,
+   "objectives_total": 48,
+   "written": 301,
+   "kept": 107,
+   "with_3_plus": 23,
+   "with_none": 10,
+   "from_pilot": 0
+  },
+  "reading:proficient_reader": {
+   "objectives_done": 49,
+   "objectives_total": 49,
+   "written": 301,
+   "kept": 100,
+   "with_3_plus": 23,
+   "with_none": 11,
+   "from_pilot": 0
+  },
+  "math:multiplication_and_division": {
+   "objectives_done": 43,
+   "objectives_total": 43,
+   "written": 233,
+   "kept": 122,
+   "with_3_plus": 31,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "english:advanced": {
+   "objectives_done": 50,
+   "objectives_total": 50,
+   "written": 296,
+   "kept": 121,
+   "with_3_plus": 29,
+   "with_none": 9,
+   "from_pilot": 0
+  },
+  "reading:advanced_reader": {
+   "objectives_done": 46,
+   "objectives_total": 46,
+   "written": 284,
+   "kept": 101,
+   "with_3_plus": 26,
+   "with_none": 10,
+   "from_pilot": 0
+  },
+  "math:fractions_area_and_perimeter": {
+   "objectives_done": 44,
+   "objectives_total": 44,
+   "written": 197,
+   "kept": 152,
+   "with_3_plus": 41,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "english:college_composition": {
+   "objectives_done": 61,
+   "objectives_total": 61,
+   "written": 395,
+   "kept": 116,
+   "with_3_plus": 29,
+   "with_none": 19,
+   "from_pilot": 0
+  },
+  "reading:college_academic_reading": {
+   "objectives_done": 26,
+   "objectives_total": 26,
+   "written": 145,
+   "kept": 65,
+   "with_3_plus": 16,
+   "with_none": 7,
+   "from_pilot": 0
+  },
+  "math:multi_digit_arithmetic_and_fraction_equivalence": {
+   "objectives_done": 63,
+   "objectives_total": 63,
+   "written": 320,
+   "kept": 177,
+   "with_3_plus": 49,
+   "with_none": 10,
+   "from_pilot": 0
+  },
+  "english:language_and_writing_studies": {
+   "objectives_done": 31,
+   "objectives_total": 31,
+   "written": 219,
+   "kept": 29,
+   "with_3_plus": 8,
+   "with_none": 22,
+   "from_pilot": 0
+  },
+  "reading:literary_studies": {
+   "objectives_done": 59,
+   "objectives_total": 59,
+   "written": 382,
+   "kept": 120,
+   "with_3_plus": 27,
+   "with_none": 13,
+   "from_pilot": 0
+  },
+  "math:fraction_and_decimal_operations": {
+   "objectives_done": 44,
+   "objectives_total": 44,
+   "written": 199,
+   "kept": 159,
+   "with_3_plus": 41,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "reading:advanced_undergraduate_honors": {
+   "objectives_done": 49,
+   "objectives_total": 51,
+   "written": 331,
+   "kept": 80,
+   "with_3_plus": 17,
+   "with_none": 15,
+   "from_pilot": 0
+  },
+  "english:advanced_undergraduate_honors": {
+   "objectives_done": 7,
+   "objectives_total": 50,
+   "written": 46,
+   "kept": 11,
+   "with_3_plus": 2,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "reading:masters": {
+   "objectives_done": 49,
+   "objectives_total": 51,
+   "written": 339,
+   "kept": 68,
+   "with_3_plus": 14,
+   "with_none": 17,
+   "from_pilot": 0
+  },
+  "english:masters": {
+   "objectives_done": 35,
+   "objectives_total": 71,
+   "written": 238,
+   "kept": 54,
+   "with_3_plus": 11,
+   "with_none": 13,
+   "from_pilot": 0
+  },
+  "math:ratios_rates_and_percents": {
+   "objectives_done": 40,
+   "objectives_total": 40,
+   "written": 201,
+   "kept": 125,
+   "with_3_plus": 35,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "math:doctoral": {
+   "objectives_done": 64,
+   "objectives_total": 65,
+   "written": 400,
+   "kept": 120,
+   "with_3_plus": 29,
+   "with_none": 21,
+   "from_pilot": 0
+  },
+  "reading:doctoral": {
+   "objectives_done": 17,
+   "objectives_total": 23,
+   "written": 123,
+   "kept": 15,
+   "with_3_plus": 2,
+   "with_none": 9,
+   "from_pilot": 0
+  },
+  "english:doctoral": {
+   "objectives_done": 27,
+   "objectives_total": 42,
+   "written": 179,
+   "kept": 43,
+   "with_3_plus": 10,
+   "with_none": 12,
+   "from_pilot": 0
+  },
+  "math:rational_numbers_and_fraction_division": {
+   "objectives_done": 37,
+   "objectives_total": 38,
+   "written": 179,
+   "kept": 125,
+   "with_3_plus": 31,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:postdoctoral_professional": {
+   "objectives_done": 50,
+   "objectives_total": 50,
+   "written": 371,
+   "kept": 35,
+   "with_3_plus": 7,
+   "with_none": 35,
+   "from_pilot": 0
+  },
+  "english:postdoctoral_professional": {
+   "objectives_done": 11,
+   "objectives_total": 36,
+   "written": 67,
+   "kept": 19,
+   "with_3_plus": 5,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "reading:postdoctoral_professional": {
+   "objectives_done": 6,
+   "objectives_total": 12,
+   "written": 39,
+   "kept": 9,
+   "with_3_plus": 2,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:expressions_equations_and_data": {
+   "objectives_done": 44,
+   "objectives_total": 44,
+   "written": 210,
+   "kept": 153,
+   "with_3_plus": 41,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "reading:field_authority": {
+   "objectives_done": 10,
+   "objectives_total": 11,
+   "written": 66,
+   "kept": 20,
+   "with_3_plus": 5,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "english:field_authority": {
+   "objectives_done": 22,
+   "objectives_total": 28,
+   "written": 135,
+   "kept": 41,
+   "with_3_plus": 11,
+   "with_none": 9,
+   "from_pilot": 0
+  },
+  "math:proportional_relationships_and_signed_numbers": {
+   "objectives_done": 43,
+   "objectives_total": 43,
+   "written": 178,
+   "kept": 161,
+   "with_3_plus": 42,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "math:linear_equations_geometry_and_probability": {
+   "objectives_done": 44,
+   "objectives_total": 44,
+   "written": 187,
+   "kept": 160,
+   "with_3_plus": 42,
+   "with_none": 1,
+   "from_pilot": 0
+  },
+  "math:exponents_linear_functions_and_systems": {
+   "objectives_done": 44,
+   "objectives_total": 44,
+   "written": 189,
+   "kept": 154,
+   "with_3_plus": 42,
+   "with_none": 1,
+   "from_pilot": 0
+  },
+  "math:transformations_pythagorean_theorem_and_data_models": {
+   "objectives_done": 43,
+   "objectives_total": 43,
+   "written": 220,
+   "kept": 133,
+   "with_3_plus": 36,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "math:algebra_1_part_a": {
+   "objectives_done": 47,
+   "objectives_total": 47,
+   "written": 204,
+   "kept": 170,
+   "with_3_plus": 45,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "math:algebra_1_part_b": {
+   "objectives_done": 49,
+   "objectives_total": 49,
+   "written": 217,
+   "kept": 179,
+   "with_3_plus": 49,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "math:geometry_part_a": {
+   "objectives_done": 47,
+   "objectives_total": 47,
+   "written": 242,
+   "kept": 149,
+   "with_3_plus": 40,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "math:geometry_part_b": {
+   "objectives_done": 54,
+   "objectives_total": 54,
+   "written": 268,
+   "kept": 183,
+   "with_3_plus": 49,
+   "with_none": 1,
+   "from_pilot": 0
+  },
+  "math:algebra_2_part_a": {
+   "objectives_done": 54,
+   "objectives_total": 54,
+   "written": 248,
+   "kept": 185,
+   "with_3_plus": 50,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "math:algebra_2_part_b": {
+   "objectives_done": 54,
+   "objectives_total": 54,
+   "written": 272,
+   "kept": 181,
+   "with_3_plus": 49,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "math:precalculus": {
+   "objectives_done": 64,
+   "objectives_total": 64,
+   "written": 302,
+   "kept": 223,
+   "with_3_plus": 60,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:statistics_and_data_analysis": {
+   "objectives_done": 62,
+   "objectives_total": 62,
+   "written": 295,
+   "kept": 209,
+   "with_3_plus": 54,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:calculus_i": {
+   "objectives_done": 53,
+   "objectives_total": 53,
+   "written": 239,
+   "kept": 187,
+   "with_3_plus": 49,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:calculus_ii": {
+   "objectives_done": 46,
+   "objectives_total": 46,
+   "written": 219,
+   "kept": 164,
+   "with_3_plus": 43,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:multivariable_calculus": {
+   "objectives_done": 49,
+   "objectives_total": 49,
+   "written": 212,
+   "kept": 175,
+   "with_3_plus": 48,
+   "with_none": 0,
+   "from_pilot": 0
+  },
+  "math:linear_algebra": {
+   "objectives_done": 65,
+   "objectives_total": 65,
+   "written": 322,
+   "kept": 206,
+   "with_3_plus": 57,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:discrete_mathematics_and_proof_writing": {
+   "objectives_done": 71,
+   "objectives_total": 71,
+   "written": 334,
+   "kept": 234,
+   "with_3_plus": 64,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:differential_equations_and_mathematical_modeling": {
+   "objectives_done": 68,
+   "objectives_total": 69,
+   "written": 343,
+   "kept": 213,
+   "with_3_plus": 59,
+   "with_none": 6,
+   "from_pilot": 0
+  },
+  "math:probability": {
+   "objectives_done": 56,
+   "objectives_total": 56,
+   "written": 270,
+   "kept": 177,
+   "with_3_plus": 47,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:mathematical_statistics": {
+   "objectives_done": 54,
+   "objectives_total": 54,
+   "written": 265,
+   "kept": 169,
+   "with_3_plus": 45,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:real_analysis_i": {
+   "objectives_done": 51,
+   "objectives_total": 51,
+   "written": 236,
+   "kept": 175,
+   "with_3_plus": 47,
+   "with_none": 1,
+   "from_pilot": 0
+  },
+  "math:real_analysis_ii_and_metric_spaces": {
+   "objectives_done": 54,
+   "objectives_total": 54,
+   "written": 258,
+   "kept": 175,
+   "with_3_plus": 49,
+   "with_none": 2,
+   "from_pilot": 0
+  },
+  "math:abstract_algebra_i": {
+   "objectives_done": 48,
+   "objectives_total": 48,
+   "written": 256,
+   "kept": 145,
+   "with_3_plus": 36,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "math:abstract_algebra_ii": {
+   "objectives_done": 55,
+   "objectives_total": 55,
+   "written": 286,
+   "kept": 164,
+   "with_3_plus": 45,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "math:topology": {
+   "objectives_done": 50,
+   "objectives_total": 50,
+   "written": 245,
+   "kept": 159,
+   "with_3_plus": 43,
+   "with_none": 3,
+   "from_pilot": 0
+  },
+  "math:complex_analysis": {
+   "objectives_done": 52,
+   "objectives_total": 52,
+   "written": 250,
+   "kept": 176,
+   "with_3_plus": 47,
+   "with_none": 4,
+   "from_pilot": 0
+  },
+  "math:advanced_undergraduate_electives_and_honors_capstone": {
+   "objectives_done": 143,
+   "objectives_total": 143,
+   "written": 807,
+   "kept": 380,
+   "with_3_plus": 94,
+   "with_none": 18,
+   "from_pilot": 0
+  },
+  "math:graduate_core_i": {
+   "objectives_done": 70,
+   "objectives_total": 70,
+   "written": 441,
+   "kept": 140,
+   "with_3_plus": 29,
+   "with_none": 15,
+   "from_pilot": 0
+  },
+  "math:graduate_core_ii": {
+   "objectives_done": 95,
+   "objectives_total": 96,
+   "written": 580,
+   "kept": 202,
+   "with_3_plus": 48,
+   "with_none": 21,
+   "from_pilot": 0
+  },
+  "math:masters_specialization_and_thesis": {
+   "objectives_done": 129,
+   "objectives_total": 131,
+   "written": 760,
+   "kept": 285,
+   "with_3_plus": 68,
+   "with_none": 33,
+   "from_pilot": 0
+  },
+  "math:senior_scholar": {
+   "objectives_done": 36,
+   "objectives_total": 36,
+   "written": 242,
+   "kept": 55,
+   "with_3_plus": 12,
+   "with_none": 14,
+   "from_pilot": 0
+  },
+  "iq:concrete_thinking_foundations": {
+   "objectives_done": 169,
+   "objectives_total": 169,
+   "written": 990,
+   "kept": 407,
+   "with_3_plus": 101,
+   "with_none": 39,
+   "from_pilot": 0
+  },
+  "act:act_grade_1": {
+   "objectives_done": 64,
+   "objectives_total": 64,
+   "written": 309,
+   "kept": 207,
+   "with_3_plus": 56,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "spanish:entry": {
+   "objectives_done": 11,
+   "objectives_total": 11,
+   "written": 78,
+   "kept": 12,
+   "with_3_plus": 2,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "iq:everyday_reasoning_basics": {
+   "objectives_done": 177,
+   "objectives_total": 177,
+   "written": 943,
+   "kept": 493,
+   "with_3_plus": 131,
+   "with_none": 28,
+   "from_pilot": 0
+  },
+  "act:act_grade_2": {
+   "objectives_done": 65,
+   "objectives_total": 65,
+   "written": 302,
+   "kept": 226,
+   "with_3_plus": 60,
+   "with_none": 5,
+   "from_pilot": 0
+  },
+  "iq:building_flexible_reasoning": {
+   "objectives_done": 155,
+   "objectives_total": 233,
+   "written": 802,
+   "kept": 468,
+   "with_3_plus": 120,
+   "with_none": 14,
+   "from_pilot": 0
+  },
+  "spanish:intermediate": {
+   "objectives_done": 8,
+   "objectives_total": 9,
+   "written": 47,
+   "kept": 22,
+   "with_3_plus": 5,
+   "with_none": 1,
+   "from_pilot": 0
+  }
+ },
+ "total": {
+  "done": 4457,
+  "written": 23616,
+  "kept": 12510,
+  "objectives": 8955,
+  "keep_rate": 0.53
+ }
+}

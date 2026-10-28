@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chess Move Trainer</title>
+  <!-- The move trainer: every move of a line is its own spaced-repetition card
+       (content/chess-srs.js). Learn shows a new move with its reason, then you
+       play it; Review asks only the moves that are due. Graded by /api/chess. -->
+  <style>
+    body { margin: 0; background: #090d16; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 560px; margin: 0 auto; padding: 18px 16px 60px; display: flex; flex-direction: column; gap: 14px; }
+    h1 { font-size: 1.25rem; margin: 0; }
+    a { color: #38bdf8; }
+    .decks { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+    .deck { background: #111827; border: 1px solid #1f293d; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .deck h2 { font-size: 1rem; margin: 0; }
+    .deck p { margin: 0; font-size: .85rem; color: #cbd5e1; line-height: 1.45; }
+    .counts { font-size: .8rem; color: #94a3b8; }
+    .counts b { color: #fbbf24; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    button { min-height: 44px; padding: 0 14px; border: 1px solid #334155; border-radius: 10px; background: #111827; color: #f8fafc; font: inherit; font-weight: 600; cursor: pointer; }
+    button.primary { background: #38bdf8; color: #090d16; border-color: #38bdf8; }
+    button:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
+    button:disabled { opacity: .5; cursor: default; }
+    .card { background: #111827; border: 1px solid #1f293d; border-radius: 12px; padding: 14px; }
+    .title { margin: 0 0 4px; font-weight: 700; }
+    .say { margin: 10px 0 0; min-height: 1.5em; text-align: center; font-size: 15px; line-height: 1.5; }
+    .say.right { color: #34d399; }
+    .say.wrong { color: #fbbf24; }
+    .why { margin: 8px 0 0; padding: 10px 12px; border-radius: 10px; border: 1px solid #1f293d; background: #090d16; font-size: 14px; line-height: 1.5; }
+    .muted { color: #94a3b8; font-size: .85rem; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Chess move trainer</h1>
+    <p class="muted">Each move you learn comes back just before you would forget it: after 4 hours, 1 day, 3 days, 1 week, 2 weeks, 1 month, 3 months and 6 months. A slip brings a move back sooner, with its reason. <a href="puzzles.html">Puzzles</a> · <a href="spar.html">Sparring</a> · <a href="NOTICES.txt">Credits</a></p>
+    <div class="decks" id="decks" aria-live="polite"></div>
+    <section class="card" id="play" hidden>
+      <p class="title" id="line-title"></p>
+      <p class="muted" id="line-note"></p>
+      <div id="board"></div>
+      <p class="say" id="say" role="status"></p>
+      <p class="why" id="why" hidden></p>
+      <div class="row">
+        <button type="button" id="again" class="primary" hidden>Next line</button>
+        <button type="button" id="back">Back to decks</button>
+      </div>
+    </section>
+  </main>
+  <script src="chess-core.js"></script>
+  <script src="board.js"></script>
+  <script src="drills.js"></script>
+</body>
+</html>

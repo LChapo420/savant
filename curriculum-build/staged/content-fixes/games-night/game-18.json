@@ -1,0 +1,2821 @@
+{
+ "row_id": 18,
+ "engine_id": "free-throw",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 23,
+ "generated_at": "2026-10-24T13:44:29.835Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 67,
+  "code_rejected": 9,
+  "sent_to_judges": 58,
+  "kept": 50,
+  "keep_rate_of_written": 0.746,
+  "judges": {
+   "both_answered": 58,
+   "picked_same_option": 54,
+   "a_picked_key": 56,
+   "b_picked_key": 56,
+   "models_a": [
+    "minimax/minimax-m3.1-flash"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nemotron-3-ultra-550b-a55b:free",
+    "gemini-3.6-flash:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "free-throw",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 23,
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "title": "Sentence Court: Combining for Effect",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q16",
+    "prompt": "The cyclist checked the map. She adjusted her route. Which sentence combines the ideas with an introductory present participial phrase?",
+    "choices": [
+     "While checking the map, the route was adjusted by the cyclist.",
+     "Checking the map, her route was adjusted.",
+     "Checked the map, the cyclist adjusted her route.",
+     "Checking the map, the cyclist adjusted her route."
+    ],
+    "answerIndex": 3,
+    "explanation": "The present participial phrase Checking the map logically modifies the main subject, the cyclist.",
+    "difficulty": 5,
+    "skill": "Introductory participial phrases",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q2",
+    "prompt": "Merge the sentences with a present participial phrase that shows the storm caused the valley to be covered: The snowstorm continued through the night. The valley was buried in snow.",
+    "choices": [
+     "The snowstorm continued through the night, it buried the valley in snow.",
+     "The snowstorm continued through the night, burying the valley in snow.",
+     "The snowstorm continued through the night because burying the valley in snow.",
+     "The snowstorm, continuing through the night buried the valley in snow."
+    ],
+    "answerIndex": 1,
+    "explanation": "The present participial phrase burying the valley in snow modifies The snowstorm and shows that the storm caused the snow to cover the valley.",
+    "difficulty": 6,
+    "skill": "Present participial phrases",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q6",
+    "prompt": "The coach explained the drill. She demonstrated each movement. Which combined version preserves parallel verb forms?",
+    "choices": [
+     "The coach explained the drill and was demonstrating each movement.",
+     "The coach explained the drill and demonstrated each movement.",
+     "The coach explained the drill and to demonstrate each movement.",
+     "The coach explaining the drill and demonstrated each movement."
+    ],
+    "answerIndex": 1,
+    "explanation": "The coordinated verbs explained and demonstrated are parallel in form and share the subject The coach.",
+    "difficulty": 7,
+    "skill": "Parallel verb forms",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q24",
+    "prompt": "The outdoor movie will start at dusk. The forecast calls for scattered showers. Choose the version that uses even if to show that the showers will not stop the movie.",
+    "choices": [
+     "The outdoor movie will start at dusk only if the forecast calls for scattered showers.",
+     "The forecast calls for scattered showers even if the outdoor movie will start at dusk.",
+     "The outdoor movie will start even if the forecast calls for scattered showers at dusk.",
+     "The outdoor movie will start at dusk even if the forecast calls for scattered showers."
+    ],
+    "answerIndex": 3,
+    "explanation": "The even if clause makes scattered showers a condition that will not prevent the movie from starting at dusk.",
+    "difficulty": 5,
+    "skill": "Combining sentences with concessive even if",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q11",
+    "prompt": "The path narrowed near the cliff. After noticing it, we slowed our pace. Which option combines the ideas with an after clause and gives the correct one-sentence explanation?",
+    "choices": [
+     "After the path narrowed near the cliff, we slowed our pace. The after clause identifies the reason for slowing our pace.",
+     "After we slowed our pace, we noticed that the path narrowed near the cliff. The after clause identifies the reason for slowing our pace.",
+     "After noticing that the path narrowed near the cliff, we slowed our pace. The after clause establishes the sequence between noticing the narrowing and slowing down.",
+     "After noticing that the path narrowed near the cliff, we slowed our pace. The after clause joins two independent clauses."
+    ],
+    "answerIndex": 2,
+    "explanation": "The after clause establishes the sequence between noticing that the path had narrowed and slowing the pace.",
+    "difficulty": 6,
+    "skill": "After clauses and sentence justification",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q14",
+    "prompt": "The student wrote the essay. The essay received an award. Which combined sentence uses a restrictive relative clause to identify the student?",
+    "choices": [
+     "The student, who wrote the essay, received an award.",
+     "The student who wrote the essay received an award.",
+     "The essay that the student wrote received an award.",
+     "The student who wrote an essay received an award."
+    ],
+    "answerIndex": 1,
+    "explanation": "The clause who wrote the essay restricts the reference to the specific student who wrote that essay.",
+    "difficulty": 6,
+    "skill": "Restrictive relative clauses",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q34",
+    "prompt": "The reporter interviewed the mayor. She hoped to verify the budget figures. Which sentence uses a simple infinitive phrase of purpose without an introductory preposition?",
+    "choices": [
+     "The reporter interviewed the mayor in order to verify the budget figures.",
+     "The reporter interviewed the mayor to verify the budget figures.",
+     "The reporter interviewed the mayor to verified the budget figures.",
+     "The reporter interviewed the mayor for verify the budget figures."
+    ],
+    "answerIndex": 1,
+    "explanation": "The infinitive phrase to verify the budget figures states the purpose of the interview without an introductory preposition.",
+    "difficulty": 5,
+    "skill": "Infinitive phrases of purpose",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q27",
+    "prompt": "The trail was flooded. We turned back early. Which sentence combines the ideas by using because to make the flooding the cause of our decision?",
+    "choices": [
+     "Although the trail was flooded, we turned back early.",
+     "Because we turned back early, the trail was flooded.",
+     "Because the trail was flooded, we turned back early.",
+     "While the trail was flooded, we turned back early."
+    ],
+    "answerIndex": 2,
+    "explanation": "Because the trail was flooded introduces the reason we turned back early and places the cause before the result.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a causal clause",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q32",
+    "prompt": "The judges will announce the winner tonight. They will contact the runners first. Which version uses subject-auxiliary inversion in both independent clauses?",
+    "choices": [
+     "Will the judges announce the winner tonight, and the judges will contact the runners first.",
+     "Will the judges announcing the winner tonight, and will they contact the runners first.",
+     "Will the judges announce the winner tonight and they will contact the runners first.",
+     "Will the judges announce the winner tonight, and will they contact the runners first?"
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct version inverts the subject and auxiliary in both clauses: will the judges announce and will they contact.",
+    "difficulty": 6,
+    "skill": "Subject-auxiliary inversion in compound sentences",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q21",
+    "prompt": "The porch light began to flicker. We continued reading on the couch. Combine the sentences so that both actions happen at the same time, using a while clause.",
+    "choices": [
+     "While the porch light began to flicker, we continued reading on the couch.",
+     "Although the porch light began to flicker, we continued reading on the couch.",
+     "Because the porch light began to flicker, we continued reading on the couch.",
+     "If the porch light began to flicker, we continued reading on the couch."
+    ],
+    "answerIndex": 0,
+    "explanation": "The while clause places the flickering porch light and the continued reading in the same time frame.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a temporal while clause",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q47",
+    "prompt": "The library will close at six. Visitors must return books before then. Which sentence joins the ideas with a colon that introduces the additional requirement?",
+    "choices": [
+     "The library will close at six; visitors must return books before then.",
+     "The library will close at six, and visitors must return books before then.",
+     "The library will close at six: visitors must return books before then.",
+     "The library will close at six, so visitors must return books before then."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon introduces the second independent clause, which states the additional requirement about returning books.",
+    "difficulty": 5,
+    "skill": "Colon for Specification",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q20",
+    "prompt": "The power failed during the storm. The clinic kept treating patients. Which sentence combines the ideas with despite followed by a gerund phrase?",
+    "choices": [
+     "Despite the clinic kept treating patients, the power failed during the storm.",
+     "Despite of the power failing during the storm, the clinic kept treating patients.",
+     "Despite the power failed during the storm, the clinic kept treating patients.",
+     "Despite the power failing during the storm, the clinic kept treating patients."
+    ],
+    "answerIndex": 3,
+    "explanation": "The gerund phrase the power failing follows despite correctly and preserves the contrast between the outage and the clinic's continued work.",
+    "difficulty": 6,
+    "skill": "Concessive prepositional phrases",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q46",
+    "prompt": "The wind tore a branch from an old oak. The branch crashed onto the toolshed. Which sentence combines the ideas into a balanced compound sentence with parallel past-tense verbs?",
+    "choices": [
+     "The wind tore a branch from an old oak while the branch crashed onto the toolshed.",
+     "The wind tore a branch from an old oak, and the branch crashed onto the toolshed.",
+     "The wind tore a branch from an old oak, and the branch was crashing onto the toolshed.",
+     "The wind tore a branch from an old oak because the branch crashed onto the toolshed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence is a balanced compound because it joins two independent clauses, the wind tore and the branch crashed, with parallel past-tense verbs.",
+    "difficulty": 6,
+    "skill": "Balanced Compound Sentences",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q8",
+    "prompt": "The trail was icy. The hikers continued carefully. Which sentence combines the ideas with a concessive clause using although?",
+    "choices": [
+     "Although the trail was icy, but the hikers continued carefully.",
+     "Although the trail was icy; the hikers continued carefully.",
+     "Although the trail was icy the hikers continued very carefully.",
+     "Although the trail was icy, the hikers continued carefully."
+    ],
+    "answerIndex": 3,
+    "explanation": "The concessive although clause shows that the hikers continued carefully despite the icy trail.",
+    "difficulty": 5,
+    "skill": "Concessive clauses",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q48",
+    "prompt": "The archivist will unlock the archive. The researchers can begin their work after that. Which sentence uses subject-auxiliary inversion to make unlocking the archive the condition for the researchers beginning their work?",
+    "choices": [
+     "After the archivist unlocks the archive, the researchers can only begin their work.",
+     "Only after the researchers can begin their work will the archivist unlock the archive.",
+     "Only after the archivist unlocked the archive could the researchers begin their work.",
+     "Only after the archivist unlocks the archive can the researchers begin their work."
+    ],
+    "answerIndex": 3,
+    "explanation": "The inverted structure can the researchers begin places the main clause after the fronted only after-clause, which states the condition.",
+    "difficulty": 7,
+    "skill": "Fronting with Inversion",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q23",
+    "prompt": "The teacher asked the class to compare the maps. The students discussed the differences in pairs. Rewrite the pair with so that to show the comparison as the purpose of the teacher's request.",
+    "choices": [
+     "The teacher asked the class to compare the maps because the students could discuss the differences in pairs.",
+     "The teacher asked the class to compare the maps unless the students could discuss the differences in pairs.",
+     "The teacher asked the class to compare the maps so that the students could discuss the differences in pairs.",
+     "The teacher asked the class to compare the maps although the students could discuss the differences in pairs."
+    ],
+    "answerIndex": 2,
+    "explanation": "The so that clause presents comparing the maps as the purpose of the teacher's request.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a purpose clause",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q41",
+    "prompt": "The lights flickered. The room went quiet. Which sentence combines the ideas with as to show the first action continuing as the second occurred?",
+    "choices": [
+     "As the lights flickered, the room went quiet.",
+     "Because the lights flickered, the room went quiet.",
+     "Although the lights flickered, the room went quiet.",
+     "Before the lights flickered, the room went quiet."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses as to place the flickering lights and the room becoming quiet on the same timeline while presenting the lights as the established event.",
+    "difficulty": 5,
+    "skill": "Using as for simultaneous actions",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q43",
+    "prompt": "The guide will explain the map. The guide will not collect the tickets. Which sentence combines the ideas using neither...nor with parallel verb forms?",
+    "choices": [
+     "The guide neither explain the map nor will collect the tickets.",
+     "The guide will neither explain the map nor collecting the tickets.",
+     "The guide will neither explain the map nor collect the tickets.",
+     "The guide will neither explain the map or collect the tickets."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence correctly pairs neither with nor and uses the parallel base forms explain and collect after the shared modal verb will.",
+    "difficulty": 6,
+    "skill": "Using neither...nor with parallel predicates",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q38",
+    "prompt": "The robotics club began its presentation. The room was crowded with visitors. Which sentence combines the ideas with despite followed by a noun phrase?",
+    "choices": [
+     "Despite of the crowded room, the robotics club began its presentation.",
+     "Despite the crowded room, the robotics club began its presentation.",
+     "Despite the room being crowded, the robotics club began its presentation.",
+     "In spite of the crowded room, the robotics club began its presentation."
+    ],
+    "answerIndex": 1,
+    "explanation": "The noun phrase the crowded room follows despite directly and makes the contrast between the crowded setting and the presentation's beginning clear.",
+    "difficulty": 5,
+    "skill": "Using a preposition with a noun phrase",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q1",
+    "prompt": "Rewrite the sentences with a nonrestrictive relative clause that adds information about Ms. Chen: Ms. Chen is our biology teacher. She has won two national awards.",
+    "choices": [
+     "Ms. Chen, who has won two national awards, is our biology teacher.",
+     "Ms. Chen, who has won two national awards, was our biology teacher.",
+     "Ms. Chen, whose two national awards she has won, is our biology teacher.",
+     "Ms. Chen, who has won two national awards, are our biology teacher."
+    ],
+    "answerIndex": 0,
+    "explanation": "The nonrestrictive relative clause who has won two national awards supplies extra information about Ms. Chen without restricting the reference to one specific teacher.",
+    "difficulty": 5,
+    "skill": "Nonrestrictive relative clauses",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q49",
+    "prompt": "Why does the sentence Although the bus was delayed, the team reached the final on time, count as a complex sentence?",
+    "choices": [
+     "It contains one dependent Although-clause and one independent main clause.",
+     "It joins two independent main clauses with the coordinating conjunction but.",
+     "It pairs a present participial phrase with an independent main clause.",
+     "It uses one dependent because-clause with an independent main clause."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence has one independent main clause and the dependent Although the bus was delayed clause, which is the defining structure of a complex sentence.",
+    "difficulty": 6,
+    "skill": "Identifying Complex Sentences",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q36",
+    "prompt": "The evidence was confusing. The jury asked for clarification. Which sentence combines the ideas with a correct so...that result clause?",
+    "choices": [
+     "The evidence was so confusing the jury asked for clarification.",
+     "The evidence was confusing so that the jury asked for clarification.",
+     "The evidence was such confusing that the jury asked for clarification.",
+     "The evidence was so confusing that the jury asked for clarification."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence places the intensifier so before the adjective and includes that to introduce the result.",
+    "difficulty": 4,
+    "skill": "So-that result clauses",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q29",
+    "prompt": "Maya is our project manager. She will lead the planning team. Which sentence combines the ideas with a nonrestrictive appositive?",
+    "choices": [
+     "Maya, our project manager, will lead the planning team.",
+     "Maya who is our project manager will lead the planning team.",
+     "Being our project manager, Maya will lead the planning team.",
+     "The project manager will lead the planning team, and Maya is that person."
+    ],
+    "answerIndex": 0,
+    "explanation": "Our project manager is a nonrestrictive appositive that renames Maya while adding information about her role.",
+    "difficulty": 5,
+    "skill": "Combining sentences with an appositive",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q50",
+    "prompt": "The warning bell rang. Everyone stopped talking. Which sentence combines the ideas with the traditional no sooner...than construction and a past perfect auxiliary?",
+    "choices": [
+     "No sooner did the warning bell ring than everyone stopped talking.",
+     "No sooner had the warning bell rung than everyone stopped talking.",
+     "No sooner had the warning bell rang than everyone stopped talking.",
+     "No sooner had the warning bell rung when everyone stopped talking."
+    ],
+    "answerIndex": 1,
+    "explanation": "The traditional construction places had after no sooner and uses the past participle rung in the first clause.",
+    "difficulty": 6,
+    "skill": "Using no sooner...than inversion",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q35",
+    "prompt": "The audience had barely sat down. The lights suddenly went out. Which sentence combines the ideas with a correct hardly...when inversion?",
+    "choices": [
+     "Hardly had the audience sat down, the lights suddenly went out.",
+     "Barely the audience had sat down when the lights suddenly went out.",
+     "Hardly had the audience sat down when the lights suddenly went out.",
+     "Hardly had the audience sat down the lights suddenly went out."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct construction places had before the subject and uses when to introduce the unexpected second event.",
+    "difficulty": 6,
+    "skill": "Hardly-when inversion",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q7",
+    "prompt": "The lighthouse stands on a rocky bluff. It is called the North Point Light. Which sentence combines the two ideas with an appositive?",
+    "choices": [
+     "The lighthouse which is called the North Point Light stands on a rocky bluff.",
+     "The lighthouse, called the North Point Light stands on a rocky bluff.",
+     "The lighthouse, called the North Point Light, stands on a rocky bluff.",
+     "The lighthouse stands on a rocky bluff, called the North Point Light."
+    ],
+    "answerIndex": 2,
+    "explanation": "The phrase called the North Point Light is an appositive that renames the lighthouse while adding identifying information.",
+    "difficulty": 5,
+    "skill": "Appositives",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which sentence uses a cumulative structure, adding layers of detail to a basic description?",
+    "choices": [
+     "The field was green although it was dotted with yellow flowers, and a low stone wall bordered it.",
+     "The field was green because it was dotted with yellow flowers, and a low stone wall bordered it.",
+     "The field was green, dotted with yellow flowers, and bordered by a low stone wall.",
+     "The field was green; it was dotted with yellow flowers, and a low stone wall bordered it."
+    ],
+    "answerIndex": 2,
+    "explanation": "The successive participial phrases expand the initial description of the field in a cumulative sequence.",
+    "difficulty": 7,
+    "skill": "Cumulative sentences",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q39",
+    "prompt": "The outdoor class was postponed. The schoolyard was covered in mud. Which sentence combines the ideas using because of followed by a noun phrase?",
+    "choices": [
+     "The outdoor class was postponed because of cover the schoolyard in mud.",
+     "The outdoor class was postponed because of the schoolyard was covered in mud.",
+     "The outdoor class was postponed because of the muddy schoolyard.",
+     "The outdoor class was postponed because of muddy the schoolyard."
+    ],
+    "answerIndex": 2,
+    "explanation": "The phrase because of the muddy schoolyard gives the reason for postponing the class in the required noun-phrase form.",
+    "difficulty": 5,
+    "skill": "Combining ideas with because of and a noun phrase",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q40",
+    "prompt": "The drummer practices percussion. She also plays the synthesizer. Which sentence combines the ideas with as well as and parallel verb forms?",
+    "choices": [
+     "The drummer practices percussion as well as the synthesizer is played.",
+     "The drummer practices percussion as well as play the synthesizer.",
+     "The drummer practices percussion as well as played the synthesizer.",
+     "The drummer practices percussion as well as plays the synthesizer."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence preserves the two present-tense activities with the parallel verbs practices and plays.",
+    "difficulty": 6,
+    "skill": "Combining ideas with as well as and parallel verbs",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q4",
+    "prompt": "Join the sentences with a causal clause that explains why the instructions were easy to read: The instructions were printed in bold. They were easy to read.",
+    "choices": [
+     "The instructions, because they were printed in bold, was easy to read.",
+     "The instructions were printed in bold because they were easy to read.",
+     "The instructions being printed in bold, they were easy to read.",
+     "The instructions were easy to read because they were printed in bold."
+    ],
+    "answerIndex": 3,
+    "explanation": "Because introduces a causal clause that correctly explains why the instructions were easy to read.",
+    "difficulty": 6,
+    "skill": "Causal subordinate clauses",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q10",
+    "prompt": "The volunteers collected supplies. They loaded them into the van. Which sentence combines the ideas with a present participial phrase?",
+    "choices": [
+     "The volunteers collected supplies, the van loaded with them.",
+     "The volunteers collected supplies, loading them into the van.",
+     "The volunteers collected supplies, loaded them into the van.",
+     "The volunteers collected supplies, and loaded them into the van."
+    ],
+    "answerIndex": 1,
+    "explanation": "The present participial phrase loading them into the van describes an action performed by the volunteers.",
+    "difficulty": 5,
+    "skill": "Participial phrases",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q5",
+    "prompt": "Create a complex sentence that makes early opening the condition for the tour time: The museum may open early. The tour will begin at eight.",
+    "choices": [
+     "If the museum opens early, the tour will begin at eight.",
+     "The museum may open early, and the tour will begin at eight.",
+     "Although the museum opens early, the tour will begin at eight.",
+     "The museum may open early, the tour will begin at eight."
+    ],
+    "answerIndex": 0,
+    "explanation": "The if-clause makes early opening the condition under which the eight o'clock tour will begin.",
+    "difficulty": 6,
+    "skill": "Conditional subordinate clauses",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q37",
+    "prompt": "The committee will not approve the proposal. It will not announce the winner yet. Which sentence combines the ideas with neither...nor and parallel verb forms?",
+    "choices": [
+     "The committee will neither approve the proposal nor announce the winner yet.",
+     "The committee will neither approve the proposal nor announcing the winner yet.",
+     "The committee will neither approves the proposal nor announce the winner yet.",
+     "The committee will neither approve the proposal nor the winner will be announced yet."
+    ],
+    "answerIndex": 0,
+    "explanation": "Using neither...nor with approve and announce keeps both verbs in the same future-tense form and clearly negates both actions.",
+    "difficulty": 5,
+    "skill": "Using neither...nor with parallel verbs",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q26",
+    "prompt": "The hikers chose the marked trail. They did not follow the unmarked shortcut. Rewrite the pair using rather than followed by the base form of follow.",
+    "choices": [
+     "The hikers chose the marked trail rather than follows the unmarked shortcut.",
+     "The hikers chose the marked trail rather than follow the unmarked shortcut.",
+     "The hikers chose the marked trail rather than following the unmarked shortcut.",
+     "The hikers chose the marked trail and rather than following the unmarked shortcut."
+    ],
+    "answerIndex": 1,
+    "explanation": "The bare infinitive follow parallels the main verb chose and preserves the contrast between choosing the marked trail and rejecting the shortcut.",
+    "difficulty": 7,
+    "skill": "Combining sentences with rather than and parallel verbs",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q25",
+    "prompt": "The choir rehearsed in the auditorium. The drama club painted scenery in the basement. Show the different activities of the two groups with a whereas clause.",
+    "choices": [
+     "The choir rehearsed in the auditorium, whereas the drama club painted scenery in the basement.",
+     "The choir rehearsed in the auditorium, because the drama club painted scenery in the basement.",
+     "The choir rehearsed in the auditorium, and the drama club painted scenery in the basement.",
+     "The choir rehearsed in the auditorium, while the drama club painted scenery in the basement."
+    ],
+    "answerIndex": 0,
+    "explanation": "The whereas clause contrasts the choir's rehearsal with the drama club's scenery painting.",
+    "difficulty": 6,
+    "skill": "Contrasting ideas with a whereas clause",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q12",
+    "prompt": "The lake froze. The skaters would not go onto it. Which combined sentence makes the freezing a condition for the skaters' decision?",
+    "choices": [
+     "Unless the lake froze, the skaters would not go onto it.",
+     "Because the lake froze, the skaters would not go onto it.",
+     "The lake froze; the skaters would not go onto it.",
+     "If the lake froze, the skaters would not go onto it."
+    ],
+    "answerIndex": 3,
+    "explanation": "An if clause makes the lake's freezing the condition for the skaters staying off the ice.",
+    "difficulty": 5,
+    "skill": "Conditional clauses",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q28",
+    "prompt": "The coach reviewed the play. The coach noticed an inconsistency. Which sentence combines the ideas with an introductory present participial phrase whose implied subject is the coach?",
+    "choices": [
+     "Reviewing the play, an inconsistency was noticed by the coach.",
+     "The coach, reviewing the play, noticed an inconsistency.",
+     "While reviewing the play, the coach noticed an inconsistency.",
+     "Reviewing the play, the coach noticed an inconsistency."
+    ],
+    "answerIndex": 3,
+    "explanation": "Reviewing the play is a present participial phrase that modifies the coach and introduces the main clause without using a subject.",
+    "difficulty": 5,
+    "skill": "Combining sentences with present participles",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q45",
+    "prompt": "The archivist delivered a folder. The folder contained duplicate prints. Which sentence uses a restrictive relative clause to identify the folder?",
+    "choices": [
+     "The archivist delivered the folder that had contained duplicate prints.",
+     "The archivist delivered the folder whom had contained duplicate prints.",
+     "The archivist delivered the folder, which contained duplicate prints.",
+     "The archivist delivered the folder that were containing duplicate prints."
+    ],
+    "answerIndex": 0,
+    "explanation": "The clause that had contained duplicate prints restricts the reference to one specific folder and provides the information needed to identify it.",
+    "difficulty": 6,
+    "skill": "Restrictive Relative Clauses",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q13",
+    "prompt": "The chef reviewed the data. The chef found an error. Which combined sentence begins with a present participial phrase rather than a prepositional or subordinate clause?",
+    "choices": [
+     "Reviewing the data, the chef found an error.",
+     "While reviewing the data, the chef found an error.",
+     "After reviewing the data, the chef found an error.",
+     "Before reviewing the data, the chef found an error."
+    ],
+    "answerIndex": 0,
+    "explanation": "The opening phrase Reviewing the data is a present participial phrase whose understood subject is the chef.",
+    "difficulty": 6,
+    "skill": "Present participial phrases",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q42",
+    "prompt": "The researcher checked the data twice. The data were complete. Which sentence combines the ideas with the coordinating conjunction and joining two independent clauses?",
+    "choices": [
+     "The researcher checked the data twice because the data were complete.",
+     "The researcher checked the data twice, and the data were complete.",
+     "The researcher checked the data twice, whereas the data were complete.",
+     "The researcher checked the data twice, for the data were complete."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence uses the coordinating conjunction and to join two independent clauses, each of which can stand alone as a complete sentence.",
+    "difficulty": 5,
+    "skill": "Joining independent clauses with a coordinating conjunction",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q30",
+    "prompt": "The printer stopped. The staff saved their documents. Which sentence combines the ideas with while to show that the two events happened at the same time?",
+    "choices": [
+     "Because the printer stopped, the staff saved their documents.",
+     "While the printer stopped, the staff saved their documents.",
+     "Although the printer stopped, the staff saved their documents.",
+     "If the printer stopped, the staff saved their documents."
+    ],
+    "answerIndex": 1,
+    "explanation": "While the printer stopped presents the printer stopping and the staff saving their documents as simultaneous events.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a while clause",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q9",
+    "prompt": "The package was fragile. The courier handled it with extra care. Which sentence combines the ideas with a grammatically correct not only...but also construction?",
+    "choices": [
+     "Not only was the package fragile, but the courier also handled it with extra care.",
+     "Not only the package was fragile, but the courier also handled it with extra care.",
+     "The package was not only fragile, but the courier also handled it with extra care.",
+     "Not only was the package fragile, but the courier handled it with extra care also."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct sentence uses fronted not only with inversion and places also after the second subject.",
+    "difficulty": 6,
+    "skill": "Correlative conjunctions",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which sentence combines the two ideas as a compound sentence joined by a semicolon?",
+    "choices": [
+     "Her explanation was clear, so the students understood the lesson.",
+     "After her explanation was clear, the students understood the lesson.",
+     "Her explanation was clear; the students understood the lesson.",
+     "Her explanation was clear, and the students understood the lesson."
+    ],
+    "answerIndex": 2,
+    "explanation": "A semicolon joins two independent clauses—her explanation was clear and the students understood the lesson—without creating a comma splice.",
+    "difficulty": 5,
+    "skill": "Semicolon coordination",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q31",
+    "prompt": "The sun set. We began the night hike. Which sentence uses once to show that the hike began immediately after sunset?",
+    "choices": [
+     "Unless the sun set, we began the night hike.",
+     "Until the sun set, we began the night hike.",
+     "Once the sun set, we began the night hike.",
+     "Since the sun set, we began the night hike."
+    ],
+    "answerIndex": 2,
+    "explanation": "Once the sun set means that the night hike began immediately after the sun had set.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a once clause",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q33",
+    "prompt": "The wind might rise. The race will be postponed. Which sentence expresses the condition with an inverted conditional clause beginning with Should?",
+    "choices": [
+     "Should the wind rise, the race will be postponed.",
+     "If the wind should rise, the race will be postponed.",
+     "Should the wind will rise, the race will be postponed.",
+     "The wind should rise, the race will be postponed."
+    ],
+    "answerIndex": 0,
+    "explanation": "Beginning the conditional clause with Should places the subject before the verb and expresses the condition without using if.",
+    "difficulty": 6,
+    "skill": "Inverted conditional clauses",
+    "topic": "Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q18",
+    "prompt": "The road will remain open. We can finish the hike safely. Which sentence correctly expresses that finishing the hike safely depends on the road remaining open?",
+    "choices": [
+     "Only if the road will remain open can we finish the hike safely.",
+     "Only if the road remains open can we finish the hike safely.",
+     "Only when the road remains open, we can finish the hike safely.",
+     "If the road remains open, only can we finish the hike safely."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct version places the conditional clause first and correctly inverts the subject and helping verb to express only if.",
+    "difficulty": 7,
+    "skill": "Conditional inversion with only if",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q44",
+    "prompt": "The gardener pruned the hedge. She discovered a bird's nest inside it. Which sentence combines the ideas with an introductory present participial phrase whose implied subject matches the main-clause subject?",
+    "choices": [
+     "While pruning the hedge, the gardener discovered a bird's nest inside it.",
+     "Having pruned the hedge, the bird's nest was discovered inside it.",
+     "Pruning the hedge, a bird's nest was discovered by the gardener.",
+     "Pruning the hedge, the gardener discovered a bird's nest inside it."
+    ],
+    "answerIndex": 3,
+    "explanation": "The introductory participial phrase Pruning the hedge has an implied subject of the gardener, who performs both the pruning and the discovery.",
+    "difficulty": 5,
+    "skill": "Integrating Present Participles",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q17",
+    "prompt": "The students entered the gym. Their shoes were soaked from the puddle. Which sentence combines the ideas with an absolute phrase?",
+    "choices": [
+     "The students entered the gym, their shoes soaked from the puddle.",
+     "The students entered the gym, soaking their shoes from the puddle.",
+     "The students entered the gym with their shoes soaked from the puddle.",
+     "The students entered the gym, their shoes were soaked from the puddle."
+    ],
+    "answerIndex": 0,
+    "explanation": "The clause their shoes soaked from the puddle is an absolute phrase that adds information about the students without becoming a separate sentence.",
+    "difficulty": 6,
+    "skill": "Combining sentences with absolute phrases",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q19",
+    "prompt": "Nora will submit the report online. She will bring it to the office. Which sentence combines the ideas with either...or, one subject, and parallel predicates?",
+    "choices": [
+     "Either Nora will submit the report online or she will bring it to the office.",
+     "Nora will either submit the report online, or bring it to the office.",
+     "Nora will either submit the report online or bring it to the office.",
+     "Nora will neither submit the report online nor bring it to the office."
+    ],
+    "answerIndex": 2,
+    "explanation": "This version uses either...or with the single subject Nora and the parallel predicates submit and bring.",
+    "difficulty": 5,
+    "skill": "Correlative conjunctions with parallel structure",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q22",
+    "prompt": "The workshop teaches note-taking. The workshop provides practice. Choose the sentence that uses a both...and construction with parallel verb forms.",
+    "choices": [
+     "The workshop both teach note-taking and provides practice.",
+     "The workshop both teaches note-taking and provides practice.",
+     "The workshop both teaches note-taking and provide practice.",
+     "The workshop teaches note-taking and both provides practice."
+    ],
+    "answerIndex": 1,
+    "explanation": "The both...and construction coordinates the parallel verbs teaches and provides while making the workshop the single subject.",
+    "difficulty": 6,
+    "skill": "Using both...and with parallel predicates",
+    "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft"
+   }
+  ],
+  "feedback": {
+   "correct": "undefined",
+   "incorrect": "undefined",
+   "win": "undefined",
+   "lose": "undefined",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Rewrite the sentences with a nonrestrictive relative clause that adds information about Ms. Chen: Ms. Chen is our biology teacher. She has won two national awards.",
+   "choices": [
+    "Ms. Chen, who has won two national awards, is our biology teacher.",
+    "Ms. Chen, who has won two national awards, was our biology teacher.",
+    "Ms. Chen, whose two national awards she has won, is our biology teacher.",
+    "Ms. Chen, who has won two national awards, are our biology teacher."
+   ],
+   "answerIndex": 0,
+   "explanation": "The nonrestrictive relative clause who has won two national awards supplies extra information about Ms. Chen without restricting the reference to one specific teacher.",
+   "difficulty": 5,
+   "skill": "Nonrestrictive relative clauses",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Merge the sentences with a present participial phrase that shows the storm caused the valley to be covered: The snowstorm continued through the night. The valley was buried in snow.",
+   "choices": [
+    "The snowstorm continued through the night, it buried the valley in snow.",
+    "The snowstorm continued through the night, burying the valley in snow.",
+    "The snowstorm continued through the night because burying the valley in snow.",
+    "The snowstorm, continuing through the night buried the valley in snow."
+   ],
+   "answerIndex": 1,
+   "explanation": "The present participial phrase burying the valley in snow modifies The snowstorm and shows that the storm caused the snow to cover the valley.",
+   "difficulty": 6,
+   "skill": "Present participial phrases",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence combines the two ideas as a compound sentence joined by a semicolon?",
+   "choices": [
+    "Her explanation was clear, so the students understood the lesson.",
+    "After her explanation was clear, the students understood the lesson.",
+    "Her explanation was clear, and the students understood the lesson.",
+    "Her explanation was clear; the students understood the lesson."
+   ],
+   "answerIndex": 3,
+   "explanation": "A semicolon joins two independent clauses—her explanation was clear and the students understood the lesson—without creating a comma splice.",
+   "difficulty": 5,
+   "skill": "Semicolon coordination",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Join the sentences with a causal clause that explains why the instructions were easy to read: The instructions were printed in bold. They were easy to read.",
+   "choices": [
+    "The instructions, because they were printed in bold, was easy to read.",
+    "The instructions were printed in bold because they were easy to read.",
+    "The instructions were easy to read because they were printed in bold.",
+    "The instructions being printed in bold, they were easy to read."
+   ],
+   "answerIndex": 2,
+   "explanation": "Because introduces a causal clause that correctly explains why the instructions were easy to read.",
+   "difficulty": 6,
+   "skill": "Causal subordinate clauses",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Create a complex sentence that makes early opening the condition for the tour time: The museum may open early. The tour will begin at eight.",
+   "choices": [
+    "The museum may open early, and the tour will begin at eight.",
+    "If the museum opens early, the tour will begin at eight.",
+    "Although the museum opens early, the tour will begin at eight.",
+    "The museum may open early, the tour will begin at eight."
+   ],
+   "answerIndex": 1,
+   "explanation": "The if-clause makes early opening the condition under which the eight o'clock tour will begin.",
+   "difficulty": 6,
+   "skill": "Conditional subordinate clauses",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The coach explained the drill. She demonstrated each movement. Which combined version preserves parallel verb forms?",
+   "choices": [
+    "The coach explained the drill and was demonstrating each movement.",
+    "The coach explaining the drill and demonstrated each movement.",
+    "The coach explained the drill and to demonstrate each movement.",
+    "The coach explained the drill and demonstrated each movement."
+   ],
+   "answerIndex": 3,
+   "explanation": "The coordinated verbs explained and demonstrated are parallel in form and share the subject The coach.",
+   "difficulty": 7,
+   "skill": "Parallel verb forms",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The lighthouse stands on a rocky bluff. It is called the North Point Light. Which sentence combines the two ideas with an appositive?",
+   "choices": [
+    "The lighthouse which is called the North Point Light stands on a rocky bluff.",
+    "The lighthouse, called the North Point Light, stands on a rocky bluff.",
+    "The lighthouse, called the North Point Light stands on a rocky bluff.",
+    "The lighthouse stands on a rocky bluff, called the North Point Light."
+   ],
+   "answerIndex": 1,
+   "explanation": "The phrase called the North Point Light is an appositive that renames the lighthouse while adding identifying information.",
+   "difficulty": 5,
+   "skill": "Appositives",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The trail was icy. The hikers continued carefully. Which sentence combines the ideas with a concessive clause using although?",
+   "choices": [
+    "Although the trail was icy, but the hikers continued carefully.",
+    "Although the trail was icy; the hikers continued carefully.",
+    "Although the trail was icy the hikers continued very carefully.",
+    "Although the trail was icy, the hikers continued carefully."
+   ],
+   "answerIndex": 3,
+   "explanation": "The concessive although clause shows that the hikers continued carefully despite the icy trail.",
+   "difficulty": 5,
+   "skill": "Concessive clauses",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The package was fragile. The courier handled it with extra care. Which sentence combines the ideas with a grammatically correct not only...but also construction?",
+   "choices": [
+    "Not only the package was fragile, but the courier also handled it with extra care.",
+    "Not only was the package fragile, but the courier also handled it with extra care.",
+    "The package was not only fragile, but the courier also handled it with extra care.",
+    "Not only was the package fragile, but the courier handled it with extra care also."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct sentence uses fronted not only with inversion and places also after the second subject.",
+   "difficulty": 6,
+   "skill": "Correlative conjunctions",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The volunteers collected supplies. They loaded them into the van. Which sentence combines the ideas with a present participial phrase?",
+   "choices": [
+    "The volunteers collected supplies, loading them into the van.",
+    "The volunteers collected supplies, the van loaded with them.",
+    "The volunteers collected supplies, loaded them into the van.",
+    "The volunteers collected supplies, and loaded them into the van."
+   ],
+   "answerIndex": 0,
+   "explanation": "The present participial phrase loading them into the van describes an action performed by the volunteers.",
+   "difficulty": 5,
+   "skill": "Participial phrases",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The path narrowed near the cliff. After noticing it, we slowed our pace. Which option combines the ideas with an after clause and gives the correct one-sentence explanation?",
+   "choices": [
+    "After the path narrowed near the cliff, we slowed our pace. The after clause identifies the reason for slowing our pace.",
+    "After we slowed our pace, we noticed that the path narrowed near the cliff. The after clause identifies the reason for slowing our pace.",
+    "After noticing that the path narrowed near the cliff, we slowed our pace. The after clause joins two independent clauses.",
+    "After noticing that the path narrowed near the cliff, we slowed our pace. The after clause establishes the sequence between noticing the narrowing and slowing down."
+   ],
+   "answerIndex": 3,
+   "explanation": "The after clause establishes the sequence between noticing that the path had narrowed and slowing the pace.",
+   "difficulty": 6,
+   "skill": "After clauses and sentence justification",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The lake froze. The skaters would not go onto it. Which combined sentence makes the freezing a condition for the skaters' decision?",
+   "choices": [
+    "If the lake froze, the skaters would not go onto it.",
+    "Because the lake froze, the skaters would not go onto it.",
+    "The lake froze; the skaters would not go onto it.",
+    "Unless the lake froze, the skaters would not go onto it."
+   ],
+   "answerIndex": 0,
+   "explanation": "An if clause makes the lake's freezing the condition for the skaters staying off the ice.",
+   "difficulty": 5,
+   "skill": "Conditional clauses",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The chef reviewed the data. The chef found an error. Which combined sentence begins with a present participial phrase rather than a prepositional or subordinate clause?",
+   "choices": [
+    "Reviewing the data, the chef found an error.",
+    "While reviewing the data, the chef found an error.",
+    "After reviewing the data, the chef found an error.",
+    "Before reviewing the data, the chef found an error."
+   ],
+   "answerIndex": 0,
+   "explanation": "The opening phrase Reviewing the data is a present participial phrase whose understood subject is the chef.",
+   "difficulty": 6,
+   "skill": "Present participial phrases",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The student wrote the essay. The essay received an award. Which combined sentence uses a restrictive relative clause to identify the student?",
+   "choices": [
+    "The student who wrote the essay received an award.",
+    "The student, who wrote the essay, received an award.",
+    "The essay that the student wrote received an award.",
+    "The student who wrote an essay received an award."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause who wrote the essay restricts the reference to the specific student who wrote that essay.",
+   "difficulty": 6,
+   "skill": "Restrictive relative clauses",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a cumulative structure, adding layers of detail to a basic description?",
+   "choices": [
+    "The field was green, dotted with yellow flowers, and bordered by a low stone wall.",
+    "The field was green because it was dotted with yellow flowers, and a low stone wall bordered it.",
+    "The field was green although it was dotted with yellow flowers, and a low stone wall bordered it.",
+    "The field was green; it was dotted with yellow flowers, and a low stone wall bordered it."
+   ],
+   "answerIndex": 0,
+   "explanation": "The successive participial phrases expand the initial description of the field in a cumulative sequence.",
+   "difficulty": 7,
+   "skill": "Cumulative sentences",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The cyclist checked the map. She adjusted her route. Which sentence combines the ideas with an introductory present participial phrase?",
+   "choices": [
+    "Checking the map, the cyclist adjusted her route.",
+    "Checking the map, her route was adjusted.",
+    "Checked the map, the cyclist adjusted her route.",
+    "While checking the map, the route was adjusted by the cyclist."
+   ],
+   "answerIndex": 0,
+   "explanation": "The present participial phrase Checking the map logically modifies the main subject, the cyclist.",
+   "difficulty": 5,
+   "skill": "Introductory participial phrases",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The students entered the gym. Their shoes were soaked from the puddle. Which sentence combines the ideas with an absolute phrase?",
+   "choices": [
+    "The students entered the gym, their shoes soaked from the puddle.",
+    "The students entered the gym, soaking their shoes from the puddle.",
+    "The students entered the gym with their shoes soaked from the puddle.",
+    "The students entered the gym, their shoes were soaked from the puddle."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause their shoes soaked from the puddle is an absolute phrase that adds information about the students without becoming a separate sentence.",
+   "difficulty": 6,
+   "skill": "Combining sentences with absolute phrases",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The road will remain open. We can finish the hike safely. Which sentence correctly expresses that finishing the hike safely depends on the road remaining open?",
+   "choices": [
+    "Only if the road remains open can we finish the hike safely.",
+    "Only if the road will remain open can we finish the hike safely.",
+    "Only when the road remains open, we can finish the hike safely.",
+    "If the road remains open, only can we finish the hike safely."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct version places the conditional clause first and correctly inverts the subject and helping verb to express only if.",
+   "difficulty": 7,
+   "skill": "Conditional inversion with only if",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Nora will submit the report online. She will bring it to the office. Which sentence combines the ideas with either...or, one subject, and parallel predicates?",
+   "choices": [
+    "Nora will either submit the report online or bring it to the office.",
+    "Nora will either submit the report online, or bring it to the office.",
+    "Either Nora will submit the report online or she will bring it to the office.",
+    "Nora will neither submit the report online nor bring it to the office."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version uses either...or with the single subject Nora and the parallel predicates submit and bring.",
+   "difficulty": 5,
+   "skill": "Correlative conjunctions with parallel structure",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The power failed during the storm. The clinic kept treating patients. Which sentence combines the ideas with despite followed by a gerund phrase?",
+   "choices": [
+    "Despite the power failing during the storm, the clinic kept treating patients.",
+    "Despite of the power failing during the storm, the clinic kept treating patients.",
+    "Despite the power failed during the storm, the clinic kept treating patients.",
+    "Despite the clinic kept treating patients, the power failed during the storm."
+   ],
+   "answerIndex": 0,
+   "explanation": "The gerund phrase the power failing follows despite correctly and preserves the contrast between the outage and the clinic's continued work.",
+   "difficulty": 6,
+   "skill": "Concessive prepositional phrases",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The porch light began to flicker. We continued reading on the couch. Combine the sentences so that both actions happen at the same time, using a while clause.",
+   "choices": [
+    "Because the porch light began to flicker, we continued reading on the couch.",
+    "Although the porch light began to flicker, we continued reading on the couch.",
+    "While the porch light began to flicker, we continued reading on the couch.",
+    "If the porch light began to flicker, we continued reading on the couch."
+   ],
+   "answerIndex": 2,
+   "explanation": "The while clause places the flickering porch light and the continued reading in the same time frame.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a temporal while clause",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The workshop teaches note-taking. The workshop provides practice. Choose the sentence that uses a both...and construction with parallel verb forms.",
+   "choices": [
+    "The workshop both teach note-taking and provides practice.",
+    "The workshop teaches note-taking and both provides practice.",
+    "The workshop both teaches note-taking and provide practice.",
+    "The workshop both teaches note-taking and provides practice."
+   ],
+   "answerIndex": 3,
+   "explanation": "The both...and construction coordinates the parallel verbs teaches and provides while making the workshop the single subject.",
+   "difficulty": 6,
+   "skill": "Using both...and with parallel predicates",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The teacher asked the class to compare the maps. The students discussed the differences in pairs. Rewrite the pair with so that to show the comparison as the purpose of the teacher's request.",
+   "choices": [
+    "The teacher asked the class to compare the maps because the students could discuss the differences in pairs.",
+    "The teacher asked the class to compare the maps so that the students could discuss the differences in pairs.",
+    "The teacher asked the class to compare the maps unless the students could discuss the differences in pairs.",
+    "The teacher asked the class to compare the maps although the students could discuss the differences in pairs."
+   ],
+   "answerIndex": 1,
+   "explanation": "The so that clause presents comparing the maps as the purpose of the teacher's request.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a purpose clause",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The outdoor movie will start at dusk. The forecast calls for scattered showers. Choose the version that uses even if to show that the showers will not stop the movie.",
+   "choices": [
+    "The outdoor movie will start at dusk even if the forecast calls for scattered showers.",
+    "The forecast calls for scattered showers even if the outdoor movie will start at dusk.",
+    "The outdoor movie will start even if the forecast calls for scattered showers at dusk.",
+    "The outdoor movie will start at dusk only if the forecast calls for scattered showers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The even if clause makes scattered showers a condition that will not prevent the movie from starting at dusk.",
+   "difficulty": 5,
+   "skill": "Combining sentences with concessive even if",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The choir rehearsed in the auditorium. The drama club painted scenery in the basement. Show the different activities of the two groups with a whereas clause.",
+   "choices": [
+    "The choir rehearsed in the auditorium, and the drama club painted scenery in the basement.",
+    "The choir rehearsed in the auditorium, because the drama club painted scenery in the basement.",
+    "The choir rehearsed in the auditorium, whereas the drama club painted scenery in the basement.",
+    "The choir rehearsed in the auditorium, while the drama club painted scenery in the basement."
+   ],
+   "answerIndex": 2,
+   "explanation": "The whereas clause contrasts the choir's rehearsal with the drama club's scenery painting.",
+   "difficulty": 6,
+   "skill": "Contrasting ideas with a whereas clause",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The hikers chose the marked trail. They did not follow the unmarked shortcut. Rewrite the pair using rather than followed by the base form of follow.",
+   "choices": [
+    "The hikers chose the marked trail rather than follows the unmarked shortcut.",
+    "The hikers chose the marked trail rather than follow the unmarked shortcut.",
+    "The hikers chose the marked trail rather than following the unmarked shortcut.",
+    "The hikers chose the marked trail and rather than following the unmarked shortcut."
+   ],
+   "answerIndex": 1,
+   "explanation": "The bare infinitive follow parallels the main verb chose and preserves the contrast between choosing the marked trail and rejecting the shortcut.",
+   "difficulty": 7,
+   "skill": "Combining sentences with rather than and parallel verbs",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "The trail was flooded. We turned back early. Which sentence combines the ideas by using because to make the flooding the cause of our decision?",
+   "choices": [
+    "Because the trail was flooded, we turned back early.",
+    "Because we turned back early, the trail was flooded.",
+    "Although the trail was flooded, we turned back early.",
+    "While the trail was flooded, we turned back early."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the trail was flooded introduces the reason we turned back early and places the cause before the result.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a causal clause",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The coach reviewed the play. The coach noticed an inconsistency. Which sentence combines the ideas with an introductory present participial phrase whose implied subject is the coach?",
+   "choices": [
+    "Reviewing the play, an inconsistency was noticed by the coach.",
+    "The coach, reviewing the play, noticed an inconsistency.",
+    "While reviewing the play, the coach noticed an inconsistency.",
+    "Reviewing the play, the coach noticed an inconsistency."
+   ],
+   "answerIndex": 3,
+   "explanation": "Reviewing the play is a present participial phrase that modifies the coach and introduces the main clause without using a subject.",
+   "difficulty": 5,
+   "skill": "Combining sentences with present participles",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Maya is our project manager. She will lead the planning team. Which sentence combines the ideas with a nonrestrictive appositive?",
+   "choices": [
+    "Maya who is our project manager will lead the planning team.",
+    "Maya, our project manager, will lead the planning team.",
+    "Being our project manager, Maya will lead the planning team.",
+    "The project manager will lead the planning team, and Maya is that person."
+   ],
+   "answerIndex": 1,
+   "explanation": "Our project manager is a nonrestrictive appositive that renames Maya while adding information about her role.",
+   "difficulty": 5,
+   "skill": "Combining sentences with an appositive",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The printer stopped. The staff saved their documents. Which sentence combines the ideas with while to show that the two events happened at the same time?",
+   "choices": [
+    "While the printer stopped, the staff saved their documents.",
+    "Because the printer stopped, the staff saved their documents.",
+    "Although the printer stopped, the staff saved their documents.",
+    "If the printer stopped, the staff saved their documents."
+   ],
+   "answerIndex": 0,
+   "explanation": "While the printer stopped presents the printer stopping and the staff saving their documents as simultaneous events.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a while clause",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The sun set. We began the night hike. Which sentence uses once to show that the hike began immediately after sunset?",
+   "choices": [
+    "Unless the sun set, we began the night hike.",
+    "Until the sun set, we began the night hike.",
+    "Since the sun set, we began the night hike.",
+    "Once the sun set, we began the night hike."
+   ],
+   "answerIndex": 3,
+   "explanation": "Once the sun set means that the night hike began immediately after the sun had set.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a once clause",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "The judges will announce the winner tonight. They will contact the runners first. Which version uses subject-auxiliary inversion in both independent clauses?",
+   "choices": [
+    "Will the judges announce the winner tonight, and the judges will contact the runners first.",
+    "Will the judges announcing the winner tonight, and will they contact the runners first.",
+    "Will the judges announce the winner tonight, and will they contact the runners first?",
+    "Will the judges announce the winner tonight and they will contact the runners first."
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct version inverts the subject and auxiliary in both clauses: will the judges announce and will they contact.",
+   "difficulty": 6,
+   "skill": "Subject-auxiliary inversion in compound sentences",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The wind might rise. The race will be postponed. Which sentence expresses the condition with an inverted conditional clause beginning with Should?",
+   "choices": [
+    "If the wind should rise, the race will be postponed.",
+    "Should the wind rise, the race will be postponed.",
+    "Should the wind will rise, the race will be postponed.",
+    "The wind should rise, the race will be postponed."
+   ],
+   "answerIndex": 1,
+   "explanation": "Beginning the conditional clause with Should places the subject before the verb and expresses the condition without using if.",
+   "difficulty": 6,
+   "skill": "Inverted conditional clauses",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The reporter interviewed the mayor. She hoped to verify the budget figures. Which sentence uses a simple infinitive phrase of purpose without an introductory preposition?",
+   "choices": [
+    "The reporter interviewed the mayor in order to verify the budget figures.",
+    "The reporter interviewed the mayor for verify the budget figures.",
+    "The reporter interviewed the mayor to verified the budget figures.",
+    "The reporter interviewed the mayor to verify the budget figures."
+   ],
+   "answerIndex": 3,
+   "explanation": "The infinitive phrase to verify the budget figures states the purpose of the interview without an introductory preposition.",
+   "difficulty": 5,
+   "skill": "Infinitive phrases of purpose",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The audience had barely sat down. The lights suddenly went out. Which sentence combines the ideas with a correct hardly...when inversion?",
+   "choices": [
+    "Hardly had the audience sat down when the lights suddenly went out.",
+    "Barely the audience had sat down when the lights suddenly went out.",
+    "Hardly had the audience sat down, the lights suddenly went out.",
+    "Hardly had the audience sat down the lights suddenly went out."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct construction places had before the subject and uses when to introduce the unexpected second event.",
+   "difficulty": 6,
+   "skill": "Hardly-when inversion",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The evidence was confusing. The jury asked for clarification. Which sentence combines the ideas with a correct so...that result clause?",
+   "choices": [
+    "The evidence was so confusing the jury asked for clarification.",
+    "The evidence was so confusing that the jury asked for clarification.",
+    "The evidence was such confusing that the jury asked for clarification.",
+    "The evidence was confusing so that the jury asked for clarification."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct sentence places the intensifier so before the adjective and includes that to introduce the result.",
+   "difficulty": 4,
+   "skill": "So-that result clauses",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The committee will not approve the proposal. It will not announce the winner yet. Which sentence combines the ideas with neither...nor and parallel verb forms?",
+   "choices": [
+    "The committee will neither approve the proposal nor announce the winner yet.",
+    "The committee will neither approve the proposal nor announcing the winner yet.",
+    "The committee will neither approves the proposal nor announce the winner yet.",
+    "The committee will neither approve the proposal nor the winner will be announced yet."
+   ],
+   "answerIndex": 0,
+   "explanation": "Using neither...nor with approve and announce keeps both verbs in the same future-tense form and clearly negates both actions.",
+   "difficulty": 5,
+   "skill": "Using neither...nor with parallel verbs",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The robotics club began its presentation. The room was crowded with visitors. Which sentence combines the ideas with despite followed by a noun phrase?",
+   "choices": [
+    "Despite the crowded room, the robotics club began its presentation.",
+    "Despite of the crowded room, the robotics club began its presentation.",
+    "Despite the room being crowded, the robotics club began its presentation.",
+    "In spite of the crowded room, the robotics club began its presentation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The noun phrase the crowded room follows despite directly and makes the contrast between the crowded setting and the presentation's beginning clear.",
+   "difficulty": 5,
+   "skill": "Using a preposition with a noun phrase",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The outdoor class was postponed. The schoolyard was covered in mud. Which sentence combines the ideas using because of followed by a noun phrase?",
+   "choices": [
+    "The outdoor class was postponed because of the muddy schoolyard.",
+    "The outdoor class was postponed because of the schoolyard was covered in mud.",
+    "The outdoor class was postponed because of cover the schoolyard in mud.",
+    "The outdoor class was postponed because of muddy the schoolyard."
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase because of the muddy schoolyard gives the reason for postponing the class in the required noun-phrase form.",
+   "difficulty": 5,
+   "skill": "Combining ideas with because of and a noun phrase",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The drummer practices percussion. She also plays the synthesizer. Which sentence combines the ideas with as well as and parallel verb forms?",
+   "choices": [
+    "The drummer practices percussion as well as the synthesizer is played.",
+    "The drummer practices percussion as well as play the synthesizer.",
+    "The drummer practices percussion as well as played the synthesizer.",
+    "The drummer practices percussion as well as plays the synthesizer."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence preserves the two present-tense activities with the parallel verbs practices and plays.",
+   "difficulty": 6,
+   "skill": "Combining ideas with as well as and parallel verbs",
+   "topic": "Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The lights flickered. The room went quiet. Which sentence combines the ideas with as to show the first action continuing as the second occurred?",
+   "choices": [
+    "As the lights flickered, the room went quiet.",
+    "Because the lights flickered, the room went quiet.",
+    "Although the lights flickered, the room went quiet.",
+    "Before the lights flickered, the room went quiet."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses as to place the flickering lights and the room becoming quiet on the same timeline while presenting the lights as the established event.",
+   "difficulty": 5,
+   "skill": "Using as for simultaneous actions",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The researcher checked the data twice. The data were complete. Which sentence combines the ideas with the coordinating conjunction and joining two independent clauses?",
+   "choices": [
+    "The researcher checked the data twice, and the data were complete.",
+    "The researcher checked the data twice because the data were complete.",
+    "The researcher checked the data twice, whereas the data were complete.",
+    "The researcher checked the data twice, for the data were complete."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses the coordinating conjunction and to join two independent clauses, each of which can stand alone as a complete sentence.",
+   "difficulty": 5,
+   "skill": "Joining independent clauses with a coordinating conjunction",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The guide will explain the map. The guide will not collect the tickets. Which sentence combines the ideas using neither...nor with parallel verb forms?",
+   "choices": [
+    "The guide will neither explain the map nor collect the tickets.",
+    "The guide will neither explain the map nor collecting the tickets.",
+    "The guide neither explain the map nor will collect the tickets.",
+    "The guide will neither explain the map or collect the tickets."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence correctly pairs neither with nor and uses the parallel base forms explain and collect after the shared modal verb will.",
+   "difficulty": 6,
+   "skill": "Using neither...nor with parallel predicates",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The gardener pruned the hedge. She discovered a bird's nest inside it. Which sentence combines the ideas with an introductory present participial phrase whose implied subject matches the main-clause subject?",
+   "choices": [
+    "While pruning the hedge, the gardener discovered a bird's nest inside it.",
+    "Pruning the hedge, the gardener discovered a bird's nest inside it.",
+    "Pruning the hedge, a bird's nest was discovered by the gardener.",
+    "Having pruned the hedge, the bird's nest was discovered inside it."
+   ],
+   "answerIndex": 1,
+   "explanation": "The introductory participial phrase Pruning the hedge has an implied subject of the gardener, who performs both the pruning and the discovery.",
+   "difficulty": 5,
+   "skill": "Integrating Present Participles",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The archivist delivered a folder. The folder contained duplicate prints. Which sentence uses a restrictive relative clause to identify the folder?",
+   "choices": [
+    "The archivist delivered the folder, which contained duplicate prints.",
+    "The archivist delivered the folder whom had contained duplicate prints.",
+    "The archivist delivered the folder that had contained duplicate prints.",
+    "The archivist delivered the folder that were containing duplicate prints."
+   ],
+   "answerIndex": 2,
+   "explanation": "The clause that had contained duplicate prints restricts the reference to one specific folder and provides the information needed to identify it.",
+   "difficulty": 6,
+   "skill": "Restrictive Relative Clauses",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The wind tore a branch from an old oak. The branch crashed onto the toolshed. Which sentence combines the ideas into a balanced compound sentence with parallel past-tense verbs?",
+   "choices": [
+    "The wind tore a branch from an old oak while the branch crashed onto the toolshed.",
+    "The wind tore a branch from an old oak because the branch crashed onto the toolshed.",
+    "The wind tore a branch from an old oak, and the branch was crashing onto the toolshed.",
+    "The wind tore a branch from an old oak, and the branch crashed onto the toolshed."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence is a balanced compound because it joins two independent clauses, the wind tore and the branch crashed, with parallel past-tense verbs.",
+   "difficulty": 6,
+   "skill": "Balanced Compound Sentences",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The library will close at six. Visitors must return books before then. Which sentence joins the ideas with a colon that introduces the additional requirement?",
+   "choices": [
+    "The library will close at six; visitors must return books before then.",
+    "The library will close at six, and visitors must return books before then.",
+    "The library will close at six: visitors must return books before then.",
+    "The library will close at six, so visitors must return books before then."
+   ],
+   "answerIndex": 2,
+   "explanation": "The colon introduces the second independent clause, which states the additional requirement about returning books.",
+   "difficulty": 5,
+   "skill": "Colon for Specification",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The archivist will unlock the archive. The researchers can begin their work after that. Which sentence uses subject-auxiliary inversion to make unlocking the archive the condition for the researchers beginning their work?",
+   "choices": [
+    "Only after the archivist unlocks the archive can the researchers begin their work.",
+    "Only after the researchers can begin their work will the archivist unlock the archive.",
+    "Only after the archivist unlocked the archive could the researchers begin their work.",
+    "After the archivist unlocks the archive, the researchers can only begin their work."
+   ],
+   "answerIndex": 0,
+   "explanation": "The inverted structure can the researchers begin places the main clause after the fronted only after-clause, which states the condition.",
+   "difficulty": 7,
+   "skill": "Fronting with Inversion",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Why does the sentence Although the bus was delayed, the team reached the final on time, count as a complex sentence?",
+   "choices": [
+    "It joins two independent main clauses with the coordinating conjunction but.",
+    "It contains one dependent Although-clause and one independent main clause.",
+    "It pairs a present participial phrase with an independent main clause.",
+    "It uses one dependent because-clause with an independent main clause."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence has one independent main clause and the dependent Although the bus was delayed clause, which is the defining structure of a complex sentence.",
+   "difficulty": 6,
+   "skill": "Identifying Complex Sentences",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The warning bell rang. Everyone stopped talking. Which sentence combines the ideas with the traditional no sooner...than construction and a past perfect auxiliary?",
+   "choices": [
+    "No sooner had the warning bell rung than everyone stopped talking.",
+    "No sooner did the warning bell ring than everyone stopped talking.",
+    "No sooner had the warning bell rang than everyone stopped talking.",
+    "No sooner had the warning bell rung when everyone stopped talking."
+   ],
+   "answerIndex": 0,
+   "explanation": "The traditional construction places had after no sooner and uses the past participle rung in the first clause.",
+   "difficulty": 6,
+   "skill": "Using no sooner...than inversion",
+   "topic": "Combine Two Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The list was short. It included six names. Which combined sentence uses a colon correctly?",
+   "choices": [
+    "The list was short: it included six names.",
+    "The list was short; it included six names.",
+    "The list was short, and it included six names.",
+    "The list was short: It included six names."
+   ],
+   "answerIndex": 3,
+   "explanation": "A colon may introduce a complete sentence when the second sentence begins with a capital letter.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The final step was too high. Our scooters could not climb it. Which sentence combines the ideas using the too...to construction?",
+   "choices": [
+    "The final step was too higher for our scooters to climb.",
+    "The final step was too highest for our scooters to climb.",
+    "The final step was too high for our scooters to climbing.",
+    "The final step was too high for our scooters to climb."
+   ],
+   "answerIndex": 3,
+   "explanation": "The too...to construction correctly expresses that the step's height prevents the scooters from climbing it.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.00) more than the keyed option 4 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The whistle blew. The runners pushed off from the blocks. Which sentence combines the ideas using as soon as to show that the runners started immediately after the whistle?",
+   "choices": [
+    "As soon as the whistle blew, the runners pushed off from the blocks.",
+    "As soon as the whistle blew, the runners had pushed off from the blocks.",
+    "As soon as the runners pushed off from the blocks, the whistle blew.",
+    "As soon as the whistle was blowing, the runners pushed off from the blocks."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence correctly places the blowing of the whistle immediately before the runners' movement.",
+   "reason": "explanation-key: the explanation describes option 4 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The committee will not approve the proposal. It will not announce the winner yet. Which sentence combines the ideas with neither...nor and parallel verb forms?",
+   "choices": [
+    "The committee will neither approve the proposal nor announce the winner yet.",
+    "The committee will neither approve the proposal nor announcing the winner yet.",
+    "The committee will neither approves the proposal nor announce the winner yet.",
+    "The committee will neither approve the proposal nor the winner will be announced yet."
+   ],
+   "answerIndex": 0,
+   "explanation": "Using neither...nor with approve and announce keeps both verbs in the same future-tense form and clearly negates both actions.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The final step was too high. Our scooters could not climb it. Which sentence combines the ideas using the too...to construction?",
+   "choices": [
+    "The final step was too higher for our scooters to climb.",
+    "The final step was too highest for our scooters to climb.",
+    "The final step was too high for our scooters to climbing.",
+    "The final step was too high for our scooters to climb."
+   ],
+   "answerIndex": 3,
+   "explanation": "The too...to construction correctly expresses that the step's height prevents the scooters from climbing it.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.00) more than the keyed option 4 (score 0.00); repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The robotics club began its presentation. The room was crowded with visitors. Which sentence combines the ideas with despite followed by a noun phrase?",
+   "choices": [
+    "Despite the crowded room, the robotics club began its presentation.",
+    "Despite of the crowded room, the robotics club began its presentation.",
+    "Despite the room being crowded, the robotics club began its presentation.",
+    "In spite of the crowded room, the robotics club began its presentation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The noun phrase the crowded room follows despite directly and makes the contrast between the crowded setting and the presentation's beginning clear.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The whistle blew. The runners pushed off from the blocks. Which sentence combines the ideas using as soon as to show that the runners started immediately after the whistle?",
+   "choices": [
+    "As soon as the whistle blew, the runners pushed off from the blocks.",
+    "As soon as the whistle blew, the runners had pushed off from the blocks.",
+    "As soon as the runners pushed off from the blocks, the whistle blew.",
+    "As soon as the whistle was blowing, the runners pushed off from the blocks."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence correctly places the blowing of the whistle immediately before the runners' movement.",
+   "reason": "explanation-key: the explanation describes option 4 (score 1.00) more than the keyed option 1 (score 0.00); repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The outdoor class was postponed. The schoolyard was covered in mud. Which sentence combines the ideas using because of followed by a noun phrase?",
+   "choices": [
+    "The outdoor class was postponed because of the muddy schoolyard.",
+    "The outdoor class was postponed because of the schoolyard was covered in mud.",
+    "The outdoor class was postponed because of cover the schoolyard in mud.",
+    "The outdoor class was postponed because of muddy the schoolyard."
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase because of the muddy schoolyard gives the reason for postponing the class in the required noun-phrase form.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The drummer practices percussion. She also plays the synthesizer. Which sentence combines the ideas with as well as and parallel verb forms?",
+   "choices": [
+    "The drummer practices percussion as well as the synthesizer is played.",
+    "The drummer practices percussion as well as play the synthesizer.",
+    "The drummer practices percussion as well as played the synthesizer.",
+    "The drummer practices percussion as well as plays the synthesizer."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence preserves the two present-tense activities with the parallel verbs practices and plays.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The train finally arrived. The platform was crowded with commuters. Which sentence combines the ideas with an absolute phrase?",
+   "choices": [
+    "The train finally arrived, its platform crowded with commuters.",
+    "The train finally arrived, crowded with commuters on the platform.",
+    "The train finally arrived, the platform crowded with commuters.",
+    "The train finally arrived, a platform crowded with commuters waiting nearby."
+   ],
+   "answerIndex": 2,
+   "explanation": "The absolute phrase the platform crowded with commuters stands independently and describes the condition of the platform.",
+   "reason": "A: picked 0 not 2 (Options 0 and 2 are both grammatically correct absolute constructions that combine the two ideas, so the answer is ambiguous.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which one-sentence explanation accurately identifies the structure of this sentence: The judge weighed the evidence carefully and delivered a clear verdict.",
+   "choices": [
+    "The sentence uses two parallel clauses of similar length joined by and.",
+    "The sentence uses a main clause followed by a series of modifying phrases.",
+    "The sentence uses a dependent clause to state a cause before the main clause.",
+    "The sentence uses an appositive to rename the evidence."
+   ],
+   "answerIndex": 0,
+   "explanation": "The two similarly structured clauses joined by and create the balanced structure of the sentence.",
+   "reason": "B: picked -1 not 0 (None of the options correctly describes the sentence structure (a simple sentence with a compound predicate); all four explanations are inac)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A student writes: Running late, the bus passed the school without stopping. Which one-sentence explanation correctly identifies the problem and gives a repair?",
+   "choices": [
+    "The original sentence has a dangling modifier, and revising it to The bus, running late, passed the school without stopping gives the phrase a clear subject.",
+    "The original sentence has a misplaced modifier, and replacing bus with student is the simplest way to give the participial phrase a clear subject.",
+    "The original sentence is already correct because a participial phrase may describe any nearby noun, so no grammatical change is necessary.",
+    "The original sentence needs a semicolon after late, which would make Running late an independent clause and correct the subject relationship."
+   ],
+   "answerIndex": 0,
+   "explanation": "The original has a dangling participial phrase, and the revision makes the bus the logical subject of the phrase Running late.",
+   "reason": "B: picked -1 not 0 (No option correctly identifies the dangling modifier and provides a valid repair; option 0 identifies dangling modifier but gives incorrect )"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The committee signs the form. The contest begins afterward. Which sentence combines the ideas by using only after and subject-auxiliary inversion?",
+   "choices": [
+    "Only after the committee signs the form will the contest begin.",
+    "Only after the committee signs the form the contest begins.",
+    "Only after the committee will sign the form will the contest begin.",
+    "Only after will the committee sign the form will the contest begin."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only after the committee signs the form places the dependent clause first and correctly inverts will the contest begin.",
+   "reason": "A: not exactly one correct (Option 3 is also grammatical and uses fronted 'only after' with subject-auxiliary inversion, so option 0 is not uniquely correct.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The class ended early. The teacher was still sorting the papers. Which sentence combines the facts with a grammatical with-phrase containing a subject and a present participle?",
+   "choices": [
+    "The class ended early, with the teacher still sorted the papers.",
+    "The class ended early, with sorting the papers still the teacher.",
+    "The class ended early, with the teacher still sorting the papers.",
+    "The class ended early, with the teacher sorting the papers still."
+   ],
+   "answerIndex": 2,
+   "explanation": "The with-phrase pairs the subject the teacher with the present participle sorting to show that the teacher was still sorting the papers.",
+   "reason": "B: not exactly one correct (Both options (2) and (3) are grammatical with‑phrases containing a subject and present participle; more than one correct answer.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "The library opened a new media center. It offers computers and recording studios. Which sentence combines the ideas with a nonrestrictive relative clause that refers to the new media center?",
+   "choices": [
+    "The library opened a new media center, which offers computers and recording studios.",
+    "The library, which offers computers and recording studios, opened a new media center.",
+    "The library opened a new media center that offers computers and recording studios.",
+    "The library opened a new media center, and it offers computers and recording studios."
+   ],
+   "answerIndex": 0,
+   "explanation": "The nonrestrictive clause is set off by commas and refers to the new media center.",
+   "reason": "surplus"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "The performance had several pauses. The audience applauded loudly. Which sentence combines the ideas with even though and preserves the original meaning?",
+   "choices": [
+    "Even though the performance had several pauses, the audience applauded loudly.",
+    "Although the audience applauded loudly, the performance had several pauses.",
+    "Despite the performance had several pauses, the audience applauded loudly.",
+    "Even though the performance had several pauses the audience applauded loudly."
+   ],
+   "answerIndex": 0,
+   "explanation": "Even though introduces a dependent contrast clause that acknowledges the pauses while the main clause states the audience's response.",
+   "reason": "surplus"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "In the sentence Running late, Maya called her friend, what does the introductory phrase Running late do?",
+   "choices": [
+    "It modifies the subject Maya, describing her condition when she called.",
+    "It modifies the verb called, describing how Maya made the call.",
+    "It modifies the object her friend, describing that person's activity during the call.",
+    "It modifies the entire independent clause by adding a reason for the phone call."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory present participle Running late modifies the subject Maya and describes her state at the time of the call.",
+   "reason": "A: picked 3 not 0 (Option 3 correctly identifies 'Running late' as modifying the entire independent clause and explaining why Maya called.)"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  }
+ ],
+ "applied": false
+}

@@ -1,0 +1,2781 @@
+{
+ "row_id": 23,
+ "engine_id": "yahtzee",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 31,
+ "generated_at": "2026-10-24T14:35:34.719Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 57,
+  "code_rejected": 3,
+  "sent_to_judges": 54,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 54,
+   "picked_same_option": 52,
+   "a_picked_key": 54,
+   "b_picked_key": 52,
+   "models_a": [
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "yahtzee",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 31,
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Rhetorical Grammar",
+   "title": "Notice It in a Model Text: Rhetorical Grammar",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q42",
+    "prompt": "In the model sentence The judges named her captain, what grammatical function should be marked on the word captain?",
+    "choices": [
+     "a direct object",
+     "an object complement",
+     "a predicate nominative",
+     "an appositive"
+    ],
+    "answerIndex": 1,
+    "explanation": "The word captain is an object complement because it completes the verb named by specifying her assigned role.",
+    "difficulty": 3,
+    "skill": "Identifying object complements",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q43",
+    "prompt": "In the model sentence Only after the final bell did the students leave, what construction creates the emphasis?",
+    "choices": [
+     "a cleft sentence",
+     "locative inversion",
+     "subject-auxiliary inversion",
+     "a periodic sentence"
+    ],
+    "answerIndex": 2,
+    "explanation": "Subject-auxiliary inversion places did before the subject students to emphasize the restrictive phrase Only after the final bell.",
+    "difficulty": 4,
+    "skill": "Identifying inversion for emphasis",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which sentence contains a subordinate clause that expresses the reason for the main action?",
+    "choices": [
+     "The road remained icy, and the storm had arrived before dawn.",
+     "The road remained icy after the storm had arrived before dawn.",
+     "The road remained icy while the storm had arrived before dawn.",
+     "The road remained icy because the storm had arrived before dawn."
+    ],
+    "answerIndex": 3,
+    "explanation": "The clause because the storm had arrived before dawn gives the reason the road remained icy.",
+    "difficulty": 2,
+    "skill": "Identifying adverbial clauses of reason",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q2",
+    "prompt": "What repeated pattern joins these three sentences? We must test every claim. We must trace every source. We must defend every conclusion.",
+    "choices": [
+     "irony",
+     "anaphora",
+     "sarcasm",
+     "understatement"
+    ],
+    "answerIndex": 1,
+    "explanation": "The repeated opening phrase 'We must' at the beginning of each sentence creates anaphora.",
+    "difficulty": 3,
+    "skill": "Identifying anaphora",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q6",
+    "prompt": "Which pattern connects the end of the first clause with the start of the second? The teacher read the myth, and the myth changed the class.",
+    "choices": [
+     "epizeuxis",
+     "anadiplosis",
+     "euphemism",
+     "apposition"
+    ],
+    "answerIndex": 1,
+    "explanation": "The second clause begins with 'the myth,' the final phrase of the first clause, creating anadiplosis.",
+    "difficulty": 5,
+    "skill": "Identifying anadiplosis",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which rhetorical device is used in this model text: The printer was jammed, so the emergency forms printed beautifully?",
+    "choices": [
+     "symbolism",
+     "hyperbole",
+     "personification",
+     "verbal irony"
+    ],
+    "answerIndex": 3,
+    "explanation": "Calling the failed printing result beautiful creates verbal irony because the word contradicts the situation.",
+    "difficulty": 3,
+    "skill": "Identifying verbal irony",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q38",
+    "prompt": "In the model sentence The judges announced that the final had been delayed, what function does the clause that the final had been delayed perform?",
+    "choices": [
+     "It modifies the noun judges.",
+     "It serves as the direct object of announced.",
+     "It modifies the noun final.",
+     "It serves as a relative clause modifying delay."
+    ],
+    "answerIndex": 1,
+    "explanation": "The clause that the final had been delayed gives the content of what the judges announced and functions as its direct object.",
+    "difficulty": 4,
+    "skill": "Identify a noun clause as a direct object",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q34",
+    "prompt": "In the model sentence Mia reread the draft to strengthen its ending, which structure should be marked?",
+    "choices": [
+     "a gerund phrase expressing means",
+     "an infinitive phrase expressing purpose",
+     "a participial phrase expressing result",
+     "a prepositional phrase expressing location"
+    ],
+    "answerIndex": 1,
+    "explanation": "The phrase to strengthen its ending begins with to and explains why Mia reread the draft, making it an infinitive phrase expressing purpose.",
+    "difficulty": 2,
+    "skill": "Identify an infinitive phrase of purpose",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q3",
+    "prompt": "Which rhetorical device is created by the repeated ending word in this model text? They valued tradition, and they preserved tradition.",
+    "choices": [
+     "tricolon",
+     "apostrophe",
+     "epistrophe",
+     "oxymoron"
+    ],
+    "answerIndex": 2,
+    "explanation": "The word 'tradition' ends both clauses, creating the repeated ending called epistrophe.",
+    "difficulty": 3,
+    "skill": "Identifying epistrophe",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q44",
+    "prompt": "In the model text, what grammatical construction should be marked in Her hands trembling, Maya raised the torch?",
+    "choices": [
+     "a compound predicate",
+     "a finite subordinate clause",
+     "a coordinated participial clause",
+     "an absolute construction"
+    ],
+    "answerIndex": 3,
+    "explanation": "The construction is absolute because its subject, Her hands, differs from the main-clause subject, Maya.",
+    "difficulty": 3,
+    "skill": "Identifying absolute constructions",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which rhetorical device is used in the model sentence The climb was not without difficulty?",
+    "choices": [
+     "onomatopoeia",
+     "euphony",
+     "litotes",
+     "sibilance"
+    ],
+    "answerIndex": 2,
+    "explanation": "By denying that the climb was without difficulty, the statement understates the difficulty through litotes.",
+    "difficulty": 4,
+    "skill": "Identify litotes",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q1",
+    "prompt": "Which figure of speech should be marked in this model text? If the school cancels the arts program, what will happen to the students who need it?",
+    "choices": [
+     "rhetorical question",
+     "hyperbole",
+     "litotes",
+     "exclamation"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence asks a question whose answer is already implied, making it a rhetorical question.",
+    "difficulty": 2,
+    "skill": "Identifying rhetorical questions",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q36",
+    "prompt": "In the model sentence The evidence was so persuasive that the committee changed its decision, which structure should be marked?",
+    "choices": [
+     "a correlative comparative construction",
+     "a cause-and-effect conditional construction",
+     "an adversative concessive construction",
+     "a degree-result construction"
+    ],
+    "answerIndex": 3,
+    "explanation": "The structure so persuasive that presents the degree of the evidence and its result, making it a degree-result construction.",
+    "difficulty": 3,
+    "skill": "Identify a degree-result construction",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q12",
+    "prompt": "What feature gives this model sentence its force: The audience listened, learned, and laughed?",
+    "choices": [
+     "litotes",
+     "periphrasis",
+     "pleonasm",
+     "tricolon"
+    ],
+    "answerIndex": 3,
+    "explanation": "A tricolon is a deliberate sequence of three similar words, phrases, or clauses.",
+    "difficulty": 5,
+    "skill": "Identify a tricolon in a model text",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q27",
+    "prompt": "Which sentence structure organizes this model text: The bell rang; the students entered; the teacher wrote the date on the board?",
+    "choices": [
+     "asyndeton",
+     "hypotaxis",
+     "parataxis",
+     "parallelism"
+    ],
+    "answerIndex": 2,
+    "explanation": "The model text places independent clauses in sequence without subordination, which is parataxis.",
+    "difficulty": 4,
+    "skill": "Identifying parataxis",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q23",
+    "prompt": "What rhetorical effect is created by the sentence After the twelve-hour shift, the job felt like a brief stroll?",
+    "choices": [
+     "irony",
+     "hyperbole",
+     "understatement",
+     "paradox"
+    ],
+    "answerIndex": 2,
+    "explanation": "Calling a twelve-hour shift a brief stroll understates how tiring the work was.",
+    "difficulty": 3,
+    "skill": "Identifying understatement",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which punctuation mark is used correctly in this sentence: The final tasks were clear: submit the essay, cite the sources, and present the results?",
+    "choices": [
+     "a comma after the introductory words",
+     "a colon before the list",
+     "a period before the final list",
+     "a semicolon between the clauses"
+    ],
+    "answerIndex": 1,
+    "explanation": "A colon correctly introduces the list of three tasks that follows the complete introductory statement.",
+    "difficulty": 2,
+    "skill": "Recognizing colon use before a list",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which rhetorical structure is created by the three matching imperative clauses in this model sentence: Eat well, sleep deeply, and study wisely?",
+    "choices": [
+     "parallelism",
+     "irony",
+     "synecdoche",
+     "apostrophe"
+    ],
+    "answerIndex": 0,
+    "explanation": "Parallelism gives several clauses the same grammatical form or structure for emphasis and clarity.",
+    "difficulty": 3,
+    "skill": "Identify parallelism in a model text",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q48",
+    "prompt": "In the model sentence The student studied with studious care, which rhetorical device repeats one root in different grammatical forms?",
+    "choices": [
+     "synizesis",
+     "epanaphora",
+     "cataphora",
+     "polyptoton"
+    ],
+    "answerIndex": 3,
+    "explanation": "Polyptoton is the repeated use of the root stud in the forms studied, studious, and study-related meanings within the sentence.",
+    "difficulty": 4,
+    "skill": "Identifying polyptoton",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q25",
+    "prompt": "Which sound device is used in this model text: The bees buzzed outside the window?",
+    "choices": [
+     "onomatopoeia",
+     "assonance",
+     "consonance",
+     "euphony"
+    ],
+    "answerIndex": 0,
+    "explanation": "The word buzzed imitates the sound made by bees, making it an example of onomatopoeia.",
+    "difficulty": 3,
+    "skill": "Identifying onomatopoeia",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q31",
+    "prompt": "Which rhetorical device appears in the model text: I have told you a million times to clean your room?",
+    "choices": [
+     "euphemism",
+     "bathos",
+     "hyperbole",
+     "invective"
+    ],
+    "answerIndex": 2,
+    "explanation": "The impossible claim of telling someone a million times deliberately exaggerates for emphasis, creating hyperbole.",
+    "difficulty": 2,
+    "skill": "Identify hyperbole",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which grammatical construction creates emphasis in this sentence: Beyond the hills lay a small farming village?",
+    "choices": [
+     "absolute construction",
+     "appositive construction",
+     "locative inversion",
+     "subject complement"
+    ],
+    "answerIndex": 2,
+    "explanation": "Locative inversion places the subject after an opening prepositional phrase, as in Beyond the hills lay a small farming village.",
+    "difficulty": 3,
+    "skill": "Identifying locative inversion",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which rhetorical device is used in this model text: We must leave now, now, now?",
+    "choices": [
+     "aphorism",
+     "antanaclasis",
+     "periphrasis",
+     "epizeuxis"
+    ],
+    "answerIndex": 3,
+    "explanation": "The immediate repetition of now in the same position creates the rhetorical device epizeuxis.",
+    "difficulty": 4,
+    "skill": "Identifying epizeuxis",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q16",
+    "prompt": "What grammatical structure creates emphasis in the model sentence It was the witness who changed the jury's mind?",
+    "choices": [
+     "inversion",
+     "nominalization",
+     "participial phrase",
+     "cleft sentence"
+    ],
+    "answerIndex": 3,
+    "explanation": "The frame It was followed by who places the witness in the grammatical focus, making the sentence a cleft sentence.",
+    "difficulty": 3,
+    "skill": "Identify a cleft sentence",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q49",
+    "prompt": "In the model sentence Some students prefer history, others geography, which construction omits the repeated verb prefer after others?",
+    "choices": [
+     "gapping",
+     "apodosis",
+     "hypophora",
+     "suspension"
+    ],
+    "answerIndex": 0,
+    "explanation": "Gapping omits a word repeated in the same grammatical position across coordinated clauses while preserving each clause's meaning.",
+    "difficulty": 5,
+    "skill": "Identifying gapping",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q7",
+    "prompt": "In the model text, what effect is created by the repeated b sound in bold, brave, and beyond?",
+    "choices": [
+     "onomatopoeia",
+     "assonance",
+     "alliteration",
+     "metaphor"
+    ],
+    "answerIndex": 2,
+    "explanation": "Alliteration is the repetition of the same initial consonant sound in closely connected words.",
+    "difficulty": 2,
+    "skill": "Identify alliteration in a model text",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q40",
+    "prompt": "In the model sentence Beyond the ridge, the village caught the first sunlight, what grammatical construction should be marked?",
+    "choices": [
+     "a restrictive relative clause",
+     "an object prepositional phrase",
+     "a predicative participial phrase",
+     "a fronted prepositional phrase"
+    ],
+    "answerIndex": 3,
+    "explanation": "The prepositional phrase Beyond the ridge comes before the subject and modifies the clause.",
+    "difficulty": 3,
+    "skill": "Identifying fronted phrases",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which grammatical-rhetorical feature should be marked in this model sentence: He lost his keys and his temper?",
+    "choices": [
+     "metonymy",
+     "oxymoron",
+     "zeugma",
+     "understatement"
+    ],
+    "answerIndex": 2,
+    "explanation": "Zeugma occurs when one word links two others with different senses, as lost links keys with temper.",
+    "difficulty": 4,
+    "skill": "Identify zeugma in a model text",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q35",
+    "prompt": "In the model sentence Students who volunteer weekly will attend the workshop, which structure should be marked?",
+    "choices": [
+     "a relative clause functioning as an adverbial",
+     "a nonrestrictive relative clause",
+     "a restrictive relative clause",
+     "a nominal clause functioning as a subject"
+    ],
+    "answerIndex": 2,
+    "explanation": "The clause who volunteer weekly restricts the noun Students to a particular group and is therefore a restrictive relative clause.",
+    "difficulty": 3,
+    "skill": "Identify a restrictive relative clause",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q46",
+    "prompt": "In the model sentence The librarian handed Theo a library card, what grammatical function does Theo perform?",
+    "choices": [
+     "subject",
+     "indirect object",
+     "direct object",
+     "object of a preposition"
+    ],
+    "answerIndex": 1,
+    "explanation": "Theo is the indirect object because he receives the direct object, a library card.",
+    "difficulty": 2,
+    "skill": "Identifying indirect objects",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q13",
+    "prompt": "In the model text At the ceremony, there was a deafening silence, which rhetorical device combines the two contradictory words?",
+    "choices": [
+     "oxymoron",
+     "synecdoche",
+     "paradox",
+     "metonymy"
+    ],
+    "answerIndex": 0,
+    "explanation": "The phrase deafening silence joins contradictory ideas, which is the defining feature of an oxymoron.",
+    "difficulty": 3,
+    "skill": "Identify an oxymoron",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q26",
+    "prompt": "Which sentence structure creates the abrupt interruption in this model text: We had planned the trip for months, but when the storm arrived—?",
+    "choices": [
+     "periodic sentence",
+     "anacoluthon",
+     "balanced sentence",
+     "complex sentence"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence begins with a complete setup and then breaks off at the dash, creating anacoluthon.",
+    "difficulty": 4,
+    "skill": "Identifying anacoluthon",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q8",
+    "prompt": "The model text moves from choosing a pencil to writing a speech and finally changing a nation. Which rhetorical structure organizes this increasing importance?",
+    "choices": [
+     "epizeuxis",
+     "anticlimax",
+     "caesura",
+     "climax"
+    ],
+    "answerIndex": 3,
+    "explanation": "Climax arranges ideas or actions in an order that builds toward a progressively stronger effect.",
+    "difficulty": 3,
+    "skill": "Identify a climax in a model text",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q41",
+    "prompt": "In the model sentence Neither the coach nor the players accepted the decision, what grammatical construction should be marked?",
+    "choices": [
+     "a correlative conjunction",
+     "a subordinating conjunction",
+     "a coordinating conjunction",
+     "a conjunctive adverb"
+    ],
+    "answerIndex": 0,
+    "explanation": "Neither and nor form a correlative conjunction pair that joins two subjects.",
+    "difficulty": 2,
+    "skill": "Identifying correlative conjunctions",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which grammatical structure appears in the model sentence Her explanation persuaded us, it did?",
+    "choices": [
+     "right dislocation",
+     "anacoluthon",
+     "left dislocation",
+     "cataphora"
+    ],
+    "answerIndex": 0,
+    "explanation": "The resumptive pronoun it at the end refers back to the subject, creating a right dislocation.",
+    "difficulty": 5,
+    "skill": "Identify a right dislocation",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q45",
+    "prompt": "In the model sentence The team's final score was impressive, what grammatical function does impressive perform?",
+    "choices": [
+     "subject complement",
+     "direct object",
+     "object of a preposition",
+     "adverbial modifier"
+    ],
+    "answerIndex": 0,
+    "explanation": "Impressive is a subject complement because it completes the linking verb was by describing the team's final score.",
+    "difficulty": 3,
+    "skill": "Identifying subject complements",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which rhetorical structure appears in the model text: The volunteers sorted donations, wrapped boxes, loaded trucks, delivered packages?",
+    "choices": [
+     "asyndetic coordination",
+     "hendiadys",
+     "syllepsis",
+     "homoeoteleuton"
+    ],
+    "answerIndex": 0,
+    "explanation": "The coordinated actions are listed without conjunctions, creating asyndetic coordination.",
+    "difficulty": 4,
+    "skill": "Identify asyndetic coordination",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which rhetorical device appears in the model text: The calendar asked for a day off because it had too many dates?",
+    "choices": [
+     "sarcasm",
+     "paradox",
+     "irony",
+     "pun"
+    ],
+    "answerIndex": 3,
+    "explanation": "The phrase too many dates plays on the word dates to create a pun.",
+    "difficulty": 3,
+    "skill": "Identify a pun",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which sentence is compound-complex?",
+    "choices": [
+     "The storm ended, and the sun appeared after midnight.",
+     "Although the trail was muddy, the hikers reached the summit, and they celebrated together.",
+     "Although the trail was muddy, the hikers reached the summit before noon.",
+     "The hikers reached the summit, celebrated together, and watched the sunset."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence contains a dependent Although clause and two independent clauses joined by and, so it is compound-complex.",
+    "difficulty": 2,
+    "skill": "Identify a compound-complex sentence",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which construction compresses the action into a noun phrase in The team's rapid decision ended the argument?",
+    "choices": [
+     "a gerund phrase",
+     "a nominalization",
+     "an appositive",
+     "an infinitive phrase"
+    ],
+    "answerIndex": 1,
+    "explanation": "The team's rapid decision is a noun phrase formed from the team's deciding rapidly, so it is a nominalization.",
+    "difficulty": 3,
+    "skill": "Identify a nominalization",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which device best names the opposition created by daring and timid in this model sentence: The proposal sounded daring in theory but timid in practice?",
+    "choices": [
+     "irony",
+     "antithesis",
+     "paradox",
+     "tautology"
+    ],
+    "answerIndex": 1,
+    "explanation": "Antithesis places contrasting words or ideas in corresponding grammatical positions.",
+    "difficulty": 4,
+    "skill": "Identify antithesis in a model text",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q37",
+    "prompt": "In the model sentence The coach, exhausted after the game, dismissed the team, what does the marked phrase exhausted after the game describe?",
+    "choices": [
+     "the coach through a participial phrase",
+     "the game through an appositive",
+     "the team through a relative clause",
+     "the dismissal through a noun phrase"
+    ],
+    "answerIndex": 0,
+    "explanation": "Exhausted after the game is a participial phrase that describes the coach and explains the coach's condition.",
+    "difficulty": 3,
+    "skill": "Identify a participial phrase and its modifier",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which rhetorical device appears in the model text: The runner moved like a cheetah across the field?",
+    "choices": [
+     "metaphor",
+     "simile",
+     "epanalepsis",
+     "antanaclasis"
+    ],
+    "answerIndex": 1,
+    "explanation": "The word like directly compares two unlike things, making the sentence a simile.",
+    "difficulty": 2,
+    "skill": "Identify a simile",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q47",
+    "prompt": "In the model sentence The city was busy, noisy, and crowded, which rhetorical device expands the idea of busyness with specific details?",
+    "choices": [
+     "apodosis",
+     "syllogism",
+     "amplification",
+     "periphrasis"
+    ],
+    "answerIndex": 2,
+    "explanation": "The device is amplification because the additional details noisy and crowded expand the general description busy.",
+    "difficulty": 4,
+    "skill": "Recognizing rhetorical amplification",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which rhetorical device is used when a speaker directly addresses an absent or abstract thing, as in O liberty, protect the innocent?",
+    "choices": [
+     "irony",
+     "apostrophe",
+     "understatement",
+     "hyperbole"
+    ],
+    "answerIndex": 1,
+    "explanation": "The speaker directly addresses liberty, an abstract quality that cannot answer, so the model uses apostrophe.",
+    "difficulty": 3,
+    "skill": "Identify an apostrophe",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q39",
+    "prompt": "In the model sentence If I were the judge, I would hear both speakers, which construction should be marked?",
+    "choices": [
+     "a past-counterfactual conditional using had for an earlier event",
+     "an indicative conditional using was for a likely situation",
+     "a subjunctive conditional using were for an unreal situation",
+     "a mixed conditional pairing present and past results"
+    ],
+    "answerIndex": 2,
+    "explanation": "The form were in if I were the judge presents an unreal situation, so the sentence uses a subjunctive conditional.",
+    "difficulty": 5,
+    "skill": "Identify a subjunctive conditional",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q21",
+    "prompt": "What type of phrase is practicing every day in the sentence Her success depended on practicing every day?",
+    "choices": [
+     "gerund phrase",
+     "infinitive phrase",
+     "participial phrase",
+     "noun phrase"
+    ],
+    "answerIndex": 0,
+    "explanation": "Practicing every day is a gerund phrase because it functions as the object of the preposition on.",
+    "difficulty": 3,
+    "skill": "Identifying gerund phrases",
+    "topic": "Rhetorical Grammar"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which rhetorical device appears in the model text: The old lighthouse kept watch over the stormy coast?",
+    "choices": [
+     "personification",
+     "allegory",
+     "catachresis",
+     "analogy"
+    ],
+    "answerIndex": 0,
+    "explanation": "The description gives the lighthouse the human activity of keeping watch, making it personification.",
+    "difficulty": 2,
+    "skill": "Identify personification",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which structure is emphasized by the reversed order of the roles in this sentence? The coach praised the player, and the player praised the coach.",
+    "choices": [
+     "simile",
+     "metaphor",
+     "paradox",
+     "chiasmus"
+    ],
+    "answerIndex": 3,
+    "explanation": "The coach–player–player–coach arrangement reverses the phrase order to form chiasmus.",
+    "difficulty": 4,
+    "skill": "Identifying chiasmus",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which device best names the repeated use of and in this model text? We packed and checked and loaded and left and locked the door.",
+    "choices": [
+     "polysyndeton",
+     "hyperbaton",
+     "asyndeton",
+     "bathos"
+    ],
+    "answerIndex": 0,
+    "explanation": "The series of repeated conjunctions deliberately creates polysyndeton.",
+    "difficulty": 3,
+    "skill": "Identifying polysyndeton",
+    "topic": "Notice It in a Model Text - Rhetorical Grammar"
+   }
+  ],
+  "feedback": {
+   "correct": "Correct — that grammar choice does exactly the persuasive job it was built to do.",
+   "incorrect": "Not quite. Look again at what the sentence structure is doing for the reader.",
+   "win": "You filled the last category with a win. You read the model like an editor.",
+   "lose": "The bot takes the category. Study the model text — every structure there was chosen for a reason.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Which figure of speech should be marked in this model text? If the school cancels the arts program, what will happen to the students who need it?",
+   "choices": [
+    "exclamation",
+    "hyperbole",
+    "litotes",
+    "rhetorical question"
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence asks a question whose answer is already implied, making it a rhetorical question.",
+   "difficulty": 2,
+   "skill": "Identifying rhetorical questions",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What repeated pattern joins these three sentences? We must test every claim. We must trace every source. We must defend every conclusion.",
+   "choices": [
+    "irony",
+    "sarcasm",
+    "anaphora",
+    "understatement"
+   ],
+   "answerIndex": 2,
+   "explanation": "The repeated opening phrase 'We must' at the beginning of each sentence creates anaphora.",
+   "difficulty": 3,
+   "skill": "Identifying anaphora",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device is created by the repeated ending word in this model text? They valued tradition, and they preserved tradition.",
+   "choices": [
+    "tricolon",
+    "epistrophe",
+    "apostrophe",
+    "oxymoron"
+   ],
+   "answerIndex": 1,
+   "explanation": "The word 'tradition' ends both clauses, creating the repeated ending called epistrophe.",
+   "difficulty": 3,
+   "skill": "Identifying epistrophe",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which structure is emphasized by the reversed order of the roles in this sentence? The coach praised the player, and the player praised the coach.",
+   "choices": [
+    "simile",
+    "metaphor",
+    "paradox",
+    "chiasmus"
+   ],
+   "answerIndex": 3,
+   "explanation": "The coach–player–player–coach arrangement reverses the phrase order to form chiasmus.",
+   "difficulty": 4,
+   "skill": "Identifying chiasmus",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which device best names the repeated use of and in this model text? We packed and checked and loaded and left and locked the door.",
+   "choices": [
+    "asyndeton",
+    "hyperbaton",
+    "polysyndeton",
+    "bathos"
+   ],
+   "answerIndex": 2,
+   "explanation": "The series of repeated conjunctions deliberately creates polysyndeton.",
+   "difficulty": 3,
+   "skill": "Identifying polysyndeton",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which pattern connects the end of the first clause with the start of the second? The teacher read the myth, and the myth changed the class.",
+   "choices": [
+    "epizeuxis",
+    "apposition",
+    "euphemism",
+    "anadiplosis"
+   ],
+   "answerIndex": 3,
+   "explanation": "The second clause begins with 'the myth,' the final phrase of the first clause, creating anadiplosis.",
+   "difficulty": 5,
+   "skill": "Identifying anadiplosis",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model text, what effect is created by the repeated b sound in bold, brave, and beyond?",
+   "choices": [
+    "alliteration",
+    "assonance",
+    "onomatopoeia",
+    "metaphor"
+   ],
+   "answerIndex": 0,
+   "explanation": "Alliteration is the repetition of the same initial consonant sound in closely connected words.",
+   "difficulty": 2,
+   "skill": "Identify alliteration in a model text",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The model text moves from choosing a pencil to writing a speech and finally changing a nation. Which rhetorical structure organizes this increasing importance?",
+   "choices": [
+    "climax",
+    "anticlimax",
+    "caesura",
+    "epizeuxis"
+   ],
+   "answerIndex": 0,
+   "explanation": "Climax arranges ideas or actions in an order that builds toward a progressively stronger effect.",
+   "difficulty": 3,
+   "skill": "Identify a climax in a model text",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical structure is created by the three matching imperative clauses in this model sentence: Eat well, sleep deeply, and study wisely?",
+   "choices": [
+    "parallelism",
+    "irony",
+    "synecdoche",
+    "apostrophe"
+   ],
+   "answerIndex": 0,
+   "explanation": "Parallelism gives several clauses the same grammatical form or structure for emphasis and clarity.",
+   "difficulty": 3,
+   "skill": "Identify parallelism in a model text",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which device best names the opposition created by daring and timid in this model sentence: The proposal sounded daring in theory but timid in practice?",
+   "choices": [
+    "antithesis",
+    "irony",
+    "paradox",
+    "tautology"
+   ],
+   "answerIndex": 0,
+   "explanation": "Antithesis places contrasting words or ideas in corresponding grammatical positions.",
+   "difficulty": 4,
+   "skill": "Identify antithesis in a model text",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which grammatical-rhetorical feature should be marked in this model sentence: He lost his keys and his temper?",
+   "choices": [
+    "zeugma",
+    "oxymoron",
+    "metonymy",
+    "understatement"
+   ],
+   "answerIndex": 0,
+   "explanation": "Zeugma occurs when one word links two others with different senses, as lost links keys with temper.",
+   "difficulty": 4,
+   "skill": "Identify zeugma in a model text",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What feature gives this model sentence its force: The audience listened, learned, and laughed?",
+   "choices": [
+    "tricolon",
+    "periphrasis",
+    "pleonasm",
+    "litotes"
+   ],
+   "answerIndex": 0,
+   "explanation": "A tricolon is a deliberate sequence of three similar words, phrases, or clauses.",
+   "difficulty": 5,
+   "skill": "Identify a tricolon in a model text",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model text At the ceremony, there was a deafening silence, which rhetorical device combines the two contradictory words?",
+   "choices": [
+    "paradox",
+    "synecdoche",
+    "oxymoron",
+    "metonymy"
+   ],
+   "answerIndex": 2,
+   "explanation": "The phrase deafening silence joins contradictory ideas, which is the defining feature of an oxymoron.",
+   "difficulty": 3,
+   "skill": "Identify an oxymoron",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device is used when a speaker directly addresses an absent or abstract thing, as in O liberty, protect the innocent?",
+   "choices": [
+    "irony",
+    "apostrophe",
+    "understatement",
+    "hyperbole"
+   ],
+   "answerIndex": 1,
+   "explanation": "The speaker directly addresses liberty, an abstract quality that cannot answer, so the model uses apostrophe.",
+   "difficulty": 3,
+   "skill": "Identify an apostrophe",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device is used in the model sentence The climb was not without difficulty?",
+   "choices": [
+    "litotes",
+    "euphony",
+    "onomatopoeia",
+    "sibilance"
+   ],
+   "answerIndex": 0,
+   "explanation": "By denying that the climb was without difficulty, the statement understates the difficulty through litotes.",
+   "difficulty": 4,
+   "skill": "Identify litotes",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What grammatical structure creates emphasis in the model sentence It was the witness who changed the jury's mind?",
+   "choices": [
+    "inversion",
+    "nominalization",
+    "participial phrase",
+    "cleft sentence"
+   ],
+   "answerIndex": 3,
+   "explanation": "The frame It was followed by who places the witness in the grammatical focus, making the sentence a cleft sentence.",
+   "difficulty": 3,
+   "skill": "Identify a cleft sentence",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which grammatical structure appears in the model sentence Her explanation persuaded us, it did?",
+   "choices": [
+    "left dislocation",
+    "anacoluthon",
+    "right dislocation",
+    "cataphora"
+   ],
+   "answerIndex": 2,
+   "explanation": "The resumptive pronoun it at the end refers back to the subject, creating a right dislocation.",
+   "difficulty": 5,
+   "skill": "Identify a right dislocation",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence is compound-complex?",
+   "choices": [
+    "The storm ended, and the sun appeared after midnight.",
+    "Although the trail was muddy, the hikers reached the summit, and they celebrated together.",
+    "Although the trail was muddy, the hikers reached the summit before noon.",
+    "The hikers reached the summit, celebrated together, and watched the sunset."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence contains a dependent Although clause and two independent clauses joined by and, so it is compound-complex.",
+   "difficulty": 2,
+   "skill": "Identify a compound-complex sentence",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which grammatical construction creates emphasis in this sentence: Beyond the hills lay a small farming village?",
+   "choices": [
+    "absolute construction",
+    "locative inversion",
+    "appositive construction",
+    "subject complement"
+   ],
+   "answerIndex": 1,
+   "explanation": "Locative inversion places the subject after an opening prepositional phrase, as in Beyond the hills lay a small farming village.",
+   "difficulty": 3,
+   "skill": "Identifying locative inversion",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence contains a subordinate clause that expresses the reason for the main action?",
+   "choices": [
+    "The road remained icy, and the storm had arrived before dawn.",
+    "The road remained icy after the storm had arrived before dawn.",
+    "The road remained icy because the storm had arrived before dawn.",
+    "The road remained icy while the storm had arrived before dawn."
+   ],
+   "answerIndex": 2,
+   "explanation": "The clause because the storm had arrived before dawn gives the reason the road remained icy.",
+   "difficulty": 2,
+   "skill": "Identifying adverbial clauses of reason",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What type of phrase is practicing every day in the sentence Her success depended on practicing every day?",
+   "choices": [
+    "gerund phrase",
+    "infinitive phrase",
+    "participial phrase",
+    "noun phrase"
+   ],
+   "answerIndex": 0,
+   "explanation": "Practicing every day is a gerund phrase because it functions as the object of the preposition on.",
+   "difficulty": 3,
+   "skill": "Identifying gerund phrases",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which punctuation mark is used correctly in this sentence: The final tasks were clear: submit the essay, cite the sources, and present the results?",
+   "choices": [
+    "a comma after the introductory words",
+    "a semicolon between the clauses",
+    "a period before the final list",
+    "a colon before the list"
+   ],
+   "answerIndex": 3,
+   "explanation": "A colon correctly introduces the list of three tasks that follows the complete introductory statement.",
+   "difficulty": 2,
+   "skill": "Recognizing colon use before a list",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What rhetorical effect is created by the sentence After the twelve-hour shift, the job felt like a brief stroll?",
+   "choices": [
+    "irony",
+    "hyperbole",
+    "understatement",
+    "paradox"
+   ],
+   "answerIndex": 2,
+   "explanation": "Calling a twelve-hour shift a brief stroll understates how tiring the work was.",
+   "difficulty": 3,
+   "skill": "Identifying understatement",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "Understatement downplays the actual situation.",
+      "url": "https://en.wikipedia.org/wiki/Understatement",
+      "quote": "Understatement is an expression of lesser strength than what the speaker or writer actually means or than what is normally expected.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Which rhetorical device is used in this model text: The printer was jammed, so the emergency forms printed beautifully?",
+   "choices": [
+    "verbal irony",
+    "hyperbole",
+    "personification",
+    "symbolism"
+   ],
+   "answerIndex": 0,
+   "explanation": "Calling the failed printing result beautiful creates verbal irony because the word contradicts the situation.",
+   "difficulty": 3,
+   "skill": "Identifying verbal irony",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sound device is used in this model text: The bees buzzed outside the window?",
+   "choices": [
+    "onomatopoeia",
+    "assonance",
+    "consonance",
+    "euphony"
+   ],
+   "answerIndex": 0,
+   "explanation": "The word buzzed imitates the sound made by bees, making it an example of onomatopoeia.",
+   "difficulty": 3,
+   "skill": "Identifying onomatopoeia",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence structure creates the abrupt interruption in this model text: We had planned the trip for months, but when the storm arrived—?",
+   "choices": [
+    "anacoluthon",
+    "periodic sentence",
+    "balanced sentence",
+    "complex sentence"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence begins with a complete setup and then breaks off at the dash, creating anacoluthon.",
+   "difficulty": 4,
+   "skill": "Identifying anacoluthon",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence structure organizes this model text: The bell rang; the students entered; the teacher wrote the date on the board?",
+   "choices": [
+    "parataxis",
+    "hypotaxis",
+    "asyndeton",
+    "parallelism"
+   ],
+   "answerIndex": 0,
+   "explanation": "The model text places independent clauses in sequence without subordination, which is parataxis.",
+   "difficulty": 4,
+   "skill": "Identifying parataxis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device is used in this model text: We must leave now, now, now?",
+   "choices": [
+    "epizeuxis",
+    "antanaclasis",
+    "periphrasis",
+    "aphorism"
+   ],
+   "answerIndex": 0,
+   "explanation": "The immediate repetition of now in the same position creates the rhetorical device epizeuxis.",
+   "difficulty": 4,
+   "skill": "Identifying epizeuxis",
+   "topic": "Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device appears in the model text: The old lighthouse kept watch over the stormy coast?",
+   "choices": [
+    "personification",
+    "allegory",
+    "catachresis",
+    "analogy"
+   ],
+   "answerIndex": 0,
+   "explanation": "The description gives the lighthouse the human activity of keeping watch, making it personification.",
+   "difficulty": 2,
+   "skill": "Identify personification",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device appears in the model text: The runner moved like a cheetah across the field?",
+   "choices": [
+    "simile",
+    "metaphor",
+    "epanalepsis",
+    "antanaclasis"
+   ],
+   "answerIndex": 0,
+   "explanation": "The word like directly compares two unlike things, making the sentence a simile.",
+   "difficulty": 2,
+   "skill": "Identify a simile",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device appears in the model text: I have told you a million times to clean your room?",
+   "choices": [
+    "hyperbole",
+    "bathos",
+    "euphemism",
+    "invective"
+   ],
+   "answerIndex": 0,
+   "explanation": "The impossible claim of telling someone a million times deliberately exaggerates for emphasis, creating hyperbole.",
+   "difficulty": 2,
+   "skill": "Identify hyperbole",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical device appears in the model text: The calendar asked for a day off because it had too many dates?",
+   "choices": [
+    "pun",
+    "paradox",
+    "irony",
+    "sarcasm"
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase too many dates plays on the word dates to create a pun.",
+   "difficulty": 3,
+   "skill": "Identify a pun",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rhetorical structure appears in the model text: The volunteers sorted donations, wrapped boxes, loaded trucks, delivered packages?",
+   "choices": [
+    "asyndetic coordination",
+    "hendiadys",
+    "syllepsis",
+    "homoeoteleuton"
+   ],
+   "answerIndex": 0,
+   "explanation": "The coordinated actions are listed without conjunctions, creating asyndetic coordination.",
+   "difficulty": 4,
+   "skill": "Identify asyndetic coordination",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Mia reread the draft to strengthen its ending, which structure should be marked?",
+   "choices": [
+    "an infinitive phrase expressing purpose",
+    "a gerund phrase expressing means",
+    "a participial phrase expressing result",
+    "a prepositional phrase expressing location"
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase to strengthen its ending begins with to and explains why Mia reread the draft, making it an infinitive phrase expressing purpose.",
+   "difficulty": 2,
+   "skill": "Identify an infinitive phrase of purpose",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Students who volunteer weekly will attend the workshop, which structure should be marked?",
+   "choices": [
+    "a restrictive relative clause",
+    "a nonrestrictive relative clause",
+    "a relative clause functioning as an adverbial",
+    "a nominal clause functioning as a subject"
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause who volunteer weekly restricts the noun Students to a particular group and is therefore a restrictive relative clause.",
+   "difficulty": 3,
+   "skill": "Identify a restrictive relative clause",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The evidence was so persuasive that the committee changed its decision, which structure should be marked?",
+   "choices": [
+    "a degree-result construction",
+    "a cause-and-effect conditional construction",
+    "an adversative concessive construction",
+    "a correlative comparative construction"
+   ],
+   "answerIndex": 0,
+   "explanation": "The structure so persuasive that presents the degree of the evidence and its result, making it a degree-result construction.",
+   "difficulty": 3,
+   "skill": "Identify a degree-result construction",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The coach, exhausted after the game, dismissed the team, what does the marked phrase exhausted after the game describe?",
+   "choices": [
+    "the coach through a participial phrase",
+    "the game through an appositive",
+    "the team through a relative clause",
+    "the dismissal through a noun phrase"
+   ],
+   "answerIndex": 0,
+   "explanation": "Exhausted after the game is a participial phrase that describes the coach and explains the coach's condition.",
+   "difficulty": 3,
+   "skill": "Identify a participial phrase and its modifier",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The judges announced that the final had been delayed, what function does the clause that the final had been delayed perform?",
+   "choices": [
+    "It serves as the direct object of announced.",
+    "It modifies the noun judges.",
+    "It modifies the noun final.",
+    "It serves as a relative clause modifying delay."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause that the final had been delayed gives the content of what the judges announced and functions as its direct object.",
+   "difficulty": 4,
+   "skill": "Identify a noun clause as a direct object",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence If I were the judge, I would hear both speakers, which construction should be marked?",
+   "choices": [
+    "a subjunctive conditional using were for an unreal situation",
+    "an indicative conditional using was for a likely situation",
+    "a past-counterfactual conditional using had for an earlier event",
+    "a mixed conditional pairing present and past results"
+   ],
+   "answerIndex": 0,
+   "explanation": "The form were in if I were the judge presents an unreal situation, so the sentence uses a subjunctive conditional.",
+   "difficulty": 5,
+   "skill": "Identify a subjunctive conditional",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Beyond the ridge, the village caught the first sunlight, what grammatical construction should be marked?",
+   "choices": [
+    "a fronted prepositional phrase",
+    "an object prepositional phrase",
+    "a predicative participial phrase",
+    "a restrictive relative clause"
+   ],
+   "answerIndex": 0,
+   "explanation": "The prepositional phrase Beyond the ridge comes before the subject and modifies the clause.",
+   "difficulty": 3,
+   "skill": "Identifying fronted phrases",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Neither the coach nor the players accepted the decision, what grammatical construction should be marked?",
+   "choices": [
+    "a correlative conjunction",
+    "a subordinating conjunction",
+    "a coordinating conjunction",
+    "a conjunctive adverb"
+   ],
+   "answerIndex": 0,
+   "explanation": "Neither and nor form a correlative conjunction pair that joins two subjects.",
+   "difficulty": 2,
+   "skill": "Identifying correlative conjunctions",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The judges named her captain, what grammatical function should be marked on the word captain?",
+   "choices": [
+    "an object complement",
+    "a direct object",
+    "a predicate nominative",
+    "an appositive"
+   ],
+   "answerIndex": 0,
+   "explanation": "The word captain is an object complement because it completes the verb named by specifying her assigned role.",
+   "difficulty": 3,
+   "skill": "Identifying object complements",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Only after the final bell did the students leave, what construction creates the emphasis?",
+   "choices": [
+    "subject-auxiliary inversion",
+    "locative inversion",
+    "a cleft sentence",
+    "a periodic sentence"
+   ],
+   "answerIndex": 0,
+   "explanation": "Subject-auxiliary inversion places did before the subject students to emphasize the restrictive phrase Only after the final bell.",
+   "difficulty": 4,
+   "skill": "Identifying inversion for emphasis",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model text, what grammatical construction should be marked in Her hands trembling, Maya raised the torch?",
+   "choices": [
+    "an absolute construction",
+    "a finite subordinate clause",
+    "a coordinated participial clause",
+    "a compound predicate"
+   ],
+   "answerIndex": 0,
+   "explanation": "The construction is absolute because its subject, Her hands, differs from the main-clause subject, Maya.",
+   "difficulty": 3,
+   "skill": "Identifying absolute constructions",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The team's final score was impressive, what grammatical function does impressive perform?",
+   "choices": [
+    "subject complement",
+    "direct object",
+    "object of a preposition",
+    "adverbial modifier"
+   ],
+   "answerIndex": 0,
+   "explanation": "Impressive is a subject complement because it completes the linking verb was by describing the team's final score.",
+   "difficulty": 3,
+   "skill": "Identifying subject complements",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The librarian handed Theo a library card, what grammatical function does Theo perform?",
+   "choices": [
+    "indirect object",
+    "subject",
+    "direct object",
+    "object of a preposition"
+   ],
+   "answerIndex": 0,
+   "explanation": "Theo is the indirect object because he receives the direct object, a library card.",
+   "difficulty": 2,
+   "skill": "Identifying indirect objects",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The city was busy, noisy, and crowded, which rhetorical device expands the idea of busyness with specific details?",
+   "choices": [
+    "amplification",
+    "syllogism",
+    "apodosis",
+    "periphrasis"
+   ],
+   "answerIndex": 0,
+   "explanation": "The device is amplification because the additional details noisy and crowded expand the general description busy.",
+   "difficulty": 4,
+   "skill": "Recognizing rhetorical amplification",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence The student studied with studious care, which rhetorical device repeats one root in different grammatical forms?",
+   "choices": [
+    "polyptoton",
+    "epanaphora",
+    "cataphora",
+    "synizesis"
+   ],
+   "answerIndex": 0,
+   "explanation": "Polyptoton is the repeated use of the root stud in the forms studied, studious, and study-related meanings within the sentence.",
+   "difficulty": 4,
+   "skill": "Identifying polyptoton",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the model sentence Some students prefer history, others geography, which construction omits the repeated verb prefer after others?",
+   "choices": [
+    "gapping",
+    "apodosis",
+    "hypophora",
+    "suspension"
+   ],
+   "answerIndex": 0,
+   "explanation": "Gapping omits a word repeated in the same grammatical position across coordinated clauses while preserving each clause's meaning.",
+   "difficulty": 5,
+   "skill": "Identifying gapping",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which construction compresses the action into a noun phrase in The team's rapid decision ended the argument?",
+   "choices": [
+    "a nominalization",
+    "a gerund phrase",
+    "an appositive",
+    "an infinitive phrase"
+   ],
+   "answerIndex": 0,
+   "explanation": "The team's rapid decision is a noun phrase formed from the team's deciding rapidly, so it is a nominalization.",
+   "difficulty": 3,
+   "skill": "Identify a nominalization",
+   "topic": "Notice It in a Model Text - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which rhetorical device appears in the model text: In her flaming courage, she challenged the school board?",
+   "choices": [
+    "transferred epithet",
+    "tautology",
+    "pleonasm",
+    "inversion"
+   ],
+   "answerIndex": 0,
+   "explanation": "The word flaming is transferred from a person to her abstract courage, creating a transferred epithet.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the model sentence A cactus, a desert plant, stores water in thick stems, what grammatical construction should be marked?",
+   "choices": [
+    "an appositive",
+    "a participial phrase",
+    "a prepositional phrase",
+    "a restrictive relative clause"
+   ],
+   "answerIndex": 0,
+   "explanation": "The appositive a desert plant directly renames the noun cactus.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the model sentence There were three reasons for the delay, what grammatical construction should be marked?",
+   "choices": [
+    "an existential there construction",
+    "a locative inversion",
+    "a cleft sentence",
+    "a right dislocation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The construction uses there as a placeholder to introduce the subject three reasons for the delay.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which figure of speech appears in the sentence The crown rejected the proposal immediately?",
+   "choices": [
+    "metonymy",
+    "synecdoche",
+    "personification",
+    "onomatopoeia"
+   ],
+   "answerIndex": 0,
+   "explanation": "The crown stands for the monarch or ruling authority, making the expression an example of metonymy.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which rhetorical device is used in this model text: The pen is mightier than the sword?",
+   "choices": [
+    "irony",
+    "synecdoche",
+    "hyperbole",
+    "personification"
+   ],
+   "answerIndex": 1,
+   "explanation": "The phrase uses the part for the whole, with pen standing for writing and sword standing for armed force.",
+   "reason": "B: picked 2 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "What rhetorical effect is created by placing the dependent clause first in When the final bell rang, the crowd began to chant the team's name?",
+   "choices": [
+    "It delays the main action and builds anticipation.",
+    "It makes the two clauses grammatically parallel.",
+    "It turns the main clause into a dependent clause.",
+    "It removes the temporal relationship between the clauses."
+   ],
+   "answerIndex": 0,
+   "explanation": "Placing the dependent clause first postpones the main action and creates anticipation before the crowd's response is revealed.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence contains a concessive dependent clause that creates a contrast?",
+   "choices": [
+    "Although the trail was steep, the hikers reached the summit.",
+    "Because the trail was steep, the hikers reached the summit.",
+    "If the trail was steep, the hikers reached the summit.",
+    "When the trail was steep, the hikers reached the summit."
+   ],
+   "answerIndex": 0,
+   "explanation": "Although introduces a concessive dependent clause that contrasts the trail's steepness with the hikers' success.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

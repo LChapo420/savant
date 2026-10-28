@@ -1,0 +1,2951 @@
+{
+ "row_id": 53,
+ "engine_id": "tug-of-war",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 76,
+ "generated_at": "2026-10-25T02:57:55.333Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 63,
+  "code_rejected": 3,
+  "sent_to_judges": 60,
+  "kept": 50,
+  "keep_rate_of_written": 0.794,
+  "judges": {
+   "both_answered": 60,
+   "picked_same_option": 56,
+   "a_picked_key": 57,
+   "b_picked_key": 57,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "tug-of-war",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 76,
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "title": "Pause Power: Ellipses, Dashes, and Commas",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q27",
+    "prompt": "In the sentence \"The orchestra tuned—violins sang a high note—and the conductor raised the baton,\" why are dashes used?",
+    "choices": [
+     "They replace commas that would be grammatically incorrect.",
+     "They indicate a sudden change in speaker.",
+     "They set off an interrupting clause that adds detail about the violins.",
+     "They mark the beginning and end of a quotation."
+    ],
+    "answerIndex": 2,
+    "explanation": "The dashes enclose an interrupting clause that provides additional information about the violins.",
+    "difficulty": 5,
+    "skill": "Combining sentences with punctuation",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q46",
+    "prompt": "Combine three sentences into one with an ellipsis that shows a pause and leaves out the middle action: The trumpet sounded. The audience clapped. The musician bowed.",
+    "choices": [
+     "The trumpet sounded, the audience clapped, and the musician bowed.",
+     "The trumpet sounded... and the musician bowed.",
+     "The trumpet sounded; the audience clapped, and the musician bowed.",
+     "The trumpet sounded—the audience clapped—and the musician bowed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis creates a pause and indicates that the audience’s clapping has been omitted from the combined sentence.",
+    "difficulty": 6,
+    "skill": "Using an ellipsis for a pause and omission",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q6",
+    "prompt": "Combine: Jordan packed the sandwiches. Jordan counted the napkins. Jordan arranged everything on the table. Which sentence omits the repeated subject while preserving all three actions?",
+    "choices": [
+     "Jordan packed the sandwiches, counted the napkins, and they arranged everything on the table.",
+     "Jordan packed the sandwiches, counted the napkins, and arranged everything on the table.",
+     "Jordan packed the sandwiches counted the napkins, and arranged everything on the table.",
+     "Jordan packed the sandwiches, Jordan counted the napkins, and Jordan arranged everything on the table."
+    ],
+    "answerIndex": 1,
+    "explanation": "The subject Jordan is stated once and understood for the other two coordinated verbs.",
+    "difficulty": 4,
+    "skill": "Omitting a repeated subject",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q30",
+    "prompt": "Combine the three sentences into one, keeping the introductory phrase and omitting the repeated subject in the second and third actions: At the opening ceremony, the ushers arranged chairs. The ushers carried supplies. The ushers closed the windows.",
+    "choices": [
+     "At the opening ceremony, the ushers arranged chairs, and the volunteers carried supplies and closed the windows.",
+     "At the opening ceremony, the ushers arranged chairs, carried supplies, and closed the windows.",
+     "At the opening ceremony, the ushers arranged chairs, carried supplies, and the volunteers closed the windows.",
+     "At the opening ceremony, the ushers was arranging chairs, carrying supplies, and closing the windows."
+    ],
+    "answerIndex": 1,
+    "explanation": "The introductory phrase is followed by one subject, which can govern all three coordinated verbs without repetition.",
+    "difficulty": 5,
+    "skill": "Combining an introductory phrase with omitted subjects",
+    "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q3",
+    "prompt": "Combine After the game, we cooled down. We stretched. We left the gym. Which sentence correctly combines the ideas while omitting the repeated subject?",
+    "choices": [
+     "After the game, we cooled down, stretched, and we left the gym.",
+     "After the game, we cooled down, we stretched, and left the gym.",
+     "After the game, we cooled down, stretched, and left the gym.",
+     "After the game, cooled down, stretched, and left the gym."
+    ],
+    "answerIndex": 2,
+    "explanation": "The repeated subject is omitted from the second and third actions, while the introductory clause is properly followed by a comma.",
+    "difficulty": 5,
+    "skill": "Omitting repeated subjects in a list",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q50",
+    "prompt": "Combine the three sentences into one, keeping the introductory clause and omitting the repeated subject in the second and third actions: After the meeting ended, the manager reviewed the notes. The manager sent the summary. The manager scheduled the follow‑up.",
+    "choices": [
+     "After the meeting ended; the manager reviewed the notes; sent the summary; and scheduled the follow‑up.",
+     "After the meeting ended, the manager reviewed the notes, sent the summary, and scheduled the follow‑up.",
+     "After the meeting ended—the manager reviewed the notes—sent the summary—and scheduled the follow‑up.",
+     "After the meeting ended... the manager reviewed the notes... sent the summary... and scheduled the follow‑up."
+    ],
+    "answerIndex": 1,
+    "explanation": "The introductory clause is followed by a comma, and the three verb phrases share the subject, so commas separate them.",
+    "difficulty": 6,
+    "skill": "Combining sentences with ellipses, dashes, and commas",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which sentence uses an ellipsis to show that the speaker did not finish the thought?",
+    "choices": [
+     "The speaker began to thank the volunteers...",
+     "The speaker began to thank the volunteers,",
+     "The speaker began to thank the volunteers.",
+     "The speaker began to thank the volunteers;"
+    ],
+    "answerIndex": 0,
+    "explanation": "The three-dot ellipsis indicates that the speaker trails off before completing the thought.",
+    "difficulty": 4,
+    "skill": "Using an ellipsis for an unfinished thought",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q2",
+    "prompt": "Combine The storm ended. The streetlights flickered on. People came outside. Which sentence correctly combines all three ideas?",
+    "choices": [
+     "The storm ended, the streetlights flickered on; people came outside.",
+     "The storm ended; the streetlights flickered on, and people came outside.",
+     "The storm ended: the streetlights flickered on, people came outside.",
+     "The storm ended; the streetlights flickered on people came outside."
+    ],
+    "answerIndex": 1,
+    "explanation": "The semicolon joins two independent clauses, and the comma plus and coordinates the two actions in the second clause.",
+    "difficulty": 5,
+    "skill": "Joining independent clauses with semicolons",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q40",
+    "prompt": "Combine the three sentences using a pair of dashes to set off the middle action. The crew launched the probe. Sensors began blinking. Mission control went quiet.",
+    "choices": [
+     "The crew launched the probe... sensors began blinking, and mission control went quiet.",
+     "The crew launched the probe; sensors began blinking, and mission control went quiet.",
+     "The crew launched the probe, sensors began blinking, and mission control went quiet.",
+     "The crew launched the probe—sensors began blinking—and mission control went quiet."
+    ],
+    "answerIndex": 3,
+    "explanation": "The dashes set off the middle action as an interruption while the first and third actions remain linked.",
+    "difficulty": 5,
+    "skill": "Using dashes to interrupt a sequence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q28",
+    "prompt": "Combine the three sentences into one with commas, omitting the repeated subject while keeping the original verb tenses: Mateo polished the trumpet. Mateo packed the music. Mateo checked the stage lights.",
+    "choices": [
+     "Mateo was polishing the trumpet, packing the music, and checking the stage lights.",
+     "Mateo polished the trumpet; he packed the music, and he checked the stage lights.",
+     "Mateo polished the trumpet, he packed the music, and he checked the stage lights.",
+     "Mateo polished the trumpet, packed the music, and checked the stage lights."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence preserves the three original actions, omits the repeated subject, and joins the verbs in a correctly punctuated series.",
+    "difficulty": 4,
+    "skill": "Combining sentences with commas and an omitted subject",
+    "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q21",
+    "prompt": "Combine the three sentences using dashes to set off the middle clause as an interruption: The train arrived. Passengers rushed aboard. The whistle blew.",
+    "choices": [
+     "The train arrived—passengers rushed aboard—and the whistle blew.",
+     "The train arrived, passengers rushed aboard, and the whistle blew.",
+     "The train arrived... passengers rushed aboard... the whistle blew.",
+     "The train arrived; passengers rushed aboard; the whistle blew."
+    ],
+    "answerIndex": 0,
+    "explanation": "Dashes correctly enclose the interrupting clause “passengers rushed aboard” while preserving the three main actions.",
+    "difficulty": 5,
+    "skill": "Combine sentences with punctuation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q9",
+    "prompt": "Combine: The loud signal sounded at the starting platform. Three swimmers dove. They splashed. They surfaced. Which sentence correctly combines the ideas with an introductory comma and a three-item list?",
+    "choices": [
+     "After the loud signal sounded at the starting platform, three swimmers dove, splashed, and surfaced.",
+     "After the loud signal sounded at the starting platform, three swimmers dove splashed, and surfaced.",
+     "After the loud signal sounded at the starting platform three swimmers dove, splashed, and surfaced.",
+     "After the loud signal sounded at the starting platform; three swimmers dove, splashed, and surfaced."
+    ],
+    "answerIndex": 0,
+    "explanation": "The comma closes the introductory clause, and the other two commas separate the three parallel actions.",
+    "difficulty": 6,
+    "skill": "Using an introductory comma and a parallel list",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q44",
+    "prompt": "Which sentence correctly uses a pair of dashes to set off information in the middle of the sentence? The committee wrote the proposal. The proposal was approved.",
+    "choices": [
+     "The proposal; written by the committee; was approved.",
+     "The proposal... written by the committee... was approved.",
+     "The proposal, written by the committee—was approved.",
+     "The proposal—written by the committee—was approved."
+    ],
+    "answerIndex": 3,
+    "explanation": "The pair of dashes properly surrounds the interrupting phrase written by the committee.",
+    "difficulty": 5,
+    "skill": "Setting off interruptions with paired dashes",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which sentence uses an ellipsis to show that a speaker trails off before completing a thought?",
+    "choices": [
+     "I was going to ask about the results, and the meeting began.",
+     "I was going to ask about the results; the meeting began.",
+     "I was going to ask about the results, but...",
+     "I was going to ask about the results—the meeting began."
+    ],
+    "answerIndex": 2,
+    "explanation": "The ellipsis after but shows that the speaker leaves the thought unfinished.",
+    "difficulty": 4,
+    "skill": "Recognizing an unfinished thought with an ellipsis",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q22",
+    "prompt": "In the sentence “The artist painted—bright colors filled the canvas—and the crowd applauded,” why are dashes used?",
+    "choices": [
+     "They separate three independent clauses in a series.",
+     "They set off an interrupting clause that adds detail about the painting.",
+     "They indicate that the speaker trailed off before finishing.",
+     "They replace a missing subject before the final clause."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dashes enclose the interrupting clause “bright colors filled the canvas” to add vivid detail.",
+    "difficulty": 5,
+    "skill": "Combine sentences with punctuation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which sentence correctly combines the three ideas using a semicolon after the first clause and a comma before and? The gallery opened. The visitors entered. The guide began speaking.",
+    "choices": [
+     "The gallery opened; the visitors entered, and the guide began speaking.",
+     "The gallery opened, the visitors entered; and the guide began speaking.",
+     "The gallery opened; the visitors entered and; the guide began speaking.",
+     "The gallery opened; the visitors entered; and the guide began speaking."
+    ],
+    "answerIndex": 0,
+    "explanation": "The semicolon separates the first independent clause, and the comma before and joins the two remaining independent clauses.",
+    "difficulty": 6,
+    "skill": "Combining independent clauses with semicolons and commas",
+    "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q23",
+    "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas, keeping the introductory clause: After the rain stopped, the children ran outside. They splashed in puddles. They laughed.",
+    "choices": [
+     "After the rain stopped... the children ran outside, splashed in puddles, and laughed.",
+     "After the rain stopped—the children ran outside—splashed in puddles, and laughed.",
+     "After the rain stopped, the children ran outside, splashed in puddles, and laughed.",
+     "After the rain stopped; the children ran outside, splashed in puddles, and laughed."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence retains the introductory clause and uses commas to join the three verb phrases with the single subject “the children.”",
+    "difficulty": 5,
+    "skill": "Combine sentences with punctuation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q1",
+    "prompt": "Combine Maya opened the door. She saw the mess. She laughed. Which sentence uses Maya as the subject of all three actions without repeating or replacing it?",
+    "choices": [
+     "Maya opened the door, saw the mess, and laughed.",
+     "Maya opened the door, she saw the mess, and laughed.",
+     "Maya opened the door; she saw the mess, and she laughed.",
+     "Maya opened the door; saw the mess, and laughed."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence names Maya once and makes her the shared subject of the three coordinated actions.",
+    "difficulty": 5,
+    "skill": "Combining sentences by sharing a subject",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q39",
+    "prompt": "Combine the three sentences into one by keeping the introductory clause and omitting the repeated subject. Before practice, the team checked the equipment. The team tightened its laces. The team warmed up.",
+    "choices": [
+     "Before practice, the team checked the equipment, the team tightened its laces, and warmed up.",
+     "Before practice the team checked the equipment, tightened its laces, and warmed up.",
+     "Before practice, the team checked the equipment, tightened its laces, and warmed up.",
+     "Before practice, the team checked the equipment tightened its laces, and warmed up."
+    ],
+    "answerIndex": 2,
+    "explanation": "The introductory dependent clause is followed by a comma, and the repeated subject is omitted before the second and third verbs.",
+    "difficulty": 4,
+    "skill": "Combining clauses with commas and omitted subjects",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q45",
+    "prompt": "Combine three sentences into one by keeping the introductory clause, omitting the repeated subject, and placing a comma before the final verb in the series: Before the storm, the workers secured the windows. The workers moved the supplies. The workers left the building.",
+    "choices": [
+     "Before the storm, the workers secured the windows, moved the supplies, and left the building.",
+     "Before the storm, the workers secured the windows, moved the supplies, and the workers left the building.",
+     "Before the storm, the workers secured the windows, moved the supplies and left the building.",
+     "Before the storm, the workers secured the windows; moved the supplies, and left the building."
+    ],
+    "answerIndex": 0,
+    "explanation": "This version keeps the introductory clause, omits the repeated subject, and uses a comma to separate the three coordinated actions.",
+    "difficulty": 6,
+    "skill": "Omitting subjects in a coordinated series",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q15",
+    "prompt": "In the sentence The swimmer dove, surfaced, and kicked toward the shore, which words are omitted from the full version of the thought?",
+    "choices": [
+     "The object is omitted before dove and surfaced.",
+     "The verbs are omitted before surfaced and kicked.",
+     "The subject is omitted before surfaced and kicked.",
+     "The conjunction is omitted before kicked."
+    ],
+    "answerIndex": 2,
+    "explanation": "The repeated subject the swimmer is understood before surfaced and kicked, so only the first clause states it.",
+    "difficulty": 5,
+    "skill": "Identifying omitted words",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q25",
+    "prompt": "Combine the three sentences using dashes to set off the middle clause as an interruption: The thunder rolled. The lights flickered. The children screamed.",
+    "choices": [
+     "The thunder rolled—the lights flickered—and the children screamed.",
+     "The thunder rolled, the lights flickered, and the children screamed.",
+     "The thunder rolled; the lights flickered; and the children screamed.",
+     "The thunder rolled... the lights flickered... and the children screamed."
+    ],
+    "answerIndex": 0,
+    "explanation": "Dashes around the middle clause mark it as an interrupting element within the sentence.",
+    "difficulty": 5,
+    "skill": "Combining sentences with punctuation",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q48",
+    "prompt": "Combine the three sentences using a pair of dashes to set off the middle clause as an interruption: The sun set. Shadows lengthened. The fireflies appeared.",
+    "choices": [
+     "The sun set... shadows lengthened... and the fireflies appeared.",
+     "The sun set, shadows lengthened, and the fireflies appeared.",
+     "The sun set; shadows lengthened; and the fireflies appeared.",
+     "The sun set—shadows lengthened—and the fireflies appeared."
+    ],
+    "answerIndex": 3,
+    "explanation": "Dashes enclose the interrupting middle clause while preserving the flow of the sentence.",
+    "difficulty": 6,
+    "skill": "Combining sentences with ellipses, dashes, and commas",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q16",
+    "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The cat watched the bird. It twitched its tail. It pounced.",
+    "choices": [
+     "The cat watched the bird, it twitched its tail, and it pounced.",
+     "The cat watched the bird; it twitched its tail, and it pounced.",
+     "The cat watched the bird—twitched its tail—and pounced.",
+     "The cat watched the bird, twitched its tail, and pounced."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence omits the repeated subject \"it\" before the second and third verbs, joining the actions with commas in a series.",
+    "difficulty": 4,
+    "skill": "Combine sentences by omitting repeated subjects with commas",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q33",
+    "prompt": "Combine three sentences into one by omitting the repeated subject: The mechanic inspected the brakes. The mechanic replaced the pad. The mechanic tested the engine.",
+    "choices": [
+     "The mechanic inspected the brakes, replaced the pad, and tested the engine.",
+     "The mechanic inspected the brakes; replaced the pad, and tested the engine.",
+     "The mechanic inspected the brakes, replaced the pad; and tested the engine.",
+     "The mechanic inspected the brakes replaced the pad and tested the engine."
+    ],
+    "answerIndex": 0,
+    "explanation": "The repeated subject appears only once, and parallel verbs joined by commas show three actions by the same person.",
+    "difficulty": 5,
+    "skill": "Omitting a repeated subject with parallel verbs",
+    "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q41",
+    "prompt": "In the sentence Tomas read the note... and passed it along, what does the ellipsis do?",
+    "choices": [
+     "It shows a pause while the middle action is left unstated.",
+     "It sets off an introductory dependent clause from the main clause.",
+     "It marks the end of a directly quoted question.",
+     "It separates coordinate verbs joined by the word and."
+    ],
+    "answerIndex": 0,
+    "explanation": "The ellipsis marks a pause and leaves the middle action unstated between reading the note and passing it along.",
+    "difficulty": 5,
+    "skill": "Using an ellipsis for pauses and omissions",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q11",
+    "prompt": "Combine three sentences: Priya checked the map. She adjusted her backpack. She continued hiking. Which sentence correctly combines all three ideas while omitting the repeated subject?",
+    "choices": [
+     "Priya checked the map, she adjusted her backpack, and continued hiking.",
+     "Priya checked the map; she adjusted her backpack, and she continued hiking.",
+     "Priya checked the map, adjusted her backpack, and continued hiking.",
+     "Priya checked the map and adjusted her backpack; she continued hiking."
+    ],
+    "answerIndex": 2,
+    "explanation": "The shared subject Priya appears once and governs the three coordinated verbs checked, adjusted, and continued.",
+    "difficulty": 4,
+    "skill": "Combining sentences with subject omission",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q10",
+    "prompt": "In the sentence The musicians tuned, the lights dimmed, and the audience quieted, why does a comma appear before and?",
+    "choices": [
+     "It joins the first and second clauses with a coordinating conjunction.",
+     "It separates the third coordinate clause from the second in a series of three independent clauses.",
+     "It introduces a parenthetical phrase that identifies the audience.",
+     "It shows that the final clause is an example of the first action."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma before and marks the boundary between the second and third clauses in a series of three independent clauses.",
+    "difficulty": 6,
+    "skill": "Explaining commas in a series of independent clauses",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q47",
+    "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The baker kneaded the dough. The baker let it rise. The baker shaped the loaves.",
+    "choices": [
+     "The baker kneaded the dough—let it rise—and shaped the loaves.",
+     "The baker kneaded the dough; let it rise; and shaped the loaves.",
+     "The baker kneaded the dough, let it rise, and shaped the loaves.",
+     "The baker kneaded the dough... let it rise... and shaped the loaves."
+    ],
+    "answerIndex": 2,
+    "explanation": "The commas separate the three coordinate verb phrases that share the same subject.",
+    "difficulty": 5,
+    "skill": "Combining sentences with ellipses, dashes, and commas",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which sentence uses an ellipsis to show that the speaker trails off before completing the thought?",
+    "choices": [
+     "I wanted to explain; the words wouldn’t come.",
+     "I wanted to explain—yet the words wouldn’t come.",
+     "I wanted to explain, but the words wouldn’t come.",
+     "I wanted to explain... but the words wouldn’t come."
+    ],
+    "answerIndex": 3,
+    "explanation": "The ellipsis signals that the speaker’s thought trails off before the clause “but the words wouldn’t come.”",
+    "difficulty": 5,
+    "skill": "Combine sentences with punctuation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q19",
+    "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The driver started the car. The driver shifted gears. The driver accelerated.",
+    "choices": [
+     "The driver started the car—shifted gears—and accelerated.",
+     "The driver started the car; shifted gears; and accelerated.",
+     "The driver started the car, shifted gears, and accelerated.",
+     "The driver started the car, the driver shifted gears, and the driver accelerated."
+    ],
+    "answerIndex": 2,
+    "explanation": "The repeated subject \"the driver\" is omitted before the second and third verbs, joined by commas and \"and\".",
+    "difficulty": 4,
+    "skill": "Combine sentences by omitting repeated subjects with commas",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q35",
+    "prompt": "Combine the three sentences into one using a pair of dashes around the middle action: The rocket lifted off. The tower shook. The crowd cheered.",
+    "choices": [
+     "The rocket lifted off, the tower shook; and the crowd cheered.",
+     "The rocket lifted off—the tower shook, and the crowd cheered.",
+     "The rocket lifted off—the tower shook—and the crowd cheered.",
+     "The rocket lifted off, the tower shook—and the crowd cheered."
+    ],
+    "answerIndex": 2,
+    "explanation": "A matching pair of dashes sets the tower's shaking off as an interruption between the other two actions.",
+    "difficulty": 6,
+    "skill": "Setting off a middle action with paired dashes",
+    "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q36",
+    "prompt": "In the sentence Before the doors opened, the ushers checked every row, what is the comma's function?",
+    "choices": [
+     "It separates two independent clauses joined by a coordinating conjunction.",
+     "It separates the subject from the predicate in the main clause.",
+     "It marks the end of an interrupting parenthetical clause.",
+     "It separates an introductory dependent clause from the main clause."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma separates the dependent introductory clause Before the doors opened from the main clause.",
+    "difficulty": 5,
+    "skill": "Using a comma after an introductory dependent clause",
+    "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q18",
+    "prompt": "In the sentence \"The hikers paused—rain began to fall—and sought shelter,\" why are dashes used?",
+    "choices": [
+     "To separate items in a list.",
+     "To set off an interrupting clause that adds detail.",
+     "To indicate a trailing thought.",
+     "To replace commas in a series."
+    ],
+    "answerIndex": 1,
+    "explanation": "Dashes enclose the interrupting clause \"rain began to fall\" providing additional information.",
+    "difficulty": 5,
+    "skill": "Explain the function of dashes in a sentence",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q29",
+    "prompt": "Combine the three sentences into one using a pair of dashes around the middle action as an interruption: The engine hummed. The robot paused. The lights turned green.",
+    "choices": [
+     "The engine hummed—the robot paused—and the lights turned green.",
+     "The engine hummed; the robot paused, and the lights turned green.",
+     "The engine hummed, the robot paused, and the lights turned green.",
+     "The engine hummed—the robot paused, and the lights turned green."
+    ],
+    "answerIndex": 0,
+    "explanation": "A pair of dashes encloses the robot's pause as an interruption between the engine's humming and the lights turning green.",
+    "difficulty": 4,
+    "skill": "Setting off a middle action with paired dashes",
+    "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q20",
+    "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The librarian whispered. She turned the page. She smiled.",
+    "choices": [
+     "The librarian whispered; turned the page, and smiled.",
+     "The librarian whispered—turned the page—and smiled.",
+     "The librarian whispered... turned the page, and smiled.",
+     "The librarian whispered, turned the page, and smiled."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct sentence uses commas to join the three verb phrases while keeping the single subject “The librarian.”",
+    "difficulty": 5,
+    "skill": "Combine sentences with punctuation",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q14",
+    "prompt": "In the sentence After the rehearsal—the instruments were still being packed—everyone left the auditorium, why are dashes used?",
+    "choices": [
+     "They introduce the main subject of the sentence.",
+     "They set off an interruption giving information about the instruments.",
+     "They separate a list of three instruments from their setting.",
+     "They mark the beginning of an omitted quotation."
+    ],
+    "answerIndex": 1,
+    "explanation": "The dashes set off the parenthetical interruption giving information about the instruments.",
+    "difficulty": 6,
+    "skill": "Identifying the function of dashes",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q8",
+    "prompt": "Combine: The runner reached the track. She took a deep breath. She started moving. Which sentence uses dashes to set off the middle action while keeping the event order?",
+    "choices": [
+     "The runner reached the track, she took a deep breath, and started moving.",
+     "The runner reached the track, and she took a deep breath before she started moving.",
+     "The runner reached the track; she took a deep breath, and started moving.",
+     "The runner reached the track—she took a deep breath—and started moving."
+    ],
+    "answerIndex": 3,
+    "explanation": "The paired dashes set off the middle action as an interruption while preserving the sequence of events.",
+    "difficulty": 5,
+    "skill": "Using dashes for an interruption",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q42",
+    "prompt": "In the sentence After the whistle, the athletes lined up along the track and waited for the race to begin, what is the function of the comma after whistle?",
+    "choices": [
+     "It joins two independent clauses that have the same subject.",
+     "It separates an introductory adverbial phrase from the main clause.",
+     "It marks the omission of a repeated verb in the sentence.",
+     "It sets off an interrupting phrase in the middle of the sentence."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma separates the introductory phrase After the whistle from the main clause describing what the athletes did.",
+    "difficulty": 4,
+    "skill": "Separating introductory phrases with commas",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q49",
+    "prompt": "In the sentence \"He opened the door... and walked in,\" what does the ellipsis indicate?",
+    "choices": [
+     "It shows a pause while the middle action is left unstated.",
+     "It indicates the speaker is trailing off without completing the thought.",
+     "It replaces omitted words at the end of a quotation.",
+     "It adds emphasis to the following clause."
+    ],
+    "answerIndex": 0,
+    "explanation": "The ellipsis marks a pause and omits the action that would occur between opening the door and walking in.",
+    "difficulty": 5,
+    "skill": "Combining sentences with ellipses, dashes, and commas",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q13",
+    "prompt": "Combine three sentences: We tried again. We failed. We tried harder. Which sentence correctly combines all three ideas while omitting the repeated subject?",
+    "choices": [
+     "We tried again, failed, and tried harder.",
+     "We tried again, failed, and we tried harder.",
+     "We tried again and failed; we tried harder.",
+     "We tried again; we failed, and we tried harder."
+    ],
+    "answerIndex": 0,
+    "explanation": "The shared subject We is stated once before the coordinated predicates tried again, failed, and tried harder.",
+    "difficulty": 6,
+    "skill": "Omitting repeated subjects",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q17",
+    "prompt": "Combine the three sentences using dashes to set off the middle clause as an interruption: The fire crackled. Sparks rose into the night. The campers sang.",
+    "choices": [
+     "The fire crackled—sparks rose into the night—and the campers sang.",
+     "The fire crackled, sparks rose into the night, and the campers sang.",
+     "The fire crackled; sparks rose into the night; and the campers sang.",
+     "The fire crackled—sparks rose into the night, and the campers sang."
+    ],
+    "answerIndex": 0,
+    "explanation": "Dashes enclose the middle independent clause as an interruption while keeping a single sentence.",
+    "difficulty": 5,
+    "skill": "Use dashes to set off an interrupting clause",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q12",
+    "prompt": "Combine three sentences: The music started. The lights dimmed. The audience settled. Which sentence correctly uses dashes to interrupt the middle idea?",
+    "choices": [
+     "The music started; the lights dimmed, and the audience settled.",
+     "The music started—the lights dimmed, the audience settled.",
+     "The music started, the lights dimmed, and the audience settled.",
+     "The music started—the lights dimmed—and the audience settled."
+    ],
+    "answerIndex": 3,
+    "explanation": "The paired dashes isolate the middle idea, the lights dimmed, while retaining the surrounding sentence.",
+    "difficulty": 5,
+    "skill": "Using dashes for interruption",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q32",
+    "prompt": "Why is a comma used after returned in the sentence: After the power returned, the lights flickered, the computers rebooted, and the office grew quiet?",
+    "choices": [
+     "It closes an inserted parenthetical phrase before the main clause.",
+     "It separates three items in a list of parallel predicates.",
+     "It marks a contrast between two independent clauses.",
+     "It separates an introductory dependent clause from the main clause."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma marks the boundary between the introductory subordinate clause and the main clause.",
+    "difficulty": 6,
+    "skill": "Explaining the function of a comma after an introductory clause",
+    "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q4",
+    "prompt": "Combine When the test began, the room grew quiet. Students opened their pencils. Which sentence correctly combines the two ideas?",
+    "choices": [
+     "When the test began, the room grew quiet students opened their pencils.",
+     "When the test began the room grew quiet; students opened their pencils.",
+     "When the test began; the room grew quiet, students opened their pencils.",
+     "When the test began, the room grew quiet; students opened their pencils."
+    ],
+    "answerIndex": 3,
+    "explanation": "The comma follows the introductory dependent clause, and the semicolon joins two independent clauses.",
+    "difficulty": 4,
+    "skill": "Combining an introductory clause with a semicolon",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q38",
+    "prompt": "Which sentence uses an ellipsis to replace words that are intentionally omitted?",
+    "choices": [
+     "The recipe called for sugar, flour, and three more ingredients—",
+     "The recipe called for sugar, flour, and three more ingredients...",
+     "The recipe called for sugar, flour, and three more ingredients;",
+     "The recipe called for sugar, flour, and three more ingredients:"
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis marks the intentional omission of the names of the three additional ingredients.",
+    "difficulty": 5,
+    "skill": "Using an ellipsis to show omitted words",
+    "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q26",
+    "prompt": "Which sentence best uses an ellipsis to show the speaker’s pause and omission of the middle action? She opened the gift. She gasped. She smiled.",
+    "choices": [
+     "She opened the gift, gasped, and smiled.",
+     "She opened the gift... and smiled.",
+     "She opened the gift—gasped—and smiled.",
+     "She opened the gift; she gasped; she smiled."
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis replaces the middle action, indicating a pause and omission.",
+    "difficulty": 5,
+    "skill": "Combining sentences with punctuation",
+    "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which sentence correctly combines the three independent clauses, using a semicolon after the first clause and a comma before the final and? The parcel arrived. It was heavier than expected. We opened it carefully.",
+    "choices": [
+     "The parcel arrived, it was heavier than expected, and we opened it carefully.",
+     "The parcel arrived; it was heavier than expected and we opened it carefully.",
+     "The parcel arrived; it was heavier than expected, and we opened it carefully.",
+     "The parcel arrived; it was heavier than expected; and we opened it carefully."
+    ],
+    "answerIndex": 2,
+    "explanation": "The semicolon separates the first two independent clauses, while the comma before and joins the final two clauses correctly.",
+    "difficulty": 6,
+    "skill": "Punctuation between independent clauses",
+    "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which sentence uses an ellipsis to show that the speaker stops before completing a thought?",
+    "choices": [
+     "I thought we had enough supplies, but then—",
+     "I thought we had enough supplies, but then...",
+     "I thought we had enough supplies, but then;",
+     "I thought we had enough supplies, but then:"
+    ],
+    "answerIndex": 1,
+    "explanation": "The ellipsis indicates that the speaker leaves the thought unfinished.",
+    "difficulty": 4,
+    "skill": "Using an ellipsis for an unfinished thought",
+    "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions"
+   },
+   {
+    "id": "q31",
+    "prompt": "Combine the three sentences into one using a pair of dashes to set off the middle clause as an interruption: Talia waited backstage. Her name had been called twice. The announcer found her.",
+    "choices": [
+     "Talia waited backstage; her name had been called twice, and the announcer found her.",
+     "Talia waited backstage, her name had been called twice, and the announcer found her.",
+     "Talia waited backstage—her name had been called twice—and the announcer found her.",
+     "Talia waited backstage, and her name had been called twice; the announcer found her."
+    ],
+    "answerIndex": 2,
+    "explanation": "The paired dashes set off the fact about Talia's name as an interruption while retaining the surrounding actions.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a dash-set interruption",
+    "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions"
+   }
+  ],
+  "feedback": {
+   "correct": "undefined",
+   "incorrect": "undefined",
+   "win": "undefined",
+   "lose": "undefined",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Combine Maya opened the door. She saw the mess. She laughed. Which sentence uses Maya as the subject of all three actions without repeating or replacing it?",
+   "choices": [
+    "Maya opened the door; she saw the mess, and she laughed.",
+    "Maya opened the door, she saw the mess, and laughed.",
+    "Maya opened the door, saw the mess, and laughed.",
+    "Maya opened the door; saw the mess, and laughed."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence names Maya once and makes her the shared subject of the three coordinated actions.",
+   "difficulty": 5,
+   "skill": "Combining sentences by sharing a subject",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine The storm ended. The streetlights flickered on. People came outside. Which sentence correctly combines all three ideas?",
+   "choices": [
+    "The storm ended, the streetlights flickered on; people came outside.",
+    "The storm ended; the streetlights flickered on people came outside.",
+    "The storm ended: the streetlights flickered on, people came outside.",
+    "The storm ended; the streetlights flickered on, and people came outside."
+   ],
+   "answerIndex": 3,
+   "explanation": "The semicolon joins two independent clauses, and the comma plus and coordinates the two actions in the second clause.",
+   "difficulty": 5,
+   "skill": "Joining independent clauses with semicolons",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine After the game, we cooled down. We stretched. We left the gym. Which sentence correctly combines the ideas while omitting the repeated subject?",
+   "choices": [
+    "After the game, we cooled down, stretched, and we left the gym.",
+    "After the game, we cooled down, stretched, and left the gym.",
+    "After the game, we cooled down, we stretched, and left the gym.",
+    "After the game, cooled down, stretched, and left the gym."
+   ],
+   "answerIndex": 1,
+   "explanation": "The repeated subject is omitted from the second and third actions, while the introductory clause is properly followed by a comma.",
+   "difficulty": 5,
+   "skill": "Omitting repeated subjects in a list",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine When the test began, the room grew quiet. Students opened their pencils. Which sentence correctly combines the two ideas?",
+   "choices": [
+    "When the test began, the room grew quiet; students opened their pencils.",
+    "When the test began the room grew quiet; students opened their pencils.",
+    "When the test began; the room grew quiet, students opened their pencils.",
+    "When the test began, the room grew quiet students opened their pencils."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma follows the introductory dependent clause, and the semicolon joins two independent clauses.",
+   "difficulty": 4,
+   "skill": "Combining an introductory clause with a semicolon",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to show that the speaker did not finish the thought?",
+   "choices": [
+    "The speaker began to thank the volunteers.",
+    "The speaker began to thank the volunteers,",
+    "The speaker began to thank the volunteers...",
+    "The speaker began to thank the volunteers;"
+   ],
+   "answerIndex": 2,
+   "explanation": "The three-dot ellipsis indicates that the speaker trails off before completing the thought.",
+   "difficulty": 4,
+   "skill": "Using an ellipsis for an unfinished thought",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "Ellipses consist of three periods and indicate an unfinished or trailing thought.",
+      "url": "https://en.wikipedia.org/wiki/Japanese_punctuation",
+      "quote": "Ellipses ( リーダー rīdā (leaders), 点線 tensen (dotted line), or てんてん ten-ten (\"dot dot\") indicate an intentional omission or abbreviation, or a pause in speech, an unfinished thought or, at the end of a sentence, a trailing off into silence ( aposiopesis ).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Combine: Jordan packed the sandwiches. Jordan counted the napkins. Jordan arranged everything on the table. Which sentence omits the repeated subject while preserving all three actions?",
+   "choices": [
+    "Jordan packed the sandwiches, counted the napkins, and arranged everything on the table.",
+    "Jordan packed the sandwiches, counted the napkins, and they arranged everything on the table.",
+    "Jordan packed the sandwiches counted the napkins, and arranged everything on the table.",
+    "Jordan packed the sandwiches, Jordan counted the napkins, and Jordan arranged everything on the table."
+   ],
+   "answerIndex": 0,
+   "explanation": "The subject Jordan is stated once and understood for the other two coordinated verbs.",
+   "difficulty": 4,
+   "skill": "Omitting a repeated subject",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to show that a speaker trails off before completing a thought?",
+   "choices": [
+    "I was going to ask about the results, and the meeting began.",
+    "I was going to ask about the results; the meeting began.",
+    "I was going to ask about the results—the meeting began.",
+    "I was going to ask about the results, but..."
+   ],
+   "answerIndex": 3,
+   "explanation": "The ellipsis after but shows that the speaker leaves the thought unfinished.",
+   "difficulty": 4,
+   "skill": "Recognizing an unfinished thought with an ellipsis",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine: The runner reached the track. She took a deep breath. She started moving. Which sentence uses dashes to set off the middle action while keeping the event order?",
+   "choices": [
+    "The runner reached the track, she took a deep breath, and started moving.",
+    "The runner reached the track—she took a deep breath—and started moving.",
+    "The runner reached the track; she took a deep breath, and started moving.",
+    "The runner reached the track, and she took a deep breath before she started moving."
+   ],
+   "answerIndex": 1,
+   "explanation": "The paired dashes set off the middle action as an interruption while preserving the sequence of events.",
+   "difficulty": 5,
+   "skill": "Using dashes for an interruption",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine: The loud signal sounded at the starting platform. Three swimmers dove. They splashed. They surfaced. Which sentence correctly combines the ideas with an introductory comma and a three-item list?",
+   "choices": [
+    "After the loud signal sounded at the starting platform three swimmers dove, splashed, and surfaced.",
+    "After the loud signal sounded at the starting platform, three swimmers dove splashed, and surfaced.",
+    "After the loud signal sounded at the starting platform, three swimmers dove, splashed, and surfaced.",
+    "After the loud signal sounded at the starting platform; three swimmers dove, splashed, and surfaced."
+   ],
+   "answerIndex": 2,
+   "explanation": "The comma closes the introductory clause, and the other two commas separate the three parallel actions.",
+   "difficulty": 6,
+   "skill": "Using an introductory comma and a parallel list",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence The musicians tuned, the lights dimmed, and the audience quieted, why does a comma appear before and?",
+   "choices": [
+    "It separates the third coordinate clause from the second in a series of three independent clauses.",
+    "It joins the first and second clauses with a coordinating conjunction.",
+    "It introduces a parenthetical phrase that identifies the audience.",
+    "It shows that the final clause is an example of the first action."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma before and marks the boundary between the second and third clauses in a series of three independent clauses.",
+   "difficulty": 6,
+   "skill": "Explaining commas in a series of independent clauses",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine three sentences: Priya checked the map. She adjusted her backpack. She continued hiking. Which sentence correctly combines all three ideas while omitting the repeated subject?",
+   "choices": [
+    "Priya checked the map, adjusted her backpack, and continued hiking.",
+    "Priya checked the map; she adjusted her backpack, and she continued hiking.",
+    "Priya checked the map, she adjusted her backpack, and continued hiking.",
+    "Priya checked the map and adjusted her backpack; she continued hiking."
+   ],
+   "answerIndex": 0,
+   "explanation": "The shared subject Priya appears once and governs the three coordinated verbs checked, adjusted, and continued.",
+   "difficulty": 4,
+   "skill": "Combining sentences with subject omission",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine three sentences: The music started. The lights dimmed. The audience settled. Which sentence correctly uses dashes to interrupt the middle idea?",
+   "choices": [
+    "The music started; the lights dimmed, and the audience settled.",
+    "The music started—the lights dimmed—and the audience settled.",
+    "The music started, the lights dimmed, and the audience settled.",
+    "The music started—the lights dimmed, the audience settled."
+   ],
+   "answerIndex": 1,
+   "explanation": "The paired dashes isolate the middle idea, the lights dimmed, while retaining the surrounding sentence.",
+   "difficulty": 5,
+   "skill": "Using dashes for interruption",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine three sentences: We tried again. We failed. We tried harder. Which sentence correctly combines all three ideas while omitting the repeated subject?",
+   "choices": [
+    "We tried again; we failed, and we tried harder.",
+    "We tried again, failed, and we tried harder.",
+    "We tried again and failed; we tried harder.",
+    "We tried again, failed, and tried harder."
+   ],
+   "answerIndex": 3,
+   "explanation": "The shared subject We is stated once before the coordinated predicates tried again, failed, and tried harder.",
+   "difficulty": 6,
+   "skill": "Omitting repeated subjects",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence After the rehearsal—the instruments were still being packed—everyone left the auditorium, why are dashes used?",
+   "choices": [
+    "They introduce the main subject of the sentence.",
+    "They set off an interruption giving information about the instruments.",
+    "They separate a list of three instruments from their setting.",
+    "They mark the beginning of an omitted quotation."
+   ],
+   "answerIndex": 1,
+   "explanation": "The dashes set off the parenthetical interruption giving information about the instruments.",
+   "difficulty": 6,
+   "skill": "Identifying the function of dashes",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence The swimmer dove, surfaced, and kicked toward the shore, which words are omitted from the full version of the thought?",
+   "choices": [
+    "The subject is omitted before surfaced and kicked.",
+    "The verbs are omitted before surfaced and kicked.",
+    "The object is omitted before dove and surfaced.",
+    "The conjunction is omitted before kicked."
+   ],
+   "answerIndex": 0,
+   "explanation": "The repeated subject the swimmer is understood before surfaced and kicked, so only the first clause states it.",
+   "difficulty": 5,
+   "skill": "Identifying omitted words",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The cat watched the bird. It twitched its tail. It pounced.",
+   "choices": [
+    "The cat watched the bird, twitched its tail, and pounced.",
+    "The cat watched the bird; it twitched its tail, and it pounced.",
+    "The cat watched the bird—twitched its tail—and pounced.",
+    "The cat watched the bird, it twitched its tail, and it pounced."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence omits the repeated subject \"it\" before the second and third verbs, joining the actions with commas in a series.",
+   "difficulty": 4,
+   "skill": "Combine sentences by omitting repeated subjects with commas",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using dashes to set off the middle clause as an interruption: The fire crackled. Sparks rose into the night. The campers sang.",
+   "choices": [
+    "The fire crackled—sparks rose into the night—and the campers sang.",
+    "The fire crackled, sparks rose into the night, and the campers sang.",
+    "The fire crackled; sparks rose into the night; and the campers sang.",
+    "The fire crackled—sparks rose into the night, and the campers sang."
+   ],
+   "answerIndex": 0,
+   "explanation": "Dashes enclose the middle independent clause as an interruption while keeping a single sentence.",
+   "difficulty": 5,
+   "skill": "Use dashes to set off an interrupting clause",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The hikers paused—rain began to fall—and sought shelter,\" why are dashes used?",
+   "choices": [
+    "To separate items in a list.",
+    "To set off an interrupting clause that adds detail.",
+    "To indicate a trailing thought.",
+    "To replace commas in a series."
+   ],
+   "answerIndex": 1,
+   "explanation": "Dashes enclose the interrupting clause \"rain began to fall\" providing additional information.",
+   "difficulty": 5,
+   "skill": "Explain the function of dashes in a sentence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The driver started the car. The driver shifted gears. The driver accelerated.",
+   "choices": [
+    "The driver started the car, shifted gears, and accelerated.",
+    "The driver started the car; shifted gears; and accelerated.",
+    "The driver started the car—shifted gears—and accelerated.",
+    "The driver started the car, the driver shifted gears, and the driver accelerated."
+   ],
+   "answerIndex": 0,
+   "explanation": "The repeated subject \"the driver\" is omitted before the second and third verbs, joined by commas and \"and\".",
+   "difficulty": 4,
+   "skill": "Combine sentences by omitting repeated subjects with commas",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The librarian whispered. She turned the page. She smiled.",
+   "choices": [
+    "The librarian whispered, turned the page, and smiled.",
+    "The librarian whispered—turned the page—and smiled.",
+    "The librarian whispered... turned the page, and smiled.",
+    "The librarian whispered; turned the page, and smiled."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses commas to join the three verb phrases while keeping the single subject “The librarian.”",
+   "difficulty": 5,
+   "skill": "Combine sentences with punctuation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using dashes to set off the middle clause as an interruption: The train arrived. Passengers rushed aboard. The whistle blew.",
+   "choices": [
+    "The train arrived—passengers rushed aboard—and the whistle blew.",
+    "The train arrived, passengers rushed aboard, and the whistle blew.",
+    "The train arrived... passengers rushed aboard... the whistle blew.",
+    "The train arrived; passengers rushed aboard; the whistle blew."
+   ],
+   "answerIndex": 0,
+   "explanation": "Dashes correctly enclose the interrupting clause “passengers rushed aboard” while preserving the three main actions.",
+   "difficulty": 5,
+   "skill": "Combine sentences with punctuation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence “The artist painted—bright colors filled the canvas—and the crowd applauded,” why are dashes used?",
+   "choices": [
+    "They set off an interrupting clause that adds detail about the painting.",
+    "They separate three independent clauses in a series.",
+    "They indicate that the speaker trailed off before finishing.",
+    "They replace a missing subject before the final clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dashes enclose the interrupting clause “bright colors filled the canvas” to add vivid detail.",
+   "difficulty": 5,
+   "skill": "Combine sentences with punctuation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas, keeping the introductory clause: After the rain stopped, the children ran outside. They splashed in puddles. They laughed.",
+   "choices": [
+    "After the rain stopped, the children ran outside, splashed in puddles, and laughed.",
+    "After the rain stopped—the children ran outside—splashed in puddles, and laughed.",
+    "After the rain stopped... the children ran outside, splashed in puddles, and laughed.",
+    "After the rain stopped; the children ran outside, splashed in puddles, and laughed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence retains the introductory clause and uses commas to join the three verb phrases with the single subject “the children.”",
+   "difficulty": 5,
+   "skill": "Combine sentences with punctuation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to show that the speaker trails off before completing the thought?",
+   "choices": [
+    "I wanted to explain... but the words wouldn’t come.",
+    "I wanted to explain—yet the words wouldn’t come.",
+    "I wanted to explain, but the words wouldn’t come.",
+    "I wanted to explain; the words wouldn’t come."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis signals that the speaker’s thought trails off before the clause “but the words wouldn’t come.”",
+   "difficulty": 5,
+   "skill": "Combine sentences with punctuation",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using dashes to set off the middle clause as an interruption: The thunder rolled. The lights flickered. The children screamed.",
+   "choices": [
+    "The thunder rolled—the lights flickered—and the children screamed.",
+    "The thunder rolled, the lights flickered, and the children screamed.",
+    "The thunder rolled; the lights flickered; and the children screamed.",
+    "The thunder rolled... the lights flickered... and the children screamed."
+   ],
+   "answerIndex": 0,
+   "explanation": "Dashes around the middle clause mark it as an interrupting element within the sentence.",
+   "difficulty": 5,
+   "skill": "Combining sentences with punctuation",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence best uses an ellipsis to show the speaker’s pause and omission of the middle action? She opened the gift. She gasped. She smiled.",
+   "choices": [
+    "She opened the gift... and smiled.",
+    "She opened the gift, gasped, and smiled.",
+    "She opened the gift—gasped—and smiled.",
+    "She opened the gift; she gasped; she smiled."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis replaces the middle action, indicating a pause and omission.",
+   "difficulty": 5,
+   "skill": "Combining sentences with punctuation",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"The orchestra tuned—violins sang a high note—and the conductor raised the baton,\" why are dashes used?",
+   "choices": [
+    "They set off an interrupting clause that adds detail about the violins.",
+    "They indicate a sudden change in speaker.",
+    "They replace commas that would be grammatically incorrect.",
+    "They mark the beginning and end of a quotation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dashes enclose an interrupting clause that provides additional information about the violins.",
+   "difficulty": 5,
+   "skill": "Combining sentences with punctuation",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one with commas, omitting the repeated subject while keeping the original verb tenses: Mateo polished the trumpet. Mateo packed the music. Mateo checked the stage lights.",
+   "choices": [
+    "Mateo polished the trumpet, packed the music, and checked the stage lights.",
+    "Mateo polished the trumpet; he packed the music, and he checked the stage lights.",
+    "Mateo polished the trumpet, he packed the music, and he checked the stage lights.",
+    "Mateo was polishing the trumpet, packing the music, and checking the stage lights."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence preserves the three original actions, omits the repeated subject, and joins the verbs in a correctly punctuated series.",
+   "difficulty": 4,
+   "skill": "Combining sentences with commas and an omitted subject",
+   "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a pair of dashes around the middle action as an interruption: The engine hummed. The robot paused. The lights turned green.",
+   "choices": [
+    "The engine hummed, the robot paused, and the lights turned green.",
+    "The engine hummed; the robot paused, and the lights turned green.",
+    "The engine hummed—the robot paused—and the lights turned green.",
+    "The engine hummed—the robot paused, and the lights turned green."
+   ],
+   "answerIndex": 2,
+   "explanation": "A pair of dashes encloses the robot's pause as an interruption between the engine's humming and the lights turning green.",
+   "difficulty": 4,
+   "skill": "Setting off a middle action with paired dashes",
+   "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, keeping the introductory phrase and omitting the repeated subject in the second and third actions: At the opening ceremony, the ushers arranged chairs. The ushers carried supplies. The ushers closed the windows.",
+   "choices": [
+    "At the opening ceremony, the ushers arranged chairs, carried supplies, and closed the windows.",
+    "At the opening ceremony, the ushers arranged chairs, and the volunteers carried supplies and closed the windows.",
+    "At the opening ceremony, the ushers arranged chairs, carried supplies, and the volunteers closed the windows.",
+    "At the opening ceremony, the ushers was arranging chairs, carrying supplies, and closing the windows."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory phrase is followed by one subject, which can govern all three coordinated verbs without repetition.",
+   "difficulty": 5,
+   "skill": "Combining an introductory phrase with omitted subjects",
+   "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a pair of dashes to set off the middle clause as an interruption: Talia waited backstage. Her name had been called twice. The announcer found her.",
+   "choices": [
+    "Talia waited backstage—her name had been called twice—and the announcer found her.",
+    "Talia waited backstage, her name had been called twice, and the announcer found her.",
+    "Talia waited backstage; her name had been called twice, and the announcer found her.",
+    "Talia waited backstage, and her name had been called twice; the announcer found her."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired dashes set off the fact about Talia's name as an interruption while retaining the surrounding actions.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a dash-set interruption",
+   "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Why is a comma used after returned in the sentence: After the power returned, the lights flickered, the computers rebooted, and the office grew quiet?",
+   "choices": [
+    "It separates an introductory dependent clause from the main clause.",
+    "It separates three items in a list of parallel predicates.",
+    "It marks a contrast between two independent clauses.",
+    "It closes an inserted parenthetical phrase before the main clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma marks the boundary between the introductory subordinate clause and the main clause.",
+   "difficulty": 6,
+   "skill": "Explaining the function of a comma after an introductory clause",
+   "topic": "Activity 4: Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine three sentences into one by omitting the repeated subject: The mechanic inspected the brakes. The mechanic replaced the pad. The mechanic tested the engine.",
+   "choices": [
+    "The mechanic inspected the brakes, replaced the pad, and tested the engine.",
+    "The mechanic inspected the brakes; replaced the pad, and tested the engine.",
+    "The mechanic inspected the brakes, replaced the pad; and tested the engine.",
+    "The mechanic inspected the brakes replaced the pad and tested the engine."
+   ],
+   "answerIndex": 0,
+   "explanation": "The repeated subject appears only once, and parallel verbs joined by commas show three actions by the same person.",
+   "difficulty": 5,
+   "skill": "Omitting a repeated subject with parallel verbs",
+   "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to show that the speaker stops before completing a thought?",
+   "choices": [
+    "I thought we had enough supplies, but then...",
+    "I thought we had enough supplies, but then—",
+    "I thought we had enough supplies, but then;",
+    "I thought we had enough supplies, but then:"
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis indicates that the speaker leaves the thought unfinished.",
+   "difficulty": 4,
+   "skill": "Using an ellipsis for an unfinished thought",
+   "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one using a pair of dashes around the middle action: The rocket lifted off. The tower shook. The crowd cheered.",
+   "choices": [
+    "The rocket lifted off, the tower shook; and the crowd cheered.",
+    "The rocket lifted off—the tower shook, and the crowd cheered.",
+    "The rocket lifted off, the tower shook—and the crowd cheered.",
+    "The rocket lifted off—the tower shook—and the crowd cheered."
+   ],
+   "answerIndex": 3,
+   "explanation": "A matching pair of dashes sets the tower's shaking off as an interruption between the other two actions.",
+   "difficulty": 6,
+   "skill": "Setting off a middle action with paired dashes",
+   "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence Before the doors opened, the ushers checked every row, what is the comma's function?",
+   "choices": [
+    "It separates two independent clauses joined by a coordinating conjunction.",
+    "It separates an introductory dependent clause from the main clause.",
+    "It marks the end of an interrupting parenthetical clause.",
+    "It separates the subject from the predicate in the main clause."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma separates the dependent introductory clause Before the doors opened from the main clause.",
+   "difficulty": 5,
+   "skill": "Using a comma after an introductory dependent clause",
+   "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly combines the three ideas using a semicolon after the first clause and a comma before and? The gallery opened. The visitors entered. The guide began speaking.",
+   "choices": [
+    "The gallery opened; the visitors entered, and the guide began speaking.",
+    "The gallery opened, the visitors entered; and the guide began speaking.",
+    "The gallery opened; the visitors entered and; the guide began speaking.",
+    "The gallery opened; the visitors entered; and the guide began speaking."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon separates the first independent clause, and the comma before and joins the two remaining independent clauses.",
+   "difficulty": 6,
+   "skill": "Combining independent clauses with semicolons and commas",
+   "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence uses an ellipsis to replace words that are intentionally omitted?",
+   "choices": [
+    "The recipe called for sugar, flour, and three more ingredients—",
+    "The recipe called for sugar, flour, and three more ingredients;",
+    "The recipe called for sugar, flour, and three more ingredients...",
+    "The recipe called for sugar, flour, and three more ingredients:"
+   ],
+   "answerIndex": 2,
+   "explanation": "The ellipsis marks the intentional omission of the names of the three additional ingredients.",
+   "difficulty": 5,
+   "skill": "Using an ellipsis to show omitted words",
+   "topic": "Combine Three Sentences—Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one by keeping the introductory clause and omitting the repeated subject. Before practice, the team checked the equipment. The team tightened its laces. The team warmed up.",
+   "choices": [
+    "Before practice, the team checked the equipment, the team tightened its laces, and warmed up.",
+    "Before practice, the team checked the equipment, tightened its laces, and warmed up.",
+    "Before practice the team checked the equipment, tightened its laces, and warmed up.",
+    "Before practice, the team checked the equipment tightened its laces, and warmed up."
+   ],
+   "answerIndex": 1,
+   "explanation": "The introductory dependent clause is followed by a comma, and the repeated subject is omitted before the second and third verbs.",
+   "difficulty": 4,
+   "skill": "Combining clauses with commas and omitted subjects",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using a pair of dashes to set off the middle action. The crew launched the probe. Sensors began blinking. Mission control went quiet.",
+   "choices": [
+    "The crew launched the probe—sensors began blinking—and mission control went quiet.",
+    "The crew launched the probe; sensors began blinking, and mission control went quiet.",
+    "The crew launched the probe, sensors began blinking, and mission control went quiet.",
+    "The crew launched the probe... sensors began blinking, and mission control went quiet."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dashes set off the middle action as an interruption while the first and third actions remain linked.",
+   "difficulty": 5,
+   "skill": "Using dashes to interrupt a sequence",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence Tomas read the note... and passed it along, what does the ellipsis do?",
+   "choices": [
+    "It separates coordinate verbs joined by the word and.",
+    "It sets off an introductory dependent clause from the main clause.",
+    "It marks the end of a directly quoted question.",
+    "It shows a pause while the middle action is left unstated."
+   ],
+   "answerIndex": 3,
+   "explanation": "The ellipsis marks a pause and leaves the middle action unstated between reading the note and passing it along.",
+   "difficulty": 5,
+   "skill": "Using an ellipsis for pauses and omissions",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence After the whistle, the athletes lined up along the track and waited for the race to begin, what is the function of the comma after whistle?",
+   "choices": [
+    "It separates an introductory adverbial phrase from the main clause.",
+    "It joins two independent clauses that have the same subject.",
+    "It marks the omission of a repeated verb in the sentence.",
+    "It sets off an interrupting phrase in the middle of the sentence."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma separates the introductory phrase After the whistle from the main clause describing what the athletes did.",
+   "difficulty": 4,
+   "skill": "Separating introductory phrases with commas",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly combines the three independent clauses, using a semicolon after the first clause and a comma before the final and? The parcel arrived. It was heavier than expected. We opened it carefully.",
+   "choices": [
+    "The parcel arrived, it was heavier than expected, and we opened it carefully.",
+    "The parcel arrived; it was heavier than expected and we opened it carefully.",
+    "The parcel arrived; it was heavier than expected, and we opened it carefully.",
+    "The parcel arrived; it was heavier than expected; and we opened it carefully."
+   ],
+   "answerIndex": 2,
+   "explanation": "The semicolon separates the first two independent clauses, while the comma before and joins the final two clauses correctly.",
+   "difficulty": 6,
+   "skill": "Punctuation between independent clauses",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses a pair of dashes to set off information in the middle of the sentence? The committee wrote the proposal. The proposal was approved.",
+   "choices": [
+    "The proposal; written by the committee; was approved.",
+    "The proposal... written by the committee... was approved.",
+    "The proposal, written by the committee—was approved.",
+    "The proposal—written by the committee—was approved."
+   ],
+   "answerIndex": 3,
+   "explanation": "The pair of dashes properly surrounds the interrupting phrase written by the committee.",
+   "difficulty": 5,
+   "skill": "Setting off interruptions with paired dashes",
+   "topic": "Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine three sentences into one by keeping the introductory clause, omitting the repeated subject, and placing a comma before the final verb in the series: Before the storm, the workers secured the windows. The workers moved the supplies. The workers left the building.",
+   "choices": [
+    "Before the storm, the workers secured the windows, moved the supplies and left the building.",
+    "Before the storm, the workers secured the windows, moved the supplies, and the workers left the building.",
+    "Before the storm, the workers secured the windows, moved the supplies, and left the building.",
+    "Before the storm, the workers secured the windows; moved the supplies, and left the building."
+   ],
+   "answerIndex": 2,
+   "explanation": "This version keeps the introductory clause, omits the repeated subject, and uses a comma to separate the three coordinated actions.",
+   "difficulty": 6,
+   "skill": "Omitting subjects in a coordinated series",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine three sentences into one with an ellipsis that shows a pause and leaves out the middle action: The trumpet sounded. The audience clapped. The musician bowed.",
+   "choices": [
+    "The trumpet sounded, the audience clapped, and the musician bowed.",
+    "The trumpet sounded—the audience clapped—and the musician bowed.",
+    "The trumpet sounded; the audience clapped, and the musician bowed.",
+    "The trumpet sounded... and the musician bowed."
+   ],
+   "answerIndex": 3,
+   "explanation": "The ellipsis creates a pause and indicates that the audience’s clapping has been omitted from the combined sentence.",
+   "difficulty": 6,
+   "skill": "Using an ellipsis for a pause and omission",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The baker kneaded the dough. The baker let it rise. The baker shaped the loaves.",
+   "choices": [
+    "The baker kneaded the dough, let it rise, and shaped the loaves.",
+    "The baker kneaded the dough; let it rise; and shaped the loaves.",
+    "The baker kneaded the dough—let it rise—and shaped the loaves.",
+    "The baker kneaded the dough... let it rise... and shaped the loaves."
+   ],
+   "answerIndex": 0,
+   "explanation": "The commas separate the three coordinate verb phrases that share the same subject.",
+   "difficulty": 5,
+   "skill": "Combining sentences with ellipses, dashes, and commas",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences using a pair of dashes to set off the middle clause as an interruption: The sun set. Shadows lengthened. The fireflies appeared.",
+   "choices": [
+    "The sun set—shadows lengthened—and the fireflies appeared.",
+    "The sun set, shadows lengthened, and the fireflies appeared.",
+    "The sun set; shadows lengthened; and the fireflies appeared.",
+    "The sun set... shadows lengthened... and the fireflies appeared."
+   ],
+   "answerIndex": 0,
+   "explanation": "Dashes enclose the interrupting middle clause while preserving the flow of the sentence.",
+   "difficulty": 6,
+   "skill": "Combining sentences with ellipses, dashes, and commas",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the sentence \"He opened the door... and walked in,\" what does the ellipsis indicate?",
+   "choices": [
+    "It shows a pause while the middle action is left unstated.",
+    "It indicates the speaker is trailing off without completing the thought.",
+    "It replaces omitted words at the end of a quotation.",
+    "It adds emphasis to the following clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis marks a pause and omits the action that would occur between opening the door and walking in.",
+   "difficulty": 5,
+   "skill": "Combining sentences with ellipses, dashes, and commas",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, keeping the introductory clause and omitting the repeated subject in the second and third actions: After the meeting ended, the manager reviewed the notes. The manager sent the summary. The manager scheduled the follow‑up.",
+   "choices": [
+    "After the meeting ended, the manager reviewed the notes, sent the summary, and scheduled the follow‑up.",
+    "After the meeting ended; the manager reviewed the notes; sent the summary; and scheduled the follow‑up.",
+    "After the meeting ended—the manager reviewed the notes—sent the summary—and scheduled the follow‑up.",
+    "After the meeting ended... the manager reviewed the notes... sent the summary... and scheduled the follow‑up."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory clause is followed by a comma, and the three verb phrases share the subject, so commas separate them.",
+   "difficulty": 6,
+   "skill": "Combining sentences with ellipses, dashes, and commas",
+   "topic": "Combine Three Sentences - Ellipses, Dashes, and Commas for Pauses and Omissions",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "In the sentence \"The sun set, the stars appeared, and the night grew quiet,\" why does a comma appear before \"and\"?",
+   "choices": [
+    "It separates the final clause in a series of three coordinate clauses.",
+    "It marks a pause for dramatic effect.",
+    "It replaces a semicolon.",
+    "It indicates a dependent clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma before \"and\" separates the third independent clause from the second in a series of coordinate clauses.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which sentence best uses an ellipsis to show the speaker’s pause and omission of the middle action? He opened the letter. He read the first line. He put it down.",
+   "choices": [
+    "He opened the letter... and put it down.",
+    "He opened the letter—read the first line—and put it down.",
+    "He opened the letter, read the first line, and put it down.",
+    "He opened the letter; he read the first line; he put it down."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis indicates a pause and omits the middle action “read the first line.”",
+   "reason": "explanation-key: the explanation describes option 2 (score 1.00) more than the keyed option 1 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Combine the three sentences into one by using an ellipsis to show a pause and omit the middle action: Nora found her notebook. She searched under the desk. She opened her history book.",
+   "choices": [
+    "Nora found her notebook, searched under the desk, and opened her history book.",
+    "Nora found her notebook... and opened her history book.",
+    "Nora found her notebook; she searched under the desk, and she opened her history book.",
+    "Nora found her notebook—and opened her history book."
+   ],
+   "answerIndex": 1,
+   "explanation": "The ellipsis marks Nora's pause and allows the search under the desk to be omitted from the combined sentence.",
+   "reason": "explanation-key: the explanation describes option 1 (score 1.00) more than the keyed option 2 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "In the sentence The hikers rested—the sun was too hot to continue, what does the dash do?",
+   "choices": [
+    "It joins two independent clauses without a conjunction.",
+    "It introduces a list of parallel verbs.",
+    "It marks the omission of repeated words.",
+    "It sets off an interruption within the sentence."
+   ],
+   "answerIndex": 3,
+   "explanation": "The dash sets off the reason for resting as an interruption within the sentence.",
+   "reason": "A: picked 0 not 3 | B: picked 0 not 3"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine: The bell rang. We cleared our desks. The teacher entered. Which sentence combines all three ideas correctly?",
+   "choices": [
+    "The bell rang, we cleared our desks, and the teacher entered.",
+    "The bell rang: we cleared our desks, and the teacher entered.",
+    "The bell rang; we cleared our desks, and the teacher entered.",
+    "The bell rang, and we cleared our desks, the teacher entered."
+   ],
+   "answerIndex": 2,
+   "explanation": "The semicolon joins the first two independent clauses, and the comma before and separates the second clause from the third.",
+   "reason": "B: picked -1 not 2 (Two defensible options (0 and 2).)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine three sentences: I wanted to tell her. I hesitated. I changed the subject. Which sentence best uses an ellipsis to show the hesitation?",
+   "choices": [
+    "I wanted to tell her; I hesitated, and I changed the subject.",
+    "I wanted to tell her, but I changed the subject.",
+    "I wanted to tell her... but I changed the subject.",
+    "I wanted to tell her... I changed the subject."
+   ],
+   "answerIndex": 2,
+   "explanation": "The ellipsis marks a hesitation before the contrasting second clause.",
+   "reason": "A: picked 3 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence best uses an ellipsis to show the speaker’s pause and omission of the middle action? I was about to call. I stopped. I sent a text.",
+   "choices": [
+    "I was about to call, stopped, and sent a text.",
+    "I was about to call... stopped... sent a text.",
+    "I was about to call... and sent a text.",
+    "I was about to call... I stopped, then sent a text."
+   ],
+   "answerIndex": 2,
+   "explanation": "The ellipsis replaces the omitted middle clause \"I stopped\" while linking the first and last actions.",
+   "reason": "A: picked 1 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas: The chef chopped the onions. The chef stirred the sauce. The chef tasted the dish.",
+   "choices": [
+    "The chef chopped the onions, stirred the sauce, and tasted the dish.",
+    "The chef chopped the onions; stirred the sauce, and tasted the dish.",
+    "The chef chopped the onions, stirred the sauce and tasted the dish.",
+    "The chef chopped the onions, stirred the sauce, tasted the dish."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses commas to separate the three verb phrases and includes the conjunction and before the final phrase.",
+   "reason": "B: not exactly one correct (Options 0 and 2 are both grammatical: both omit the repeated subject, use commas, and correctly join the three predicates. The prompt does n)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "In the sentence \"The rain stopped, the clouds cleared, and the sun shone,\" why does a comma appear before \"and\"?",
+   "choices": [
+    "It separates the final coordinate clause from the preceding ones in a series of three.",
+    "It indicates a pause before the last clause for emphasis.",
+    "It marks a dependent clause that follows the conjunction.",
+    "It replaces a semicolon that would otherwise be required."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma before and separates the third coordinate clause in a series of three.",
+   "reason": "B: not exactly one correct (Option 0 gives the standard structural reason, but option 1 is also defensible because the comma can indicate a slight pause before the fina)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one by omitting the repeated subject and using commas, keeping the introductory clause: After the movie ended, we walked home. We talked about the plot. We laughed.",
+   "choices": [
+    "After the movie ended, we walked home, talked about the plot, and laughed.",
+    "After the movie ended we walked home, talked about the plot, and laughed.",
+    "After the movie ended, we walked home; talked about the plot, and laughed.",
+    "After the movie ended, we walked home, talked about the plot and laughed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence retains the introductory clause and uses commas to join the three verb phrases with the conjunction and.",
+   "reason": "B: not exactly one correct (Options 0 and 3 are both grammatical: each keeps the introductory clause, omits the repeated subject, and correctly joins the three predicat)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine three sentences into one using a pair of dashes to set off the middle action as an interruption: The gardener turned on the hose. Bees arrived. The flowers brightened.",
+   "choices": [
+    "The gardener turned on the hose, the bees arrived, and the flowers brightened.",
+    "The gardener turned on the hose—the bees arrived—and the flowers brightened.",
+    "The gardener turned on the hose—the bees arrived and the flowers brightened.",
+    "The gardener turned on the hose; the bees arrived, and the flowers brightened."
+   ],
+   "answerIndex": 1,
+   "explanation": "The paired dashes set off the bees’ arrival as an interruption between the gardener’s first and final actions.",
+   "reason": "B: picked 0 not 1 (None of the options use a pair of dashes to set off the middle action as an interruption; only single dashes or no dashes are used.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "In the sentence \"The chef plated the dish—steam rose from the plate—and the diners applauded,\" why are dashes used?",
+   "choices": [
+    "They set off an interrupting clause that adds detail about the plating.",
+    "They separate items in a list.",
+    "They indicate omitted words in the middle of the sentence.",
+    "They show a sudden change in tone."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dashes enclose the clause \"steam rose from the plate\" as an interruption providing extra detail.",
+   "reason": "surplus"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one using an ellipsis to omit the middle action: The runner sprinted. The crowd cheered. The finish line approached.",
+   "choices": [
+    "The runner sprinted... and the finish line approached.",
+    "The runner sprinted, the crowd cheered, and the finish line approached.",
+    "The runner sprinted—the crowd cheered—and the finish line approached.",
+    "The runner sprinted; the crowd cheered; and the finish line approached."
+   ],
+   "answerIndex": 0,
+   "explanation": "The ellipsis shows a pause and leaves out the middle action (the crowd cheered) while linking the first and last actions.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  }
+ ],
+ "applied": false
+}

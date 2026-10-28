@@ -1,0 +1,261 @@
+{
+ "collection": "lessons",
+ "row_id": 3069,
+ "shared": false,
+ "user_id": 4,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P62",
+   "wrong": "Greek -opt / -scop / -graph give you telescope, optical, biography. Both mean something with sight, but the Latin set is everyday and the Greek set is the scientific, specialized version.",
+   "correct": "-graph means \"write\" (biography = life-writing); it is not a sight root. Greek sight roots are -opt- and -scop-.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P63",
+   "wrong": "Diagnosis and condition are Latin-family (general, professional).",
+   "correct": "\"Diagnosis\" is Greek (dia- + gnosis), not Latin-family.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P64",
+   "wrong": "gen- in geographer is Greek (earth).",
+   "correct": "The Greek root for \"earth\" in geographer is geo-/ge-, not \"gen-\".",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Greek -opt / -scop / -graph give you telescope, optical, biography. Both mean something with sight, but the Latin set is everyday and the Greek set is the scientific, specialized version.",
+   "replace": "Greek -opt / -scop give you optical and telescope, while -graph gives you biography. -opt- and -scop- are sight roots; -graph- means \"write\" (biography = life-writing). The Latin sight set is everyday, while the Greek sight roots are the scientific, specialized version.",
+   "fixes": [
+    "P62"
+   ]
+  },
+  {
+   "find": "Diagnosis and condition are Latin-family (general, professional).",
+   "replace": "Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin).",
+   "fixes": [
+    "P63"
+   ]
+  },
+  {
+   "find": "The sentence is doing real work with this mix: the doctor is professional (Latin), the condition is medical (Greek), and the follow-up is routine (Latin).",
+   "replace": "The sentence is doing real work with this mix: diagnosis and chronic carry the specialized medical load, while condition stays Latin-family and frequent keeps the follow-up routine.",
+   "fixes": [
+    "P63"
+   ]
+  },
+  {
+   "find": "If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" every word would be Latin-family, and the medical weight would disappear. The Greek word chronic is what pins the sentence to a medical register.",
+   "replace": "If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" the Latin-family time words would replace chronic's explicit long-lasting medical shade, though diagnosis would still be Greek-family and keep the medical context. Together, diagnosis and chronic pin the sentence to a medical register.",
+   "fixes": [
+    "P63"
+   ]
+  },
+  {
+   "find": "Roots to sort: graph-, chrono-, bio-, taxo-, gen- (in geographer).",
+   "replace": "Roots to sort: graph-, chrono-, bio-, taxo-, geo- (in geographer).",
+   "fixes": [
+    "P64"
+   ]
+  },
+  {
+   "find": "Step 1: Name the root and its family. graph- is Greek (write). chrono- is Greek (time). bio- is Greek (life). taxo- is Greek (arrange, classify). gen- in geographer is Greek (earth).",
+   "replace": "Step 1: Name the root and its family. graph- is Greek (write). chrono- is Greek (time). bio- is Greek (life). taxo- is Greek (arrange, classify). geo- in geographer is Greek (earth).",
+   "fixes": [
+    "P64"
+   ]
+  },
+  {
+   "find": "All five roots (graph-, chrono-, bio-, taxo-, gen-) are Greek",
+   "replace": "All five roots (graph-, chrono-, bio-, taxo-, geo-) are Greek",
+   "fixes": [
+    "P64"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[0].example",
+   "before": "Take the idea of sight. Latin o- / oc- / vis- give you visible, occur, vision. Greek -opt / -scop / -graph give you telescope, optical, biography. Both mean something with sight, but the Latin set is everyday and the Greek set is the scientific, specialized version. A reader of \"optical instrument\" already expects a laboratory tool; a reader of \"vision board\" expects a poster on a wall.",
+   "after": "Take the idea of sight. Latin o- / oc- / vis- give you visible, occur, vision. Greek -opt / -scop give you optical and telescope, while -graph gives you biography. -opt- and -scop- are sight roots; -graph- means \"write\" (biography = life-writing). The Latin sight set is everyday, while the Greek sight roots are the scientific, specialized version. A reader of \"optical instrument\" already expects a laboratory tool; a reader of \"vision board\" expects a poster on a wall.",
+   "fixes": [
+    "P62"
+   ]
+  },
+  {
+   "path": "sections[2].example",
+   "before": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis and condition are Latin-family (general, professional). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: the doctor is professional (Latin), the condition is medical (Greek), and the follow-up is routine (Latin). If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" every word would be Latin-family, and the medical weight would disappear. The Greek word chronic is what pins the sentence to a medical register.",
+   "after": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: the doctor is professional (Latin), the condition is medical (Greek), and the follow-up is routine (Latin). If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" every word would be Latin-family, and the medical weight would disappear. The Greek word chronic is what pins the sentence to a medical register.",
+   "fixes": [
+    "P63"
+   ]
+  },
+  {
+   "path": "sections[2].example",
+   "before": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: the doctor is professional (Latin), the condition is medical (Greek), and the follow-up is routine (Latin). If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" every word would be Latin-family, and the medical weight would disappear. The Greek word chronic is what pins the sentence to a medical register.",
+   "after": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: diagnosis and chronic carry the specialized medical load, while condition stays Latin-family and frequent keeps the follow-up routine. If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" every word would be Latin-family, and the medical weight would disappear. The Greek word chronic is what pins the sentence to a medical register.",
+   "fixes": [
+    "P63"
+   ]
+  },
+  {
+   "path": "sections[2].example",
+   "before": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: diagnosis and chronic carry the specialized medical load, while condition stays Latin-family and frequent keeps the follow-up routine. If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" every word would be Latin-family, and the medical weight would disappear. The Greek word chronic is what pins the sentence to a medical register.",
+   "after": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: diagnosis and chronic carry the specialized medical load, while condition stays Latin-family and frequent keeps the follow-up routine. If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" the Latin-family time words would replace chronic's explicit long-lasting medical shade, though diagnosis would still be Greek-family and keep the medical context. Together, diagnosis and chronic pin the sentence to a medical register.",
+   "fixes": [
+    "P63"
+   ]
+  },
+  {
+   "path": "worked_example.problem",
+   "before": "Identify the family (Latin or Greek) of each root in the sentence below, then explain why the sentence reads as formal and specialized rather than everyday. Sentence: \"The geographer's chronology of the bioregion depended on a precise taxonomy of the species.\" Roots to sort: graph-, chrono-, bio-, taxo-, gen- (in geographer).",
+   "after": "Identify the family (Latin or Greek) of each root in the sentence below, then explain why the sentence reads as formal and specialized rather than everyday. Sentence: \"The geographer's chronology of the bioregion depended on a precise taxonomy of the species.\" Roots to sort: graph-, chrono-, bio-, taxo-, geo- (in geographer).",
+   "fixes": [
+    "P64"
+   ]
+  },
+  {
+   "path": "worked_example.steps[0]",
+   "before": "Step 1: Name the root and its family. graph- is Greek (write). chrono- is Greek (time). bio- is Greek (life). taxo- is Greek (arrange, classify). gen- in geographer is Greek (earth).",
+   "after": "Step 1: Name the root and its family. graph- is Greek (write). chrono- is Greek (time). bio- is Greek (life). taxo- is Greek (arrange, classify). geo- in geographer is Greek (earth).",
+   "fixes": [
+    "P64"
+   ]
+  },
+  {
+   "path": "worked_example.answer",
+   "before": "All five roots (graph-, chrono-, bio-, taxo-, gen-) are Greek, so the sentence is uniformly formal and technical. If the writer had used Latin-family words, the register would drop to everyday prose.",
+   "after": "All five roots (graph-, chrono-, bio-, taxo-, geo-) are Greek, so the sentence is uniformly formal and technical. If the writer had used Latin-family words, the register would drop to everyday prose.",
+   "fixes": [
+    "P64"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Advanced Vocabulary: Latin and Greek — The Double Family of One Root",
+  "intro": "You already pull meaning from context fluently. The harder move is knowing the word before you meet it. Latin and Greek roots build that prediction, but most learners stop at one family per root. The gap that costs points: one root often produces TWO families, one Latin and one Greek, and they sound different and carry different shades. Today you learn to tell the two families apart, and to read the shade each one adds.",
+  "sections": [
+   {
+    "heading": "The Rule: One Root, Two Families",
+    "body": "Many big words are built from one of two roots: a Latin family or a Greek family. If a word comes from the Latin root, it keeps the Latin spelling and meaning. If it comes from the Greek root, it keeps the Greek spelling and a slightly different meaning. Crucially, the Greek version is usually the more technical or formal one. Your job is to name which family the word came from, and what shade the family adds.",
+    "example": "Take the idea of sight. Latin o- / oc- / vis- give you visible, occur, vision. Greek -opt / -scop give you optical and telescope, while -graph gives you biography. -opt- and -scop- are sight roots; -graph- means \"write\" (biography = life-writing). The Latin sight set is everyday, while the Greek sight roots are the scientific, specialized version. A reader of \"optical instrument\" already expects a laboratory tool; a reader of \"vision board\" expects a poster on a wall."
+   },
+   {
+    "heading": "The Rule at Work: Match the Family to the Shade",
+    "body": "Apply the rule in three quick tests. First, name the family. Second, say whether it is the everyday shade or the specialized shade. Third, predict what a reader expects. This is the same three-move routine you use with tone, but now the tone is built into the word's family rather than the sentence around it.",
+    "example": "Word: chronic. Family: Greek (chron- = time). Shade: medical / formal. Prediction: a reader expects a health or scientific context. Word: frequent. Family: Latin (frequ- = busy, often). Shade: everyday. Prediction: a reader expects daily life. Word: biographer. Family: Greek (bio- = life, -graph = write). Shade: formal, specialized. Prediction: a reader expects a formal record of a life. Word: alive. Family: Latin (via Old French, from Latin vivere). Shade: everyday. Prediction: a reader expects general language, not a medical report."
+   },
+   {
+    "heading": "The Rule Under Pressure: When a Latin and Greek Word Sit Side by Side",
+    "body": "The hardest case is a sentence that puts one Latin family word and one Greek family word next to each other. The meaning of the sentence depends on which one is doing the specialized work. When you see this, slow down and name both families, then say which one is carrying the technical load. That is the move that separates a proficient reader from a strong one.",
+    "example": "Sentence: \"The physician's diagnosis revealed a chronic condition that would require frequent observation.\" Diagnosis is Greek-family (specialized, medical), while condition is Latin-family (general in origin). Chronic is Greek-family (specialized, medical). Frequent is Latin-family (everyday). The sentence is doing real work with this mix: diagnosis and chronic carry the specialized medical load, while condition stays Latin-family and frequent keeps the follow-up routine. If the writer had said \"The physician's diagnosis revealed a periodic condition requiring recurrent observation,\" the Latin-family time words would replace chronic's explicit long-lasting medical shade, though diagnosis would still be Greek-family and keep the medical context. Together, diagnosis and chronic pin the sentence to a medical register."
+   }
+  ],
+  "worked_example": {
+   "problem": "Identify the family (Latin or Greek) of each root in the sentence below, then explain why the sentence reads as formal and specialized rather than everyday. Sentence: \"The geographer's chronology of the bioregion depended on a precise taxonomy of the species.\" Roots to sort: graph-, chrono-, bio-, taxo-, geo- (in geographer).",
+   "steps": [
+    "Step 1: Name the root and its family. graph- is Greek (write). chrono- is Greek (time). bio- is Greek (life). taxo- is Greek (arrange, classify). geo- in geographer is Greek (earth).",
+    "Step 2: Count the families. Every root in this sentence is Greek. Not one is Latin.",
+    "Step 3: Read the shade. Because every root is Greek, the sentence is uniformly formal and technical. No everyday-word softens it.",
+    "Step 4: Contrast to test the rule. Rewrite with Latin-family words: \"The writer's history of the living region depended on a precise arrangement of the kinds.\" Same content, Latin-family, and the sentence now reads as a magazine article, not a scientific paper.",
+    "Step 5: State the conclusion. The sentence reads as formal and specialized because all five roots are Greek, and Greek roots carry the technical shade."
+   ],
+   "answer": "All five roots (graph-, chrono-, bio-, taxo-, geo-) are Greek, so the sentence is uniformly formal and technical. If the writer had used Latin-family words, the register would drop to everyday prose."
+  },
+  "common_mistakes": [
+   "Naming a root as Latin just because the word is common in English. Common usage does not change the family. Biography is Greek even though you use it every week. If you say \"biography is Latin because it sounds normal,\" you have misidentified the family and lost the shade test.",
+   "Treating the two families as interchangeable because they share a loose idea. Sight (Latin) and scope (Greek) both involve seeing, but they do not carry the same register. If you swap them in a sentence without noticing the register shift, the sentence's tone changes even though the core meaning stays close.",
+   "Reading only the word and ignoring the family. The word \"chronic\" looks simple, but its Greek family is what pins it to a medical context. If you only look at the surface meaning \"long-lasting,\" you miss the specialized shade and will misread the sentence's register.",
+   "Confusing the prefix's family with the whole word's register. A word like \"biography\" has a Greek root but is used in everyday English. The root is still Greek; the word's register in a given sentence depends on context. If you say \"biography is everyday so it must be Latin,\" you have let context override the etymology, which is the opposite of the right move."
+  ],
+  "summary": "One root can produce two families: a Latin one and a Greek one. The Latin family is usually everyday; the Greek family is usually technical or formal. To read a word's register before you meet it in context, name the family, say the shade, and predict the reader's expectation. The hardest case is a sentence that mixes the two families; there, the word carrying the Greek root is the one doing the specialized work.",
+  "check_questions": [
+   {
+    "skill_id": "vocab_context",
+    "skill_name": "Vocabulary in context",
+    "difficulty": 2.9468690702087286,
+    "prompt": "In the sentence \"The biologist's taxonomy of the region's fauna was meticulous,\" which root is Greek and carries the specialized, technical shade?",
+    "answer": "taxo- in taxonomy",
+    "rationale": "taxo- is a Greek root (arrange, classify) and is the specialized, technical word in the sentence. biolog- is also Greek, but the question asks which root carries the specialized shade doing the technical work, and taxonomy is the classification term doing that work. The step that decides this is Step 2 of the rule: name the family, then say which word is doing the specialized load.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "biolog- in biologist",
+     "taxo- in taxonomy",
+     "-logy in biologist is Greek but taxo- is Latin",
+     "None of the roots are Greek"
+    ]
+   },
+   {
+    "skill_id": "vocab_context",
+    "skill_name": "Vocabulary in context",
+    "difficulty": 2.9468690702087286,
+    "prompt": "Type the family (Latin or Greek) of the root \"spect-\" as in the word \"spectator.\" Then, in one short phrase, say what shade it carries. (Two words total, e.g., \"Greek, formal.\")",
+    "answer": "Latin, everyday",
+    "rationale": "spect- is a Latin root (look), and spectator is an everyday, non-technical word. The shade is everyday. The step that decides this is the rule's first move: name the family, then say whether it is the everyday or the specialized shade.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "vocab_context",
+    "skill_name": "Vocabulary in context",
+    "difficulty": 2.9468690702087286,
+    "prompt": "Which of these sentences uses a Greek-family root to pin the sentence to a medical register?",
+    "answer": "The physician's chronic case required careful observation.",
+    "rationale": "chronic is the only Greek-family root in this set that carries a medical shade. The other sentences use Latin-family words (frequent, vision, clinic via Latin) that keep the register general. The step that decides this is the rule under pressure: name both families in the sentence, then say which one is carrying the technical load. In this sentence, chronic (Greek) is the word pinning it to a medical register.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "The frequent visits to the clinic wore the patient out.",
+     "The physician's chronic case required careful observation.",
+     "The doctor's frequent notes were thorough.",
+     "The patient's vision improved after the surgery."
+    ]
+   },
+   {
+    "skill_id": "vocab_context",
+    "skill_name": "Vocabulary in context",
+    "difficulty": 2.9468690702087286,
+    "prompt": "A student reads \"The geographer's chronology of the bioregion was precise\" and concludes the sentence is everyday prose because geographer, chronology, and bioregion all sound common. What is the exact wrong move the student made?",
+    "answer": "They ignored the family entirely and judged only by familiarity.",
+    "rationale": "The student never named the family of any root; they let the words sounding common override the etymology. That is the exact wrong move named in the common-mistakes list: judging by how common a word feels instead of by its family. The step that decides this is the rule's first move, which the student skipped: name the family before you say anything about the shade.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "They confused the root's family with the word's surface meaning.",
+     "They treated all three roots as Latin because the sentence sounds smooth.",
+     "They ignored the family entirely and judged only by familiarity.",
+     "They misidentified chronology as a Latin root."
+    ]
+   }
+  ]
+ }
+}

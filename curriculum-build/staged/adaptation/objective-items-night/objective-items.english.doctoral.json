@@ -1,0 +1,1398 @@
+{
+ "track_id": "english",
+ "grade_id": "doctoral",
+ "generated_at": "2026-10-26T03:38:11.716Z",
+ "items": [
+  {
+   "objective_id": "doctoral:L127",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Which planning strategy most effectively structures progress monitoring for a multi‑year doctoral research project?",
+   "choices": [
+    "Define yearly milestones with quarterly review checkpoints.",
+    "Set a single final deadline and assess only at project end.",
+    "Create only monthly task lists without higher‑level milestones.",
+    "Rely solely on advisor meetings for progress evaluation."
+   ],
+   "answer": "Define yearly milestones with quarterly review checkpoints.",
+   "rationale": "Yearly milestones broken into quarterly checkpoints give concrete, regularly spaced targets, enabling early detection of drift and systematic adjustment, unlike a single deadline, monthly lists only, or advisor‑only reviews.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L127",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "What is the recommended way to handle major risks in a long‑term research project?",
+   "choices": [
+    "Identify key risks early and prepare mitigation plans with trigger criteria.",
+    "Ignore risks until they materialize and then improvise solutions.",
+    "Assume continued funding eliminates the need for risk analysis.",
+    "Delegate all risk assessment to the supervisory committee."
+   ],
+   "answer": "Identify key risks early and prepare mitigation plans with trigger criteria.",
+   "rationale": "Proactive risk identification with predefined mitigation triggers lets the researcher act quickly when issues arise, whereas reactive, funding‑assumption, or delegation approaches leave the project vulnerable.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L127",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Which method best supports consistent time allocation and progress tracking across years?",
+   "choices": [
+    "Use a Gantt chart or similar timeline to allocate weekly blocks and track milestone completion.",
+    "Rely on memory and informal notes for daily work allocation.",
+    "Track only publication output as a proxy for overall progress.",
+    "Work in ad‑hoc bursts without a formal schedule."
+   ],
+   "answer": "Use a Gantt chart or similar timeline to allocate weekly blocks and track milestone completion.",
+   "rationale": "A visual timeline (Gantt chart) maps weekly effort to long‑term milestones, providing continuous visibility of progress, unlike memory‑based, publication‑only, or ad‑hoc methods.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L127",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "How should a doctoral researcher sustain motivation and work‑life balance over several years?",
+   "choices": [
+    "Schedule regular reflection periods, adjust goals, and protect dedicated non‑work time.",
+    "Work continuously without breaks until the dissertation is finished.",
+    "Wait for intrinsic motivation to return before resuming effort.",
+    "Evaluate well‑being only at the final defense stage."
+   ],
+   "answer": "Schedule regular reflection periods, adjust goals, and protect dedicated non‑work time.",
+   "rationale": "Built‑in reflection, goal revision, and protected personal time create a sustainable rhythm, preventing burnout; the other options promote exhaustion, passivity, or late‑stage awareness.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L169",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "A researcher models the number of pauses per conversation turn with log E[Yᵢ] = β₀ + β₁TURNᵢ + log(wordsᵢ). If β₁ = 0.40, how does the expected pause count change when turn number rises by one, holding the number of words constant?",
+   "choices": [
+    "Multiplied by 0.67, giving about a 33% decrease.",
+    "Divided by 1.49, giving about a 33% decrease.",
+    "Multiplied by 1.49, giving about a 49% increase.",
+    "Multiplied by 1.40, giving about a 40% increase."
+   ],
+   "answer": "Multiplied by 1.49, giving about a 49% increase.",
+   "rationale": "With a log link, increasing TURN by one multiplies the expected count by exp(0.40) ≈ 1.49.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L169",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "A mixed-effects logistic model has βfrequency = 0.50. Holding the speaker effect and all other variables constant, when log word frequency rises by one unit, what happens to the odds of the response being 1?",
+   "choices": [
+    "Increase by 0.50.",
+    "Multiply by 0.61.",
+    "Increase by 1.50.",
+    "Multiply by 1.65."
+   ],
+   "answer": "Multiply by 1.65.",
+   "rationale": "The odds ratio is exp(0.50) ≈ 1.65, so the odds are multiplied by 1.65.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L169",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "In a linear model, grammaticality = β₀ + β₁F + β₂A + β₃FA, where F and A are binary. If β₁ = 2.0 and β₃ = −0.5, what is the change in predicted grammaticality when F changes from 0 to 1 when A = 1?",
+   "choices": [
+    "It increases by 0.5 points.",
+    "It decreases by 1.5 points.",
+    "It increases by 2.0 points.",
+    "It increases by 1.5 points."
+   ],
+   "answer": "It increases by 1.5 points.",
+   "rationale": "When A = 1, the effect of F is β₁ + β₃ = 2.0 − 0.5 = 1.5 points.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L169",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Across 100 recordings of spontaneous speech, a Poisson model for pauses per minute predicts a mean of 4, but the observed variance is 9.6. Which conclusion and modeling response are most appropriate?",
+   "choices": [
+    "The data are underdispersed; a negative-binomial model may be more suitable.",
+    "The data are overdispersed; a negative-binomial model may be more suitable.",
+    "The data are overdispersed; ordinary least squares is the standard remedy.",
+    "The data show no overdispersion; the Poisson model remains automatically preferred."
+   ],
+   "answer": "The data are overdispersed; a negative-binomial model may be more suitable.",
+   "rationale": "The variance greatly exceeds the mean, contradicting the Poisson model’s equidispersion assumption; a negative-binomial model may accommodate the overdispersion.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L244",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "When revising a novel's macrostructure, which approach best ensures thematic coherence across chapters?",
+   "choices": [
+    "Reorder chapters strictly by chronological sequence.",
+    "Align each chapter's central conflict with the novel's core theme.",
+    "Remove every subplot that does not serve the protagonist's primary goal.",
+    "Insert a prologue that outlines the overarching theme."
+   ],
+   "answer": "Align each chapter's central conflict with the novel's core theme.",
+   "rationale": "Mapping each chapter's conflict to the core theme directly aligns macrostructure with thematic coherence, unlike reordering, cutting subplots, or adding a prologue.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L244",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "Which strategy is most effective for maintaining daily progress on a memoir manuscript during the middle‑draft slump?",
+   "choices": [
+    "Set a fixed word‑count target and write only when inspired.",
+    "Reserve a non‑negotiable 90‑minute block and begin with a prompt‑based freewrite.",
+    "Pause drafting until a clear narrative arc emerges fully.",
+    "Alternate drafting and line‑editing within each writing session."
+   ],
+   "answer": "Reserve a non‑negotiable 90‑minute block and begin with a prompt‑based freewrite.",
+   "rationale": "A protected time block with a low‑stakes freewrite combats the middle‑draft slump by guaranteeing daily output and reducing perfectionism.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L244",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "literary_analysis",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "After receiving contradictory peer reviews on a poetry collection's ordering, what is the principled next step?",
+   "choices": [
+    "Adopt the majority opinion and reorder the poems accordingly.",
+    "Build a decision matrix weighting reviewer expertise and the collection's conceptual framework.",
+    "Discard all feedback and retain the original ordering unchanged.",
+    "Randomize the sequence to gauge reader response experimentally."
+   ],
+   "answer": "Build a decision matrix weighting reviewer expertise and the collection's conceptual framework.",
+   "rationale": "A decision matrix systematically integrates contradictory feedback by weighting expertise and the collection's framework, producing a principled ordering.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L350",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "A doctoral student’s topic, social media and academic success, yields many sources but no clear contribution to knowledge. Which first step best supports sustained original research?",
+   "choices": [
+    "Synthesize the literature, identify a gap, and formulate a focused question.",
+    "Survey students about every platform and analyze every response.",
+    "Replicate a published study to confirm its original findings.",
+    "Apply a popular model to the population without modifying it."
+   ],
+   "answer": "Synthesize the literature, identify a gap, and formulate a focused question.",
+   "rationale": "Identifying a specific knowledge gap and developing a focused question makes the research tractable and original. Broad surveying, replication, or unmodified application of an existing model does not establish a clear original contribution.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L350",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "During a pilot study, several survey items give inconsistent responses and fail to measure the intended construct. What should the researcher do before full data collection?",
+   "choices": [
+    "Revise the items using pilot evidence and document the changes.",
+    "Keep the items unchanged because consistency does not matter.",
+    "Replace the items with measures giving more favorable results.",
+    "Remove the pilot data and begin collection with the original items."
+   ],
+   "answer": "Revise the items using pilot evidence and document the changes.",
+   "rationale": "Pilot evidence should guide instrument refinement, and documenting changes supports transparency and validity. Keeping flawed items, selecting favorable measures, or discarding useful pilot evidence would weaken the research.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L350",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "An analysis produces a pattern that conflicts with the researcher’s hypothesis. What is the strongest next step in conducting rigorous research?",
+   "choices": [
+    "Examine data, assumptions, and measures, then document justified analytical changes.",
+    "Adjust the model repeatedly until the findings match the hypothesis.",
+    "Discard unexpected results and report only the predicted relationship.",
+    "Ask colleagues to select the interpretation supporting the hypothesis."
+   ],
+   "answer": "Examine data, assumptions, and measures, then document justified analytical changes.",
+   "rationale": "Unexpected findings should prompt critical examination of the data, assumptions, measures, and analytical decisions. Repeated adjustment, selective reporting, or choosing convenient interpretations risks research misconduct.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L350",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "After eight months, repeated data-quality problems and schedule delays threaten a dissertation project. Which practice most directly supports continued progress?",
+   "choices": [
+    "Keep a dated log of problems, decisions, evidence, and next milestones.",
+    "Delay all documentation until the study is complete.",
+    "Reduce the scope whenever a delay occurs and change topics.",
+    "Postpone data collection while writing the literature review."
+   ],
+   "answer": "Keep a dated log of problems, decisions, evidence, and next milestones.",
+   "rationale": "A dated research log preserves continuity, documents evidence-based decisions, and makes progress reviewable. Postponing documentation, abandoning scope, or avoiding data collection undermines sustained research.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L191",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "A researcher wants to estimate the effect of feedback type on learners’ production while accounting for repeated attempts by the same learners. Which design and analysis combination is most defensible?",
+   "choices": [
+    "Randomly assign learners to feedback conditions and analyze scores with a mixed-effects model including participant and item effects.",
+    "Assign learners to conditions and compare only the highest and lowest scores, removing all middle scores.",
+    "Let each learner choose a condition and analyze all attempts as independent observations.",
+    "Use one production per learner and assign conditions according to each learner’s proficiency level."
+   ],
+   "answer": "Randomly assign learners to feedback conditions and analyze scores with a mixed-effects model including participant and item effects.",
+   "rationale": "Random assignment strengthens causal inference, while a mixed-effects model appropriately represents both repeated observations and differences among items. The alternatives introduce selection effects, unjustified data removal, or unmodeled dependence.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L191",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "Which operationalization would best support a claim that learners reduce their use of a target construction under interactive rather than expository instructions?",
+   "choices": [
+    "Code comparable clauses from matched tasks for construction frequency, using blinded raters and reporting inter-rater reliability.",
+    "Ask learners whether they prefer interactive instruction and use their responses as the main outcome measure.",
+    "Count target constructions across differently sized groups and compare their raw frequencies without normalization.",
+    "Rate overall fluency subjectively and report the number of instructions each learner received."
+   ],
+   "answer": "Code comparable clauses from matched tasks for construction frequency, using blinded raters and reporting inter-rater reliability.",
+   "rationale": "This operationalization directly measures the target behavior, controls task comparability, and addresses measurement reliability. The other choices rely on preference, incomparable raw counts, or an outcome that does not directly represent construction use.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L191",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "linguistics",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "Which reporting practice would most clearly demonstrate transparent reporting of an original linguistic study?",
+   "choices": [
+    "Report preregistered hypotheses, all outcomes, exclusion rules, effect estimates with uncertainty, and any deviations from the plan.",
+    "Report only statistically significant results and describe unsuccessful analyses as technical problems.",
+    "Present supportive examples while omitting measurements that did not confirm the main hypothesis.",
+    "Summarize the main conclusion without reporting tables, uncertainty estimates, or data-collection details."
+   ],
+   "answer": "Report preregistered hypotheses, all outcomes, exclusion rules, effect estimates with uncertainty, and any deviations from the plan.",
+   "rationale": "Transparent reporting identifies the study plan, includes relevant results, and discloses decisions that could affect interpretation. The alternatives selectively conceal outcomes or omit information needed to evaluate the evidence.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L234",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A writing center faces declining enrollment. What should the director do first when deciding how to revise the program?",
+   "choices": [
+    "Analyze enrollment trends and gather feedback from students and faculty",
+    "Cancel several writing courses immediately to reduce costs",
+    "Launch a marketing campaign without consulting anyone",
+    "Replace experienced instructors with graduate assistants"
+   ],
+   "answer": "Analyze enrollment trends and gather feedback from students and faculty",
+   "rationale": "A director should first use enrollment data and stakeholder feedback to identify the causes of decline and inform a well-supported revision.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L234",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Funding for a writing program will end next year. Which action best demonstrates responsible fiscal administration?",
+   "choices": [
+    "Create a budget covering future staffing and operating needs",
+    "Commit current funds to permanent positions without planning",
+    "Wait for the funding decision before reviewing program costs",
+    "Reduce essential services without explaining the consequences"
+   ],
+   "answer": "Create a budget covering future staffing and operating needs",
+   "rationale": "A sustainable budget should identify staffing, operating, and program needs so the director can plan resources and discuss realistic funding options.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L234",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "Two instructors give conflicting feedback about the writing center’s tutoring expectations. What is the best supervisory response?",
+   "choices": [
+    "Meet separately, clarify standards, and agree on follow-up actions",
+    "Require both instructors to follow the stricter standard",
+    "Ask students to determine which instructor is correct",
+    "Avoid discussing the conflict to preserve workplace harmony"
+   ],
+   "answer": "Meet separately, clarify standards, and agree on follow-up actions",
+   "rationale": "Separate meetings allow the director to understand the disagreement, establish consistent expectations, and arrange appropriate follow-up.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L234",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A writing center plans a partnership with a local organization. Which step should come first to manage the partnership effectively?",
+   "choices": [
+    "Agree in writing on goals, roles, resources, and measures",
+    "Announce the partnership before securing any commitments",
+    "Begin activities without defining responsibilities",
+    "Give the partner full control of the center’s curriculum"
+   ],
+   "answer": "Agree in writing on goals, roles, resources, and measures",
+   "rationale": "A written agreement defining shared responsibilities, resources, and outcomes creates accountability and reduces ambiguity in the partnership.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L435",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "A researcher is applying for a laboratory scientist position and has two versions of their CV. Which approach best demonstrates targeted CV writing?",
+   "choices": [
+    "Tailors the employment history to every vacancy in exactly the same way.",
+    "Highlights unrelated coursework because it appears earlier in the education section.",
+    "Connects research and coursework to the vacancy's duties, then presents relevant achievements.",
+    "Lists all activities chronologically without considering the vacancy's requirements."
+   ],
+   "answer": "Connects research and coursework to the vacancy's duties, then presents relevant achievements.",
+   "rationale": "A targeted CV emphasizes the education, skills, and achievements most relevant to the advertised position and presents them using clear, action-oriented language.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L435",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Which opening best uses a cover letter to demonstrate fit for a specific postdoctoral position?",
+   "choices": [
+    "I am writing to express my interest in the position advertised on your website.",
+    "Your laboratory's repair research aligns with my doctoral work and publications in that area.",
+    "Please find attached my curriculum vitae, which contains my complete academic history.",
+    "I have held several research positions and am looking for a new opportunity."
+   ],
+   "answer": "Your laboratory's repair research aligns with my doctoral work and publications in that area.",
+   "rationale": "A strong cover-letter opening identifies the specific position and connects the applicant's relevant qualifications and experience to the employer's work.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L435",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "Which paragraph most effectively fulfills the main purpose of a teaching statement in a faculty application?",
+   "choices": [
+    "Lists courses taught chronologically without explaining decisions about teaching or learning.",
+    "Explains the instructor's philosophy, methods, and evidence of how students learned.",
+    "Summarizes publications and service activities without connecting them to classroom practice.",
+    "Repeats the curriculum vitae and adds personal interests unrelated to teaching."
+   ],
+   "answer": "Explains the instructor's philosophy, methods, and evidence of how students learned.",
+   "rationale": "A teaching statement should explain the applicant's approach to teaching and learning, support it with examples, and show how student learning was evaluated.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L308",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "In backward design, which step occurs first?",
+   "choices": [
+    "Select instructional activities",
+    "Determine acceptable evidence",
+    "Identify desired results",
+    "Develop assessment rubrics"
+   ],
+   "answer": "Identify desired results",
+   "rationale": "Backward design begins with identifying desired results before determining evidence and planning instruction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Backward design begins by identifying the desired learning results.",
+      "url": "https://en.wikipedia.org/wiki/Understanding_by_Design",
+      "quote": "Stage 1 is identification of desired results for students.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L308",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "When aligning a graduate program's outcomes, assessments, and learning activities, which framework emphasizes that each component must be deliberately designed to support the others?",
+   "choices": [
+    "Constructive alignment",
+    "Backward design",
+    "Curriculum mapping",
+    "ADDIE model"
+   ],
+   "answer": "Constructive alignment",
+   "rationale": "Constructive alignment explicitly requires outcomes, assessments, and activities to be mutually reinforcing.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Constructive alignment is the educational design principle where learning activities and assessments are aligned with intended outcomes.",
+      "url": "https://en.wikipedia.org/wiki/Constructive_alignment",
+      "quote": "Constructive alignment is a principle used for devising teaching and learning activities, and assessment tasks, that directly address the intended learning outcomes (ILOs) in a way not typically achieved in traditional lectures , tutorial classes and examinations.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Constructive alignment requires outcomes, learning activities, and assessments to be deliberately designed to support one another.",
+      "url": "https://en.wikipedia.org/wiki/Constructive_alignment",
+      "quote": "The teacher makes a deliberate alignment between the planned learning activities and the learning outcomes. This is a conscious effort to provide the learner with a clearly specified goal, a well designed learning activity or activities that are appropriate for the task, and well designed assessment criteria for giving feedback to the learner.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L445",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "When drafting a research statement for a postdoctoral application, which element best demonstrates alignment with the prospective lab's current projects?",
+   "choices": [
+    "List all prior publications in chronological order",
+    "Summarize your PhD thesis in exhaustive detail",
+    "Describe specific aims that extend the lab's recent publications",
+    "Provide a generic statement of broad research interests"
+   ],
+   "answer": "Describe specific aims that extend the lab's recent publications",
+   "rationale": "A strong research statement shows how your proposed work builds directly on the lab's latest findings, indicating fit and initiative.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A research statement that extends a laboratory's recent publications directly demonstrates alignment with its current projects.",
+      "url": "https://en.wikipedia.org/wiki/Research_statement",
+      "quote": "It should discuss how a recent piece of work paved the path for the planned research.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L445",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "Which strategy most effectively identifies postdoctoral positions that match your research interests and career goals?",
+   "choices": [
+    "Search only high-impact journal author lists",
+    "Check job boards, faculty sites, tailor each application",
+    "Apply to all postdoc ads without filtering",
+    "Rely solely on advisor's recommended positions"
+   ],
+   "answer": "Check job boards, faculty sites, tailor each application",
+   "rationale": "Systematically reviewing multiple sources and customizing each application demonstrates proactive alignment with specific labs, increasing the chance of a good fit.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L445",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "When adapting a graduate CV for a postdoctoral application, which section should be expanded to highlight independent research contributions?",
+   "choices": [
+    "List graduate coursework and relevant grades",
+    "Describe teaching assistantships and responsibilities",
+    "Emphasize publications, preprints, and your contributions",
+    "Summarize departmental service and outreach activities"
+   ],
+   "answer": "Emphasize publications, preprints, and your contributions",
+   "rationale": "Postdoctoral selectors prioritize evidence of research independence; detailing publications and your specific role directly showcases that capability.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L445",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "During a postdoctoral interview, what is the most effective way to convey how you will complement the host lab's expertise?",
+   "choices": [
+    "List all techniques you have used",
+    "Propose a project linking your skills to lab goals",
+    "Stress eagerness to learn new methods",
+    "Recite recent lab publications from memory"
+   ],
+   "answer": "Propose a project linking your skills to lab goals",
+   "rationale": "Presenting a concrete, integrative project idea shows initiative, awareness of the lab's direction, and how your background adds value.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L328",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Which method directly captures participants' verbalized thought processes while they interact with a document?",
+   "choices": [
+    "Think‑aloud protocol",
+    "Heuristic evaluation",
+    "A/B testing",
+    "Post‑use questionnaire"
+   ],
+   "answer": "Think‑aloud protocol",
+   "rationale": "The think‑aloud protocol asks users to speak their thoughts in real time, providing direct insight into cognitive processes during document use.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "A think-aloud protocol elicits participants’ verbalized thoughts while they perform a task.",
+      "url": "https://en.wikipedia.org/wiki/Think_aloud_protocol",
+      "quote": "Think-aloud protocols involve participants thinking aloud as they are performing a set of specified tasks.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L328",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "In a usability test of a technical manual, which metric best reflects efficiency of use?",
+   "choices": [
+    "Task completion time",
+    "Error frequency count",
+    "User satisfaction score",
+    "Number of clicks"
+   ],
+   "answer": "Task completion time",
+   "rationale": "Efficiency is defined as the resources (primarily time) required to complete a task; task completion time measures this directly.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Task completion time is a standard usability metric for measuring efficiency.",
+      "url": "https://en.wikipedia.org/wiki/Usability",
+      "quote": "These categories are measured by the percent that complete the task, how long it takes to complete the tasks, ratios of success to failure to complete the task, time spent on errors, the number of errors, rating scale of satisfactions, number of times user seems frustrated, etc.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L328",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "To test whether reorganizing a report improves readers’ ability to locate key information, which design gives the strongest causal evidence?",
+   "choices": [
+    "Random assignment to report versions",
+    "Self-reported preferences afterward",
+    "Think-aloud interviews alone",
+    "Expert review of document structure"
+   ],
+   "answer": "Random assignment to report versions",
+   "rationale": "Random assignment reduces selection bias, and comparing performance across the original and reorganized versions supports a causal conclusion. The other methods do not adequately test the effect of document organization.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "Random assignment to report versions provides the strongest causal evidence for the effect of reorganization.",
+      "url": "https://en.wikipedia.org/wiki/Random_assignment",
+      "quote": "Random assignment is the desired assignment method because it provides control for all attributes of the members of the samples—in contrast to matching on only one or more variables—and provides the mathematical basis for estimating the likelihood of group equivalence for characteristics one is interested in, both for pretreatment checks on equivalence and the evaluation of post treatment results using inferential statistics.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L340",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "Which question best converts the topic of urban heat and transit use into a focused doctoral research question?",
+   "choices": [
+    "What do public-transit riders think and feel about summer heat?",
+    "How do heat exposure and service reliability jointly shape trip abandonment among low-income riders?",
+    "Is summer temperature significantly related to a city’s monthly ridership?",
+    "Which kinds of riders most often avoid transit during hot weather?"
+   ],
+   "answer": "How do heat exposure and service reliability jointly shape trip abandonment among low-income riders?",
+   "rationale": "The second choice specifies a population, relevant factors, and an outcome to explain, allowing the dissertation to address a precise problem rather than a broad topic.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L340",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "A scholar reviews studies on algorithmic hiring. Which gap would provide the clearest basis for an original dissertation project?",
+   "choices": [
+    "Prior studies measure outcomes, but not how applicant explanations affect later decisions.",
+    "Many organizations use algorithmic tools, but few leaders understand them.",
+    "Hiring algorithms are widely discussed, yet researchers disagree on their popularity.",
+    "The topic connects technology, law, ethics, management, and public policy."
+   ],
+   "answer": "Prior studies measure outcomes, but not how applicant explanations affect later decisions.",
+   "rationale": "The correct option identifies a specific gap in what prior research has examined and proposes a mechanism that the dissertation can investigate.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L340",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "Which contribution claim is strongest for a doctoral study of how remote work changes team information sharing?",
+   "choices": [
+    "Shows when and why remote work changes information-sharing practices.",
+    "Confirms that information sharing is important to modern organizations.",
+    "Introduces remote work as a relevant subject for future research.",
+    "Demonstrates that remote work is more common than office work."
+   ],
+   "answer": "Shows when and why remote work changes information-sharing practices.",
+   "rationale": "The correct option makes a clear scholarly contribution by explaining when and why the relationship occurs rather than merely documenting importance or prevalence.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L340",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "Which project scope is most suitable for a focused doctoral dissertation on housing affordability and migration?",
+   "choices": [
+    "Tests one proposed mechanism in one city during a defined period.",
+    "Studies every city in one country and compares all migration causes.",
+    "Explains housing policy worldwide from a broad historical perspective.",
+    "Examines migration, housing, economics, politics, and culture together."
+   ],
+   "answer": "Tests one proposed mechanism in one city during a defined period.",
+   "rationale": "The correct option is narrow enough for a feasible doctoral study while still allowing the scholar to investigate a precise, original mechanism.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "doctoral:L415",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 415,
+   "format": "multiple_choice",
+   "prompt": "What is an orphan work in copyright law?",
+   "choices": [
+    "Work whose author cannot be identified or located",
+    "Work published before 1923 in the US",
+    "Work whose copyright term has expired",
+    "Work dedicated to the public domain"
+   ],
+   "answer": "Work whose author cannot be identified or located",
+   "rationale": "An orphan work is defined as a work whose rights holder cannot be identified or located.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "An orphan work is a copyrighted work whose author cannot be identified or located.",
+      "url": "https://en.wikipedia.org/wiki/Orphan_Work",
+      "quote": "An orphan work is a copyright -protected work for which rightsholders are positively indeterminate or uncontactable.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "An orphan work is a copyrighted work whose author is unknown or cannot be identified or located.",
+      "url": "https://en.wikipedia.org/wiki/Orphan_Work",
+      "quote": "An orphan work is a copyright -protected work for which rightsholders are positively indeterminate or uncontactable.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L296",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "What strategy most directly enhances the trustworthiness of qualitative findings in a literacy classroom study?",
+   "choices": [
+    "Conducting member checking with participants",
+    "Increasing statistical power through larger samples",
+    "Applying a Bonferroni correction to p‑values",
+    "Using random assignment to control groups"
+   ],
+   "answer": "Conducting member checking with participants",
+   "rationale": "Member checking involves participants reviewing interpretations, directly strengthening credibility and trustworthiness in qualitative research.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Member checking allows participants to assess and challenge the researcher's interpretation of qualitative data.",
+      "url": "https://en.wikipedia.org/wiki/Member_check",
+      "quote": "Since the most important issue in evaluating the rigor of qualitative research is trustworthiness, using the strategy of member checks, (along with other techniques such as independent audit, prolonged engagement, triangulation, peer debriefing), is critical to minimizing distortion.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "Member checking corroborates interpretations with participants.",
+      "url": "https://en.wikipedia.org/wiki/Member_check",
+      "quote": "Since the most important issue in evaluating the rigor of qualitative research is trustworthiness, using the strategy of member checks, (along with other techniques such as independent audit, prolonged engagement, triangulation, peer debriefing), is critical to minimizing distortion.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L276",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "An analyst tests each of 8,000 words for a frequency difference between two large corpora. Which safeguard best keeps the reported findings credible?",
+   "choices": [
+    "No correction is needed; a p < 0.05 per word suffices.",
+    "A fixed stricter cutoff of p < 0.001 per word is sufficient.",
+    "Apply a false discovery rate correction across the 8,000 tests.",
+    "Correction is only needed when the two corpora differ in size."
+   ],
+   "answer": "Apply a false discovery rate correction across the 8,000 tests.",
+   "rationale": "Testing thousands of words inflates false discoveries. Controlling the false discovery rate (e.g., Benjamini–Hochberg) limits the expected proportion of false positives among reported differences while retaining statistical power.",
+   "verified": {
+    "code": true,
+    "writer": "deepseek-ai/deepseek-v4.1-flash",
+    "writer_family": "deepseek",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "False discovery rate correction controls the expected proportion of false positives among rejected hypotheses in multiple testing.",
+      "url": "https://en.wikipedia.org/wiki/False_Discovery_Rate",
+      "quote": "In statistics , the false discovery rate ( FDR ) is a method of conceptualizing the rate of type I errors in null hypothesis testing when conducting multiple comparisons . FDR-controlling procedures are designed to control the FDR, which is the expected proportion of \"discoveries\" (rejected null hypotheses ) that are false (incorrect rejections of the null).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L318",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "What triangulation strategy strengthens validity in a mixed‑methods study of technical documentation production?",
+   "choices": [
+    "Combine interview data with only the researcher’s field notes",
+    "Compare survey results, document analysis, and participant observation",
+    "Use only quantitative metrics such as page count and revision cycles",
+    "Rely on a single case study for deep description"
+   ],
+   "answer": "Compare survey results, document analysis, and participant observation",
+   "rationale": "Triangulating multiple data sources—surveys, artifact analysis, and observation—converges evidence, whereas the other choices rely on a single source or method.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Triangulation involves using multiple data sources to strengthen validity.",
+      "url": "https://en.wiktionary.org/wiki/triangulation",
+      "quote": "Multiple sources of data were used to create a triangulation of evidence: books, documentation, archival records and relevant publications by key actors, particularly in the development field, open ended interviews, participant-observation conducted during field work and a case study.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "Triangulation strengthens validity by comparing evidence collected through multiple methods or data sources.",
+      "url": "https://en.wiktionary.org/wiki/triangulation",
+      "quote": "Multiple sources of data were used to create a triangulation of evidence: books, documentation, archival records and relevant publications by key actors, particularly in the development field, open ended interviews, participant-observation conducted during field work and a case study.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "doctoral:L318",
+   "track_id": "english",
+   "grade_id": "doctoral",
+   "skill_id": "academic_writing",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "When analyzing collaborative grant proposals using activity theory, what unit of analysis should the researcher prioritize?",
+   "choices": [
+    "Individual writer's cognitive processes alone",
+    "Mediating artifacts such as templates guidelines",
+    "Entire activity system with community rules",
+    "Final submitted document only examined"
+   ],
+   "answer": "Entire activity system with community rules",
+   "rationale": "Activity theory treats the activity system — subjects, tools, community, rules, division of labor — as the primary unit, capturing the collective, mediated nature of collaborative writing.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Activity theory analyzes an activity as a complete system involving tools, community, rules, and other components.",
+      "url": "https://en.wikipedia.org/wiki/Activity_Theory",
+      "quote": "The unit of analysis in AT is the concept of object-oriented, collective and culturally mediated human activity, or activity system. This system includes the object (or objective), subject, mediating artifacts (signs and tools), rules, community and division of labor.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

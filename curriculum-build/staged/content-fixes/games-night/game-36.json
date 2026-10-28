@@ -1,0 +1,2940 @@
+{
+ "row_id": 36,
+ "engine_id": "memory-match",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 54,
+ "generated_at": "2026-10-24T23:34:39.769Z",
+ "writer": "nvidia/nemotron-3-ultra-550b-a55b, nvidia/nemotron-3-ultra-550b-a55b:free, minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 61,
+  "code_rejected": 0,
+  "sent_to_judges": 61,
+  "kept": 50,
+  "keep_rate_of_written": 0.82,
+  "judges": {
+   "both_answered": 61,
+   "picked_same_option": 59,
+   "a_picked_key": 59,
+   "b_picked_key": 59,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ],
+   "models_b": [
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "memory-match",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 54,
+   "topic": "Activity 2 of 9 (quiz/game): Guided Fill-In - Using Voice and Mood for Effect",
+   "title": "Voice and Mood Memory Match",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q3",
+    "prompt": "The committee recommends that the proposal ____ reviewed.",
+    "choices": [
+     "was",
+     "is",
+     "be",
+     "were"
+    ],
+    "answerIndex": 2,
+    "explanation": "Be is the base form required in the mandative subjunctive after verbs like recommend.",
+    "difficulty": 3,
+    "skill": "Voice and Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q4",
+    "prompt": "The novel ____ the reader's imagination.",
+    "choices": [
+     "has been captured",
+     "is captured by",
+     "captured",
+     "captures"
+    ],
+    "answerIndex": 3,
+    "explanation": "Captures uses active voice to give the novel agency over the action.",
+    "difficulty": 2,
+    "skill": "Voice and Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q16",
+    "prompt": "Using the simple past for the hypothetical condition, if the coach ____ more clearly, the players would understand the strategy.",
+    "choices": [
+     "speaking",
+     "speaks",
+     "will speak",
+     "spoke"
+    ],
+    "answerIndex": 3,
+    "explanation": "The simple past spoke expresses the hypothetical condition in a second-conditional sentence.",
+    "difficulty": 3,
+    "skill": "Forming second-conditional sentences",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which form completes the sentence in the subjunctive mood: The judge requires that each witness ____ the question clearly under oath.",
+    "choices": [
+     "answering",
+     "answers",
+     "answered",
+     "answer"
+    ],
+    "answerIndex": 3,
+    "explanation": "The subjunctive form after requires takes the base form answer.",
+    "difficulty": 4,
+    "skill": "Subjunctive Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q30",
+    "prompt": "Rewrite in the active voice: The rare map was donated by a retired collector.",
+    "choices": [
+     "A retired collector was donated the rare map.",
+     "A retired collector donated the rare map.",
+     "A retired collector had donate the rare map.",
+     "A retired collector donated rare map."
+    ],
+    "answerIndex": 1,
+    "explanation": "The active voice makes the retired collector the doer and uses donated with the rare map as the object.",
+    "difficulty": 3,
+    "skill": "Active Voice Transformation",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q47",
+    "prompt": "Since sunrise, the volunteers ____ every tent.",
+    "choices": [
+     "will pack",
+     "had packed",
+     "have packed",
+     "are packing"
+    ],
+    "answerIndex": 2,
+    "explanation": "Since sunrise calls for the present perfect, and have packed keeps the volunteers active as the people doing the packing.",
+    "difficulty": 3,
+    "skill": "Using active voice with the present perfect",
+    "topic": "Guided Fill-In — Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q6",
+    "prompt": "I wish that he ____ here now.",
+    "choices": [
+     "was",
+     "were",
+     "is",
+     "be"
+    ],
+    "answerIndex": 1,
+    "explanation": "Were expresses a wish contrary to reality in the subjunctive mood.",
+    "difficulty": 2,
+    "skill": "Voice and Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q15",
+    "prompt": "Using the simple present for the condition, if the fog ____, we will drive more slowly.",
+    "choices": [
+     "has lifted",
+     "lifted",
+     "lifts",
+     "will lift"
+    ],
+    "answerIndex": 2,
+    "explanation": "The simple present lifts expresses the likely future condition in a first-conditional sentence.",
+    "difficulty": 3,
+    "skill": "Forming first-conditional sentences",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q28",
+    "prompt": "Using the subjunctive mood, complete the sentence: The director requests that each employee ____ the form before the meeting.",
+    "choices": [
+     "submitting",
+     "submits",
+     "submitted",
+     "submit"
+    ],
+    "answerIndex": 3,
+    "explanation": "After requests, the subjunctive uses the base form submit even though each employee is singular.",
+    "difficulty": 3,
+    "skill": "Subjunctive Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q10",
+    "prompt": "If she ____ more time, she would finish the project.",
+    "choices": [
+     "has",
+     "had",
+     "have",
+     "will"
+    ],
+    "answerIndex": 1,
+    "explanation": "A counterfactual conditional uses the past perfect 'had' in the if‑clause to show an unreal past condition.",
+    "difficulty": 4,
+    "skill": "Conditional Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q27",
+    "prompt": "Rewrite in the passive voice: The storm knocked down the old sign.",
+    "choices": [
+     "The old sign had been knocked down by the storm.",
+     "The old sign was knocking down by the storm.",
+     "The old sign was knocked down by the storm.",
+     "The old sign was knocked down the storm."
+    ],
+    "answerIndex": 2,
+    "explanation": "The passive voice places the old sign in the subject position and uses was knocked down with a by-phrase identifying the storm.",
+    "difficulty": 3,
+    "skill": "Passive Voice Transformation",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q31",
+    "prompt": "For a direct emergency command, complete the sentence: ____ the building immediately.",
+    "choices": [
+     "Left",
+     "Leaving",
+     "Leave",
+     "Leaves"
+    ],
+    "answerIndex": 2,
+    "explanation": "A direct command uses the base form of the verb without a subject, so the correct form is Leave.",
+    "difficulty": 2,
+    "skill": "Imperative Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q14",
+    "prompt": "Rewrite the sentence in the passive voice: The judges selected the finalists.",
+    "choices": [
+     "The finalists are selected by the judges.",
+     "The finalists were selected by the judges.",
+     "The finalists were selected the judges.",
+     "The finalists have selected the judges."
+    ],
+    "answerIndex": 1,
+    "explanation": "The passive construction The finalists were selected by the judges makes the finalists the focus and preserves the original past tense.",
+    "difficulty": 3,
+    "skill": "Rewriting in passive voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q48",
+    "prompt": "If the instructions ____ clearly, new volunteers would not have made errors.",
+    "choices": [
+     "have been written",
+     "had written",
+     "were being written",
+     "had been written"
+    ],
+    "answerIndex": 3,
+    "explanation": "Had been written is the passive past-perfect form needed for the third-conditional condition.",
+    "difficulty": 3,
+    "skill": "Using passive voice in a third conditional",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q46",
+    "prompt": "Complete the third conditional: If the warning lights ____ earlier, the drivers could have slowed down.",
+    "choices": [
+     "flash",
+     "had flashed",
+     "flashed",
+     "would flash"
+    ],
+    "answerIndex": 1,
+    "explanation": "In the third conditional, had flashed is required for the earlier unreal condition, while could have slowed expresses the counterfactual result.",
+    "difficulty": 4,
+    "skill": "Forming a third conditional",
+    "topic": "Guided Fill-In — Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q35",
+    "prompt": "Complete the sentence in the subjunctive mood: It is essential that every passenger ____ seated before departure.",
+    "choices": [
+     "remained",
+     "remains",
+     "remain",
+     "remaining"
+    ],
+    "answerIndex": 2,
+    "explanation": "An essential that clause takes the base form remain in the subjunctive mood to describe a continuing state.",
+    "difficulty": 3,
+    "skill": "Using the subjunctive with essential",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q1",
+    "prompt": "To emphasize the results rather than the researcher, the writer chose the ____ voice.",
+    "choices": [
+     "passive",
+     "active",
+     "conditional",
+     "subjunctive"
+    ],
+    "answerIndex": 0,
+    "explanation": "Passive voice shifts focus to the results instead of the person performing the action.",
+    "difficulty": 2,
+    "skill": "Voice and Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q49",
+    "prompt": "Rewrite the sentence in the passive voice: The science club organized the poster exhibition.",
+    "choices": [
+     "The poster exhibition was organized by the science club.",
+     "The science club was organized the poster exhibition.",
+     "The poster exhibition organized the science club.",
+     "The science club organized was the poster exhibition."
+    ],
+    "answerIndex": 0,
+    "explanation": "The passive voice makes the poster exhibition the subject and uses was organized with the science club as the agent.",
+    "difficulty": 3,
+    "skill": "Converting active voice to passive voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q5",
+    "prompt": "Should the weather ____ , the event will move indoors.",
+    "choices": [
+     "change",
+     "changes",
+     "changed",
+     "will change"
+    ],
+    "answerIndex": 0,
+    "explanation": "Change follows the inverted “should” conditional structure for a hypothetical future.",
+    "difficulty": 3,
+    "skill": "Voice and Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q9",
+    "prompt": "Please ____ the door when you leave.",
+    "choices": [
+     "close",
+     "closes",
+     "closed",
+     "closing"
+    ],
+    "answerIndex": 0,
+    "explanation": "The imperative mood uses the base form of the verb to give a direct command or request.",
+    "difficulty": 2,
+    "skill": "Imperative Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q25",
+    "prompt": "____ your name at the top of the page.",
+    "choices": [
+     "Write",
+     "Writes",
+     "Wrote",
+     "Writing"
+    ],
+    "answerIndex": 0,
+    "explanation": "The imperative mood gives a direct command using the base form of the verb.",
+    "difficulty": 3,
+    "skill": "Imperative Mood for Commands",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q22",
+    "prompt": "Convert to active: The results were announced by the manager.",
+    "choices": [
+     "The results announced the manager.",
+     "The manager announced the results.",
+     "The manager was announced by the results.",
+     "The results announce the manager."
+    ],
+    "answerIndex": 1,
+    "explanation": "The active version makes the doer \"the manager\" the subject and uses the past‑tense verb \"announced\".",
+    "difficulty": 3,
+    "skill": "Voice Transformation",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q18",
+    "prompt": "Complete the sentence in the subjunctive mood: I would prefer that you ____ the earlier train.",
+    "choices": [
+     "took",
+     "take",
+     "taking",
+     "taken"
+    ],
+    "answerIndex": 1,
+    "explanation": "The base form take is used after would prefer that to express the speaker's preference in the subjunctive.",
+    "difficulty": 4,
+    "skill": "Using subjunctive forms of preference",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q7",
+    "prompt": "To stress the doer of the action, the writer chose the ____ voice.",
+    "choices": [
+     "subjunctive",
+     "passive",
+     "active",
+     "conditional"
+    ],
+    "answerIndex": 2,
+    "explanation": "The active voice makes the subject the performer of the action, highlighting agency.",
+    "difficulty": 3,
+    "skill": "Active Voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q8",
+    "prompt": "The teacher insisted that each student ____ the assignment by Friday.",
+    "choices": [
+     "will complete",
+     "completes",
+     "completed",
+     "complete"
+    ],
+    "answerIndex": 3,
+    "explanation": "In a mandative subjunctive clause, the base form of the verb follows expressions like 'insisted that'.",
+    "difficulty": 3,
+    "skill": "Subjunctive Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q36",
+    "prompt": "Complete the direct command: At the sound of the bell, ____ your papers face down on the desk.",
+    "choices": [
+     "placing",
+     "places",
+     "placed",
+     "place"
+    ],
+    "answerIndex": 3,
+    "explanation": "The imperative mood uses the base form place when addressing the person directly.",
+    "difficulty": 2,
+    "skill": "Forming a direct command",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q2",
+    "prompt": "If I ____ you, I would study harder.",
+    "choices": [
+     "was",
+     "were",
+     "am",
+     "be"
+    ],
+    "answerIndex": 1,
+    "explanation": "Were is the subjunctive form used for contrary‑to‑fact conditionals.",
+    "difficulty": 3,
+    "skill": "Voice and Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q50",
+    "prompt": "Using the subjunctive mood, complete the sentence: The doctor insists that each athlete ____ for a concussion evaluation before practice.",
+    "choices": [
+     "is evaluated",
+     "be evaluated",
+     "was evaluated",
+     "has been evaluated"
+    ],
+    "answerIndex": 1,
+    "explanation": "Be evaluated is the passive subjunctive form used after insists that when each athlete is the subject of the action.",
+    "difficulty": 4,
+    "skill": "Using subjunctive mood with passive voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q23",
+    "prompt": "It is crucial that the committee ____ the proposal before Friday.",
+    "choices": [
+     "approved",
+     "approves",
+     "approve",
+     "approving"
+    ],
+    "answerIndex": 2,
+    "explanation": "Expressions of necessity such as 'it is crucial that' require the subjunctive mood, which uses the base form of the verb.",
+    "difficulty": 3,
+    "skill": "Subjunctive Mood for Necessity",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q42",
+    "prompt": "Before crossing the tracks, ____ the warning light.",
+    "choices": [
+     "checks",
+     "check",
+     "checked",
+     "checking"
+    ],
+    "answerIndex": 1,
+    "explanation": "A direct command uses the imperative mood, so the correct instruction is check.",
+    "difficulty": 2,
+    "skill": "Writing a direct command",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q20",
+    "prompt": "Unless the data ___ verified, the conclusion remains tentative.",
+    "choices": [
+     "were",
+     "is",
+     "be",
+     "are"
+    ],
+    "answerIndex": 3,
+    "explanation": "With a plural subject \"data\" in a real present conditional, the verb takes the plural present form \"are\".",
+    "difficulty": 3,
+    "skill": "Conditional Construction",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q11",
+    "prompt": "If the experiment ____ successful, we will publish the results.",
+    "choices": [
+     "be",
+     "were",
+     "is",
+     "been"
+    ],
+    "answerIndex": 2,
+    "explanation": "The indicative present \"is\" matches the real‑condition \"if\" clause referring to a likely future event.",
+    "difficulty": 3,
+    "skill": "Selecting appropriate verb voice and mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q12",
+    "prompt": "The coach suggests that the player ____ early for practice.",
+    "choices": [
+     "arriving",
+     "arrives",
+     "arrived",
+     "arrive"
+    ],
+    "answerIndex": 3,
+    "explanation": "After a verb of suggestion, the base form \"arrive\" is required in the subjunctive mood.",
+    "difficulty": 3,
+    "skill": "Selecting appropriate verb voice and mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q39",
+    "prompt": "In the simple past active voice, the hikers ____ the trail before sunrise.",
+    "choices": [
+     "were reached",
+     "are reaching",
+     "reached",
+     "had reached"
+    ],
+    "answerIndex": 2,
+    "explanation": "In the simple past active voice, the subject hikers performs the action, so the verb is reached.",
+    "difficulty": 2,
+    "skill": "Choosing active voice and simple past",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q43",
+    "prompt": "In the passive voice and simple past, the scores ____ by the judges.",
+    "choices": [
+     "entered",
+     "are entered",
+     "were entered",
+     "have been entered"
+    ],
+    "answerIndex": 2,
+    "explanation": "The simple past passive is formed with was or were plus the past participle, yielding were entered.",
+    "difficulty": 3,
+    "skill": "Choosing passive voice and simple past",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q21",
+    "prompt": "Had the researchers ___ the anomaly earlier, they would have adjusted the model.",
+    "choices": [
+     "noticed",
+     "notice",
+     "notices",
+     "noticing"
+    ],
+    "answerIndex": 0,
+    "explanation": "The past‑perfect conditional clause requires the past participle \"noticed\" after \"had\".",
+    "difficulty": 4,
+    "skill": "Conditional Construction",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q26",
+    "prompt": "Change the following to passive voice: The director approved the budget.",
+    "choices": [
+     "The budget is approved by the director.",
+     "The budget was approved by the director.",
+     "The budget approved by the director.",
+     "The director was approved by the budget."
+    ],
+    "answerIndex": 1,
+    "explanation": "The passive voice version makes the budget the subject and uses 'was approved by the director'.",
+    "difficulty": 3,
+    "skill": "Pass",
+    "topic": ""
+   },
+   {
+    "id": "q34",
+    "prompt": "Complete the sentence in the subjunctive mood: The librarian requests that each visitor ____ the borrowed book.",
+    "choices": [
+     "returns",
+     "return",
+     "returned",
+     "returning"
+    ],
+    "answerIndex": 1,
+    "explanation": "A requests that clause uses the base form return in the subjunctive mood, regardless of the subject's number.",
+    "difficulty": 3,
+    "skill": "Using the subjunctive after a request",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q41",
+    "prompt": "For a first conditional, the if-clause uses the present tense: if the bus ____ late, the team will miss the opening ceremony.",
+    "choices": [
+     "arrives",
+     "will arrive",
+     "is arriving",
+     "arrived"
+    ],
+    "answerIndex": 0,
+    "explanation": "A first conditional places the condition in the present tense, so the correct form is arrives.",
+    "difficulty": 2,
+    "skill": "Forming a first conditional",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q19",
+    "prompt": "To give a direct command, the writer used the ____ mood.",
+    "choices": [
+     "subjunctive",
+     "indicative",
+     "imperative",
+     "conditional"
+    ],
+    "answerIndex": 2,
+    "explanation": "The imperative mood is used for direct commands.",
+    "difficulty": 3,
+    "skill": "Mood Identification",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q17",
+    "prompt": "Complete the sentence in the subjunctive mood: The judge ordered that the witness ____ the truth.",
+    "choices": [
+     "tell",
+     "told",
+     "telling",
+     "tells"
+    ],
+    "answerIndex": 0,
+    "explanation": "The base form tell is used in the subjunctive construction ordered that the witness tell the truth.",
+    "difficulty": 4,
+    "skill": "Using base form in the subjunctive mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q29",
+    "prompt": "If each guide ____ the key exhibit by noon, the museum will open early tomorrow.",
+    "choices": [
+     "prepares",
+     "prepare",
+     "prepared",
+     "preparing"
+    ],
+    "answerIndex": 0,
+    "explanation": "The condition of a first conditional sentence uses the simple present, so the singular subject each guide takes prepares.",
+    "difficulty": 3,
+    "skill": "Conditional Mood",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q37",
+    "prompt": "Use the past hypothetical condition: If I ____ the neighborhood well, I would suggest that restaurant.",
+    "choices": [
+     "knew",
+     "know",
+     "knowing",
+     "known"
+    ],
+    "answerIndex": 0,
+    "explanation": "The second conditional pairs the past form knew with would to describe an unreal condition in the present.",
+    "difficulty": 3,
+    "skill": "Forming a second conditional",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q13",
+    "prompt": "Use the active voice to emphasize the volunteers: After the flood, volunteers ____ damaged homes.",
+    "choices": [
+     "repaired",
+     "were repaired",
+     "are repairing",
+     "were repairing"
+    ],
+    "answerIndex": 0,
+    "explanation": "The simple-past active form repaired makes the volunteers the doer of the action.",
+    "difficulty": 2,
+    "skill": "Choosing active voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q24",
+    "prompt": "If the engineer ____ the flaw, the bridge would not collapse.",
+    "choices": [
+     "noticing",
+     "notice",
+     "notices",
+     "noticed"
+    ],
+    "answerIndex": 3,
+    "explanation": "In a second conditional, the if-clause uses the past simple form of the verb to express a hypothetical present situation.",
+    "difficulty": 3,
+    "skill": "Second Conditional",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q38",
+    "prompt": "Make the actor the subject while preserving the original tense: The final sculpture was unveiled by the mayor.",
+    "choices": [
+     "The mayor unveil the final sculpture.",
+     "The mayor unveiled the final sculpture.",
+     "The mayor unveils the final sculpture.",
+     "The mayor unveiled the final sculptures."
+    ],
+    "answerIndex": 1,
+    "explanation": "Putting the mayor in the subject position creates active voice while unveiled preserves the original past tense.",
+    "difficulty": 3,
+    "skill": "Transforming passive voice into active voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q44",
+    "prompt": "Using active voice for the past hypothetical condition, if the committee ____ the schedule sooner, the volunteers could have prepared.",
+    "choices": [
+     "approves",
+     "is approving",
+     "will approve",
+     "had approved"
+    ],
+    "answerIndex": 3,
+    "explanation": "An active past hypothetical condition uses had plus the past participle, giving had approved.",
+    "difficulty": 4,
+    "skill": "Forming a past hypothetical condition",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q45",
+    "prompt": "Using the subjunctive mood, complete the sentence: The trainer recommends that each athlete ____ the safety rules before practice.",
+    "choices": [
+     "review",
+     "reviewed",
+     "will review",
+     "is reviewing"
+    ],
+    "answerIndex": 0,
+    "explanation": "In the subjunctive mood, recommend takes that plus the base form review, and the active voice keeps the athlete as the doer.",
+    "difficulty": 3,
+    "skill": "Choosing the subjunctive base form",
+    "topic": "Guided Fill-In — Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q33",
+    "prompt": "Put the object first while preserving the original tense: The storm damaged the old greenhouse.",
+    "choices": [
+     "The old greenhouse was damaged by the storm.",
+     "The old greenhouse was damage by the storm.",
+     "The old greenhouse are damaged by the storm.",
+     "The old greenhouse damaged by the storm."
+    ],
+    "answerIndex": 0,
+    "explanation": "The passive construction makes the old greenhouse the subject and uses was damaged to preserve the past tense.",
+    "difficulty": 2,
+    "skill": "Transforming active voice into passive voice",
+    "topic": "Using Voice and Mood for Effect"
+   },
+   {
+    "id": "q40",
+    "prompt": "The curator advises that every guest ____ the exhibit before noon.",
+    "choices": [
+     "views",
+     "viewed",
+     "viewing",
+     "view"
+    ],
+    "answerIndex": 3,
+    "explanation": "In a that-clause following advises, the subjunctive mood takes the base form view.",
+    "difficulty": 3,
+    "skill": "Using the subjunctive mood",
+    "topic": "Using Voice and Mood for Effect"
+   }
+  ],
+  "feedback": {
+   "correct": "Nice ear for voice and mood — that pair is matched.",
+   "incorrect": "Not this time — the card stays face down. Think about who does the action, or whether it is a wish, a condition, or a demand.",
+   "win": "All eight pairs matched — you can now choose voice and mood on purpose instead of by accident.",
+   "lose": "The pairs got away this time, but every card you saw taught you something about voice and mood.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "To emphasize the results rather than the researcher, the writer chose the ____ voice.",
+   "choices": [
+    "active",
+    "passive",
+    "conditional",
+    "subjunctive"
+   ],
+   "answerIndex": 1,
+   "explanation": "Passive voice shifts focus to the results instead of the person performing the action.",
+   "difficulty": 2,
+   "skill": "Voice and Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If I ____ you, I would study harder.",
+   "choices": [
+    "were",
+    "was",
+    "am",
+    "be"
+   ],
+   "answerIndex": 0,
+   "explanation": "Were is the subjunctive form used for contrary‑to‑fact conditionals.",
+   "difficulty": 3,
+   "skill": "Voice and Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The committee recommends that the proposal ____ reviewed.",
+   "choices": [
+    "be",
+    "is",
+    "was",
+    "were"
+   ],
+   "answerIndex": 0,
+   "explanation": "Be is the base form required in the mandative subjunctive after verbs like recommend.",
+   "difficulty": 3,
+   "skill": "Voice and Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The novel ____ the reader's imagination.",
+   "choices": [
+    "captures",
+    "is captured by",
+    "captured",
+    "has been captured"
+   ],
+   "answerIndex": 0,
+   "explanation": "Captures uses active voice to give the novel agency over the action.",
+   "difficulty": 2,
+   "skill": "Voice and Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Should the weather ____ , the event will move indoors.",
+   "choices": [
+    "change",
+    "changes",
+    "changed",
+    "will change"
+   ],
+   "answerIndex": 0,
+   "explanation": "Change follows the inverted “should” conditional structure for a hypothetical future.",
+   "difficulty": 3,
+   "skill": "Voice and Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "I wish that he ____ here now.",
+   "choices": [
+    "were",
+    "was",
+    "is",
+    "be"
+   ],
+   "answerIndex": 0,
+   "explanation": "Were expresses a wish contrary to reality in the subjunctive mood.",
+   "difficulty": 2,
+   "skill": "Voice and Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "To stress the doer of the action, the writer chose the ____ voice.",
+   "choices": [
+    "active",
+    "passive",
+    "subjunctive",
+    "conditional"
+   ],
+   "answerIndex": 0,
+   "explanation": "The active voice makes the subject the performer of the action, highlighting agency.",
+   "difficulty": 3,
+   "skill": "Active Voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The teacher insisted that each student ____ the assignment by Friday.",
+   "choices": [
+    "complete",
+    "completes",
+    "completed",
+    "will complete"
+   ],
+   "answerIndex": 0,
+   "explanation": "In a mandative subjunctive clause, the base form of the verb follows expressions like 'insisted that'.",
+   "difficulty": 3,
+   "skill": "Subjunctive Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Please ____ the door when you leave.",
+   "choices": [
+    "close",
+    "closes",
+    "closed",
+    "closing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood uses the base form of the verb to give a direct command or request.",
+   "difficulty": 2,
+   "skill": "Imperative Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If she ____ more time, she would finish the project.",
+   "choices": [
+    "had",
+    "has",
+    "have",
+    "will"
+   ],
+   "answerIndex": 0,
+   "explanation": "A counterfactual conditional uses the past perfect 'had' in the if‑clause to show an unreal past condition.",
+   "difficulty": 4,
+   "skill": "Conditional Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If the experiment ____ successful, we will publish the results.",
+   "choices": [
+    "is",
+    "were",
+    "be",
+    "been"
+   ],
+   "answerIndex": 0,
+   "explanation": "The indicative present \"is\" matches the real‑condition \"if\" clause referring to a likely future event.",
+   "difficulty": 3,
+   "skill": "Selecting appropriate verb voice and mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The coach suggests that the player ____ early for practice.",
+   "choices": [
+    "arrive",
+    "arrives",
+    "arrived",
+    "arriving"
+   ],
+   "answerIndex": 0,
+   "explanation": "After a verb of suggestion, the base form \"arrive\" is required in the subjunctive mood.",
+   "difficulty": 3,
+   "skill": "Selecting appropriate verb voice and mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Use the active voice to emphasize the volunteers: After the flood, volunteers ____ damaged homes.",
+   "choices": [
+    "repaired",
+    "were repaired",
+    "are repairing",
+    "were repairing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The simple-past active form repaired makes the volunteers the doer of the action.",
+   "difficulty": 2,
+   "skill": "Choosing active voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rewrite the sentence in the passive voice: The judges selected the finalists.",
+   "choices": [
+    "The finalists were selected by the judges.",
+    "The finalists are selected by the judges.",
+    "The finalists were selected the judges.",
+    "The finalists have selected the judges."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive construction The finalists were selected by the judges makes the finalists the focus and preserves the original past tense.",
+   "difficulty": 3,
+   "skill": "Rewriting in passive voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Using the simple present for the condition, if the fog ____, we will drive more slowly.",
+   "choices": [
+    "lifts",
+    "lifted",
+    "has lifted",
+    "will lift"
+   ],
+   "answerIndex": 0,
+   "explanation": "The simple present lifts expresses the likely future condition in a first-conditional sentence.",
+   "difficulty": 3,
+   "skill": "Forming first-conditional sentences",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Using the simple past for the hypothetical condition, if the coach ____ more clearly, the players would understand the strategy.",
+   "choices": [
+    "spoke",
+    "speaks",
+    "will speak",
+    "speaking"
+   ],
+   "answerIndex": 0,
+   "explanation": "The simple past spoke expresses the hypothetical condition in a second-conditional sentence.",
+   "difficulty": 3,
+   "skill": "Forming second-conditional sentences",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Complete the sentence in the subjunctive mood: The judge ordered that the witness ____ the truth.",
+   "choices": [
+    "tell",
+    "told",
+    "telling",
+    "tells"
+   ],
+   "answerIndex": 0,
+   "explanation": "The base form tell is used in the subjunctive construction ordered that the witness tell the truth.",
+   "difficulty": 4,
+   "skill": "Using base form in the subjunctive mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Complete the sentence in the subjunctive mood: I would prefer that you ____ the earlier train.",
+   "choices": [
+    "take",
+    "took",
+    "taking",
+    "taken"
+   ],
+   "answerIndex": 0,
+   "explanation": "The base form take is used after would prefer that to express the speaker's preference in the subjunctive.",
+   "difficulty": 4,
+   "skill": "Using subjunctive forms of preference",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "To give a direct command, the writer used the ____ mood.",
+   "choices": [
+    "imperative",
+    "indicative",
+    "subjunctive",
+    "conditional"
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood is used for direct commands.",
+   "difficulty": 3,
+   "skill": "Mood Identification",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Unless the data ___ verified, the conclusion remains tentative.",
+   "choices": [
+    "are",
+    "is",
+    "be",
+    "were"
+   ],
+   "answerIndex": 0,
+   "explanation": "With a plural subject \"data\" in a real present conditional, the verb takes the plural present form \"are\".",
+   "difficulty": 3,
+   "skill": "Conditional Construction",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Had the researchers ___ the anomaly earlier, they would have adjusted the model.",
+   "choices": [
+    "noticed",
+    "notice",
+    "notices",
+    "noticing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The past‑perfect conditional clause requires the past participle \"noticed\" after \"had\".",
+   "difficulty": 4,
+   "skill": "Conditional Construction",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Convert to active: The results were announced by the manager.",
+   "choices": [
+    "The manager announced the results.",
+    "The results announced the manager.",
+    "The manager was announced by the results.",
+    "The results announce the manager."
+   ],
+   "answerIndex": 0,
+   "explanation": "The active version makes the doer \"the manager\" the subject and uses the past‑tense verb \"announced\".",
+   "difficulty": 3,
+   "skill": "Voice Transformation",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "It is crucial that the committee ____ the proposal before Friday.",
+   "choices": [
+    "approve",
+    "approves",
+    "approved",
+    "approving"
+   ],
+   "answerIndex": 0,
+   "explanation": "Expressions of necessity such as 'it is crucial that' require the subjunctive mood, which uses the base form of the verb.",
+   "difficulty": 3,
+   "skill": "Subjunctive Mood for Necessity",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If the engineer ____ the flaw, the bridge would not collapse.",
+   "choices": [
+    "noticed",
+    "notice",
+    "notices",
+    "noticing"
+   ],
+   "answerIndex": 0,
+   "explanation": "In a second conditional, the if-clause uses the past simple form of the verb to express a hypothetical present situation.",
+   "difficulty": 3,
+   "skill": "Second Conditional",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "____ your name at the top of the page.",
+   "choices": [
+    "Write",
+    "Writes",
+    "Wrote",
+    "Writing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood gives a direct command using the base form of the verb.",
+   "difficulty": 3,
+   "skill": "Imperative Mood for Commands",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Change the following to passive voice: The director approved the budget.",
+   "choices": [
+    "The budget was approved by the director.",
+    "The budget is approved by the director.",
+    "The budget approved by the director.",
+    "The director was approved by the budget."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive voice version makes the budget the subject and uses 'was approved by the director'.",
+   "difficulty": 3,
+   "skill": "Pass",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rewrite in the passive voice: The storm knocked down the old sign.",
+   "choices": [
+    "The old sign was knocked down by the storm.",
+    "The old sign was knocking down by the storm.",
+    "The old sign had been knocked down by the storm.",
+    "The old sign was knocked down the storm."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive voice places the old sign in the subject position and uses was knocked down with a by-phrase identifying the storm.",
+   "difficulty": 3,
+   "skill": "Passive Voice Transformation",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Using the subjunctive mood, complete the sentence: The director requests that each employee ____ the form before the meeting.",
+   "choices": [
+    "submit",
+    "submits",
+    "submitted",
+    "submitting"
+   ],
+   "answerIndex": 0,
+   "explanation": "After requests, the subjunctive uses the base form submit even though each employee is singular.",
+   "difficulty": 3,
+   "skill": "Subjunctive Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If each guide ____ the key exhibit by noon, the museum will open early tomorrow.",
+   "choices": [
+    "prepares",
+    "prepare",
+    "prepared",
+    "preparing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The condition of a first conditional sentence uses the simple present, so the singular subject each guide takes prepares.",
+   "difficulty": 3,
+   "skill": "Conditional Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rewrite in the active voice: The rare map was donated by a retired collector.",
+   "choices": [
+    "A retired collector donated the rare map.",
+    "A retired collector was donated the rare map.",
+    "A retired collector had donate the rare map.",
+    "A retired collector donated rare map."
+   ],
+   "answerIndex": 0,
+   "explanation": "The active voice makes the retired collector the doer and uses donated with the rare map as the object.",
+   "difficulty": 3,
+   "skill": "Active Voice Transformation",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "For a direct emergency command, complete the sentence: ____ the building immediately.",
+   "choices": [
+    "Leave",
+    "Leaving",
+    "Left",
+    "Leaves"
+   ],
+   "answerIndex": 0,
+   "explanation": "A direct command uses the base form of the verb without a subject, so the correct form is Leave.",
+   "difficulty": 2,
+   "skill": "Imperative Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which form completes the sentence in the subjunctive mood: The judge requires that each witness ____ the question clearly under oath.",
+   "choices": [
+    "answer",
+    "answers",
+    "answered",
+    "answering"
+   ],
+   "answerIndex": 0,
+   "explanation": "The subjunctive form after requires takes the base form answer.",
+   "difficulty": 4,
+   "skill": "Subjunctive Mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Put the object first while preserving the original tense: The storm damaged the old greenhouse.",
+   "choices": [
+    "The old greenhouse was damaged by the storm.",
+    "The old greenhouse was damage by the storm.",
+    "The old greenhouse are damaged by the storm.",
+    "The old greenhouse damaged by the storm."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive construction makes the old greenhouse the subject and uses was damaged to preserve the past tense.",
+   "difficulty": 2,
+   "skill": "Transforming active voice into passive voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Complete the sentence in the subjunctive mood: The librarian requests that each visitor ____ the borrowed book.",
+   "choices": [
+    "return",
+    "returns",
+    "returned",
+    "returning"
+   ],
+   "answerIndex": 0,
+   "explanation": "A requests that clause uses the base form return in the subjunctive mood, regardless of the subject's number.",
+   "difficulty": 3,
+   "skill": "Using the subjunctive after a request",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Complete the sentence in the subjunctive mood: It is essential that every passenger ____ seated before departure.",
+   "choices": [
+    "remain",
+    "remains",
+    "remained",
+    "remaining"
+   ],
+   "answerIndex": 0,
+   "explanation": "An essential that clause takes the base form remain in the subjunctive mood to describe a continuing state.",
+   "difficulty": 3,
+   "skill": "Using the subjunctive with essential",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Complete the direct command: At the sound of the bell, ____ your papers face down on the desk.",
+   "choices": [
+    "place",
+    "places",
+    "placed",
+    "placing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood uses the base form place when addressing the person directly.",
+   "difficulty": 2,
+   "skill": "Forming a direct command",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Use the past hypothetical condition: If I ____ the neighborhood well, I would suggest that restaurant.",
+   "choices": [
+    "knew",
+    "know",
+    "knowing",
+    "known"
+   ],
+   "answerIndex": 0,
+   "explanation": "The second conditional pairs the past form knew with would to describe an unreal condition in the present.",
+   "difficulty": 3,
+   "skill": "Forming a second conditional",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Make the actor the subject while preserving the original tense: The final sculpture was unveiled by the mayor.",
+   "choices": [
+    "The mayor unveiled the final sculpture.",
+    "The mayor unveil the final sculpture.",
+    "The mayor unveils the final sculpture.",
+    "The mayor unveiled the final sculptures."
+   ],
+   "answerIndex": 0,
+   "explanation": "Putting the mayor in the subject position creates active voice while unveiled preserves the original past tense.",
+   "difficulty": 3,
+   "skill": "Transforming passive voice into active voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the simple past active voice, the hikers ____ the trail before sunrise.",
+   "choices": [
+    "were reached",
+    "reached",
+    "are reaching",
+    "had reached"
+   ],
+   "answerIndex": 1,
+   "explanation": "In the simple past active voice, the subject hikers performs the action, so the verb is reached.",
+   "difficulty": 2,
+   "skill": "Choosing active voice and simple past",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The curator advises that every guest ____ the exhibit before noon.",
+   "choices": [
+    "views",
+    "viewed",
+    "viewing",
+    "view"
+   ],
+   "answerIndex": 3,
+   "explanation": "In a that-clause following advises, the subjunctive mood takes the base form view.",
+   "difficulty": 3,
+   "skill": "Using the subjunctive mood",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "For a first conditional, the if-clause uses the present tense: if the bus ____ late, the team will miss the opening ceremony.",
+   "choices": [
+    "arrived",
+    "will arrive",
+    "is arriving",
+    "arrives"
+   ],
+   "answerIndex": 3,
+   "explanation": "A first conditional places the condition in the present tense, so the correct form is arrives.",
+   "difficulty": 2,
+   "skill": "Forming a first conditional",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Before crossing the tracks, ____ the warning light.",
+   "choices": [
+    "checks",
+    "check",
+    "checked",
+    "checking"
+   ],
+   "answerIndex": 1,
+   "explanation": "A direct command uses the imperative mood, so the correct instruction is check.",
+   "difficulty": 2,
+   "skill": "Writing a direct command",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the passive voice and simple past, the scores ____ by the judges.",
+   "choices": [
+    "entered",
+    "are entered",
+    "were entered",
+    "have been entered"
+   ],
+   "answerIndex": 2,
+   "explanation": "The simple past passive is formed with was or were plus the past participle, yielding were entered.",
+   "difficulty": 3,
+   "skill": "Choosing passive voice and simple past",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Using active voice for the past hypothetical condition, if the committee ____ the schedule sooner, the volunteers could have prepared.",
+   "choices": [
+    "approves",
+    "is approving",
+    "had approved",
+    "will approve"
+   ],
+   "answerIndex": 2,
+   "explanation": "An active past hypothetical condition uses had plus the past participle, giving had approved.",
+   "difficulty": 4,
+   "skill": "Forming a past hypothetical condition",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Using the subjunctive mood, complete the sentence: The trainer recommends that each athlete ____ the safety rules before practice.",
+   "choices": [
+    "review",
+    "reviewed",
+    "will review",
+    "is reviewing"
+   ],
+   "answerIndex": 0,
+   "explanation": "In the subjunctive mood, recommend takes that plus the base form review, and the active voice keeps the athlete as the doer.",
+   "difficulty": 3,
+   "skill": "Choosing the subjunctive base form",
+   "topic": "Guided Fill-In — Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": [
+     {
+      "claim": "Subjunctive construction after recommend uses the base form of the verb.",
+      "url": "https://en.wiktionary.org/wiki/subjunctive_mood",
+      "quote": "modern English has only one verb that has mutually distinguishable indicative and subjunctive forms — be.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Complete the third conditional: If the warning lights ____ earlier, the drivers could have slowed down.",
+   "choices": [
+    "flash",
+    "flashed",
+    "had flashed",
+    "would flash"
+   ],
+   "answerIndex": 2,
+   "explanation": "In the third conditional, had flashed is required for the earlier unreal condition, while could have slowed expresses the counterfactual result.",
+   "difficulty": 4,
+   "skill": "Forming a third conditional",
+   "topic": "Guided Fill-In — Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Since sunrise, the volunteers ____ every tent.",
+   "choices": [
+    "have packed",
+    "had packed",
+    "will pack",
+    "are packing"
+   ],
+   "answerIndex": 0,
+   "explanation": "Since sunrise calls for the present perfect, and have packed keeps the volunteers active as the people doing the packing.",
+   "difficulty": 3,
+   "skill": "Using active voice with the present perfect",
+   "topic": "Guided Fill-In — Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If the instructions ____ clearly, new volunteers would not have made errors.",
+   "choices": [
+    "had been written",
+    "had written",
+    "were being written",
+    "have been written"
+   ],
+   "answerIndex": 0,
+   "explanation": "Had been written is the passive past-perfect form needed for the third-conditional condition.",
+   "difficulty": 3,
+   "skill": "Using passive voice in a third conditional",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rewrite the sentence in the passive voice: The science club organized the poster exhibition.",
+   "choices": [
+    "The poster exhibition was organized by the science club.",
+    "The science club was organized the poster exhibition.",
+    "The poster exhibition organized the science club.",
+    "The science club organized was the poster exhibition."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive voice makes the poster exhibition the subject and uses was organized with the science club as the agent.",
+   "difficulty": 3,
+   "skill": "Converting active voice to passive voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Using the subjunctive mood, complete the sentence: The doctor insists that each athlete ____ for a concussion evaluation before practice.",
+   "choices": [
+    "be evaluated",
+    "is evaluated",
+    "was evaluated",
+    "has been evaluated"
+   ],
+   "answerIndex": 0,
+   "explanation": "Be evaluated is the passive subjunctive form used after insists that when each athlete is the subject of the action.",
+   "difficulty": 4,
+   "skill": "Using subjunctive mood with passive voice",
+   "topic": "Using Voice and Mood for Effect",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Had I known the deadline, I ____ started earlier.",
+   "choices": [
+    "would have",
+    "would not",
+    "will have",
+    "might have"
+   ],
+   "answerIndex": 0,
+   "explanation": "The conditional perfect 'would have' follows an inverted past‑perfect clause to express a hypothetical past result.",
+   "reason": "B: not exactly one correct (Both “would have started” and “might have started” are grammatical; without context, the sentence does not distinguish certainty from possib)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The report states that the findings ____ significant.",
+   "choices": [
+    "are",
+    "is",
+    "be",
+    "were"
+   ],
+   "answerIndex": 0,
+   "explanation": "The indicative plural verb 'are' agrees with the plural subject 'findings' in a declarative clause.",
+   "reason": "B: not exactly one correct (Both “are significant” and “were significant” are grammatical because the report could describe current or past findings.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The committee ____ that the proposal be reviewed.",
+   "choices": [
+    "recommends",
+    "recommended",
+    "recommend",
+    "recommending"
+   ],
+   "answerIndex": 0,
+   "explanation": "The present‑tense singular verb \"recommends\" agrees with the singular subject \"committee\" and introduces a subjunctive clause.",
+   "reason": "B: not exactly one correct (Both “recommends that the proposal be reviewed” and “recommended that the proposal be reviewed” are grammatical, and no time frame selects o)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Had the team known the rules, they ____ have avoided the penalty.",
+   "choices": [
+    "would",
+    "could",
+    "should",
+    "might"
+   ],
+   "answerIndex": 0,
+   "explanation": "In a past‑unreal conditional, the modal \"would\" combines with \"have\" to form the perfect conditional.",
+   "reason": "B: not exactly one correct (“Would have,” “could have,” and “might have” can all complete the counterfactual; in a normative reading, “should have” is also defensible.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The manuscript ____ reviewed by the editor before publication.",
+   "choices": [
+    "was",
+    "were",
+    "is",
+    "be"
+   ],
+   "answerIndex": 0,
+   "explanation": "The singular subject \"manuscript\" takes the singular past‑passive auxiliary \"was\".",
+   "reason": "B: not exactly one correct (Both “was reviewed” and “is reviewed” are grammatical, with the latter naturally describing a recurring review process before publication.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "If the manager ____ the request, the project would start next week.",
+   "choices": [
+    "approves",
+    "approved",
+    "approve",
+    "approving"
+   ],
+   "answerIndex": 0,
+   "explanation": "The present‑tense \"approves\" fits a real future conditional introduced by \"if\".",
+   "reason": "B: picked 1 not 0 (Option 0 is defensible as a mixed or first conditional with a contingent future result, while option 1 is the standard second conditional; t)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The rule requires that each participant ___ a waiver before competing.",
+   "choices": [
+    "sign",
+    "signs",
+    "signed",
+    "signing"
+   ],
+   "answerIndex": 0,
+   "explanation": "The mandative subjunctive uses the base form of the verb, so \"sign\" is correct.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The teacher insists that the student ___ the essay.",
+   "choices": [
+    "write",
+    "writes",
+    "wrote",
+    "writing"
+   ],
+   "answerIndex": 0,
+   "explanation": "After verbs of insistence the mandative subjunctive calls for the base form \"write\".",
+   "reason": "B: not exactly one correct (Both “write” (mandative/subjunctive sense) and “writes” (factual sense) are grammatically defensible, so there is not exactly one correct op)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The article uses the ____ voice to highlight the researcher's breakthrough.",
+   "choices": [
+    "active",
+    "passive",
+    "middle",
+    "reflexive"
+   ],
+   "answerIndex": 0,
+   "explanation": "The active voice makes the researcher the subject, emphasizing the doer of the action.",
+   "reason": "A: not exactly one correct (The article is not provided, so it is impossible to verify whether it uses active or passive voice; both could highlight the breakthrough.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The writer selects the ____ voice to keep the focus on the outcome.",
+   "choices": [
+    "passive",
+    "active",
+    "causative",
+    "reciprocal"
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive voice places the outcome in subject position, shifting focus away from the actor.",
+   "reason": "A: not exactly one correct (The writer's passage is not provided, so the intended voice cannot be verified unambiguously.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "To express a condition treated as contrary to fact, the writer uses the ____ mood.",
+   "choices": [
+    "conditional",
+    "subjunctive",
+    "indicative",
+    "imperative"
+   ],
+   "answerIndex": 0,
+   "explanation": "The conditional mood expresses conditions, including situations presented as contrary to fact.",
+   "reason": "A: picked 1 not 0 | B: picked 1 not 0"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

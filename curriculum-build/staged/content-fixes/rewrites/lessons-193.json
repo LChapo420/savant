@@ -1,0 +1,152 @@
+{
+ "collection": "lessons",
+ "row_id": 193,
+ "shared": false,
+ "user_id": 365,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 3,
+  "after": 2
+ },
+ "errors": [
+  {
+   "ref": "P25",
+   "wrong": "In 2x + 7 = 17, dividing only the left side by 2 gives x + 7 = 17 and then x = 10.",
+   "correct": "Dividing the whole left side of 2x + 7 = 17 by 2 gives x + 3.5; x + 7 = 17 comes from dividing only the 2x term.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "In 2x + 7 = 17, dividing only the left side by 2 gives x + 7 = 17 and then x = 10. The two sides no longer hold the same value, and the check fails: 2 * 10 + 7 = 27, not 17.",
+   "replace": "Mistake: dividing only the 2x term in 2x + 7 = 17 gives x + 7 = 17 and then x = 10. Dividing the whole left side of 2x + 7 = 17 by 2 gives x + 3.5; x + 7 = 17 comes from dividing only the 2x term. The original equation fails the check: 2 * 10 + 7 = 27, not 17.",
+   "fixes": [
+    "P25"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[1]",
+   "before": "In 2x + 7 = 17, dividing only the left side by 2 gives x + 7 = 17 and then x = 10. The two sides no longer hold the same value, and the check fails: 2 * 10 + 7 = 27, not 17.",
+   "after": "Mistake: dividing only the 2x term in 2x + 7 = 17 gives x + 7 = 17 and then x = 10. Dividing the whole left side of 2x + 7 = 17 by 2 gives x + 3.5; x + 7 = 17 comes from dividing only the 2x term. The original equation fails the check: 2 * 10 + 7 = 27, not 17.",
+   "fixes": [
+    "P25"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Linear equations: isolating x one step at a time",
+  "intro": "A linear equation is a statement that two expressions are equal, like x + 5 = 12. Your goal is always the same: get x alone on one side. This lesson shows the one rule that does all the work, then applies it to the simplest equations first.",
+  "sections": [
+   {
+    "heading": "Rule 1: do the same thing to both sides",
+    "body": "The rule is: whatever you do to one side of the equation, do to the other side. That keeps the two sides balanced, so the x you find is still the true solution. When something is added to x, undo it by subtracting that same number from both sides.",
+    "example": "x + 5 = 12. Subtract 5 from both sides: x + 5 - 5 = 12 - 5, so x = 7. Check: 7 + 5 = 12, which is true."
+   },
+   {
+    "heading": "Rule 2: undo multiplication with division",
+    "body": "When x is multiplied by a number, undo it by dividing both sides by that number. Do not touch anything else in the equation. This is the mirror image of Rule 1: subtraction undoes addition, division undoes multiplication.",
+    "example": "4x = 20. Divide both sides by 4: 4x / 4 = 20 / 4, so x = 5. Check: 4 * 5 = 20, which is true."
+   },
+   {
+    "heading": "Rule 3: in two-step equations, undo addition first",
+    "body": "When x is both multiplied and added to, undo the addition or subtraction first, then undo the multiplication. If you divide first, you get stuck with a fraction and the equation stops being simple. Doing addition first always lands you on a clean multiplication problem.",
+    "example": "3x + 4 = 19. First subtract 4 from both sides: 3x = 15. Then divide both sides by 3: x = 5. Check: 3 * 5 + 4 = 19, which is true."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 2x + 7 = 17.",
+   "steps": [
+    "Look at the structure: x is multiplied by 2, then 7 is added. Two steps are needed.",
+    "Rule 3 says undo the addition first. Subtract 7 from both sides: 2x + 7 - 7 = 17 - 7, which simplifies to 2x = 10.",
+    "Now undo the multiplication. Divide both sides by 2: 2x / 2 = 10 / 2, which gives x = 5.",
+    "Check the answer in the original equation: 2 * 5 + 7 = 10 + 7 = 17. The left side equals the right side, so x = 5 is correct."
+   ],
+   "answer": "x = 5"
+  },
+  "common_mistakes": [
+   "In x + 5 = 12, writing x = 12 + 5 gives x = 17. That adds 5 to the right side instead of subtracting it; the correct move is subtracting 5 from both sides, which gives x = 7.",
+   "Mistake: dividing only the 2x term in 2x + 7 = 17 gives x + 7 = 17 and then x = 10. Dividing the whole left side of 2x + 7 = 17 by 2 gives x + 3.5; x + 7 = 17 comes from dividing only the 2x term. The original equation fails the check: 2 * 10 + 7 = 27, not 17.",
+   "In 3x + 4 = 19, adding 4 to the right side instead of subtracting it gives 3x = 23 and x = 23/3. The check fails: 3 * (23/3) + 4 = 27, not 19.",
+   "In 3x + 4 = 19, dividing by 3 before removing the 4 gives x + 4 = 19/3, which turns a clean problem into a fraction problem. Subtract 4 first."
+  ],
+  "summary": "A linear equation is solved by isolating x with the rule: do the same thing to both sides. Undo addition or subtraction first, then undo multiplication by dividing. Always plug your answer back into the original equation to check it.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "For x + 6 = 11, which move isolates x?",
+    "answer": "Subtract 6 from both sides",
+    "rationale": "Rule 1 says undo addition with subtraction, applied to both sides: x + 6 - 6 = 11 - 6, so x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Add 6 to both sides",
+     "Subtract 6 from both sides",
+     "Subtract 6 from the left side only",
+     "Divide both sides by 6"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 5x = 35.",
+    "answer": "x = 7",
+    "rationale": "Rule 2 says undo multiplication by dividing both sides by 5: 5x / 5 = 35 / 5, so x = 7.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "In 3x + 4 = 19, what should you do first?",
+    "answer": "Subtract 4 from both sides",
+    "rationale": "Rule 3 says undo the addition before the multiplication. Subtracting 4 gives 3x = 15, then dividing by 3 gives x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Divide both sides by 3",
+     "Subtract 4 from both sides",
+     "Add 4 to both sides",
+     "Subtract 19 from both sides"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 2x + 3 = 11.",
+    "answer": "x = 4",
+    "rationale": "Undo the addition first: subtract 3 from both sides to get 2x = 8. Then undo the multiplication: divide both sides by 2 to get x = 4, and the check 2 * 4 + 3 = 11 holds.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

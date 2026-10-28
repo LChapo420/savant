@@ -1,0 +1,63 @@
+{
+  "engineId": "eight-ball-pool",
+  "displayName": "8-Ball Pool",
+  "difficulty": "medium",
+  "mechanic": "Mobile-style cue power slider drives a physics shot strong enough to cross and return; aim guide and cue stick shown. Correct question unlocks a user turn; potting an own solid grants a FREE extra shot. Bot takes real physics shots after a user miss. Standard rack, clear group before the 8-ball.",
+  "questionType": "multiple_choice",
+  "questionCount": 50,
+  "questionCountNote": "50 unique questions per level. A round only ever moves forward through them: losing, answering wrong, or pressing Play again continues at the next unseen question, so the pool must outlast many rounds.",
+  "choicesPerQuestion": 4,
+  "answerIndexRange": [
+    0,
+    3
+  ],
+  "difficultyScale": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat",
+    "label": "medium"
+  },
+  "requiresExplanation": true,
+  "requiresTopicTag": true,
+  "plainTextOnly": true,
+  "distractorRules": "Wrong options must be the same kind of thing as the right one — same units, same part of speech, same level of detail, similar length. For number work the distractors must be plausible miscalculations at this level, never oddballs identifiable at a glance.",
+  "payloadShape": {
+    "schemaVersion": 1,
+    "meta": [
+      "subject",
+      "grade",
+      "level",
+      "topic",
+      "title",
+      "ageRange"
+    ],
+    "settings": {
+      "questionCount": 50,
+      "choicesPerTurn": 4,
+      "difficulty": {
+        "start": 4,
+        "end": 7,
+        "curve": "flat"
+      },
+      "timeLimitSec": null
+    },
+    "questions": [
+      "id",
+      "prompt",
+      "choices[4]",
+      "answerIndex",
+      "explanation",
+      "difficulty",
+      "skill",
+      "topic"
+    ],
+    "feedback": [
+      "correct",
+      "incorrect",
+      "win",
+      "lose",
+      "draw",
+      "outOfQuestions"
+    ]
+  }
+}

@@ -1,0 +1,152 @@
+{
+ "collection": "lessons",
+ "row_id": 425,
+ "shared": false,
+ "user_id": 833,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P37",
+   "wrong": "In x + 6 = 14, adding 6 to both sides gives x = 20, and 20 + 6 = 26 does not equal 14.",
+   "correct": "Adding 6 to both sides of x + 6 = 14 gives x + 12 = 20 (x = 8), not x = 20.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Adding the number instead of subtracting it. In x + 6 = 14, adding 6 to both sides gives x = 20, and 20 + 6 = 26 does not equal 14.",
+   "replace": "Adding the number instead of subtracting it. In x + 6 = 14, adding 6 to both sides gives x + 12 = 20, so x = 8, not x = 20.",
+   "fixes": [
+    "P37"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Adding the number instead of subtracting it. In x + 6 = 14, adding 6 to both sides gives x = 20, and 20 + 6 = 26 does not equal 14.",
+   "after": "Adding the number instead of subtracting it. In x + 6 = 14, adding 6 to both sides gives x + 12 = 20, so x = 8, not x = 20.",
+   "fixes": [
+    "P37"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving One-Step Equations with Addition",
+  "intro": "A linear equation like x + 6 = 14 hides the value of x. You already know the answer should make the statement true, so the goal is to unwrap x. We will do that with one move: the inverse operation.",
+  "sections": [
+   {
+    "heading": "The rule: undo addition with subtraction",
+    "body": "When a number is added to x, subtract that same number from both sides of the equation. Doing it to both sides keeps the equation balanced, so the two sides stay equal. After the subtraction, the x term is alone and the number on the right is your answer.",
+    "example": "Solve x + 6 = 14.\nSubtract 6 from both sides: x + 6 - 6 = 14 - 6.\nThis gives x = 8."
+   },
+   {
+    "heading": "Why both sides must change",
+    "body": "The equal sign says the left side and the right side are the same amount. If you subtract 6 from only the left side, the two sides are no longer equal and your answer is not a solution. The move you apply to one side is always copied to the other side.",
+    "example": "x + 6 = 14.\nWrong: x + 6 - 6 = 14 gives x = 14, but 14 + 6 = 20, not 14.\nRight: x + 6 - 6 = 14 - 6 gives x = 8, and 8 + 6 = 14."
+   },
+   {
+    "heading": "Check your answer by substituting it back",
+    "body": "Take your answer and put it back into x in the original equation. If the left side equals the right side, the answer is correct. This check catches the wrong move before it costs you a question.",
+    "example": "Found x = 8 in x + 6 = 14.\nSubstitute: 8 + 6 = 14.\nBoth sides are 14, so x = 8 is correct."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve x + 9 = 4.",
+   "steps": [
+    "Name the operation attached to x: 9 is added to x, so the equation is x + 9 = 4.",
+    "Undo the addition. The inverse of adding 9 is subtracting 9, so subtract 9 from both sides: x + 9 - 9 = 4 - 9.",
+    "Simplify each side. On the left, 9 - 9 = 0, leaving just x. On the right, 4 - 9 = -5. So x = -5.",
+    "Check by substituting back into x + 9 = 4: -5 + 9 = 4. Both sides are 4, so the answer is correct."
+   ],
+   "answer": "x = -5"
+  },
+  "common_mistakes": [
+   "Adding the number instead of subtracting it. In x + 6 = 14, adding 6 to both sides gives x + 12 = 20, so x = 8, not x = 20.",
+   "Subtracting from only one side. In x + 6 = 14, writing x + 6 - 6 = 14 gives x = 14, which fails the check because 14 + 6 = 20.",
+   "Keeping the added number on the left while writing its negative on the right. Writing x = 14 - 6 as x = 8 is fine only after the 6 is actually removed from the left; leaving x + 6 = 8 is the unfinished move.",
+   "Doing 9 - 4 instead of 4 - 9 in x + 9 = 4. The subtraction runs right side minus the number, so 4 - 9 = -5, not 5."
+  ],
+  "summary": "To solve x + a = b, subtract a from both sides to get x = b - a. Keep both sides balanced, then check by substituting your answer into the original equation.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x + 3 = 10.",
+    "answer": "x = 7",
+    "rationale": "3 is added to x, so subtract 3 from both sides: x = 10 - 3 = 7.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "x = 13",
+     "x = 7",
+     "x = 30",
+     "x = -7"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve x + 15 = 6.",
+    "answer": "x = -9",
+    "rationale": "Subtract 15 from both sides: x = 6 - 15 = -9. The subtraction runs 6 minus 15, so the answer is negative.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Which move correctly starts solving x - 5 = 11?",
+    "answer": "Add 5 to both sides",
+    "rationale": "5 is subtracted from x, and the inverse of subtraction is addition, so adding 5 to both sides gives x = 16.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Subtract 5 from both sides",
+     "Add 5 to both sides",
+     "Divide both sides by 5",
+     "Subtract 11 from both sides"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "You solved x + 6 = 14 and got x = 8. Substitute 8 back into x + 6 = 14. What do you get on the left side?",
+    "answer": "14",
+    "rationale": "Replacing x with 8 gives 8 + 6 = 14, which matches the right side, so x = 8 is correct.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

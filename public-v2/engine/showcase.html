@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Block Showcase — Lesson Engine Testbed</title>
+  <!-- The live testbed for Option 3: Modular Primitives. Every generated block
+       is listed by name up front, then rendered with its own testPayload as
+       soon as its module arrives — 107 scripts in parallel, each card
+       independent, one broken block never blanking the page. -->
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #111827;
+      --border: #1f293d;
+      --border-active: #334155;
+      --accent: #38bdf8;
+      --glow: rgba(56, 189, 248, 0.15);
+      --good: #34d399;
+      --bad: #f87171;
+      --caution: #fbbf24;
+      --ink: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+    }
+    .top {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
+      padding: 12px 18px; background: rgba(9, 13, 22, .94); border-bottom: 1px solid var(--border);
+    }
+    .brand { font-weight: 800; letter-spacing: .2px; }
+    .brand b { color: var(--accent); }
+    .chip {
+      padding: 4px 11px; border-radius: 999px; font-size: .78rem; font-weight: 700;
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+    }
+    .chip b { color: var(--ink); }
+    main { max-width: 1120px; margin: 0 auto; padding: 22px 18px 80px; }
+    h1 { font-size: 1.55rem; margin: 8px 0 4px; }
+    .lede { color: var(--muted); margin: 0 0 20px; max-width: 74ch; }
+
+    /* The named index: every block, on screen the moment the registry loads. */
+    .index {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px 18px; margin: 0 0 26px;
+    }
+    .index h2 { font-size: 1.02rem; margin: 0 0 4px; }
+    .index .counts { color: var(--muted); font-size: .82rem; margin-bottom: 12px; }
+    .idx-group { margin: 0 0 14px; }
+    .idx-group h3 {
+      font-size: .74rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); margin: 0 0 6px;
+    }
+    .idx-list {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none;
+    }
+    .idx-list a {
+      display: inline-block; padding: 5px 10px; border-radius: 999px; text-decoration: none;
+      border: 1px solid var(--border-active); color: var(--ink); font-size: .8rem; font-weight: 600;
+    }
+    .idx-list a:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+    .idx-list a .tag { color: var(--muted); font-weight: 500; font-size: .72rem; margin-left: 6px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      margin: 0 0 20px; overflow: hidden; scroll-margin-top: 70px;
+    }
+    .card-head {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+    }
+    .card-title { font-weight: 800; font-size: 1.05rem; }
+    .card-title .num { color: var(--muted); font-weight: 600; margin-right: 8px; font-size: .85rem; }
+    .badge {
+      font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border-active); color: var(--muted);
+    }
+    .badge.Foundational { color: var(--accent); border-color: rgba(56, 189, 248, .5); }
+    .badge.Assessment { color: var(--good); border-color: rgba(52, 211, 153, .5); }
+    .badge.Game { color: var(--caution); border-color: rgba(251, 191, 36, .5); }
+    .badge.Utility { color: var(--muted); }
+    .card-desc { padding: 12px 18px 0; color: var(--muted); font-size: .9rem; }
+    .sandbox { padding: 18px; min-height: 60px; }
+    .sandbox .pending { color: var(--muted); font-size: .85rem; }
+    .sandbox .broken {
+      padding: 14px 16px; border: 1px dashed var(--bad); border-radius: 10px;
+      color: var(--bad); font-size: .85rem;
+    }
+    .tools { display: flex; gap: 8px; padding: 0 18px 16px; flex-wrap: wrap; }
+    button.tool {
+      appearance: none; cursor: pointer; font-weight: 700; font-size: .82rem;
+      color: var(--ink); background: var(--surface); border: 1px solid var(--border-active);
+      border-radius: 8px; padding: 8px 13px;
+    }
+    button.tool:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+    button.tool:active { transform: translateY(1px); }
+    pre.data {
+      margin: 0; padding: 14px 18px; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: .78rem; overflow: auto; max-height: 260px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .footnote { color: var(--muted); font-size: .82rem; margin-top: 26px; }
+    .footnote code { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand">Polymath <b>Block Showcase</b></div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap">
+      <span class="chip">blocks <b id="count">…</b></span>
+      <span class="chip">loaded <b id="loaded">0</b></span>
+      <span class="chip">registry <b id="regstate">loading</b></span>
+    </div>
+  </div>
+
+  <main>
+    <h1>Modular primitives — live testbed</h1>
+    <p class="lede">
+      The complete block library, listed by name below and rendered live with its own
+      test payload. The renderer knows nothing about the subject: the content is
+      data, and swapping the payload swaps the lesson. <b>Re-render</b> proves a block
+      rebuilds cleanly, <b>Render with empty data</b> shows it degrade instead of break.
+    </p>
+
+    <div class="index" id="index">
+      <h2>Every block</h2>
+      <div class="counts" id="idx-counts">reading the registry…</div>
+      <div id="idx-groups"></div>
+    </div>
+
+    <div id="stage"></div>
+
+    <p class="footnote">
+      Blocks: <code>public/engine/blocks/*.js</code> · Index: <code>public/engine/registry.json</code>
+      · Compiler: <code>public/engine/compiler.js</code> · Regenerate with
+      <code>node scripts/generate_blocks.js</code> · Test with <code>node scripts/check-block.js</code>
+    </p>
+  </main>
+
+  <script src="./compiler.js"></script>
+  <script src="./showcase.js"></script>
+</body>
+</html>

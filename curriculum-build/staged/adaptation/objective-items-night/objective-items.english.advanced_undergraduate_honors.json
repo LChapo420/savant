@@ -1,0 +1,371 @@
+{
+ "track_id": "english",
+ "grade_id": "advanced_undergraduate_honors",
+ "generated_at": "2026-10-26T03:38:11.703Z",
+ "items": [
+  {
+   "objective_id": "advanced_undergraduate_honors:L316",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "act_rhetoric",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "A scholar’s draft has a clear argument, but Chapter 3 begins with the thesis, while the introduction repeats later material. Which edit should the author make first?",
+   "choices": [
+    "Move the thesis earlier and reorganize the duplicated sections",
+    "Correct subject–verb agreement throughout the duplicated sections",
+    "Standardize citation spacing, margins, and page-number formatting",
+    "Replace passive voice and weak verbs throughout the later chapters"
+   ],
+   "answer": "Move the thesis earlier and reorganize the duplicated sections",
+   "rationale": "The thesis placement and repeated material are structural problems, so they require developmental editing rather than sentence-level correction or formatting.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L316",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "act_rhetoric",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "Which copyedit correctly repairs the comma splice in this sentence: “The editor revised the report, the annex appeared without approval”?",
+   "choices": [
+    "Use a semicolon or divide the sentence into two",
+    "Move the report into a separate introductory paragraph",
+    "Delete the clause concerning why the annex was unapproved",
+    "Add background explaining why the annex appeared earlier"
+   ],
+   "answer": "Use a semicolon or divide the sentence into two",
+   "rationale": "Two independent clauses are joined by a comma, creating a comma splice. A semicolon or separate sentences correctly preserve both clauses and their meanings.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L316",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "act_rhetoric",
+   "level": 316,
+   "format": "multiple_choice",
+   "prompt": "A journal has completed typesetting. The author returns proofs with several corrected typos and one disputed sentence. What should the production editor do?",
+   "choices": [
+    "Apply agreed typo corrections and query the disputed wording",
+    "Reject the proof and return the manuscript for peer review",
+    "Publish the issue immediately without checking the submitted corrections",
+    "Refer the disputed sentence for a new substantive peer review"
+   ],
+   "answer": "Apply agreed typo corrections and query the disputed wording",
+   "rationale": "At the proof stage, production staff implement agreed corrections and raise queries for unclear or disputed wording. Proofing does not restart review or permit unchecked publication.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L137",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "linguistics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "During beam search decoding, what does the beam width control?",
+   "choices": [
+    "Number of hypotheses kept",
+    "Maximum output length",
+    "Softmax temperature value",
+    "Learning rate schedule"
+   ],
+   "answer": "Number of hypotheses kept",
+   "rationale": "Beam width determines how many partial sequences (hypotheses) are retained at each decoding step, trading off search breadth for computation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "In beam search, beam width controls the number of candidate hypotheses retained at each decoding step.",
+      "url": "https://en.wikipedia.org/wiki/Beam_Search",
+      "quote": "But in beam search, only a predetermined number of best partial solutions are kept as candidates.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L137",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "linguistics",
+   "level": 137,
+   "format": "multiple_choice",
+   "prompt": "BLEU score primarily measures which aspect of generated text?",
+   "choices": [
+    "N‑gram precision against references",
+    "Semantic adequacy of output",
+    "Syntactic correctness of output",
+    "Fluency of generated text"
+   ],
+   "answer": "N‑gram precision against references",
+   "rationale": "BLEU computes modified n‑gram precision of the candidate translation against one or more reference translations, with a brevity penalty.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "BLEU measures the overlap of n-grams between generated sentences and reference translations, computing accuracy (with brevity penalty).",
+      "url": "https://en.wikipedia.org/wiki/BLEU",
+      "quote": "This quantity measures how many n-grams in the reference sentence are reproduced by the candidate sentence.",
+      "reader": "openai/gpt-oss-20b"
+     },
+     {
+      "claim": "BLEU primarily measures modified n-gram precision of generated text against reference translations.",
+      "url": "https://en.wikipedia.org/wiki/Evaluation_of_machine_translation",
+      "quote": "BLEU uses a modified form of precision to compare a candidate translation against multiple reference translations.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L167",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "linguistics",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "Which transcription practice best preserves phonetic detail needed for variable analysis?",
+   "choices": [
+    "Broad orthographic transcription ignoring allophones.",
+    "Narrow phonetic transcription using IPA with diacritics for variation.",
+    "Summarized narrative description of speech events.",
+    "Automated speech-to-text output without manual correction."
+   ],
+   "answer": "Narrow phonetic transcription using IPA with diacritics for variation.",
+   "rationale": "Narrow IPA transcription records fine‑grained phonetic differences (e.g., vowel quality, aspiration) essential for identifying and quantifying sociolinguistic variables.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Narrow phonetic transcription using the International Phonetic Alphabet records fine phonetic distinctions such as allophones.",
+      "url": "https://en.wikipedia.org/wiki/International_Phonetic_Alphabet_for_English",
+      "quote": "Some varieties of English have syllabic consonants in some words, principally [l̩, m̩, n̩] , for example at the end of bottle , rhythm and button . In such cases, no phonetic vowel is pronounced between the last two consonants, and the last consonant forms a syllable on its own. Syllabic consonants are generally transcribed with a vertical line under the consonant letter, so that phonetic transcription of bottle and button in GA would be [ˈbɑɾl̩] and [ˈbʌʔn̩] . In theory, such consonants could be analyzed as individual phonemes.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L167",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "linguistics",
+   "level": 167,
+   "format": "multiple_choice",
+   "prompt": "To capture systematic variation across age, gender, and social class, a researcher should employ which sampling strategy?",
+   "choices": [
+    "Random sampling of all residents.",
+    "Stratified quota sampling based on demographic categories.",
+    "Convenience sampling of university students.",
+    "Snowball sampling starting from a single informant."
+   ],
+   "answer": "Stratified quota sampling based on demographic categories.",
+   "rationale": "Stratified quota sampling guarantees representation of each demographic stratum, enabling controlled comparison of sociolinguistic variables.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Stratified quota sampling selects participants according to demographic categories such as age, gender, and social class.",
+      "url": "https://en.wikipedia.org/wiki/Quota_sampling",
+      "quote": "In quota sampling, a population is first segmented into mutually exclusive sub-groups, just as in stratified sampling.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L147",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "academic_writing",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Which snippet correctly counts each word in `text` case‑insensitively, ignoring punctuation?",
+   "choices": [
+    "import re; from collections import Counter; Counter(re.findall(r'\\b\\w+\\b', text.lower()))",
+    "import re; from collections import Counter; Counter(text.lower().split())",
+    "import re; from collections import Counter; Counter(re.findall(r'\\w+', text))",
+    "import re; from collections import Counter; Counter(text.split())"
+   ],
+   "answer": "import re; from collections import Counter; Counter(re.findall(r'\\b\\w+\\b', text.lower()))",
+   "rationale": "Option A uses a regex with word boundaries and lowercases the text, so it counts words case‑insensitively and discards punctuation. The other options either keep punctuation, are case‑sensitive, or split only on whitespace.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L147",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "academic_writing",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Which snippet extracts all email addresses from `text` using a regular expression?",
+   "choices": [
+    "import re; re.findall(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}', text)",
+    "import re; re.findall(r'\\w+@\\w+\\.\\w+', text)",
+    "import re; re.search(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}', text)",
+    "import re; text.split('@')"
+   ],
+   "answer": "import re; re.findall(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}', text)",
+   "rationale": "Option A applies a thorough email regex with findall, returning every match. Option B's regex is too simple, Option C uses search which returns only the first match, and Option D merely splits on '@' without validation.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L147",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "academic_writing",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Which snippet correctly builds a Counter of bigrams from `text` after lowercasing and stripping punctuation?",
+   "choices": [
+    "import re, collections; words=re.findall(r'\\b\\w+\\b', text.lower()); bigrams=zip(words, words[1:]); cnt=collections.Counter(bigrams)",
+    "import re, collections; words=re.findall(r'\\b\\w+\\b', text); bigrams=zip(words, words[1:]); cnt=collections.Counter(bigrams)",
+    "words=text.split(); bigrams=zip(words, words[1:]); cnt=collections.Counter(bigrams)",
+    "import re, collections; words=re.findall(r'\\b\\w+\\b', text.lower()); bigrams=set(zip(words, words[1:])); cnt=collections.Counter(bigrams)"
+   ],
+   "answer": "import re, collections; words=re.findall(r'\\b\\w+\\b', text.lower()); bigrams=zip(words, words[1:]); cnt=collections.Counter(bigrams)",
+   "rationale": "The first snippet lowercases the text, extracts word tokens without punctuation via a regex, forms consecutive pairs with zip, and counts them with Counter, which is the correct procedure.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "advanced_undergraduate_honors:L147",
+   "track_id": "english",
+   "grade_id": "advanced_undergraduate_honors",
+   "skill_id": "academic_writing",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "Which regex pattern matches HTTP/HTTPS URLs but not email addresses?",
+   "choices": [
+    "r'https?://[^\\s/$.?#].[^\\s]*'",
+    "r'[\\w.+-]+@[\\w-]+\\.[\\w.-]+'",
+    "r'[^\\s/$.?#].[^\\s]*'",
+    "r'ftp?://[^\\s/$.?#].[^\\s]*'"
+   ],
+   "answer": "r'https?://[^\\s/$.?#].[^\\s]*'",
+   "rationale": "The first pattern requires the scheme http or https followed by :// and then non‑space characters, so it matches web URLs while excluding email addresses, which lack the scheme.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "openai",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  }
+ ]
+}

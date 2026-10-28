@@ -1,0 +1,2005 @@
+<style>
+#base-lesson-body{
+  --base:#141416;
+  --surface:#1b1b20;
+  --surface-2:#232329;
+  --surface-3:#2c2c33;
+  --accent:#F59E0B;
+  --accent-dark:#92400E;
+  --accent-glow:rgba(245,158,11,.45);
+  --green:#22C55E;
+  --green-dark:#15803D;
+  --blue:#3B82F6;
+  --violet:#A855F7;
+  --danger:#EF4444;
+  --danger-dark:#7F1D1D;
+  --text:#F4F4F5;
+  --muted:#A1A1AA;
+  --line:#3f3f46;
+
+  position:relative;
+  display:block;
+  box-sizing:border-box;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(245,158,11,.09), transparent 55%),
+    radial-gradient(circle at 88% 100%, rgba(34,197,94,.07), transparent 55%),
+    var(--base);
+  color:var(--text);
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:14px;
+  line-height:1.65;
+  border-radius:14px;
+  padding:0 0 48px;
+  -webkit-font-smoothing:antialiased;
+}
+#base-lesson-body *,
+#base-lesson-body *::before,
+#base-lesson-body *::after{ box-sizing:border-box; }
+
+#base-lesson-body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:14px;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.028) 0px,
+    rgba(255,255,255,.028) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index:0;
+}
+#base-lesson-body > *{ position:relative; z-index:1; }
+
+/* ============ HUD ============ */
+#base-lesson-body .ddl-hud{
+  position:sticky;
+  top:0;
+  z-index:60;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  background:linear-gradient(180deg,#1f1f26,#141418);
+  border-bottom:2px solid var(--accent-dark);
+  border-radius:14px 14px 0 0;
+  box-shadow:0 8px 20px rgba(0,0,0,.65);
+}
+#base-lesson-body .ddl-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:2px solid var(--line);
+  border-radius:8px;
+  padding:4px 9px;
+  font-size:10.5px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  font-weight:700;
+  background:linear-gradient(180deg,#26262e,#1a1a20);
+  box-shadow:0 3px 0 rgba(0,0,0,.55);
+  white-space:nowrap;
+}
+#base-lesson-body .ddl-badge--lvl{ border-color:var(--accent-dark); color:var(--accent); box-shadow:0 3px 0 #3a2506, 0 0 12px rgba(245,158,11,.18); }
+#base-lesson-body .ddl-badge--sub{ color:#e4e4e7; }
+#base-lesson-body .ddl-badge--age{ color:var(--green); border-color:#14532d; box-shadow:0 3px 0 #0b2d18; }
+#base-lesson-body .ddl-badge--xp{ color:#FDE68A; border-color:#78350F; box-shadow:0 3px 0 #3a2506; }
+
+#base-lesson-body .ddl-callsign{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:10.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+#base-lesson-body .ddl-callsign input{
+  width:110px;
+  font-family:inherit;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:#0f0f13;
+  border:2px solid var(--line);
+  border-radius:8px;
+  padding:4px 8px;
+  outline:none;
+}
+#base-lesson-body .ddl-callsign input:focus{ border-color:var(--accent); box-shadow:0 0 10px var(--accent-glow); }
+
+#base-lesson-body .ddl-gauge-wrap{
+  flex:1 1 220px;
+  min-width:170px;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+#base-lesson-body .ddl-gauge{
+  height:14px;
+  border:2px solid var(--line);
+  border-radius:8px;
+  background:#0b0b0e;
+  overflow:hidden;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.9);
+}
+#base-lesson-body .ddl-gauge-fill{
+  height:100%;
+  width:25%;
+  border-radius:5px;
+  background:linear-gradient(90deg,#166534,var(--green));
+  box-shadow:0 0 14px rgba(34,197,94,.6);
+  transition:width .9s cubic-bezier(.2,.9,.3,1), background .5s;
+}
+#base-lesson-body .ddl-gauge-label{
+  font-size:9.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+#base-lesson-body .ddl-gauge-label b{ color:var(--green); }
+
+#base-lesson-body .ddl-mission{
+  max-width:1180px;
+  margin:14px auto 0;
+  padding:12px 16px;
+  border-left:3px solid var(--accent);
+  background:linear-gradient(90deg, rgba(245,158,11,.09), transparent 70%);
+  border-radius:0 10px 10px 0;
+  font-size:13px;
+  color:#d4d4d8;
+}
+#base-lesson-body .ddl-mission b{ color:var(--accent); letter-spacing:.06em; }
+
+/* ============ LAYOUT ============ */
+#base-lesson-body .ddl-main{
+  max-width:1180px;
+  margin:0 auto;
+  padding:18px 16px 0;
+}
+#base-lesson-body .ddl-section{ margin-bottom:26px; }
+
+#base-lesson-body .ddl-sec-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 14px;
+  padding-bottom:8px;
+  border-bottom:2px solid var(--line);
+}
+#base-lesson-body .ddl-sec-num{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:44px;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.1em;
+  color:#141416;
+  background:linear-gradient(180deg,#FBBF24,#F59E0B);
+  border:2px solid var(--accent-dark);
+  border-radius:8px;
+  box-shadow:0 3px 0 var(--accent-dark);
+}
+#base-lesson-body .ddl-sec-title{
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:#fafafa;
+  margin:0;
+}
+#base-lesson-body .ddl-sec-sub{
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-left:auto;
+  text-align:right;
+}
+
+#base-lesson-body .ddl-card{
+  background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  border:2px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 6px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.045);
+}
+#base-lesson-body .ddl-card + .ddl-card{ margin-top:14px; }
+#base-lesson-body .ddl-card h3{
+  margin:0 0 10px;
+  font-size:12.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:800;
+}
+#base-lesson-body .ddl-card h4{
+  margin:14px 0 8px;
+  font-size:11.5px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:#e4e4e7;
+  font-weight:800;
+}
+#base-lesson-body .ddl-card p{ margin:0 0 10px; color:#d4d4d8; }
+#base-lesson-body .ddl-card p:last-child{ margin-bottom:0; }
+#base-lesson-body .ddl-card ul{ margin:0 0 10px; padding-left:20px; color:#d4d4d8; }
+#base-lesson-body .ddl-card li{ margin-bottom:6px; }
+#base-lesson-body .ddl-card strong{ color:#fff; }
+
+#base-lesson-body .ddl-grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+#base-lesson-body .ddl-grid-2 > .ddl-card{ margin-top:0; }
+#base-lesson-body .ddl-grid-4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+#base-lesson-body .ddl-term-chip{
+  display:inline-block;
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:800;
+  padding:2px 7px;
+  border-radius:6px;
+  border:1.5px solid;
+  margin-right:4px;
+}
+#base-lesson-body .t-core{ color:#FDE68A; border-color:#78350F; background:rgba(245,158,11,.12); }
+#base-lesson-body .t-ground{ color:#BBF7D0; border-color:#14532D; background:rgba(34,197,94,.12); }
+#base-lesson-body .t-bridge{ color:#E9D5FF; border-color:#5B21B6; background:rgba(168,85,247,.14); }
+#base-lesson-body .t-scope{ color:#BFDBFE; border-color:#1E3A8A; background:rgba(59,130,246,.14); }
+#base-lesson-body .t-bound{ color:#FECACA; border-color:#7F1D1D; background:rgba(239,68,68,.14); }
+
+#base-lesson-body .ddl-worked{
+  border:2px dashed #4b3a1a;
+  border-radius:10px;
+  padding:12px 14px;
+  background:rgba(245,158,11,.045);
+  margin-bottom:12px;
+}
+#base-lesson-body .ddl-worked:last-child{ margin-bottom:0; }
+#base-lesson-body .ddl-worked .quote{
+  font-style:italic;
+  color:#FDE68A;
+  border-left:3px solid var(--accent-dark);
+  padding-left:10px;
+  margin:6px 0 10px;
+}
+#base-lesson-body .ddl-decode{
+  display:grid;
+  gap:6px;
+  font-size:12.5px;
+}
+
+/* ============ BUTTONS ============ */
+#base-lesson-body .ddl-btn{
+  font-family:inherit;
+  font-size:11.5px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#141416;
+  background:linear-gradient(180deg,#FBBF24,#F59E0B);
+  border:2px solid var(--accent-dark);
+  border-radius:10px;
+  padding:10px 16px;
+  cursor:pointer;
+  box-shadow:0 4px 0 var(--accent-dark);
+  transition:transform .08s ease, box-shadow .2s ease, background .2s ease, filter .2s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  text-align:center;
+  line-height:1.25;
+}
+#base-lesson-body .ddl-btn:hover:not(:disabled){
+  box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 var(--accent-dark);
+  filter:brightness(1.07);
+}
+#base-lesson-body .ddl-btn:active:not(:disabled){
+  transform:translateY(2px);
+  box-shadow:0 2px 0 var(--accent-dark);
+}
+#base-lesson-body .ddl-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  filter:grayscale(.6);
+}
+#base-lesson-body .ddl-btn--ghost{
+  background:linear-gradient(180deg,#2c2c33,#1f1f25);
+  color:var(--accent);
+  border-color:#4b3a1a;
+  box-shadow:0 4px 0 #0d0d10;
+}
+#base-lesson-body .ddl-btn--ghost:hover:not(:disabled){
+  box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 #0d0d10;
+}
+#base-lesson-body .ddl-btn--ghost:active:not(:disabled){ box-shadow:0 2px 0 #0d0d10; }
+#base-lesson-body .ddl-btn--green{
+  background:linear-gradient(180deg,#4ADE80,#22C55E);
+  border-color:var(--green-dark);
+  box-shadow:0 4px 0 var(--green-dark);
+  color:#052e16;
+}
+#base-lesson-body .ddl-btn--green:hover:not(:disabled){ box-shadow:0 4px 16px rgba(34,197,94,.5), 0 4px 0 var(--green-dark); }
+#base-lesson-body .ddl-btn--green:active:not(:disabled){ box-shadow:0 2px 0 var(--green-dark); }
+#base-lesson-body .ddl-btn--danger{
+  background:linear-gradient(180deg,#F87171,#EF4444);
+  border-color:var(--danger-dark);
+  box-shadow:0 4px 0 var(--danger-dark);
+  color:#2b0606;
+}
+#base-lesson-body .ddl-btn--danger:hover:not(:disabled){ box-shadow:0 4px 18px rgba(239,68,68,.55), 0 4px 0 var(--danger-dark); }
+#base-lesson-body .ddl-btn--danger:active:not(:disabled){ box-shadow:0 2px 0 var(--danger-dark); }
+#base-lesson-body .ddl-btn--violet{
+  background:linear-gradient(180deg,#C084FC,#A855F7);
+  border-color:#5B21B6;
+  box-shadow:0 4px 0 #5B21B6;
+  color:#1e0a33;
+}
+#base-lesson-body .ddl-btn--violet:hover:not(:disabled){ box-shadow:0 4px 18px rgba(168,85,247,.55), 0 4px 0 #5B21B6; }
+#base-lesson-body .ddl-btn--violet:active:not(:disabled){ box-shadow:0 2px 0 #5B21B6; }
+#base-lesson-body .ddl-btn--block{ width:100%; }
+
+/* ============ CHROMATOGRAPH ============ */
+#base-lesson-body .chrom-case{
+  border:2px solid var(--accent-dark);
+  border-radius:10px;
+  padding:12px 14px;
+  background:linear-gradient(180deg, rgba(245,158,11,.1), rgba(245,158,11,.02));
+  margin-bottom:14px;
+}
+#base-lesson-body .chrom-case .lbl{
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:800;
+  display:block;
+  margin-bottom:4px;
+}
+#base-lesson-body .chrom-case .txt{ color:#fafafa; font-size:14px; }
+
+#base-lesson-body .chrom-rig{
+  display:grid;
+  grid-template-columns:minmax(200px,1fr) auto minmax(220px,1.1fr);
+  gap:16px;
+  align-items:start;
+}
+#base-lesson-body .chrom-panel{
+  background:linear-gradient(180deg,#202027,#17171c);
+  border:2px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+  box-shadow:0 5px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.04);
+}
+#base-lesson-body .chrom-panel h4{
+  margin:0 0 10px;
+  font-size:10.5px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:800;
+}
+#base-lesson-body .chrom-slider-val{
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:2px 0 12px;
+  font-weight:800;
+}
+#base-lesson-body .chrom-slider-val b{ font-size:16px; }
+#base-lesson-body .chrom-panel .ddl-btn{ margin-bottom:9px; }
+#base-lesson-body .chrom-panel .ddl-btn:last-child{ margin-bottom:0; }
+
+#base-lesson-body input[type="range"]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:34px;
+  background:transparent;
+  cursor:pointer;
+  outline:none;
+}
+#base-lesson-body input[type="range"]::-webkit-slider-runnable-track{
+  height:12px;
+  border-radius:6px;
+  border:2px solid var(--line);
+  background:linear-gradient(90deg,#101014,#2e2e36);
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.85);
+}
+#base-lesson-body input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:22px;
+  height:32px;
+  margin-top:-12px;
+  border-radius:6px;
+  border:2px solid var(--accent-dark);
+  background:linear-gradient(180deg,#FBBF24,#F59E0B);
+  box-shadow:0 3px 0 var(--accent-dark), 0 0 10px var(--accent-glow);
+}
+#base-lesson-body input[type="range"]::-moz-range-track{
+  height:12px;
+  border-radius:6px;
+  border:2px solid var(--line);
+  background:#22222a;
+}
+#base-lesson-body input[type="range"]::-moz-range-thumb{
+  width:20px;
+  height:30px;
+  border-radius:6px;
+  border:2px solid var(--accent-dark);
+  background:linear-gradient(180deg,#FBBF24,#F59E0B);
+  box-shadow:0 3px 0 var(--accent-dark);
+}
+
+#base-lesson-body .chrom-tube-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+#base-lesson-body .chrom-tube-row{
+  display:flex;
+  align-items:flex-end;
+  gap:6px;
+}
+#base-lesson-body .chrom-scale{
+  position:relative;
+  width:34px;
+  height:360px;
+}
+#base-lesson-body .chrom-tick{
+  position:absolute;
+  right:0;
+  width:12px;
+  height:1.5px;
+  background:var(--line);
+}
+#base-lesson-body .chrom-tick.major{ width:20px; background:#71717a; }
+#base-lesson-body .chrom-tick span{
+  position:absolute;
+  right:24px;
+  top:-8px;
+  font-size:9px;
+  color:#71717a;
+  letter-spacing:.04em;
+}
+#base-lesson-body .chrom-tube{
+  position:relative;
+  width:88px;
+  height:360px;
+  border:2px solid #4b4b55;
+  border-top-left-radius:40px;
+  border-top-right-radius:40px;
+  border-bottom-left-radius:8px;
+  border-bottom-right-radius:8px;
+  background:linear-gradient(90deg, rgba(255,255,255,.05), rgba(255,255,255,.01) 40%, rgba(0,0,0,.3));
+  overflow:hidden;
+  box-shadow:inset 0 0 26px rgba(0,0,0,.9), 0 0 0 4px rgba(0,0,0,.35);
+  transition:box-shadow .5s ease, border-color .5s ease;
+}
+#base-lesson-body .chrom-tube.is-resolved{
+  border-color:var(--green);
+  box-shadow:inset 0 0 26px rgba(34,197,94,.16), 0 0 24px rgba(34,197,94,.5);
+}
+#base-lesson-body .chrom-tube.is-smear{
+  border-color:var(--danger);
+  box-shadow:inset 0 0 26px rgba(239,68,68,.2), 0 0 24px rgba(239,68,68,.45);
+}
+#base-lesson-body .chrom-band{
+  position:absolute;
+  left:4px;
+  right:4px;
+  height:0;
+  bottom:0;
+  opacity:0;
+  border-radius:4px;
+  transition:height .95s cubic-bezier(.2,.85,.3,1), bottom .95s cubic-bezier(.2,.85,.3,1), opacity .5s ease, filter .4s ease;
+}
+#base-lesson-body .cb-blue{
+  background:linear-gradient(90deg,#1D4ED8,#60A5FA,#1D4ED8);
+  box-shadow:0 0 14px rgba(59,130,246,.75);
+  transition-delay:0s;
+}
+#base-lesson-body .cb-amber{
+  background:linear-gradient(90deg,#B45309,#FBBF24,#B45309);
+  box-shadow:0 0 14px rgba(245,158,11,.75);
+  transition-delay:.13s;
+}
+#base-lesson-body .cb-violet{
+  background:linear-gradient(90deg,#6D28D9,#C084FC,#6D28D9);
+  box-shadow:0 0 14px rgba(168,85,247,.75);
+  transition-delay:.26s;
+}
+#base-lesson-body .chrom-front{
+  position:absolute;
+  left:0;
+  right:0;
+  height:3px;
+  bottom:0;
+  background:linear-gradient(90deg, transparent, #FDE68A, transparent);
+  opacity:0;
+  box-shadow:0 0 12px rgba(253,230,138,.9);
+}
+@keyframes ddl-front-rise{
+  0%{ bottom:0; opacity:0; }
+  12%{ opacity:1; }
+  100%{ bottom:100%; opacity:0; }
+}
+#base-lesson-body .chrom-front.is-running{ animation:ddl-front-rise 1.25s ease-out forwards; }
+#base-lesson-body .chrom-tube-label{
+  font-size:9.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#71717a;
+}
+
+#base-lesson-body .chrom-read{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 8px;
+  border:2px solid var(--line);
+  border-radius:8px;
+  background:#141418;
+  margin-bottom:7px;
+  font-size:11.5px;
+}
+#base-lesson-body .chrom-chip{
+  width:14px;
+  height:14px;
+  border-radius:4px;
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.25);
+}
+#base-lesson-body .chrom-chip.c-blue{ background:#3B82F6; box-shadow:0 0 8px rgba(59,130,246,.8); }
+#base-lesson-body .chrom-chip.c-amber{ background:#F59E0B; box-shadow:0 0 8px rgba(245,158,11,.8); }
+#base-lesson-body .chrom-chip.c-violet{ background:#A855F7; box-shadow:0 0 8px rgba(168,85,247,.8); }
+#base-lesson-body .chrom-read .nm{ flex:1 1 auto; color:#d4d4d8; letter-spacing:.03em; }
+#base-lesson-body .chrom-read .vl{ font-weight:800; color:#fafafa; letter-spacing:.05em; }
+#base-lesson-body .chrom-load{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  padding:9px 10px;
+  border:2px solid var(--accent-dark);
+  border-radius:8px;
+  background:rgba(245,158,11,.09);
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:var(--accent);
+}
+#base-lesson-body .chrom-load b{ font-size:15px; color:#FDE68A; }
+
+#base-lesson-body .chrom-msg{
+  margin-top:11px;
+  font-size:11.5px;
+  line-height:1.5;
+  color:#a1a1aa;
+  border-left:3px solid var(--line);
+  padding-left:9px;
+  min-height:34px;
+}
+#base-lesson-body .chrom-msg.ok{ color:#BBF7D0; border-left-color:var(--green); }
+#base-lesson-body .chrom-msg.bad{ color:#FECACA; border-left-color:var(--danger); }
+
+#base-lesson-body .chrom-verdicts{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+#base-lesson-body .chrom-verdicts .ddl-btn{
+  flex-direction:column;
+  align-items:flex-start;
+  text-align:left;
+  padding:11px 13px;
+  gap:3px;
+  background:linear-gradient(180deg,#2c2c33,#1f1f25);
+  color:#e4e4e7;
+  border-color:#4b4b55;
+  box-shadow:0 4px 0 #0d0d10;
+  font-size:11px;
+}
+#base-lesson-body .chrom-verdicts .ddl-btn:hover:not(:disabled){
+  border-color:var(--accent);
+  box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 #0d0d10;
+  color:#fff;
+}
+#base-lesson-body .chrom-verdicts .ddl-btn:active:not(:disabled){ box-shadow:0 2px 0 #0d0d10; }
+#base-lesson-body .chrom-verdicts .sub{
+  font-size:9.5px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:none;
+  color:var(--muted);
+}
+
+#base-lesson-body .chrom-feedback{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:2px solid var(--line);
+  background:#181820;
+  font-size:12.5px;
+  display:none;
+}
+#base-lesson-body .chrom-feedback.show{ display:block; }
+#base-lesson-body .chrom-feedback.ok{ border-color:var(--green-dark); background:rgba(34,197,94,.09); color:#DCFCE7; }
+#base-lesson-body .chrom-feedback.bad{ border-color:var(--danger-dark); background:rgba(239,68,68,.09); color:#FEE2E2; }
+#base-lesson-body .chrom-feedback b{ display:block; letter-spacing:.1em; text-transform:uppercase; font-size:10.5px; margin-bottom:4px; }
+#base-lesson-body .chrom-feedback.ok b{ color:var(--green); }
+#base-lesson-body .chrom-feedback.bad b{ color:#F87171; }
+
+/* ============ DETONATOR ============ */
+#base-lesson-body .det-arena{
+  position:relative;
+  border:2px solid var(--accent-dark);
+  border-radius:12px;
+  padding:18px;
+  background:linear-gradient(180deg,#1e1e24,#151519);
+  overflow:hidden;
+  transition:box-shadow .35s ease, border-color .35s ease, background .35s ease;
+}
+#base-lesson-body .det-arena.is-charging{
+  border-color:#EF4444;
+  box-shadow:0 0 30px rgba(239,68,68,.55), inset 0 0 40px rgba(239,68,68,.15);
+  background:linear-gradient(180deg,#2a1418,#1a0d10);
+}
+@keyframes ddl-det-flash{
+  0%,100%{ background-color:rgba(239,68,68,0); }
+  50%{ background-color:rgba(239,68,68,.35); }
+}
+#base-lesson-body .det-arena.is-charging{ animation:ddl-det-flash .55s ease-in-out 2; }
+#base-lesson-body .det-arena.is-collapsed{
+  border-color:#3f3f46;
+  box-shadow:inset 0 0 60px rgba(0,0,0,.9);
+  background:linear-gradient(180deg,#131317,#0e0e11);
+}
+#base-lesson-body .det-label{
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:800;
+  margin-bottom:8px;
+}
+#base-lesson-body .det-scenario{
+  font-size:14.5px;
+  line-height:1.8;
+  color:#fafafa;
+  position:relative;
+  z-index:2;
+}
+#base-lesson-body .det-word{
+  display:inline-block;
+  transition:transform .85s cubic-bezier(.3,.1,.4,1), opacity .85s ease, color .4s ease;
+  will-change:transform;
+}
+#base-lesson-body .det-arena.is-collapsed .det-word{ opacity:0; }
+
+#base-lesson-body .det-plate{
+  position:relative;
+  z-index:2;
+  margin-top:16px;
+  border:2px solid var(--violet);
+  border-radius:10px;
+  padding:12px 14px;
+  background:linear-gradient(180deg, rgba(168,85,247,.16), rgba(168,85,247,.04));
+  box-shadow:0 0 22px rgba(168,85,247,.32), inset 0 0 20px rgba(168,85,247,.1);
+}
+#base-lesson-body .det-plate .lbl{
+  display:block;
+  font-size:9.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#E9D5FF;
+  font-weight:800;
+  margin-bottom:5px;
+}
+#base-lesson-body .det-plate .val{ color:#fafafa; font-size:13.5px; font-style:italic; }
+#base-lesson-body .det-arena.is-collapsed .det-plate{
+  border-color:#3f3f46;
+  box-shadow:none;
+  opacity:.35;
+  filter:grayscale(1);
+}
+
+#base-lesson-body .det-cracks{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:3;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+#base-lesson-body .det-arena.is-collapsed .det-cracks{ opacity:1; }
+#base-lesson-body .det-cracks path{
+  fill:none;
+  stroke:#EF4444;
+  stroke-width:.7;
+  stroke-linecap:round;
+  filter:drop-shadow(0 0 3px rgba(239,68,68,.9));
+  stroke-dasharray:200;
+  stroke-dashoffset:200;
+}
+#base-lesson-body .det-arena.is-collapsed .det-cracks path{
+  animation:ddl-crack-draw .7s ease-out forwards;
+}
+@keyframes ddl-crack-draw{ to{ stroke-dashoffset:0; } }
+
+#base-lesson-body .det-debris{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:0;
+}
+#base-lesson-body .det-arena.is-collapsed .det-debris{ opacity:.5; }
+
+#base-lesson-body .det-popup{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(5,5,8,.82);
+}
+#base-lesson-body .det-popup.show{ display:flex; }
+#base-lesson-body .det-popup-inner{
+  max-width:520px;
+  width:100%;
+  border:2px solid var(--green);
+  border-radius:14px;
+  padding:20px;
+  background:linear-gradient(180deg,#1c231d,#141a16);
+  box-shadow:0 0 40px rgba(34,197,94,.35), 0 10px 0 rgba(0,0,0,.6);
+  animation:ddl-pop-in .35s cubic-bezier(.2,1.2,.4,1);
+}
+@keyframes ddl-pop-in{
+  from{ transform:scale(.86) translateY(14px); opacity:0; }
+  to{ transform:scale(1) translateY(0); opacity:1; }
+}
+#base-lesson-body .det-popup-inner h3{
+  margin:0 0 10px;
+  font-size:13px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--green);
+  font-weight:800;
+}
+#base-lesson-body .det-popup-inner p{ margin:0 0 10px; color:#DCFCE7; font-size:13.5px; }
+#base-lesson-body .det-popup-inner p.note{ color:#a7f3d0; font-size:12.5px; font-style:italic; }
+
+/* ============ FORENSICS ============ */
+#base-lesson-body .fx-modes{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+#base-lesson-body .fx-mode{
+  font-family:inherit;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:11px 10px;
+  border-radius:10px;
+  border:2px solid var(--line);
+  background:linear-gradient(180deg,#26262e,#1a1a20);
+  color:#d4d4d8;
+  cursor:pointer;
+  box-shadow:0 4px 0 #0d0d10;
+  transition:transform .08s ease, box-shadow .2s ease, border-color .2s ease, color .2s ease;
+}
+#base-lesson-body .fx-mode:hover{ transform:translateY(-1px); }
+#base-lesson-body .fx-mode:active{ transform:translateY(2px); box-shadow:0 2px 0 #0d0d10; }
+#base-lesson-body .fx-mode[data-mode="grounds"].active{
+  border-color:var(--green); color:#BBF7D0;
+  box-shadow:0 4px 16px rgba(34,197,94,.45), 0 4px 0 #0d0d10;
+}
+#base-lesson-body .fx-mode[data-mode="claims"].active{
+  border-color:var(--blue); color:#BFDBFE;
+  box-shadow:0 4px 16px rgba(59,130,246,.45), 0 4px 0 #0d0d10;
+}
+#base-lesson-body .fx-mode[data-mode="warrants"].active{
+  border-color:var(--accent); color:#FDE68A;
+  box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 #0d0d10;
+}
+
+#base-lesson-body .fx-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);
+  gap:14px;
+  align-items:start;
+}
+#base-lesson-body .fx-console{
+  border:2px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  background:linear-gradient(180deg,#181820,#121216);
+  box-shadow:inset 0 0 40px rgba(0,0,0,.6);
+}
+#base-lesson-body .fx-console-head{
+  font-size:9.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#71717a;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+#base-lesson-body .fx-passage{
+  margin:0;
+  font-size:14px;
+  line-height:1.95;
+  color:#d4d4d8;
+}
+#base-lesson-body .fx-tok{
+  border-bottom:2px solid transparent;
+  border-radius:4px;
+  padding:1px 2px;
+  transition:background .3s ease, box-shadow .3s ease, color .3s ease, border-color .3s ease;
+}
+#base-lesson-body .fx-wrap.mode-grounds .fx-tok[data-tag="grounds"]{
+  background:rgba(34,197,94,.18);
+  border-bottom-color:var(--green);
+  box-shadow:0 0 14px rgba(34,197,94,.35);
+  color:#BBF7D0;
+}
+#base-lesson-body .fx-wrap.mode-claims .fx-tok[data-tag="claims"]{
+  background:rgba(59,130,246,.2);
+  border-bottom-color:var(--blue);
+  box-shadow:0 0 14px rgba(59,130,246,.42);
+  color:#BFDBFE;
+}
+#base-lesson-body .fx-wrap.mode-warrants .fx-tok[data-tag="warrants"]{
+  background:rgba(245,158,11,.2);
+  border-bottom-color:var(--accent);
+  box-shadow:0 0 14px var(--accent-glow);
+  color:#FDE68A;
+}
+
+#base-lesson-body .fx-side{
+  border:2px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+  background:linear-gradient(180deg,#202027,#17171c);
+  box-shadow:0 5px 0 rgba(0,0,0,.5);
+  min-height:200px;
+}
+#base-lesson-body .fx-side h4{
+  margin:0 0 10px;
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:800;
+}
+#base-lesson-body .fx-note{
+  font-size:12px;
+  color:#d4d4d8;
+  border-left:3px solid var(--line);
+  padding:6px 0 6px 10px;
+  margin-bottom:9px;
+  line-height:1.55;
+}
+#base-lesson-body .fx-note.g{ border-left-color:var(--green); }
+#base-lesson-body .fx-note.b{ border-left-color:var(--blue); }
+#base-lesson-body .fx-note.o{ border-left-color:var(--accent); }
+#base-lesson-body .fx-note b{ color:#fff; display:block; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:2px; }
+#base-lesson-body .fx-empty{ font-size:12px; color:#71717a; font-style:italic; }
+
+#base-lesson-body .fx-hyps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+#base-lesson-body .fx-hyp{
+  font-family:inherit;
+  text-align:left;
+  font-size:12px;
+  line-height:1.5;
+  padding:13px;
+  border-radius:10px;
+  border:2px solid var(--line);
+  background:linear-gradient(180deg,#26262e,#1a1a20);
+  color:#d4d4d8;
+  cursor:pointer;
+  box-shadow:0 4px 0 #0d0d10;
+  transition:transform .08s ease, box-shadow .2s ease, border-color .2s ease, color .2s ease;
+}
+#base-lesson-body .fx-hyp:hover:not(:disabled){
+  border-color:var(--accent);
+  color:#fff;
+  box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 #0d0d10;
+}
+#base-lesson-body .fx-hyp:active:not(:disabled){ transform:translateY(2px); box-shadow:0 2px 0 #0d0d10; }
+#base-lesson-body .fx-hyp.correct{
+  border-color:var(--green);
+  background:rgba(34,197,94,.12);
+  color:#DCFCE7;
+  box-shadow:0 4px 18px rgba(34,197,94,.4), 0 4px 0 #0d0d10;
+}
+#base-lesson-body .fx-hyp.wrong{
+  border-color:var(--danger);
+  background:rgba(239,68,68,.1);
+  color:#FECACA;
+}
+#base-lesson-body .fx-hyp:disabled{ cursor:default; opacity:.85; }
+#base-lesson-body .fx-hyp .tag{
+  display:block;
+  font-size:9.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:800;
+  color:var(--accent);
+  margin-bottom:5px;
+}
+
+#base-lesson-body .fx-result{
+  margin-top:14px;
+  padding:13px 15px;
+  border-radius:10px;
+  border:2px solid var(--green-dark);
+  background:rgba(34,197,94,.09);
+  color:#DCFCE7;
+  font-size:12.5px;
+  display:none;
+}
+#base-lesson-body .fx-result.show{ display:block; }
+#base-lesson-body .fx-result b{ color:var(--green); letter-spacing:.1em; text-transform:uppercase; font-size:10.5px; display:block; margin-bottom:4px; }
+
+/* ============ MATRIX ============ */
+#base-lesson-body .ddl-matrix{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:12.5px;
+  border:2px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+#base-lesson-body .ddl-matrix th{
+  background:linear-gradient(180deg,#2c2c33,#212127);
+  color:var(--accent);
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  text-align:left;
+  padding:10px 12px;
+  border-bottom:2px solid var(--line);
+}
+#base-lesson-body .ddl-matrix td{
+  padding:10px 12px;
+  border-bottom:1px solid #2b2b32;
+  color:#d4d4d8;
+  vertical-align:top;
+}
+#base-lesson-body .ddl-matrix tr:last-child td{ border-bottom:none; }
+#base-lesson-body .ddl-matrix tr:nth-child(even) td{ background:rgba(255,255,255,.018); }
+#base-lesson-body .ddl-matrix td:first-child{ color:#FDE68A; font-weight:700; }
+
+#base-lesson-body .ddl-protocol{
+  counter-reset:step;
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+#base-lesson-body .ddl-protocol li{
+  position:relative;
+  padding:12px 14px 12px 52px;
+  border:2px solid var(--line);
+  border-radius:10px;
+  background:linear-gradient(180deg,#202027,#17171c);
+  margin-bottom:10px;
+  font-size:12.5px;
+  color:#d4d4d8;
+  box-shadow:0 4px 0 rgba(0,0,0,.45);
+}
+#base-lesson-body .ddl-protocol li:last-child{ margin-bottom:0; }
+#base-lesson-body .ddl-protocol li::before{
+  counter-increment:step;
+  content:counter(step);
+  position:absolute;
+  left:12px;
+  top:11px;
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  border:2px solid var(--accent-dark);
+  background:linear-gradient(180deg,#FBBF24,#F59E0B);
+  color:#141416;
+  font-weight:900;
+  font-size:12px;
+  box-shadow:0 3px 0 var(--accent-dark);
+}
+#base-lesson-body .ddl-protocol li strong{ color:#fff; }
+
+/* ============ TERMINATION ============ */
+#base-lesson-body .ddl-term{
+  display:flex;
+  justify-content:center;
+  padding:26px 16px 8px;
+}
+#base-lesson-body .ddl-btn--finish{
+  font-size:15px;
+  padding:18px 46px;
+  border-radius:14px;
+  letter-spacing:.14em;
+  background:linear-gradient(180deg,#4ADE80,#22C55E);
+  border-color:var(--green-dark);
+  box-shadow:0 7px 0 var(--green-dark);
+  color:#04220f;
+}
+#base-lesson-body .ddl-btn--finish:hover:not(:disabled){
+  box-shadow:0 7px 26px rgba(34,197,94,.6), 0 7px 0 var(--green-dark);
+}
+#base-lesson-body .ddl-btn--finish:active:not(:disabled){
+  transform:translateY(3px);
+  box-shadow:0 4px 0 var(--green-dark);
+}
+@keyframes ddl-finish-pulse{
+  0%,100%{ box-shadow:0 7px 0 var(--green-dark), 0 0 0 rgba(34,197,94,0); }
+  50%{ box-shadow:0 7px 0 var(--green-dark), 0 0 32px rgba(34,197,94,.85); }
+}
+#base-lesson-body .ddl-btn--finish:not(:disabled){ animation:ddl-finish-pulse 1.9s ease-in-out infinite; }
+
+/* ============ SHAKE ============ */
+@keyframes ddl-shake{
+  0%,100%{ transform:translate(0,0); }
+  10%{ transform:translate(-6px,2px); }
+  20%{ transform:translate(6px,-2px); }
+  30%{ transform:translate(-5px,-2px); }
+  40%{ transform:translate(5px,2px); }
+  50%{ transform:translate(-4px,0); }
+  60%{ transform:translate(4px,0); }
+  70%{ transform:translate(-2px,0); }
+  80%{ transform:translate(2px,0); }
+  90%{ transform:translate(-1px,0); }
+}
+#base-lesson-body .ddl-shake{ animation:ddl-shake .55s ease-in-out; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:900px){
+  #base-lesson-body .chrom-rig{ grid-template-columns:1fr; }
+  #base-lesson-body .chrom-tube-col{ order:-1; }
+  #base-lesson-body .fx-layout{ grid-template-columns:1fr; }
+  #base-lesson-body .fx-hyps{ grid-template-columns:1fr; }
+  #base-lesson-body .ddl-grid-4{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:640px){
+  #base-lesson-body{ font-size:13.5px; }
+  #base-lesson-body .ddl-grid-2{ grid-template-columns:1fr; }
+  #base-lesson-body .chrom-verdicts{ grid-template-columns:1fr; }
+  #base-lesson-body .fx-modes{ grid-template-columns:1fr; }
+  #base-lesson-body .ddl-grid-4{ grid-template-columns:1fr; }
+  #base-lesson-body .chrom-tube{ width:74px; height:290px; }
+  #base-lesson-body .chrom-scale{ height:290px; }
+  #base-lesson-body .ddl-sec-sub{ display:none; }
+  #base-lesson-body .ddl-btn--finish{ width:100%; padding:16px 20px; }
+  #base-lesson-body .ddl-matrix{ font-size:11.5px; }
+  #base-lesson-body .ddl-matrix th,
+  #base-lesson-body .ddl-matrix td{ padding:8px 9px; }
+}
+</style>
+
+<div id="base-lesson-body">
+
+  <!-- ================= HUD ================= -->
+  <header class="ddl-hud">
+    <span class="ddl-badge ddl-badge--lvl">◆ Level 95</span>
+    <span class="ddl-badge ddl-badge--sub">English: Diction and Precision</span>
+    <span class="ddl-badge ddl-badge--age">9th–10th Grade | Ages 12–16</span>
+    <label class="ddl-callsign">Callsign
+      <input id="ddlCallsign" type="text" value="ANALYST-11" maxlength="14" spellcheck="false" aria-label="Player callsign">
+    </label>
+    <span class="ddl-badge ddl-badge--xp" id="ddlXp">+0 XP</span>
+    <div class="ddl-gauge-wrap">
+      <div class="ddl-gauge"><div class="ddl-gauge-fill" id="ddlGaugeFill"></div></div>
+      <div class="ddl-gauge-label" id="ddlGaugeLabel">Structural Integrity: <b>25%</b> Calibration</div>
+    </div>
+  </header>
+
+  <div class="ddl-mission">
+    <b>MISSION:</b> The Lexical Forensics Lab has received a batch of contaminated prose samples. Your job is to separate every argument into its measurable components — data, noise, and unstated mechanism — and verify that each word choice carries enough evidentiary weight for the claim it is asked to support.
+  </div>
+
+  <main class="ddl-main">
+
+    <!-- ================= SECTION 01 ================= -->
+    <section class="ddl-section" id="sec01">
+      <div class="ddl-sec-head">
+        <span class="ddl-sec-num">01</span>
+        <h2 class="ddl-sec-title">Comprehensive Textbook Foundation</h2>
+        <span class="ddl-sec-sub">Full Domain Architecture</span>
+      </div>
+
+      <div class="ddl-card">
+        <h3>1.1 — The Structural Model of a Diction Claim</h3>
+        <p>Every act of word selection is an implicit argument. When a writer drops <em>scrutinized</em> into a sentence instead of <em>looked at</em>, the sentence silently asserts: <strong>this word, in this slot, for this audience, produces this meaning.</strong> That assertion is built from five load-bearing components. Remove any one and the choice stops being precise — it becomes a guess dressed as style.</p>
+
+        <h4>Component 1 — Core Assertion (the chosen word + intended effect)</h4>
+        <p>The lexical choice itself, plus the effect it is supposed to produce in the reader. This is the "outcome" of the diction argument. It is not merely "a word I like"; it is a prediction about how meaning will land. <em>"Scrutinized" will make the committee's review read as rigorous rather than casual.</em></p>
+
+        <h4>Component 2 — Empirical Grounds (denotation, connotation, register evidence)</h4>
+        <p>The verifiable facts about the word that must support the Core Assertion. Grounds are not opinions about how a word feels; they are inspectable claims:</p>
+        <ul>
+          <li><strong>Denotation</strong> — the dictionary sense, checked against an actual dictionary rather than memory.</li>
+          <li><strong>Connotation</strong> — the evaluative and emotional charge the word carries in attested usage (neutral, pejorative, reverent, clinical).</li>
+          <li><strong>Register label</strong> — formal / informal / technical / archaic / slang, and the domains where the word actually appears.</li>
+          <li><strong>Corpus and usage evidence</strong> — frequency in the register you are writing in, and typical collocates (the words it habitually keeps company with).</li>
+        </ul>
+
+        <h4>Component 3 — Connecting Bridge (the inference warrant)</h4>
+        <p>The unstated principle that links the word's established properties to the intended effect. Bridges are almost never written down, which is exactly why they are where diction arguments fail. Example bridge: <em>"Readers of a formal lab report will map the severity of 'meticulous' onto careful precision rather than onto fussy nitpicking."</em> If that bridge is false for your audience, the whole choice collapses — no matter how good the word is in isolation.</p>
+
+        <h4>Component 4 — Scope Qualifiers (audience, occasion, register, dialect)</h4>
+        <p>The boundaries within which the choice is licensed. Who reads this? In what publication, at what formality level, in which variety of English? A word can be perfectly precise in an op-ed and perfectly wrong in a coroner's report. Scope qualifiers are not decoration; they are part of the claim.</p>
+
+        <h4>Component 5 — Boundary Conditions (where the choice breaks down)</h4>
+        <p>The point past which the word becomes false, misleading, or absurd. Boundary conditions are the falsification test for a word choice. <em>"Scrutinized" is accurate up to the moment the committee only skimmed the document; past that point it is a factual misstatement, not a stylistic preference.</em></p>
+      </div>
+
+      <div class="ddl-card">
+        <h3>1.2 — The Four Core Verification Criteria</h3>
+        <p>Once you have decomposed a word choice into its five components, you audit it against four criteria. Every one of them must pass.</p>
+        <div class="ddl-grid-4">
+          <div class="ddl-card" style="margin-top:0;">
+            <h4 style="margin-top:0;">Relevance</h4>
+            <p>Does the word's <strong>connotative charge</strong> match the intended tone? A word can be denotatively exact and connotatively catastrophic. <em>Slender</em>, <em>thin</em>, <em>skinny</em>, and <em>gaunt</em> share a denotation; they do not share a tone.</p>
+          </div>
+          <div class="ddl-card" style="margin-top:0;">
+            <h4 style="margin-top:0;">Sufficiency</h4>
+            <p>Does the word carry the <strong>full weight</strong> the sentence needs? Vague load-bearers — <em>nice</em>, <em>thing</em>, <em>very</em>, <em>good</em>, <em>impactful</em> — leave a gap where meaning should be. Precision is a weight requirement, not a preference.</p>
+          </div>
+          <div class="ddl-card" style="margin-top:0;">
+            <h4 style="margin-top:0;">Accuracy</h4>
+            <p>Does the word <strong>actually mean</strong> what you believe it means? Verify denotation against a dictionary and against attested usage, never against memory. Most diction errors are accuracy errors disguised as style errors.</p>
+          </div>
+          <div class="ddl-card" style="margin-top:0;">
+            <h4 style="margin-top:0;">Independence</h4>
+            <p>Is the choice supported by <strong>more than one source</strong> — a definition, a corpus pattern, and a usage example that agree — rather than by a single intuition or a single admired writer?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ddl-card">
+        <h3>1.3 — Structural Validity vs. Soundness in Word Choice</h3>
+        <p><strong>Structural validity</strong> is internal consistency: the word you chose fits the tone you declared, the register you are writing in, and the syntax it sits inside. A valid choice follows the rules you set for yourself.</p>
+        <p><strong>Soundness</strong> is validity <em>plus</em> factual correctness: the word genuinely denotes and connotes what you claimed it does. A sentence can be flawlessly consistent with an author's intended tone and still be unsound, because the author is simply wrong about the word. <em>"The report was decimated — utterly wiped out"</em> is internally consistent (both halves sound dramatic) and unsound (decimate does not mean utter destruction).</p>
+        <p>Validity without soundness produces confident nonsense. Soundness without validity produces accurate writing in the wrong voice. Precision requires both.</p>
+      </div>
+
+      <div class="ddl-card">
+        <h3>1.4 — Deductive vs. Inductive Diction Decisions</h3>
+        <p><strong>Deductive (truth-preserving) decisions</strong> are settled by definition and category. If a dictionary sense establishes that <em>reluctant</em> means "unwilling," then using it to mean "unwilling" is certain. Part-of-speech, register labels, and etymology-backed definitions behave this way: they preserve truth.</p>
+        <p><strong>Inductive (probabilistic) decisions</strong> concern connotation, tone, and audience response. These are frequency-based generalizations drawn from observed usage and they always carry a confidence level. "Most readers in an academic register read <em>slender</em> as neutral-to-positive" is an inductive claim: strong or weak, never certain. Treating an inductive connotation judgment as a deductive certainty is the most common way writers become dogmatic about style.</p>
+      </div>
+
+      <div class="ddl-card">
+        <h3>1.5 — Two Fully Analyzed Worked Examples</h3>
+
+        <div class="ddl-worked">
+          <h4 style="margin-top:0;">Worked Example A — Upgrading a verb</h4>
+          <div class="quote">Draft: "The committee <u>looked at</u> the proposal." &nbsp;→&nbsp; Revision: "The committee <u>scrutinized</u> the proposal."</div>
+          <div class="ddl-decode">
+            <div><span class="ddl-term-chip t-core">CORE</span> <strong>scrutinized</strong> — intended effect: convey an exhaustive, critical examination rather than a casual glance.</div>
+            <div><span class="ddl-term-chip t-ground">GROUNDS</span> Denotation: "to examine closely and minutely." Register: formal, well attested in legal, scholarly, and journalistic prose. Connotation: rigorous, slightly severe, faintly adversarial.</div>
+            <div><span class="ddl-term-chip t-bridge">BRIDGE</span> Readers of a formal report will map the severity of <em>scrutinized</em> onto the committee's diligence, not onto hostility toward the proposal.</div>
+            <div><span class="ddl-term-chip t-scope">SCOPE</span> Formal written report; adult professional audience; standard American English; third-person register.</div>
+            <div><span class="ddl-term-chip t-bound">BOUNDARY</span> If the committee actually glanced at the proposal for two minutes, <em>scrutinized</em> is a false claim about the world, not a stylistic upgrade. Precision is accuracy <em>before</em> it is elegance.</div>
+          </div>
+        </div>
+
+        <div class="ddl-worked">
+          <h4 style="margin-top:0;">Worked Example B — A smuggled evaluation</h4>
+          <div class="quote">Draft: "The mayor's <u>plan</u> to reroute traffic." &nbsp;→&nbsp; Revision: "The mayor's <u>scheme</u> to reroute traffic."</div>
+          <div class="ddl-decode">
+            <div><span class="ddl-term-chip t-core">CORE</span> <strong>scheme</strong> — intended effect: imply the plan is self-serving, devious, or covert, without ever asserting it outright.</div>
+            <div><span class="ddl-term-chip t-ground">GROUNDS</span> Denotative overlap: both <em>plan</em> and <em>scheme</em> denote a proposed course of action. Connotation: <em>scheme</em> carries a documented pejorative charge (a secret or devious plan). Register: neutral to informal.</div>
+            <div><span class="ddl-term-chip t-bridge">BRIDGE</span> The word's negative charge transfers to the mayor automatically, so the writer never has to argue for the evaluation. This is the smuggled-verdict mechanism in miniature.</div>
+            <div><span class="ddl-term-chip t-scope">SCOPE</span> Op-ed; opinion register; adversarial audience already primed to distrust the mayor. Licensed here.</div>
+            <div><span class="ddl-term-chip t-bound">BOUNDARY</span> In a neutral news report, the identical substitution converts reporting into editorializing. The word is not "wrong" — the register is. The same token can be precise in one scope and a defect in another.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 02 ================= -->
+    <section class="ddl-section" id="sec02">
+      <div class="ddl-sec-head">
+        <span class="ddl-sec-num">02</span>
+        <h2 class="ddl-sec-title">The Four Hazard Pods</h2>
+        <span class="ddl-sec-sub">Failure Archetypes</span>
+      </div>
+
+      <div class="ddl-grid-2">
+
+        <div class="ddl-card">
+          <h3>POD 1 — The Value Trap</h3>
+          <p><strong>Formal identification rule:</strong> The word carries an evaluation — positive, negative, moral, aesthetic — that the sentence never argues for and the evidence never establishes. <em>Test:</em> strip the word out and ask whether the evaluation survives in the remaining facts. If it vanishes, the word was doing argumentative work without a license.</p>
+          <p><strong>Catastrophic failure risks:</strong> A neutral report silently becomes an editorial. A reader who disagrees with the smuggled value rejects the entire passage, including the parts that were true. In academic writing it registers as unsupported bias and forfeits credibility for every other claim in the piece.</p>
+          <p><strong>Domain excerpt:</strong> "The <em>regime's</em> new <em>scheme</em> to <em>burden</em> homeowners with <em>compliance</em> costs…"</p>
+          <p><strong>Diagnostic breakdown:</strong> Four evaluative tokens in one clause. <em>Regime</em> implies illegitimacy; <em>scheme</em> implies deviousness; <em>burden</em> pre-judges the cost as unjust; <em>compliance</em> reframes ordinary regulation as servility. No fact in the sentence supports any of the four. The reader is being handed a verdict before seeing a single piece of evidence.</p>
+        </div>
+
+        <div class="ddl-card">
+          <h3>POD 2 — The Causal Leap</h3>
+          <p><strong>Formal identification rule:</strong> The writer assumes a word will <em>produce</em> an effect — that renaming changes reality, that a euphemism reduces harm, that a strong adjective creates strong feeling in every reader. A correlation observed in one context (a word was present when a feeling occurred) is treated as a cause operating in all contexts. Look for the omitted variable: whatever else changed while the word changed.</p>
+          <p><strong>Catastrophic failure risks:</strong> Rebranding substitutes for reform. A policy is judged by its label rather than its effects. An audience that does not share the writer's associations experiences the opposite of the intended effect, and the writer has no backup plan because the word was doing all the work.</p>
+          <p><strong>Domain excerpt:</strong> "Once we rename the program 'Pathways to Excellence,' student motivation will rise."</p>
+          <p><strong>Diagnostic breakdown:</strong> Sequence is treated as cause. The unstated bridge — "a program's name independently produces measurable changes in student behavior" — is doing the entire argument. Omitted variables include instruction quality, funding, teacher assignment, peer cohort, and grading policy. The word is credited with a psychological effect it cannot independently produce.</p>
+        </div>
+
+        <div class="ddl-card">
+          <h3>POD 3 — The Definitional Shift</h3>
+          <p><strong>Formal identification rule:</strong> A word slides between a technical sense and a colloquial sense mid-argument. The technical sense supplies authority; the colloquial sense does the emotional work. Watch for intensifiers — <em>literally</em>, <em>utterly</em>, <em>completely</em>, <em>absolutely</em> — appearing next to a word whose technical sense cannot support them.</p>
+          <p><strong>Catastrophic failure risks:</strong> The argument looks rigorous while resting on a meaning the writer never committed to. Anyone can defeat it by choosing the other sense, and the writer has no defense because no definition was ever fixed. Chronic offenders: <em>theory</em>, <em>argument</em>, <em>decimate</em>, <em>literally</em>, <em>unique</em>, <em>irony</em>, <em>organic</em>, <em>chemical</em>, <em>average</em>.</p>
+          <p><strong>Domain excerpt:</strong> "The report was <em>decimated</em> — utterly wiped out by the reviewers."</p>
+          <p><strong>Diagnostic breakdown:</strong> <em>Decimate</em> derives from a Latin root meaning "to take a tenth" and retains a technical sense of drastic but partial reduction. "Utterly wiped out" is a different order of magnitude entirely. The dash and the intensifier reveal the slide: the word was borrowed for its technical severity, then spent at colloquial magnitude.</p>
+        </div>
+
+        <div class="ddl-card">
+          <h3>POD 4 — The Micro-Sample Mirage</h3>
+          <p><strong>Formal identification rule:</strong> A claim about general usage — <em>everyone says</em>, <em>nobody uses that anymore</em>, <em>this word is standard now</em> — is supported by the writer's immediate circle, a single style guide, a self-selected survey, or whatever the writer happened to notice. The sample is small, unstratified, and selected by availability.</p>
+          <p><strong>Catastrophic failure risks:</strong> Register misjudgment. A word that is standard in one community reads as an error in another, and the writer has no way of knowing because the sample never included the other community. Compounded by selection bias: we notice the usages that confirm our habits and overlook the ones that contradict them.</p>
+          <p><strong>Domain excerpt:</strong> "Nobody uses <em>whom</em> anymore — I haven't heard it in years."</p>
+          <p><strong>Diagnostic breakdown:</strong> The sample is the speaker's own environment: one dialect region, one age cohort, one register. No corpus evidence, no register stratification, no frequency data. The universal quantifier <em>nobody</em> is doing far more work than the evidence can carry — a 20-unit claim riding on a 4-unit sample.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 03 ================= -->
+    <section class="ddl-section" id="sec03">
+      <div class="ddl-sec-head">
+        <span class="ddl-sec-num">03</span>
+        <h2 class="ddl-sec-title">The Logic Chromatograph</h2>
+        <span class="ddl-sec-sub">Variant 11 — Capillary Band Separation</span>
+      </div>
+
+      <div class="ddl-card">
+        <p style="margin-bottom:12px;">A diction claim is a chemical mixture. Inject it into the capillary column and the elution gradient separates it into three measurable fractions: <strong style="color:#60A5FA;">Noise Blue</strong> (pathos, slant, and rhetorical charge), <strong style="color:#FBBF24;">Data Amber</strong> (verified denotation, register, and usage grounds), and <strong style="color:#C084FC;">Mechanism Violet</strong> (the unstated warrant linking the word to its effect). <strong>Set a gradient that resolves the bands, read the integrator, and rule on whether the amber fraction clears the claim load.</strong></p>
+
+        <div class="chrom-case">
+          <span class="lbl" id="chromCaseLabel">SAMPLE 01</span>
+          <div class="txt" id="chromCaseText">—</div>
+        </div>
+
+        <div class="chrom-rig">
+          <div class="chrom-panel">
+            <h4>Elution Gradient Control</h4>
+            <input type="range" id="chromSlider" min="0" max="100" value="20" aria-label="Elution gradient">
+            <div class="chrom-slider-val"><b id="chromSliderVal">20</b>% Solvent Polarity</div>
+            <button class="ddl-btn ddl-btn--block" id="chromRun">⚗️ RUN ELUTION GRADIENT</button>
+            <button class="ddl-btn ddl-btn--ghost ddl-btn--block" id="chromPurge">↺ PURGE COLUMN</button>
+            <div class="chrom-msg" id="chromMsg">Column primed. Set a gradient and run the elution.</div>
+          </div>
+
+          <div class="chrom-tube-col">
+            <div class="chrom-tube-row">
+              <div class="chrom-scale" id="chromScale"></div>
+              <div class="chrom-tube" id="chromTube">
+                <div class="chrom-band cb-blue" id="cbBlue"></div>
+                <div class="chrom-band cb-amber" id="cbAmber"></div>
+                <div class="chrom-band cb-violet" id="cbViolet"></div>
+                <div class="chrom-front" id="chromFront"></div>
+              </div>
+            </div>
+            <div class="chrom-tube-label">Capillary 11-C</div>
+          </div>
+
+          <div class="chrom-panel">
+            <h4>Band Integrator</h4>
+            <div class="chrom-read">
+              <span class="chrom-chip c-blue"></span>
+              <span class="nm">Noise / Pathos</span>
+              <span class="vl" id="readBlue">—</span>
+            </div>
+            <div class="chrom-read">
+              <span class="chrom-chip c-amber"></span>
+              <span class="nm">Data / Grounds</span>
+              <span class="vl" id="readAmber">—</span>
+            </div>
+            <div class="chrom-read">
+              <span class="chrom-chip c-violet"></span>
+              <span class="nm">Mechanism / Warrant</span>
+              <span class="vl" id="readViolet">—</span>
+            </div>
+            <div class="chrom-load">
+              <span>Claim Load</span>
+              <b id="chromLoad">—</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="chrom-verdicts" id="chromVerdicts"></div>
+        <div class="chrom-feedback" id="chromFeedback"></div>
+        <div style="margin-top:12px;">
+          <button class="ddl-btn ddl-btn--green" id="chromNext" style="display:none;">▶ LOAD NEXT SAMPLE</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 04 ================= -->
+    <section class="ddl-section" id="sec04">
+      <div class="ddl-sec-head">
+        <span class="ddl-sec-num">04</span>
+        <h2 class="ddl-sec-title">The Negation Detonator</h2>
+        <span class="ddl-sec-sub">Active Heuristic Destruction</span>
+      </div>
+
+      <div class="ddl-card">
+        <p style="margin-bottom:14px;">The claim below is under synthetic load. Somewhere inside it, an <strong>unstated warrant</strong> is carrying the entire structure. Negate that warrant. If the claim collapses, the warrant was load-bearing.</p>
+
+        <div class="det-arena" id="detArena">
+          <svg class="det-cracks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M50 0 L46 20 L58 36 L44 54 L52 78 L48 100"></path>
+            <path d="M0 38 L22 45 L38 39 L58 51"></path>
+            <path d="M100 28 L78 41 L64 35 L52 43"></path>
+            <path d="M20 100 L30 74 L18 60 L27 40"></path>
+            <path d="M82 100 L72 76 L87 62 L74 44"></path>
+            <path d="M8 12 L26 22 L40 16 L54 26"></path>
+          </svg>
+          <div class="det-debris" aria-hidden="true" style="background-image:radial-gradient(circle at 30% 40%, rgba(239,68,68,.35), transparent 45%), radial-gradient(circle at 70% 65%, rgba(239,68,68,.3), transparent 40%);"></div>
+          <div class="det-label">Scenario Argument — Under Load</div>
+          <div class="det-scenario" id="detScenario"></div>
+          <div class="det-plate">
+            <span class="lbl">Target Implicit Warrant</span>
+            <div class="val">"A change in a program's name will produce a measurable change in student performance, independent of any change in instruction."</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+          <button class="ddl-btn ddl-btn--danger" id="detBtn">💣 DETONATE NEGATION TEST</button>
+          <span style="font-size:11.5px; color:var(--muted); letter-spacing:.06em;">Negation to test: "Renaming a program does not, by itself, alter instruction or ability."</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 05 ================= -->
+    <section class="ddl-section" id="sec05">
+      <div class="ddl-sec-head">
+        <span class="ddl-sec-num">05</span>
+        <h2 class="ddl-sec-title">Live Fire Forensics</h2>
+        <span class="ddl-sec-sub">Interactive Text X-Ray</span>
+      </div>
+
+      <div class="ddl-card fx-wrap" id="fxWrap">
+        <div class="fx-modes">
+          <button class="fx-mode" data-mode="grounds">🟢 SCAN FOUNDATION / GROUNDS</button>
+          <button class="fx-mode" data-mode="claims">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+          <button class="fx-mode" data-mode="warrants">🟠 DETECT UNSTATED MECHANISMS</button>
+        </div>
+
+        <div class="fx-layout">
+          <div class="fx-console">
+            <div class="fx-console-head">
+              <span>DOCUMENT 11-FX · DISTRICT MEMO DRAFT</span>
+              <span>SPECTRAL VIEW: <b id="fxModeLabel">NONE</b></span>
+            </div>
+            <p class="fx-passage">
+              <span class="fx-tok" data-tag="context">The district's new "Pathways to Excellence" initiative will replace the old "Basic Skills" track beginning this fall.</span>
+              <span class="fx-tok" data-tag="grounds">Our data show that 78 percent of students surveyed said they felt "discouraged" by the phrase "basic skills."</span>
+              <span class="fx-tok" data-tag="warrants">Because the new name signals ambition rather than deficiency,</span>
+              <span class="fx-tok" data-tag="claims">enrollment in advanced coursework will climb by at least a third within two years.</span>
+              <span class="fx-tok" data-tag="warrants">The word "basic," after all, literally means "simple" or "undeveloped," and no student can thrive while being called undeveloped.</span>
+              <span class="fx-tok" data-tag="claims">The board therefore recommends that every course title be audited for "deficit language" by December.</span>
+            </p>
+          </div>
+
+          <aside class="fx-side">
+            <h4>Inspector Notes</h4>
+            <div id="fxNotes"><div class="fx-empty">Select a spectral mode to begin scanning the passage.</div></div>
+          </aside>
+        </div>
+
+        <h4 style="margin-top:18px;">Interactive Challenge — Find the Fatal Flaw</h4>
+        <div class="fx-hyps" id="fxHyps">
+          <button class="fx-hyp" data-ok="1">
+            <span class="tag">Hypothesis A</span>
+            The 78% figure comes from an unspecified, self-selected survey, and the leap from "felt discouraged" to "enrollment will climb by a third" depends on an unstated mechanism — that a name change alone alters course-taking behavior.
+          </button>
+          <button class="fx-hyp" data-ok="0">
+            <span class="tag">Hypothesis B</span>
+            The passage misuses the word "literally" and contains an imprecise hyphenation in "deficit language."
+          </button>
+          <button class="fx-hyp" data-ok="0">
+            <span class="tag">Hypothesis C</span>
+            The board lacks the authority to audit course titles, so the recommendation cannot be implemented on schedule.
+          </button>
+        </div>
+
+        <div class="fx-result" id="fxResult"></div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 06 ================= -->
+    <section class="ddl-section" id="sec06">
+      <div class="ddl-sec-head">
+        <span class="ddl-sec-num">06</span>
+        <h2 class="ddl-sec-title">Quick-Reference Procedural Protocol</h2>
+        <span class="ddl-sec-sub">Transfer &amp; Error Triage</span>
+      </div>
+
+      <div class="ddl-card">
+        <h3>Component → Failure Mode → Triage Signal</h3>
+        <table class="ddl-matrix">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Failure Mode</th>
+              <th>Triage Signal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Core Assertion / Word Choice</td>
+              <td>An overloaded word smuggles an evaluation the sentence never argues for.</td>
+              <td>Strip the word out — does the evaluation survive in the remaining facts?</td>
+            </tr>
+            <tr>
+              <td>Empirical Grounds</td>
+              <td>Anecdote, a single remembered definition, or "it sounds right" standing in for usage evidence.</td>
+              <td>Is there more than one independent source: definition, corpus pattern, attested example?</td>
+            </tr>
+            <tr>
+              <td>Connecting Bridge / Warrant</td>
+              <td>An unstated mechanism links the word to its effect; no one ever says it aloud.</td>
+              <td>Write the bridge as a full sentence. Is it licensed by this register and this audience?</td>
+            </tr>
+            <tr>
+              <td>Scope Qualifiers</td>
+              <td>Audience, occasion, or dialect mismatch — precise in one register, defective in another.</td>
+              <td>Who reads this, where does it appear, and in which variety of English?</td>
+            </tr>
+            <tr>
+              <td>Boundary Conditions</td>
+              <td>The word is used past the edge of its sense and becomes a factual misstatement.</td>
+              <td>What would have to be true in the world for this word to be false?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ddl-card">
+        <h3>The Universal 5-Step Deconstruction Protocol</h3>
+        <ol class="ddl-protocol">
+          <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark certainty limiters.</li>
+          <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check for sample representation, bias, and source independence.</li>
+          <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle linking inputs to outcomes.</li>
+          <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge; if the outcome collapses, the component is load-bearing.</li>
+          <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, and definitional shifts.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= TERMINATION ================= -->
+    <div class="ddl-term">
+      <button class="ddl-btn ddl-btn--finish" id="finishBtn" disabled>🏁 FINISH LESSON</button>
+    </div>
+
+  </main>
+
+  <!-- ================= DETONATOR POPUP ================= -->
+  <div class="det-popup" id="detPopup">
+    <div class="det-popup-inner">
+      <h3>Detonation Successful</h3>
+      <p><strong>By proving the opposite of the implicit assumption, the entire premise collapsed.</strong> The Negation Test proves this assumption was a fatal structural dependency.</p>
+      <p class="note">The negation — "renaming a program does not by itself alter instruction or ability" — survives scrutiny. Therefore the causal bridge from label to test score was carrying the whole claim. A word choice was being asked to perform the work of a pedagogical change.</p>
+      <button class="ddl-btn ddl-btn--green" id="detAck">✔ ACKNOWLEDGE DEBRIEF</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.__ddlLesson95Init) { return; }
+  window.__ddlLesson95Init = true;
+
+  var ROOT = document.getElementById('base-lesson-body');
+  if (!ROOT) { return; }
+
+  /* ================= STATE ================= */
+  var TOTAL_TESTS = 6;
+  var state = {
+    xp: 0,
+    solved: {},
+    solvedCount: 0
+  };
+
+  var gaugeFill = document.getElementById('ddlGaugeFill');
+  var gaugeLabel = document.getElementById('ddlGaugeLabel');
+  var xpBadge = document.getElementById('ddlXp');
+  var finishBtn = document.getElementById('finishBtn');
+
+  function updateHUD() {
+    xpBadge.textContent = '+' + state.xp + ' XP';
+    var pct = 25 + 75 * (state.solvedCount / TOTAL_TESTS);
+    if (state.solvedCount >= TOTAL_TESTS) { pct = 100; }
+    gaugeFill.style.width = pct.toFixed(1) + '%';
+    if (pct >= 100) {
+      gaugeLabel.innerHTML = 'Structural Integrity: <b>100%</b> Structure Secured &amp; Verified';
+      finishBtn.disabled = false;
+    } else {
+      gaugeLabel.innerHTML = 'Structural Integrity: <b>' + Math.round(pct) + '%</b> Calibration';
+    }
+  }
+
+  function solve(key) {
+    if (state.solved[key]) { return false; }
+    state.solved[key] = true;
+    state.solvedCount += 1;
+    state.xp += 100;
+    updateHUD();
+    return true;
+  }
+
+  updateHUD();
+
+  /* ================= SECTION 03 — LOGIC CHROMATOGRAPH ================= */
+  var CHROM_ROUNDS = [
+    {
+      id: 1,
+      label: 'SAMPLE 01 — REGISTER & CHARGE',
+      text: 'Wire report draft: "The regime tightened its grip on the province."',
+      win: [40, 62],
+      bands: { blue: 58, amber: 12, violet: 30 },
+      load: 45,
+      correct: 'pathos',
+      why: 'The Noise Blue fraction (58u) dwarfs the Data Amber fraction (12u), and 12u falls far short of the 45u claim load. "Regime" carries a documented pejorative charge in standard news registers; a neutral wire report cannot license that charge with the evidence attached.'
+    },
+    {
+      id: 2,
+      label: 'SAMPLE 02 — DENOTATIVE SLIDE',
+      text: 'Review draft: "The report was decimated — utterly wiped out by the reviewers."',
+      win: [52, 74],
+      bands: { blue: 10, amber: 22, violet: 68 },
+      load: 20,
+      correct: 'warrant',
+      why: 'The amber fraction clears the 20u load, but the Mechanism Violet band is grossly over-dominant at 68u. The inference from "decimated" to "utterly wiped out" rests on an unlicensed definitional slide from the technical sense (reduce by one tenth) to the colloquial one — an unstated bridge doing all the work.'
+    },
+    {
+      id: 3,
+      label: 'SAMPLE 03 — SCOPE OVERREACH',
+      text: 'Style claim: "Everyone says \'impactful\' is standard now — nobody objects anymore."',
+      win: [64, 86],
+      bands: { blue: 8, amber: 9, violet: 14 },
+      load: 50,
+      correct: 'sample',
+      why: 'Total signal is 31u against a 50u claim load. A universal claim about "everyone" requires representative usage evidence — corpus data stratified across registers and regions — not the speaker\'s informal circle. The sample is non-representative and self-selected, so the grounds collapse under the scope of the claim.'
+    },
+    {
+      id: 4,
+      label: 'SAMPLE 04 — LICENSED CHOICE',
+      text: 'Lab report draft: "The technician performed a meticulous calibration of every instrument."',
+      win: [46, 68],
+      bands: { blue: 18, amber: 55, violet: 27 },
+      load: 50,
+      correct: 'sufficient',
+      why: 'Amber (55u) clears the 50u claim load, noise stays low at 18u, and the 27u warrant band is proportionate rather than dominant. Denotation ("showing great attention to detail"), connotation (careful, exacting), and register (formal technical prose) all point the same direction. The choice is both valid and sound.'
+    }
+  ];
+
+  var VERDICTS = [
+    { key: 'sufficient', label: '✅ GROUNDS SUFFICIENT', sub: 'Amber ≥ claim load; warrant proportionate.' },
+    { key: 'pathos', label: '🔵 PATHOS CONTAMINATION', sub: 'Noise band outweighs the data band.' },
+    { key: 'warrant', label: '🟣 UNSTATED MECHANISM', sub: 'Warrant band over-dominant / definitional slide.' },
+    { key: 'sample', label: '🟠 MICRO-SAMPLE MIRAGE', sub: 'Grounds too thin for the claim\'s scope.' }
+  ];
+
+  var chromIndex = 0;
+  var chromResolved = false;
+
+  var elSlider = document.getElementById('chromSlider');
+  var elSliderVal = document.getElementById('chromSliderVal');
+  var elCaseLabel = document.getElementById('chromCaseLabel');
+  var elCaseText = document.getElementById('chromCaseText');
+  var elMsg = document.getElementById('chromMsg');
+  var elTube = document.getElementById('chromTube');
+  var elFront = document.getElementById('chromFront');
+  var elScale = document.getElementById('chromScale');
+  var elReadBlue = document.getElementById('readBlue');
+  var elReadAmber = document.getElementById('readAmber');
+  var elReadViolet = document.getElementById('readViolet');
+  var elLoad = document.getElementById('chromLoad');
+  var elVerdicts = document.getElementById('chromVerdicts');
+  var elFeedback = document.getElementById('chromFeedback');
+  var elNext = document.getElementById('chromNext');
+  var elRun = document.getElementById('chromRun');
+  var elPurge = document.getElementById('chromPurge');
+
+  var BAND_NODES = {
+    blue: document.getElementById('cbBlue'),
+    amber: document.getElementById('cbAmber'),
+    violet: document.getElementById('cbViolet')
+  };
+  var BAND_ORDER = ['blue', 'amber', 'violet'];
+
+  /* build scale ticks */
+  (function buildScale() {
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i <= 10; i++) {
+      var tick = document.createElement('div');
+      tick.className = 'chrom-tick' + (i % 5 === 0 ? ' major' : '');
+      tick.style.bottom = (i * 10) + '%';
+      if (i % 5 === 0) {
+        var sp = document.createElement('span');
+        sp.textContent = (i * 10);
+        tick.appendChild(sp);
+      }
+      frag.appendChild(tick);
+    }
+    elScale.appendChild(frag);
+  })();
+
+  function resetTube() {
+    BAND_ORDER.forEach(function (k) {
+      var n = BAND_NODES[k];
+      n.style.height = '0%';
+      n.style.bottom = '0%';
+      n.style.opacity = '0';
+      n.style.filter = 'none';
+    });
+    elTube.classList.remove('is-resolved', 'is-smear');
+  }
+
+  function applyBands(bands, resolved) {
+    var cursor = 0;
+    BAND_ORDER.forEach(function (k, i) {
+      var n = BAND_NODES[k];
+      var bottom, height;
+      if (resolved) {
+        height = bands[k];
+        bottom = cursor;
+        cursor += bands[k];
+      } else {
+        height = Math.max(18, bands[k] * 0.75);
+        bottom = 8 + i * 14;
+      }
+      n.style.bottom = bottom + '%';
+      n.style.height = height + '%';
+      n.style.opacity = '1';
+      n.style.filter = resolved ? 'none' : 'blur(7px)';
+    });
+  }
+
+  function setReadouts(bands) {
+    if (bands) {
+      elReadBlue.textContent = bands.blue + ' u';
+      elReadAmber.textContent = bands.amber + ' u';
+      elReadViolet.textContent = bands.violet + ' u';
+    } else {
+      elReadBlue.textContent = '—';
+      elReadAmber.textContent = '—';
+      elReadViolet.textContent = '—';
+    }
+  }
+
+  function setMessage(txt, kind) {
+    elMsg.textContent = txt;
+    elMsg.className = 'chrom-msg' + (kind ? ' ' + kind : '');
+  }
+
+  function renderVerdicts(enabled) {
+    elVerdicts.innerHTML = '';
+    VERDICTS.forEach(function (v) {
+      var b = document.createElement('button');
+      b.className = 'ddl-btn';
+      b.type = 'button';
+      b.disabled = !enabled;
+      b.innerHTML = '<span>' + v.label + '</span><span class="sub">' + v.sub + '</span>';
+      b.addEventListener('click', function () { judge(v.key); });
+      elVerdicts.appendChild(b);
+    });
+  }
+
+  function showFeedback(kind, title, body) {
+    elFeedback.className = 'chrom-feedback show ' + kind;
+    elFeedback.innerHTML = '<b>' + title + '</b>' + body;
+  }
+
+  function hideFeedback() {
+    elFeedback.className = 'chrom-feedback';
+    elFeedback.innerHTML = '';
+  }
+
+  function loadChromRound(idx) {
+    var r = CHROM_ROUNDS[idx];
+    chromResolved = false;
+    elCaseLabel.textContent = r.label;
+    elCaseText.textContent = r.text;
+    elLoad.textContent = r.load + ' u';
+    elSlider.value = 20;
+    elSliderVal.textContent = '20';
+    resetTube();
+    setReadouts(null);
+    hideFeedback();
+    renderVerdicts(false);
+    elNext.style.display = 'none';
+    elRun.disabled = false;
+    elPurge.disabled = false;
+    setMessage('Sample injected. Sweep the gradient fader and run the elution — each mixture resolves in a different polarity window.', '');
+  }
+
+  function runElution() {
+    var r = CHROM_ROUNDS[chromIndex];
+    var g = parseInt(elSlider.value, 10);
+    resetTube();
+    setReadouts(null);
+    hideFeedback();
+    renderVerdicts(false);
+    chromResolved = false;
+
+    /* restart solvent-front animation */
+    elFront.classList.remove('is-running');
+    void elFront.offsetWidth;
+    elFront.classList.add('is-running');
+
+    if (g < r.win[0]) {
+      applyBands(r.bands, false);
+      elTube.classList.add('is-smear');
+      elTube.classList.remove('is-resolved');
+      elTube.classList.add('ddl-shake');
+      setTimeout(function () { elTube.classList.remove('ddl-shake'); }, 600);
+      setMessage('BANDS UNRESOLVED — the solvent front stalled and all three fractions smeared into a single overlapping band. Raise the gradient polarity and re-run.', 'bad');
+      return;
+    }
+    if (g > r.win[1]) {
+      applyBands(r.bands, false);
+      elTube.classList.add('is-smear');
+      elTube.classList.remove('is-resolved');
+      elTube.classList.add('ddl-shake');
+      setTimeout(function () { elTube.classList.remove('ddl-shake'); }, 600);
+      setMessage('SAMPLE OVERRUN — the fractions eluted past the detector window and the data fraction was lost off-column. Lower the gradient polarity and re-run.', 'bad');
+      return;
+    }
+
+    applyBands(r.bands, true);
+    elTube.classList.add('is-resolved');
+    elTube.classList.remove('is-smear');
+    chromResolved = true;
+    setReadouts(r.bands);
+    renderVerdicts(true);
+    setMessage('BANDS RESOLVED — three clean fractions isolated at ' + g + '% polarity. Read the integrator and compare the amber fraction against the claim load.', 'ok');
+  }
+
+  function judge(key) {
+    if (!chromResolved) { return; }
+    var r = CHROM_ROUNDS[chromIndex];
+    if (key === r.correct) {
+      var isNew = solve('chrom' + r.id);
+      showFeedback('ok', 'RULING ACCEPTED — ' + r.why, '');
+      renderVerdicts(false);
+      elRun.disabled = true;
+      elPurge.disabled = true;
+      if (isNew) {
+        showFeedback('ok', 'RULING ACCEPTED (+100 XP)', r.why);
+      }
+      if (chromIndex < CHROM_ROUNDS.length - 1) {
+        elNext.style.display = 'inline-flex';
+        elNext.textContent = '▶ LOAD NEXT SAMPLE';
+      } else {
+        elNext.style.display = 'inline-flex';
+        elNext.textContent = '✔ CHROMATOGRAPH CALIBRATED — RETURN TO CONSOLE';
+        elNext.disabled = true;
+        setMessage('All four samples resolved and ruled. The chromatograph is fully calibrated.', 'ok');
+      }
+    } else {
+      elTube.classList.add('ddl-shake');
+      setTimeout(function () { elTube.classList.remove('ddl-shake'); }, 600);
+      var hint = '';
+      if (key === 'sufficient') {
+        hint = 'Check the amber fraction against the claim load before clearing the sample. If amber < claim load, the grounds cannot carry the assertion.';
+      } else if (key === 'pathos') {
+        hint = 'Compare the blue noise fraction to the amber data fraction. Pathos contamination is only the diagnosis when noise actually outweighs grounds.';
+      } else if (key === 'warrant') {
+        hint = 'Look at the violet mechanism band. An unstated mechanism is the diagnosis when the warrant band is disproportionate or over-dominant relative to the data.';
+      } else {
+        hint = 'Ask whether the sample is representative. The micro-sample diagnosis applies when total signal falls far short of the claim load and the claim speaks universally.';
+      }
+      showFeedback('bad', 'RULING REJECTED — re-read the integrator', hint);
+    }
+  }
+
+  elSlider.addEventListener('input', function () {
+    elSliderVal.textContent = elSlider.value;
+  });
+  elRun.addEventListener('click', runElution);
+  elPurge.addEventListener('click', function () {
+    resetTube();
+    setReadouts(null);
+    hideFeedback();
+    renderVerdicts(false);
+    chromResolved = false;
+    setMessage('Column purged. Sample retained in the injection port — set a new gradient and re-run.', '');
+  });
+  elNext.addEventListener('click', function () {
+    if (chromIndex < CHROM_ROUNDS.length - 1) {
+      chromIndex += 1;
+      loadChromRound(chromIndex);
+    }
+  });
+
+  loadChromRound(0);
+
+  /* ================= SECTION 04 — NEGATION DETONATOR ================= */
+  var detScenarioEl = document.getElementById('detScenario');
+  var detArena = document.getElementById('detArena');
+  var detBtn = document.getElementById('detBtn');
+  var detPopup = document.getElementById('detPopup');
+  var detAck = document.getElementById('detAck');
+  var detFired = false;
+
+  (function buildDetScenario() {
+    var text = "The committee voted to rename the 'Remedial Reading Program' the 'Accelerated Literacy Program.' Test scores will rise, because students who feel labeled 'remedial' underperform.";
+    var words = text.split(' ');
+    var frag = document.createDocumentFragment();
+    words.forEach(function (w) {
+      var s = document.createElement('span');
+      s.className = 'det-word';
+      s.textContent = w + ' ';
+      frag.appendChild(s);
+    });
+    detScenarioEl.appendChild(frag);
+  })();
+
+  detBtn.addEventListener('click', function () {
+    if (detFired) { return; }
+    detFired = true;
+    detBtn.disabled = true;
+    detArena.classList.add('is-charging');
+
+    setTimeout(function () {
+      detArena.classList.remove('is-charging');
+      detArena.classList.add('is-collapsed');
+
+      var words = detScenarioEl.querySelectorAll('.det-word');
+      for (var i = 0; i < words.length; i++) {
+        var dx = (Math.random() * 260 - 130).toFixed(1);
+        var dy = (Math.random() * 200 - 40).toFixed(1);
+        var rot = (Math.random() * 120 - 60).toFixed(1);
+        words[i].style.transitionDelay = (i * 0.012) + 's';
+        words[i].style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg)';
+      }
+    }, 1100);
+
+    setTimeout(function () {
+      detPopup.classList.add('show');
+      solve('detonator');
+    }, 2100);
+  });
+
+  detAck.addEventListener('click', function () {
+    detPopup.classList.remove('show');
+  });
+
+  /* ================= SECTION 05 — LIVE FIRE FORENSICS ================= */
+  var fxWrap = document.getElementById('fxWrap');
+  var fxNotes = document.getElementById('fxNotes');
+  var fxModeLabel = document.getElementById('fxModeLabel');
+  var fxResult = document.getElementById('fxResult');
+  var fxModes = fxWrap.querySelectorAll('.fx-mode');
+  var fxHyps = document.getElementById('fxHyps');
+  var fxActive = null;
+
+  var FX_NOTES = {
+    grounds: [
+      { cls: 'g', title: 'Grounds located', body: 'A single quantitative figure: 78 percent of students "surveyed." Survey provenance is unstated — who was sampled, how many, and whether participation was voluntary.' },
+      { cls: 'g', title: 'Sufficiency check', body: 'One self-report item about a feeling ("discouraged") is asked to support a behavioural prediction two years out. The grounds are relevant but far too thin for the claim load.' },
+      { cls: 'g', title: 'Independence check', body: 'No second source. No enrollment data, no comparison cohort, no register-stratified usage evidence for the phrase "basic skills."' }
+    ],
+    claims: [
+      { cls: 'b', title: 'Core outcome claim', body: '"Enrollment in advanced coursework will climb by at least a third within two years." A precise, falsifiable, quantitative prediction — and therefore a claim that requires strong grounds.' },
+      { cls: 'b', title: 'Policy claim', body: '"Every course title be audited for deficit language by December." A sweeping mandate generalised from one survey of one phrase.' },
+      { cls: 'b', title: 'Scope note', body: 'The claim is universal ("every course title") while the evidence covers one phrase in one district. The scope of the conclusion exceeds the scope of the grounds.' }
+    ],
+    warrants: [
+      { cls: 'o', title: 'Unstated mechanism #1', body: '"Because the new name signals ambition rather than deficiency…" This is the bridge: label → perception → motivation → enrollment. Every link is asserted, none is demonstrated.' },
+      { cls: 'o', title: 'Unstated mechanism #2', body: '"No student can thrive while being called undeveloped." A universal psychological claim smuggled in as common sense.' },
+      { cls: 'o', title: 'Definitional slide', body: '"Basic" is reduced to "simple" or "undeveloped." The technical sense (foundational, prerequisite) is discarded and the colloquial pejorative sense is spent instead — a textbook equivocation.' }
+    ]
+  };
+
+  function renderFxNotes(mode) {
+    var notes = FX_NOTES[mode] || [];
+    if (!notes.length) {
+      fxNotes.innerHTML = '<div class="fx-empty">Select a spectral mode to begin scanning the passage.</div>';
+      return;
+    }
+    var html = '';
+    notes.forEach(function (n) {
+      html += '<div class="fx-note ' + n.cls + '"><b>' + n.title + '</b>' + n.body + '</div>';
+    });
+    fxNotes.innerHTML = html;
+  }
+
+  fxModes.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mode = btn.getAttribute('data-mode');
+      if (fxActive === mode) {
+        fxActive = null;
+        fxWrap.classList.remove('mode-grounds', 'mode-claims', 'mode-warrants');
+        fxModes.forEach(function (b) { b.classList.remove('active'); });
+        fxModeLabel.textContent = 'NONE';
+        renderFxNotes(null);
+        return;
+      }
+      fxActive = mode;
+      fxWrap.classList.remove('mode-grounds', 'mode-claims', 'mode-warrants');
+      fxWrap.classList.add('mode-' + mode);
+      fxModes.forEach(function (b) { b.classList.toggle('active', b === btn); });
+      fxModeLabel.textContent = mode.toUpperCase();
+      renderFxNotes(mode);
+    });
+  });
+
+  fxHyps.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.fx-hyp') : null;
+    if (!btn || btn.disabled) { return; }
+    var ok = btn.getAttribute('data-ok') === '1';
+    if (ok) {
+      var all = fxHyps.querySelectorAll('.fx-hyp');
+      for (var i = 0; i < all.length; i++) { all[i].disabled = true; }
+      btn.classList.add('correct');
+      fxResult.className = 'fx-result show';
+      fxResult.innerHTML = '<b>Structural Clearance Granted</b>The fatal flaw is the unstated mechanism bridging a name change to a behavioural outcome, compounded by self-selected survey grounds. The 78 percent figure is relevant but insufficient, and the inference from "felt discouraged" to "enrollment will climb by a third" is licensed by nothing in the passage. Hypotheses B and C attack surface features and an implementation detail; neither touches a load-bearing component.';
+      solve('forensics');
+    } else {
+      btn.classList.add('wrong');
+      btn.disabled = true;
+      fxResult.className = 'fx-result show';
+      fxResult.style.borderColor = 'var(--danger-dark)';
+      fxResult.style.background = 'rgba(239,68,68,.09)';
+      fxResult.style.color = '#FEE2E2';
+      fxResult.innerHTML = '<b style="color:#F87171;">Hypothesis Rejected</b>That observation may be true, but it is not load-bearing. A flaw must break the inference between grounds and outcome — surface features and implementation details do not. Re-scan the orange channel and locate the bridge that carries the argument.';
+    }
+  });
+
+  /* ================= TERMINATION ================= */
+  finishBtn.addEventListener('click', function () {
+    if (typeof window.polymathFinishLesson === 'function') {
+      window.polymathFinishLesson();
+    }
+  });
+
+  /* ================= CALLSIGN ================= */
+  var callsignInput = document.getElementById('ddlCallsign');
+  callsignInput.addEventListener('input', function () {
+    var v = callsignInput.value.toUpperCase().replace(/[^A-Z0-9\-_]/g, '');
+    callsignInput.value = v;
+  });
+});
+</script>

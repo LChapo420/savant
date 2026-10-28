@@ -1,0 +1,2991 @@
+{
+ "row_id": 21,
+ "engine_id": "moto-x3m",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 24,
+ "generated_at": "2026-10-24T20:36:15.085Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 63,
+  "code_rejected": 0,
+  "sent_to_judges": 63,
+  "kept": 50,
+  "keep_rate_of_written": 0.794,
+  "judges": {
+   "both_answered": 63,
+   "picked_same_option": 53,
+   "a_picked_key": 60,
+   "b_picked_key": 55,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash",
+    "openai/gpt-oss-20b"
+   ],
+   "models_b": [
+    "google/gemma-4-31b-it:free",
+    "openai/gpt-oss-20b",
+    "z-ai/glm-5.3",
+    "qwen/qwen3.8-max:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "moto-x3m",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 24,
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "title": "Three Into One: The Sentence Craft Track",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q12",
+    "prompt": "Which choice combines all three sentences into one cumulative sentence with a main clause followed by coordinated verb phrases in the original order? The robotics team unpacked the new laptops. It tested each device. It labeled the storage boxes.",
+    "choices": [
+     "The robotics team, while testing each device, unpacked the new laptops and labeled the storage boxes.",
+     "After the robotics team unpacked the new laptops, it tested each device and labeled the storage boxes.",
+     "The robotics team unpacked the new laptops, and it tested each device; it labeled the storage boxes.",
+     "The robotics team unpacked the new laptops, tested each device, and labeled the storage boxes."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence begins with one main clause and then adds three parallel action phrases in the order given by the source sentences.",
+    "difficulty": 5,
+    "skill": "Cumulative sentence construction",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q27",
+    "prompt": "The Red Maple is a community center. Its language classes focus on conversational skills. Its kitchen serves evening meals. Which choice uses an appositive to identify The Red Maple and a relative clause to modify language classes?",
+    "choices": [
+     "The Red Maple is a community center, and it has language classes that focus on conversational skills, while its kitchen serves evening meals.",
+     "The Red Maple, which is a community center, has language classes focusing on conversational skills, and its kitchen serves evening meals.",
+     "The Red Maple, a community center, has language classes that focus on conversational skills, and its kitchen serves evening meals.",
+     "The Red Maple, a community center whose classes focus on conversational skills, has a kitchen serving evening meals."
+    ],
+    "answerIndex": 2,
+    "explanation": "The appositive a community center identifies The Red Maple, and the relative clause that focus on conversational skills directly modifies language classes.",
+    "difficulty": 6,
+    "skill": "Appositives and restrictive relative clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q48",
+    "prompt": "Combine the three sentences into one periodic sentence that begins with two separate introductory subordinate clauses and ends with a main clause:\nThe fire alarm sounded. The students evacuated the building. The teachers checked the rolls.",
+    "choices": [
+     "The teachers checked the rolls after the fire alarm sounded and the students evacuated the building.",
+     "The fire alarm sounded, the students evacuated the building, and the teachers checked the rolls.",
+     "After the fire alarm sounded, the students evacuated the building; then the teachers checked the rolls.",
+     "When the fire alarm sounded, after the students evacuated the building, the teachers checked the rolls."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option opens with two subordinate clauses (“When…”, “after…”) before the main clause, forming a periodic structure.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q34",
+    "prompt": "Elena repaired the radio. The radio was on the kitchen shelf. Elena found a loose wire. Which sentence combines all three details and uses an it-cleft to emphasize Elena as the person who performed the repair?",
+    "choices": [
+     "It was the radio that Elena, after finding a loose wire, repaired on the kitchen shelf.",
+     "It was Elena who, after finding a loose wire, repaired the radio that was on the kitchen shelf.",
+     "Was it Elena who, after finding a loose wire, repaired the radio that was on the kitchen shelf?",
+     "It was on the kitchen shelf that Elena repaired the radio after finding a loose wire."
+    ],
+    "answerIndex": 1,
+    "explanation": "The it-cleft foregrounds Elena as the agent of the repair, while the subordinate clauses retain the loose wire and the radio's kitchen-shelf location.",
+    "difficulty": 7,
+    "skill": "Combining sentences with an it-cleft construction",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which sentence combines all three facts, retains the negative adverb Never, and correctly uses subject-auxiliary inversion? The observatory never opened before sunrise. The technicians unlocked the dome. The first stargazers arrived.",
+    "choices": [
+     "Never the observatory had opened before sunrise, with the technicians unlocking the dome as the first stargazers arrived.",
+     "Never had the observatory opened before sunrise, with the technicians unlocking the dome as the first stargazers arrived.",
+     "Seldom had the observatory opened before sunrise, with the technicians unlocking the dome as the first stargazers arrived.",
+     "Never had the observatory open before sunrise, with the technicians unlocking the dome as the first stargazers arrived."
+    ],
+    "answerIndex": 1,
+    "explanation": "The fronted negative adverb Never triggers subject-auxiliary inversion, and the with-phrase adds the entrance and visitor details.",
+    "difficulty": 6,
+    "skill": "Inversion after fronted negative adverbs",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q35",
+    "prompt": "Combine the three sentences into one balanced sentence with three parallel clauses: A small boat rocked near the pier. A rope snapped taut. The bow turned toward open water.",
+    "choices": [
+     "A small boat rocking near the pier, a rope snapped taut, and the bow turned toward open water.",
+     "A small boat rocked near the pier, a rope was snapped taut, and the bow turned toward open water.",
+     "A small boat rocked near the pier, a rope snapped taut, and the bow turned toward open water.",
+     "Although a small boat rocked near the pier, a rope snapped taut, and the bow turned toward open water."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence combines the three facts in parallel independent clauses that have matching subject-verb structures.",
+    "difficulty": 5,
+    "skill": "Balanced sentence construction",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q19",
+    "prompt": "The committee reviewed the proposal. The mayor signed it. The council funded the project. Which sentence begins with a two-part past-participial phrase and preserves all three facts?",
+    "choices": [
+     "After the committee reviewed the proposal and the mayor signed it, the council funded the project.",
+     "Reviewing the proposal, the mayor signed it after the committee approved it and before the council funded the project.",
+     "Reviewed by the committee and signed by the mayor, the proposal was funded by the council.",
+     "The proposal, reviewed by the committee and signed by the mayor, was funded by the council."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence opens with two passive participial phrases and preserves all three actions.",
+    "difficulty": 4,
+    "skill": "Fronted participial phrase",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which one-sentence explanation best describes the relationship between the clauses in this sentence? Although rehearsal had ended, the actors stayed to review their lines.",
+    "choices": [
+     "The subordinate clause gives the reason the actors stayed, while the main clause states the action they chose.",
+     "The although clause establishes a contrast between rehearsal ending and the actors remaining, and the main clause states their action.",
+     "The subordinate clause marks a simultaneous action, with the actors reviewing their lines while rehearsal was still in progress.",
+     "The subordinate clause states a necessary condition, meaning the actors could review their lines only if rehearsal had ended."
+    ],
+    "answerIndex": 1,
+    "explanation": "The although clause establishes a contrast between rehearsal ending and the actors remaining, and the main clause states their action.",
+    "difficulty": 5,
+    "skill": "Concessive clauses",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q32",
+    "prompt": "The exhibit is open to the public. It displays forty photographs. Twelve of them were taken by local students. Which choice uses a colon to introduce a compound independent clause whose coordinated clauses have the subjects it and twelve of them?",
+    "choices": [
+     "The exhibit is open to the public; it displays forty photographs, and twelve of them were taken by local students.",
+     "The exhibit is open to the public: it displays forty photographs, twelve of which were taken by local students.",
+     "The exhibit is open to the public: forty photographs are displayed, and twelve of them were taken by local students.",
+     "The exhibit is open to the public: it displays forty photographs, and twelve of them were taken by local students."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon introduces two coordinated independent clauses with the required subjects it and twelve of them, and all three original facts remain present.",
+    "difficulty": 6,
+    "skill": "Using a colon to introduce coordinated independent clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q45",
+    "prompt": "The bridge was repaired last summer. It carries cyclists across a ravine. Its old wooden trusses remain. Which choice combines all three facts using a nonrestrictive relative clause beginning with which?",
+    "choices": [
+     "The bridge, which was repaired last summer, carries cyclists across a ravine, and its old wooden trusses remain.",
+     "The bridge that was repaired last summer carries cyclists across a ravine, and its old wooden trusses remain.",
+     "Although the bridge was repaired last summer, it carries cyclists across a ravine, and its old wooden trusses remain.",
+     "The bridge, repaired last summer and carrying cyclists across a ravine, has old wooden trusses that remain."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct choice uses the nonrestrictive relative clause which was repaired last summer to identify the bridge while preserving all three original details.",
+    "difficulty": 5,
+    "skill": "Nonrestrictive Relative Clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q43",
+    "prompt": "Tomas checked the schedule. He packed a flashlight. He locked the supply closet. Which sentence forms one cumulative sentence with a main clause followed by three coordinated verb phrases in the original order?",
+    "choices": [
+     "Tomas checked the schedule and packed a flashlight; then the supply closet was locked.",
+     "After Tomas checked the schedule, he packed a flashlight, and he locked the supply closet.",
+     "Tomas checked the schedule, packed a flashlight, and locked the supply closet.",
+     "Checking the schedule, Tomas packed a flashlight and locked the supply closet."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence begins with the main clause Tomas checked the schedule and continues with three coordinated verb phrases in the original order.",
+    "difficulty": 6,
+    "skill": "Building a cumulative sentence with coordinated verb phrases",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q22",
+    "prompt": "Samira watered seedlings. She logged moisture levels. She covered young plants before noon. Which sentence forms one cumulative sentence with a main clause followed by three parallel verb phrases in the original order?",
+    "choices": [
+     "Before noon, Samira covered young plants, logged moisture levels, and watered seedlings.",
+     "Samira watered seedlings, logged moisture levels, and covered young plants before noon.",
+     "Samira watered seedlings and logged moisture levels before she covered young plants.",
+     "Samira watered seedlings, covered young plants, and logged moisture levels before noon."
+    ],
+    "answerIndex": 1,
+    "explanation": "The main clause contains three coordinated verbs that follow the actions in their original order.",
+    "difficulty": 5,
+    "skill": "Cumulative sentence with parallel predicates",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which one-sentence explanation accurately describes the structure of this sentence? After the rehearsal ended, the stage manager dimmed the lights; the audience began filing out through the side doors.",
+    "choices": [
+     "The sentence contains two introductory relative clauses, followed by two independent clauses joined by a colon.",
+     "The sentence contains one introductory adverbial clause, followed by two independent clauses joined by a semicolon.",
+     "The sentence contains one introductory participial phrase, followed by a compound predicate joined by a semicolon.",
+     "The sentence contains two dependent adverbial clauses joined by a semicolon, followed by a main clause."
+    ],
+    "answerIndex": 1,
+    "explanation": "After the rehearsal ended is an introductory adverbial clause, and the semicolon joins two independent clauses about the stage manager and the audience.",
+    "difficulty": 7,
+    "skill": "Analyzing complex sentence structure",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q8",
+    "prompt": "Combine the three sentences into one sentence that uses a colon and preserves the original meaning: The museum will display a new sculpture. The artist designed it. Visitors can meet the artist.",
+    "choices": [
+     "The museum will display a new sculpture, the artist designed it, and visitors can meet the artist.",
+     "The museum will display a new sculpture, and the artist designed it so visitors can meet the artist.",
+     "The museum will display a new sculpture; the artist designed it, and visitors can meet the artist.",
+     "The museum will display a new sculpture: the artist designed it, and visitors can meet the artist."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon after sculpture introduces the statement about the artist designing it, and the final clause preserves the detail about meeting the artist.",
+    "difficulty": 6,
+    "skill": "Colons in compound sentences",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q16",
+    "prompt": "The community garden has three plots. Two students volunteer there. They grow tomatoes. Select the sentence that uses a colon correctly while preserving every fact.",
+    "choices": [
+     "The community garden has three plots: two students volunteer there, they grow tomatoes.",
+     "The community garden: it has three plots, and two students volunteer there to grow tomatoes.",
+     "The community garden has three plots; two students volunteer there, and they grow tomatoes.",
+     "The community garden has three plots: two students volunteer there, and they grow tomatoes."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon follows a complete independent clause and introduces the related statements about the volunteers and their tomatoes.",
+    "difficulty": 5,
+    "skill": "Colons joining related sentences",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q41",
+    "prompt": "The fair has three attractions. The robot show begins at noon. The pottery wheel follows. Which sentence uses a colon to introduce two independent clauses after a complete introductory clause?",
+    "choices": [
+     "The fair has three attractions: the robot show begins at noon, and the pottery wheel follows.",
+     "The fair has three attractions: including the robot show at noon and the pottery wheel afterward.",
+     "The fair's three attractions include the robot show, which begins at noon; the pottery wheel follows.",
+     "Because the robot show begins at noon and the pottery wheel follows, the fair has three attractions."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon follows the complete introductory clause, and the material after it consists of two independent clauses joined by and.",
+    "difficulty": 4,
+    "skill": "Using a colon to introduce independent clauses",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q33",
+    "prompt": "The bell rang. Players formed two lines. The drill began. Which choice makes the three facts a balanced sentence with parallel clauses and no introductory transition?",
+    "choices": [
+     "The bell rang, players formed two lines, and the drill began.",
+     "The bell rang, while players formed two lines, and the drill began.",
+     "The bell rang, and players formed two lines before the drill began.",
+     "After the bell rang, players formed two lines, and the drill began."
+    ],
+    "answerIndex": 0,
+    "explanation": "The three clauses share the same subject-verb pattern, making the sentence balanced while preserving the sequence of events.",
+    "difficulty": 5,
+    "skill": "Creating a balanced sentence with parallel clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q40",
+    "prompt": "Combine the three sentences into one sentence that opens with an introductory absolute phrase and ends with the final action in a main clause: Snow gathered on the windowsill. The radio played softly. Elena sketched the street.",
+    "choices": [
+     "With the radio playing softly and the windowsill gathering snow, Elena sketched the street.",
+     "Gathering snow on the windowsill, Elena sketched the street while the radio played softly.",
+     "Snow gathered on the windowsill, and the radio played softly as Elena sketched the street.",
+     "With snow gathered on the windowsill and the radio playing softly, Elena sketched the street."
+    ],
+    "answerIndex": 3,
+    "explanation": "The introductory absolute phrase combines the window and radio details, while the main clause presents Elena's final action.",
+    "difficulty": 6,
+    "skill": "Introductory absolute-phrase construction",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q2",
+    "prompt": "Combine the three sentences into one grammatically correct sentence that uses an appositive for Dr. Chen and preserves the original details: Dr. Chen is a marine biologist. She studies coral reefs. Her laboratory is in the university museum.",
+    "choices": [
+     "Dr. Chen is a marine biologist, she studies coral reefs, and her laboratory is in the university museum.",
+     "Dr. Chen, a marine biologist, studies coral reefs, and her laboratory is in the university museum.",
+     "Dr. Chen, a marine biologist who studies coral reefs, has her laboratory in the university museum and it is used for coral research.",
+     "Dr. Chen, a marine biologist studies coral reefs, and her laboratory is in the university museum."
+    ],
+    "answerIndex": 1,
+    "explanation": "The appositive a marine biologist identifies Dr. Chen, and the coordinated clauses retain all three original facts.",
+    "difficulty": 5,
+    "skill": "Using appositives in compound sentences",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which one-sentence explanation best describes the relationship between the clauses in this sentence? Because the power failed, the clinic used battery lanterns, while patients continued their check-in.",
+    "choices": [
+     "Because introduces a cause-and-effect relationship, while signals a contrast between the backup lighting and the continued check-in.",
+     "Because introduces a contrast between cause and effect, while signals only a sequence between the backup lighting and the continued check-in.",
+     "Because introduces a time relationship, while signals a cause-and-effect relationship between the backup lighting and the continued check-in.",
+     "Because joins two independent clauses, while introduces a relative clause that modifies the continued check-in."
+    ],
+    "answerIndex": 0,
+    "explanation": "Because presents the power failure as the cause of using battery lanterns, while contrasts that use with the patients continuing their check-in.",
+    "difficulty": 7,
+    "skill": "Explaining subordinate clause relationships",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q26",
+    "prompt": "The bakery occupies a corner storefront. It bakes sourdough each morning. Customers line up there before opening. Which choice uses a nonrestrictive relative clause to identify the bakery?",
+    "choices": [
+     "The bakery which bakes sourdough each morning occupies a corner storefront where customers line up before opening.",
+     "The bakery, which bakes sourdough each morning, occupies a corner storefront where customers line up before opening.",
+     "The bakery bakes sourdough each morning, and it occupies a corner storefront where customers line up before opening.",
+     "The corner storefront, where customers line up before opening, contains a bakery that bakes sourdough each morning."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma-delimited which clause is a nonrestrictive relative clause that identifies the bakery by its sourdough habit, while the where clause preserves the customer detail.",
+    "difficulty": 6,
+    "skill": "Nonrestrictive relative clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q21",
+    "prompt": "The workshop opened at nine. Two apprentices repaired instruments. Customers waited outside. Select the sentence that uses a colon to introduce two independent clauses and preserves the original order of all three facts.",
+    "choices": [
+     "The workshop opened at nine: two apprentices repaired instruments, and customers waited outside.",
+     "The workshop opened at nine: customers waited outside, and two apprentices repaired instruments.",
+     "The workshop opened at nine: two apprentices repaired instruments, but customers waited outside.",
+     "The workshop opened at nine: while two apprentices repaired instruments, customers waited outside."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon introduces two independent clauses, and the apprentices-and-customers order matches the source sentences.",
+    "difficulty": 5,
+    "skill": "Colon with coordinated independent clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q25",
+    "prompt": "The satellite passed overhead. Then its cameras recorded migrating birds. Later, scientists mapped the flight paths. Which choice combines the three facts and begins with a temporal subordinate clause that preserves the stated sequence?",
+    "choices": [
+     "After the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths.",
+     "Although the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths.",
+     "Because the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths.",
+     "While the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths."
+    ],
+    "answerIndex": 0,
+    "explanation": "The introductory temporal clause After the satellite passed overhead preserves the sequence before presenting the two remaining actions.",
+    "difficulty": 5,
+    "skill": "Sequencing with temporal subordinate clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q3",
+    "prompt": "Combine the three sentences into one sentence that uses a colon and preserves the original meaning: Three finalists were selected for the award. Their projects address food waste. The winners will receive certificates and small grants.",
+    "choices": [
+     "Three finalists were selected for the award: their projects address food waste; however, the winners will receive certificates and small grants.",
+     "Three finalists were selected for the award: because their projects address food waste, the winners will receive certificates and small grants.",
+     "Three finalists were selected for the award: their projects address food waste, and the winners will receive certificates and small grants.",
+     "Three finalists were selected for the award: their projects addressing food waste, and the winners will receive certificates and small grants."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon introduces complete clauses that present the finalists' projects and the winners' rewards without adding or changing information.",
+    "difficulty": 6,
+    "skill": "Using a colon to combine sentences",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q31",
+    "prompt": "Visibility was poor. The dock was crowded. The captain delayed the departure. Which sentence places two Because clauses before the final main clause, creating a periodic sentence?",
+    "choices": [
+     "Visibility was poor, and because the dock was crowded, the captain delayed the departure.",
+     "Although visibility was poor and because the dock was crowded, the captain delayed the departure.",
+     "Because visibility was poor and because the dock was crowded, the captain delayed the departure.",
+     "Because visibility was poor, because the dock was crowded, and the captain delayed the departure."
+    ],
+    "answerIndex": 2,
+    "explanation": "Both because clauses precede the main clause, making the sentence periodic and presenting poor visibility and the crowded dock as reasons for the delay.",
+    "difficulty": 5,
+    "skill": "Building a periodic sentence with parallel introductory clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q1",
+    "prompt": "Combine the three sentences without changing their meaning: Many students entered the contest. They submitted essays about local history. The teachers will announce the winners next week.",
+    "choices": [
+     "Many students entered the contest and submitted essays about local history; the teachers will announce the winners next week.",
+     "Many students entered the contest, submitted essays about local history, and waited for the teachers to announce the winners next week.",
+     "Many students entered the contest and they submitted essays about local history, the teachers will announce the winners next week.",
+     "Many students entered the contest, they submitted essays about local history, and the teachers will announce the winners next week."
+    ],
+    "answerIndex": 0,
+    "explanation": "This option combines the three original sentences into a grammatically correct compound sentence without changing the facts.",
+    "difficulty": 4,
+    "skill": "Coordinating independent clauses",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q24",
+    "prompt": "The wind dropped. Flags hung still. The harbor lights reflected on the calm water. Which sentence combines the facts into a balanced sentence with three parallel clauses?",
+    "choices": [
+     "The wind dropped while flags hung still, and the harbor lights reflected on the calm water.",
+     "After the wind dropped, flags hung still, and the harbor lights reflected on the calm water.",
+     "The flags hung still because the wind dropped, and the harbor lights reflected on the calm water.",
+     "The wind dropped, flags hung still, and the harbor lights reflected on the calm water."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence presents three finite clauses in matching subject-verb form and uses parallel structure.",
+    "difficulty": 6,
+    "skill": "Balanced sentence with parallel clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q38",
+    "prompt": "Combine the three sentences into one sentence that uses a colon correctly and preserves the original meaning: The report has two sections. The first examines water use. The second compares schools with older buildings.",
+    "choices": [
+     "The report has two sections; the first examines water use, and the second compares schools with older buildings.",
+     "The report has two sections: the first examines water use, and the second compares schools with older buildings.",
+     "The report: has two sections, the first examines water use, and the second compares schools with older buildings.",
+     "The report has two sections, the first examines water use, and the second compares schools with older buildings."
+    ],
+    "answerIndex": 1,
+    "explanation": "The colon correctly introduces the two sections, and the remaining clauses explain what each section does.",
+    "difficulty": 5,
+    "skill": "Colon introduction and coordination",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence combines the three facts into a balanced sentence with three parallel predicates: Amira opened the notebook. She reviewed the list. She began the class.",
+    "choices": [
+     "After Amira opened the notebook and she reviewed the list, she began the class.",
+     "Amira opened the notebook, reviewed the list, and began the class.",
+     "Amira opened the notebook, and she reviewed the list before the class began.",
+     "Opening the notebook, Amira reviewed the list, and the class began."
+    ],
+    "answerIndex": 1,
+    "explanation": "The three coordinated past-tense verbs have the same subject and grammatical form, creating a balanced structure with parallel predicates.",
+    "difficulty": 7,
+    "skill": "Balanced sentences with parallel predicates",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q36",
+    "prompt": "Combine the three sentences into one sentence using a relative clause without changing their meaning: The observatory is a research station. It studies cloud formations. Its data is shared with schools.",
+    "choices": [
+     "The observatory, a research station, studies cloud formations, and its data is shared with schools.",
+     "The observatory is a research station whose studies cloud formations and shares its data with schools.",
+     "The observatory studies cloud formations that are shared with schools, making it a research station.",
+     "The observatory that studies cloud formations shares its data with schools and is a research station."
+    ],
+    "answerIndex": 3,
+    "explanation": "The relative clause identifies the observatory by its work, while the main clause preserves the facts that it is a research station and shares its data with schools.",
+    "difficulty": 5,
+    "skill": "Relative-clause integration",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q47",
+    "prompt": "Which one-sentence explanation accurately describes the structure of this sentence? When the train arrived, the conductor checked the tickets, and passengers found their seats.",
+    "choices": [
+     "The when clause is an introductory absolute phrase, and the main clause contains three parallel participles.",
+     "The when clause introduces a cause-and-effect relationship, and the main clause contains two coordinated verbs with the same subject.",
+     "The when clause introduces a time relationship, and the main clause contains two coordinated independent clauses joined by a comma and and.",
+     "The sentence contains one independent clause followed by a subordinate clause that describes the passengers."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct explanation identifies the introductory when clause as showing time and recognizes the two coordinated independent clauses in the main clause.",
+    "difficulty": 6,
+    "skill": "Analyzing Compound Sentences",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q7",
+    "prompt": "Combine these three sentences into one grammatically correct sentence that uses an appositive to identify Leo: Leo is a luthier. He repairs violins. His workshop opens on Saturdays.",
+    "choices": [
+     "Leo repairs violins as a luthier, and his workshop opens on Saturdays.",
+     "Leo, who repairs violins, is a luthier, and his workshop opens on Saturdays.",
+     "Leo, a luthier, repairs violins, and his workshop opens on Saturdays.",
+     "Leo is a luthier who repairs violins, and his workshop opens on Saturdays."
+    ],
+    "answerIndex": 2,
+    "explanation": "The phrase a luthier is an appositive that renames Leo, while the rest of the sentence preserves the other two facts.",
+    "difficulty": 5,
+    "skill": "Appositives",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q6",
+    "prompt": "Which sentence combines all three facts into one sentence using a relative clause: The lighthouse stands on a rocky coast. It was built in 1890. Its beacon still guides ships.",
+    "choices": [
+     "Built in 1890, the lighthouse stands on a rocky coast, and its beacon still guides ships.",
+     "The lighthouse, which was built in 1890, stands on a rocky coast, and its beacon still guides ships.",
+     "The lighthouse stands on a rocky coast because it was built in 1890, and its beacon still guides ships.",
+     "Although the lighthouse was built in 1890, it stands on a rocky coast; its beacon still guides ships."
+    ],
+    "answerIndex": 1,
+    "explanation": "The relative clause which was built in 1890 identifies the lighthouse while the rest of the sentence preserves its location and the purpose of its beacon.",
+    "difficulty": 6,
+    "skill": "Relative clauses",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q46",
+    "prompt": "Snow settled across the valley overnight. The roads became slippery. Bus drivers reduced their speed. Which sentence combines the facts into one sentence with three independent clauses joined by semicolons?",
+    "choices": [
+     "Snow settled across the valley overnight, the roads became slippery, and bus drivers reduced their speed.",
+     "Snow settled across the valley overnight; the roads became slippery; and bus drivers reduced their speed.",
+     "Snow settled across the valley overnight: the roads became slippery, and bus drivers reduced their speed.",
+     "Because snow settled across the valley overnight, the roads became slippery; bus drivers reduced their speed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct choice preserves the three independent clauses and uses semicolons to separate them without creating comma splices.",
+    "difficulty": 5,
+    "skill": "Semicolons and Independent Clauses",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q20",
+    "prompt": "Leila is an architect. She designs public libraries. Her models use recycled wood. Which sentence combines all three facts and uses an appositive to identify Leila?",
+    "choices": [
+     "Leila is an architect, and she designs public libraries using recycled wood.",
+     "Leila, who is an architect, designs public libraries and makes models with recycled wood.",
+     "Leila, a designer of public libraries and recycled wood, works as an architect.",
+     "Leila, an architect who designs public libraries, uses recycled wood in her models."
+    ],
+    "answerIndex": 3,
+    "explanation": "The appositive an architect who designs public libraries identifies Leila while the sentence also preserves the recycled-wood detail.",
+    "difficulty": 4,
+    "skill": "Appositive with a relative clause",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q28",
+    "prompt": "The camp offers two workshops. Pottery meets on Saturdays. Woodworking meets on Wednesdays. Which choice combines all three facts and uses a colon followed by two independent clauses joined by and?",
+    "choices": [
+     "The camp offers two workshops: pottery meeting on Saturdays, and woodworking meeting on Wednesdays.",
+     "The camp offers two workshops; pottery meets on Saturdays, and woodworking meets on Wednesdays.",
+     "The camp offers two workshops, pottery meets on Saturdays, and woodworking meets on Wednesdays.",
+     "The camp offers two workshops: pottery meets on Saturdays, and woodworking meets on Wednesdays."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon introduces two complete clauses, with pottery meets on Saturdays and woodworking meets on Wednesdays joined by and, so the sentence avoids a comma splice.",
+    "difficulty": 5,
+    "skill": "Colons in compound sentences",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q23",
+    "prompt": "After the bell rang, the coach unlocked the storage cabinet, and the team quickly gathered their materials. Which one-sentence explanation accurately describes the sentence's structure?",
+    "choices": [
+     "The sentence has one independent clause with three coordinated verbs.",
+     "The sentence is a compound sentence whose two independent clauses are joined by a subordinating conjunction.",
+     "The sentence begins with an adverbial clause, and its main clause contains two independent clauses joined by and.",
+     "The introductory clause states a cause, while the main clause states two effects."
+    ],
+    "answerIndex": 2,
+    "explanation": "After the bell rang is an introductory adverbial clause, while the main clause contains two independent clauses joined by the coordinating conjunction and.",
+    "difficulty": 6,
+    "skill": "Explaining compound sentence structure",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q17",
+    "prompt": "The roads were wet. Visibility was low. The bus moved slowly through the fog. Which sentence creates a periodic sentence beginning with two separate introductory subordinate clauses?",
+    "choices": [
+     "Although the roads were wet, because visibility was low, the bus moved slowly through the fog.",
+     "Although the roads were wet, because visibility was low, the bus move slowly through the fog.",
+     "Because the roads were wet, although visibility was low, when the bus moved slowly through the fog.",
+     "Although the roads were wet, because visibility was low, and the bus moved slowly through the fog."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence is periodic because two introductory subordinate clauses delay the main clause, which states the bus's action.",
+    "difficulty": 7,
+    "skill": "Periodic sentence structure",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q42",
+    "prompt": "Daylight faded. Cicadas hummed. Bats swept across the pond. Which sentence combines all three facts in a balanced sentence with three parallel past-tense clauses?",
+    "choices": [
+     "Daylight was fading, cicadas were humming, and bats swept across the pond.",
+     "Daylight faded, cicadas hummed, and bats swept across the pond.",
+     "After daylight faded, cicadas hummed, and bats swept across the pond.",
+     "Daylight faded while cicadas hummed, and bats swept across the pond."
+    ],
+    "answerIndex": 1,
+    "explanation": "The three clauses form a balanced structure because they have matching forms and use the simple past-tense verbs faded, hummed, and swept.",
+    "difficulty": 5,
+    "skill": "Creating a balanced sentence with parallel clauses",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q39",
+    "prompt": "Which one-sentence explanation best identifies the structure and effect of this sentence? The bells chimed, the crowd applauded, and the judges rose.",
+    "choices": [
+     "The sentence is cumulative because it places one main clause before three coordinated predicate phrases.",
+     "The sentence is periodic because it delays the main clause until after three introductory subordinate clauses.",
+     "The sentence is balanced because it uses three independent clauses with parallel subject-verb structure and similar length.",
+     "The sentence is inverted because it places the crowd's action between the two sounds before ending with a dependent clause."
+    ],
+    "answerIndex": 2,
+    "explanation": "This explanation correctly recognizes the three similarly structured independent clauses that give the sentence its balanced effect.",
+    "difficulty": 6,
+    "skill": "Analysis of balanced structure",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which sentence combines all three facts and uses an introductory absolute phrase? Rain began during the final minute. The match ended. The players gathered at midfield.",
+    "choices": [
+     "With rain beginning during the final minute, the players gathered at midfield after the match ended.",
+     "During the final minute, rain began, and after the match ended, the players gathered at midfield.",
+     "Rain began during the final minute, while the players gathered at midfield after the match ended.",
+     "The players gathered at midfield after the match ended, with rain beginning during the final minute."
+    ],
+    "answerIndex": 0,
+    "explanation": "The opening with-phrase is an absolute phrase, while the main clause and after-clause preserve all three events.",
+    "difficulty": 5,
+    "skill": "Using absolute phrases",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q37",
+    "prompt": "Combine the three sentences into one sentence using both a nonrestrictive appositive and a relative clause: Inés is a chef. She owns a small café. The café specializes in seafood.",
+    "choices": [
+     "Inés, a chef, owns a small café that specializes in seafood.",
+     "Inés is a chef who owns a small café that specializes in seafood.",
+     "Inés, a chef who owns a small café, specializes in seafood.",
+     "Inés, a chef and seafood specialist, owns a small café."
+    ],
+    "answerIndex": 0,
+    "explanation": "The appositive identifies Inés as a chef, and the relative clause modifies the café by describing its seafood specialty.",
+    "difficulty": 6,
+    "skill": "Appositive and relative-clause combination",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q15",
+    "prompt": "The old theater reopened last year. It shows independent films. Its restored seats have red velvet. Select the sentence that combines all three facts with one nonrestrictive relative clause introduced by which.",
+    "choices": [
+     "The old theater that reopened last year shows independent films in its restored red velvet seats.",
+     "The old theater, which reopened last year, show independent films in its restored red velvet seats.",
+     "The old theater, which reopened last year, shows independent films in its restored red velvet seats.",
+     "The old theater, which reopened last year and red velvet seats, shows independent films."
+    ],
+    "answerIndex": 2,
+    "explanation": "This option uses a nonrestrictive relative clause introduced by which and retains all three facts without changing their meaning.",
+    "difficulty": 5,
+    "skill": "Nonrestrictive relative clauses",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q11",
+    "prompt": "Combine the three sentences into one periodic sentence that begins with two separate introductory subordinate clauses and ends with a main clause: The storm ended. The river began to recede. A fox crossed the exposed field.",
+    "choices": [
+     "The fox crossed the exposed field after the storm ended, and the river began to recede.",
+     "After the storm ended, the river began to recede, and a fox crossed the exposed field.",
+     "After the storm ended, after the river began to recede, a fox crossed the exposed field.",
+     "When the storm ended and the river began to recede, a fox crossed the exposed field."
+    ],
+    "answerIndex": 2,
+    "explanation": "The final clause is the main clause, and the two opening after-clauses are subordinate clauses that place the actions in context.",
+    "difficulty": 4,
+    "skill": "Periodic sentence construction",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q50",
+    "prompt": "Combine the three sentences into one sentence that begins with an absolute phrase and preserves all details: The orchestra tuned their instruments. The conductor raised the baton. The first note rang out.",
+    "choices": [
+     "With the orchestra tuning their instruments, the conductor raised the baton, and the first note rang out.",
+     "The orchestra tuning their instruments, the conductor raised the baton, and the first note rang out.",
+     "The orchestra tuned their instruments; the conductor raised the baton; the first note rang out.",
+     "The orchestra tuned their instruments, the conductor raised the baton, and the first note rang out."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option A opens with an absolute phrase (“The orchestra tuning their instruments”) that modifies the entire main clause, correctly combining all three facts.",
+    "difficulty": 5,
+    "skill": "Sentence combining with absolute phrases",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q9",
+    "prompt": "Combine the three sentences into one sentence that uses semicolons to join three independent clauses: The runners entered the gym. The coach locked the doors. The lights flickered.",
+    "choices": [
+     "The runners entered the gym; the coach locked the doors; and the lights flickered.",
+     "The runners entered the gym, the coach locked the doors, and the lights flickered.",
+     "After the runners entered the gym, the coach locked the doors, and the lights flickered.",
+     "The runners entered the gym; the coach locked the doors, and the lights flickered."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence joins the three independent clauses with semicolons and uses and before the final clause to make the series parallel.",
+    "difficulty": 6,
+    "skill": "Semicolons and parallel structure",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q4",
+    "prompt": "Combine the three sentences into one balanced sentence with three parallel clauses: Rain drummed on the roof. Wind shook the windows. Inside, a small lamp glowed.",
+    "choices": [
+     "While rain drummed on the roof and the wind shook the windows, a small lamp glowed inside.",
+     "Rain drummed on the roof because the wind shook the windows, and inside a small lamp glowed.",
+     "Rain drummed on the roof, the windows were shaken by the wind, and a small lamp glowed inside.",
+     "Rain drummed on the roof, wind shook the windows, and a small lamp glowed inside."
+    ],
+    "answerIndex": 3,
+    "explanation": "The three clauses follow the same subject-verb pattern, creating a balanced sentence with parallel structure.",
+    "difficulty": 7,
+    "skill": "Creating balanced sentences with parallel clauses",
+    "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q44",
+    "prompt": "The branches were blocking the path. The hikers took an alternate route. They reached camp before sunset. Which sentence combines all three facts using a Because clause to express the reason the hikers took an alternate route?",
+    "choices": [
+     "Although the branches were blocking the path, the hikers took an alternate route, and they reached camp before sunset.",
+     "While the branches were blocking the path, the hikers took an alternate route, and they reached camp before sunset.",
+     "The branches were blocking the path, so the hikers took an alternate route, and they reached camp before sunset.",
+     "Because the branches were blocking the path, the hikers took an alternate route, and they reached camp before sunset."
+    ],
+    "answerIndex": 3,
+    "explanation": "The Because clause identifies the blocked path as the reason for taking the alternate route before the hikers reached camp before sunset.",
+    "difficulty": 5,
+    "skill": "Combining causal and independent clauses",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q49",
+    "prompt": "Combine the three sentences into one sentence that begins with an introductory absolute phrase:\nThe storm passed. The sky cleared. The birds resumed singing.",
+    "choices": [
+     "The storm having passed, the sky cleared, and the birds resumed singing.",
+     "After the storm passed, the sky cleared, and the birds resumed singing.",
+     "With the storm passed, the sky cleared, and the birds resumed singing.",
+     "The storm passed; the sky cleared, and the birds resumed singing."
+    ],
+    "answerIndex": 0,
+    "explanation": "The absolute construction “The storm having passed” functions as a free‑standing introductory phrase before the main clause.",
+    "difficulty": 6,
+    "skill": "Sentence Combining",
+    "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   },
+   {
+    "id": "q5",
+    "prompt": "Combine the three sentences into one sentence that begins with a participial phrase and preserves the original details: The hikers reached the river after the storm ended. The river had swollen overnight. They crossed it on a footbridge.",
+    "choices": [
+     "Reaching the swollen river after the storm ended, the hikers crossed it on a footbridge.",
+     "The hikers reached the river after the storm ended; the river had swollen overnight, and they crossed it on a footbridge.",
+     "After the storm ended and because the river had swollen overnight, the hikers reached it and crossed it on a footbridge.",
+     "The river had swollen overnight, and the hikers, who reached it after the storm ended, crossed it on a footbridge."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence begins with the participial phrase Reaching the swollen river after the storm ended, then makes the hikers the subject of the main clause.",
+    "difficulty": 5,
+    "skill": "Participial phrases",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft"
+   }
+  ],
+  "feedback": {
+   "correct": "Sharp instincts — that combined sentence keeps the emphasis exactly where it belongs.",
+   "incorrect": "The combination broke the pattern: check which clause carries the main idea and where it lands.",
+   "win": "You rode the whole syntax track — three sentences in, one crafted sentence out, every time.",
+   "lose": "The trail is lost for today. Reread the three sentences and ask: main idea first, last, or balanced?",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Combine the three sentences without changing their meaning: Many students entered the contest. They submitted essays about local history. The teachers will announce the winners next week.",
+   "choices": [
+    "Many students entered the contest and they submitted essays about local history, the teachers will announce the winners next week.",
+    "Many students entered the contest, submitted essays about local history, and waited for the teachers to announce the winners next week.",
+    "Many students entered the contest and submitted essays about local history; the teachers will announce the winners next week.",
+    "Many students entered the contest, they submitted essays about local history, and the teachers will announce the winners next week."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option combines the three original sentences into a grammatically correct compound sentence without changing the facts.",
+   "difficulty": 4,
+   "skill": "Coordinating independent clauses",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "google/gemma-4-31b-it:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one grammatically correct sentence that uses an appositive for Dr. Chen and preserves the original details: Dr. Chen is a marine biologist. She studies coral reefs. Her laboratory is in the university museum.",
+   "choices": [
+    "Dr. Chen, a marine biologist, studies coral reefs, and her laboratory is in the university museum.",
+    "Dr. Chen is a marine biologist, she studies coral reefs, and her laboratory is in the university museum.",
+    "Dr. Chen, a marine biologist who studies coral reefs, has her laboratory in the university museum and it is used for coral research.",
+    "Dr. Chen, a marine biologist studies coral reefs, and her laboratory is in the university museum."
+   ],
+   "answerIndex": 0,
+   "explanation": "The appositive a marine biologist identifies Dr. Chen, and the coordinated clauses retain all three original facts.",
+   "difficulty": 5,
+   "skill": "Using appositives in compound sentences",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that uses a colon and preserves the original meaning: Three finalists were selected for the award. Their projects address food waste. The winners will receive certificates and small grants.",
+   "choices": [
+    "Three finalists were selected for the award: their projects address food waste, and the winners will receive certificates and small grants.",
+    "Three finalists were selected for the award: because their projects address food waste, the winners will receive certificates and small grants.",
+    "Three finalists were selected for the award: their projects address food waste; however, the winners will receive certificates and small grants.",
+    "Three finalists were selected for the award: their projects addressing food waste, and the winners will receive certificates and small grants."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces complete clauses that present the finalists' projects and the winners' rewards without adding or changing information.",
+   "difficulty": 6,
+   "skill": "Using a colon to combine sentences",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one balanced sentence with three parallel clauses: Rain drummed on the roof. Wind shook the windows. Inside, a small lamp glowed.",
+   "choices": [
+    "Rain drummed on the roof, wind shook the windows, and a small lamp glowed inside.",
+    "Rain drummed on the roof because the wind shook the windows, and inside a small lamp glowed.",
+    "Rain drummed on the roof, the windows were shaken by the wind, and a small lamp glowed inside.",
+    "While rain drummed on the roof and the wind shook the windows, a small lamp glowed inside."
+   ],
+   "answerIndex": 0,
+   "explanation": "The three clauses follow the same subject-verb pattern, creating a balanced sentence with parallel structure.",
+   "difficulty": 7,
+   "skill": "Creating balanced sentences with parallel clauses",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that begins with a participial phrase and preserves the original details: The hikers reached the river after the storm ended. The river had swollen overnight. They crossed it on a footbridge.",
+   "choices": [
+    "The hikers reached the river after the storm ended; the river had swollen overnight, and they crossed it on a footbridge.",
+    "Reaching the swollen river after the storm ended, the hikers crossed it on a footbridge.",
+    "After the storm ended and because the river had swollen overnight, the hikers reached it and crossed it on a footbridge.",
+    "The river had swollen overnight, and the hikers, who reached it after the storm ended, crossed it on a footbridge."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence begins with the participial phrase Reaching the swollen river after the storm ended, then makes the hikers the subject of the main clause.",
+   "difficulty": 5,
+   "skill": "Participial phrases",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines all three facts into one sentence using a relative clause: The lighthouse stands on a rocky coast. It was built in 1890. Its beacon still guides ships.",
+   "choices": [
+    "The lighthouse, which was built in 1890, stands on a rocky coast, and its beacon still guides ships.",
+    "Built in 1890, the lighthouse stands on a rocky coast, and its beacon still guides ships.",
+    "The lighthouse stands on a rocky coast because it was built in 1890, and its beacon still guides ships.",
+    "Although the lighthouse was built in 1890, it stands on a rocky coast; its beacon still guides ships."
+   ],
+   "answerIndex": 0,
+   "explanation": "The relative clause which was built in 1890 identifies the lighthouse while the rest of the sentence preserves its location and the purpose of its beacon.",
+   "difficulty": 6,
+   "skill": "Relative clauses",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine these three sentences into one grammatically correct sentence that uses an appositive to identify Leo: Leo is a luthier. He repairs violins. His workshop opens on Saturdays.",
+   "choices": [
+    "Leo repairs violins as a luthier, and his workshop opens on Saturdays.",
+    "Leo, who repairs violins, is a luthier, and his workshop opens on Saturdays.",
+    "Leo is a luthier who repairs violins, and his workshop opens on Saturdays.",
+    "Leo, a luthier, repairs violins, and his workshop opens on Saturdays."
+   ],
+   "answerIndex": 3,
+   "explanation": "The phrase a luthier is an appositive that renames Leo, while the rest of the sentence preserves the other two facts.",
+   "difficulty": 5,
+   "skill": "Appositives",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that uses a colon and preserves the original meaning: The museum will display a new sculpture. The artist designed it. Visitors can meet the artist.",
+   "choices": [
+    "The museum will display a new sculpture, the artist designed it, and visitors can meet the artist.",
+    "The museum will display a new sculpture: the artist designed it, and visitors can meet the artist.",
+    "The museum will display a new sculpture; the artist designed it, and visitors can meet the artist.",
+    "The museum will display a new sculpture, and the artist designed it so visitors can meet the artist."
+   ],
+   "answerIndex": 1,
+   "explanation": "The colon after sculpture introduces the statement about the artist designing it, and the final clause preserves the detail about meeting the artist.",
+   "difficulty": 6,
+   "skill": "Colons in compound sentences",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that uses semicolons to join three independent clauses: The runners entered the gym. The coach locked the doors. The lights flickered.",
+   "choices": [
+    "After the runners entered the gym, the coach locked the doors, and the lights flickered.",
+    "The runners entered the gym, the coach locked the doors, and the lights flickered.",
+    "The runners entered the gym; the coach locked the doors; and the lights flickered.",
+    "The runners entered the gym; the coach locked the doors, and the lights flickered."
+   ],
+   "answerIndex": 2,
+   "explanation": "The sentence joins the three independent clauses with semicolons and uses and before the final clause to make the series parallel.",
+   "difficulty": 6,
+   "skill": "Semicolons and parallel structure",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines the three facts into a balanced sentence with three parallel predicates: Amira opened the notebook. She reviewed the list. She began the class.",
+   "choices": [
+    "Amira opened the notebook, reviewed the list, and began the class.",
+    "After Amira opened the notebook and she reviewed the list, she began the class.",
+    "Amira opened the notebook, and she reviewed the list before the class began.",
+    "Opening the notebook, Amira reviewed the list, and the class began."
+   ],
+   "answerIndex": 0,
+   "explanation": "The three coordinated past-tense verbs have the same subject and grammatical form, creating a balanced structure with parallel predicates.",
+   "difficulty": 7,
+   "skill": "Balanced sentences with parallel predicates",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one periodic sentence that begins with two separate introductory subordinate clauses and ends with a main clause: The storm ended. The river began to recede. A fox crossed the exposed field.",
+   "choices": [
+    "After the storm ended, after the river began to recede, a fox crossed the exposed field.",
+    "After the storm ended, the river began to recede, and a fox crossed the exposed field.",
+    "The fox crossed the exposed field after the storm ended, and the river began to recede.",
+    "When the storm ended and the river began to recede, a fox crossed the exposed field."
+   ],
+   "answerIndex": 0,
+   "explanation": "The final clause is the main clause, and the two opening after-clauses are subordinate clauses that place the actions in context.",
+   "difficulty": 4,
+   "skill": "Periodic sentence construction",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which choice combines all three sentences into one cumulative sentence with a main clause followed by coordinated verb phrases in the original order? The robotics team unpacked the new laptops. It tested each device. It labeled the storage boxes.",
+   "choices": [
+    "The robotics team unpacked the new laptops, tested each device, and labeled the storage boxes.",
+    "After the robotics team unpacked the new laptops, it tested each device and labeled the storage boxes.",
+    "The robotics team unpacked the new laptops, and it tested each device; it labeled the storage boxes.",
+    "The robotics team, while testing each device, unpacked the new laptops and labeled the storage boxes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence begins with one main clause and then adds three parallel action phrases in the order given by the source sentences.",
+   "difficulty": 5,
+   "skill": "Cumulative sentence construction",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines all three facts and uses an introductory absolute phrase? Rain began during the final minute. The match ended. The players gathered at midfield.",
+   "choices": [
+    "With rain beginning during the final minute, the players gathered at midfield after the match ended.",
+    "During the final minute, rain began, and after the match ended, the players gathered at midfield.",
+    "Rain began during the final minute, while the players gathered at midfield after the match ended.",
+    "The players gathered at midfield after the match ended, with rain beginning during the final minute."
+   ],
+   "answerIndex": 0,
+   "explanation": "The opening with-phrase is an absolute phrase, while the main clause and after-clause preserve all three events.",
+   "difficulty": 5,
+   "skill": "Using absolute phrases",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence combines all three facts, retains the negative adverb Never, and correctly uses subject-auxiliary inversion? The observatory never opened before sunrise. The technicians unlocked the dome. The first stargazers arrived.",
+   "choices": [
+    "Never the observatory had opened before sunrise, with the technicians unlocking the dome as the first stargazers arrived.",
+    "Never had the observatory opened before sunrise, with the technicians unlocking the dome as the first stargazers arrived.",
+    "Seldom had the observatory opened before sunrise, with the technicians unlocking the dome as the first stargazers arrived.",
+    "Never had the observatory open before sunrise, with the technicians unlocking the dome as the first stargazers arrived."
+   ],
+   "answerIndex": 1,
+   "explanation": "The fronted negative adverb Never triggers subject-auxiliary inversion, and the with-phrase adds the entrance and visitor details.",
+   "difficulty": 6,
+   "skill": "Inversion after fronted negative adverbs",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The old theater reopened last year. It shows independent films. Its restored seats have red velvet. Select the sentence that combines all three facts with one nonrestrictive relative clause introduced by which.",
+   "choices": [
+    "The old theater that reopened last year shows independent films in its restored red velvet seats.",
+    "The old theater, which reopened last year, show independent films in its restored red velvet seats.",
+    "The old theater, which reopened last year, shows independent films in its restored red velvet seats.",
+    "The old theater, which reopened last year and red velvet seats, shows independent films."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option uses a nonrestrictive relative clause introduced by which and retains all three facts without changing their meaning.",
+   "difficulty": 5,
+   "skill": "Nonrestrictive relative clauses",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The community garden has three plots. Two students volunteer there. They grow tomatoes. Select the sentence that uses a colon correctly while preserving every fact.",
+   "choices": [
+    "The community garden has three plots: two students volunteer there, they grow tomatoes.",
+    "The community garden: it has three plots, and two students volunteer there to grow tomatoes.",
+    "The community garden has three plots: two students volunteer there, and they grow tomatoes.",
+    "The community garden has three plots; two students volunteer there, and they grow tomatoes."
+   ],
+   "answerIndex": 2,
+   "explanation": "The colon follows a complete independent clause and introduces the related statements about the volunteers and their tomatoes.",
+   "difficulty": 5,
+   "skill": "Colons joining related sentences",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The roads were wet. Visibility was low. The bus moved slowly through the fog. Which sentence creates a periodic sentence beginning with two separate introductory subordinate clauses?",
+   "choices": [
+    "Although the roads were wet, because visibility was low, and the bus moved slowly through the fog.",
+    "Although the roads were wet, because visibility was low, the bus move slowly through the fog.",
+    "Because the roads were wet, although visibility was low, when the bus moved slowly through the fog.",
+    "Although the roads were wet, because visibility was low, the bus moved slowly through the fog."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence is periodic because two introductory subordinate clauses delay the main clause, which states the bus's action.",
+   "difficulty": 7,
+   "skill": "Periodic sentence structure",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the relationship between the clauses in this sentence? Although rehearsal had ended, the actors stayed to review their lines.",
+   "choices": [
+    "The subordinate clause gives the reason the actors stayed, while the main clause states the action they chose.",
+    "The subordinate clause marks a simultaneous action, with the actors reviewing their lines while rehearsal was still in progress.",
+    "The although clause establishes a contrast between rehearsal ending and the actors remaining, and the main clause states their action.",
+    "The subordinate clause states a necessary condition, meaning the actors could review their lines only if rehearsal had ended."
+   ],
+   "answerIndex": 2,
+   "explanation": "The although clause establishes a contrast between rehearsal ending and the actors remaining, and the main clause states their action.",
+   "difficulty": 5,
+   "skill": "Concessive clauses",
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The committee reviewed the proposal. The mayor signed it. The council funded the project. Which sentence begins with a two-part past-participial phrase and preserves all three facts?",
+   "choices": [
+    "Reviewed by the committee and signed by the mayor, the proposal was funded by the council.",
+    "Reviewing the proposal, the mayor signed it after the committee approved it and before the council funded the project.",
+    "After the committee reviewed the proposal and the mayor signed it, the council funded the project.",
+    "The proposal, reviewed by the committee and signed by the mayor, was funded by the council."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence opens with two passive participial phrases and preserves all three actions.",
+   "difficulty": 4,
+   "skill": "Fronted participial phrase",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Leila is an architect. She designs public libraries. Her models use recycled wood. Which sentence combines all three facts and uses an appositive to identify Leila?",
+   "choices": [
+    "Leila, an architect who designs public libraries, uses recycled wood in her models.",
+    "Leila, who is an architect, designs public libraries and makes models with recycled wood.",
+    "Leila, a designer of public libraries and recycled wood, works as an architect.",
+    "Leila is an architect, and she designs public libraries using recycled wood."
+   ],
+   "answerIndex": 0,
+   "explanation": "The appositive an architect who designs public libraries identifies Leila while the sentence also preserves the recycled-wood detail.",
+   "difficulty": 4,
+   "skill": "Appositive with a relative clause",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The workshop opened at nine. Two apprentices repaired instruments. Customers waited outside. Select the sentence that uses a colon to introduce two independent clauses and preserves the original order of all three facts.",
+   "choices": [
+    "The workshop opened at nine: two apprentices repaired instruments, and customers waited outside.",
+    "The workshop opened at nine: customers waited outside, and two apprentices repaired instruments.",
+    "The workshop opened at nine: two apprentices repaired instruments, but customers waited outside.",
+    "The workshop opened at nine: while two apprentices repaired instruments, customers waited outside."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces two independent clauses, and the apprentices-and-customers order matches the source sentences.",
+   "difficulty": 5,
+   "skill": "Colon with coordinated independent clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Samira watered seedlings. She logged moisture levels. She covered young plants before noon. Which sentence forms one cumulative sentence with a main clause followed by three parallel verb phrases in the original order?",
+   "choices": [
+    "Samira watered seedlings, logged moisture levels, and covered young plants before noon.",
+    "Before noon, Samira covered young plants, logged moisture levels, and watered seedlings.",
+    "Samira watered seedlings and logged moisture levels before she covered young plants.",
+    "Samira watered seedlings, covered young plants, and logged moisture levels before noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The main clause contains three coordinated verbs that follow the actions in their original order.",
+   "difficulty": 5,
+   "skill": "Cumulative sentence with parallel predicates",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "After the bell rang, the coach unlocked the storage cabinet, and the team quickly gathered their materials. Which one-sentence explanation accurately describes the sentence's structure?",
+   "choices": [
+    "The sentence begins with an adverbial clause, and its main clause contains two independent clauses joined by and.",
+    "The sentence is a compound sentence whose two independent clauses are joined by a subordinating conjunction.",
+    "The sentence has one independent clause with three coordinated verbs.",
+    "The introductory clause states a cause, while the main clause states two effects."
+   ],
+   "answerIndex": 0,
+   "explanation": "After the bell rang is an introductory adverbial clause, while the main clause contains two independent clauses joined by the coordinating conjunction and.",
+   "difficulty": 6,
+   "skill": "Explaining compound sentence structure",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The wind dropped. Flags hung still. The harbor lights reflected on the calm water. Which sentence combines the facts into a balanced sentence with three parallel clauses?",
+   "choices": [
+    "The wind dropped, flags hung still, and the harbor lights reflected on the calm water.",
+    "After the wind dropped, flags hung still, and the harbor lights reflected on the calm water.",
+    "The flags hung still because the wind dropped, and the harbor lights reflected on the calm water.",
+    "The wind dropped while flags hung still, and the harbor lights reflected on the calm water."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence presents three finite clauses in matching subject-verb form and uses parallel structure.",
+   "difficulty": 6,
+   "skill": "Balanced sentence with parallel clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The satellite passed overhead. Then its cameras recorded migrating birds. Later, scientists mapped the flight paths. Which choice combines the three facts and begins with a temporal subordinate clause that preserves the stated sequence?",
+   "choices": [
+    "After the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths.",
+    "Although the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths.",
+    "Because the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths.",
+    "While the satellite passed overhead, its cameras recorded migrating birds, and scientists later mapped the flight paths."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory temporal clause After the satellite passed overhead preserves the sequence before presenting the two remaining actions.",
+   "difficulty": 5,
+   "skill": "Sequencing with temporal subordinate clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The bakery occupies a corner storefront. It bakes sourdough each morning. Customers line up there before opening. Which choice uses a nonrestrictive relative clause to identify the bakery?",
+   "choices": [
+    "The bakery, which bakes sourdough each morning, occupies a corner storefront where customers line up before opening.",
+    "The bakery which bakes sourdough each morning occupies a corner storefront where customers line up before opening.",
+    "The bakery bakes sourdough each morning, and it occupies a corner storefront where customers line up before opening.",
+    "The corner storefront, where customers line up before opening, contains a bakery that bakes sourdough each morning."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma-delimited which clause is a nonrestrictive relative clause that identifies the bakery by its sourdough habit, while the where clause preserves the customer detail.",
+   "difficulty": 6,
+   "skill": "Nonrestrictive relative clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The Red Maple is a community center. Its language classes focus on conversational skills. Its kitchen serves evening meals. Which choice uses an appositive to identify The Red Maple and a relative clause to modify language classes?",
+   "choices": [
+    "The Red Maple, a community center, has language classes that focus on conversational skills, and its kitchen serves evening meals.",
+    "The Red Maple, which is a community center, has language classes focusing on conversational skills, and its kitchen serves evening meals.",
+    "The Red Maple is a community center, and it has language classes that focus on conversational skills, while its kitchen serves evening meals.",
+    "The Red Maple, a community center whose classes focus on conversational skills, has a kitchen serving evening meals."
+   ],
+   "answerIndex": 0,
+   "explanation": "The appositive a community center identifies The Red Maple, and the relative clause that focus on conversational skills directly modifies language classes.",
+   "difficulty": 6,
+   "skill": "Appositives and restrictive relative clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The camp offers two workshops. Pottery meets on Saturdays. Woodworking meets on Wednesdays. Which choice combines all three facts and uses a colon followed by two independent clauses joined by and?",
+   "choices": [
+    "The camp offers two workshops: pottery meets on Saturdays, and woodworking meets on Wednesdays.",
+    "The camp offers two workshops; pottery meets on Saturdays, and woodworking meets on Wednesdays.",
+    "The camp offers two workshops, pottery meets on Saturdays, and woodworking meets on Wednesdays.",
+    "The camp offers two workshops: pottery meeting on Saturdays, and woodworking meeting on Wednesdays."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces two complete clauses, with pottery meets on Saturdays and woodworking meets on Wednesdays joined by and, so the sentence avoids a comma splice.",
+   "difficulty": 5,
+   "skill": "Colons in compound sentences",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the relationship between the clauses in this sentence? Because the power failed, the clinic used battery lanterns, while patients continued their check-in.",
+   "choices": [
+    "Because introduces a cause-and-effect relationship, while signals a contrast between the backup lighting and the continued check-in.",
+    "Because introduces a contrast between cause and effect, while signals only a sequence between the backup lighting and the continued check-in.",
+    "Because introduces a time relationship, while signals a cause-and-effect relationship between the backup lighting and the continued check-in.",
+    "Because joins two independent clauses, while introduces a relative clause that modifies the continued check-in."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because presents the power failure as the cause of using battery lanterns, while contrasts that use with the patients continuing their check-in.",
+   "difficulty": 7,
+   "skill": "Explaining subordinate clause relationships",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation accurately describes the structure of this sentence? After the rehearsal ended, the stage manager dimmed the lights; the audience began filing out through the side doors.",
+   "choices": [
+    "The sentence contains one introductory adverbial clause, followed by two independent clauses joined by a semicolon.",
+    "The sentence contains two introductory relative clauses, followed by two independent clauses joined by a colon.",
+    "The sentence contains one introductory participial phrase, followed by a compound predicate joined by a semicolon.",
+    "The sentence contains two dependent adverbial clauses joined by a semicolon, followed by a main clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "After the rehearsal ended is an introductory adverbial clause, and the semicolon joins two independent clauses about the stage manager and the audience.",
+   "difficulty": 7,
+   "skill": "Analyzing complex sentence structure",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Visibility was poor. The dock was crowded. The captain delayed the departure. Which sentence places two Because clauses before the final main clause, creating a periodic sentence?",
+   "choices": [
+    "Because visibility was poor and because the dock was crowded, the captain delayed the departure.",
+    "Although visibility was poor and because the dock was crowded, the captain delayed the departure.",
+    "Visibility was poor, and because the dock was crowded, the captain delayed the departure.",
+    "Because visibility was poor, because the dock was crowded, and the captain delayed the departure."
+   ],
+   "answerIndex": 0,
+   "explanation": "Both because clauses precede the main clause, making the sentence periodic and presenting poor visibility and the crowded dock as reasons for the delay.",
+   "difficulty": 5,
+   "skill": "Building a periodic sentence with parallel introductory clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The exhibit is open to the public. It displays forty photographs. Twelve of them were taken by local students. Which choice uses a colon to introduce a compound independent clause whose coordinated clauses have the subjects it and twelve of them?",
+   "choices": [
+    "The exhibit is open to the public; it displays forty photographs, and twelve of them were taken by local students.",
+    "The exhibit is open to the public: it displays forty photographs, twelve of which were taken by local students.",
+    "The exhibit is open to the public: it displays forty photographs, and twelve of them were taken by local students.",
+    "The exhibit is open to the public: forty photographs are displayed, and twelve of them were taken by local students."
+   ],
+   "answerIndex": 2,
+   "explanation": "The colon introduces two coordinated independent clauses with the required subjects it and twelve of them, and all three original facts remain present.",
+   "difficulty": 6,
+   "skill": "Using a colon to introduce coordinated independent clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The bell rang. Players formed two lines. The drill began. Which choice makes the three facts a balanced sentence with parallel clauses and no introductory transition?",
+   "choices": [
+    "After the bell rang, players formed two lines, and the drill began.",
+    "The bell rang, while players formed two lines, and the drill began.",
+    "The bell rang, and players formed two lines before the drill began.",
+    "The bell rang, players formed two lines, and the drill began."
+   ],
+   "answerIndex": 3,
+   "explanation": "The three clauses share the same subject-verb pattern, making the sentence balanced while preserving the sequence of events.",
+   "difficulty": 5,
+   "skill": "Creating a balanced sentence with parallel clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Elena repaired the radio. The radio was on the kitchen shelf. Elena found a loose wire. Which sentence combines all three details and uses an it-cleft to emphasize Elena as the person who performed the repair?",
+   "choices": [
+    "It was the radio that Elena, after finding a loose wire, repaired on the kitchen shelf.",
+    "Was it Elena who, after finding a loose wire, repaired the radio that was on the kitchen shelf?",
+    "It was Elena who, after finding a loose wire, repaired the radio that was on the kitchen shelf.",
+    "It was on the kitchen shelf that Elena repaired the radio after finding a loose wire."
+   ],
+   "answerIndex": 2,
+   "explanation": "The it-cleft foregrounds Elena as the agent of the repair, while the subordinate clauses retain the loose wire and the radio's kitchen-shelf location.",
+   "difficulty": 7,
+   "skill": "Combining sentences with an it-cleft construction",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one balanced sentence with three parallel clauses: A small boat rocked near the pier. A rope snapped taut. The bow turned toward open water.",
+   "choices": [
+    "A small boat rocked near the pier, a rope snapped taut, and the bow turned toward open water.",
+    "A small boat rocked near the pier, a rope was snapped taut, and the bow turned toward open water.",
+    "A small boat rocking near the pier, a rope snapped taut, and the bow turned toward open water.",
+    "Although a small boat rocked near the pier, a rope snapped taut, and the bow turned toward open water."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence combines the three facts in parallel independent clauses that have matching subject-verb structures.",
+   "difficulty": 5,
+   "skill": "Balanced sentence construction",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence using a relative clause without changing their meaning: The observatory is a research station. It studies cloud formations. Its data is shared with schools.",
+   "choices": [
+    "The observatory, a research station, studies cloud formations, and its data is shared with schools.",
+    "The observatory that studies cloud formations shares its data with schools and is a research station.",
+    "The observatory studies cloud formations that are shared with schools, making it a research station.",
+    "The observatory is a research station whose studies cloud formations and shares its data with schools."
+   ],
+   "answerIndex": 1,
+   "explanation": "The relative clause identifies the observatory by its work, while the main clause preserves the facts that it is a research station and shares its data with schools.",
+   "difficulty": 5,
+   "skill": "Relative-clause integration",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence using both a nonrestrictive appositive and a relative clause: Inés is a chef. She owns a small café. The café specializes in seafood.",
+   "choices": [
+    "Inés, a chef, owns a small café that specializes in seafood.",
+    "Inés is a chef who owns a small café that specializes in seafood.",
+    "Inés, a chef who owns a small café, specializes in seafood.",
+    "Inés, a chef and seafood specialist, owns a small café."
+   ],
+   "answerIndex": 0,
+   "explanation": "The appositive identifies Inés as a chef, and the relative clause modifies the café by describing its seafood specialty.",
+   "difficulty": 6,
+   "skill": "Appositive and relative-clause combination",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that uses a colon correctly and preserves the original meaning: The report has two sections. The first examines water use. The second compares schools with older buildings.",
+   "choices": [
+    "The report has two sections: the first examines water use, and the second compares schools with older buildings.",
+    "The report has two sections; the first examines water use, and the second compares schools with older buildings.",
+    "The report: has two sections, the first examines water use, and the second compares schools with older buildings.",
+    "The report has two sections, the first examines water use, and the second compares schools with older buildings."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon correctly introduces the two sections, and the remaining clauses explain what each section does.",
+   "difficulty": 5,
+   "skill": "Colon introduction and coordination",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best identifies the structure and effect of this sentence? The bells chimed, the crowd applauded, and the judges rose.",
+   "choices": [
+    "The sentence is balanced because it uses three independent clauses with parallel subject-verb structure and similar length.",
+    "The sentence is periodic because it delays the main clause until after three introductory subordinate clauses.",
+    "The sentence is cumulative because it places one main clause before three coordinated predicate phrases.",
+    "The sentence is inverted because it places the crowd's action between the two sounds before ending with a dependent clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "This explanation correctly recognizes the three similarly structured independent clauses that give the sentence its balanced effect.",
+   "difficulty": 6,
+   "skill": "Analysis of balanced structure",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that opens with an introductory absolute phrase and ends with the final action in a main clause: Snow gathered on the windowsill. The radio played softly. Elena sketched the street.",
+   "choices": [
+    "With snow gathered on the windowsill and the radio playing softly, Elena sketched the street.",
+    "Gathering snow on the windowsill, Elena sketched the street while the radio played softly.",
+    "Snow gathered on the windowsill, and the radio played softly as Elena sketched the street.",
+    "With the radio playing softly and the windowsill gathering snow, Elena sketched the street."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory absolute phrase combines the window and radio details, while the main clause presents Elena's final action.",
+   "difficulty": 6,
+   "skill": "Introductory absolute-phrase construction",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The fair has three attractions. The robot show begins at noon. The pottery wheel follows. Which sentence uses a colon to introduce two independent clauses after a complete introductory clause?",
+   "choices": [
+    "The fair has three attractions: including the robot show at noon and the pottery wheel afterward.",
+    "The fair has three attractions: the robot show begins at noon, and the pottery wheel follows.",
+    "The fair's three attractions include the robot show, which begins at noon; the pottery wheel follows.",
+    "Because the robot show begins at noon and the pottery wheel follows, the fair has three attractions."
+   ],
+   "answerIndex": 1,
+   "explanation": "The colon follows the complete introductory clause, and the material after it consists of two independent clauses joined by and.",
+   "difficulty": 4,
+   "skill": "Using a colon to introduce independent clauses",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Daylight faded. Cicadas hummed. Bats swept across the pond. Which sentence combines all three facts in a balanced sentence with three parallel past-tense clauses?",
+   "choices": [
+    "Daylight was fading, cicadas were humming, and bats swept across the pond.",
+    "Daylight faded while cicadas hummed, and bats swept across the pond.",
+    "After daylight faded, cicadas hummed, and bats swept across the pond.",
+    "Daylight faded, cicadas hummed, and bats swept across the pond."
+   ],
+   "answerIndex": 3,
+   "explanation": "The three clauses form a balanced structure because they have matching forms and use the simple past-tense verbs faded, hummed, and swept.",
+   "difficulty": 5,
+   "skill": "Creating a balanced sentence with parallel clauses",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Tomas checked the schedule. He packed a flashlight. He locked the supply closet. Which sentence forms one cumulative sentence with a main clause followed by three coordinated verb phrases in the original order?",
+   "choices": [
+    "Tomas checked the schedule and packed a flashlight; then the supply closet was locked.",
+    "After Tomas checked the schedule, he packed a flashlight, and he locked the supply closet.",
+    "Checking the schedule, Tomas packed a flashlight and locked the supply closet.",
+    "Tomas checked the schedule, packed a flashlight, and locked the supply closet."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence begins with the main clause Tomas checked the schedule and continues with three coordinated verb phrases in the original order.",
+   "difficulty": 6,
+   "skill": "Building a cumulative sentence with coordinated verb phrases",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The branches were blocking the path. The hikers took an alternate route. They reached camp before sunset. Which sentence combines all three facts using a Because clause to express the reason the hikers took an alternate route?",
+   "choices": [
+    "Although the branches were blocking the path, the hikers took an alternate route, and they reached camp before sunset.",
+    "Because the branches were blocking the path, the hikers took an alternate route, and they reached camp before sunset.",
+    "The branches were blocking the path, so the hikers took an alternate route, and they reached camp before sunset.",
+    "While the branches were blocking the path, the hikers took an alternate route, and they reached camp before sunset."
+   ],
+   "answerIndex": 1,
+   "explanation": "The Because clause identifies the blocked path as the reason for taking the alternate route before the hikers reached camp before sunset.",
+   "difficulty": 5,
+   "skill": "Combining causal and independent clauses",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The bridge was repaired last summer. It carries cyclists across a ravine. Its old wooden trusses remain. Which choice combines all three facts using a nonrestrictive relative clause beginning with which?",
+   "choices": [
+    "The bridge, which was repaired last summer, carries cyclists across a ravine, and its old wooden trusses remain.",
+    "The bridge that was repaired last summer carries cyclists across a ravine, and its old wooden trusses remain.",
+    "Although the bridge was repaired last summer, it carries cyclists across a ravine, and its old wooden trusses remain.",
+    "The bridge, repaired last summer and carrying cyclists across a ravine, has old wooden trusses that remain."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct choice uses the nonrestrictive relative clause which was repaired last summer to identify the bridge while preserving all three original details.",
+   "difficulty": 5,
+   "skill": "Nonrestrictive Relative Clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Snow settled across the valley overnight. The roads became slippery. Bus drivers reduced their speed. Which sentence combines the facts into one sentence with three independent clauses joined by semicolons?",
+   "choices": [
+    "Snow settled across the valley overnight; the roads became slippery; and bus drivers reduced their speed.",
+    "Snow settled across the valley overnight, the roads became slippery, and bus drivers reduced their speed.",
+    "Snow settled across the valley overnight: the roads became slippery, and bus drivers reduced their speed.",
+    "Because snow settled across the valley overnight, the roads became slippery; bus drivers reduced their speed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct choice preserves the three independent clauses and uses semicolons to separate them without creating comma splices.",
+   "difficulty": 5,
+   "skill": "Semicolons and Independent Clauses",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation accurately describes the structure of this sentence? When the train arrived, the conductor checked the tickets, and passengers found their seats.",
+   "choices": [
+    "The when clause introduces a time relationship, and the main clause contains two coordinated independent clauses joined by a comma and and.",
+    "The when clause introduces a cause-and-effect relationship, and the main clause contains two coordinated verbs with the same subject.",
+    "The when clause is an introductory absolute phrase, and the main clause contains three parallel participles.",
+    "The sentence contains one independent clause followed by a subordinate clause that describes the passengers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct explanation identifies the introductory when clause as showing time and recognizes the two coordinated independent clauses in the main clause.",
+   "difficulty": 6,
+   "skill": "Analyzing Compound Sentences",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one periodic sentence that begins with two separate introductory subordinate clauses and ends with a main clause:\nThe fire alarm sounded. The students evacuated the building. The teachers checked the rolls.",
+   "choices": [
+    "When the fire alarm sounded, after the students evacuated the building, the teachers checked the rolls.",
+    "The fire alarm sounded, the students evacuated the building, and the teachers checked the rolls.",
+    "After the fire alarm sounded, the students evacuated the building; then the teachers checked the rolls.",
+    "The teachers checked the rolls after the fire alarm sounded and the students evacuated the building."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option opens with two subordinate clauses (“When…”, “after…”) before the main clause, forming a periodic structure.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that begins with an introductory absolute phrase:\nThe storm passed. The sky cleared. The birds resumed singing.",
+   "choices": [
+    "The storm having passed, the sky cleared, and the birds resumed singing.",
+    "After the storm passed, the sky cleared, and the birds resumed singing.",
+    "With the storm passed, the sky cleared, and the birds resumed singing.",
+    "The storm passed; the sky cleared, and the birds resumed singing."
+   ],
+   "answerIndex": 0,
+   "explanation": "The absolute construction “The storm having passed” functions as a free‑standing introductory phrase before the main clause.",
+   "difficulty": 6,
+   "skill": "Sentence Combining",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence that begins with an absolute phrase and preserves all details: The orchestra tuned their instruments. The conductor raised the baton. The first note rang out.",
+   "choices": [
+    "The orchestra tuning their instruments, the conductor raised the baton, and the first note rang out.",
+    "With the orchestra tuning their instruments, the conductor raised the baton, and the first note rang out.",
+    "The orchestra tuned their instruments; the conductor raised the baton; the first note rang out.",
+    "The orchestra tuned their instruments, the conductor raised the baton, and the first note rang out."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A opens with an absolute phrase (“The orchestra tuning their instruments”) that modifies the entire main clause, correctly combining all three facts.",
+   "difficulty": 5,
+   "skill": "Sentence combining with absolute phrases",
+   "topic": "Combine Three Sentences - Advanced Syntax and Sentence Craft",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three sentences using relative clauses without changing their meaning: Dr. Morales is a geologist. She studies coastal erosion. Her research has inspired a new classroom project.",
+   "choices": [
+    "Dr. Morales, a geologist who studies coastal erosion, has research that has inspired a new classroom project.",
+    "Dr. Morales, who studies coastal erosion, is a geologist whose research has inspired a new classroom project.",
+    "Dr. Morales is a geologist, she studies coastal erosion, and her research has inspired a new classroom project.",
+    "Dr. Morales, a geologist who studies coastal erosion and her research, has inspired a new classroom project."
+   ],
+   "answerIndex": 1,
+   "explanation": "This option uses relative clauses to combine the three facts while accurately describing Dr. Morales and her research.",
+   "reason": "B: picked -1 not 1 (Two defensible options, no single correct answer)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one sentence that begins with a past-participle phrase and accurately describes the child: The child was exhausted. She had climbed all afternoon. She sat down beneath a tree.",
+   "choices": [
+    "The exhausted child sat down beneath a tree after she had climbed all afternoon.",
+    "Climbing all afternoon, the child sat down beneath a tree, feeling exhausted.",
+    "Exhausted from climbing all afternoon, the child sat down beneath a tree.",
+    "Exhausted from the afternoon, the child sat down beneath a tree."
+   ],
+   "answerIndex": 2,
+   "explanation": "The opening phrase modifies the child clearly and combines the three facts without changing their meaning.",
+   "reason": "B: picked -1 not 2 (Multiple defensible answers.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which sentence combines all three facts and uses the pattern not only...but also within a single main clause? Priya packed the boxes. She counted the books. She emailed the donors.",
+   "choices": [
+    "Priya not only packed the boxes but also counted the books and emailed the donors.",
+    "Priya not only packed the boxes but counted the books and emailed the donors.",
+    "Not only did Priya pack the boxes, but she also counted the books and emailed the donors.",
+    "Not only packing the boxes, but also counting the books and emailing the donors, Priya completed the task."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correlative pattern not only...but also appears within one main clause and coordinates the three actions around Priya.",
+   "reason": "A: picked 2 not 0 (two defensible options (0 and 2 both use not only...but also pattern))"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which option combines all three facts, avoids a comma splice, and gives an accurate explanation of its structure? Rain delayed the opening. The guide changed the route. Visitors followed the new path.",
+   "choices": [
+    "When rain delayed the opening, the guide changed the route, and visitors followed the new path, because the comma and coordinating conjunction correctly join two independent clauses.",
+    "Because rain delayed the opening, the guide changed the route and visitors followed the new path, because the single subject can control both verbs.",
+    "Rain delayed the opening; the guide changed the route, and visitors followed the new path, because the semicolon joins all three independent clauses.",
+    "Although rain delayed the opening, the guide changed the route and visitors followed the new path, because although can join two independent clauses."
+   ],
+   "answerIndex": 0,
+   "explanation": "The dependent when-clause introduces the delay, and the comma with and correctly joins the two independent clauses.",
+   "reason": "B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Maya carried an umbrella. The wind was blowing sideways. She stepped onto a wet platform. Which sentence combines the facts with an introductory absolute phrase?",
+   "choices": [
+    "Maya, with the wind blowing sideways, carried her umbrella and stepped onto the wet platform.",
+    "Wind blowing sideways, Maya carried her umbrella when she stepped onto the wet platform.",
+    "With the wind blowing sideways, Maya carry her umbrella as she stepped onto the wet platform.",
+    "With the wind blowing sideways, Maya carried her umbrella as she stepped onto the wet platform."
+   ],
+   "answerIndex": 3,
+   "explanation": "An introductory absolute phrase has its own subject and verb and modifies the main clause, while Maya remains the subject of the main sentence.",
+   "reason": "B: picked 0 not 3"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Nora is a cartographer. She maps river deltas. She published an atlas with a university press. Which sentence integrates all three facts with both an appositive and a nonrestrictive relative clause?",
+   "choices": [
+    "Nora, a cartographer, she maps river deltas, and published an atlas with a university press.",
+    "Nora, a cartographer who maps river deltas, published an atlas with a university press.",
+    "Nora, a cartographer mapping river deltas, published an atlas with a university press.",
+    "Nora, a cartographer who maps river deltas, publish an atlas with a university press."
+   ],
+   "answerIndex": 1,
+   "explanation": "The appositive identifies Nora, and the nonrestrictive relative clause gives her specialty in a grammatically integrated structure.",
+   "reason": "A: not exactly one correct (no option has both an appositive and a nonrestrictive relative clause (relative clause restrictive))"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Jonah is a drummer. He performs with a neighborhood orchestra. His rehearsals take place above the library. Which sentence combines the details with a nonrestrictive appositive containing a restrictive relative clause?",
+   "choices": [
+    "Jonah, who is a drummer who performs with a neighborhood orchestra, rehearses above the library.",
+    "Jonah, a drummer who performs with a neighborhood orchestra, rehearses above the library.",
+    "Jonah, a drummer who performs with a neighborhood orchestra and rehearses above the library.",
+    "Jonah, a drummer performs with a neighborhood orchestra, rehearses above the library."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma-set appositive identifies Jonah as a drummer, and its restrictive who clause names the orchestra he performs with.",
+   "reason": "B: picked 0 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Waiting in the rain, Dante finally boarded the empty bus. Which one-sentence explanation best describes the opening phrase and the implication it creates?",
+   "choices": [
+    "Waiting in the rain is a present-participial phrase that modifies Dante and implies that the rain delayed his boarding.",
+    "Waiting in the rain is an introductory absolute phrase that modifies the bus and explains why the bus was empty.",
+    "Waiting in the rain is a prepositional phrase that states that Dante boarded only after the rain stopped.",
+    "Waiting in the rain is a subordinate clause that modifies Dante and creates a contrast between the weather and his action."
+   ],
+   "answerIndex": 0,
+   "explanation": "The participial phrase modifies Dante and places him in the rain, while its initial position suggests that the wet conditions delayed his eventual boarding.",
+   "reason": "B: picked -1 not 0 (None of the provided options accurately describes the participial phrase and its implication.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Ravi is a cellist. He performs with the city orchestra. His rehearsals occur in Studio B. Which sentence combines all three facts with an appositive and a nonrestrictive relative clause?",
+   "choices": [
+    "Ravi, a cellist, performs with the city orchestra, and Studio B is where he rehearses.",
+    "Ravi, who is a cellist, performs with the city orchestra, and his rehearsals occur in Studio B.",
+    "Ravi, a cellist who performs with the city orchestra, holds rehearsals in Studio B.",
+    "Ravi performs with the city orchestra as a cellist, and his rehearsals occur in Studio B."
+   ],
+   "answerIndex": 2,
+   "explanation": "This sentence uses the appositive a cellist and the nonrestrictive relative clause who performs with the city orchestra while preserving all three facts.",
+   "reason": "B: picked 0 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "City officials approved the design. Local businesses donated materials. Volunteers built the pavilion. Which sentence begins with a two-part past-participial phrase that modifies the subject?",
+   "choices": [
+    "Approving the design and donating materials, city officials built the pavilion.",
+    "The pavilion, approved by city officials and supported by donated materials, was built by volunteers.",
+    "Approved by city officials and donating materials, the pavilion was built by volunteers.",
+    "After the design was approved and materials were donated, volunteers built the pavilion."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence begins with the coordinated past-participial phrase Approved by city officials and supported by donated materials, which modifies pavilion.",
+   "reason": "A: picked 2 not 1 | B: picked 0 not 1 (No correct option)"
+  },
+  {
+   "round": 1,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "Combine the three sentences into one sentence that uses a colon correctly to introduce the two details:\nThe garden contains three herbs. Basil adds flavor to pasta. Mint refreshes drinks.",
+   "choices": [
+    "The garden contains three herbs: basil adds flavor to pasta, and mint refreshes drinks.",
+    "The garden contains three herbs; basil adds flavor to pasta, and mint refreshes drinks.",
+    "The garden contains three herbs, basil adds flavor to pasta, and mint refreshes drinks.",
+    "The garden contains three herbs — basil adds flavor to pasta, and mint refreshes drinks."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon correctly signals that what follows explains or lists the three herbs mentioned before it.",
+   "reason": "source: \"...use colon\": offline retrieval: nothing found"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one balanced sentence with three parallel clauses:\nThe chef chopped onions. The chef sliced carrots. The chef diced celery.",
+   "choices": [
+    "The chef chopped onions, sliced carrots, and diced celery.",
+    "The chef chopped onions, the chef sliced carrots, and the chef diced celery.",
+    "The chef chopped onions; sliced carrots; and diced celery.",
+    "Chopping onions, slicing carrots, and dicing celery were done by the chef."
+   ],
+   "answerIndex": 0,
+   "explanation": "The three verb phrases share the same subject and form a perfectly parallel series, creating a balanced sentence.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 2,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one periodic sentence that begins with two separate introductory subordinate clauses and ends with a main clause: The library closed early. A storm knocked out power. The students continued studying by candlelight.",
+   "choices": [
+    "Although the library closed early, because a storm knocked out power, the students continued studying by candlelight.",
+    "Because a storm knocked out power, although the library closed early, the students continued studying by candlelight.",
+    "The library closed early; a storm knocked out power; the students continued studying by candlelight.",
+    "The library closed early, and a storm knocked out power, so the students continued studying by candlelight."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A opens with two introductory subordinate clauses (“Although the library closed early” and “because a storm knocked out power”) before the main clause, forming a periodic sentence that preserves all three facts.",
+   "reason": "A: not exactly one correct (Two defensible options satisfy the criteria.) | B: not exactly one correct (Both options 0 and 1 begin with two introductory subordinate clauses and end with a main clause, making both defensible.)"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "google/gemma-4-31b-it:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": false
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  }
+ ],
+ "applied": false
+}

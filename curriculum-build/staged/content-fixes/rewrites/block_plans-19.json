@@ -1,0 +1,69 @@
+{
+ "collection": "block_plans",
+ "row_id": 19,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P101",
+   "wrong": "Card s1 \"The recipe says to preheat the oven and then stir the batter constantly.\" is sorted as a mood shift (indicative to imperative).",
+   "correct": "It is one indicative sentence: \"says\" reports the recipe, and \"to preheat\" and \"(to) stir\" are both what it says; there is no shift."
+  }
+ ],
+ "edits": [
+  {
+   "path": "blocks[1].data.cards[1].correctBucket",
+   "before": "shift",
+   "after": "consistent"
+  },
+  {
+   "path": "blocks[1].data.cards[1].detail",
+   "before": "Mood flips: indicative to imperative",
+   "after": "Mood stays indicative: the infinitives report the recipe"
+  },
+  {
+   "path": "blocks[1].data.cards[1].explanation",
+   "before": "The sentence starts in indicative (tells a fact) and flips to imperative (a command) with no punctuation or marker to signal it.",
+   "after": "The sentence states a fact about the recipe. 'To preheat' and '(to) stir' are both infinitives telling what the recipe says, so there is no command and no shift."
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[1].data.cards[1].correctBucket",
+   "before": "shift",
+   "after": "consistent"
+  },
+  {
+   "path": "blocks[1].data.cards[1].detail",
+   "before": "Mood flips: indicative to imperative",
+   "after": "Mood stays indicative: the infinitives report the recipe"
+  },
+  {
+   "path": "blocks[1].data.cards[1].explanation",
+   "before": "The sentence starts in indicative (tells a fact) and flips to imperative (a command) with no punctuation or marker to signal it.",
+   "after": "The sentence states a fact about the recipe. 'To preheat' and '(to) stir' are both infinitives telling what the recipe says, so there is no command and no shift."
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "the one edit used JSON syntax and matched 0 places",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

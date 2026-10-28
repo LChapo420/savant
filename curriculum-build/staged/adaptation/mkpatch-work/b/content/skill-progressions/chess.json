@@ -1,0 +1,311 @@
+{
+  "subject": "chess",
+  "version": 1,
+  "status": "STAGED, not live. Owner approval needed (see curriculum-build/SKILL-CURRICULA.md, section 9).",
+  "doc": "Novice-to-elite progression for the playing path C01-C13, with the professional (C14-C16) and frontier (C17-C19) tracks open alongside at any playing level. Each stage maps onto existing grades (ids from content/chess-grades.js) and says what the learner can DO at the end, how that is PROVED, how practice is built, how feedback is given and what the app senses. Gate numbers marked [R] are design values to be normed on real learners; no gate may be passed by self-report alone.",
+  "evidence_tags": {
+    "V": "page or text opened and read (this session or the subject's research files)",
+    "S": "search-result summary only",
+    "P": "from Savant's earlier research files (curriculum-build/chess/research/*.md), which carry their own sources",
+    "L": "computed by code in this folder (verify-skill-curricula.js)",
+    "R": "our design inference or recommendation"
+  },
+  "sources": {
+    "charness2005": { "cite": "Charness, Tuffiash, Krampe, Reingold & Vasyukova (2005): serious solo study the strongest predictor of rating; GMs ~5,000 h solo study in first decade", "tag": "P" },
+    "burgoyne2019": { "cite": "Burgoyne et al. (2019), N=377: study+instruction+starting age explain 63% of peak-rating variance; tournament play adds R2 .006", "tag": "P" },
+    "gobet2007": { "cite": "Gobet & Campitelli (2007): practice necessary not sufficient; 8x spread in practice needed to reach master", "tag": "P" },
+    "gobetsimon1996": { "cite": "Gobet & Simon (1996) templates in chess memory", "tag": "P" },
+    "debruin2007": { "cite": "de Bruin, Rikers & Schmidt (2007): predict + self-explain beat predict alone and observe for KR v K learners", "tag": "P" },
+    "bilalic2008": { "cite": "Bilalic, McLeod & Gobet (2008) Einstellung: familiar non-optimal solution drops experts ~3 SD", "tag": "P" },
+    "rowland2014": { "cite": "Rowland (2014) testing-effect meta-analysis: recall > recognition (0.61 v 0.29), feedback raises effect", "tag": "P" },
+    "cepeda2006": { "cite": "Cepeda et al. (2006) distributed-practice meta-analysis", "tag": "P" },
+    "chessable": { "cite": "Chessable MoveTrainer intervals 4h,1d,3d,1w,2w,1mo,3mo,6mo; a timer per move (support.chess.com/en/articles/10319322)", "tag": "V" },
+    "act2005": { "cite": "van der Maas & Wagenmakers (2005) A psychometric analysis of chess expertise, Am J Psychol 118(1): the Amsterdam Chess Test (choose-a-move, predict-a-move, recall, verbal knowledge); reliable, high predictive validity against Elo; response times add validity on easy items. https://dare.uva.nl/id/44227bd6-730b-4f8d-885d-6c7d08d1eebf", "tag": "S" },
+    "regan2011": { "cite": "Regan & Haworth (2011) Intrinsic Performance Ratings: move quality over many moves tracks Elo", "tag": "P" },
+    "glicko": { "cite": "Glickman: Glicko/Glicko-2, rating deviation (glicko.net)", "tag": "P" },
+    "kalyuga2005": { "cite": "Kalyuga & Sweller (2005) Rapid dynamic assessment of expertise to improve the efficiency of adaptive e-learning, ETR&D 53, 83-93 (first-step / rapid verification diagnosis of expertise)", "tag": "S" },
+    "tetzlaff2025": { "cite": "Tetzlaff et al. (2025) expertise reversal meta-analysis (60 experiments), as used in docs/SCORECARD.md 'Reach'", "tag": "P" },
+    "guadagnoli2004": { "cite": "Guadagnoli & Lee (2004) Challenge point framework, J Motor Behav 36(2) 212-224: the optimal difficulty depends on the learner's skill (functional vs nominal difficulty)", "tag": "S" },
+    "lichessdata": { "cite": "1500-1700 Lichess players: more daily games inversely related to rating gain (emerginginvestigators.org/articles/25-024); puzzle ratings run above game ratings", "tag": "P" },
+    "pert": { "cite": "Pert's error lists by band 1600-2000 (curriculum-build/chess/research/03 section 3)", "tag": "P" },
+    "steps": { "cite": "Steps Method: mating postponed until play is fluent (chess.co.uk Step 1)", "tag": "P" },
+    "tables": { "cite": "Our own retrograde tables (lib/endgame-tables.js): KQK max distance-to-mate 10, KRK 16, every white-to-move position won; KPK win/draw for every position", "tag": "L" }
+  },
+  "competence_model": {
+    "doc": "What a chess learner IS, as the app tracks it. Each component has its own evidence and its own gate; none stands in for another.",
+    "components": [
+      { "id": "rules_fluency", "what": "Legal moves and rules without hesitation", "evidence": "board answers (tap/drag), timed; chess_moves, chess_board items", "source": "board" },
+      { "id": "pattern_library", "what": "Tactical motifs, mating patterns, endgame positions recognised fast", "evidence": "Glicko-2 puzzle rating per theme family with RD (content/chess-trainer.js); per-move SRS cards (content/chess-srs.js)", "source": "board" },
+      { "id": "calculation", "what": "Forcing lines seen to the end, opponent replies included", "evidence": "multi-move puzzles where every learner move is graded; visualisation drills (pieces hidden)", "source": "board" },
+      { "id": "noticing", "what": "Finding that a tactic exists (or does not) in unlabelled positions; the move-checking habit", "evidence": "unannounced positions with 'nothing works' items; blunder rate in own games", "source": "board + games" },
+      { "id": "technique", "what": "Winning won endings and holding drawn ones against best defence", "evidence": "play-outs against perfect defence (tables), scored against distance to mate", "source": "board" },
+      { "id": "judgement", "what": "Evaluation and plans in quiet positions", "evidence": "choose-a-move items accepted within an engine threshold plus a reason; guess-the-move through annotated games", "source": "board + text" },
+      { "id": "game_performance", "what": "Results and move quality in real games", "evidence": "rapid games against calibrated bots (Maia-2 bands where installed): performance rating with its standard error, blunder count by win-probability loss", "source": "games" },
+      { "id": "knowledge", "what": "Rules details, notation, history, professional knowledge", "evidence": "unit bank items through learnerPath.unitBelief", "source": "items" }
+    ]
+  },
+  "gate_rules": {
+    "proof_only": "A stage, unit or lesson is skipped or passed only on measured evidence: board answers, rated puzzles, play-outs and games. Self-report, time spent and the after-level model read never prove anything (same rule as GAP-PATHS-SPEC 'nothing may be marked known without evidence').",
+    "cold": "Performance gates count only cold attempts: the first attempt of a day, at least 20 hours after the skill was last practised (retention, not warm-up performance; research/02 section 7).",
+    "two_days": "Every performance gate needs passes on two different days.",
+    "unannounced": "Tactics gates are sat in unannounced mode (no theme given; some positions have nothing) because themed puzzles inflate success (lichessdata).",
+    "rating_with_uncertainty": "A rating gate needs rating >= target AND RD <= 80 (about +/-160 at 95%).",
+    "game_gate_size": "A game-performance gate needs at least 12 rated rapid games: the standard error of a performance rating over n games near a 50% score is about 347/sqrt(n) Elo (L: 100 Elo at 12 games), so games are only one of several signals and never the only one.",
+    "unit_belief": "Knowledge units use the live learnerPath.unitBelief (services/learner-path.js, current knobs HOLE_PRIOR 0.15, ISLAND_PRIOR 0.65, SLIP 0.15, LUCK 0.15, KNOWN_AT 0.965). A board answer is graded as one of ~30 legal moves, so its guess rate is far lower than 4-option multiple choice and fewer right answers prove a unit (L, computed with the live function: 2 right board answers v 3 multiple-choice for a 'past' unit; 2 v 4 for an 'island' unit). Board-answer unit banks therefore make placement and test-outs shorter for the same safety.",
+    "norming": "Thresholds marked [R] are provisional. After 200 learners have sat a stage's battery, cuts are re-set from the data (the score separating learners who then pass the next stage's game gate from those who do not), and the change is logged."
+  },
+  "stages": [
+    {
+      "id": "CH0", "name": "Board explorer", "grades": ["chess_board_explorer"], "draft": "C01",
+      "who": "Never seen a board; age 4+ (voice-led) or an adult on day one",
+      "objectives": [
+        "Moves each piece legally from any square, including blocked lines and the pawn's move-versus-capture asymmetry",
+        "Captures and protects in mini-games (pawn wars, capture-the-pawns) without moving into danger more than rarely",
+        "Sets up the starting position from memory with the light square on the right"
+      ],
+      "exit": {
+        "knowledge": "C01 units proved by board answers (unit_belief)",
+        "performance": [
+          { "metric": "legal_move_accuracy", "test": "tap every square a piece can reach, 6 pieces x 3 random positions", "threshold": ">= 95% squares right, no illegal square tapped twice", "n_min": 18, "source": "board", "tag": "R" },
+          { "metric": "star_maze_par", "test": "collect-the-stars mazes for rook, bishop, queen, knight within the move par", "threshold": "3 of 4 pieces at par on a cold day", "source": "board", "tag": "R" },
+          { "metric": "setup_from_memory", "test": "place all 32 pieces", "threshold": "100% on two days", "source": "board", "tag": "R" }
+        ],
+        "retention": "Pass again after 7+ days (spaced queue)"
+      },
+      "practice": { "session_minutes": "5-15 (ages 4-7), 15-20 adults", "mix": { "mini_games_and_play": 0.5, "piece_drills": 0.4, "review": 0.1 }, "difficulty_target": "about 80% first-try success", "games": "mini-games only; no full games yet (Steps method)" },
+      "feedback": ["Immediate, voice-led, show the legal squares after any wrong tap", "Stars against a move par (Lichess Learn pattern)", "No text needed; no notation"],
+      "sensing": ["board taps/drags (exact)", "voice prompts out; no camera or mic needed"],
+      "evidence": ["steps", "rowland2014"]
+    },
+    {
+      "id": "CH1", "name": "Rules learner", "grades": ["chess_rules_learner"], "draft": "C02",
+      "who": "Plays a full legal game; online 100-400",
+      "objectives": [
+        "Plays a complete legal game: check, three ways out of check, castling conditions, promotion, en passant, draw rules",
+        "Tells checkmate from stalemate and check on sight",
+        "Finds mate in one in unlabelled positions",
+        "Mates with K+Q v K and two rooks against perfect defence"
+      ],
+      "exit": {
+        "knowledge": "C02 units proved (rules items are computed by content/chess-board.js; perft-checked)",
+        "performance": [
+          { "metric": "check_mate_stalemate_id", "test": "20 mixed positions: check, mate, stalemate or none", "threshold": ">= 18/20", "source": "board", "tag": "R" },
+          { "metric": "mate_in_1_unannounced", "test": "15 positions, mate in one present in 10, absent in 5 ('no mate' is an answer)", "threshold": ">= 13/15", "source": "board", "tag": "R" },
+          { "metric": "kqk_playout", "test": "5 random won K+Q v K starts against perfect defence (tables)", "threshold": "mate in every start within DTM+6 moves and never stalemate", "source": "board", "tag": "R+L" },
+          { "metric": "legal_game", "test": "2 full games against the lowest bot", "threshold": "no illegal-move attempt that the learner did not correct, game recorded", "source": "games", "tag": "R" }
+        ],
+        "retention": "KQK play-out repeated after 7+ days"
+      },
+      "practice": { "session_minutes": "10-20", "mix": { "play_vs_bot_or_minigames": 0.4, "puzzles": 0.3, "lessons": 0.25, "basic_mates": 0.05 }, "difficulty_target": "70-85% first-try success on puzzles (expected score 0.75: puzzle rating about 190 below the learner's)", "games": "untimed or 15+10 against a friendly bot" },
+      "feedback": ["Immediate on puzzles, with the refutation of a wrong move played on the board", "Stalemate warning replayed when it happens in a play-out"],
+      "sensing": ["board"],
+      "evidence": ["rowland2014", "tables", "steps"]
+    },
+    {
+      "id": "CH2", "name": "Beginner tactician", "grades": ["chess_beginner_tactician"], "draft": "C03",
+      "who": "400-800: hangs pieces, misses one-move tactics",
+      "objectives": [
+        "Runs the checks-captures-threats scan for both sides before every move",
+        "Wins hanging pieces and stops hanging own pieces",
+        "Recognises forks, pins, skewers, discovered attacks and removing the defender",
+        "Mates with K+R v K against perfect defence; wins simple pawn races"
+      ],
+      "exit": {
+        "knowledge": "C03 units proved",
+        "performance": [
+          { "metric": "tactics_unannounced", "test": "fixed-form set of 30 positions rated about 600-1000 on our puzzle scale, mixed motifs, 5 with no tactic", "threshold": ">= 80% right", "source": "board", "tag": "R" },
+          { "metric": "krk_playout", "test": "5 random won K+R v K starts against perfect defence", "threshold": "mate in all within DTM+8, no stalemate, within the 50-move rule", "source": "board", "tag": "R+L" },
+          { "metric": "hung_pieces_per_game", "test": "12 rapid games (15+10) against the 600-800 bot band", "threshold": "median <= 1 piece left en prise per game AND score >= 40%", "source": "games", "tag": "R" }
+        ],
+        "retention": "Tactics set repeated with new positions after 7+ days"
+      },
+      "practice": { "session_minutes": "15-30", "mix": { "play": 0.35, "puzzles": 0.35, "lessons": 0.1, "endgames": 0.1, "openings_principles": 0.05, "own_game_review": 0.05 }, "difficulty_target": "70-85%", "games": "10-15 minute games; blitz is a labelled fun mode, not practice" },
+      "feedback": ["Puzzles immediate; games delayed: learner marks their 'oops' and 'best' moves before any engine view", "Each own blunder becomes a 'find the better move' card on the SRS queue"],
+      "sensing": ["board", "game records"],
+      "evidence": ["charness2005", "lichessdata", "rowland2014"]
+    },
+    {
+      "id": "CH3", "name": "Novice club player", "grades": ["chess_novice_club_player"], "draft": "C04",
+      "who": "800-1100",
+      "objectives": [
+        "Uses double check, overloading, trapped pieces, x-ray and desperado in combinations",
+        "Knows opposition, the square of the pawn and K+P v K wins and draws",
+        "Plays one opening system per colour from principles, with its plans",
+        "Annotates own slow games before the engine"
+      ],
+      "exit": {
+        "knowledge": "C04 units proved",
+        "performance": [
+          { "metric": "tactics_unannounced", "test": "30 positions about 900-1300 on our scale, 6 with nothing", "threshold": ">= 80%", "source": "board", "tag": "R" },
+          { "metric": "kpk_judgement", "test": "20 K+P v K positions: win or draw with the side to move", "threshold": ">= 18/20 (answers proved by the KPK table)", "source": "board", "tag": "R+L" },
+          { "metric": "kpk_playout", "test": "4 won K+P v K positions against perfect defence; 2 drawn positions defended as Black", "threshold": "all converted or held", "source": "board", "tag": "R+L" },
+          { "metric": "games", "test": "12 rapid games against the 900-1100 bot band", "threshold": "score >= 50% with median blunders (win-probability loss >= 0.20) <= 1 per game", "source": "games", "tag": "R" }
+        ],
+        "retention": "Endgame play-outs again after 7+ days"
+      },
+      "practice": { "session_minutes": "20-40", "mix": { "play": 0.35, "puzzles": 0.35, "lessons": 0.1, "endgames": 0.1, "openings": 0.05, "own_game_review": 0.05 }, "difficulty_target": "70-85%", "games": "15+10 or slower" },
+      "feedback": ["Hint ladder on puzzles (theme, then piece, then square) costs stars", "Game review: learner's annotations first, then the coach names the pattern from the curriculum"],
+      "sensing": ["board", "game records"],
+      "evidence": ["debruin2007", "rowland2014", "tables"]
+    },
+    {
+      "id": "CH4", "name": "Club player", "grades": ["chess_club_player"], "draft": "C05",
+      "who": "1100-1400",
+      "objectives": [
+        "Calculates forcing lines 3-4 moves deep including the opponent's best replies",
+        "Uses deflection, decoy, interference and clearance; re-checks the final position of a line",
+        "Plays key squares and basic rook endings; converts extra material",
+        "Recognises weak pawns, holes and outposts and makes a plan from them"
+      ],
+      "exit": {
+        "knowledge": "C05 units proved",
+        "performance": [
+          { "metric": "tactics_rating", "test": "rated puzzles in unannounced mode", "threshold": "rating at or above the stage cut with RD <= 80 (provisional cut: 80% success on a 30-item set at 1200-1500)", "source": "board", "tag": "R" },
+          { "metric": "calculation", "test": "10 positions where the full line (3+ learner moves, every reply) must be entered", "threshold": ">= 7/10", "source": "board", "tag": "R" },
+          { "metric": "games", "test": "12 rapid games against the 1200-1400 band (Maia-2 1200-1400 where installed)", "threshold": "performance >= 1250 with median blunders <= 1", "source": "games", "tag": "R" }
+        ],
+        "retention": "Repeat a parallel calculation set after 7+ days"
+      },
+      "practice": { "session_minutes": "30-60", "mix": { "play": 0.3, "puzzles": 0.3, "lessons": 0.1, "endgames": 0.1, "openings": 0.05, "own_game_review": 0.15 }, "difficulty_target": "70-85% on single-move sets; about 60% on full-line calculation (challenge point rises with skill)", "games": "15+10 or slower, at most about 3 a day (anti-volume)" },
+      "feedback": ["Wrong calculation shows the refutation line move by move", "Every game reviewed: 3 critical moments marked by the learner first"],
+      "sensing": ["board", "game records"],
+      "evidence": ["lichessdata", "guadagnoli2004", "pert"]
+    },
+    {
+      "id": "CH5", "name": "Intermediate", "grades": ["chess_intermediate"], "draft": "C06",
+      "who": "1400-1600",
+      "objectives": [
+        "Lists candidate moves before calculating; defends against the opponent's tactics",
+        "Plays Lucena and Philidor, queen v pawn, wrong-bishop and fortress draws",
+        "Knows zugzwang and uses it in pawn endings",
+        "Simplifies when ahead"
+      ],
+      "exit": {
+        "knowledge": "C06 units proved",
+        "performance": [
+          { "metric": "tactics_rating", "test": "unannounced rated puzzles incl. defensive positions", "threshold": "stage cut, RD <= 80 (provisional: 80% on 1400-1700 set)", "source": "board", "tag": "R" },
+          { "metric": "rook_endgame_playouts", "test": "Lucena win and Philidor hold against an engine/tablebase", "threshold": "both, twice on different days", "source": "board", "tag": "R" },
+          { "metric": "games", "test": "12 rapid games, 1400-1600 band", "threshold": "performance >= 1450", "source": "games", "tag": "R" }
+        ],
+        "retention": "Endgame play-outs again after 14+ days"
+      },
+      "practice": { "session_minutes": "30-60, with 2-4 deep sessions a week of 45-90 min (a slow game plus analysis)", "mix": { "play": 0.3, "puzzles": 0.3, "lessons": 0.1, "endgames": 0.1, "openings": 0.05, "own_game_review": 0.15 }, "difficulty_target": "70-85% single-move; ~60% calculation" },
+      "feedback": ["Defensive puzzles: a wrong move shows the opponent's winning reply", "Endgame play-outs scored against the best result, not the engine number"],
+      "sensing": ["board", "game records", "engine (server, Stockfish/Leorik) for review where installed"],
+      "evidence": ["pert", "debruin2007"]
+    },
+    {
+      "id": "CH6", "name": "Strong club player", "grades": ["chess_strong_club_player"], "draft": "C07",
+      "who": "1600-1800 (Class B)",
+      "objectives": [
+        "Calculates 4+ move lines and compares candidates by their final positions; blunder-checks the quiet move",
+        "Uses a repertoire learned as plans first, then drilled on the move trainer",
+        "Plays IQP and hanging-pawn structures, minority attacks, triangulation, K+B+N v K",
+        "Attacks the castled king when the conditions are met (Greek gift)"
+      ],
+      "exit": {
+        "knowledge": "C07 units proved",
+        "performance": [
+          { "metric": "tactics_rating", "test": "unannounced rated puzzles", "threshold": "stage cut, RD <= 80", "source": "board", "tag": "R" },
+          { "metric": "repertoire_srs", "test": "move-trainer cards for own repertoire", "threshold": ">= 90% of due cards right on first try over 2 weeks, every card has its reason", "source": "board", "tag": "R" },
+          { "metric": "games", "test": "12 rapid/classical games, 1600-1800 band (Maia-2 where installed)", "threshold": "performance >= 1650", "source": "games", "tag": "R" }
+        ],
+        "retention": "SRS continues; endgame and structure checks after 14+ days"
+      },
+      "practice": { "mix": { "play": 0.3, "calculation": 0.2, "lessons": 0.1, "endgames": 0.15, "openings": 0.1, "own_game_review": 0.15 }, "difficulty_target": "about 60-70% on calculation sets" },
+      "feedback": ["Repertoire: a deviation shows the plan, not only the move", "Guess-the-move through annotated master games"],
+      "sensing": ["board", "games", "engine for review"],
+      "evidence": ["chessable", "pert", "charness2005"]
+    },
+    {
+      "id": "CH7", "name": "Advanced club player", "grades": ["chess_advanced_club_player"], "draft": "C08",
+      "who": "1800-2000 (Class A)",
+      "objectives": [
+        "Prophylaxis: names the opponent's plan before choosing a move",
+        "Converts advantages and decides exchanges well",
+        "Rook-ending theory (Vancura, short side) and corresponding squares",
+        "Manages the clock under pressure"
+      ],
+      "exit": {
+        "knowledge": "C08 units proved",
+        "performance": [
+          { "metric": "choose_a_move", "test": "ACT-style choose-a-move set (tactical, positional, endgame thirds), timed", "threshold": "stage cut [R], accepted within an engine threshold of 0.3 pawns plus the stated reason", "source": "board", "tag": "R" },
+          { "metric": "conversion_playouts", "test": "5 '+3' positions converted and 3 worse positions held against an engine", "threshold": ">= 4/5 and >= 2/3", "source": "board", "tag": "R" },
+          { "metric": "games", "test": "12 games, 1800-2000 band", "threshold": "performance >= 1850", "source": "games", "tag": "R" }
+        ]
+      },
+      "practice": { "mix": { "play": 0.3, "calculation": 0.2, "lessons": 0.1, "endgames": 0.15, "openings": 0.1, "own_game_review": 0.15 } },
+      "feedback": ["Annotation first; the engine is a check on the learner's analysis, not a substitute"],
+      "sensing": ["board", "games", "engine"],
+      "evidence": ["act2005", "pert"]
+    },
+    {
+      "id": "CH8", "name": "Expert", "grades": ["chess_expert"], "draft": "C09",
+      "who": "2000-2199",
+      "objectives": ["Deeper calculation (5 plies blind), opponent's candidates, repertoire with model games, Einstellung checks"],
+      "exit": {
+        "knowledge": "C09 units proved",
+        "performance": [
+          { "metric": "choose_a_move", "test": "ACT-style set at expert level", "threshold": "stage cut [R]", "source": "board", "tag": "R" },
+          { "metric": "games", "test": "Maia-2 tops out at its 2000+ band, so games against it cannot certify 2000+; use the strongest engine level calibrated against Maia-2 2000+ plus an imported FIDE/national/online rating as a discounted prior", "threshold": "performance >= 2000 on the calibrated scale OR an external rating >= 2000 with RD/k-factor known", "source": "games + import", "tag": "R" },
+          { "metric": "own_game_quality", "test": "Intrinsic-performance-style estimate from 20+ of the learner's own slow games (engine move quality, server side)", "threshold": "shown as an estimate with its error; not a gate on its own", "source": "engine", "tag": "R" }
+        ]
+      },
+      "practice": { "mix": { "play": 0.3, "calculation": 0.15, "model_games": 0.1, "endgames": 0.15, "openings": 0.15, "own_game_review": 0.15 } },
+      "feedback": ["Exercises built from the learner's own critical positions (Dvoretsky style), multi-solution, graded by engine threshold"],
+      "sensing": ["board", "games", "engine", "external rating import"],
+      "evidence": ["regan2011", "act2005"]
+    },
+    {
+      "id": "CH9-12", "name": "Master to elite (taught as understanding and doing what such players do)", "grades": ["chess_master", "chess_international_master", "chess_grandmaster", "chess_elite_and_world_class"], "draft": "C10-C13",
+      "who": "2200+",
+      "objectives": ["The tasks those players face: preparing for a named opponent, converting a technical ending at their level, calculating long forcing lines, building and maintaining a repertoire with engines"],
+      "exit": {
+        "knowledge": "Units proved",
+        "performance": [
+          { "metric": "tasks", "test": "capstone tasks graded against engine analysis and a rubric (preparation file, annotated game, technical conversion)", "threshold": "rubric pass, engine-checked", "source": "board + engine", "tag": "R" },
+          { "metric": "external", "test": "FIDE or national rating import", "threshold": "shown, never required", "source": "import", "tag": "R" }
+        ]
+      },
+      "honesty": "The app does not certify a title or a 2200+ rating; no bot it has is a calibrated 2400 opponent. These grades say 'you can do what players at this level do', measured by tasks.",
+      "practice": { "mix": { "play_classical": 0.3, "own_game_analysis": 0.2, "openings_prep": 0.15, "endgames": 0.15, "calculation": 0.1, "model_games": 0.1 } },
+      "evidence": ["charness2005", "burgoyne2019"]
+    }
+  ],
+  "tracks_any_level": {
+    "grades": ["chess_professional_foundations", "chess_professional_practitioner", "chess_professional_authority", "chess_frontier_literacy", "chess_frontier_research", "chess_frontier_contribution"],
+    "doc": "Knowledge tracks (coaching, arbiting, problems, history, engines, theory). Gated by unit_belief on items plus applied tasks; open at any playing level, except that solving/composition and engine-research grades recommend (never force) CH6+ tactics for comprehension."
+  },
+  "practice_engine": {
+    "puzzle_selection": "Pick puzzles with expected score 0.75 for the learner: puzzle rating = learner rating - 400*log10(0.75/0.25) = learner rating - 191 (L). For calculation sets from CH4 on, expected score 0.6 (rating - 70).",
+    "interleaving": "A motif is practised blocked inside its lesson, then appears only in mixed, unannounced sets from the next lesson on (research/02 section 7; interleaving helps most for similar-looking categories).",
+    "variation": "Every motif is met in 3+ board locations, both colours and mirrored (chunks are location-specific; gobetsimon1996).",
+    "srs": "One per-move queue (content/chess-srs.js) for mating patterns, endgame technique, own-game mistakes and, from CH6, repertoire. A 'why' is shown before each new opening move (understanding before memorising).",
+    "own_games": "From CH2: every rated game gets the learner's own annotation of 3 critical moments before any engine view; each mistake (win-probability loss >= 0.10) becomes a 'find the better move' SRS card.",
+    "anti_volume": "Learning games are 15+10 or slower; more than about 3 games a day without review gets a nudge to review instead (lichessdata). Blitz is a labelled fun mode."
+  },
+  "adaptation": {
+    "doc": "How each learner's path changes. Every lever changes HOW and HOW MUCH is practised; none removes an objective that is not proved.",
+    "levers": [
+      { "id": "entry", "rule": "Subject placement plus an in-grade unit placement on board answers; skill batteries (tactics set, a play-out, an optional bot game, an optional imported rating as a discounted prior) set the starting stage. Units before the placed one are 'past' (prior 0.85); a unit is known only by unit_belief.", "signals": ["placement", "unit_belief"] },
+      { "id": "probe_first", "rule": "Each lesson opens with one independent item and one transfer item (the first-step check). Both right on the first try, cold, moves the lesson to 'provisional'; it becomes 'known' only after a cold spaced check 1+ day later. One miss: the full worked -> faded -> independent ladder runs.", "signals": ["first attempt", "spaced check"], "evidence": ["kalyuga2005", "tetzlaff2025"] },
+      { "id": "dose", "rule": "Worked and faded examples (A1-A2) shrink when the scorecard's per-subject reach is high (items well within reach) and grow when it is low; A4 stops early once two clean solves are followed by a clean transfer item.", "signals": ["scorecard reach (scaffolding fade)", "A4 streak"], "evidence": ["tetzlaff2025"] },
+      { "id": "difficulty", "rule": "Puzzle ratings chosen for expected score 0.75 (0.6 for calculation); after 3 misses in a row the next item is 150 points easier; frustration directive from the scorecard lowers it further.", "signals": ["Glicko rating", "scorecard frustration"], "evidence": ["guadagnoli2004"] },
+      { "id": "weak_theme_focus", "rule": "Theme families whose per-theme rating is 150+ below the overall rating get 2x the share of the mixed sets until the gap closes; never more than half of a set, so interleaving survives.", "signals": ["per-theme Glicko"] },
+      { "id": "review_timing", "rule": "Per-move SRS intervals; when the forgetting model is fitted (20+ learners), review when predicted recall < 85% (SCORECARD.md 'review-pick=model').", "signals": ["SRS", "forgetting model"] },
+      { "id": "remediation", "rule": "Own-game errors are tagged by curriculum pattern; a pattern missed in 2+ games re-opens its lesson's practice items (not the whole grade).", "signals": ["game review tags"] },
+      { "id": "preferences", "rule": "Learner chooses opening repertoire (from the curriculum's systems), bot personality, session length and kid/adult voice; choices never change gate content.", "signals": ["choices", "feedback taps"] },
+      { "id": "age", "rule": "Ages 4-7: voice-led, 5-15 min sessions, mate postponed to C02, no clocks; the scorecard's attention-runway and fatigue stats shorten sessions further when confident.", "signals": ["age", "scorecard"] }
+    ],
+    "never": [
+      "Never skip a unit without unit_belief proof or a passed stage battery",
+      "Never pass a performance gate on warm (same-session) attempts only",
+      "Never certify a rating or title; show ratings with their uncertainty",
+      "Never let a themed-puzzle success rate stand in for unannounced success"
+    ]
+  },
+  "needs_from_other_builds": [
+    { "from": "chess engine / puzzles agent (services/chess-engine.js, content/chess-trainer.js, chess-srs.js)", "need": "per-theme Glicko sub-ratings; an 'unannounced' trainer mode that mixes in no-tactic positions (verified by engine: no move gains >= 1.5 pawns); a play-out mode against our KQK/KRK/KPK tables (staged here in lib/endgame-tables.js) and later 5-man tablebases; a 'performance rating with SE' for bot games" },
+    { "from": "Maia-2 (services/chess-maia.js)", "need": "bands 1100-2000 used as calibrated opponents for CH4-CH7 game gates; below 1000 the app bot" }
+  ]
+}

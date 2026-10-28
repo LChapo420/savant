@@ -1,0 +1,3246 @@
+{
+ "row_id": 60,
+ "engine_id": "bowling",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 84,
+ "generated_at": "2026-10-25T06:10:24.263Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free, nvidia/nemotron-3-ultra-550b-a55b",
+ "stats": {
+  "written": 81,
+  "code_rejected": 17,
+  "sent_to_judges": 64,
+  "kept": 49,
+  "keep_rate_of_written": 0.605,
+  "judges": {
+   "both_answered": 64,
+   "picked_same_option": 62,
+   "a_picked_key": 61,
+   "b_picked_key": 63,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash",
+    "z-ai/glm-5.3"
+   ]
+  },
+  "complete": false,
+  "set_problems": [
+   "49 questions, expected 50"
+  ]
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "bowling",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 84,
+   "topic": "Activity 2 of 9 (quiz/game): Echo or Choral Practice - Usage Debates and Style Guides",
+   "title": "Echo Practice: Usage Debates and Style Guides",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q27",
+    "prompt": "A school publication's style guide says to write alumni, without an apostrophe, for all former students, regardless of gender. Which phrase follows the guide?",
+    "choices": [
+     "alumni's association",
+     "alumnae association",
+     "alumni association",
+     "alumna association"
+    ],
+    "answerIndex": 2,
+    "explanation": "The phrase alumni association uses the guide's gender-inclusive plural form without an apostrophe.",
+    "difficulty": 3,
+    "skill": "Applying gender-inclusive plural forms",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q16",
+    "prompt": "A school publication's guide requires Ms. with a final period when addressing a woman. Which heading follows the guide?",
+    "choices": [
+     "Ms, Rivera",
+     "Ms Rivera",
+     "M.s. Rivera",
+     "Ms. Rivera"
+    ],
+    "answerIndex": 3,
+    "explanation": "Ms. Rivera follows the guide because it places a period after the abbreviation Ms.",
+    "difficulty": 2,
+    "skill": "Applying abbreviation punctuation rules",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q36",
+    "prompt": "A newspaper uses one style guide for headlines and a different one for feature articles. What is the best editing approach?",
+    "choices": [
+     "Apply whichever guide gives the shorter result.",
+     "Apply the headline guide to every part of the newspaper.",
+     "Apply the feature guide to every part of the newspaper.",
+     "Apply each guide only to the section it governs."
+    ],
+    "answerIndex": 3,
+    "explanation": "Style guides can govern different parts of a publication, and each section should be edited according to the guide that covers it.",
+    "difficulty": 4,
+    "skill": "Applying section-specific style guides",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q40",
+    "prompt": "A theater guide requires dates in numeric month/day/year format and whole numbers in descriptions to be written as words. Which program description follows both rules?",
+    "choices": [
+     "The show opens on June 3, 2027 and runs for ninety minutes.",
+     "The show opens on 6/3/2027 and runs for 90 minutes.",
+     "The show opens on 3-6-2027 and runs for ninety minutes.",
+     "The show opens on 6/3/2027 and runs for ninety minutes."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence uses the guide's numeric month/day/year date and spells out the duration in words.",
+    "difficulty": 3,
+    "skill": "Applying date and number style rules",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q2",
+    "prompt": "Two equally acceptable spellings are debated within a newspaper. What should its style guide provide?",
+    "choices": [
+     "A rule declaring one spelling correct for all English.",
+     "A consistent spelling rule for the newspaper.",
+     "A personal preference for each writer to follow privately.",
+     "A list of variant spellings with no recommended form."
+    ],
+    "answerIndex": 1,
+    "explanation": "The guide should give the newspaper a shared rule so that its writers use one spelling consistently.",
+    "difficulty": 3,
+    "skill": "Resolving spelling debates",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q20",
+    "prompt": "A club's style guide says to spell out the conjunction between club names in meeting minutes and use ampersands only in the club's display name. Which sentence follows the rule?",
+    "choices": [
+     "The Art Club & Chess Club & Drama Club held a joint meeting.",
+     "The Art Club & the Chess Club held a joint meeting.",
+     "The Art Club and the Chess Club & the Drama Club held a joint meeting.",
+     "The Art Club and the Chess Club held a joint meeting."
+    ],
+    "answerIndex": 3,
+    "explanation": "This option spells out and between the club names as required for the meeting minutes.",
+    "difficulty": 2,
+    "skill": "Applying ampersand rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q42",
+    "prompt": "A community newspaper's guide says to use since for time and because for reasons. Which sentence uses both words according to those distinctions?",
+    "choices": [
+     "Since the match began at noon, we missed the opening since the bus was late.",
+     "Since the match began at noon, we missed the opening because the bus was late.",
+     "Because the match began at noon, we missed the opening because the bus was late.",
+     "Because the match began at noon, we missed the opening since the bus was late."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence uses since to identify the time when the match began and because to identify the reason the opening was missed.",
+    "difficulty": 3,
+    "skill": "Applying distinctions between since and because",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q10",
+    "prompt": "An exhibition guide requires dates in day-month-year order without ordinal suffixes. Which sentence follows the guide?",
+    "choices": [
+     "The exhibition opens June 14 2026.",
+     "The exhibition opens 14 June 2026.",
+     "The exhibition opens 2026 June 14.",
+     "The exhibition opens 14th June 2026."
+    ],
+    "answerIndex": 1,
+    "explanation": "The required day-month-year order with no ordinal suffix makes 14 June 2026 the compliant date.",
+    "difficulty": 4,
+    "skill": "Applying a date-format style rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which activity best combines echo practice with learning a house-style rule?",
+    "choices": [
+     "Echo a model sentence, then identify the style choice it demonstrates.",
+     "Echo a model paragraph, then remove all its punctuation.",
+     "Read a model sentence silently, then name its main topic.",
+     "Echo a model sentence, then replace every word with a synonym."
+    ],
+    "answerIndex": 0,
+    "explanation": "Explaining the house-style choice in an echoed model shows that the student recognized the rule as well as the pronunciation.",
+    "difficulty": 3,
+    "skill": "Echo practice with style-guide analysis",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q1",
+    "prompt": "What is the main purpose of a style guide for a publication?",
+    "choices": [
+     "To set consistent editorial rules for a publication.",
+     "To decide whether every sentence is grammatically correct.",
+     "To determine which facts an article should report.",
+     "To persuade readers to accept the writer's opinion."
+    ],
+    "answerIndex": 0,
+    "explanation": "A style guide establishes consistent editorial conventions for a publication.",
+    "difficulty": 2,
+    "skill": "Identifying the purpose of a style guide",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q24",
+    "prompt": "A university style guide says to write the degree names bachelor's degree and master's degree in lowercase, with an apostrophe. Which sentence follows the guide?",
+    "choices": [
+     "The program offers a bachelors degree in biology.",
+     "The program offers a Bachelor’s degree in biology.",
+     "The program offers a bachelor degree in biology.",
+     "The program offers a bachelor's degree in biology."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence uses the lowercase possessive form bachelor's degree exactly as the guide requires.",
+    "difficulty": 3,
+    "skill": "Applying capitalization and possessive-style rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q26",
+    "prompt": "A volunteer group's style guide says to use that for restrictive clauses and who for nonrestrictive clauses. Which sentence follows the guide?",
+    "choices": [
+     "The volunteers who arrived before noon received the first badges.",
+     "The volunteers that arrived before noon received the first badges.",
+     "The volunteers, that arrived before noon, received the first badges.",
+     "The volunteers which arrived before noon received the first badges."
+    ],
+    "answerIndex": 1,
+    "explanation": "The volunteers that arrived before noon restricts the group to those who arrived before noon and uses the required relative pronoun.",
+    "difficulty": 4,
+    "skill": "Distinguishing restrictive and nonrestrictive clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q21",
+    "prompt": "A magazine's style guide says to lowercase the names of seasons unless they begin a sentence. Which sentence follows the rule?",
+    "choices": [
+     "Winter enrollment usually increases after the holidays.",
+     "The team practices indoors every Winter before Spring.",
+     "The club holds a meeting in Fall and another in Spring.",
+     "Our Summer Schedule lists the Fall and Spring programs."
+    ],
+    "answerIndex": 0,
+    "explanation": "This option correctly capitalizes Winter because it begins the sentence.",
+    "difficulty": 2,
+    "skill": "Applying capitalization rules for seasons",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q29",
+    "prompt": "A store's style guide requires fewer when referring to quantities of separate items. Which sentence follows the guide?",
+    "choices": [
+     "We have fewer chairs left.",
+     "We have less chairs left.",
+     "We have fewer chair left.",
+     "We have less chair left."
+    ],
+    "answerIndex": 0,
+    "explanation": "Fewer is required for chairs because they are separate, countable items.",
+    "difficulty": 3,
+    "skill": "Distinguishing fewer from less",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which pair of words can both be used to introduce a restrictive clause, depending on context and house style?",
+    "choices": [
+     "who and whom",
+     "that and which",
+     "because and although",
+     "either and neither"
+    ],
+    "answerIndex": 1,
+    "explanation": "Both that and which can introduce a restrictive clause, although a particular style guide may prefer one.",
+    "difficulty": 3,
+    "skill": "Recognizing usage variants",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q19",
+    "prompt": "A school's style guide says to spell out an organization's full name on first mention, followed by its abbreviation in parentheses. Which sentence follows the rule?",
+    "choices": [
+     "The National Aeronautics and Space Administration released the report.",
+     "The NASA released the report.",
+     "The National Aeronautics and Space Administration (NASA) released the report.",
+     "The (NASA) National Aeronautics and Space Administration released the report."
+    ],
+    "answerIndex": 2,
+    "explanation": "This option gives the organization's full name before introducing the abbreviation NASA in parentheses.",
+    "difficulty": 2,
+    "skill": "Applying first-mention abbreviations",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q22",
+    "prompt": "A legal magazine's style guide says to spell out versus in running text and use vs. only in tables. Which sentence follows the rule?",
+    "choices": [
+     "The matchup features the Hawks v. the Bears.",
+     "The matchup features the Hawks versus the Bears.",
+     "The matchup features the Hawks vs the Bears.",
+     "The matchup features the Hawks vs. the Bears."
+    ],
+    "answerIndex": 1,
+    "explanation": "This option spells out versus in running text as the guide requires.",
+    "difficulty": 3,
+    "skill": "Applying abbreviation rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q15",
+    "prompt": "A research center's style guide says to treat data as a plural noun and pair it with a plural verb. Which sentence follows the guide?",
+    "choices": [
+     "The data shows a clear trend.",
+     "The data is showing a clear trend.",
+     "The data show a clear trend.",
+     "The data was showing a clear trend."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence pairs the plural noun data with the plural verb show.",
+    "difficulty": 4,
+    "skill": "Following guidance on disputed grammar",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q28",
+    "prompt": "A city visitor guide says to spell out the word Avenue in full. Which sentence follows the guide?",
+    "choices": [
+     "The center is on Oak Ave.",
+     "The center is on Oak Av.",
+     "The center is on Oak Avn.",
+     "The center is on Oak Avenue."
+    ],
+    "answerIndex": 3,
+    "explanation": "The guide requires the street type Avenue to be written in full, so Oak Avenue is the correct form.",
+    "difficulty": 3,
+    "skill": "Following a house-style rule for street names",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q33",
+    "prompt": "In choral reading practice, what do the learners do with the same passage?",
+    "choices": [
+     "They read it aloud together at a shared pace.",
+     "They read separate sections aloud in sequence.",
+     "They perform it as a dialogue with invented roles.",
+     "They study its punctuation without reading aloud."
+    ],
+    "answerIndex": 0,
+    "explanation": "Choral reading involves a group reading the same passage aloud together, usually at a coordinated pace.",
+    "difficulty": 2,
+    "skill": "Choral practice",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q46",
+    "prompt": "During an echo activity, the model sentence contains a disputed hyphenation. What should the learner focus on while repeating?",
+    "choices": [
+     "The meaning of the hyphenated word",
+     "The exact hyphenation as shown in the model",
+     "The number of syllables in the word",
+     "The speaker's tone and pitch"
+    ],
+    "answerIndex": 1,
+    "explanation": "The learner should reproduce the exact hyphenation demonstrated in the model.",
+    "difficulty": 3,
+    "skill": "Echo practice",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q41",
+    "prompt": "An events guide says to use entered for entering a place or competition and entered into for joining an agreement or discussion. Which sentence follows the guide?",
+    "choices": [
+     "Both teams entered the tournament, and the mayor entered into the discussion.",
+     "Both teams entered into the tournament, and the mayor entered into the discussion.",
+     "Both teams entered the tournament, and the mayor entered the discussion.",
+     "Both teams entered into the tournament, and the mayor entered the discussion."
+    ],
+    "answerIndex": 0,
+    "explanation": "It uses entered for entering the tournament and entered into for joining the discussion, as the guide requires.",
+    "difficulty": 4,
+    "skill": "Distinguishing similar phrases under house style",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q8",
+    "prompt": "An online club's style guide says to use its for possession because the organization is treated as one entity. Which sentence follows the guide?",
+    "choices": [
+     "The club changed her logo before the meeting.",
+     "The club changed it's logo before the meeting.",
+     "The club changed their logo before the meeting.",
+     "The club changed its logo before the meeting."
+    ],
+    "answerIndex": 3,
+    "explanation": "Because the club is treated as a single entity, its is the possessive pronoun that links it to the logo.",
+    "difficulty": 3,
+    "skill": "Choosing the correct possessive pronoun",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q18",
+    "prompt": "A history club's guide uses an en dash without spaces between the years in a date range. Which option follows the guide?",
+    "choices": [
+     "1920-1945",
+     "1920–1945",
+     "1920—1945",
+     "1920– 1945"
+    ],
+    "answerIndex": 1,
+    "explanation": "1920–1945 follows the guide because it places an en dash directly between the two years.",
+    "difficulty": 2,
+    "skill": "Applying rules for joining date ranges",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q3",
+    "prompt": "A publication's guide says to use a serial comma in lists of three or more items. Which sentence follows that rule?",
+    "choices": [
+     "The exhibit includes paintings, and photographs and sculptures.",
+     "The exhibit includes paintings, photographs and sculptures.",
+     "The exhibit includes paintings, photographs, and sculptures.",
+     "The exhibit includes paintings and photographs, and sculptures."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence places a comma before the conjunction in a list of three items.",
+    "difficulty": 3,
+    "skill": "Applying a comma convention",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q17",
+    "prompt": "A civic organization's guide requires the -ize spelling for verbs in its newsletters. Which word follows the guide?",
+    "choices": [
+     "organize",
+     "organise",
+     "orginize",
+     "organze"
+    ],
+    "answerIndex": 0,
+    "explanation": "Organize follows the guide because it uses the required -ize ending.",
+    "difficulty": 2,
+    "skill": "Applying preferred spelling rules",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q48",
+    "prompt": "A government report's style guide requires the abbreviation for United States to be written as U.S. with periods. Which sentence follows the guide?",
+    "choices": [
+     "The U.S.. delegation arrived yesterday.",
+     "The US delegation arrived yesterday.",
+     "The U.S delegation arrived yesterday.",
+     "The U.S. delegation arrived yesterday."
+    ],
+    "answerIndex": 3,
+    "explanation": "The guide mandates U.S. with periods after each letter, so the sentence using U.S. meets the requirement.",
+    "difficulty": 3,
+    "skill": "Style Guide Application",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which of these is primarily a house-style rule rather than a rule of standard grammar?",
+    "choices": [
+     "Use single quotation marks for short works.",
+     "Capitalize the first word of every sentence.",
+     "Form the comparative of good as better.",
+     "Place a period at the end of a complete sentence."
+    ],
+    "answerIndex": 0,
+    "explanation": "The choice between single and double quotation marks is a publication-specific style decision rather than a core rule of grammar.",
+    "difficulty": 4,
+    "skill": "Distinguishing style from grammar",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q39",
+    "prompt": "A publisher's style guide says to use adviser, not advisor, in job titles. Which phrase follows the guide?",
+    "choices": [
+     "senior editorial advisor",
+     "senior editorial advaiser",
+     "senior editorial adviser",
+     "senior editorial advisar"
+    ],
+    "answerIndex": 2,
+    "explanation": "The phrase uses adviser, the spelling required by the publisher's style guide.",
+    "difficulty": 3,
+    "skill": "Applying house-style job-title spellings",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q45",
+    "prompt": "During echo practice, a model sentence contains a disputed punctuation choice. What should the learner do first?",
+    "choices": [
+     "Read the model aloud while attending to the punctuation.",
+     "Rewrite the sentence without the disputed punctuation.",
+     "Ask classmates which punctuation they prefer.",
+     "Read the sentence silently and skip the punctuation."
+    ],
+    "answerIndex": 0,
+    "explanation": "The learner should first read the model aloud while attending to the punctuation being practiced.",
+    "difficulty": 2,
+    "skill": "Echo a model while attending to a style choice",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q4",
+    "prompt": "An events guide says to write clock times with numerals and a.m. or p.m. and to leave one space after a period. Which sentence follows both rules?",
+    "choices": [
+     "The meeting starts at 4:30 PM on Friday.",
+     "The meeting starts at 4.30 p.m. on Friday.",
+     "The meeting starts at 4:30 p.m.  on Friday.",
+     "The meeting starts at 4:30 p.m. on Friday."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence uses the required time format, includes one space after the period, and avoids the extra space and altered formatting in the other choices.",
+    "difficulty": 3,
+    "skill": "Revising to match a style guide",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q23",
+    "prompt": "A journalism school's style guide says to use double quotation marks for a full quotation and single quotation marks for a quotation inside it. Which sentence follows the rule?",
+    "choices": [
+     "The editor said, “Read the note marked “final” before noon.”",
+     "The editor said, ‘Read the note marked “final” before noon.’",
+     "The editor said, “Read the note marked ‘final’ before noon.”",
+     "The editor said, Read the note marked ‘final’ before noon."
+    ],
+    "answerIndex": 2,
+    "explanation": "This option uses double quotation marks for the full quotation and single quotation marks for the quoted word inside it.",
+    "difficulty": 4,
+    "skill": "Applying nested-quotation rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q14",
+    "prompt": "An organization's style guide says to use em dashes with no spaces around them when setting off an interruption. Which sentence follows the guide?",
+    "choices": [
+     "The final - the one we discussed - arrived late.",
+     "The final—the one we discussed—arrived late.",
+     "The final: the one we discussed: arrived late.",
+     "The final, the one we discussed, arrived late."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence uses em dashes without surrounding spaces to set off the interruption.",
+    "difficulty": 3,
+    "skill": "Applying a punctuation style rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q32",
+    "prompt": "During an echo activity, what should a student do immediately after hearing the model sentence?",
+    "choices": [
+     "Answer a question about the model's topic instead of repeating it.",
+     "Repeat the sentence aloud, changing its meaning and word order.",
+     "Read the sentence silently while another student speaks the model.",
+     "Repeat the sentence aloud, matching the model's wording and rhythm."
+    ],
+    "answerIndex": 3,
+    "explanation": "Echo practice involves repeating the model aloud while matching its wording, pronunciation, and rhythm.",
+    "difficulty": 2,
+    "skill": "Echo practice",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q38",
+    "prompt": "A newsletter's style guide says to use a colon after a section label when the text after it is a complete sentence. Which version follows the guide?",
+    "choices": [
+     "Contest winners: The winners being announced on Friday.",
+     "Contest winners: The judges will announce them on Friday.",
+     "Contest winners: After the judges announce them on Friday.",
+     "Contest winners: Announcing the winners on Friday."
+    ],
+    "answerIndex": 1,
+    "explanation": "The clause The judges will announce them on Friday is a complete sentence, so the colon follows the guide.",
+    "difficulty": 3,
+    "skill": "Using colons after section labels",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q13",
+    "prompt": "A community newspaper's style guide says to use singular they when a person's pronouns are unknown. Which sentence follows the guide?",
+    "choices": [
+     "The student said they would submit the report.",
+     "The student said he would submit the report.",
+     "The student said she would submit the report.",
+     "The student said he or she would submit the report."
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence uses they without a gender-specific pronoun for a person whose pronouns are unknown.",
+    "difficulty": 3,
+    "skill": "Applying inclusive pronoun guidance",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q11",
+    "prompt": "A travel publication's style guide says to use toward rather than towards. Which sentence follows the guide?",
+    "choices": [
+     "The path leads towords the river.",
+     "The path leads towards the river.",
+     "The path leads toward the river.",
+     "The path leads towardsthe river."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence uses toward, the spelling required by the publication's style guide.",
+    "difficulty": 2,
+    "skill": "Following a preferred word choice",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q31",
+    "prompt": "A writing guide requires whose for possession and reserves who's for the contraction meaning who is or who has. Which sentence follows the guide?",
+    "choices": [
+     "The author who essay won the contest received a prize.",
+     "The author who's essay won the contest received a prize.",
+     "The author whose essay won the contest received a prize.",
+     "The author whom essay won the contest received a prize."
+    ],
+    "answerIndex": 2,
+    "explanation": "Whose is the possessive word needed to connect the author to the essay.",
+    "difficulty": 4,
+    "skill": "Distinguishing whose from who's",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q35",
+    "prompt": "A columnist is writing for a magazine that uses a particular style guide, but another guide recommends a different spelling. Which choice should govern the column?",
+    "choices": [
+     "The guide used by the author's school",
+     "The guide published most recently",
+     "The magazine's chosen style guide",
+     "The guide that recommends the longer spelling"
+    ],
+    "answerIndex": 2,
+    "explanation": "The publication's chosen style guide sets the house rules for the column, so the columnist should follow it.",
+    "difficulty": 3,
+    "skill": "Resolving style-guide conflicts",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q44",
+    "prompt": "A museum guide requires the word through to be spelled out in captions. Which sentence follows the guide?",
+    "choices": [
+     "The exhibit is open during September.",
+     "The exhibit is open thru September.",
+     "The exhibit is open until September.",
+     "The exhibit is open through September."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence spells out through, as the museum guide requires.",
+    "difficulty": 2,
+    "skill": "Apply a style guide's spelling rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q49",
+    "prompt": "A publishing house's style guide says to hyphenate compound adjectives that precede a noun. Which phrase follows the guide?",
+    "choices": [
+     "well-known author",
+     "well known author",
+     "well known-author",
+     "wellknown author"
+    ],
+    "answerIndex": 0,
+    "explanation": "The guide requires a hyphen between the words of a compound adjective before a noun, so well-known author is correct.",
+    "difficulty": 3,
+    "skill": "Style Guide Application",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q6",
+    "prompt": "A style guide must settle a disputed comma practice for its writers. Which entry would be clearest and most useful?",
+    "choices": [
+     "Name the competing comma practices without recommending one.",
+     "State the preferred comma practice and show an example.",
+     "Declare the oldest practice the only acceptable form.",
+     "Choose a practice without identifying its application."
+    ],
+    "answerIndex": 1,
+    "explanation": "A clear rule and example tell writers both what to use and how to apply it.",
+    "difficulty": 4,
+    "skill": "Documenting a usage decision",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q9",
+    "prompt": "An organization's style guide prefers active voice for its news stories. Which sentence uses active voice?",
+    "choices": [
+     "The editor revised the draft.",
+     "The draft was revised by the editor.",
+     "A revision of the draft was made by the editor.",
+     "The editor's revision of the draft was made."
+    ],
+    "answerIndex": 0,
+    "explanation": "The editor revised the draft identifies the actor in the subject position and uses the active voice.",
+    "difficulty": 3,
+    "skill": "Applying a voice preference",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q12",
+    "prompt": "A school newspaper's style guide says to write percentages as numerals followed immediately by a percent sign. Which sentence follows the guide?",
+    "choices": [
+     "About thirty-five percent of students joined the club.",
+     "About 35 % of students joined the club.",
+     "About 35 percent of students joined the club.",
+     "About 35% of students joined the club."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence writes 35 with a numeral and places the percent sign directly after it.",
+    "difficulty": 2,
+    "skill": "Applying percentage formatting",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q43",
+    "prompt": "A newspaper's byline guide requires initials without spaces between them and a space before the surname. Which byline follows the guide?",
+    "choices": [
+     "A B Chen",
+     "A.B.Chen",
+     "A.B. Chen",
+     "A. B. Chen"
+    ],
+    "answerIndex": 2,
+    "explanation": "The required format places periods after both initials and a space only before the surname.",
+    "difficulty": 3,
+    "skill": "Applying initial spacing",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q7",
+    "prompt": "A publisher's style guide says to use numerals for exact measurements, even when they begin a sentence. Which sentence follows the guide?",
+    "choices": [
+     "The sculpture measures 6 foot 2 inch.",
+     "The sculpture measures six feet two inches.",
+     "The sculpture measures 6 feet 2 inches.",
+     "The sculpture measures 6 feet 2 inch."
+    ],
+    "answerIndex": 2,
+    "explanation": "The guide requires numerals for exact measurements, and 6 feet 2 inches uses a numeral with correctly pluralized unit names.",
+    "difficulty": 3,
+    "skill": "Applying a numerical style rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q30",
+    "prompt": "A dance school's style guide uses the spelling practise for the verb meaning to rehearse. Which sentence follows the guide?",
+    "choices": [
+     "The dancers practice the routine twice.",
+     "The dancers practise the routine twice.",
+     "The dancers practiced the routine yesterday.",
+     "The dancers will practice the routine tomorrow."
+    ],
+    "answerIndex": 1,
+    "explanation": "The guide uses the verb spelling practise, and that word is the verb in this sentence.",
+    "difficulty": 4,
+    "skill": "Applying a house-style spelling rule to a verb",
+    "topic": "Echo or Choral Practice - Usage Debates and Style Guides"
+   },
+   {
+    "id": "q25",
+    "prompt": "A business magazine's style guide requires e-commerce with a hyphen and a lowercase e. Which sentence follows the guide?",
+    "choices": [
+     "Our e-commerce report is ready.",
+     "Our ecommerce report is ready.",
+     "Our e commerce report is ready.",
+     "Our e-commerces report is ready."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence uses the required hyphenated form e-commerce with a lowercase e.",
+    "difficulty": 2,
+    "skill": "Applying compound-word rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q47",
+    "prompt": "A newsletter's style guide says to spell out whole numbers from one through nine and use numerals for 10 and above. Which sentence follows the guide?",
+    "choices": [
+     "She bought three apples and twelve oranges.",
+     "She bought 3 apples and twelve oranges.",
+     "She bought three apples and 12 oranges.",
+     "She bought 3 apples and 12 oranges."
+    ],
+    "answerIndex": 2,
+    "explanation": "The guide requires spelling out numbers one through nine and using numerals for 10 and higher, so the sentence with three and 12 follows it.",
+    "difficulty": 3,
+    "skill": "Style Guide Application",
+    "topic": "Usage Debates and Style Guides"
+   }
+  ],
+  "feedback": {
+   "correct": "Clean strike — that's how a style guide settles it.",
+   "incorrect": "That ball slipped past — a style guide would have called it.",
+   "win": "Strike after strike! You argue usage like a style guide editor.",
+   "lose": "The bot out-bowled you tonight. Grab a style guide and a rematch.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "What is the main purpose of a style guide for a publication?",
+   "choices": [
+    "To set consistent editorial rules for a publication.",
+    "To decide whether every sentence is grammatically correct.",
+    "To determine which facts an article should report.",
+    "To persuade readers to accept the writer's opinion."
+   ],
+   "answerIndex": 0,
+   "explanation": "A style guide establishes consistent editorial conventions for a publication.",
+   "difficulty": 2,
+   "skill": "Identifying the purpose of a style guide",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Two equally acceptable spellings are debated within a newspaper. What should its style guide provide?",
+   "choices": [
+    "A consistent spelling rule for the newspaper.",
+    "A rule declaring one spelling correct for all English.",
+    "A personal preference for each writer to follow privately.",
+    "A list of variant spellings with no recommended form."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide should give the newspaper a shared rule so that its writers use one spelling consistently.",
+   "difficulty": 3,
+   "skill": "Resolving spelling debates",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publication's guide says to use a serial comma in lists of three or more items. Which sentence follows that rule?",
+   "choices": [
+    "The exhibit includes paintings, photographs, and sculptures.",
+    "The exhibit includes paintings, photographs and sculptures.",
+    "The exhibit includes paintings, and photographs and sculptures.",
+    "The exhibit includes paintings and photographs, and sculptures."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence places a comma before the conjunction in a list of three items.",
+   "difficulty": 3,
+   "skill": "Applying a comma convention",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An events guide says to write clock times with numerals and a.m. or p.m. and to leave one space after a period. Which sentence follows both rules?",
+   "choices": [
+    "The meeting starts at 4:30 p.m. on Friday.",
+    "The meeting starts at 4.30 p.m. on Friday.",
+    "The meeting starts at 4:30 p.m.  on Friday.",
+    "The meeting starts at 4:30 PM on Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence uses the required time format, includes one space after the period, and avoids the extra space and altered formatting in the other choices.",
+   "difficulty": 3,
+   "skill": "Revising to match a style guide",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which of these is primarily a house-style rule rather than a rule of standard grammar?",
+   "choices": [
+    "Use single quotation marks for short works.",
+    "Capitalize the first word of every sentence.",
+    "Form the comparative of good as better.",
+    "Place a period at the end of a complete sentence."
+   ],
+   "answerIndex": 0,
+   "explanation": "The choice between single and double quotation marks is a publication-specific style decision rather than a core rule of grammar.",
+   "difficulty": 4,
+   "skill": "Distinguishing style from grammar",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide must settle a disputed comma practice for its writers. Which entry would be clearest and most useful?",
+   "choices": [
+    "State the preferred comma practice and show an example.",
+    "Name the competing comma practices without recommending one.",
+    "Declare the oldest practice the only acceptable form.",
+    "Choose a practice without identifying its application."
+   ],
+   "answerIndex": 0,
+   "explanation": "A clear rule and example tell writers both what to use and how to apply it.",
+   "difficulty": 4,
+   "skill": "Documenting a usage decision",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publisher's style guide says to use numerals for exact measurements, even when they begin a sentence. Which sentence follows the guide?",
+   "choices": [
+    "The sculpture measures 6 feet 2 inches.",
+    "The sculpture measures six feet two inches.",
+    "The sculpture measures 6 foot 2 inch.",
+    "The sculpture measures 6 feet 2 inch."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires numerals for exact measurements, and 6 feet 2 inches uses a numeral with correctly pluralized unit names.",
+   "difficulty": 3,
+   "skill": "Applying a numerical style rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An online club's style guide says to use its for possession because the organization is treated as one entity. Which sentence follows the guide?",
+   "choices": [
+    "The club changed its logo before the meeting.",
+    "The club changed it's logo before the meeting.",
+    "The club changed their logo before the meeting.",
+    "The club changed her logo before the meeting."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the club is treated as a single entity, its is the possessive pronoun that links it to the logo.",
+   "difficulty": 3,
+   "skill": "Choosing the correct possessive pronoun",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An organization's style guide prefers active voice for its news stories. Which sentence uses active voice?",
+   "choices": [
+    "The editor revised the draft.",
+    "The draft was revised by the editor.",
+    "A revision of the draft was made by the editor.",
+    "The editor's revision of the draft was made."
+   ],
+   "answerIndex": 0,
+   "explanation": "The editor revised the draft identifies the actor in the subject position and uses the active voice.",
+   "difficulty": 3,
+   "skill": "Applying a voice preference",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An exhibition guide requires dates in day-month-year order without ordinal suffixes. Which sentence follows the guide?",
+   "choices": [
+    "The exhibition opens 14 June 2026.",
+    "The exhibition opens June 14 2026.",
+    "The exhibition opens 2026 June 14.",
+    "The exhibition opens 14th June 2026."
+   ],
+   "answerIndex": 0,
+   "explanation": "The required day-month-year order with no ordinal suffix makes 14 June 2026 the compliant date.",
+   "difficulty": 4,
+   "skill": "Applying a date-format style rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A travel publication's style guide says to use toward rather than towards. Which sentence follows the guide?",
+   "choices": [
+    "The path leads toward the river.",
+    "The path leads towards the river.",
+    "The path leads towords the river.",
+    "The path leads towardsthe river."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence uses toward, the spelling required by the publication's style guide.",
+   "difficulty": 2,
+   "skill": "Following a preferred word choice",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school newspaper's style guide says to write percentages as numerals followed immediately by a percent sign. Which sentence follows the guide?",
+   "choices": [
+    "About thirty-five percent of students joined the club.",
+    "About 35% of students joined the club.",
+    "About 35 percent of students joined the club.",
+    "About 35 % of students joined the club."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence writes 35 with a numeral and places the percent sign directly after it.",
+   "difficulty": 2,
+   "skill": "Applying percentage formatting",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A community newspaper's style guide says to use singular they when a person's pronouns are unknown. Which sentence follows the guide?",
+   "choices": [
+    "The student said he would submit the report.",
+    "The student said they would submit the report.",
+    "The student said she would submit the report.",
+    "The student said he or she would submit the report."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence uses they without a gender-specific pronoun for a person whose pronouns are unknown.",
+   "difficulty": 3,
+   "skill": "Applying inclusive pronoun guidance",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An organization's style guide says to use em dashes with no spaces around them when setting off an interruption. Which sentence follows the guide?",
+   "choices": [
+    "The final—the one we discussed—arrived late.",
+    "The final - the one we discussed - arrived late.",
+    "The final: the one we discussed: arrived late.",
+    "The final, the one we discussed, arrived late."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence uses em dashes without surrounding spaces to set off the interruption.",
+   "difficulty": 3,
+   "skill": "Applying a punctuation style rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A research center's style guide says to treat data as a plural noun and pair it with a plural verb. Which sentence follows the guide?",
+   "choices": [
+    "The data shows a clear trend.",
+    "The data show a clear trend.",
+    "The data is showing a clear trend.",
+    "The data was showing a clear trend."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence pairs the plural noun data with the plural verb show.",
+   "difficulty": 4,
+   "skill": "Following guidance on disputed grammar",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school publication's guide requires Ms. with a final period when addressing a woman. Which heading follows the guide?",
+   "choices": [
+    "Ms. Rivera",
+    "Ms Rivera",
+    "M.s. Rivera",
+    "Ms, Rivera"
+   ],
+   "answerIndex": 0,
+   "explanation": "Ms. Rivera follows the guide because it places a period after the abbreviation Ms.",
+   "difficulty": 2,
+   "skill": "Applying abbreviation punctuation rules",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A civic organization's guide requires the -ize spelling for verbs in its newsletters. Which word follows the guide?",
+   "choices": [
+    "organize",
+    "organise",
+    "orginize",
+    "organze"
+   ],
+   "answerIndex": 0,
+   "explanation": "Organize follows the guide because it uses the required -ize ending.",
+   "difficulty": 2,
+   "skill": "Applying preferred spelling rules",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A history club's guide uses an en dash without spaces between the years in a date range. Which option follows the guide?",
+   "choices": [
+    "1920–1945",
+    "1920-1945",
+    "1920—1945",
+    "1920– 1945"
+   ],
+   "answerIndex": 0,
+   "explanation": "1920–1945 follows the guide because it places an en dash directly between the two years.",
+   "difficulty": 2,
+   "skill": "Applying rules for joining date ranges",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school's style guide says to spell out an organization's full name on first mention, followed by its abbreviation in parentheses. Which sentence follows the rule?",
+   "choices": [
+    "The National Aeronautics and Space Administration (NASA) released the report.",
+    "The NASA released the report.",
+    "The National Aeronautics and Space Administration released the report.",
+    "The (NASA) National Aeronautics and Space Administration released the report."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option gives the organization's full name before introducing the abbreviation NASA in parentheses.",
+   "difficulty": 2,
+   "skill": "Applying first-mention abbreviations",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A club's style guide says to spell out the conjunction between club names in meeting minutes and use ampersands only in the club's display name. Which sentence follows the rule?",
+   "choices": [
+    "The Art Club and the Chess Club held a joint meeting.",
+    "The Art Club & the Chess Club held a joint meeting.",
+    "The Art Club and the Chess Club & the Drama Club held a joint meeting.",
+    "The Art Club & Chess Club & Drama Club held a joint meeting."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option spells out and between the club names as required for the meeting minutes.",
+   "difficulty": 2,
+   "skill": "Applying ampersand rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's style guide says to lowercase the names of seasons unless they begin a sentence. Which sentence follows the rule?",
+   "choices": [
+    "Winter enrollment usually increases after the holidays.",
+    "The team practices indoors every Winter before Spring.",
+    "The club holds a meeting in Fall and another in Spring.",
+    "Our Summer Schedule lists the Fall and Spring programs."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option correctly capitalizes Winter because it begins the sentence.",
+   "difficulty": 2,
+   "skill": "Applying capitalization rules for seasons",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A legal magazine's style guide says to spell out versus in running text and use vs. only in tables. Which sentence follows the rule?",
+   "choices": [
+    "The matchup features the Hawks versus the Bears.",
+    "The matchup features the Hawks v. the Bears.",
+    "The matchup features the Hawks vs the Bears.",
+    "The matchup features the Hawks vs. the Bears."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option spells out versus in running text as the guide requires.",
+   "difficulty": 3,
+   "skill": "Applying abbreviation rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A journalism school's style guide says to use double quotation marks for a full quotation and single quotation marks for a quotation inside it. Which sentence follows the rule?",
+   "choices": [
+    "The editor said, “Read the note marked ‘final’ before noon.”",
+    "The editor said, ‘Read the note marked “final” before noon.’",
+    "The editor said, “Read the note marked “final” before noon.”",
+    "The editor said, Read the note marked ‘final’ before noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option uses double quotation marks for the full quotation and single quotation marks for the quoted word inside it.",
+   "difficulty": 4,
+   "skill": "Applying nested-quotation rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A university style guide says to write the degree names bachelor's degree and master's degree in lowercase, with an apostrophe. Which sentence follows the guide?",
+   "choices": [
+    "The program offers a bachelor's degree in biology.",
+    "The program offers a Bachelor’s degree in biology.",
+    "The program offers a bachelor degree in biology.",
+    "The program offers a bachelors degree in biology."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses the lowercase possessive form bachelor's degree exactly as the guide requires.",
+   "difficulty": 3,
+   "skill": "Applying capitalization and possessive-style rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A business magazine's style guide requires e-commerce with a hyphen and a lowercase e. Which sentence follows the guide?",
+   "choices": [
+    "Our e-commerce report is ready.",
+    "Our ecommerce report is ready.",
+    "Our e commerce report is ready.",
+    "Our e-commerces report is ready."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses the required hyphenated form e-commerce with a lowercase e.",
+   "difficulty": 2,
+   "skill": "Applying compound-word rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A volunteer group's style guide says to use that for restrictive clauses and who for nonrestrictive clauses. Which sentence follows the guide?",
+   "choices": [
+    "The volunteers that arrived before noon received the first badges.",
+    "The volunteers who arrived before noon received the first badges.",
+    "The volunteers, that arrived before noon, received the first badges.",
+    "The volunteers which arrived before noon received the first badges."
+   ],
+   "answerIndex": 0,
+   "explanation": "The volunteers that arrived before noon restricts the group to those who arrived before noon and uses the required relative pronoun.",
+   "difficulty": 4,
+   "skill": "Distinguishing restrictive and nonrestrictive clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school publication's style guide says to write alumni, without an apostrophe, for all former students, regardless of gender. Which phrase follows the guide?",
+   "choices": [
+    "alumni association",
+    "alumnae association",
+    "alumni's association",
+    "alumna association"
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase alumni association uses the guide's gender-inclusive plural form without an apostrophe.",
+   "difficulty": 3,
+   "skill": "Applying gender-inclusive plural forms",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A city visitor guide says to spell out the word Avenue in full. Which sentence follows the guide?",
+   "choices": [
+    "The center is on Oak Ave.",
+    "The center is on Oak Av.",
+    "The center is on Oak Avn.",
+    "The center is on Oak Avenue."
+   ],
+   "answerIndex": 3,
+   "explanation": "The guide requires the street type Avenue to be written in full, so Oak Avenue is the correct form.",
+   "difficulty": 3,
+   "skill": "Following a house-style rule for street names",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A store's style guide requires fewer when referring to quantities of separate items. Which sentence follows the guide?",
+   "choices": [
+    "We have fewer chairs left.",
+    "We have less chairs left.",
+    "We have fewer chair left.",
+    "We have less chair left."
+   ],
+   "answerIndex": 0,
+   "explanation": "Fewer is required for chairs because they are separate, countable items.",
+   "difficulty": 3,
+   "skill": "Distinguishing fewer from less",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A dance school's style guide uses the spelling practise for the verb meaning to rehearse. Which sentence follows the guide?",
+   "choices": [
+    "The dancers practice the routine twice.",
+    "The dancers will practice the routine tomorrow.",
+    "The dancers practiced the routine yesterday.",
+    "The dancers practise the routine twice."
+   ],
+   "answerIndex": 3,
+   "explanation": "The guide uses the verb spelling practise, and that word is the verb in this sentence.",
+   "difficulty": 4,
+   "skill": "Applying a house-style spelling rule to a verb",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A writing guide requires whose for possession and reserves who's for the contraction meaning who is or who has. Which sentence follows the guide?",
+   "choices": [
+    "The author who essay won the contest received a prize.",
+    "The author whose essay won the contest received a prize.",
+    "The author who's essay won the contest received a prize.",
+    "The author whom essay won the contest received a prize."
+   ],
+   "answerIndex": 1,
+   "explanation": "Whose is the possessive word needed to connect the author to the essay.",
+   "difficulty": 4,
+   "skill": "Distinguishing whose from who's",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "During an echo activity, what should a student do immediately after hearing the model sentence?",
+   "choices": [
+    "Repeat the sentence aloud, matching the model's wording and rhythm.",
+    "Repeat the sentence aloud, changing its meaning and word order.",
+    "Read the sentence silently while another student speaks the model.",
+    "Answer a question about the model's topic instead of repeating it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Echo practice involves repeating the model aloud while matching its wording, pronunciation, and rhythm.",
+   "difficulty": 2,
+   "skill": "Echo practice",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In choral reading practice, what do the learners do with the same passage?",
+   "choices": [
+    "They read it aloud together at a shared pace.",
+    "They read separate sections aloud in sequence.",
+    "They perform it as a dialogue with invented roles.",
+    "They study its punctuation without reading aloud."
+   ],
+   "answerIndex": 0,
+   "explanation": "Choral reading involves a group reading the same passage aloud together, usually at a coordinated pace.",
+   "difficulty": 2,
+   "skill": "Choral practice",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which pair of words can both be used to introduce a restrictive clause, depending on context and house style?",
+   "choices": [
+    "that and which",
+    "who and whom",
+    "because and although",
+    "either and neither"
+   ],
+   "answerIndex": 0,
+   "explanation": "Both that and which can introduce a restrictive clause, although a particular style guide may prefer one.",
+   "difficulty": 3,
+   "skill": "Recognizing usage variants",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A columnist is writing for a magazine that uses a particular style guide, but another guide recommends a different spelling. Which choice should govern the column?",
+   "choices": [
+    "The magazine's chosen style guide",
+    "The guide published most recently",
+    "The guide used by the author's school",
+    "The guide that recommends the longer spelling"
+   ],
+   "answerIndex": 0,
+   "explanation": "The publication's chosen style guide sets the house rules for the column, so the columnist should follow it.",
+   "difficulty": 3,
+   "skill": "Resolving style-guide conflicts",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newspaper uses one style guide for headlines and a different one for feature articles. What is the best editing approach?",
+   "choices": [
+    "Apply each guide only to the section it governs.",
+    "Apply the headline guide to every part of the newspaper.",
+    "Apply the feature guide to every part of the newspaper.",
+    "Apply whichever guide gives the shorter result."
+   ],
+   "answerIndex": 0,
+   "explanation": "Style guides can govern different parts of a publication, and each section should be edited according to the guide that covers it.",
+   "difficulty": 4,
+   "skill": "Applying section-specific style guides",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which activity best combines echo practice with learning a house-style rule?",
+   "choices": [
+    "Echo a model sentence, then identify the style choice it demonstrates.",
+    "Echo a model paragraph, then remove all its punctuation.",
+    "Read a model sentence silently, then name its main topic.",
+    "Echo a model sentence, then replace every word with a synonym."
+   ],
+   "answerIndex": 0,
+   "explanation": "Explaining the house-style choice in an echoed model shows that the student recognized the rule as well as the pronunciation.",
+   "difficulty": 3,
+   "skill": "Echo practice with style-guide analysis",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newsletter's style guide says to use a colon after a section label when the text after it is a complete sentence. Which version follows the guide?",
+   "choices": [
+    "Contest winners: The judges will announce them on Friday.",
+    "Contest winners: The winners being announced on Friday.",
+    "Contest winners: After the judges announce them on Friday.",
+    "Contest winners: Announcing the winners on Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause The judges will announce them on Friday is a complete sentence, so the colon follows the guide.",
+   "difficulty": 3,
+   "skill": "Using colons after section labels",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publisher's style guide says to use adviser, not advisor, in job titles. Which phrase follows the guide?",
+   "choices": [
+    "senior editorial advisor",
+    "senior editorial advaiser",
+    "senior editorial adviser",
+    "senior editorial advisar"
+   ],
+   "answerIndex": 2,
+   "explanation": "The phrase uses adviser, the spelling required by the publisher's style guide.",
+   "difficulty": 3,
+   "skill": "Applying house-style job-title spellings",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A theater guide requires dates in numeric month/day/year format and whole numbers in descriptions to be written as words. Which program description follows both rules?",
+   "choices": [
+    "The show opens on June 3, 2027 and runs for ninety minutes.",
+    "The show opens on 6/3/2027 and runs for 90 minutes.",
+    "The show opens on 6/3/2027 and runs for ninety minutes.",
+    "The show opens on 3-6-2027 and runs for ninety minutes."
+   ],
+   "answerIndex": 2,
+   "explanation": "This sentence uses the guide's numeric month/day/year date and spells out the duration in words.",
+   "difficulty": 3,
+   "skill": "Applying date and number style rules",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "An events guide says to use entered for entering a place or competition and entered into for joining an agreement or discussion. Which sentence follows the guide?",
+   "choices": [
+    "Both teams entered into the tournament, and the mayor entered into the discussion.",
+    "Both teams entered the tournament, and the mayor entered into the discussion.",
+    "Both teams entered the tournament, and the mayor entered the discussion.",
+    "Both teams entered into the tournament, and the mayor entered the discussion."
+   ],
+   "answerIndex": 1,
+   "explanation": "It uses entered for entering the tournament and entered into for joining the discussion, as the guide requires.",
+   "difficulty": 4,
+   "skill": "Distinguishing similar phrases under house style",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A community newspaper's guide says to use since for time and because for reasons. Which sentence uses both words according to those distinctions?",
+   "choices": [
+    "Since the match began at noon, we missed the opening because the bus was late.",
+    "Since the match began at noon, we missed the opening since the bus was late.",
+    "Because the match began at noon, we missed the opening because the bus was late.",
+    "Because the match began at noon, we missed the opening since the bus was late."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses since to identify the time when the match began and because to identify the reason the opening was missed.",
+   "difficulty": 3,
+   "skill": "Applying distinctions between since and because",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newspaper's byline guide requires initials without spaces between them and a space before the surname. Which byline follows the guide?",
+   "choices": [
+    "A B Chen",
+    "A.B. Chen",
+    "A.B.Chen",
+    "A. B. Chen"
+   ],
+   "answerIndex": 1,
+   "explanation": "The required format places periods after both initials and a space only before the surname.",
+   "difficulty": 3,
+   "skill": "Applying initial spacing",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "id": 84,
+   "prompt": "A museum guide requires the word through to be spelled out in captions. Which sentence follows the guide?",
+   "choices": [
+    "The exhibit is open through September.",
+    "The exhibit is open thru September.",
+    "The exhibit is open until September.",
+    "The exhibit is open during September."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence spells out through, as the museum guide requires.",
+   "difficulty": 2,
+   "skill": "Apply a style guide's spelling rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "id": 87,
+   "prompt": "During echo practice, a model sentence contains a disputed punctuation choice. What should the learner do first?",
+   "choices": [
+    "Read the model aloud while attending to the punctuation.",
+    "Rewrite the sentence without the disputed punctuation.",
+    "Ask classmates which punctuation they prefer.",
+    "Read the sentence silently and skip the punctuation."
+   ],
+   "answerIndex": 0,
+   "explanation": "The learner should first read the model aloud while attending to the punctuation being practiced.",
+   "difficulty": 2,
+   "skill": "Echo a model while attending to a style choice",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "During an echo activity, the model sentence contains a disputed hyphenation. What should the learner focus on while repeating?",
+   "choices": [
+    "The meaning of the hyphenated word",
+    "The exact hyphenation as shown in the model",
+    "The number of syllables in the word",
+    "The speaker's tone and pitch"
+   ],
+   "answerIndex": 1,
+   "explanation": "The learner should reproduce the exact hyphenation demonstrated in the model.",
+   "difficulty": 3,
+   "skill": "Echo practice",
+   "topic": "Echo or Choral Practice - Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newsletter's style guide says to spell out whole numbers from one through nine and use numerals for 10 and above. Which sentence follows the guide?",
+   "choices": [
+    "She bought three apples and 12 oranges.",
+    "She bought 3 apples and twelve oranges.",
+    "She bought three apples and twelve oranges.",
+    "She bought 3 apples and 12 oranges."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires spelling out numbers one through nine and using numerals for 10 and higher, so the sentence with three and 12 follows it.",
+   "difficulty": 3,
+   "skill": "Style Guide Application",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A government report's style guide requires the abbreviation for United States to be written as U.S. with periods. Which sentence follows the guide?",
+   "choices": [
+    "The U.S. delegation arrived yesterday.",
+    "The US delegation arrived yesterday.",
+    "The U.S delegation arrived yesterday.",
+    "The U.S.. delegation arrived yesterday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide mandates U.S. with periods after each letter, so the sentence using U.S. meets the requirement.",
+   "difficulty": 3,
+   "skill": "Style Guide Application",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publishing house's style guide says to hyphenate compound adjectives that precede a noun. Which phrase follows the guide?",
+   "choices": [
+    "well-known author",
+    "well known author",
+    "well known-author",
+    "wellknown author"
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires a hyphen between the words of a compound adjective before a noun, so well-known author is correct.",
+   "difficulty": 3,
+   "skill": "Style Guide Application",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A website's style guide says to spell website as one word, without a hyphen. Which sentence follows the guide?",
+   "choices": [
+    "The website provides the schedule for Monday.",
+    "The Web site provides the schedule for Monday.",
+    "The web-site provides the schedule for Monday.",
+    "The web site provides the schedule for Monday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The closed-up spelling website matches the guide's stated preference to write the word as one word.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A campus publication's style guide requires sentence case for headlines, with only proper nouns capitalized. Which headline follows the guide?",
+   "choices": [
+    "Students visit the museum.",
+    "Students Visit the Museum.",
+    "STUDENTS VISIT THE MUSEUM.",
+    "Students Visit the museum."
+   ],
+   "answerIndex": 1,
+   "explanation": "Sentence case capitalizes only the first word and proper nouns, so this headline follows the guide.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A magazine's style guide says to capitalize the first and last words of a book title and all major words, but not short articles, prepositions, or conjunctions unless they begin or end the title. Which title follows this rule?",
+   "choices": [
+    "The Call of the Wild",
+    "The Call Of The Wild",
+    "the Call of the Wild",
+    "The Call of the wild"
+   ],
+   "answerIndex": 0,
+   "explanation": "The title capitalizes The because it is the first word and lowercases of because it is a short preposition.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A hotel's guest guide requires Wi-Fi with a hyphen and capital W and F. Which label follows the guide?",
+   "choices": [
+    "Hotel Wi-Fi",
+    "Hotel WIFI",
+    "Hotel Wifi",
+    "Hotel WI-FI"
+   ],
+   "answerIndex": 0,
+   "explanation": "Hotel Wi-Fi follows the guide because it uses the required hyphen and capitalization.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A city guide requires the abbreviation D.C. with periods. Which sentence follows the guide?",
+   "choices": [
+    "The conference is in D.C. next month.",
+    "The conference is in DC next month.",
+    "The conference is in D.C next month.",
+    "The conference is in d.c. next month."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses the required capitalization and periods in the abbreviation D.C.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A journalism school requires direct quotations to use sentence capitalization, with only the first word and proper nouns capitalized. Which sentence follows the guide?",
+   "choices": [
+    "“The train leaves at noon,” she said.",
+    "“the train leaves at noon,” she said.",
+    "“The train leaves at noon,” She said.",
+    "“The Train Leaves at Noon,” she said."
+   ],
+   "answerIndex": 0,
+   "explanation": "This quotation uses sentence capitalization and correctly continues with the lowercase attribution she said.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A nonprofit's style guide says to pluralize initialisms by adding s, with no apostrophe. Which sentence follows the guide?",
+   "choices": [
+    "The panel invited three CEO's to speak.",
+    "The panel invited three CEOes to speak.",
+    "The panel invited three CEOs to speak.",
+    "The panel invited three CEOS to speak."
+   ],
+   "answerIndex": 2,
+   "explanation": "Adding s without an apostrophe makes CEOs the plural required for the initialism CEO.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A district style guide says to capitalize a formal job title before a person's name and lowercase it after the name. Which sentence follows the guide?",
+   "choices": [
+    "Principal Elena Ruiz opened the meeting.",
+    "The principal Elena Ruiz opened the meeting.",
+    "The Principal Elena Ruiz opened the meeting.",
+    "Elena Ruiz, Principal, opened the meeting."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide capitalizes Principal because the formal title appears before Elena Ruiz's name.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A school's style guide says to write email as one word, with no hyphen. Which sentence follows the guide?",
+   "choices": [
+    "Please send me the e-mail before noon.",
+    "Please send me the E-mail before noon.",
+    "Please send me the email before noon.",
+    "Please send me the e-mails before noon."
+   ],
+   "answerIndex": 2,
+   "explanation": "The guide requires email as one lowercase word without a hyphen.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A hardware company's style guide says to use aluminum in all articles. Which sentence follows the guide?",
+   "choices": [
+    "The frame is made of aluminum.",
+    "The frame is made of aluminium.",
+    "The frame is made of Aluminum.",
+    "The frame is made of aluminums."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses the guide's required spelling aluminum with one l and no final s.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A magazine's guide requires commas and periods to appear inside quotation marks when they belong to the quoted sentence. Which sentence follows the guide?",
+   "choices": [
+    "The guide calls it a “major step,” she said.",
+    "The guide calls it a “major step”, she said.",
+    "The guide calls it a “major step.” she said.",
+    "The guide calls it a “major step”; she said."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence follows the guide because the comma appears inside the closing quotation mark.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A museum's visitor guide says to spell out numbers from one through nine but use numerals for numbers 10 and above. Which room label follows the guide?",
+   "choices": [
+    "Room 12",
+    "Room 9",
+    "Room Ten",
+    "Room Twelve"
+   ],
+   "answerIndex": 0,
+   "explanation": "Room 12 follows the guide because 12 is a number of 10 or above and therefore requires a numeral.",
+   "reason": "A: picked -1 not 0 (More than one option correct)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A newspaper's style guide says that misspellings in direct quotations must be preserved. Which sentence follows the rule?",
+   "choices": [
+    "The witness said, “I beleive every word,” and the editor left the spelling unchanged.",
+    "The witness said, “I believe every word,” and the editor left the spelling unchanged.",
+    "The witness said, “I beleive every word,” and the editor corrected the spelling.",
+    "The witness said, “I believe every word,” and the editor corrected the spelling."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option preserves the misspelling beleive inside the direct quotation and leaves it unchanged.",
+   "reason": "B: not exactly one correct (Both (0) and (1) arguably follow the rule; not exactly one correct.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "During echo practice, what should a student do when the model sentence contains a disputed style choice?",
+   "choices": [
+    "Substitute the preferred spelling from another style guide.",
+    "Read whichever version sounds more natural.",
+    "Ask the group to vote on the choice before repeating.",
+    "Repeat the model as written without changing the style choice."
+   ],
+   "answerIndex": 3,
+   "explanation": "Echo practice requires repeating the model accurately, including its deliberate style choice.",
+   "reason": "source: \"Echo practice expects students to repeat the model sentence exactly as written, preserving the style choice.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "In a choral round, how should the group coordinate the start of the passage?",
+   "choices": [
+    "Each reader chooses a separate starting speed.",
+    "The group counts in together and begins on an agreed cue.",
+    "The readers begin as soon as anyone sees the title screen.",
+    "The readers take turns saying one word at a time."
+   ],
+   "answerIndex": 1,
+   "explanation": "A shared count-in and agreed cue help choral readers begin together at the intended pace.",
+   "reason": "source: \"Choral rounds typically begin after a shared count-in cue.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A museum's style guide says to capitalize the first and last words of award names while lowercasing articles, short prepositions, and conjunctions unless they appear at the beginning or end. Which award name follows the guide?",
+   "choices": [
+    "Order of the Golden Eagle",
+    "ORDER OF THE GOLDEN EAGLE",
+    "Order Of the Golden Eagle",
+    "Order of the golden eagle"
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide capitalizes the first and last words and major words but lowercases articles, short prepositions, and conjunctions.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A technology publication's guide requires the word internet to begin with a lowercase letter. Which sentence follows the rule?",
+   "choices": [
+    "The Internet connects people worldwide.",
+    "The internet connects people worldwide.",
+    "The INTERNET connects people worldwide.",
+    "The iNTERNET connects people worldwide."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide requires internet to be lowercase because it is treated as a common noun.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A newsletter's guide requires all letters in an email address to be lowercase. Which address follows the rule?",
+   "choices": [
+    "alerts@riverside.org",
+    "Alerts@Riverside.Org",
+    "ALERTS@RIVERSIDE.ORG",
+    "Alerts@riverside.org"
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide lowercases every letter in the email address.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A city guide requires numerals for building numbers. Which address follows the guide?",
+   "choices": [
+    "The clinic is at Eighteen Oak Street.",
+    "The clinic is at 18 Oak Street.",
+    "The clinic is at eighteen Oak Street.",
+    "The clinic is at Eighteen oak Street."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide requires the building number 18 to appear as a numeral.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A publishing guide says to use the abbreviation etc. only when it is necessary for meaning, not merely to save space. Which sentence follows the guide?",
+   "choices": [
+    "Pack the camera, flashlight, and batteries, etc.",
+    "Pack the camera, flashlight, batteries, and other tools.",
+    "Pack the camera and flashlight, etc.",
+    "Pack the camera, flashlight, and batteries, etc."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second sentence spells out the complete list because the guide does not use etc. merely to shorten the sentence.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A research organization's guide spells website as one word. Which sentence follows the guide?",
+   "choices": [
+    "The web-site contains current findings.",
+    "The web site contains current findings.",
+    "The website contains current findings.",
+    "The websites contain current findings."
+   ],
+   "answerIndex": 2,
+   "explanation": "The guide requires website to be written as one word.",
+   "reason": "A: not exactly one correct (The guide spells 'website' as one word, but both option (2) and option (3) use 'website'/'websites' as one word, making the correct answer a)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A school publication's style guide says to use no more than two spaces after a sentence-ending period. Which paragraph follows the rule?",
+   "choices": [
+    "The bell rang. The students entered. The teacher smiled.",
+    "The bell rang.  The students entered.  The teacher smiled.",
+    "The bell rang. The students entered.  The teacher smiled.",
+    "The bell rang.  The students entered. The teacher smiled."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second paragraph uses exactly two spaces after each sentence-ending period.",
+   "reason": "A: picked 0 not 1 (multiple paragraphs follow the rule; no unique correct answer) | B: picked 0 not 1 (More than one paragraph satisfies the two-space rule.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A news organization's style guide says to use fewer rather than lesser when comparing quantities. Which sentence follows the guide?",
+   "choices": [
+    "The morning crowd had fewer visitors than the evening crowd.",
+    "The morning crowd had lesser visitors than the evening crowd.",
+    "The morning crowd had less visitors than the evening crowd.",
+    "The morning crowd had fewer people than the evening crowds."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence correctly uses fewer with the plural noun visitors when comparing quantities.",
+   "reason": "A: not exactly one correct (Both options (0) and (3) use 'fewer' correctly.) | B: not exactly one correct (two defensible options (0 and 3 both use fewer))"
+  },
+  {
+   "round": 2,
+   "stage": "code",
+   "prompt": "A style guide states that 'etc.' must be preceded by a comma when it follows a list. Which sentence follows the guide?",
+   "choices": [
+    "The kit includes pens, pencils etc.",
+    "The kit includes pens, pencils, etc.",
+    "The kit includes pens pencils, etc.",
+    "The kit includes pens, pencils etc."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide requires a comma before etc. when it follows a list.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "In choral reading practice, how do learners typically handle a passage that contains a style‑guide‑specific capitalization rule?",
+   "choices": [
+    "Each learner capitalizes differently",
+    "They read the passage together, applying the same capitalization as the model",
+    "They ignore capitalization and read everything in lowercase",
+    "They pause at each capitalized word"
+   ],
+   "answerIndex": 1,
+   "explanation": "Learners read the passage together, applying the same capitalization as the model.",
+   "reason": "source: \"Choral reading involves all participants reading the same text together.\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "A magazine's style guide requires the abbreviation 'e.g.' to be followed by a comma. Which sentence follows the guide?",
+   "choices": [
+    "The menu includes pasta, e.g. spaghetti.",
+    "The menu includes pasta, e.g., spaghetti.",
+    "The menu includes pasta e.g., spaghetti.",
+    "The menu includes pasta e.g. spaghetti."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide requires a comma after e.g., so the correct sentence includes a comma after the abbreviation.",
+   "reason": "source: \"Many magazine style guides require a comma after the abbreviation 'e.g.'.\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "A newspaper's style guide says to spell out numbers one through nine and use numerals for 10 and above. Which sentence follows the guide?",
+   "choices": [
+    "She bought 7 apples and 12 oranges.",
+    "She bought seven apples and 12 oranges.",
+    "She bought seven apples and twelve oranges.",
+    "She bought 7 apples and twelve oranges."
+   ],
+   "answerIndex": 1,
+   "explanation": "Numbers one through nine are spelled out, while 10 and above are written as numerals.",
+   "reason": "source: \"Newspaper style often spells numbers one through nine and uses numerals for ten or greater.\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "A publishing house's style guide requires a hyphen in compound adjectives before a noun but not after. Which phrase follows the guide?",
+   "choices": [
+    "a well known author",
+    "a well-known author",
+    "a wellknown author",
+    "a well - known author"
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide requires a hyphen in compound adjectives before a noun, so 'well-known' is correct.",
+   "reason": "source: \"Style guides commonly hyphenate compound adjectives preceding nouns.\": not_addressed"
+  },
+  {
+   "round": 2,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+   "prompt": "During an echo activity, the model sentence contains a word that has two accepted spellings, and the publication’s style guide prefers one of them. What should the learner repeat?",
+   "choices": [
+    "The spelling prescribed by the style guide as shown in the model.",
+    "Either spelling, because both are correct in standard English.",
+    "The spelling the learner personally prefers.",
+    "The spelling used in the most recent edition of a general dictionary."
+   ],
+   "answerIndex": 0,
+   "explanation": "The learner must echo the exact wording, including the style‑guide‑specified spelling, to internalize the house rule.",
+   "reason": "source: \"An echo activity requires the learner to repeat the model sentence exactly as written, so the spelling shown in the mode\": not_addressed"
+  },
+  {
+   "round": 3,
+   "stage": "code",
+   "prompt": "A magazine's style guide says to capitalize the word The when it is the first word of a title of a work. Which sentence follows the guide?",
+   "choices": [
+    "The article reviews The Great Gatsby and its themes.",
+    "The article reviews the Great Gatsby and its themes.",
+    "The article reviews The great Gatsby and its themes.",
+    "The article reviews The Great gatsby and its themes."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires capitalizing The as the first word of a title, so the sentence that writes The Great Gatsby with both words capitalized follows the rule.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 3,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "During an echo activity, the model sentence contains a disputed capitalization of a season name. What should the learner do first?",
+   "choices": [
+    "Read the model aloud, reproducing the exact capitalization shown.",
+    "Change the capitalization to match the learner's preferred style.",
+    "Skip the sentence and move to the next model.",
+    "Write a note about the dispute before repeating."
+   ],
+   "answerIndex": 0,
+   "explanation": "The learner must first echo the model exactly, including its capitalization, before any analysis.",
+   "reason": "source: \"An echo activity requires reproducing the model text exactly as shown, so the learner should read it as written.\": not_addressed"
+  },
+  {
+   "round": 3,
+   "stage": "source",
+   "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "prompt": "In choral reading practice for a style guide, what is the primary goal when the group reads a passage together?",
+   "choices": [
+    "To internalize the guide's conventions through shared, paced reading.",
+    "To memorize the passage word for word.",
+    "To compare each reader's individual pronunciation.",
+    "To identify every punctuation error in the text."
+   ],
+   "answerIndex": 0,
+   "explanation": "Choral reading aims to help learners absorb the style guide's patterns by reading in unison at a common pace.",
+   "reason": "source: \"Choral reading aims at fluent, paced, shared reading to internalize conventions, not memorization or error-spotting.\": not_addressed"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 2,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 3,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  }
+ ],
+ "applied": false
+}

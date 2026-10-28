@@ -1,0 +1,521 @@
+{
+ "collection": "block_plans",
+ "row_id": 9,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P85",
+   "wrong": "That is not a real word. The noun is effect.",
+   "correct": "\"Effected\" is a real word (past tense of the verb effect, \"to bring about\"); the feedback says it is not.",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "P86",
+   "wrong": "notice the second part has no subject and verb",
+   "correct": "\"because the bus never came\" has a subject (the bus) and a finite verb (came); it is a fragment only when it stands alone, because it is a dependent clause.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "That is not a real word. The noun is effect.",
+   "replace": "\"Effected\" is a real word: it is the past tense of the verb \"effect,\" meaning \"to bring about.\" In this sentence, though, you need the noun \"effect.\"",
+   "fixes": [
+    "P85"
+   ]
+  },
+  {
+   "find": "\"We left early because the bus never came.\" — notice the second part has no subject and verb.",
+   "replace": "\"We left early because the bus never came.\" — \"because the bus never came\" has the subject \"the bus\" and finite verb \"came\"; it is a fragment when it stands alone because it is a dependent clause.",
+   "fixes": [
+    "P86"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[4].data.feedback.byOption.d",
+   "before": "That is not a real word. The noun is effect.",
+   "after": "\"Effected\" is a real word: it is the past tense of the verb \"effect,\" meaning \"to bring about.\" In this sentence, though, you need the noun \"effect.\"",
+   "fixes": [
+    "P85"
+   ]
+  },
+  {
+   "path": "blocks[5].data.items[0].detail",
+   "before": "\"We left early because the bus never came.\" — notice the second part has no subject and verb.",
+   "after": "\"We left early because the bus never came.\" — \"because the bus never came\" has the subject \"the bus\" and finite verb \"came\"; it is a fragment when it stands alone because it is a dependent clause.",
+   "fixes": [
+    "P86"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Hook_Dilemma",
+    "purpose": "Sparks curiosity by presenting two plausible but conflicting choices about a real disputed usage rule, activating the idea that English rules can be debated.",
+    "data": {
+     "context": "Same sentence. Both editors are professionals. Neither one is simply \"wrong\" — so how do you decide?",
+     "eyebrow": "Warm-Up Dilemma",
+     "footerNote": "Hold that question. By the end of this lesson you will know exactly who settles arguments like this one.",
+     "leftChoice": {
+      "body": "As AP Stylebook users know, AP dropped the serial comma decades ago. Newsrooms and many websites follow AP, so their copy would look like this.",
+      "label": "OPTION A",
+      "title": "No comma — newsroom style",
+      "tone": "accent"
+     },
+     "prompt": "You are editing the school newspaper. Which sentence is correct?",
+     "rightChoice": {
+      "body": "The Chicago Manual of Style keeps the serial comma because it prevents confusion. Book publishers and academics follow Chicago.",
+      "label": "OPTION B",
+      "title": "With comma — book style",
+      "tone": "accent"
+     },
+     "versusLabel": "VS"
+    },
+    "repaired": false,
+    "index": 0
+   },
+   {
+    "block": "Theory_RuleCard",
+    "purpose": "Defines what a style guide is with a bolded anchor sentence and prerequisite bullets, covering the core idea that style guides settle disputed rules.",
+    "data": {
+     "anchor": "A style guide is a reference book of agreed-upon choices that settles disputed usage questions — it tells writers which option to follow, even when the rules of English allow more than one.",
+     "prerequisites": [
+      "Grammar gives you the hard rules: a sentence needs a subject and a verb, and words must fit together. Those are not debatable.",
+      "Usage is different: it covers choices like which word to pick or where to put a comma, where several options are grammatically possible.",
+      "Some word pairs get mixed up so often (affect and effect) that editors argue about them too — which makes them perfect examples of usage questions.",
+      "A fragment is an incomplete sentence and a run-on jams sentences together; both are errors, not style choices — knowing the difference matters later in this lesson."
+     ],
+     "ruleName": "What a Style Guide Is",
+     "tag": "Core Idea"
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Theory_ContrastSplit",
+    "purpose": "Side-by-side comparison of two real style guides (e.g., AP vs. Chicago) showing how they disagree on a specific disputed rule like the Oxford comma.",
+    "data": {
+     "footnote": "A style guide settles disputed usage by declaring a house choice — it does not discover the one true answer.",
+     "leftColumn": {
+      "heading": "What a style guide IS",
+      "items": [
+       {
+        "label": "A set of choices",
+        "text": "A decision manual for questions where two reasonable answers exist. It picks one so everyone in a newsroom, publishing house, or school writes the same way.",
+        "example": "Chicago says: use the Oxford comma. AP says: leave it out."
+       },
+       {
+        "label": "Consistency",
+        "text": "The main goal is not perfection — it is sameness. Readers should never notice the style flipping mid-article."
+       },
+       {
+        "label": "Changeable",
+        "text": "Guides get revised every few years. When real-world usage shifts, the guide updates to match it."
+       }
+      ]
+     },
+     "rightColumn": {
+      "heading": "What a style guide is NOT",
+      "items": [
+       {
+        "label": "Not the grammar police",
+        "text": "A style guide does not override hard grammar rules. No guide allows fragments or run-ons in formal writing.",
+        "example": "\"She went to the store. Because she was hungry.\" stays an error under every guide."
+       },
+       {
+        "label": "Not universal law",
+        "text": "Two guides can give opposite answers to the same question, and both are correct within their own system. There is no Supreme Court of English."
+       },
+       {
+        "label": "Not eternal truth",
+        "text": "A rule inside a guide can be dropped in the next edition. The guide follows usage; it does not command it."
+       }
+      ]
+     },
+     "subtitle": "AP Stylebook vs. The Chicago Manual of Style on the Oxford comma — the comma before \"and\" in a list.",
+     "title": "Two guides, two answers: what a style guide is and is not"
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Context_HistoricalPivot",
+    "purpose": "Tells the short story of a real usage debate (e.g., split infinitives or singular 'they') that caused style guides to change, showing rules evolve over time.",
+    "data": {
+     "beforeAfter": {
+      "after": "Editors slowly gave up. Chicago dropped its ban in 2014, and most guides now accept split infinitives when splitting sounds better. Usage had already changed — the rules followed.",
+      "before": "Style guides and teachers banned split infinitives for over a century. Careful writers contorted sentences to keep \"to\" and its verb together, often making them clunkier."
+     },
+     "crisis": "English grammar handbooks copied Latin patterns, and in Latin an infinitive is one word that cannot be split. So 19th-century editors declared that English infinitives must never be split either — a rule with no real basis in how English works.",
+     "era": "London and New York, 1800s–2014",
+     "ruleName": "The split infinitive rule",
+     "story": [
+      "The rule made famous by Star Trek's \"to boldly go\" — with \"boldly\" wedged inside the infinitive \"to go\" — had been attacked since the 1800s. Grammar writers insisted the adverb belonged before the whole phrase: \"boldly to go.\"",
+      "But no English speaker actually talked that way. Famous writers kept splitting infinitives on purpose because the split version often sounds stronger and clearer. The ban survived mostly on habit and snobbery."
+     ],
+     "takeaway": "When everyday usage and a rule collide for long enough, usage usually wins — style guides update, and yesterday's \"error\" becomes a choice.",
+     "title": "The rule that took 150 years to die",
+     "tags": [
+      "usage debates",
+      "split infinitive",
+      "singular they"
+     ]
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Interact_MultipleChoice",
+    "purpose": "Has the learner pick the correct commonly confused word pair (e.g., 'affect/effect') in a sentence, practising word_choice skill right after the core teaching.",
+    "data": {
+     "correctOptionId": "b",
+     "feedback": {
+      "byOption": {
+       "a": "Affect is the verb meaning to change something — the storm changed the game, so you need effect here.",
+       "b": "Correct: effect is the noun meaning a result or outcome.",
+       "c": "Reversed — affect is the verb; the noun for a result is effect.",
+       "d": "\"Effected\" is a real word: it is the past tense of the verb \"effect,\" meaning \"to bring about.\" In this sentence, though, you need the noun \"effect.\""
+      }
+     },
+     "options": [
+      {
+       "id": "a",
+       "text": "affected"
+      },
+      {
+       "id": "b",
+       "text": "effect"
+      },
+      {
+       "id": "c",
+       "text": "affect"
+      },
+      {
+       "id": "d",
+       "text": "effected"
+      }
+     ],
+     "prompt": "Which word completes the sentence correctly?",
+     "passage": "The storm had a huge ___ on the championship game."
+    },
+    "repaired": false,
+    "index": 4
+   },
+   {
+    "block": "Interact_CategorySort",
+    "purpose": "Learners drag disputed usage statements into buckets like 'Always wrong', 'Style choice', or 'Universally accepted', directly applying the lesson's central distinction.",
+    "data": {
+     "categories": [
+      {
+       "accent": "error",
+       "hint": "Breaks a real grammar rule no style guide allows.",
+       "id": "error",
+       "label": "Always an error"
+      },
+      {
+       "accent": "caution",
+       "hint": "Guides disagree; pick one and stay consistent.",
+       "id": "style",
+       "label": "Style choice"
+      },
+      {
+       "accent": "success",
+       "hint": "No English source argues about this.",
+       "id": "accepted",
+       "label": "Universally accepted"
+      }
+     ],
+     "instruction": "Drag each item into the bucket that describes it best.",
+     "items": [
+      {
+       "correctCategoryId": "error",
+       "detail": "\"We left early because the bus never came.\" — \"because the bus never came\" has the subject \"the bus\" and finite verb \"came\"; it is a fragment when it stands alone because it is a dependent clause.",
+       "id": "frag",
+       "text": "Writing \"We left early. Because the bus never came.\""
+      },
+      {
+       "correctCategoryId": "style",
+       "detail": "AP drops it; Chicago keeps it. Both are correct in their own systems.",
+       "id": "oxford",
+       "text": "Leaving out the Oxford comma in \"red, white and blue\""
+      },
+      {
+       "correctCategoryId": "error",
+       "detail": "\"She studied hard she passed the exam.\" — two sentences jammed together.",
+       "id": "runon",
+       "text": "Running two sentences together with no punctuation"
+      },
+      {
+       "correctCategoryId": "style",
+       "detail": "Chicago now allows it; AP has allowed it since 2017.",
+       "id": "they",
+       "text": "Using singular \"they\" for a person of unknown gender"
+      },
+      {
+       "correctCategoryId": "accepted",
+       "detail": "There is nothing to argue about here.",
+       "id": "cap",
+       "text": "Capitalizing the first word of every sentence"
+      },
+      {
+       "correctCategoryId": "style",
+       "detail": "Sound smooth? Split it. A perfectionist rule, not a grammar rule.",
+       "id": "split",
+       "text": "Splitting an infinitive: \"to quickly run\""
+      },
+      {
+       "correctCategoryId": "accepted",
+       "detail": "Basic agreement is settled English.",
+       "id": "sv",
+       "text": "Making the verb match its subject: \"she runs\""
+      }
+     ],
+     "shuffle": true,
+     "title": "Error or style choice?",
+     "resetLabel": "Reset"
+    },
+    "repaired": false,
+    "index": 5
+   },
+   {
+    "block": "Interact_ClickToReveal",
+    "purpose": "Self-testing cards where learners predict each style guide's ruling on a disputed rule before revealing the answer, promoting retrieval.",
+    "data": {
+     "cards": [
+      {
+       "answer": "AP omits the Oxford comma; Chicago keeps it.",
+       "note": "AP writes \"red, white and blue.\" Chicago writes \"red, white, and blue.\"",
+       "prompt": "AP Stylebook vs. Chicago: which one keeps the Oxford comma?",
+       "promptLabel": "Q1"
+      },
+      {
+       "answer": "AP dropped its objection in 2017; Chicago allows it too.",
+       "note": "One big reason: singular they avoids awkward \"he or she\" constructions and is centuries old in English.",
+       "prompt": "Singular \"they\": which guides now accept it?",
+       "promptLabel": "Q2"
+      },
+      {
+       "answer": "Affect is usually the verb (the storm affected the game); effect is usually the noun (the storm had an effect).",
+       "note": "Tricky exception: effect can be a verb meaning to bring about — \"effect change\" — but that is advanced.",
+       "prompt": "Affect or effect: what is the basic memory trick?",
+       "promptLabel": "Q3"
+      },
+      {
+       "answer": "Ask which guide your audience expects, check what it says, and then apply that one choice consistently — never mix guides mid-document.",
+       "prompt": "Your paper has no assigned guide. What are the two steps for a disputed rule?",
+       "promptLabel": "Q4"
+      },
+      {
+       "answer": "Usage shifted: writers kept splitting infinitives and using singular they, so guides updated to match real English.",
+       "prompt": "Why did the split infinitive rule and the singular they ban fade away?",
+       "promptLabel": "Q5"
+      }
+     ],
+     "revealLabel": "Tap to reveal",
+     "revealedLabel": "Revealed",
+     "subtitle": "Predict each answer out loud before you tap.",
+     "title": "You be the editor"
+    },
+    "repaired": false,
+    "index": 6
+   },
+   {
+    "block": "Trap_CommonError",
+    "purpose": "Targets the #1 misconception — that disputed usage rules are always hard grammar errors rather than style choices — by presenting a tricky sentence and revealing why intuition fails.",
+    "data": {
+     "choices": [
+      "It is flat-out wrong because the serial comma is required in all sentences.",
+      "It is a style choice — either version is fine if you pick one style guide and follow it consistently.",
+      "It is a fragment error, since a comma can replace the word \"and.\"",
+      "It is correct only if every comma in the whole document is removed."
+     ],
+     "commonErrorLabel": "Treating style choices as hard errors",
+     "correctIndex": 1,
+     "context": "\"I thanked my parents, Beyoncé and Batman.\" Does dropping the Oxford comma make this sentence an error?",
+     "correctReasoning": "The sentence is grammatically complete either way. The Oxford comma is disputed usage: AP omits it, Chicago keeps it. The right move is to choose one guide and apply it consistently, not to call either version an error.",
+     "difficulty": "Trap",
+     "question": "A student writes: \"I thanked my parents, Beyoncé and Batman.\" Another student says the missing comma before \"and\" makes this a grammar error. What is the best judgment of that claim?",
+     "recoveryTip": "Before flagging anything as an error, ask: does a major style guide actually allow this? If yes, it is a style choice — pick a guide and stay consistent.",
+     "standardTag": "Usage Debates and Style Guides",
+     "trapChoiceIndexes": [
+      0
+     ],
+     "trapReasons": {
+      "0": "This sounds like what strict teachers say, but no universal rule requires the serial comma — that is exactly why guides disagree."
+     },
+     "whyIntuitionFailed": "Your intuition screams that the missing comma causes real confusion, so it must be an error. But confusion is not the test for a grammar error — a broken grammar rule is. The sentence has a subject, a verb, and complete clauses either way. Comma placement before \"and\" is a disputed usage question, and reputable guides disagree about it, which is the whole definition of a style choice."
+    },
+    "repaired": true,
+    "index": 7
+   },
+   {
+    "block": "Memory_CheatSheet",
+    "purpose": "Compact key-value matrix summarizing major disputed rules, which style guides settle them, and how to check, for quick reference and retention.",
+    "data": {
+     "rows": [
+      {
+       "detail": "It settles disputed usage for one group of writers; it does not rewrite grammar.",
+       "key": "Style guide",
+       "tone": "success",
+       "value": "A rulebook a publication or organization follows so its writing stays consistent."
+      },
+      {
+       "detail": "AP drops it; Chicago keeps it. Both are right within their own system.",
+       "key": "Oxford comma",
+       "tone": "accent",
+       "value": "The comma before \"and\" in a list — a style choice, not a required or forbidden mark."
+      },
+      {
+       "detail": "Once banned, now accepted: Chicago dropped its ban in 2014, AP never enforced it strictly.",
+       "key": "Split infinitive",
+       "tone": "accent",
+       "value": "Splitting \"to\" from its verb (\"to boldly go\") — widely accepted today."
+      },
+      {
+       "detail": "AP accepted it in 2017; Chicago permits it. Real usage drove the change.",
+       "key": "Singular they",
+       "tone": "accent",
+       "value": "Using \"they\" for one person of unknown or nonbinary gender — now accepted by major guides."
+      },
+      {
+       "detail": "Once a banned \"error\"; now widely accepted when it is sincere.",
+       "key": "Hopefully as a sentence adverb",
+       "tone": "accent",
+       "value": "\"Hopefully, it will snow\" — long attacked, now standard in most guides."
+      },
+      {
+       "detail": "Follow your assigned guide; if none is assigned, never mix them.",
+       "key": "How to apply a guide",
+       "tone": "default",
+       "value": "Check whether a guide has been assigned; if not, pick one (AP or Chicago) and apply it consistently."
+      },
+      {
+       "detail": "Effect = noun (the result). Affect = verb (to change). Ask: thing or action?",
+       "key": "Affect / effect",
+       "tone": "default",
+       "value": "Most often affect is the verb (to influence); effect is the noun (a result)."
+      },
+      {
+       "detail": "Fragments, run-ons, and broken agreement fail under every guide. Disputed commas and word choices do not.",
+       "key": "Error vs. style choice",
+       "tone": "caution",
+       "value": "Real grammar errors break rules no guide allows; style choices are spots where guides disagree."
+      }
+     ],
+     "subtitle": "Usage Debates and Style Guides — unit quick reference",
+     "title": "Disputed rules cheat sheet"
+    },
+    "repaired": true,
+    "index": 8
+   },
+   {
+    "block": "Concept_TakeawayBadge",
+    "purpose": "Single high-contrast summary banner stating the lesson's conclusion: style guides are the tiebreakers for disputed usage rules, and context decides which guide to follow.",
+    "data": {
+     "accent": "primary",
+     "badgeLabel": "Key Takeaway",
+     "footerNote": "Next up: using voice and mood for effect — more tools that turn rules into choices.",
+     "icon": "flag",
+     "sequenceLabel": "Step 4 of 4",
+     "takeaway": "For disputed usage, there is no single right answer — a style guide is the tiebreaker, so find out which guide your audience follows and apply it consistently.",
+     "terms": [
+      "style guide",
+      "disputed usage",
+      "consistency",
+      "AP vs. Chicago"
+     ],
+     "topic": "Usage Debates and Style Guides",
+     "unitLabel": "English · Usage and Style"
+    },
+    "repaired": false,
+    "index": 9
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A student asks why style guides exist. Which statement gives the real purpose of a style guide?",
+    "answer": "To settle disputed usage questions by declaring one consistent choice",
+    "rationale": "The lesson defines a style guide as a reference of agreed choices that settles questions where more than one grammatically possible answer exists.",
+    "source": "ai",
+    "hint": "Think about the Oxford comma: two guides, two answers, both fine. What is the guide actually doing?",
+    "choices": [
+     "To ban every sentence that breaks a grammar rule",
+     "To settle disputed usage questions by declaring one consistent choice",
+     "To prove that one version of English is eternally correct",
+     "To replace the need for knowing grammar at all"
+    ],
+    "id": "c1",
+    "after": 1,
+    "focus": "Identifying the purpose of a style guide in settling disputed usage"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "In 1950, most style guides called \"to boldly go\" an error. Today Chicago and AP allow it. What does this tell you about usage rules?",
+    "answer": "Both can be correct, depending on which style guide you follow",
+    "rationale": "Usage rules shift over time as guides revise to match real-world usage, so both sentences can be correct under different editions and guides.",
+    "source": "ai",
+    "hint": "Remember the split infinitive story: guides updated their rules when usage shifted.",
+    "choices": [
+     "Only the first is correct, because strict rules always ban split infinitives",
+     "Only the second is correct, because guides always enforce the older rule",
+     "Both can be correct, depending on which style guide you follow",
+     "Neither is correct, since adverbs must never touch infinitives"
+    ],
+    "id": "c2",
+    "after": 3,
+    "focus": "Recognizing that usage rules can shift over time and differ between guides"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 2,
+    "format": "multiple_choice",
+    "prompt": "A classmate claims that writing \"red, white and blue\" without the serial comma is a hard grammar error. How should you classify this question?",
+    "answer": "A style choice — one comma version is fine as long as you follow one guide consistently",
+    "rationale": "AP and Chicago disagree on the Oxford comma, which makes it disputed usage — a style choice settled by a guide, not a grammar error.",
+    "source": "ai",
+    "hint": "Ask yourself: does any major style guide allow writing it without the comma?",
+    "choices": [
+     "A hard error, because the serial comma is required by every style guide",
+     "A hard error, because the sentence is incomplete without it",
+     "A style choice — one comma version is fine as long as you follow one guide consistently",
+     "Not a usage question at all, since commas are purely a grammar matter"
+    ],
+    "id": "c4",
+    "after": 7,
+    "focus": "Classifying a usage question as style choice vs. hard error"
+   }
+  ]
+ }
+}

@@ -1,0 +1,3628 @@
+{
+ "track_id": "math",
+ "grade_id": "add_and_subtract_within_20",
+ "generated_at": "2026-10-26T03:38:11.636Z",
+ "items": [
+  {
+   "objective_id": "add_and_subtract_within_20:L10",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which action means 'taking from'?",
+   "choices": [
+    "Adding more blocks to a pile",
+    "Removing some blocks from a pile",
+    "Counting all the blocks in two piles",
+    "Seeing which pile has more blocks"
+   ],
+   "answer": "Removing some blocks from a pile",
+   "rationale": "'Taking from' means removing objects from an existing group, which models subtraction.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L10",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Which question asks you to compare?",
+   "choices": [
+    "How many birds are left after 2 fly away?",
+    "How many birds are there in total now?",
+    "How many more birds does Sam have than Lily?",
+    "How many birds join the 4 already on the fence?"
+   ],
+   "answer": "How many more birds does Sam have than Lily?",
+   "rationale": "Asking 'how many more' requires comparing two amounts to find the difference between them.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Comparing means determining how much more or less one amount is than another.",
+      "url": "https://en.wikipedia.org/wiki/Comparing",
+      "quote": "Comparing is the act of evaluating two or more things by determining the relevant, comparable characteristics of each thing, and then determining which characteristics of each are similar to the other, which are different , and to what degree.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L10",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Mia has 3 apples. She gets 2 more. Which action is this?",
+   "choices": [
+    "Comparing",
+    "Putting together",
+    "Adding to",
+    "Taking from"
+   ],
+   "answer": "Adding to",
+   "rationale": "Getting more apples added to what Mia already has models the 'adding to' action.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Adding to means increasing a starting group by combining it with more.",
+      "url": "https://en.wikipedia.org/wiki/Adding",
+      "quote": "Possibly the most basic interpretation of addition lies in combining sets , that is:",
+      "reader": "z-ai/glm-5.3"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L65",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "Which addition sentence is part of the number bond for 7?",
+   "choices": [
+    "3 + 4 = 7",
+    "2 + 6 = 7",
+    "5 + 3 = 7",
+    "1 + 5 = 7"
+   ],
+   "answer": "3 + 4 = 7",
+   "rationale": "3 and 4 are a pair of parts that make 7, so 3 + 4 = 7 is a correct number bond sentence for 7.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L65",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "What subtraction sentence matches the number bond 4 + 6 = 10?",
+   "choices": [
+    "10 - 4 = 6",
+    "10 - 3 = 7",
+    "10 - 5 = 5",
+    "10 - 2 = 8"
+   ],
+   "answer": "10 - 4 = 6",
+   "rationale": "If 4 and 6 make 10, taking away one part (4) from the whole (10) leaves the other part (6), giving 10 - 4 = 6.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L65",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "Which pair of numbers makes 8?",
+   "choices": [
+    "5 and 3",
+    "4 and 5",
+    "6 and 3",
+    "7 and 2"
+   ],
+   "answer": "5 and 3",
+   "rationale": "5 and 3 are parts that add up to 8. The other pairs make 9, 9, and 9 instead of 8.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L65",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 65,
+   "format": "multiple_choice",
+   "prompt": "What is the missing number in this number bond: __ + 2 = 9?",
+   "choices": [
+    "7",
+    "6",
+    "8",
+    "5"
+   ],
+   "answer": "7",
+   "rationale": "To find the missing part when the whole is 9 and one part is 2, subtract: 9 - 2 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L55",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 55,
+   "format": "multiple_choice",
+   "prompt": "A bowl had 7 grapes. Dara ate some grapes. Then 3 grapes remained. How many grapes did Dara eat?",
+   "choices": [
+    "4 grapes",
+    "6 grapes",
+    "10 grapes",
+    "3 grapes"
+   ],
+   "answer": "4 grapes",
+   "rationale": "The change is unknown, so 7 − □ = 3. Solving the equation gives □ = 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L55",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 55,
+   "format": "multiple_choice",
+   "prompt": "After giving away some cards, Kim had 6 cards left. She gave away 4 cards. How many cards did she have at first?",
+   "choices": [
+    "10 cards",
+    "6 cards",
+    "2 cards",
+    "4 cards"
+   ],
+   "answer": "10 cards",
+   "rationale": "The starting amount is unknown, so 6 + 4 = 10. Kim began with 10 cards.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L55",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 55,
+   "format": "multiple_choice",
+   "prompt": "There were 6 stickers on a page. Some were torn off, leaving 3. Which subtraction equation finds how many were torn off?",
+   "choices": [
+    "6 − □ = 3",
+    "3 − □ = 6",
+    "6 + □ = 3",
+    "3 + □ = 6"
+   ],
+   "answer": "6 − □ = 3",
+   "rationale": "The 6 stickers before the change minus the unknown torn-off amount equals the 3 remaining.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L55",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 55,
+   "format": "multiple_choice",
+   "prompt": "A bus had some riders. Five got off, and 8 riders remained. Which equation finds the number of riders before anyone got off?",
+   "choices": [
+    "8 + 5 = □",
+    "□ + 5 = 8",
+    "8 − □ = 5",
+    "5 − □ = 8"
+   ],
+   "answer": "8 + 5 = □",
+   "rationale": "The starting amount equals the 8 remaining riders plus the 5 who got off.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L32",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "There are 12 apples. 5 are red. How many are green?",
+   "choices": [
+    "7",
+    "6",
+    "8",
+    "5"
+   ],
+   "answer": "7",
+   "rationale": "12 total apples minus 5 red apples leaves 7 green apples.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L32",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "Sam has 8 marbles. He gets 6 more. How many marbles does he have now?",
+   "choices": [
+    "13",
+    "14",
+    "12",
+    "15"
+   ],
+   "answer": "14",
+   "rationale": "Adding 6 marbles to 8 marbles gives a total of 14 marbles.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L32",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "A box has 15 crayons. Some are blue, some are yellow. If there are 9 blue crayons, how many yellow crayons are there?",
+   "choices": [
+    "6",
+    "7",
+    "5",
+    "8"
+   ],
+   "answer": "6",
+   "rationale": "15 total crayons minus 9 blue crayons equals 6 yellow crayons.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L32",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 32,
+   "format": "multiple_choice",
+   "prompt": "Which pair of numbers adds to 10?",
+   "choices": [
+    "3 and 8",
+    "4 and 6",
+    "2 and 9",
+    "5 and 4"
+   ],
+   "answer": "4 and 6",
+   "rationale": "4 plus 6 equals 10; the other pairs sum to 11 or 9.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L97",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "What is 7 + 0?",
+   "choices": [
+    "7",
+    "0",
+    "8",
+    "6"
+   ],
+   "answer": "7",
+   "rationale": "Adding zero to any number leaves the number unchanged, so 7 + 0 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "glm",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L97",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "Which addition sentence has the same sum as 4 + 5?",
+   "choices": [
+    "5 + 4",
+    "4 + 6",
+    "3 + 5",
+    "5 + 3"
+   ],
+   "answer": "5 + 4",
+   "rationale": "The commutative property of addition states that changing the order of addends does not change the sum; 4 + 5 = 5 + 4.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "glm",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L97",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "To add 6 + 4 + 3, which two numbers make 10?",
+   "choices": [
+    "6 and 4",
+    "6 and 3",
+    "4 and 3",
+    "6 and 6"
+   ],
+   "answer": "6 and 4",
+   "rationale": "When adding three numbers, a useful strategy is to first find two numbers that make 10; 6 and 4 make 10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "glm",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L97",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 97,
+   "format": "multiple_choice",
+   "prompt": "What is 2 + 8 + 5?",
+   "choices": [
+    "15",
+    "14",
+    "16",
+    "13"
+   ],
+   "answer": "15",
+   "rationale": "Using the make‑ten strategy, 2 + 8 = 10, then 10 + 5 = 15.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "glm",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L87",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 87,
+   "format": "multiple_choice",
+   "prompt": "What number makes this equation true? 7 + 3 = 4 + ?",
+   "choices": [
+    "5",
+    "6",
+    "8",
+    "10"
+   ],
+   "answer": "6",
+   "rationale": "7 + 3 = 10, so the right side must also equal 10. 4 + 6 = 10, making 6 the correct answer.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L87",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 87,
+   "format": "multiple_choice",
+   "prompt": "Which value balances both sides? 9 + 1 = 6 + ?",
+   "choices": [
+    "3",
+    "4",
+    "5",
+    "10"
+   ],
+   "answer": "4",
+   "rationale": "9 + 1 = 10, so the right side must total 10. Since 6 + 4 = 10, the missing value is 4.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L87",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 87,
+   "format": "multiple_choice",
+   "prompt": "Find the number that makes both sides equal: 5 + 5 = 2 + ?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "10"
+   ],
+   "answer": "8",
+   "rationale": "5 + 5 = 10, so the right side must also be 10. Since 2 + 8 = 10, the missing number is 8.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L87",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 87,
+   "format": "multiple_choice",
+   "prompt": "What number completes the balance? 6 + 4 = 3 + ?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "10"
+   ],
+   "answer": "7",
+   "rationale": "6 + 4 = 10, so the right side needs to total 10. Because 3 + 7 = 10, the correct number is 7.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L119",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 119,
+   "format": "multiple_choice",
+   "prompt": "What is 7 + 7?",
+   "choices": [
+    "12",
+    "13",
+    "14",
+    "15"
+   ],
+   "answer": "14",
+   "rationale": "7 + 7 is a doubles fact. Adding 7 and 7 gives 14.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L119",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 119,
+   "format": "multiple_choice",
+   "prompt": "Use a doubles fact to solve 8 + 9. What is the answer?",
+   "choices": [
+    "15",
+    "16",
+    "17",
+    "18"
+   ],
+   "answer": "17",
+   "rationale": "8 + 9 is one more than the double 8 + 8 = 16, so 8 + 9 = 17.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L119",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 119,
+   "format": "multiple_choice",
+   "prompt": "What is 9 + 9?",
+   "choices": [
+    "16",
+    "17",
+    "18",
+    "19"
+   ],
+   "answer": "18",
+   "rationale": "9 + 9 is a doubles fact. Adding 9 and 9 gives 18.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "judge_families": [
+     "minimax",
+     "glm"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L174",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 174,
+   "format": "multiple_choice",
+   "prompt": "Which number added to 6 makes 14?",
+   "choices": [
+    "7",
+    "8",
+    "9",
+    "10"
+   ],
+   "answer": "8",
+   "rationale": "Because 6 + 8 = 14, so 14 − 6 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L174",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 174,
+   "format": "multiple_choice",
+   "prompt": "What number plus 4 equals 11?",
+   "choices": [
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "answer": "7",
+   "rationale": "Since 4 + 7 = 11, the subtraction 11 − 4 equals 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L174",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 174,
+   "format": "multiple_choice",
+   "prompt": "Find the number that added to 9 gives 16.",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "7",
+   "rationale": "9 + 7 = 16, so 16 − 9 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L174",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 174,
+   "format": "multiple_choice",
+   "prompt": "Which addend completes 12 + ___ = 19?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "7",
+   "rationale": "12 + 7 = 19, thus 19 − 12 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L186",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 186,
+   "format": "multiple_choice",
+   "prompt": "Which expression uses the \"go down through ten\" method for 13 − 5?",
+   "choices": [
+    "13 − 3 − 2",
+    "13 − 5",
+    "13 − 4 − 1",
+    "13 − 6 + 1"
+   ],
+   "answer": "13 − 3 − 2",
+   "rationale": "Going down through ten means subtracting enough to reach 10 first (13 − 3 = 10), then subtracting the rest (10 − 2 = 8). Option A shows exactly this two‑step decomposition.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "qwen",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L186",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 186,
+   "format": "multiple_choice",
+   "prompt": "Which expression uses the \"go down through ten\" method for 15 − 7?",
+   "choices": [
+    "15 − 5 − 2",
+    "15 − 7",
+    "15 − 6 − 1",
+    "15 − 4 − 3"
+   ],
+   "answer": "15 − 5 − 2",
+   "rationale": "First subtract 5 to reach 10 (15 − 5 = 10), then subtract the remaining 2 (10 − 2 = 8). Option A matches this strategy.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "qwen",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L186",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 186,
+   "format": "multiple_choice",
+   "prompt": "Which expression uses the \"go down through ten\" method for 12 − 8?",
+   "choices": [
+    "12 − 2 − 6",
+    "12 − 8",
+    "12 − 3 − 5",
+    "12 − 4 − 4"
+   ],
+   "answer": "12 − 2 − 6",
+   "rationale": "Subtract 2 to get to 10 (12 − 2 = 10), then subtract the remaining 6 (10 − 6 = 4). Option A shows the correct two‑step decomposition.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "qwen",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L186",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 186,
+   "format": "multiple_choice",
+   "prompt": "Which expression uses the \"go down through ten\" method for 14 − 6?",
+   "choices": [
+    "14 − 4 − 2",
+    "14 − 6",
+    "14 − 5 − 1",
+    "14 − 3 − 3"
+   ],
+   "answer": "14 − 4 − 2",
+   "rationale": "First subtract 4 to reach 10 (14 − 4 = 10), then subtract the remaining 2 (10 − 2 = 8). Option A represents this method.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "qwen",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L141",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 141,
+   "format": "multiple_choice",
+   "prompt": "On a rekenrek you have 8 beads on the top row. You want to add 6 more. How many beads do you slide to make ten, and how many are left to add?",
+   "choices": [
+    "Slide 2 beads, then add 4",
+    "Slide 3 beads, then add 3",
+    "Slide 1 bead, then add 5",
+    "Slide 4 beads, then add 2"
+   ],
+   "answer": "Slide 2 beads, then add 4",
+   "rationale": "From 8 you need 2 beads to reach 10; the remaining 6‑2 = 4 beads are added after the make‑ten move.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L141",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 141,
+   "format": "multiple_choice",
+   "prompt": "You start at 5 on a number path and need to add 7. First you hop to 10. How many more hops do you take?",
+   "choices": [
+    "2 hops",
+    "3 hops",
+    "1 hop",
+    "4 hops"
+   ],
+   "answer": "2 hops",
+   "rationale": "5 → 10 uses 5 hops; 7 total needed leaves 7‑5 = 2 hops after reaching ten.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L141",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 141,
+   "format": "multiple_choice",
+   "prompt": "There are 6 beads on the top row of a rekenrek. You want to add 8. How many beads do you slide to make ten, and how many remain?",
+   "choices": [
+    "Slide 4 beads, then add 4",
+    "Slide 3 beads, then add 5",
+    "Slide 5 beads, then add 3",
+    "Slide 2 beads, then add 6"
+   ],
+   "answer": "Slide 4 beads, then add 4",
+   "rationale": "6 needs 4 beads to reach 10; the leftover from 8 is 8‑4 = 4 beads.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L141",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 141,
+   "format": "multiple_choice",
+   "prompt": "You are at 3 on a number path and need to add 9. After hopping to 10, how many more hops do you make?",
+   "choices": [
+    "2 hops",
+    "3 hops",
+    "1 hop",
+    "4 hops"
+   ],
+   "answer": "2 hops",
+   "rationale": "3 → 10 uses 7 hops; 9 total needed leaves 9‑7 = 2 hops after the make‑ten hop.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L109",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 109,
+   "format": "multiple_choice",
+   "prompt": "To solve 3 + 14, which strategy is most efficient?",
+   "choices": [
+    "Count on from 3",
+    "Count back from 14",
+    "Count on from 14",
+    "Count back from 3"
+   ],
+   "answer": "Count on from 14",
+   "rationale": "Counting on from the larger number (14) is more efficient because you only count up 3 steps instead of 14.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L109",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 109,
+   "format": "multiple_choice",
+   "prompt": "What do you get when you count back 3 starting from 15?",
+   "choices": [
+    "18",
+    "12",
+    "13",
+    "11"
+   ],
+   "answer": "12",
+   "rationale": "Counting back 3 from 15 means saying 14, 13, 12. The answer is 12.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L109",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 109,
+   "format": "multiple_choice",
+   "prompt": "You have 19 and take away 2. Which is the best strategy?",
+   "choices": [
+    "Count on from 2",
+    "Count back from 19",
+    "Count on from 19",
+    "Count back from 2"
+   ],
+   "answer": "Count back from 19",
+   "rationale": "When subtracting a small number like 2 from 19, counting back from 19 is the most efficient strategy.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L154",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "What is the first step when using the make-ten strategy to solve 7 + 6?",
+   "choices": [
+    "Add 3 to 7 to make 10",
+    "Add 4 to 7 to make 11",
+    "Add 2 to 7 to make 9",
+    "Add 3 to 6 to make 9"
+   ],
+   "answer": "Add 3 to 7 to make 10",
+   "rationale": "To use make-ten with 7, you add 3 to reach 10. You take that 3 from the 6, leaving 3 to add to 10.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L154",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "When solving 8 + 7 by making ten, after adding 2 to 8, what number do you add next?",
+   "choices": [
+    "5",
+    "6",
+    "7",
+    "4"
+   ],
+   "answer": "5",
+   "rationale": "You decompose 7 into 2 and 5. After adding 2 to 8 to make 10, you add the remaining 5 to get 15.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L154",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 154,
+   "format": "multiple_choice",
+   "prompt": "Using the make-ten strategy for 7 + 8, which equation shows the correct final step?",
+   "choices": [
+    "10 + 5 = 15",
+    "10 + 3 = 13",
+    "10 + 1 = 11",
+    "10 + 4 = 14"
+   ],
+   "answer": "10 + 5 = 15",
+   "rationale": "Decompose 8 into 3 and 5. Add 3 to 7 to make 10, then add the leftover 5: 10 + 5 = 15.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L196",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 196,
+   "format": "multiple_choice",
+   "prompt": "Which set lists the four related addition and subtraction sentences for 5, 8, and 13?",
+   "choices": [
+    "5 + 8 = 13; 8 + 5 = 13; 13 - 5 = 8; 13 - 8 = 5",
+    "5 + 8 = 13; 8 + 5 = 13; 13 - 5 = 5; 13 - 8 = 8",
+    "5 + 8 = 13; 8 + 5 = 13; 13 - 5 = 8; 13 - 8 = 8",
+    "5 + 8 = 13; 8 + 5 = 13; 13 - 5 = 5; 13 - 8 = 5"
+   ],
+   "answer": "5 + 8 = 13; 8 + 5 = 13; 13 - 5 = 8; 13 - 8 = 5",
+   "rationale": "A fact family for 5, 8, 13 includes both addition orders and both subtraction equations using the total 13.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L196",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 196,
+   "format": "multiple_choice",
+   "prompt": "Which group shows the correct fact family for 3, 9, and 12?",
+   "choices": [
+    "3 + 9 = 12; 9 + 3 = 12; 12 - 3 = 9; 12 - 9 = 3",
+    "3 + 9 = 12; 9 + 3 = 12; 12 - 3 = 3; 12 - 9 = 9",
+    "3 + 9 = 12; 9 + 3 = 12; 12 - 3 = 9; 12 - 9 = 9",
+    "3 + 9 = 12; 9 + 3 = 12; 12 - 3 = 3; 12 - 9 = 3"
+   ],
+   "answer": "3 + 9 = 12; 9 + 3 = 12; 12 - 3 = 9; 12 - 9 = 3",
+   "rationale": "The fact family contains both addition arrangements and the two subtraction equations that return the addends.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L196",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 196,
+   "format": "multiple_choice",
+   "prompt": "Select the four related sentences for the numbers 6, 7, and 13.",
+   "choices": [
+    "6 + 7 = 13; 7 + 6 = 13; 13 - 6 = 7; 13 - 7 = 6",
+    "6 + 7 = 13; 7 + 6 = 13; 13 - 6 = 6; 13 - 7 = 7",
+    "6 + 7 = 13; 7 + 6 = 13; 13 - 6 = 7; 13 - 7 = 7",
+    "6 + 7 = 13; 7 + 6 = 13; 13 - 6 = 6; 13 - 7 = 6"
+   ],
+   "answer": "6 + 7 = 13; 7 + 6 = 13; 13 - 6 = 7; 13 - 7 = 6",
+   "rationale": "A correct fact family uses both addends in addition and subtracts each addend from the sum to retrieve the other addend.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L196",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 196,
+   "format": "multiple_choice",
+   "prompt": "Which of the following is the complete fact family for 2, 10, and 12?",
+   "choices": [
+    "2 + 10 = 12; 10 + 2 = 12; 12 - 2 = 10; 12 - 10 = 2",
+    "2 + 10 = 12; 10 + 2 = 12; 12 - 2 = 2; 12 - 10 = 10",
+    "2 + 10 = 12; 10 + 2 = 12; 12 - 2 = 10; 12 - 10 = 10",
+    "2 + 10 = 12; 10 + 2 = 12; 12 - 2 = 2; 12 - 10 = 2"
+   ],
+   "answer": "2 + 10 = 12; 10 + 2 = 12; 12 - 2 = 10; 12 - 10 = 2",
+   "rationale": "The fact family for 2, 10, 12 includes both addition orders and the two subtraction equations that yield the original addends.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L131",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 131,
+   "format": "multiple_choice",
+   "prompt": "To solve 9 + 4, you move 1 to make 10. What do you add next?",
+   "choices": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "answer": "3",
+   "rationale": "Moving 1 from 4 leaves 3, so after making 10 you add 3 more.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "glm",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L131",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 131,
+   "format": "multiple_choice",
+   "prompt": "When adding 9 + 6 by making ten, what is the new addition problem?",
+   "choices": [
+    "10 + 4",
+    "10 + 5",
+    "10 + 6",
+    "10 + 7"
+   ],
+   "answer": "10 + 5",
+   "rationale": "Take 1 from 6 to make 10 with the 9, leaving 5. The new problem is 10 + 5.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "nemotron",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L131",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 131,
+   "format": "multiple_choice",
+   "prompt": "What is 9 + 7 when you use the make-a-ten strategy?",
+   "choices": [
+    "15",
+    "16",
+    "17",
+    "18"
+   ],
+   "answer": "16",
+   "rationale": "Move 1 from 7 to 9 to make 10, then add the remaining 6. 10 + 6 = 16.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L131",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 131,
+   "format": "multiple_choice",
+   "prompt": "In 9 + 5, how many are left in the second ten frame after moving one?",
+   "choices": [
+    "3",
+    "4",
+    "5",
+    "6"
+   ],
+   "answer": "4",
+   "rationale": "Start with 5 in the second ten frame. Moving 1 to fill the first ten frame leaves 4.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L263",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "ratios",
+   "level": 263,
+   "format": "multiple_choice",
+   "prompt": "Mia has 8 stickers. Her cousin gives her 5 stickers. How many stickers does Mia have now? Choose the operation and explain why.",
+   "choices": [
+    "8 + 5, because two groups are combined.",
+    "8 − 5, because two groups are combined.",
+    "8 + 5, because one group is taken away.",
+    "8 − 5, because one group is taken away."
+   ],
+   "answer": "8 + 5, because two groups are combined.",
+   "rationale": "Mia’s 8 stickers and the 5 given stickers are combined, so 8 + 5 = 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L263",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "ratios",
+   "level": 263,
+   "format": "multiple_choice",
+   "prompt": "There were 12 crayons in a box. A child took 3 crayons from the box. How many crayons remain in the box?",
+   "choices": [
+    "12 + 3, because some leaves the original group.",
+    "12 − 3, because some leaves the original group.",
+    "3 − 12, because some leaves the original group.",
+    "12 − 3, because some joins the original group."
+   ],
+   "answer": "12 − 3, because some leaves the original group.",
+   "rationale": "Taking 3 crayons removes them from the original 12, so 12 − 3 = 9 crayons remain.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L263",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "ratios",
+   "level": 263,
+   "format": "multiple_choice",
+   "prompt": "One shelf holds 9 books, and another shelf holds 4 books. How many more books are on the first shelf?",
+   "choices": [
+    "9 − 4, because it finds the difference between groups.",
+    "9 + 4, because it finds the difference between groups.",
+    "4 − 9, because it finds the difference between groups.",
+    "9 + 4, because it combines the two groups."
+   ],
+   "answer": "9 − 4, because it finds the difference between groups.",
+   "rationale": "To find how many more, subtract the smaller group from the larger: 9 − 4 = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L263",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "ratios",
+   "level": 263,
+   "format": "multiple_choice",
+   "prompt": "A baker puts 5 muffins on one tray and 4 muffins on another tray. Which operation should be used to find the total on both trays?",
+   "choices": [
+    "5 − 4, because the groups are combined.",
+    "5 + 4, because the groups are combined.",
+    "4 − 5, because one group is taken away.",
+    "5 + 4, because one group is taken away."
+   ],
+   "answer": "5 + 4, because the groups are combined.",
+   "rationale": "The two groups of muffins are combined to find their total, so the operation is 5 + 4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L240",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 240,
+   "format": "multiple_choice",
+   "prompt": "Tom has 4 red balls, 5 blue balls, and 6 green balls. How many balls does he have in all?",
+   "choices": [
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "answer": "15",
+   "rationale": "Adding the three groups: 4 + 5 + 6 = 15. The equation joins all three addends to find the total within 20.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L240",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 240,
+   "format": "multiple_choice",
+   "prompt": "Lily picks 3 apples, then 7 more, then 8 more. Which equation shows how many apples she picked?",
+   "choices": [
+    "3 + 7 + 8 = 18",
+    "3 + 7 + 8 = 17",
+    "3 + 8 + 8 = 19",
+    "3 + 7 + 7 = 17"
+   ],
+   "answer": "3 + 7 + 8 = 18",
+   "rationale": "The story joins three groups of 3, 7, and 8. The correct equation is 3 + 7 + 8 = 18.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L240",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 240,
+   "format": "multiple_choice",
+   "prompt": "A pet shop has 2 cats, 9 dogs, and 5 fish. How many animals are there in all?",
+   "choices": [
+    "14",
+    "15",
+    "16",
+    "17"
+   ],
+   "answer": "16",
+   "rationale": "Joining the three groups gives 2 + 9 + 5 = 16 animals in all.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L240",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 240,
+   "format": "multiple_choice",
+   "prompt": "Sam reads 6 pages on Monday, 4 on Tuesday, and 3 on Wednesday. How many pages did Sam read?",
+   "choices": [
+    "11",
+    "12",
+    "13",
+    "14"
+   ],
+   "answer": "13",
+   "rationale": "The three addends represent each day's pages: 6 + 4 + 3 = 13 pages in total.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L20",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Lily has 6 stickers. She gets 7 more. How many stickers does Lily have now?",
+   "choices": [
+    "11",
+    "12",
+    "13",
+    "14"
+   ],
+   "answer": "13",
+   "rationale": "Adding the starting amount and the change gives the total: 6 + 7 = 13.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L20",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Tom had 15 grapes. He ate 8 grapes. How many grapes are left?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "7",
+   "rationale": "Subtracting the eaten grapes from the start gives the leftover: 15 − 8 = 7.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L20",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Mia found 9 shells. Then she found 5 more. How many shells did Mia find in all?",
+   "choices": [
+    "12",
+    "13",
+    "14",
+    "15"
+   ],
+   "answer": "14",
+   "rationale": "The total is the sum of both groups: 9 + 5 = 14.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L20",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Jake had 12 crayons. He gave 4 to his friend. How many crayons does Jake have now?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "answer": "8",
+   "rationale": "Taking away the given crayons leaves the result: 12 − 4 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L253",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 253,
+   "format": "multiple_choice",
+   "prompt": "Lily has 8 apples. She picks 5 more, then gives 3 away. How many apples does Lily have now?",
+   "choices": [
+    "10",
+    "13",
+    "7",
+    "16"
+   ],
+   "answer": "10",
+   "rationale": "First add: 8 + 5 = 13. Then subtract: 13 - 3 = 10. The two-step answer is 10.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L253",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 253,
+   "format": "multiple_choice",
+   "prompt": "Tom had 15 marbles. He lost 6, then found 4. How many marbles does Tom have now?",
+   "choices": [
+    "5",
+    "13",
+    "11",
+    "9"
+   ],
+   "answer": "13",
+   "rationale": "First subtract: 15 - 6 = 9. Then add: 9 + 4 = 13. The two-step answer is 13.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L253",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 253,
+   "format": "multiple_choice",
+   "prompt": "Sara baked 7 cookies Monday and 6 Tuesday. She ate 4. How many cookies are left?",
+   "choices": [
+    "17",
+    "5",
+    "13",
+    "9"
+   ],
+   "answer": "9",
+   "rationale": "First add: 7 + 6 = 13. Then subtract: 13 - 4 = 9. The two-step answer is 9.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L253",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 253,
+   "format": "multiple_choice",
+   "prompt": "Max had 12 stickers. He gave 5 to a friend, then bought 8 more. How many stickers does Max have?",
+   "choices": [
+    "15",
+    "3",
+    "11",
+    "17"
+   ],
+   "answer": "15",
+   "rationale": "First subtract: 12 - 5 = 7. Then add: 7 + 8 = 15. The two-step answer is 15.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L372",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "geometry_area",
+   "level": 372,
+   "format": "multiple_choice",
+   "prompt": "Two equal squares are joined along one complete side. What is the new two-dimensional shape?",
+   "choices": [
+    "a rectangle",
+    "a square",
+    "a circle",
+    "a triangle"
+   ],
+   "answer": "a rectangle",
+   "rationale": "Joining two equal squares along a full side creates a rectangle twice as long as it is wide.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L372",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "geometry_area",
+   "level": 372,
+   "format": "multiple_choice",
+   "prompt": "Two identical cubes are stacked one above the other. What is the name of the new three-dimensional shape?",
+   "choices": [
+    "a cylinder",
+    "a rectangular prism",
+    "a cone",
+    "a triangular pyramid"
+   ],
+   "answer": "a rectangular prism",
+   "rationale": "Stacking two identical cubes creates a solid with six rectangular faces, called a rectangular prism.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L372",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "geometry_area",
+   "level": 372,
+   "format": "multiple_choice",
+   "prompt": "An equilateral triangle with the same side length as a square is joined to the square along that side. What is the new flat shape?",
+   "choices": [
+    "a hexagon",
+    "a rectangle",
+    "a pentagon",
+    "a circle"
+   ],
+   "answer": "a pentagon",
+   "rationale": "The joined shape has five sides, so it is a pentagon.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L372",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "geometry_area",
+   "level": 372,
+   "format": "multiple_choice",
+   "prompt": "Which set of flat shapes can be folded to build a cube?",
+   "choices": [
+    "four equal squares",
+    "five equal squares",
+    "six equal squares",
+    "eight equal squares"
+   ],
+   "answer": "six equal squares",
+   "rationale": "A cube has six equal square faces, so six equal squares are needed.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L394",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 394,
+   "format": "multiple_choice",
+   "prompt": "Maria has 7 apples. She picks 5 more. How many apples does she have now?",
+   "choices": [
+    "12",
+    "11",
+    "13",
+    "10"
+   ],
+   "answer": "12",
+   "rationale": "Adding 7 and 5 gives 12; the other choices are common off‑by‑one errors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L394",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 394,
+   "format": "multiple_choice",
+   "prompt": "There are 14 birds on a tree. Six fly away. How many birds stay?",
+   "choices": [
+    "8",
+    "9",
+    "7",
+    "10"
+   ],
+   "answer": "8",
+   "rationale": "Subtracting 6 from 14 leaves 8; the distractors reflect typical counting mistakes.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L394",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 394,
+   "format": "multiple_choice",
+   "prompt": "Tom has 9 stickers. He gives 4 to his friend. How many stickers does Tom have left?",
+   "choices": [
+    "5",
+    "6",
+    "4",
+    "7"
+   ],
+   "answer": "5",
+   "rationale": "9 minus 4 equals 5; the other numbers are plausible subtraction errors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L394",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 394,
+   "format": "multiple_choice",
+   "prompt": "A box holds 8 crayons. You add some crayons and now there are 15. How many crayons did you add?",
+   "choices": [
+    "7",
+    "6",
+    "8",
+    "5"
+   ],
+   "answer": "7",
+   "rationale": "Finding the missing addend: 15 minus 8 equals 7; the alternatives are common miscalculations.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L75",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Which equation is true?",
+   "choices": [
+    "8 = 5 + 3",
+    "6 = 4 + 3",
+    "9 = 5 + 3",
+    "7 = 5 + 3"
+   ],
+   "answer": "8 = 5 + 3",
+   "rationale": "The equal sign means 'is the same as.' 5 + 3 equals 8, so 8 = 5 + 3 correctly shows both sides are the same value.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "glm",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L75",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Which equation is false?",
+   "choices": [
+    "5 = 2 + 3",
+    "8 = 4 + 4",
+    "7 = 3 + 5",
+    "10 = 6 + 4"
+   ],
+   "answer": "7 = 3 + 5",
+   "rationale": "3 + 5 equals 8, not 7, so the equation 7 = 3 + 5 is false.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L75",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Which equation correctly uses the equal sign?",
+   "choices": [
+    "12 = 7 + 5",
+    "11 = 6 + 4",
+    "13 = 8 + 4",
+    "14 = 9 + 4"
+   ],
+   "answer": "12 = 7 + 5",
+   "rationale": "7 + 5 equals 12, making the first equation true; the others give incorrect sums.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L75",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 75,
+   "format": "multiple_choice",
+   "prompt": "Which equation shows two different sums that are equal?",
+   "choices": [
+    "6 + 2 = 5 + 3",
+    "7 + 1 = 4 + 5",
+    "9 + 0 = 4 + 4",
+    "3 + 5 = 2 + 7"
+   ],
+   "answer": "6 + 2 = 5 + 3",
+   "rationale": "Both 6 + 2 and 5 + 3 equal 8, so the first equation correctly shows two different ways to make the same total.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L230",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 230,
+   "format": "multiple_choice",
+   "prompt": "What is 14 - 6?",
+   "choices": [
+    "7",
+    "8",
+    "9",
+    "6"
+   ],
+   "answer": "8",
+   "rationale": "14 minus 6 equals 8; the other options are common off‑by‑one or confusion errors.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L230",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 230,
+   "format": "multiple_choice",
+   "prompt": "Which addition fact can help you find 15 - 7?",
+   "choices": [
+    "7 + 7 = 14",
+    "7 + 8 = 15",
+    "8 + 8 = 16",
+    "6 + 9 = 15"
+   ],
+   "answer": "7 + 8 = 15",
+   "rationale": "Knowing 7 + 8 = 15 lets you see that 15 - 7 = 8; the other equations do not match the subtraction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L230",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 230,
+   "format": "multiple_choice",
+   "prompt": "To solve 12 - 5 quickly, you might think of 5 + ? = 12. What is the missing number?",
+   "choices": [
+    "6",
+    "7",
+    "8",
+    "5"
+   ],
+   "answer": "7",
+   "rationale": "5 + 7 = 12, so 12 - 5 = 7; the other numbers give incorrect sums.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L230",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 230,
+   "format": "multiple_choice",
+   "prompt": "? - 4 = 9. What number goes in the box?",
+   "choices": [
+    "12",
+    "13",
+    "14",
+    "11"
+   ],
+   "answer": "13",
+   "rationale": "13 - 4 = 9; the other choices would give results of 8, 10, or 7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "minimax",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L42",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "A bar model shows 14 blocks for dogs and 8 blocks for cats. How many more dogs than cats are there?",
+   "choices": [
+    "6",
+    "22",
+    "8",
+    "14"
+   ],
+   "answer": "6",
+   "rationale": "The top bar has 14, the bottom bar has 8. To find how many more, subtract: 14 − 8 = 6.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L42",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Lily read 17 books. Max read 9 books. Which equation matches a bar model showing how many fewer books Max read?",
+   "choices": [
+    "17 − 9 = 8",
+    "9 + 17 = 26",
+    "17 + 9 = 26",
+    "9 − 17 = 8"
+   ],
+   "answer": "17 − 9 = 8",
+   "rationale": "The longer bar is 17, the shorter is 9. The matching equation to find how many fewer is 17 − 9 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L42",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "A bar model shows 15 stars in the top row and 7 stars in the bottom row. What does the extra part of the top bar represent?",
+   "choices": [
+    "How many more stars are on top",
+    "The total number of stars",
+    "How many stars are on bottom",
+    "How many fewer stars total"
+   ],
+   "answer": "How many more stars are on top",
+   "rationale": "The extra length on the longer bar represents the difference, which answers how many more stars are in the top row.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L42",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "There are 13 red birds and 5 blue birds. A bar model compares them. What is the difference shown by the bars?",
+   "choices": [
+    "8",
+    "18",
+    "5",
+    "13"
+   ],
+   "answer": "8",
+   "rationale": "The top bar is 13 and the bottom bar is 5. The difference between the paired bars is 13 − 5 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L317",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 317,
+   "format": "multiple_choice",
+   "prompt": "What number comes next when skip counting by 2s: 14, 16, 18, ___?",
+   "choices": [
+    "19",
+    "20",
+    "21",
+    "22"
+   ],
+   "answer": "20",
+   "rationale": "Skip counting by 2s means adding 2 each time. 18 + 2 = 20.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L317",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 317,
+   "format": "multiple_choice",
+   "prompt": "Which list shows correct skip counting by 5s starting at 35?",
+   "choices": [
+    "35, 45, 55, 65",
+    "35, 40, 45, 50",
+    "35, 36, 37, 38",
+    "35, 40, 50, 55"
+   ],
+   "answer": "35, 40, 45, 50",
+   "rationale": "Skip counting by 5s means adding 5 each time: 35, 40, 45, 50.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L317",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 317,
+   "format": "multiple_choice",
+   "prompt": "When skip counting by 10s starting at 10, what is the fifth number you say?",
+   "choices": [
+    "40",
+    "50",
+    "60",
+    "100"
+   ],
+   "answer": "50",
+   "rationale": "Counting by 10s: 10 (first), 20 (second), 30 (third), 40 (fourth), 50 (fifth).",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L317",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 317,
+   "format": "multiple_choice",
+   "prompt": "What pattern do you notice in all numbers when skip counting by 10s starting at 10?",
+   "choices": [
+    "They end in 5",
+    "They end in 0",
+    "They end in 2",
+    "They are odd"
+   ],
+   "answer": "They end in 0",
+   "rationale": "Numbers when skip counting by 10s from 10 are 10, 20, 30, etc. They all end in 0.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L329",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "word_problems",
+   "level": 329,
+   "format": "multiple_choice",
+   "prompt": "You have 7 apples. You try to put them into pairs. Is 7 even or odd?",
+   "choices": [
+    "Even, no apples left over",
+    "Odd, one apple left over",
+    "Even, one apple left over",
+    "Odd, no apples left over"
+   ],
+   "answer": "Odd, one apple left over",
+   "rationale": "When 7 apples are paired, there are 3 pairs and 1 apple left over with no partner. A leftover means the number is odd.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L329",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "word_problems",
+   "level": 329,
+   "format": "multiple_choice",
+   "prompt": "Which numbers do you land on if you start at 0 and jump by 2s on a number line?",
+   "choices": [
+    "All odd numbers",
+    "Only the number zero",
+    "All even numbers",
+    "Even then odd numbers"
+   ],
+   "answer": "All even numbers",
+   "rationale": "Starting at 0 and jumping by 2s lands on 0, 2, 4, 6, 8, and so on. These are all even numbers.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L329",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "word_problems",
+   "level": 329,
+   "format": "multiple_choice",
+   "prompt": "There are 10 shoes in a pile. Can they all be matched into pairs?",
+   "choices": [
+    "No, one shoe is left",
+    "Yes, they make 5 pairs",
+    "No, two shoes are left",
+    "Yes, they make 4 pairs"
+   ],
+   "answer": "Yes, they make 5 pairs",
+   "rationale": "Ten shoes can be grouped into exactly 5 pairs with nothing left over. Because every shoe has a partner, 10 is an even number.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L329",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "word_problems",
+   "level": 329,
+   "format": "multiple_choice",
+   "prompt": "On a number line, which number comes right after 8 when you count by 2s starting at 0?",
+   "choices": [
+    "9",
+    "11",
+    "10",
+    "12"
+   ],
+   "answer": "10",
+   "rationale": "Counting by 2s from 0 gives 0, 2, 4, 6, 8, 10. The next number after 8 in this even-number pattern is 10.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L307",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 307,
+   "format": "multiple_choice",
+   "prompt": "What number comes right after 109?",
+   "choices": [
+    "100",
+    "108",
+    "110",
+    "120"
+   ],
+   "answer": "110",
+   "rationale": "After 109, the ones digit resets to 0 and the tens digit increases by 1, giving 110. This mirrors how 9 becomes 10.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L307",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 307,
+   "format": "multiple_choice",
+   "prompt": "Which numeral is 'one hundred twelve'?",
+   "choices": [
+    "102",
+    "112",
+    "120",
+    "121"
+   ],
+   "answer": "112",
+   "rationale": "'One hundred twelve' is written as 112. The 'twelve' part follows the same pattern as the teen numbers after 100.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L307",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 307,
+   "format": "multiple_choice",
+   "prompt": "What number comes next: 117, 118, 119, ___?",
+   "choices": [
+    "110",
+    "120",
+    "121",
+    "200"
+   ],
+   "answer": "120",
+   "rationale": "After 119, the count reaches the next ten. Just as 19 is followed by 20, 119 is followed by 120.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L339",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 339,
+   "format": "multiple_choice",
+   "prompt": "Start at 5 on an open number line. Make two jumps of 4 spaces forward. Where do you land?",
+   "choices": [
+    "5",
+    "9",
+    "13",
+    "17"
+   ],
+   "answer": "13",
+   "rationale": "Two jumps of 4 add 8, so starting at 5 gives 5 + 8 = 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "qwen",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L339",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 339,
+   "format": "multiple_choice",
+   "prompt": "A number starts at 10. It jumps forward 6 spaces, then backward 3 spaces. Which path is correct?",
+   "choices": [
+    "10 → 16 → 13",
+    "10 → 4 → 7",
+    "10 → 13 → 16",
+    "10 → 16 → 19"
+   ],
+   "answer": "10 → 16 → 13",
+   "rationale": "The first jump reaches 16, and the backward jump of 3 reaches 13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "qwen",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L339",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 339,
+   "format": "multiple_choice",
+   "prompt": "Which number-line path checks that 12 + 6 = 18?",
+   "choices": [
+    "12 → 13 → 14 → 15 → 16 → 17 → 18",
+    "12 → 11 → 10 → 9 → 8 → 7 → 6",
+    "12 → 18 → 17 → 16 → 15 → 14",
+    "12 → 13 → 14 → 15 → 16 → 17"
+   ],
+   "answer": "12 → 13 → 14 → 15 → 16 → 17 → 18",
+   "rationale": "Six forward jumps of 1 space from 12 end at 18, confirming the sum.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "qwen",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L273",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 273,
+   "format": "multiple_choice",
+   "prompt": "You solve 7 + 6 by making ten. Which equation shows this thinking?",
+   "choices": [
+    "7 + 3 + 3 = 13",
+    "7 + 6 + 1 = 14",
+    "6 + 4 + 2 = 12",
+    "7 + 7 - 1 = 13"
+   ],
+   "answer": "7 + 3 + 3 = 13",
+   "rationale": "Adding 3 to 7 makes 10, then adding the remaining 3 gives 13, which correctly shows the make-ten strategy.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L273",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 273,
+   "format": "multiple_choice",
+   "prompt": "You draw 12 dots and cross out 4 to show 12 - 4. What should your explanation say?",
+   "choices": [
+    "I started with 12 and took away 4.",
+    "I added 4 more dots to my 12.",
+    "I crossed out 12 of my dots.",
+    "I made 4 groups of 12 dots."
+   ],
+   "answer": "I started with 12 and took away 4.",
+   "rationale": "Crossing out dots represents subtraction, so explaining that you started with 12 and took away 4 matches the drawing.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L273",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 273,
+   "format": "multiple_choice",
+   "prompt": "To explain 8 + 5 to a friend, you draw 8 circles and 5 circles. What should your words say?",
+   "choices": [
+    "I drew 8 and 5 circles, so 13 in all.",
+    "I drew 8 circles and crossed out 5 of them.",
+    "I drew 8 circles and added 8 more to them.",
+    "I drew 5 circles and took away 3 of them."
+   ],
+   "answer": "I drew 8 and 5 circles, so 13 in all.",
+   "rationale": "The correct explanation matches the drawing by stating both groups drawn and giving the total sum of 13.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L273",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 273,
+   "format": "multiple_choice",
+   "prompt": "You solve 9 + 4 by first adding 1 to make 10. Which sentence best explains this step?",
+   "choices": [
+    "I broke 4 into 1 and 3 to make ten first.",
+    "I counted back 4 from 9 to find the answer.",
+    "I added 9 and 4 together to get 12 right away.",
+    "I subtracted 1 from 9 because I needed less."
+   ],
+   "answer": "I broke 4 into 1 and 3 to make ten first.",
+   "rationale": "The correct explanation describes decomposing 4 into 1 and 3 so that 9 + 1 makes 10 before adding the remaining 3.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L285",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 285,
+   "format": "multiple_choice",
+   "prompt": "Sam solved 6 + 4 by counting on: 7, 8, 9. He got 9. What did Sam forget?",
+   "choices": [
+    "The fourth count, which is 10",
+    "To start counting at 6",
+    "To subtract instead of add",
+    "The first count, which is 6"
+   ],
+   "answer": "The fourth count, which is 10",
+   "rationale": "Sam needed to count on 4 numbers from 6: 7, 8, 9, 10. He stopped after only three counts, so he missed the last number, 10.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_families": [
+     "minimax",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L208",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 208,
+   "format": "multiple_choice",
+   "prompt": "Find the number that makes the equation true.\n\n? − 6 = 8",
+   "choices": [
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen"
+   ],
+   "answer": "fourteen",
+   "rationale": "Adding 6 to 8 gives 14, so 14 − 6 = 8 and the missing number is 14.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L208",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 208,
+   "format": "multiple_choice",
+   "prompt": "What number belongs in the blank?\n\n16 − ? = 9",
+   "choices": [
+    "six",
+    "seven",
+    "eight",
+    "nine"
+   ],
+   "answer": "seven",
+   "rationale": "The numbers 9 and 7 are fact-family partners for 16. Since 16 − 7 = 9, the missing number is 7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L208",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "linear_eq",
+   "level": 208,
+   "format": "multiple_choice",
+   "prompt": "Complete the equation by choosing the missing number.\n\n? + 5 = 12",
+   "choices": [
+    "six",
+    "seven",
+    "eight",
+    "nine"
+   ],
+   "answer": "seven",
+   "rationale": "The numbers 7 and 5 are fact-family partners for 12. Since 7 + 5 = 12, the missing number is 7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "qwen",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L218",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 218,
+   "format": "multiple_choice",
+   "prompt": "What is 9 + 6?",
+   "choices": [
+    "14",
+    "16",
+    "13",
+    "15"
+   ],
+   "answer": "15",
+   "rationale": "9 + 6 = 15. Using the make-ten strategy: 9 + 1 = 10, then 10 + 5 = 15. Common errors include answering 14 or 16.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L218",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 218,
+   "format": "multiple_choice",
+   "prompt": "What is 5 + 8?",
+   "choices": [
+    "12",
+    "13",
+    "14",
+    "11"
+   ],
+   "answer": "13",
+   "rationale": "5 + 8 = 13. A learner might miscount and answer 12 or 14, or add only partway and say 11.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L218",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 218,
+   "format": "multiple_choice",
+   "prompt": "Which pair of numbers has a sum of 16?",
+   "choices": [
+    "7 and 8",
+    "9 and 7",
+    "8 and 9",
+    "6 and 9"
+   ],
+   "answer": "9 and 7",
+   "rationale": "9 + 7 = 16. The other pairs give sums of 15, 17, and 15, which are common off-by-one errors when recalling addition facts.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L295",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 295,
+   "format": "multiple_choice",
+   "prompt": "Start at 96 and count forward by ones. Which number is 8 counts later?",
+   "choices": [
+    "103",
+    "104",
+    "105",
+    "112"
+   ],
+   "answer": "104",
+   "rationale": "Counting 8 forward from 96 gives 104 because 96 + 8 = 104.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "nemotron",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L295",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 295,
+   "format": "multiple_choice",
+   "prompt": "On a hundred chart, the numbers 2, 12, 22, and 32 form a pattern. What number comes next?",
+   "choices": [
+    "40",
+    "42",
+    "43",
+    "52"
+   ],
+   "answer": "42",
+   "rationale": "The pattern increases by 10 each time, so the number after 32 is 42.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "judge_families": [
+     "nemotron",
+     "qwen"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L295",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 295,
+   "format": "multiple_choice",
+   "prompt": "On a hundred chart, what number is directly to the right of 47?",
+   "choices": [
+    "46",
+    "48",
+    "57",
+    "37"
+   ],
+   "answer": "48",
+   "rationale": "Moving one space to the right on a hundred chart adds 1 to the number. One more than 47 is 48.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L295",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "add_sub",
+   "level": 295,
+   "format": "multiple_choice",
+   "prompt": "You start counting at 109. What are the next three numbers?",
+   "choices": [
+    "110, 111, 112",
+    "110, 120, 130",
+    "108, 107, 106",
+    "119, 129, 139"
+   ],
+   "answer": "110, 111, 112",
+   "rationale": "Counting forward by ones from 109 gives 110, then 111, then 112.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L384",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "act_data",
+   "level": 384,
+   "format": "multiple_choice",
+   "prompt": "A tally chart shows: Apples ||||, Bananas |||, Oranges ||. How many more apples than bananas are there?",
+   "choices": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "answer": "1",
+   "rationale": "Apples have 4 tallies, bananas have 3 tallies; 4 − 3 = 1 more apple.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L384",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "act_data",
+   "level": 384,
+   "format": "multiple_choice",
+   "prompt": "A pictograph shows: Pencils 6 symbols, Erasers 4 symbols, Rulers 2 symbols (each symbol = 1). How many more pencils than rulers?",
+   "choices": [
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "answer": "4",
+   "rationale": "Pencils = 6, rulers = 2; 6 − 2 = 4 more pencils.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "add_and_subtract_within_20:L384",
+   "track_id": "math",
+   "grade_id": "add_and_subtract_within_20",
+   "skill_id": "act_data",
+   "level": 384,
+   "format": "multiple_choice",
+   "prompt": "A class votes on pets. Tally chart: Dogs |||||, Cats |||, Fish ||. How many students voted in all?",
+   "choices": [
+    "8",
+    "10",
+    "5",
+    "3"
+   ],
+   "answer": "10",
+   "rationale": "To find the total, add all three categories: 5 + 3 + 2 = 10 students voted in all.",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "nemotron",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Each group of five tally marks represents five votes, and each remaining mark represents one vote.",
+      "url": "https://en.wikipedia.org/wiki/Tally_marks",
+      "quote": "Tally marks are typically clustered in groups of five for legibility.",
+      "reader": "nvidia/nemotron-3-ultra-550b-a55b"
+     }
+    ],
+    "round": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,5427 @@
+{
+ "track_id": "math",
+ "grade_id": "probability",
+ "generated_at": "2026-10-26T03:38:11.794Z",
+ "items": [
+  {
+   "objective_id": "probability:L72",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Which equation defines that two events A and B are independent?",
+   "choices": [
+    "P(A∩B) = P(A)P(B)",
+    "P(A∩B) = P(A) + P(B)",
+    "P(A∩B) = 0",
+    "P(A∪B) = P(A)P(B)"
+   ],
+   "answer": "P(A∩B) = P(A)P(B)",
+   "rationale": "Independence means that the probability of both events occurring equals the product of their individual probabilities.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L72",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "For P(C) > 0, which equation defines that A and B are conditionally independent given C?",
+   "choices": [
+    "P(A∩B|C) = P(A|C)P(B|C)",
+    "P(A∩B|C) = P(A|C) + P(B|C)",
+    "P(A∩B|C) = P(A|B|C)P(B|C)",
+    "P(A∩B|C) = P(A∩B|C)P(B|C)"
+   ],
+   "answer": "P(A∩B|C) = P(A|C)P(B|C)",
+   "rationale": "Conditional independence given C means that, after conditioning on C, the joint probability equals the product of the two conditional probabilities.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L72",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "Events A and B have probabilities 0.4 and 0.5, with P(A∩B) = 0.2. Which statement is correct?",
+   "choices": [
+    "They are independent but not disjoint.",
+    "They are disjoint but not independent.",
+    "They are both independent and disjoint.",
+    "They are neither independent nor disjoint."
+   ],
+   "answer": "They are independent but not disjoint.",
+   "rationale": "Since 0.4 × 0.5 = 0.2, the events are independent. Their intersection has positive probability, so they are not disjoint.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L72",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 72,
+   "format": "multiple_choice",
+   "prompt": "A machine has two independent components, each working with probability 0.8. A series system works only if both components work; a parallel system works if at least one works. What are their working probabilities?",
+   "choices": [
+    "0.64 for series; 0.96 for parallel",
+    "0.96 for series; 0.64 for parallel",
+    "0.64 for series; 0.84 for parallel",
+    "0.84 for series; 0.96 for parallel"
+   ],
+   "answer": "0.64 for series; 0.96 for parallel",
+   "rationale": "The series probability is 0.8 × 0.8 = 0.64. The parallel probability is 1 − (0.2)(0.2) = 0.96.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L30",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which set of properties defines a sigma-algebra on Ω?",
+   "choices": [
+    "It contains ∅ and Ω and is closed under complements and countable unions.",
+    "It contains ∅ and Ω and is closed under complements and finite unions only.",
+    "It contains ∅ and Ω and is closed under countable unions only.",
+    "It contains ∅ and Ω and is closed under complements only."
+   ],
+   "answer": "It contains ∅ and Ω and is closed under complements and countable unions.",
+   "rationale": "A sigma-algebra contains ∅ and Ω and is closed under complements and countable unions.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L30",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "For P:F→[0,1], which axioms make P a probability measure?",
+   "choices": [
+    "P(∅)=1, P(Ω)=0, and P(⋃ₙAₙ)=∑ₙP(Aₙ) for pairwise disjoint Aₙ∈F.",
+    "P(∅)=0, P(Ω)=1, and P(A∩B)=P(A)P(B) for every A,B∈F.",
+    "P(∅)=0, P(Ω)=1, and P(⋃ₙAₙ)=∑ₙP(Aₙ) for pairwise disjoint Aₙ∈F.",
+    "P(∅)=0, P(Ω)=1, and P(⋃ₙAₙ)=∑ₙP(Aₙ) for arbitrary Aₙ∈F."
+   ],
+   "answer": "P(∅)=0, P(Ω)=1, and P(⋃ₙAₙ)=∑ₙP(Aₙ) for pairwise disjoint Aₙ∈F.",
+   "rationale": "A probability measure is normalized and countably additive on pairwise disjoint measurable events; nonnegativity is given by P:F→[0,1].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L30",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes F-measurability?",
+   "choices": [
+    "A is measurable iff A⊆Ω, because F contains every subset.",
+    "A is measurable iff A is closed under complements and countable unions.",
+    "A is measurable iff A is finite, since finite sets are included.",
+    "A is measurable iff A∈F; F need not contain every subset."
+   ],
+   "answer": "A is measurable iff A∈F; F need not contain every subset.",
+   "rationale": "Measurability is membership in the chosen sigma-algebra F, which need not contain every subset of Ω.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L30",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 30,
+   "format": "multiple_choice",
+   "prompt": "Which statement about X:Ω→R and E[X] is correct?",
+   "choices": [
+    "{X≤a}∈F for some a∈R; E[X]=∫_Ω X dP when X is integrable.",
+    "{X≤a}∈F for every a∈R; E[X]=∫_Ω X dP when X is integrable.",
+    "X is finite everywhere; E[X]=∫_Ω X dP when X is integrable.",
+    "{X=a}∈F for every a∈R; E[X]=∫_Ω X dP when X is integrable."
+   ],
+   "answer": "{X≤a}∈F for every a∈R; E[X]=∫_Ω X dP when X is integrable.",
+   "rationale": "A real-valued random variable is measurable when all lower-level preimages belong to F, and its expectation is its integral with respect to P.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L85",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "In the standard Monty Hall game with three doors, the contestant picks one. The host, who knows where the car is, always opens another door showing a goat, then offers a switch. What is the probability of winning if the contestant switches?",
+   "choices": [
+    "25%",
+    "33⅓%",
+    "50%",
+    "66⅔%"
+   ],
+   "answer": "66⅔%",
+   "rationale": "Switching wins exactly when the initial choice was wrong, which has probability 2/3. The host’s deliberate reveal does not change the initial 1/3 chance that the chosen door contains the car.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L85",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "In a three-door Monty Hall game, the contestant first picks one door. A host who does not know where the car is randomly opens another door. If the host reveals a goat, what is the probability that switching to the remaining closed door wins?",
+   "choices": [
+    "1/4",
+    "1/3",
+    "1/2",
+    "2/3"
+   ],
+   "answer": "1/2",
+   "rationale": "Conditional on a goat being revealed, staying and switching have equal probabilities of 1/2. Unlike the standard game, the random host may reveal the car, so the usual 2/3 switching advantage disappears.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L85",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 85,
+   "format": "multiple_choice",
+   "prompt": "A disease affects 1% of 10,000 people. A test detects 90% of cases, but 5% of healthy people test positive. If a person tests positive, what is the approximate probability that they have the disease?",
+   "choices": [
+    "2%",
+    "5%",
+    "15%",
+    "50%"
+   ],
+   "answer": "15%",
+   "rationale": "There are 100 cases, producing 90 true positives, and 9,900 healthy people, producing 495 false positives. Thus the probability is 90 divided by 585, which is approximately 15.4%.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L117",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "A random variable X has mean μ. Which statement correctly defines the population variance of X?",
+   "choices": [
+    "the square of the mean deviation from μ",
+    "the expected squared deviation from μ",
+    "the expected absolute deviation from μ",
+    "the square root of the expected squared deviation"
+   ],
+   "answer": "the expected squared deviation from μ",
+   "rationale": "Population variance is the expected value of the squared deviations from the mean: Var(X) = E[(X − μ)^2].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L117",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "Starting from E[(X − μ)^2], which expression is equivalent to the population variance?",
+   "choices": [
+    "E(X²) + [E(X)]²",
+    "[E(X²) − E(X)]²",
+    "E(X²) − [E(X)]²",
+    "E(X²) − 2E(X)"
+   ],
+   "answer": "E(X²) − [E(X)]²",
+   "rationale": "Since μ = E(X), expanding E[(X − μ)^2] gives E(X²) − 2μE(X) + μ² = E(X²) − [E(X)]².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L117",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "If Y = X + 7, how are the mean and variance of Y related to those of X?",
+   "choices": [
+    "E(Y) = E(X) + 7; Var(Y) = Var(X)",
+    "E(Y) = E(X) + 7; Var(Y) = Var(X) + 49",
+    "E(Y) = E(X); Var(Y) = Var(X) + 7",
+    "E(Y) = 7E(X); Var(Y) = Var(X)"
+   ],
+   "answer": "E(Y) = E(X) + 7; Var(Y) = Var(X)",
+   "rationale": "Adding a constant shifts the mean by 7 but leaves every deviation X − E(X), and therefore the variance, unchanged.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L117",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 117,
+   "format": "multiple_choice",
+   "prompt": "If Y = 3X, how are the mean and variance of Y related to those of X?",
+   "choices": [
+    "E(Y) = 3E(X); Var(Y) = 3Var(X)",
+    "E(Y) = E(X); Var(Y) = 9Var(X)",
+    "E(Y) = 3E(X); Var(Y) = Var(X)",
+    "E(Y) = 3E(X); Var(Y) = 9Var(X)"
+   ],
+   "answer": "E(Y) = 3E(X); Var(Y) = 9Var(X)",
+   "rationale": "Multiplying by 3 multiplies the mean by 3. Each squared deviation is multiplied by 9, so the variance is also multiplied by 9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L20",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "In a sample space, event A has probability 0.28. What is the probability of its complement?",
+   "choices": [
+    "0.28",
+    "0.72",
+    "0.50",
+    "0.22"
+   ],
+   "answer": "0.72",
+   "rationale": "The complement rule gives P(Aᶜ) = 1 − P(A) = 1 − 0.28 = 0.72.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L20",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "Events A and B satisfy P(A) = 0.70, P(B) = 0.50, and P(A ∩ B) = 0.20. What is P(A ∪ B)?",
+   "choices": [
+    "1.00",
+    "0.90",
+    "1.20",
+    "0.40"
+   ],
+   "answer": "1.00",
+   "rationale": "By inclusion-exclusion, P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = 0.70 + 0.50 − 0.20 = 1.00.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L20",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 20,
+   "format": "multiple_choice",
+   "prompt": "A sample space contains 25 equally likely outcomes, and event E contains 3. How should P(E) be interpreted?",
+   "choices": [
+    "The probability of E is 0.12.",
+    "Event E occurs exactly 12 times.",
+    "Event E is more likely than not.",
+    "The outcome has 25 possible values."
+   ],
+   "answer": "The probability of E is 0.12.",
+   "rationale": "For equally likely outcomes, P(E) = 3/25 = 0.12, so E occurs with probability 0.12.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L52",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "Which formula correctly defines the conditional probability of event A, given that event B occurred?",
+   "choices": [
+    "P(A|B) = P(A∩B)/P(B), where P(B) > 0",
+    "P(A|B) = P(B|A)/P(B), where P(B) > 0",
+    "P(A|B) = P(A∩B)/P(A), where P(A) > 0",
+    "P(A|B) = P(A)P(B), where P(B) > 0"
+   ],
+   "answer": "P(A|B) = P(A∩B)/P(B), where P(B) > 0",
+   "rationale": "Conditional probability restricts the sample space to event B, so P(A|B) = P(A∩B)/P(B), provided P(B) is positive.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L52",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A factory sends 60% of its products through Line 1 and 40% through Line 2. On Line 1, 10% of products are defective; on Line 2, 5% are defective. What is the probability that a randomly selected product came from Line 1 and is defective?",
+   "choices": [
+    "0.06",
+    "0.10",
+    "0.15",
+    "0.40"
+   ],
+   "answer": "0.06",
+   "rationale": "By the multiplication rule, P(Line 1 and defective) = P(Line 1)P(defective|Line 1) = 0.60(0.10) = 0.06.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L52",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A class has 40 first-year students and 60 second-year students. Among the first-years, 30 passed; among the second-years, 45 passed. If a randomly chosen student is known to have passed, what is the probability that the student is first-year?",
+   "choices": [
+    "0.30",
+    "0.40",
+    "0.50",
+    "0.75"
+   ],
+   "answer": "0.40",
+   "rationale": "Knowing the student passed reduces the relevant group to 30 + 45 = 75 students. Of these, 30 are first-years, so the conditional probability is 30/75 = 0.40.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L52",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 52,
+   "format": "multiple_choice",
+   "prompt": "A factory makes 70% of its chips using Process A and 30% using Process B. Process A produces a 2% defect rate, while Process B produces an 8% defect rate. Given that a chip is defective, what is the probability it used Process A?",
+   "choices": [
+    "7/19",
+    "1/2",
+    "12/19",
+    "7/10"
+   ],
+   "answer": "7/19",
+   "rationale": "The defective probabilities are 0.70(0.02) = 0.014 for A and 0.30(0.08) = 0.024 for B. Thus P(A|defective) = 0.014/0.038 = 7/19.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L95",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly describes a random variable?",
+   "choices": [
+    "A function that assigns a number to each outcome of a random experiment",
+    "A function that gives the probability of every subset of outcomes",
+    "The long-run average value of outcomes from a random experiment",
+    "A function that gives the probability of an outcome or event"
+   ],
+   "answer": "A function that assigns a number to each outcome of a random experiment",
+   "rationale": "A random variable is a numerical assignment to each outcome of a random experiment.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L95",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "A fair six-sided die is rolled. Let X be the number showing. Which expression gives the probability mass function of X?",
+   "choices": [
+    "0 for x ∈ {1,...,6}, and 1/6 otherwise",
+    "1/6 for x ∈ {1,...,6}, and 0 otherwise",
+    "1/6 for every real number x, and 0 otherwise",
+    "x/6 for x ∈ {1,...,6}, and 0 otherwise"
+   ],
+   "answer": "1/6 for x ∈ {1,...,6}, and 0 otherwise",
+   "rationale": "Each possible die result has probability 1/6, while values outside {1,...,6} have probability 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L95",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "The probability mass function of X is p_X(−1)=0.1, p_X(0)=0.2, p_X(1)=0.3, and p_X(2)=0.4. What is the cumulative distribution function value F_X(1)?",
+   "choices": [
+    "0.3",
+    "0.4",
+    "0.5",
+    "0.6"
+   ],
+   "answer": "0.6",
+   "rationale": "The CDF at 1 is P(X ≤ 1), which equals 0.1 + 0.2 + 0.3 = 0.6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L95",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 95,
+   "format": "multiple_choice",
+   "prompt": "Suppose X is discrete and F_X(0)=0.30, F_X(1)=0.55, and F_X(2)=0.80. What is P(0 < X ≤ 2)?",
+   "choices": [
+    "0.25",
+    "0.45",
+    "0.50",
+    "0.55"
+   ],
+   "answer": "0.50",
+   "rationale": "P(0 < X ≤ 2)=P(X ≤ 2)−P(X ≤ 0)=0.80−0.30=0.50.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L10",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Two distinguishable six-sided dice are rolled once. Which set is the sample space when each result is recorded as an ordered pair?",
+   "choices": [
+    "{(i,j): i,j ∈ {1,2,3,4,5,6}}",
+    "{(i,j): 1 ≤ i < j ≤ 6}",
+    "{(i,j): i,j ∈ {1,2,3,4,5,6}, i ≠ j}",
+    "{(i,j): 1 ≤ i ≤ j ≤ 6}"
+   ],
+   "answer": "{(i,j): i,j ∈ {1,2,3,4,5,6}}",
+   "rationale": "Because the dice are distinguishable, their results form ordered pairs. Each die has 6 possible values, so the sample space contains 6 × 6 = 36 outcomes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L10",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Two fair coins are tossed once, and the results are recorded in order. Which set represents the event that the two results differ?",
+   "choices": [
+    "{(H,H), (T,T)}",
+    "{(H,T), (T,H)}",
+    "{(H,T), (T,T)}",
+    "{(H,H), (H,T)}"
+   ],
+   "answer": "{(H,T), (T,H)}",
+   "rationale": "The results differ exactly when one outcome is (H,T) and the other is (T,H). The outcomes (H,H) and (T,T) have matching results.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L10",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 10,
+   "format": "multiple_choice",
+   "prompt": "Within S = {1,2,3,4,5,6,7,8,9,10,11,12}, let A = {2,3,5,7,11} and B = {3,4,5,6,11}. Which phrase describes (A ∪ B)ᶜ?",
+   "choices": [
+    "Elements of S outside both A and B.",
+    "Elements of S inside both A and B.",
+    "Elements of S inside exactly one of A or B.",
+    "Elements of S inside A but outside B."
+   ],
+   "answer": "Elements of S outside both A and B.",
+   "rationale": "The complement of A ∪ B contains the elements of S that are in neither A nor B. Here, that set is {1,8,9,10,12}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L147",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A bag contains 7 red and 13 blue marbles. Four marbles are drawn simultaneously without replacement. What is the probability that exactly 2 are red?",
+   "choices": [
+    "0.338",
+    "0.413",
+    "0.350",
+    "0.260"
+   ],
+   "answer": "0.338",
+   "rationale": "There are C(20,4) equally likely selections. Exactly 2 red marbles can be chosen in C(7,2)C(13,2) ways, so the probability is 1638/4845, approximately 0.338.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L147",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A lot contains 100 lamps, 30 of which are defective. An inspector randomly selects 7 lamps without replacement. Let X be the number of defective lamps selected. Which distribution and parameters model X?",
+   "choices": [
+    "Hypergeometric: N = 100, K = 30, n = 7",
+    "Binomial: n = 100, p = 0.30",
+    "Binomial: n = 7, p = 0.30",
+    "Hypergeometric: N = 100, K = 30, n = 100"
+   ],
+   "answer": "Hypergeometric: N = 100, K = 30, n = 7",
+   "rationale": "Sampling without replacement from a population with a fixed number of defective items produces a hypergeometric distribution with N = 100, K = 30, and sample size n = 7.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L147",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A box contains 4 red and 6 blue cards. Compare the probability of drawing 2 red cards without replacement with the probability of drawing 2 red cards with replacement.",
+   "choices": [
+    "Without: 2/15; with: 4/25; without is lower.",
+    "Without: 4/25; with: 2/15; without is lower.",
+    "Both: 2/15; without and with are equal.",
+    "Without: 6/25; with: 2/15; without is higher."
+   ],
+   "answer": "Without: 2/15; with: 4/25; without is lower.",
+   "rationale": "Without replacement, the probability is (4/10)(3/9) = 2/15. With replacement, it is (4/10)(4/10) = 4/25, so the without-replacement probability is lower.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L147",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 147,
+   "format": "multiple_choice",
+   "prompt": "A population contains 20 successes and 80 failures. Ten items are sampled without replacement. Which finite population correction factor multiplies n p(1-p) in the variance of the sampled success count?",
+   "choices": [
+    "90/99",
+    "90/100",
+    "10/99",
+    "100/99"
+   ],
+   "answer": "90/99",
+   "rationale": "For a simple random sample without replacement, the variance is n p(1-p)(N-n)/(N-1). Here the correction factor is (100-10)/(100-1) = 90/99.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L169",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "A random variable X has density f_X(x) = 2x for 0 ≤ x ≤ 1 and 0 otherwise. What is P(0.2 ≤ X ≤ 0.5)?",
+   "choices": [
+    "0.0400",
+    "0.2100",
+    "0.2500",
+    "0.4600"
+   ],
+   "answer": "0.2100",
+   "rationale": "Integrating the density gives P(0.2 ≤ X ≤ 0.5) = ∫₀.₂^0.5 2x dx = 0.25 − 0.04 = 0.21.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L169",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "For a continuous random variable X with density f_X, which formula defines its cumulative distribution function F_X(x)?",
+   "choices": [
+    "∫ from −∞ to x of f_X(t) dt",
+    "∫ from x to ∞ of f_X(t) dt",
+    "∫ from −∞ to x of t f_X(t) dt",
+    "∫ from −∞ to x of [f_X(t)]² dt"
+   ],
+   "answer": "∫ from −∞ to x of f_X(t) dt",
+   "rationale": "The cumulative distribution function accumulates all density up to x, so F_X(x) = ∫ from −∞ to x of f_X(t) dt.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L169",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "Which pair of conditions makes a function f_X a valid probability density function?",
+   "choices": [
+    "f_X(x) ≥ 0 everywhere and its total integral equals 1",
+    "f_X(x) ≥ 0 everywhere and its total integral equals 0",
+    "f_X(x) lies between 0 and 1 everywhere, with no integral condition",
+    "Its total integral equals 1, although f_X may be negative on intervals"
+   ],
+   "answer": "f_X(x) ≥ 0 everywhere and its total integral equals 1",
+   "rationale": "A probability density must be nonnegative and must integrate to 1 over the entire real line.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L169",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 169,
+   "format": "multiple_choice",
+   "prompt": "The density of X is 2x for 0 ≤ x ≤ 1 and 0 otherwise. Its 80th percentile q satisfies F_X(q) = 0.80. What is q?",
+   "choices": [
+    "0.4000",
+    "0.6400",
+    "0.8000",
+    "0.8944"
+   ],
+   "answer": "0.8944",
+   "rationale": "Here F_X(x) = x² on [0,1], so q = √0.80 ≈ 0.8944.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L244",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A joint PDF is f(x,y) = 1/2 on 0 ≤ x ≤ 1 and 0 ≤ y ≤ 2, and 0 elsewhere. Using a double integral, find P(X + Y ≤ 2).",
+   "choices": [
+    "1/2",
+    "1",
+    "3/4",
+    "1/4"
+   ],
+   "answer": "3/4",
+   "rationale": "P(X + Y ≤ 2) = ∫₀¹∫₀^(2−x) (1/2) dy dx = ∫₀¹(2−x)/2 dx = 3/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L244",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A joint PDF is f(x,y) = x + y on the unit square 0 < x < 1, 0 < y < 1. Find the marginal density f_X(x) for 0 < x < 1.",
+   "choices": [
+    "x + 1/2",
+    "2x + 1/2",
+    "x² + 1/2",
+    "1/2"
+   ],
+   "answer": "x + 1/2",
+   "rationale": "Integrating out y gives f_X(x) = ∫₀¹(x + y) dy = x + 1/2 for 0 < x < 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L244",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 244,
+   "format": "multiple_choice",
+   "prompt": "A joint PDF is f(x,y) = 2xy on the unit square 0 < x < 1, 0 < y < 1. Use a double integral to find E[X²].",
+   "choices": [
+    "1/3",
+    "1/8",
+    "1/4",
+    "1/6"
+   ],
+   "answer": "1/4",
+   "rationale": "E[X²] = ∫₀¹∫₀¹ x²(2xy) dy dx = 2(∫₀¹x³dx)(∫₀¹y dy) = 1/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L191",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "Let X have an exponential distribution with rate λ. For t,s > 0, what equals P(X > t+s | X > t)?",
+   "choices": [
+    "e^(−λs)",
+    "e^(−λ(t+s))",
+    "1−e^(−λs)",
+    "s e^(−λs)"
+   ],
+   "answer": "e^(−λs)",
+   "rationale": "The conditional probability is e^(−λ(t+s))/e^(−λt)=e^(−λs), which demonstrates the memoryless property.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L191",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "If successive waiting times between arrivals are exponential with rate λ, what is the distribution of the count N(t) by time t?",
+   "choices": [
+    "Poisson with mean λt",
+    "Poisson with mean λ/t",
+    "Normal with mean λt",
+    "Binomial with parameters t and λ"
+   ],
+   "answer": "Poisson with mean λt",
+   "rationale": "Exponential interarrival times with constant rate λ generate a Poisson process, so N(t) is Poisson with mean λt.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L191",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "For a Poisson process with rate λ, what is the probability that at least one arrival occurs during an interval of length t?",
+   "choices": [
+    "1−e^(−λt)",
+    "λt e^(−λt)",
+    "e^(−λt)",
+    "1−λt"
+   ],
+   "answer": "1−e^(−λt)",
+   "rationale": "Since N(t) is Poisson with mean λt, P(N(t)≥1)=1−P(N(t)=0)=1−e^(−λt).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L191",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 191,
+   "format": "multiple_choice",
+   "prompt": "If X is uniformly distributed on [2, 6], what is P(3 ≤ X ≤ 4.5)?",
+   "choices": [
+    "3/8",
+    "1/4",
+    "5/12",
+    "3/16"
+   ],
+   "answer": "3/8",
+   "rationale": "For a continuous uniform distribution, probability is interval length divided by total range length: (4.5−3)/(6−2)=1.5/4=3/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "For a uniform distribution on [a,b], P(c≤X≤d)= (d-c)/(b-a).",
+      "url": "https://en.wikipedia.org/wiki/Uniform_distribution_mod_1",
+      "quote": "\\displaystyle \\lim _{n\\to \\infty }{\\left|\\{\\,s_{k+1},\\dots ,s_{k+n}\\,\\}\\cap [c,d]\\right| \\over n}={d-c \\over b-a}",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L62",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A factory has two machines. Machine A produces 70% of the items with a 2% defect rate; Machine B produces 30% with a 5% defect rate. What is the probability that a randomly selected item is defective?",
+   "choices": [
+    "0.029",
+    "0.035",
+    "0.023",
+    "0.041"
+   ],
+   "answer": "0.029",
+   "rationale": "Using the law of total probability: P(defective)=0.7*0.02 + 0.3*0.05 = 0.014 + 0.015 = 0.029.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L62",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "A system has two independent components. Component 1 fails with probability 0.1, Component 2 fails with probability 0.2. The system works if at least one component works. Given that the system works, what is the probability Component 1 works?",
+   "choices": [
+    "0.918",
+    "0.850",
+    "0.950",
+    "0.800"
+   ],
+   "answer": "0.918",
+   "rationale": "P(system works)=1-(0.1*0.2)=0.98. P(C1 works|system works)=P(C1 works)/P(system works)=0.9/0.98≈0.918.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L62",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 62,
+   "format": "multiple_choice",
+   "prompt": "Events E1, E2, E3 partition the sample space with probabilities 0.2, 0.5, 0.3. An event A occurs with P(A|E1)=0.6, P(A|E2)=0.4, P(A|E3)=0.1. What is P(E2|A)?",
+   "choices": [
+    "0.571",
+    "0.428",
+    "0.500",
+    "0.333"
+   ],
+   "answer": "0.571",
+   "rationale": "By Bayes: numerator = 0.5*0.4 = 0.20. Denominator = 0.2*0.6 + 0.5*0.4 + 0.3*0.1 = 0.35. Posterior = 0.20/0.35 ≈ 0.571.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L360",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "Let S be a random variable with moment-generating function M_S(t). For t ≥ 0 and a > 0, which inequality follows by applying Markov’s inequality to e^{tS}?",
+   "choices": [
+    "P(S ≥ a) ≤ exp(−ta)M_S(t)",
+    "P(S ≥ a) ≤ exp(ta)M_S(t)",
+    "P(S ≥ a) ≤ exp(−ta)M_S(−t)",
+    "P(S ≥ a) ≤ exp(−ta)/M_S(t)"
+   ],
+   "answer": "P(S ≥ a) ≤ exp(−ta)M_S(t)",
+   "rationale": "Markov’s inequality gives P(e^{tS} ≥ e^{ta}) ≤ E[e^{tS}]/e^{ta} = exp(−ta)M_S(t), which is the Chernoff bound.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L360",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "If X has 100 independent Bernoulli trials with success probability 0.5, use the multiplicative Chernoff bound for μ = 50 and δ = 0.3. What bound does it give for P(X ≥ 65)?",
+   "choices": [
+    "[exp(0.3)/(1.3)^1.3]^50",
+    "[exp(0.3)/(1.3)^1.3]^40",
+    "[exp(0.3)/(1.3)^1.3]^100",
+    "[exp(−0.3)/(1.3)^1.3]^50"
+   ],
+   "answer": "[exp(0.3)/(1.3)^1.3]^50",
+   "rationale": "Here 65 = (1 + 0.3)50. Substitution into P(X ≥ (1+δ)μ) ≤ [exp(δ)/(1+δ)^(1+δ)]^μ gives the first bound.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L360",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "Let X_1,…,X_20 be independent, with E[X_i] = 0 and −1 ≤ X_i ≤ 1. What Hoeffding bound does the inequality give for P(X_1 + ··· + X_20 ≥ 5)?",
+   "choices": [
+    "exp(−5/8)",
+    "exp(−5/4)",
+    "exp(−5/16)",
+    "exp(−5/2)"
+   ],
+   "answer": "exp(−5/8)",
+   "rationale": "Hoeffding gives exp(−2t²/Σ(b_i−a_i)²). With t = 5 and twenty ranges of width 2, the exponent is −50/80 = −5/8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L360",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 360,
+   "format": "multiple_choice",
+   "prompt": "Six independent variables lie in [0,2], and four independent variables lie in [1,4]. For their sum S, what Hoeffding bound applies to P(S − E[S] ≥ 3)?",
+   "choices": [
+    "exp(−3/10)",
+    "exp(−3/20)",
+    "exp(−3/5)",
+    "exp(−3/40)"
+   ],
+   "answer": "exp(−3/10)",
+   "rationale": "The sum of squared ranges is 6(2²) + 4(3²) = 60. Thus Hoeffding gives exp(−2·3²/60) = exp(−3/10).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L318",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "Which expression defines the characteristic function of a real-valued random variable X?",
+   "choices": [
+    "E[cos(tX)] for every real t",
+    "E[e^(itX)] for every real t",
+    "E[Xe^(it)] for every real t",
+    "e^(itE[X]) for every real t"
+   ],
+   "answer": "E[e^(itX)] for every real t",
+   "rationale": "By definition, the characteristic function of X is φ_X(t)=E[e^(itX)].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L318",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "Let X be uniform on (-1,1). Which formula is its characteristic function, with t=0 interpreted by continuity?",
+   "choices": [
+    "sin(t)/t",
+    "cos(t)",
+    "(e^(it)-1)/(it)",
+    "1/(1+t^2)"
+   ],
+   "answer": "sin(t)/t",
+   "rationale": "Since φ_X(t)=(1/2)∫_{-1}^{1}e^(itx)dx=sin(t)/t, with φ_X(0)=1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L318",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "The uniqueness theorem for characteristic functions states that if two random variables have identical characteristic functions at every real t, then they have:",
+   "choices": [
+    "the same distribution",
+    "the same value almost surely",
+    "only the same mean and variance",
+    "a zero covariance between them"
+   ],
+   "answer": "the same distribution",
+   "rationale": "Equality of characteristic functions at every real t determines the entire probability distribution; it does not imply equality almost surely.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L318",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 318,
+   "format": "multiple_choice",
+   "prompt": "For independent iid variables X_i with mean 0 and variance 1, set S_n=∑X_i. Which characteristic-function result supports the CLT for S_n/√n?",
+   "choices": [
+    "φ_(S_n/√n)(t)→e^(-t²/2), so S_n/√n⇒N(0,1)",
+    "φ_(S_n/√n)(t)→e^(-t²/2), so S_n/√n⇒N(0,1/2)",
+    "φ_(S_n/√n)(t)→e^(-t²/2), so S_n/√n converges almost surely",
+    "φ_(S_n/√n)(t)→e^(-t²/2), so S_n/√n→0 in probability"
+   ],
+   "answer": "φ_(S_n/√n)(t)→e^(-t²/2), so S_n/√n⇒N(0,1)",
+   "rationale": "A Taylor expansion gives φ_X(u)=1-u²/2+o(u²), so φ_(S_n/√n)(t)→e^(-t²/2). By continuity, the limit law is N(0,1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L201",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "A random variable X has mean 100 and standard deviation 15. What is the standardized z-score for x = 130?",
+   "choices": [
+    "0.67",
+    "1.88",
+    "2.00",
+    "2.15"
+   ],
+   "answer": "2.00",
+   "rationale": "Standardization gives z = (x − μ)/σ = (130 − 100)/15 = 2.00.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L201",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "Let X have a normal distribution with mean 12 and standard deviation 5. Which value equals the density f(12)?",
+   "choices": [
+    "0.0000",
+    "0.0798",
+    "0.1592",
+    "0.3989"
+   ],
+   "answer": "0.0798",
+   "rationale": "The density at the mean is 1/(σ√(2π)) = 1/(5√(2π)), which is approximately 0.0798.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L201",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 201,
+   "format": "multiple_choice",
+   "prompt": "A numerical integrator evaluates the full area under the standard normal density. Which result should be reported to verify that the density is properly normalized?",
+   "choices": [
+    "0.5000",
+    "1.0000",
+    "0.9545",
+    "0.3989"
+   ],
+   "answer": "1.0000",
+   "rationale": "A probability density must have total area 1 over the entire real line, so the numerical integral should equal 1.0000.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L276",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "For random variables X and Y with finite, positive standard deviations, which pair of formulas correctly defines covariance and correlation?",
+   "choices": [
+    "Cov(X,Y)=E[(X−μ_X)(Y−μ_Y)] and ρ=Cov(X,Y)/(σ_Xσ_Y).",
+    "Cov(X,Y)=E[XY] and ρ=Cov(X,Y)/(σ_Xσ_Y).",
+    "Cov(X,Y)=E[(X−μ_X)²(Y−μ_Y)²] and ρ=Cov(X,Y)/(σ_Xσ_Y).",
+    "Cov(X,Y)=E[(X−μ_X)(Y−μ_Y)] and ρ=Cov(X,Y)/(σ_X+σ_Y)."
+   ],
+   "answer": "Cov(X,Y)=E[(X−μ_X)(Y−μ_Y)] and ρ=Cov(X,Y)/(σ_Xσ_Y).",
+   "rationale": "Covariance is the expected product of the centered variables. Correlation divides this covariance by the product of their standard deviations.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L276",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "For constants a and b, which calculation correctly proves that Cov(aX,bY)=ab Cov(X,Y)?",
+   "choices": [
+    "E[(aX−E[aX])(bY−E[bY])]=E[ab(X−μ_X)(Y−μ_Y)]=ab Cov(X,Y).",
+    "E[(aX−E[X])(bY−E[Y])]=E[ab(X−μ_X)(Y−μ_Y)]=ab Cov(X,Y).",
+    "E[(aX−E[aX])(bY−E[bY])]=E[(a+b)(X−μ_X)(Y−μ_Y)]=ab Cov(X,Y).",
+    "E[(aX−E[aX])(bY−E[bY])]=E[a(X−μ_X)+b(Y−μ_Y)]=ab Cov(X,Y)."
+   ],
+   "answer": "E[(aX−E[aX])(bY−E[bY])]=E[ab(X−μ_X)(Y−μ_Y)]=ab Cov(X,Y).",
+   "rationale": "Because E[aX]=aμ_X and E[bY]=bμ_Y, the centered variables become a(X−μ_X) and b(Y−μ_Y), producing the factor ab.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L276",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 276,
+   "format": "multiple_choice",
+   "prompt": "Which argument correctly proves that every correlation coefficient satisfies |ρ|≤1?",
+   "choices": [
+    "Cauchy–Schwarz applied to the centered variables gives |Cov(X,Y)|≤σ_Xσ_Y, hence |ρ|≤1.",
+    "Chebyshev’s inequality applied to the centered variables gives |Cov(X,Y)|≤σ_Xσ_Y, hence |ρ|≤1.",
+    "Jensen’s inequality applied to the centered variables gives |Cov(X,Y)|≤σ_X+σ_Y, hence |ρ|≤1.",
+    "The variance formula for X+Y gives |Cov(X,Y)|≤Var(X)+Var(Y), hence |ρ|≤1."
+   ],
+   "answer": "Cauchy–Schwarz applied to the centered variables gives |Cov(X,Y)|≤σ_Xσ_Y, hence |ρ|≤1.",
+   "rationale": "Cauchy–Schwarz bounds the covariance by the product of the standard deviations. Dividing by σ_Xσ_Y gives |ρ|≤1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L296",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "Let X be square-integrable and Y any random variable. Let W = E[X|Y]. Which pair of properties must W satisfy?",
+   "choices": [
+    "W is measurable with respect to Y and E[W|Y] = W.",
+    "W is measurable with respect to X and E[W|X] = W.",
+    "W is constant and E[W|Y] = E[X].",
+    "W is measurable with respect to Y and E[W|X] = E[X|Y]."
+   ],
+   "answer": "W is measurable with respect to Y and E[W|Y] = W.",
+   "rationale": "Conditional expectation is a random variable measurable with respect to the conditioning variable Y and satisfies E[W|Y] = W almost surely.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L296",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "Which equation gives the law of total variance for a random variable X conditioned on a random variable Y?",
+   "choices": [
+    "Var(X) = E[Var(X|Y)] + Var(E[X|Y]).",
+    "Var(X) = E[Var(X|Y)] + E[E[X|Y]].",
+    "Var(X) = Var(E[X|Y]) − E[Var(X|Y]).",
+    "Var(X) = E[Var(E[X|Y])] + Var(E[Var(X|Y]))."
+   ],
+   "answer": "Var(X) = E[Var(X|Y)] + Var(E[X|Y]).",
+   "rationale": "The law of total variance separates the variance into the average conditional variance within Y-groups and the variance of the conditional means between groups.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L296",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 296,
+   "format": "multiple_choice",
+   "prompt": "Let Y take values 0 and 1 with probability 1/2 each. Given Y=0, E[X|Y=0]=2 and Var(X|Y=0)=1. Given Y=1, E[X|Y=1]=6 and Var(X|Y=1)=4. What is Var(X)?",
+   "choices": [
+    "2.5",
+    "4.0",
+    "6.5",
+    "8.5"
+   ],
+   "answer": "6.5",
+   "rationale": "The within-group term is (1+4)/2=2.5. The between-group term is Var(2,6)=(2−4)²/2+(6−4)²/2=4. Therefore Var(X)=2.5+4=6.5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L105",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A discrete random variable has P(X=1)=0.2, P(X=3)=0.5, and P(X=5)=0.3. What is E[X]?",
+   "choices": [
+    "2.8",
+    "3.0",
+    "3.2",
+    "3.6"
+   ],
+   "answer": "3.2",
+   "rationale": "E[X]=1(0.2)+3(0.5)+5(0.3)=0.2+1.5+1.5=3.2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L105",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A random variable has P(X=0)=0.1, P(X=1)=0.2, P(X=2)=0.3, and P(X=3)=0.4. What is E[(X−1)²]?",
+   "choices": [
+    "1.6",
+    "1.8",
+    "2.0",
+    "2.4"
+   ],
+   "answer": "2.0",
+   "rationale": "E[(X−1)²]=1(0.1)+0(0.2)+1(0.3)+4(0.4)=2.0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L105",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "X counts sixes in three rolls of a fair die, and Y counts heads in four tosses of a fair coin. What is E[X+Y]?",
+   "choices": [
+    "2.0",
+    "2.25",
+    "2.5",
+    "2.75"
+   ],
+   "answer": "2.5",
+   "rationale": "By linearity, E[X+Y]=E[X]+E[Y]=3(1/6)+4(1/2)=2.5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L105",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 105,
+   "format": "multiple_choice",
+   "prompt": "A 10-card hand is dealt from a standard 52-card deck. Let I_i indicate whether the ith card is an ace. What is E[∑ from i=1 to 10 of I_i]?",
+   "choices": [
+    "4/13",
+    "10/13",
+    "1",
+    "13/10"
+   ],
+   "answer": "10/13",
+   "rationale": "Each card has probability 1/13 of being an ace, so linearity gives E[∑I_i]=∑E[I_i]=10(1/13)=10/13.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L234",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A joint pmf for integer-valued X and Y has p(0,0)=1/6, p(0,1)=1/6, and p(1,0)=1/3. All probability mass lies on these four points. What is p(1,1)?",
+   "choices": [
+    "1/3",
+    "1/2",
+    "1/6",
+    "1/4"
+   ],
+   "answer": "1/3",
+   "rationale": "A joint pmf must sum to 1, so p(1,1)=1−(1/6+1/6+1/3)=1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L234",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "The joint pmf of X and Y is p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4, with all other values zero. What is the marginal probability P(Y=1)?",
+   "choices": [
+    "0.6",
+    "0.5",
+    "0.7",
+    "0.4"
+   ],
+   "answer": "0.6",
+   "rationale": "Summing over all x, P(Y=1)=p(0,1)+p(1,1)=0.2+0.4=0.6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L234",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "A joint pmf has p(0,0)=1/5, p(0,1)=1/10, p(1,0)=1/5, and p(1,1)=1/2, with all other values zero. What is the expected value E[X]?",
+   "choices": [
+    "7/10",
+    "3/5",
+    "4/5",
+    "1/2"
+   ],
+   "answer": "7/10",
+   "rationale": "Summing over y gives P(X=1)=1/5+1/2=7/10. Since X is 0 or 1, E[X]=7/10.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L234",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 234,
+   "format": "multiple_choice",
+   "prompt": "The joint pmf of X and Y is p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4, with all other values zero. What is E[2X+3Y]?",
+   "choices": [
+    "16/5",
+    "14/5",
+    "17/5",
+    "13/5"
+   ],
+   "answer": "16/5",
+   "rationale": "Summing over the support gives 0(0.1)+3(0.2)+2(0.3)+5(0.4)=3.2=16/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L254",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Independent X,Y ~ Uniform(0,1). Let U=X/Y and V=Y. Find the joint density f_{U,V}(u,v).",
+   "choices": [
+    "v for 0<v≤1, 0<u≤1/v; 0 otherwise",
+    "1/v for 0<v≤1, 0<u≤1/v; 0 otherwise",
+    "v for 0<v≤1, 0<u≤v; 0 otherwise",
+    "1 for 0<v≤1, 0<u≤1/v; 0 otherwise"
+   ],
+   "answer": "v for 0<v≤1, 0<u≤1/v; 0 otherwise",
+   "rationale": "The inverse transformation is x=uv and y=v, with absolute Jacobian determinant v. The conditions 0<x<1 and 0<y<1 become 0<v≤1 and 0<u≤1/v, so the density is v there.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L254",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Independent X,Y ~ N(0,1). Let R=√(X²+Y²), and let Θ be the angle of (X,Y) in [0,2π). Find f_{R,Θ}(r,θ).",
+   "choices": [
+    "r e^(−r²/2)/(2π) for r>0, 0≤θ<2π; 0 otherwise",
+    "e^(−r²/2)/(2π) for r>0, 0≤θ<2π; 0 otherwise",
+    "r e^(−r²/2)/π for r>0, 0≤θ<2π; 0 otherwise",
+    "r e^(−r²/2)/(2π) for r>0, 0≤θ<π; 0 otherwise"
+   ],
+   "answer": "r e^(−r²/2)/(2π) for r>0, 0≤θ<2π; 0 otherwise",
+   "rationale": "Using x=r cos θ and y=r sin θ, the absolute Jacobian determinant is r. Multiplying it by the standard bivariate normal density e^(−r²/2)/(2π) gives the stated density.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L254",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 254,
+   "format": "multiple_choice",
+   "prompt": "Independent rate-1 exponential variables X,Y. Let S=X+Y and Q=X/Y. Find the joint density f_{S,Q}(s,q).",
+   "choices": [
+    "s e^(−s)/(1+q)² for s>0, q>0; 0 otherwise",
+    "s e^(−s)/(1+q) for s>0, q>0; 0 otherwise",
+    "e^(−s)/(1+q)² for s>0, q>0; 0 otherwise",
+    "(1+q)² e^(−s)/s for s>0, q>0; 0 otherwise"
+   ],
+   "answer": "s e^(−s)/(1+q)² for s>0, q>0; 0 otherwise",
+   "rationale": "The inverse is x=sq/(1+q) and y=s/(1+q), with absolute Jacobian determinant s/(1+q)². The original joint density is e^(−s), yielding s e^(−s)/(1+q)².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L266",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "Let p(x,y) be a joint pmf with p(0,0)=0.1, p(0,1)=0.3, p(1,0)=0.2, and p(1,1)=0.4. What is P(Y=1 | X=0)?",
+   "choices": [
+    "0.25",
+    "0.30",
+    "0.50",
+    "0.75"
+   ],
+   "answer": "0.75",
+   "rationale": "Since P(X=0)=0.1+0.3=0.4, the conditional probability is p(0,1)/P(X=0)=0.3/0.4=0.75.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L266",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "A joint density is f(x,y)=2(x+y) for 0<y<x<1, and 0 otherwise. What is the conditional density f(y | x) for 0<x<1?",
+   "choices": [
+    "2(x+y)/(3x²), for 0<y<x",
+    "2(x+y)/(3x), for 0<y<x",
+    "2(x+y)/x², for 0<y<x",
+    "2(x+y)/(2x²), for 0<y<x"
+   ],
+   "answer": "2(x+y)/(3x²), for 0<y<x",
+   "rationale": "Integrating over y gives f_X(x)=∫₀ˣ2(x+y)dy=3x². Thus f(y | x)=f(x,y)/f_X(x)=2(x+y)/(3x²).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L266",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "A joint pmf has p(0,0)=0.12, p(0,1)=0.28, p(1,0)=0.18, and p(1,1)=0.42. Its marginals are P(X=0)=0.4 and P(Y=0)=0.3. What does the factorization test show?",
+   "choices": [
+    "X and Y are independent.",
+    "X and Y are dependent.",
+    "Factorization holds only when X=0.",
+    "Factorization holds only when Y=0."
+   ],
+   "answer": "X and Y are independent.",
+   "rationale": "The marginals are (0.4,0.6) and (0.3,0.7). Their products equal all four joint probabilities: 0.12, 0.28, 0.18, and 0.42.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L266",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 266,
+   "format": "multiple_choice",
+   "prompt": "A joint density is f(x,y)=4xy for 0<x<1 and 0<y<1, and 0 elsewhere. Which equality correctly applies the factorization test for independence?",
+   "choices": [
+    "f_X(x)f_Y(y)=4xy=f(x,y)",
+    "f_X(x)f_Y(y)=2xy=f(x,y)",
+    "f_X(x)f_Y(y)=4x=f(x,y)",
+    "f_X(x)f_Y(y)=2y=f(x,y)"
+   ],
+   "answer": "f_X(x)f_Y(y)=4xy=f(x,y)",
+   "rationale": "The marginal densities are f_X(x)=2x and f_Y(y)=2y, so f_X(x)f_Y(y)=4xy=f(x,y) throughout the support.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L415",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 415,
+   "format": "multiple_choice",
+   "prompt": "Let X have a binomial distribution with n = 100 and p = 0.50. Using a normal approximation with continuity correction, which value is closest to P(45 ≤ X ≤ 55)?",
+   "choices": [
+    "0.729",
+    "0.683",
+    "0.866",
+    "0.590"
+   ],
+   "answer": "0.729",
+   "rationale": "The mean is 50 and the standard deviation is 5. The continuity-corrected bounds 44.5 and 55.5 give z = -1.1 and 1.1, so the probability is approximately 0.729.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L415",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 415,
+   "format": "multiple_choice",
+   "prompt": "Let Y have a Poisson distribution with mean 20. Using a normal approximation with continuity correction, which value is closest to P(Y ≥ 15)?",
+   "choices": [
+    "0.868",
+    "0.891",
+    "0.843",
+    "0.109"
+   ],
+   "answer": "0.891",
+   "rationale": "The mean and standard deviation are both 20. Using 14.5 as the lower boundary gives z = -1.230, so P(Y ≥ 15) is approximately 0.891.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L415",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "analysis",
+   "level": 415,
+   "format": "multiple_choice",
+   "prompt": "Which proposed probability is most suitable for approximation by a normal distribution?",
+   "choices": [
+    "Binomial: n = 20, p = 0.10; P(X ≥ 3)",
+    "Binomial: n = 50, p = 0.02; P(X ≥ 2)",
+    "Poisson: λ = 4; P(Y ≥ 8)",
+    "Binomial: n = 100, p = 0.50; P(40 ≤ X ≤ 60)"
+   ],
+   "answer": "Binomial: n = 100, p = 0.50; P(40 ≤ X ≤ 60)",
+   "rationale": "For the last option, np = 50 and n(1 − p) = 50, so both expected counts are large. The other options have an expected success count or Poisson mean below 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L445",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "A stochastic process is a Markov chain when its future satisfies which condition?",
+   "choices": [
+    "The next-state distribution depends only on the current state.",
+    "The next-state distribution depends only on the previous transition.",
+    "The next-state distribution is independent of the current state.",
+    "The next-state distribution depends equally on all earlier states."
+   ],
+   "answer": "The next-state distribution depends only on the current state.",
+   "rationale": "The Markov property means that, given the current state, the next-state distribution does not depend on the path used to reach that state.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L445",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "For the row-stochastic matrix P = [[0.7, 0.3], [0.4, 0.6]], what is the two-step probability from state 1 to state 2?",
+   "choices": [
+    "0.21 (21%)",
+    "0.39 (39%)",
+    "0.42 (42%)",
+    "0.54 (54%)"
+   ],
+   "answer": "0.39 (39%)",
+   "rationale": "The entry (P²)₁₂ equals 0.7(0.3) + 0.3(0.6) = 0.21 + 0.18 = 0.39.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L445",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 445,
+   "format": "multiple_choice",
+   "prompt": "For P = [[0.9, 0.1], [0.2, 0.8]], what is the three-step return probability (P³)₁₁?",
+   "choices": [
+    "0.747 (74.7%)",
+    "0.774 (77.4%)",
+    "0.781 (78.1%)",
+    "0.830 (83.0%)"
+   ],
+   "answer": "0.781 (78.1%)",
+   "rationale": "First, P² has first row [0.83, 0.17]. Thus (P³)₁₁ = 0.83(0.9) + 0.17(0.2) = 0.781.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L179",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "A continuous random variable has density f_X(x)=2e^(-2x) for x≥0 and 0 otherwise. What is E[X²]?",
+   "choices": [
+    "1/4",
+    "1/2",
+    "1",
+    "2"
+   ],
+   "answer": "1/2",
+   "rationale": "By integration, E[X²]=∫₀^∞ x²·2e^(-2x) dx=2(2!)/2³=1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L179",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 179,
+   "format": "multiple_choice",
+   "prompt": "A continuous random variable has density f_X(x)=12x(1-x)² for 0≤x≤1 and 0 otherwise. What is its mode?",
+   "choices": [
+    "1/4",
+    "1/3",
+    "1/2",
+    "2/3"
+   ],
+   "answer": "1/3",
+   "rationale": "Differentiating the density gives f′(x)=12(1-x)(1-3x). The interior maximum occurs where 1-3x=0, so the mode is x=1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L340",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "Let X1,…,Xn be i.i.d. Exponential(λ). What is the pdf of Y = min(X1,…,Xn)?",
+   "choices": [
+    "nλ e^{-nλ y}, y≥0",
+    "λ e^{-λ y}, y≥0",
+    "nλ e^{-λ y}, y≥0",
+    "λ e^{-nλ y}, y≥0"
+   ],
+   "answer": "nλ e^{-nλ y}, y≥0",
+   "rationale": "The minimum of n independent Exponential(λ) variables is Exponential with rate nλ, giving pdf nλ e^{-nλ y} for y≥0.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L340",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "For i.i.d. Uniform(0,1) sample of size n, the cdf of the k-th order statistic X_(k) is:",
+   "choices": [
+    "Σ_{j=k}^n C(n,j) x^j (1-x)^{n-j}",
+    "Σ_{j=0}^{k-1} C(n,j) x^j (1-x)^{n-j}",
+    "C(n,k) x^{k-1}(1-x)^{n-k}",
+    "C(n,k-1) x^{k}(1-x)^{n-k+1}"
+   ],
+   "answer": "Σ_{j=k}^n C(n,j) x^j (1-x)^{n-j}",
+   "rationale": "The cdf of the k-th order statistic equals the probability that at least k observations fall ≤ x, which is the sum from j=k to n of the binomial probabilities.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L340",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "A series system has n independent components, each lifetime ~ Weibull(shape=2, scale=θ). The system lifetime T = min(T1,…,Tn). Its survival function S_T(t) is:",
+   "choices": [
+    "exp[-n (t/θ)^2]",
+    "exp[-(t/θ)^2]",
+    "1 - exp[-n (t/θ)^2]",
+    "exp[-n (t/θ)]"
+   ],
+   "answer": "exp[-n (t/θ)^2]",
+   "rationale": "Each component survival is exp[-(t/θ)^2]; independence makes the system survival the product, yielding exp[-n (t/θ)^2].",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L340",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "data_stats",
+   "level": 340,
+   "format": "multiple_choice",
+   "prompt": "In a sequence of i.i.d. continuous random variables, what is the probability that the third observation sets a new record high?",
+   "choices": [
+    "1/3",
+    "1/2",
+    "1/4",
+    "1/6"
+   ],
+   "answer": "1/3",
+   "rationale": "For continuous i.i.d. sequences, the k-th observation is a record with probability 1/k; thus the third observation has probability 1/3.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L457",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 457,
+   "format": "multiple_choice",
+   "prompt": "A two-state Markov chain has transition matrix P = [[0.8, 0.2], [0.4, 0.6]]. Which probability vector (π1, π2) satisfies πP = π and π1 + π2 = 1?",
+   "choices": [
+    "(1/3, 2/3)",
+    "(2/5, 3/5)",
+    "(2/3, 1/3)",
+    "(3/4, 1/4)"
+   ],
+   "answer": "(2/3, 1/3)",
+   "rationale": "Stationarity requires 0.2π1 = 0.4π2, so π1 = 2π2. Together with π1 + π2 = 1, this gives π1 = 2/3 and π2 = 1/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L457",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 457,
+   "format": "multiple_choice",
+   "prompt": "An absorbing chain has transition matrix P = [[0.5, 0.5, 0, 0, 0], [0, 0.5, 0.5, 0, 0], [0, 0, 0.5, 0.3, 0.2], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]. Starting in state 3, how many transitions are expected before reaching state 4 or 5?",
+   "choices": [
+    "2 transitions",
+    "3 transitions",
+    "5 transitions",
+    "6 transitions"
+   ],
+   "answer": "2 transitions",
+   "rationale": "Let E3 be the expected remaining time from state 3. Then E3 = 1 + 0.5E3 because the other probability, 0.5, leads immediately to an absorbing state. Thus E3 = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L457",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 457,
+   "format": "multiple_choice",
+   "prompt": "Using the same absorbing-chain matrix, what is the probability of eventual absorption in state 4 rather than state 5 when the chain starts in state 1?",
+   "choices": [
+    "0.3",
+    "0.4",
+    "0.6",
+    "0.8"
+   ],
+   "answer": "0.6",
+   "rationale": "Let h_i be the probability of absorption in state 4. The equations give h1 = h2 = h3, while h3 = 0.5h3 + 0.3. Therefore h3 = 0.6, so h1 = 0.6.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L370",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "In the Chebyshev proof of the weak law, what inequality is used to bound P(|X̄ₙ−μ|≥ε)?",
+   "choices": [
+    "P(|X̄ₙ−μ|≥ε) ≤ Var(X₁)/(nε²).",
+    "P(|X̄ₙ−μ|≥ε) ≤ E|X₁−μ|/(nε).",
+    "P(|X̄ₙ−μ|≥ε) ≤ 1/(nε²).",
+    "P(|X̄ₙ−μ|≥ε) ≤ Var(X₁)/ε²."
+   ],
+   "answer": "P(|X̄ₙ−μ|≥ε) ≤ Var(X₁)/(nε²).",
+   "rationale": "Chebyshev's inequality gives P(|X̄ₙ−μ|≥ε) ≤ Var(X̄ₙ)/ε² = Var(X₁)/(nε²).",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L370",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "What minimal moment condition on the i.i.d. sequence is required for the Chebyshev‑based proof of the weak law?",
+   "choices": [
+    "Finite first moment (mean).",
+    "Finite second moment (variance).",
+    "Finite third moment.",
+    "Finite moment generating function."
+   ],
+   "answer": "Finite second moment (variance).",
+   "rationale": "Chebyshev's inequality requires a finite variance; thus the proof needs a finite second moment.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L370",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "A simulation repeatedly draws n i.i.d. samples from a distribution with mean μ and plots the sample means for increasing n. What pattern illustrates the weak law?",
+   "choices": [
+    "The histogram of sample means widens as n grows.",
+    "The sample means eventually equal μ exactly for all runs.",
+    "The spread of sample means around μ shrinks as n increases.",
+    "The sample means follow a normal curve for every n."
+   ],
+   "answer": "The spread of sample means around μ shrinks as n increases.",
+   "rationale": "Convergence in probability means the distribution of the sample mean concentrates near μ; the empirical spread decreases with larger n.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L370",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 370,
+   "format": "multiple_choice",
+   "prompt": "Which statement correctly expresses the weak law of large numbers for i.i.d. random variables X₁, X₂, … with finite mean μ?",
+   "choices": [
+    "The sample mean converges to μ almost surely.",
+    "For every ε>0, P(|X̄ₙ−μ|≥ε) → 0 as n→∞.",
+    "The sample mean converges in distribution to a normal with mean μ.",
+    "The variance of the sample mean stays constant as n increases."
+   ],
+   "answer": "For every ε>0, P(|X̄ₙ−μ|≥ε) → 0 as n→∞.",
+   "rationale": "The weak law states convergence in probability: for any ε>0, the probability that the sample mean deviates from μ by at least ε tends to zero.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The weak law of large numbers states that the sample mean converges in probability to the population mean μ.",
+      "url": "https://en.wikipedia.org/wiki/Law_Of_Large_Numbers",
+      "quote": "The weak law of large numbers (also called Khinchin 's law) states that given a collection of independent and identically distributed (iid) samples from a random variable with finite mean, the sample mean converges in probability to the expected value",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L42",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Five distinct books are placed in a row at random. What is the probability that two specified books are next to each other?",
+   "choices": [
+    "1/5",
+    "2/5",
+    "3/5",
+    "1/2"
+   ],
+   "answer": "2/5",
+   "rationale": "Treat the two specified books as one block. There are 2(4!) favorable arrangements among 5! total arrangements, so the probability is 2(4!)/5! = 2/5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L42",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "A five-card hand is dealt from a standard 52-card deck. What is the probability of a full house: three cards of one rank and two of another?",
+   "choices": [
+    "0.072%",
+    "0.144%",
+    "0.288%",
+    "0.432%"
+   ],
+   "answer": "0.144%",
+   "rationale": "The number of full houses is 13C(4,3)(12)C(4,2) = 3,744. Dividing by C(52,5) = 2,598,960 gives approximately 0.1441%.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L42",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "A 5‑card hand is dealt from a standard 52‑card deck. What is the probability that the hand contains exactly two distinct pairs (and a fifth card of a third rank)?",
+   "choices": [
+    "0.0475",
+    "0.0211",
+    "0.0014",
+    "0.0920"
+   ],
+   "answer": "0.0475",
+   "rationale": "Number of two‑pair hands = C(13,2)·C(4,2)^2·44 = 123 552. Total 5‑card hands = C(52,5) = 2 598 960. Probability = 123 552 / 2 598 960 ≈ 0.0475.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L42",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 42,
+   "format": "multiple_choice",
+   "prompt": "Eight people are seated randomly around a circular table. What is the probability that two particular people sit next to each other?",
+   "choices": [
+    "0.2857",
+    "0.1429",
+    "0.3333",
+    "0.2500"
+   ],
+   "answer": "0.2857",
+   "rationale": "Treat the two people as a block. Around a circle there are (8‑1)! = 7! total seatings. With the block we have 7 entities, giving (7‑1)! = 6! seatings, and the block can be ordered in 2! ways. Probability = 2·6! / 7! = 2/7 ≈ 0.2857.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L286",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "X ~ Poisson(2) and Y ~ Poisson(3) are independent. Which distribution describes S = X + Y?",
+   "choices": [
+    "Poisson(1)",
+    "Poisson(5)",
+    "Poisson(6)",
+    "Poisson(25)"
+   ],
+   "answer": "Poisson(5)",
+   "rationale": "The sum of independent Poisson variables is Poisson, and its parameter is the sum of the original parameters: 2 + 3 = 5.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L286",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 286,
+   "format": "multiple_choice",
+   "prompt": "X ~ N(2, 9) and Y ~ N(-1, 16) are independent, where the second parameter is variance. Which distribution describes S = X + Y?",
+   "choices": [
+    "N(1, 25)",
+    "N(1, 15)",
+    "N(1, 81)",
+    "N(1, 225)"
+   ],
+   "answer": "N(1, 25)",
+   "rationale": "The mean is 2 + (-1) = 1, and the variance is 9 + 16 = 25. An independent sum of normal variables is normal.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L542",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 542,
+   "format": "multiple_choice",
+   "prompt": "Let (X_n) be an adapted, integrable process with respect to (F_n). Which condition defines a martingale?",
+   "choices": [
+    "E[X_{n+1}|F_n]=X_n almost surely.",
+    "E[X_{n+1}]=X_n almost surely.",
+    "E[X_{n+1}|F_n]=E[X_n] almost surely.",
+    "E[X_{n+1}|F_n]=X_0 almost surely."
+   ],
+   "answer": "E[X_{n+1}|F_n]=X_n almost surely.",
+   "rationale": "A martingale has conditional mean equal to its current value given all information available at time n.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L542",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 542,
+   "format": "multiple_choice",
+   "prompt": "At each round, a player gains $1 with probability 1/2 and loses $1 with probability 1/2, independently. Let C_n be total fortune after n rounds and F_n the observed history. Which statement is true?",
+   "choices": [
+    "(C_n) is a martingale since E[C_{n+1}|F_n]=C_n.",
+    "(C_n^2) is a martingale since E[C_{n+1}^2|F_n]=C_n^2.",
+    "The win count is a martingale since E[W_{n+1}|F_n]=W_n.",
+    "(C_n+n) is a martingale since E[C_{n+1}|F_n]=C_n+n."
+   ],
+   "answer": "(C_n) is a martingale since E[C_{n+1}|F_n]=C_n.",
+   "rationale": "The next fair bet has conditional mean zero given the history, so expected fortune after the next round equals current fortune.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L542",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 542,
+   "format": "multiple_choice",
+   "prompt": "A fair simple random walk starts at S_0=x on {0,1,...,N}, where 0<x<N and each step is ±1. Let τ be its first hitting time of 0 or N. What is P(S_τ=N)?",
+   "choices": [
+    "The probability equals x/N.",
+    "The probability equals x/(N−x).",
+    "The probability equals (N−x)/N.",
+    "The probability equals x^2/N^2."
+   ],
+   "answer": "The probability equals x/N.",
+   "rationale": "Optional stopping gives E[S_τ]=x. If p=P(S_τ=N), then E[S_τ]=Np, so p=x/N.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L542",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 542,
+   "format": "multiple_choice",
+   "prompt": "A fair simple random walk starts at x between the absorbing boundaries 0 and N. What is the expected number of steps until it first hits either boundary?",
+   "choices": [
+    "The expectation is x(N−x).",
+    "The expectation is x(N+x).",
+    "The expectation is N(N−x).",
+    "The expectation is N(N+x)."
+   ],
+   "answer": "The expectation is x(N−x).",
+   "rationale": "The process S_n^2−n is a martingale. Optional stopping gives E[τ]=E[S_τ^2]−x^2=Nx−x^2=x(N−x).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L211",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "For x > 0, which expression evaluates the gamma function?",
+   "choices": [
+    "∫₀¹ t^(x−1)(1−t)^(−1) dt",
+    "∫₀^∞ t^(x−1)e^(−t) dt",
+    "∫₀^∞ t^(x+1)e^(−t) dt",
+    "∫₀^∞ t^(x−1)e^t dt"
+   ],
+   "answer": "∫₀^∞ t^(x−1)e^(−t) dt",
+   "rationale": "The gamma function is defined by Γ(x) = ∫₀^∞ t^(x−1)e^(−t) dt for x > 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L211",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "For a Poisson process with constant rate λ, what is the distribution of the waiting time until the fourth event occurs?",
+   "choices": [
+    "Gamma(shape = 3, rate = λ)",
+    "Gamma(shape = 5, rate = λ)",
+    "Gamma(shape = 4, rate = λ)",
+    "Gamma(shape = 4, scale = λ)"
+   ],
+   "answer": "Gamma(shape = 4, rate = λ)",
+   "rationale": "A sum of four independent exponential waiting times has a gamma distribution with shape 4 and rate λ.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L211",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "For X distributed as Beta(α, β), which expression is its probability density for 0 < x < 1?",
+   "choices": [
+    "x^α(1−x)^β divided by B(α+1, β+1)",
+    "x^(α−1)(1−x)^β divided by B(α, β+1)",
+    "x^α(1−x)^(β−1) divided by B(α+1, β)",
+    "x^(α−1)(1−x)^(β−1) divided by B(α, β)"
+   ],
+   "answer": "x^(α−1)(1−x)^(β−1) divided by B(α, β)",
+   "rationale": "The beta density on (0,1) is x^(α−1)(1−x)^(β−1) divided by the beta function B(α, β).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L211",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 211,
+   "format": "multiple_choice",
+   "prompt": "Let U₁, …, Uₙ be independent Uniform(0,1) variables. Which distribution describes the kth smallest value?",
+   "choices": [
+    "Beta(k, n+1−k)",
+    "Beta(k+1, n−k)",
+    "Beta(n+1−k, k)",
+    "Beta(k, n−k)"
+   ],
+   "answer": "Beta(k, n+1−k)",
+   "rationale": "The kth order statistic from n independent uniform variables has a beta distribution with parameters k and n+1−k.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L467",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "A two-state chain assigns probability 1/2 to each of its four possible transitions. Classify its states by recurrence and period.",
+   "choices": [
+    "Both states are recurrent and aperiodic.",
+    "Both states are transient and aperiodic.",
+    "State 0 is recurrent; state 1 is transient.",
+    "Both states are recurrent with period 2."
+   ],
+   "answer": "Both states are recurrent and aperiodic.",
+   "rationale": "Self-loops give period 1. A finite irreducible chain has only recurrent states.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L467",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "A and D are absorbing. From B: A with 0.3 and C with 0.7. From C: A with 0.2 and D with 0.8. Starting at B, find the probability of absorption in A.",
+   "choices": [
+    "0.30",
+    "0.44",
+    "0.56",
+    "0.70"
+   ],
+   "answer": "0.44",
+   "rationale": "Let p_B and p_C be absorption-in-A probabilities. Then p_C=0.2 and p_B=0.3+0.7(0.2)=0.44.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L467",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "States satisfy 0→1, 2→1, and 1→0 or 2 with equal probability. Let T₀ be the hitting time of 0, counting transitions. Find E₁[T₀].",
+   "choices": [
+    "2 steps",
+    "2.5 steps",
+    "3 steps",
+    "4 steps"
+   ],
+   "answer": "3 steps",
+   "rationale": "With h₀=0, h₁=1+0.5h₂ and h₂=1+h₁. Solving gives h₁=3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L467",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 467,
+   "format": "multiple_choice",
+   "prompt": "What does the ergodic theorem state for a finite irreducible aperiodic Markov chain?",
+   "choices": [
+    "Time averages converge almost surely to stationary probabilities.",
+    "Every state has equal stationary probability.",
+    "Transition probabilities converge to the initial distribution.",
+    "Mean hitting time is the inverse stationary probability."
+   ],
+   "answer": "Time averages converge almost surely to stationary probabilities.",
+   "rationale": "The theorem gives almost-sure convergence of empirical state frequencies to the unique stationary distribution’s components.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L221",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "Let X have a binomial distribution with n = 4 and p = 1/2, and let Y = 2X. Using the change-of-variable formula for discrete variables, what is P(Y = 6)?",
+   "choices": [
+    "1/4",
+    "3/8",
+    "3/16",
+    "1/8"
+   ],
+   "answer": "1/4",
+   "rationale": "Y = 6 occurs exactly when X = 3. Thus P(Y = 6) = P(X = 3) = C(4,3)(1/2)^4 = 4/16 = 1/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L221",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "The CDF of X is 0 for x < 0, x/2 for 0 ≤ x < 1, and 1 for x ≥ 1. For U uniform on (0,1), which rule computes X = F_X⁻¹(U)?",
+   "choices": [
+    "2U for 0 < U < 1/2; 1 for 1/2 ≤ U < 1",
+    "U/2 for 0 < U < 1/2; 1 for 1/2 ≤ U < 1",
+    "2U for 0 < U < 1/2; 1/2 for 1/2 ≤ U < 1",
+    "1/(2U) for 0 < U < 1/2; 1 for 1/2 ≤ U < 1"
+   ],
+   "answer": "2U for 0 < U < 1/2; 1 for 1/2 ≤ U < 1",
+   "rationale": "For U below 1/2, solving U = x/2 gives x = 2U. For U at least 1/2, the inverse CDF selects the jump point x = 1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L221",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "The density of X is f_X(x) = 2x for 0 < x < 1 and 0 otherwise. For Y = X², which expression gives F_Y(y) for 0 ≤ y ≤ 1?",
+   "choices": [
+    "y",
+    "√y",
+    "y²",
+    "2y"
+   ],
+   "answer": "y",
+   "rationale": "By the CDF method, F_Y(y) = P(X² ≤ y) = P(X ≤ √y) = ∫₀^√y 2x dx = y. Thus Y is uniform on (0,1).",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L221",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 221,
+   "format": "multiple_choice",
+   "prompt": "To simulate X from an exponential distribution with rate 2 using inverse transform, set U = 0.25 and compute X = F_X⁻¹(U). Which value results?",
+   "choices": [
+    "approximately 0.144",
+    "approximately 0.287",
+    "approximately 0.693",
+    "approximately 1.386"
+   ],
+   "answer": "approximately 0.144",
+   "rationale": "For an exponential distribution with rate 2, F_X⁻¹(u) = −ln(1−u)/2. Therefore X = −ln(0.75)/2 ≈ 0.1438.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L328",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Let X and Y be jointly normal with Var(X) = 9, Var(Y) = 16, and Cov(X,Y) = 6. What is Corr(X,Y)?",
+   "choices": [
+    "0.25",
+    "0.50",
+    "0.75",
+    "1.00"
+   ],
+   "answer": "0.50",
+   "rationale": "Correlation is Cov(X,Y) divided by √(Var(X)Var(Y)), so 6/√(9·16) = 6/12 = 0.50.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L328",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Let X and Y be jointly normal with E[X] = 1, E[Y] = 2, Var(X) = 4, Var(Y) = 9, and Cov(X,Y) = 2. Which describes the conditional distribution of Y given X = 0?",
+   "choices": [
+    "Mean 3/2, variance 8",
+    "Mean 1/2, variance 8",
+    "Mean 3/2, variance 9",
+    "Mean 3/2, variance 7"
+   ],
+   "answer": "Mean 3/2, variance 8",
+   "rationale": "The conditional mean is 2 + (2/4)(0 − 1) = 3/2, while the conditional variance is 9 − 2²/4 = 8.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L328",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 328,
+   "format": "multiple_choice",
+   "prompt": "Let X and Y be jointly normal with E[X] = 2, E[Y] = 5, Var(X) = 9, Var(Y) = 16, and Cov(X,Y) = 4. What are the mean and variance of Z = 3X - 2Y?",
+   "choices": [
+    "Mean -4, variance 97",
+    "Mean -4, variance 193",
+    "Mean 16, variance 97",
+    "Mean 16, variance 193"
+   ],
+   "answer": "Mean -4, variance 97",
+   "rationale": "The mean is 3(2) - 2(5) = -4. Its variance is 3^2(9) + (-2)^2(16) + 2(3)(-2)(4) = 97.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L127",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Each of 40 items is defective with probability 0.02, independently of the others. Which statement correctly models the number of defective items?",
+   "choices": [
+    "X has a Binomial(40, 0.02) distribution because the checks are independent.",
+    "X has a Binomial(0.02, 40) distribution because the checks are independent.",
+    "X has a Hypergeometric(40, 0.02) distribution because defects are counted.",
+    "X has a Poisson(40, 0.02) distribution because 40 items are checked."
+   ],
+   "answer": "X has a Binomial(40, 0.02) distribution because the checks are independent.",
+   "rationale": "The number of defects is a count of 40 independent Bernoulli trials, each with success probability 0.02, so X has a Binomial(40, 0.02) distribution.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L127",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "A fair coin is tossed 12 times. Which expression gives the probability of exactly 5 heads?",
+   "choices": [
+    "C(12,5)*(0.5)^5*(0.5)^7",
+    "C(12,5)*(0.5)^12",
+    "C(12,5)*(0.5)^5*(0.5)^5",
+    "C(12,5)*(0.5)^7"
+   ],
+   "answer": "C(12,5)*(0.5)^5*(0.5)^7",
+   "rationale": "The binomial probability for k successes in n independent trials is C(n,k)p^k(1-p)^{n-k}. With n=12, k=5, p=0.5, this yields C(12,5)*(0.5)^5*(0.5)^7.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L127",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 127,
+   "format": "multiple_choice",
+   "prompt": "Each widget has a 0.015 chance of being flawed, independently. For a batch of 500, which distribution models the count of flawed widgets?",
+   "choices": [
+    "Binomial(500,0.015)",
+    "Poisson(7.5)",
+    "Geometric(0.015)",
+    "Negative binomial(5,0.015)"
+   ],
+   "answer": "Binomial(500,0.015)",
+   "rationale": "The number of successes in a fixed number of independent Bernoulli trials with constant success probability follows a Binomial distribution, here n=500 and p=0.015.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The count of successes in 500 independent trials with success probability 0.015 follows a Binomial(500, 0.015) distribution.",
+      "url": "https://en.wiktionary.org/wiki/binomial_distribution",
+      "quote": "( probability theory , statistics ) The discrete probability distribution of the number of successes in a sequence of n independent trials, each of which yields success with probability p .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L564",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "A discrete source emits symbols 0 and 1 with probabilities 0.25 and 0.75. Using base-2 logarithms, what is its Shannon entropy per symbol?",
+   "choices": [
+    "0.811 bits per symbol",
+    "1.000 bits per symbol",
+    "1.500 bits per symbol",
+    "0.500 bits per symbol"
+   ],
+   "answer": "0.811 bits per symbol",
+   "rationale": "Shannon entropy is H(X)=-Σp(x)log₂p(x). Here H(X)=-(0.25 log₂0.25+0.75 log₂0.75)≈0.811 bits per symbol.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L564",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "Which argument correctly proves Gibbs’ inequality for positive probability vectors p and q?",
+   "choices": [
+    "Jensen on −log q directly shows Σp_i log(p_i/q_i) is nonnegative.",
+    "Let r_i=p_i/q_i; Jensen on t log t gives D(p||q)≥log(Σq_i r_i)=0.",
+    "The reverse log-sum inequality gives D(p||q)≤log(Σp_i/Σq_i), so the result follows.",
+    "Because D(p||q)=H(q)−H(p), and entropy never decreases under averaging, D(p||q)≥0."
+   ],
+   "answer": "Let r_i=p_i/q_i; Jensen on t log t gives D(p||q)≥log(Σq_i r_i)=0.",
+   "rationale": "Writing r_i=p_i/q_i gives D(p||q)=Σq_i r_i log r_i. Since t log t is convex, Jensen’s inequality yields D(p||q)≥log(Σq_i r_i)=log(Σp_i)=0. Equality holds exactly when p=q.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L564",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 564,
+   "format": "multiple_choice",
+   "prompt": "For an i.i.d. source with entropy H bits per symbol, which statement correctly limits lossless compression?",
+   "choices": [
+    "Each symbol must use exactly H bits, even when probabilities differ.",
+    "Block codes cannot approach H because fixed-length symbol codes are required.",
+    "Asymptotic expected rate is at least H, and block codes can approach H.",
+    "Joint encoding can compress below H by removing all source randomness."
+   ],
+   "answer": "Asymptotic expected rate is at least H, and block codes can approach H.",
+   "rationale": "The source coding theorem states that lossless codes have an asymptotic expected rate of at least H bits per symbol, while suitable block codes can make the rate arbitrarily close to H.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L350",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "A random variable X has mean 10 and variance 4. What upper bound does Chebyshev’s inequality give for P(|X−10|≥6)?",
+   "choices": [
+    "1/9",
+    "1/6",
+    "1/3",
+    "2/9"
+   ],
+   "answer": "1/9",
+   "rationale": "Chebyshev’s inequality gives P(|X−μ|≥a)≤σ²/a². Here the bound is 4/6²=1/9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L350",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "A nonnegative random variable X has E[X]=12. What upper bound does Markov’s inequality give for P(X≥18)?",
+   "choices": [
+    "1/2",
+    "2/3",
+    "3/4",
+    "4/5"
+   ],
+   "answer": "2/3",
+   "rationale": "Markov’s inequality gives P(X≥a)≤E[X]/a for a nonnegative X. Thus the bound is 12/18=2/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L350",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "X is uniform on {−1,1}. What are the exact probability P(|X|≥2) and Chebyshev’s upper bound for this probability?",
+   "choices": [
+    "Exact 0; bound 1/4",
+    "Exact 1/4; bound 0",
+    "Exact 0; bound 1",
+    "Exact 1/2; bound 1/4"
+   ],
+   "answer": "Exact 0; bound 1/4",
+   "rationale": "The exact probability is 0 because |X| is always 1. Since E[X]=0 and Var(X)=1, Chebyshev gives the looser bound 1/2²=1/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L350",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 350,
+   "format": "multiple_choice",
+   "prompt": "Let X have mean μ and variance σ². Which tail inequality follows by applying Markov’s inequality to (X−μ)²?",
+   "choices": [
+    "P(|X−μ|≥a)≤σ²/a²",
+    "P(|X−μ|≥a)≤σ/a",
+    "P(|X−μ|≤a)≤σ²/a²",
+    "P(|X−μ|<a)≤σ²/a²"
+   ],
+   "answer": "P(|X−μ|≥a)≤σ²/a²",
+   "rationale": "Markov applied to (X−μ)² gives P((X−μ)²≥a²)≤σ²/a², which is equivalent to P(|X−μ|≥a)≤σ²/a².",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L308",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "Which distribution has MGF M_X(t)=exp(μ t + ½ σ^2 t^2)?",
+   "choices": [
+    "Normal(μ,σ^2)",
+    "Exponential(μ)",
+    "Poisson(μ)",
+    "Uniform(0,σ^2)"
+   ],
+   "answer": "Normal(μ,σ^2)",
+   "rationale": "The MGF of a Normal(μ,σ^2) random variable is exp(μ t + ½ σ^2 t^2); no other listed distribution shares this form.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L308",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "Let X~Pois(λ1) and Y~Pois(λ2) be independent. The mgf of X+Y is exp((λ1+λ2)(e^t−1)). Hence X+Y follows which distribution?",
+   "choices": [
+    "Poisson(λ1+λ2)",
+    "Normal(λ1+λ2, λ1+λ2)",
+    "Binomial(λ1+λ2,½)",
+    "Gamma(λ1+λ2,1)"
+   ],
+   "answer": "Poisson(λ1+λ2)",
+   "rationale": "The product of the individual Poisson MGFs yields exp((λ1+λ2)(e^t−1)), the MGF of a Poisson with parameter λ1+λ2.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L308",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "The moment generating function of a random variable X is M_X(t) = (1/3)e^t + (2/3)e^{3t}. What is E[X]?",
+   "choices": [
+    "5/3",
+    "7/3",
+    "10/3",
+    "7"
+   ],
+   "answer": "7/3",
+   "rationale": "Since E[X] = M_X'(0), differentiate to get M_X'(t) = (1/3)e^t + 2e^{3t}. Thus E[X] = 1/3 + 2 = 7/3.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L308",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 308,
+   "format": "multiple_choice",
+   "prompt": "Let X and Y be independent random variables with M_X(t) = e^{2t} and M_Y(t) = e^{3t}. What is the MGF of X + Y?",
+   "choices": [
+    "e^{5t}",
+    "e^{6t}",
+    "e^{t^2}",
+    "(e^{2t} + e^{3t})/2"
+   ],
+   "answer": "e^{5t}",
+   "rationale": "For independent random variables, the MGF of their sum is the product of their MGFs. Therefore, M_{X+Y}(t) = e^{2t}e^{3t} = e^{5t}.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L499",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "For an M/M/1 queue with arrival rate λ = 8 customers per hour and service rate μ = 12 customers per hour, what is the stationary probability that the system contains exactly two customers?",
+   "choices": [
+    "4/27",
+    "2/9",
+    "1/3",
+    "8/27"
+   ],
+   "answer": "4/27",
+   "rationale": "Here ρ = λ/μ = 2/3, so P(N = 2) = (1 − ρ)ρ² = (1/3)(4/9) = 4/27.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L499",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "An M/M/1 queue has arrival rate λ = 15 customers per hour and service rate μ = 25 customers per hour. What is the average time a customer spends in the system, including service?",
+   "choices": [
+    "4 minutes",
+    "6 minutes",
+    "10 minutes",
+    "12 minutes"
+   ],
+   "answer": "6 minutes",
+   "rationale": "The mean time in the system is W = 1/(μ − λ) = 1/10 hour, which equals 6 minutes.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L499",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "An M/M/3 queue has arrival rate 20 customers per hour, and each of its three servers has service rate 10 customers per hour. What is the stationary expected number of customers waiting in the queue?",
+   "choices": [
+    "2/9",
+    "4/9",
+    "8/9",
+    "10/9"
+   ],
+   "answer": "8/9",
+   "rationale": "For a = 2 and ρ = 2/3, Erlang C gives P(wait) = 4/9. Thus Lq = P(wait)ρ/(1 − ρ) = (4/9)(2) = 8/9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L499",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "calculus",
+   "level": 499,
+   "format": "multiple_choice",
+   "prompt": "A queue has a steady-state throughput of 30 customers per hour and an average customer time in the system of 4 minutes. By Little’s law, what is the average number of customers in the system?",
+   "choices": [
+    "1 customer",
+    "2 customers",
+    "3 customers",
+    "4 customers"
+   ],
+   "answer": "2 customers",
+   "rationale": "Little’s law gives L = λW = 30(4/60) = 2 customers.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L594",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 594,
+   "format": "multiple_choice",
+   "prompt": "An M/M/1 queue has independent Poisson arrivals at 10 per hour and independent exponential service times with mean 5 minutes. What fraction of time is the server busy?",
+   "choices": [
+    "5/6",
+    "6/5",
+    "1/6",
+    "1/12"
+   ],
+   "answer": "5/6",
+   "rationale": "The service rate is 12 per hour, so utilization is λ/μ = 10/12 = 5/6. Since λ < μ, the queue is stable.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L594",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 594,
+   "format": "multiple_choice",
+   "prompt": "Two components operate in parallel. Their failure times are independent, with probabilities of surviving one year equal to 0.90 and 0.80. What is the probability that the system survives the year?",
+   "choices": [
+    "0.98",
+    "0.72",
+    "0.89",
+    "0.17"
+   ],
+   "answer": "0.98",
+   "rationale": "The system fails only if both components fail, with probability (0.10)(0.20) = 0.02. Thus its survival probability is 1 − 0.02 = 0.98.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L594",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 594,
+   "format": "multiple_choice",
+   "prompt": "An insurer pays $1,000 for a minor loss with probability 0.20 and $5,000 for a major loss with probability 0.05; otherwise it pays nothing. For 100 independent policies, what is the expected total payout?",
+   "choices": [
+    "$45,000",
+    "$25,000",
+    "$7,500",
+    "$2,500"
+   ],
+   "answer": "$45,000",
+   "rationale": "The expected payout per policy is (0.20)($1,000) + (0.05)($5,000) = $450. For 100 policies, the expectation is $45,000.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L519",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 519,
+   "format": "multiple_choice",
+   "prompt": "Let N be independent of X_1, X_2, …, with P(N=0)=P(N=1)=1/2. Each X_i has P(X_i=0)=P(X_i=1)=1/2. If S=∑_{i=1}^N X_i, what is G_S(s)=E[s^S]?",
+   "choices": [
+    "(3+s)/4",
+    "(1+2s)/3",
+    "(1+s)/2",
+    "(2+s)/3"
+   ],
+   "answer": "(3+s)/4",
+   "rationale": "Conditioning on N gives G_S(s)=G_N(G_X(s)). Since both G_N(s) and G_X(s) equal (1+s)/2, G_S(s)=(3+s)/4.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L519",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 519,
+   "format": "multiple_choice",
+   "prompt": "Let P(N=n)=2^{-n} for n≥1, and let the X_i be independent Bernoulli(1/2) variables independent of N. What is E[∑_{i=1}^N X_i]?",
+   "choices": [
+    "1/2",
+    "3/4",
+    "1",
+    "3/2"
+   ],
+   "answer": "1",
+   "rationale": "The compound-sum PGF is G_S(s)=G_N(G_X(s))=(1+s)/(3-s). Differentiating gives E[S]=G_S′(1)=1.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L519",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 519,
+   "format": "multiple_choice",
+   "prompt": "A Galton-Watson process starts with two independent ancestors. Each individual has 0 offspring with probability 1/4 and 2 offspring with probability 3/4. What is the probability of eventual extinction?",
+   "choices": [
+    "1/9",
+    "2/9",
+    "1/3",
+    "4/9"
+   ],
+   "answer": "1/9",
+   "rationale": "Here f(s)=1/4+3s²/4. The smallest fixed point is q=1/3. With two independent ancestral lines, the extinction probability is q²=1/9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L477",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 477,
+   "format": "multiple_choice",
+   "prompt": "A counting process {N(t)} is a Poisson process of rate λ if it has independent increments, N(t)−N(s)∼Poisson(λ(t−s)), and its increments are also:",
+   "choices": [
+    "stationary",
+    "continuous",
+    "deterministic",
+    "bounded"
+   ],
+   "answer": "stationary",
+   "rationale": "Stationary increments (the distribution of N(t)−N(s) depends only on t−s) is the third defining property of a Poisson process.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Poisson process increments are stationary.",
+      "url": "https://en.wikipedia.org/wiki/Stationary_increments",
+      "quote": "Being special Lévy processes, both the Wiener process and the Poisson processes have stationary increments.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L477",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 477,
+   "format": "multiple_choice",
+   "prompt": "For a Poisson process of rate 2 per hour, P(N(2)=3) equals:",
+   "choices": [
+    "e^{-4}·4^3/3!",
+    "e^{-2}·2^3/3!",
+    "e^{-4}·4^2/2!",
+    "e^{-2}·2^4/4!"
+   ],
+   "answer": "e^{-4}·4^3/3!",
+   "rationale": "Over a 2‑hour interval the mean count is λt=4, so N(2)∼Poisson(4) and P(N=3)=e^{-4}4^3/3!.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "A Poisson process with rate 2 per hour has mean count 4 over 2 hours, so its count at time 2 follows a Poisson distribution with parameter 4.",
+      "url": "https://en.wikipedia.org/wiki/Poisson_Distribution",
+      "quote": "If for every t > 0 the number of arrivals in the time interval [0, t ] follows the Poisson distribution with mean λt , then the sequence of inter-arrival times are independent and identically distributed exponential random variables having mean 1/ λ .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L477",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 477,
+   "format": "multiple_choice",
+   "prompt": "Two independent Poisson processes with rates 4 and 6 are superposed. The resulting process is Poisson with rate:",
+   "choices": [
+    "10",
+    "24",
+    "5",
+    "√52"
+   ],
+   "answer": "10",
+   "rationale": "Merging independent Poisson streams adds their rates; 4+6=10.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The superposition of independent Poisson processes is a Poisson process whose rate is the sum of the individual rates, here 4 + 6 = 10.",
+      "url": "https://en.wikipedia.org/wiki/History_of_network_traffic_models",
+      "quote": "Primarily, superposition of independent Poisson processes results in a new Poisson process whose rate is the sum of the rates of the independent Poisson processes.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L574",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "A fair coin is tossed five times. What is the probability that exactly three of the five tosses are heads?",
+   "choices": [
+    "5/16",
+    "1/8",
+    "1/2",
+    "3/10"
+   ],
+   "answer": "5/16",
+   "rationale": "By symmetry, the C(5,3) = 10 arrangements with three heads are equally likely among all 2^5 = 32 outcomes, so the probability is 10/32 = 5/16.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L574",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "A bag contains 3 red and 2 blue marbles. Two marbles are drawn without replacement. Given that the first marble is red, what is the probability that the second marble is blue?",
+   "choices": [
+    "1/4",
+    "1/2",
+    "2/3",
+    "2/5"
+   ],
+   "answer": "1/2",
+   "rationale": "Conditioning on the first marble being red leaves 2 blue marbles among 4 remaining marbles, so the conditional probability is 2/4 = 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L574",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "A 12-question true-false quiz is answered independently, with probability 0.65 of being correct on each question. What is the expected number of correct answers?",
+   "choices": [
+    "6.0",
+    "7.2",
+    "7.8",
+    "8.4"
+   ],
+   "answer": "7.8",
+   "rationale": "Let an indicator equal 1 when each answer is correct. Linearity of expectation gives 12 × 0.65 = 7.8 correct answers on average.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L574",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 574,
+   "format": "multiple_choice",
+   "prompt": "Two fair six-sided dice are rolled 10,000 times. The simulation estimates the probability that the sum is not 8. What value should the simulation result be close to?",
+   "choices": [
+    "5/36",
+    "6/36",
+    "31/36",
+    "36/36"
+   ],
+   "answer": "31/36",
+   "rationale": "There are 36 equally likely ordered outcomes, and 5 have sum 8. By complementary counting, the probability of a sum other than 8 is 1 − 5/36 = 31/36.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L383",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 383,
+   "format": "multiple_choice",
+   "prompt": "For events A_n with ∑P(A_n)<∞, which argument proves that A_n occurs infinitely often with probability 0?",
+   "choices": [
+    "Use P(∪_{n≥m}A_n)≤∑_{n≥m}P(A_n), then let m→∞.",
+    "Use P(A_n)→0 to conclude P(A_n)=0 eventually.",
+    "Assume the events are disjoint and sum their probabilities.",
+    "Multiply the probabilities because the events are independent."
+   ],
+   "answer": "Use P(∪_{n≥m}A_n)≤∑_{n≥m}P(A_n), then let m→∞.",
+   "rationale": "Let B_m=∪_{n≥m}A_n. Then P(B_m)≤∑_{n≥m}P(A_n)→0, so P(∩_{m≥1}B_m)=0. Independence is not required.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "Countable subadditivity (union bound) holds for probabilities.",
+      "url": "https://en.wikipedia.org/wiki/Union_bound",
+      "quote": "the probability that at least one of the events happens is no greater than the sum of the probabilities of the individual events.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L383",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 383,
+   "format": "multiple_choice",
+   "prompt": "For a sequence of events B_n with P(B_n) = 1/n^2, which Borel‑Cantelli lemma determines whether B_n occurs infinitely often, and what is the conclusion?",
+   "choices": [
+    "First lemma: sum finite ⇒ P(i.o.) = 0",
+    "First lemma: sum infinite ⇒ P(i.o.) = 1",
+    "Second lemma: sum finite ⇒ P(i.o.) = 0",
+    "Second lemma: sum infinite ⇒ P(i.o.) = 1"
+   ],
+   "answer": "First lemma: sum finite ⇒ P(i.o.) = 0",
+   "rationale": "Since Σ 1/n^2 converges, the first Borel‑Cantelli lemma applies and yields P(B_n i.o.) = 0; independence is not required for this direction.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "The first Borel-Cantelli lemma: if ΣP(B_n)<∞ then P(B_n i.o.)=0.",
+      "url": "https://en.wikipedia.org/wiki/Borel-Cantelli_lemmas",
+      "quote": "The first Borel–Cantelli lemma , which states that if the sum of the probabilities of the events is finite, then the probability that infinitely many of them occur is 0.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The first Borel–Cantelli lemma says that if the probabilities have a finite sum, the events occur infinitely often with probability zero.",
+      "url": "https://en.wikipedia.org/wiki/Borel-Cantelli_Lemma",
+      "quote": "The first Borel–Cantelli lemma , which states that if the sum of the probabilities of the events is finite, then the probability that infinitely many of them occur is 0.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L383",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 383,
+   "format": "multiple_choice",
+   "prompt": "Let (A_n) be independent events with Σ P(A_n) = ∞. Which statement follows from the second Borel‑Cantelli lemma?",
+   "choices": [
+    "P(A_n i.o.) = 0",
+    "P(A_n i.o.) = 1",
+    "Σ P(A_n) < ∞",
+    "The events are mutually exclusive"
+   ],
+   "answer": "P(A_n i.o.) = 1",
+   "rationale": "The second Borel‑Cantelli lemma states that for independent events, if the sum of probabilities diverges then the events occur infinitely often with probability 1.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "Second Borel-Cantelli Lemma: for independent events with ΣP(A_n)=∞, P(A_n i.o.)=1.",
+      "url": "https://en.wikipedia.org/wiki/Borel-Cantelli_Lemma",
+      "quote": "The second Borel–Cantelli lemma , which states that if the events are independent and the sum of their probabilities is infinite, then the probability that infinitely many of them occur is 1.",
+      "reader": "minimax/minimax-m3.1-flash"
+     },
+     {
+      "claim": "The second Borel–Cantelli lemma says that independent events whose probabilities have an infinite sum occur infinitely often with probability one.",
+      "url": "https://en.wikipedia.org/wiki/Borel-Cantelli_Lemma",
+      "quote": "The second Borel–Cantelli lemma , which states that if the events are independent and the sum of their probabilities is infinite, then the probability that infinitely many of them occur is 1.",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L584",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "When using the product rule P(A∩B)=P(A)P(B) in a written solution, which assumption must be explicitly stated?",
+   "choices": [
+    "The events A and B are independent.",
+    "The events A and B are mutually exclusive.",
+    "The events A and B have equal probabilities.",
+    "The sample space is finite and uniform."
+   ],
+   "answer": "The events A and B are independent.",
+   "rationale": "The product rule holds only under independence; stating independence is the required assumption.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L584",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "When applying the law of total probability P(A)=∑P(A|B_i)P(B_i), what must be explicitly stated about the events B_i?",
+   "choices": [
+    "The B_i form a partition of the sample space.",
+    "The B_i are pairwise independent of each other.",
+    "Each B_i is assigned equal probability weight.",
+    "All B_i are contained within event A."
+   ],
+   "answer": "The B_i form a partition of the sample space.",
+   "rationale": "The law of total probability requires that the conditioning events B_i constitute a partition (mutually exclusive and exhaustive) of the sample space; without this assumption the decomposition is invalid.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L584",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 584,
+   "format": "multiple_choice",
+   "prompt": "To justify E[1_A] = P(A) in a written argument, which definition must be cited?",
+   "choices": [
+    "Definition of the indicator random variable 1_A.",
+    "Linearity of expectation for discrete variables.",
+    "Law of total expectation for partitions.",
+    "Independence of A from the sample space."
+   ],
+   "answer": "Definition of the indicator random variable 1_A.",
+   "rationale": "The equality E[1_A]=P(A) follows directly from the definition of the indicator variable 1_A, which equals 1 on A and 0 otherwise; its expectation is the probability of A.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The indicator random variable satisfies E[1_A] = P(A).",
+      "url": "https://en.wikipedia.org/wiki/Indicator_random_variable",
+      "quote": "In mathematics , an indicator function or a characteristic function of a subset of a set is a function that maps elements of the subset to one, and all other elements to zero.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L552",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "Let X be nonnegative and satisfy E[X] = 8. What upper bound does Markov's inequality give for P(X ≥ 16)?",
+   "choices": [
+    "1/4",
+    "1/2",
+    "3/4",
+    "1"
+   ],
+   "answer": "1/2",
+   "rationale": "Markov's inequality gives P(X ≥ a) ≤ E[X]/a, so P(X ≥ 16) ≤ 8/16 = 1/2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L552",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "A random variable X has E[X] = 10 and Var(X) = 4. What upper bound does Chebyshev's inequality give for P(|X − 10| ≥ 3)?",
+   "choices": [
+    "3/4",
+    "4/9",
+    "1/3",
+    "9/4"
+   ],
+   "answer": "4/9",
+   "rationale": "Chebyshev's inequality gives P(|X − E[X]| ≥ a) ≤ Var(X)/a². Here the bound is 4/3² = 4/9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L552",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "Let X be a random variable with E[X] = 3, and let f(x) = x². Which statement follows directly from Jensen's inequality?",
+   "choices": [
+    "E[X²] ≥ 14",
+    "E[X²] = 9",
+    "E[X²] ≤ 9",
+    "E[X²] ≥ 9"
+   ],
+   "answer": "E[X²] ≥ 9",
+   "rationale": "Because x² is convex, Jensen's inequality gives E[f(X)] ≥ f(E[X]). Thus E[X²] ≥ 3² = 9.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L552",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 552,
+   "format": "multiple_choice",
+   "prompt": "Let X be a nonnegative integer-valued random variable with E[X] = 2. Which existence conclusion must be true?",
+   "choices": [
+    "There is an outcome where X is at least 2.",
+    "There is an outcome where X equals exactly 2.",
+    "There is an outcome where X is at most 1.",
+    "There is an outcome where X is greater than 2."
+   ],
+   "answer": "There is an outcome where X is at least 2.",
+   "rationale": "If X were below 2 at every outcome, integer-valuedness would imply X ≤ 1 everywhere, giving E[X] ≤ 1. This contradicts E[X] = 2.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L393",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "Let X_n be independent Bernoulli variables with P(X_n=1)=1/log(n+1) for n≥2. Which claimed implication is refuted by this sequence?",
+   "choices": [
+    "Mean-square convergence implies almost sure convergence.",
+    "Mean-square convergence implies convergence in probability.",
+    "Almost sure convergence implies convergence in mean square.",
+    "Convergence in probability implies convergence in mean square."
+   ],
+   "answer": "Mean-square convergence implies almost sure convergence.",
+   "rationale": "Here E[(X_n-0)^2]=1/log(n+1)→0, so the sequence converges in mean square. But ΣP(X_n=1) diverges, so independence and the second Borel–Cantelli lemma imply X_n=1 infinitely often almost surely. Thus it does not converge almost surely to 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The series Σ 1/log(n) diverges, so by Borel–Cantelli X_n=1 infinitely often almost surely.",
+      "url": "https://en.wikipedia.org/wiki/Borel_cantelli",
+      "quote": "If the events E_n are independent and the sum of the probabilities of the E_n diverges to infinity, then the probability that infinitely many of them occur is 1.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L393",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "On a product probability space, let A_n be independent with P(A_n)=1/n, and X_n=1_{A_n}. Which statement is correct?",
+   "choices": [
+    "It converges to 0 in probability, but not almost surely.",
+    "It converges to 0 almost surely, but not in probability.",
+    "It converges to 0 in mean square, but not in probability.",
+    "It converges to 0 almost surely, but not in distribution."
+   ],
+   "answer": "It converges to 0 in probability, but not almost surely.",
+   "rationale": "Since P(|X_n|>1/2)=1/n→0, X_n converges to 0 in probability. However, independence and the divergence of ΣP(A_n)=Σ1/n imply that A_n occurs infinitely often almost surely, so X_n does not converge almost surely to 0.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": [
+     {
+      "claim": "The harmonic series diverges, so by the second Borel–Cantelli lemma infinitely many A_n occur almost surely.",
+      "url": "https://en.wikipedia.org/wiki/Borel_cantelli",
+      "quote": "The second Borel–Cantelli lemma , which states that if the events are independent and the sum of their probabilities is infinite, then the probability that infinitely many of them occur is 1.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L393",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 393,
+   "format": "multiple_choice",
+   "prompt": "On the probability space ([0,1], Lebesgue), define X_n(ω)= n·1_{[0,1/n]}(ω). Which mode of convergence does this sequence exhibit towards 0?",
+   "choices": [
+    "Converges almost surely and in mean square.",
+    "Converges in probability but not in mean square.",
+    "Converges in mean square but not in probability.",
+    "Converges neither in probability nor in mean square."
+   ],
+   "answer": "Converges in probability but not in mean square.",
+   "rationale": "P(|X_n|>ε)=1/n→0, so X_n→0 in probability. However E[X_n^2]=n^2·(1/n)=n→∞, so convergence in mean square fails.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L509",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 509,
+   "format": "multiple_choice",
+   "prompt": "For an irreducible birth-death chain on {0,1,2,...}, let λ_n=1 and μ_n=1 for n≥1, with no death from state 0. Which conclusion follows?",
+   "choices": [
+    "Null recurrent, with no stationary probability distribution",
+    "Positive recurrent, with a unique stationary probability distribution",
+    "Transient, with no stationary probability distribution",
+    "Null recurrent, with a unique stationary probability distribution"
+   ],
+   "answer": "Null recurrent, with no stationary probability distribution",
+   "rationale": "The embedded reflected symmetric walk is recurrent. However, the invariant weights are all 1, whose infinite sum cannot be normalized, so the chain is null recurrent and has no stationary probability distribution.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L509",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 509,
+   "format": "multiple_choice",
+   "prompt": "Consider a CTMC on states {0,1,2} with birth rates λ₀=3, λ₁=2, λ₂=0 and death rates μ₀=0, μ₁=1, μ₂=4. What is the off‑diagonal entry Q_{1,2}?",
+   "choices": [
+    "2",
+    "1",
+    "-3",
+    "0"
+   ],
+   "answer": "2",
+   "rationale": "In a birth‑death generator, Q_{i,i+1}=λ_i. Here λ₁=2, so Q_{1,2}=2. The other options correspond to the death rate from 1, the negative row sum, and a zero entry.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "judge_families": [
+     "openai",
+     "minimax"
+    ],
+    "source": [
+     {
+      "claim": "In the standard CTMC generator convention, Q_{1,2} equals the transition rate from state 1 to state 2, which is the birth rate λ₁=2.",
+      "url": "https://en.wikipedia.org/wiki/Markov_chain",
+      "quote": "For i ≠ j , the elements q ij are non-negative and describe the rate of the process transitions from state i to state j .",
+      "reader": "minimax/minimax-m3.1-flash"
+     }
+    ],
+    "round": 1
+   }
+  },
+  {
+   "objective_id": "probability:L435",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 435,
+   "format": "multiple_choice",
+   "prompt": "A fair random walk moves on {0,1,2,3} until reaching 0 or 3. Let E_i be its expected absorption time from i. Given E_0=E_3=0 and E_i=1+(E_{i-1}+E_{i+1})/2, what is E_1?",
+   "choices": [
+    "1",
+    "3/2",
+    "2",
+    "5/2"
+   ],
+   "answer": "2",
+   "rationale": "Solving the recurrence gives E_i=i(3-i). Therefore E_1=1(3-1)=2 steps.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L532",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 532,
+   "format": "multiple_choice",
+   "prompt": "Let S_k = sum from i=1 to k of X_i, where each X_i equals 1 or −1 with probability 1/2. Define W_n(t) = S_floor(nt)/sqrt(n). As n tends to infinity, W_n converges in distribution as a process to which limit?",
+   "choices": [
+    "Standard Brownian motion with B_0 = 0 and Var(B_t) = t",
+    "A deterministic process with B_t = t",
+    "A discrete random walk with unit-size increments",
+    "Standard Brownian motion with B_0 = 0 and Var(B_t) = t²"
+   ],
+   "answer": "Standard Brownian motion with B_0 = 0 and Var(B_t) = t",
+   "rationale": "The functional central limit theorem gives this limit. Over a time interval of length t−s, W_n has variance approximately n(t−s)/n = t−s, yielding standard Brownian motion.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L532",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 532,
+   "format": "multiple_choice",
+   "prompt": "Which set of properties characterizes the increments and sample paths of standard Brownian motion B on [0,infinity)?",
+   "choices": [
+    "B_0 = 1; continuous paths; independent N(0,t−s) increments over [s,t]",
+    "B_0 = 0; discontinuous paths; independent N(0,t−s) increments over [s,t]",
+    "B_0 = 0; continuous paths; independent N(0,t−s) increments over [s,t]",
+    "B_0 = 0; continuous paths; dependent N(0,t−s) increments over [s,t]"
+   ],
+   "answer": "B_0 = 0; continuous paths; independent N(0,t−s) increments over [s,t]",
+   "rationale": "Standard Brownian motion starts at zero, has continuous sample paths, and has independent Gaussian increments B_t−B_s distributed as N(0,t−s) for s<t.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L532",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 532,
+   "format": "multiple_choice",
+   "prompt": "For standard Brownian motion B with B_0=0, let M_t=max from 0 to t of B_s. For a>0 and t>0, which formula equals P(M_t is at least a)?",
+   "choices": [
+    "2[1−Phi(a/sqrt(t))]",
+    "1−Phi(a/sqrt(t))",
+    "2Phi(a/sqrt(t))−1",
+    "1−Phi(−a/sqrt(t))"
+   ],
+   "answer": "2[1−Phi(a/sqrt(t))]",
+   "rationale": "Reflecting paths after their first hit of a and using symmetry gives P(M_t≥a)=2P(B_t≥a). Since B_t has distribution N(0,t), this equals 2[1−Phi(a/sqrt(t))].",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_families": [
+     "openai",
+     "nemotron"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L403",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 403,
+   "format": "multiple_choice",
+   "prompt": "A simulation repeatedly forms standardized sums from iid populations with finite variance. Which pattern most strongly supports the central limit theorem?",
+   "choices": [
+    "As n increases, the histograms increasingly resemble a standard normal curve.",
+    "As n increases, the histograms increasingly resemble a uniform distribution.",
+    "As n increases, the histograms increasingly split into two separate peaks.",
+    "As n increases, the histograms retain exactly the same spread for every n."
+   ],
+   "answer": "As n increases, the histograms increasingly resemble a standard normal curve.",
+   "rationale": "Simulations of the CLT show that standardized sums of iid variables with finite variance become approximately normally distributed as the number of terms increases.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L403",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 403,
+   "format": "multiple_choice",
+   "prompt": "Which conditions are sufficient for applying the classical central limit theorem to a sequence of random variables?",
+   "choices": [
+    "The variables are iid and have a finite mean and positive finite variance.",
+    "The variables are dependent but each has a finite mean and variance.",
+    "The variables are iid but their variances increase without bound.",
+    "The variables are independent but have infinite means and variances."
+   ],
+   "answer": "The variables are iid and have a finite mean and positive finite variance.",
+   "rationale": "The classical CLT applies to independent, identically distributed random variables whose common mean is finite and whose common variance is finite and positive.",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "nemotron",
+     "openai"
+    ],
+    "source": [
+     {
+      "claim": "The classical central limit theorem requires the random variables to be independent and identically distributed with a finite, non-zero variance.",
+      "url": "https://en.wiktionary.org/wiki/Central_Limit_Theorem",
+      "quote": "the theorem that states that if the sum of independent identically distributed random variables has a finite variance, then it will be approximately normally distributed.",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ],
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L425",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "You draw 1,000,000 samples from Uniform(0,1) and compute the fraction exceeding 0.7. What is the Monte Carlo estimate of P(U>0.7)?",
+   "choices": [
+    "0.30",
+    "0.70",
+    "0.50",
+    "0.00"
+   ],
+   "answer": "0.30",
+   "rationale": "For U~Uniform(0,1), P(U>0.7)=1-0.7=0.3; the Monte Carlo proportion converges to this value.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  },
+  {
+   "objective_id": "probability:L425",
+   "track_id": "math",
+   "grade_id": "probability",
+   "skill_id": "probability",
+   "level": 425,
+   "format": "multiple_choice",
+   "prompt": "For a Monte Carlo estimate of a probability p using N=10,000 samples, the standard error is √[p(1−p)/N]. If the estimated p̂ = 0.25, what is the approximate standard error?",
+   "choices": [
+    "0.0043",
+    "0.043",
+    "0.0014",
+    "0.014"
+   ],
+   "answer": "0.0043",
+   "rationale": "SE = sqrt(0.25*0.75/10000) = sqrt(0.1875/10000) ≈ 0.00433, which rounds to 0.0043.",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "judge_families": [
+     "minimax",
+     "openai"
+    ],
+    "source": "no factual claim named by either judge",
+    "round": 0
+   }
+  }
+ ]
+}

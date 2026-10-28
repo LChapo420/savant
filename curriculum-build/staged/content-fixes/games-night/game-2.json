@@ -1,0 +1,2668 @@
+{
+ "row_id": 2,
+ "engine_id": "memory-match",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 1,
+ "generated_at": "2026-10-24T06:18:21.858Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 57,
+  "code_rejected": 0,
+  "sent_to_judges": 57,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 57,
+   "picked_same_option": 55,
+   "a_picked_key": 56,
+   "b_picked_key": 56,
+   "models_a": [
+    "minimax/minimax-m3.1-flash",
+    "minimax-m3.1-flash:free"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "gemini-3.6-flash:free",
+    "nemotron-3-ultra-550b-a55b:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "memory-match",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 1,
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "title": "Entry Check: Advanced Grammar and Voice",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q3",
+    "prompt": "Which sentence is written in the passive voice?",
+    "choices": [
+     "The committee approved the proposal after a long meeting.",
+     "The proposal was approved after a long meeting.",
+     "After a long meeting, the committee approved the proposal.",
+     "The committee will approve the proposal after a long meeting."
+    ],
+    "answerIndex": 1,
+    "explanation": "The passive voice puts the subject in the subject position and uses a form of be with the past participle approved.",
+    "difficulty": 3,
+    "skill": "Identifying passive voice",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q24",
+    "prompt": "Choose the present-tense verb that agrees with the singular subject: The author of the essays ___ revising each chapter now.",
+    "choices": [
+     "is",
+     "are",
+     "am",
+     "be"
+    ],
+    "answerIndex": 0,
+    "explanation": "The singular subject author takes the present-tense verb is, even though the prepositional phrase of the essays comes between them.",
+    "difficulty": 2,
+    "skill": "Subject-Verb Agreement",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which sentence correctly uses subject-verb inversion after a fronted negative phrase?",
+    "choices": [
+     "Only after the bell did the guests leave.",
+     "Only after the bell the guests did leave.",
+     "Only after the bell left the guests did.",
+     "Only after the bell did the guests left."
+    ],
+    "answerIndex": 0,
+    "explanation": "Only after the bell is a fronted negative phrase, so did the guests leave correctly inverts the subject and verb.",
+    "difficulty": 4,
+    "skill": "Applying subject-verb inversion",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q16",
+    "prompt": "By the time the teacher noticed the folder was missing, another pupil ___ it.",
+    "choices": [
+     "has taken",
+     "takes",
+     "had taken",
+     "is taking"
+    ],
+    "answerIndex": 2,
+    "explanation": "Had taken is in the past perfect because the pupil took the folder before the teacher noticed that it was missing.",
+    "difficulty": 3,
+    "skill": "Forming the past perfect",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q40",
+    "prompt": "Identify the sentence that uses the interrogative mood.",
+    "choices": [
+     "Where will the team practice after the tournament?",
+     "The team will practice after the tournament.",
+     "Although the team will practice after the tournament, the coaches will watch.",
+     "The coaches will watch the team practice after the tournament."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence asks where the team will practice, so it uses the interrogative mood.",
+    "difficulty": 2,
+    "skill": "Distinguishing sentence moods and purposes",
+    "topic": "Entry Check, Part 1 of 9: Sentence Mood"
+   },
+   {
+    "id": "q31",
+    "prompt": "After the collision, Carlos hurt ___.",
+    "choices": [
+     "himself",
+     "themselves",
+     "herself",
+     "itself"
+    ],
+    "answerIndex": 0,
+    "explanation": "The reflexive pronoun agrees with the singular antecedent Carlos, so himself is correct.",
+    "difficulty": 2,
+    "skill": "Reflexive pronoun agreement",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q33",
+    "prompt": "Which sentence uses a modal to express certainty based on the available evidence?",
+    "choices": [
+     "The measurements match exactly, so the device must be working.",
+     "The measurements match exactly, so the device might be working.",
+     "The measurements match exactly, so the device may be working.",
+     "The measurements match exactly, so the device can be working."
+    ],
+    "answerIndex": 0,
+    "explanation": "Must expresses the certainty inferred from the speaker's conclusion.",
+    "difficulty": 3,
+    "skill": "Modal verbs for certainty",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which sentence correctly describes an unreal condition and result in the past?",
+    "choices": [
+     "If Leah left earlier, she will catch the train.",
+     "If Leah had left earlier, she would have caught the train.",
+     "If Leah had left earlier, she would catch the train.",
+     "If Leah would leave earlier, she would have caught the train."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option uses the third conditional: had left sets an unreal past condition, and would have caught states its unreal result.",
+    "difficulty": 4,
+    "skill": "Third conditional",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q6",
+    "prompt": "Which sentence is a sentence fragment?",
+    "choices": [
+     "Because the roads were flooded, the buses were delayed all morning.",
+     "While the roads were flooded, the buses were delayed all morning.",
+     "Because the roads were flooded and the buses were delayed all morning.",
+     "After the roads were flooded, the buses were delayed and the drivers waited."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option is a sentence fragment because the dependent clause introduced by because has no main clause.",
+    "difficulty": 2,
+    "skill": "Identifying sentence fragments",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q35",
+    "prompt": "By the time the judges arrive, the technicians ___ the winner's trophy.",
+    "choices": [
+     "will have polished",
+     "will polish",
+     "had polished",
+     "have polished"
+    ],
+    "answerIndex": 0,
+    "explanation": "The future perfect will have polished indicates that the polishing will be complete before the judges arrive.",
+    "difficulty": 3,
+    "skill": "Future perfect tense",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q47",
+    "prompt": "Choose the verb that agrees with the singular subject: On the bulletin board, a list of approved names ___.",
+    "choices": [
+     "appears",
+     "appear",
+     "appearing",
+     "appeared"
+    ],
+    "answerIndex": 0,
+    "explanation": "The subject is the singular noun phrase a list of approved names, so appears is the correct present-tense verb.",
+    "difficulty": 2,
+    "skill": "Agreement with a Singular Noun Phrase",
+    "topic": "Entry Check, Part 1 of 9: Subject-Verb Agreement"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which sentence contains a comma splice?",
+    "choices": [
+     "The band began playing and the audience began clapping.",
+     "The band began playing; the audience began clapping.",
+     "The band began playing when the audience began clapping.",
+     "The band began playing, the audience began clapping."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option is a comma splice because it joins two independent clauses with only a comma.",
+    "difficulty": 3,
+    "skill": "Identifying comma splices",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which sentence reports the statement I am ready to begin using the standard shift to reported speech?",
+    "choices": [
+     "She said that she was ready to begin.",
+     "She said that she is ready to begin.",
+     "She said that she has been ready to begin.",
+     "She said that she had been ready to begin."
+    ],
+    "answerIndex": 0,
+    "explanation": "The simple present in the direct statement normally shifts to the simple past in reported speech, producing she was ready to begin.",
+    "difficulty": 4,
+    "skill": "Shifting Tense in Reported Speech",
+    "topic": "Entry Check, Part 1 of 9: Reported Speech"
+   },
+   {
+    "id": "q38",
+    "prompt": "Select the sentence in which the participial phrase tasting the soup logically modifies the chef.",
+    "choices": [
+     "Tasting the soup, the table was set for dinner.",
+     "The chef, tasting the soup, decided that it needed salt.",
+     "After tasting the soup, the waiter carried the empty bowl away.",
+     "Tasting the soup, it was the chef who decided that it needed salt."
+    ],
+    "answerIndex": 1,
+    "explanation": "In the selected sentence, tasting the soup describes the chef, who is the subject of the main clause.",
+    "difficulty": 3,
+    "skill": "Attaching participial modifiers",
+    "topic": "Entry Check, Part 1 of 9: Participial Modifiers"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which sentence uses the preposition correctly?",
+    "choices": [
+     "Despite of the rain, the soccer match continued.",
+     "Despite from the rain, the soccer match continued.",
+     "Despite to the rain, the soccer match continued.",
+     "Despite the rain, the soccer match continued."
+    ],
+    "answerIndex": 3,
+    "explanation": "Despite is followed directly by the noun phrase the rain, so no second preposition belongs after it.",
+    "difficulty": 2,
+    "skill": "Using prepositions with noun phrases",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q25",
+    "prompt": "Choose the relative pronoun that correctly completes the sentence: The student ___ essay won the contest was recognized at the assembly.",
+    "choices": [
+     "whose",
+     "who",
+     "which",
+     "where"
+    ],
+    "answerIndex": 0,
+    "explanation": "Whose expresses possession and identifies the essay that belongs to the student.",
+    "difficulty": 3,
+    "skill": "Relative Pronouns",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q37",
+    "prompt": "Identify the sentence that correctly punctuates an introductory dependent clause.",
+    "choices": [
+     "After the storm had damaged the eastern entrance, the maintenance crew cleared the fallen branches.",
+     "After the storm had damaged the eastern entrance the maintenance crew cleared the fallen branches.",
+     "After the storm had damaged the eastern entrance; the maintenance crew cleared the fallen branches.",
+     "After the storm had damaged the eastern entrance, and the maintenance crew cleared the fallen branches."
+    ],
+    "answerIndex": 0,
+    "explanation": "The introductory clause After the storm had damaged the eastern entrance is followed by a comma before the independent clause.",
+    "difficulty": 2,
+    "skill": "Punctuating introductory dependent clauses",
+    "topic": "Entry Check, Part 1 of 9: Clauses and Comma Usage"
+   },
+   {
+    "id": "q5",
+    "prompt": "Which sentence avoids a dangling modifier?",
+    "choices": [
+     "Walking into the room, the trophy was placed on the table.",
+     "Walking into the room, she placed the trophy on the table.",
+     "The trophy was placed on the table while walking into the room.",
+     "While walking into the room, the trophy was placed on the table."
+    ],
+    "answerIndex": 1,
+    "explanation": "In the correct sentence, she is the subject of the main clause, so the introductory phrase Walking into the room logically modifies her.",
+    "difficulty": 4,
+    "skill": "Dangling modifiers",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which sentence uses the infinitive correctly after the verb require?",
+    "choices": [
+     "The rules require every participant to check in before the final round.",
+     "The rules require every participant to checks in before the final round.",
+     "The rules require every participant to checked in before the final round.",
+     "The rules require every participant to checking in before the final round."
+    ],
+    "answerIndex": 0,
+    "explanation": "The infinitive to is followed by the base verb check in, not an inflected or -ing form.",
+    "difficulty": 2,
+    "skill": "Infinitive Complements",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q26",
+    "prompt": "Which conjunction correctly introduces the contrast in this sentence? ___ the deadline had passed, Maya asked whether the office could still accept her application.",
+    "choices": [
+     "Even though",
+     "As",
+     "Provided that",
+     "Before"
+    ],
+    "answerIndex": 0,
+    "explanation": "Even though introduces a contrast between the deadline having passed and Maya's request that the office might still accept her application.",
+    "difficulty": 3,
+    "skill": "Subordinating Conjunctions",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q27",
+    "prompt": "Which sentence uses the imperative mood?",
+    "choices": [
+     "Close the door when you leave.",
+     "Closes the door when you leave.",
+     "Closed the door when you leave.",
+     "Closing the door when you leave."
+    ],
+    "answerIndex": 0,
+    "explanation": "The imperative mood gives a direct command, so the sentence begins with the base-form verb Close without a subject.",
+    "difficulty": 2,
+    "skill": "Mood",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which sentence uses a semicolon correctly?",
+    "choices": [
+     "The library closes at six p.m.; students must return books before then.",
+     "The library closes at six p.m., students must return books before then.",
+     "The library closes at six p.m.; and students must return books before then.",
+     "The library closes at six p.m. students must return books before then."
+    ],
+    "answerIndex": 0,
+    "explanation": "A semicolon can join two complete independent clauses, and the clause after it should not begin with the conjunction and.",
+    "difficulty": 3,
+    "skill": "Semicolon usage",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q41",
+    "prompt": "Select the sentence in which used to expresses a past habit rather than a state of being accustomed.",
+    "choices": [
+     "Amara used to work later than usual when she lived abroad.",
+     "Amara is used to work later than usual when she lived abroad.",
+     "Amara used to working later than usual when she lived abroad.",
+     "Amara is used to working later than usual now."
+    ],
+    "answerIndex": 0,
+    "explanation": "Used to followed by the base verb work describes Amara's past habit.",
+    "difficulty": 4,
+    "skill": "Distinguishing used to from be used to",
+    "topic": "Entry Check, Part 1 of 9: Tricky Verb Usage"
+   },
+   {
+    "id": "q28",
+    "prompt": "Choose the object pronoun that correctly fills the blank: After the judges selected the winners, the reporters asked ___ for comments.",
+    "choices": [
+     "them",
+     "they",
+     "their",
+     "theirs"
+    ],
+    "answerIndex": 0,
+    "explanation": "Them is the object pronoun for the reporters, who are the people doing the asking.",
+    "difficulty": 2,
+    "skill": "Pronoun Case",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which sentence uses a restrictive clause without implying that every student volunteers at the library?",
+    "choices": [
+     "Students who volunteer at the library will receive a thank-you gift.",
+     "Students, who volunteer at the library, will receive a thank-you gift.",
+     "Students who volunteer at the library, will receive a thank-you gift.",
+     "Students, who volunteer at the library will receive a thank-you gift."
+    ],
+    "answerIndex": 0,
+    "explanation": "Because the clause identifies which students qualify, it is restrictive and should not be set off by commas.",
+    "difficulty": 3,
+    "skill": "Restrictive Clauses",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q50",
+    "prompt": "Which sentence expresses its action in the active voice?",
+    "choices": [
+     "The engineers redesigned the ventilation system.",
+     "The ventilation system was redesigned by the engineers.",
+     "The ventilation system had been redesigned by the engineers.",
+     "The ventilation system is being redesigned by the engineers."
+    ],
+    "answerIndex": 0,
+    "explanation": "The engineers are the subject performing the action, so the sentence uses the active voice.",
+    "difficulty": 3,
+    "skill": "Identifying the Active Voice",
+    "topic": "Entry Check, Part 1 of 9: Voice"
+   },
+   {
+    "id": "q18",
+    "prompt": "Choose the verb that correctly agrees with the singular subject and fits the present-tense sentence: The committee ___ the work among four teams every week.",
+    "choices": [
+     "divides",
+     "divide",
+     "dividing",
+     "divided"
+    ],
+    "answerIndex": 0,
+    "explanation": "The singular subject committee takes the present-tense verb divides.",
+    "difficulty": 2,
+    "skill": "Subject-Verb Agreement",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which sentence correctly forms an embedded question?",
+    "choices": [
+     "The coach asked the players where they should meet.",
+     "The coach asked the players where should they meet.",
+     "The coach asked the players where did they meet.",
+     "The coach asked the players where they did meet."
+    ],
+    "answerIndex": 0,
+    "explanation": "An embedded question after asked uses statement-like word order, with the subject they before the auxiliary should.",
+    "difficulty": 4,
+    "skill": "Embedded Question Word Order",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q12",
+    "prompt": "In which sentence do both adjectives directly modify the noun kitten?",
+    "choices": [
+     "The small kitten gray slept.",
+     "The kitten small gray slept.",
+     "The small gray kitten slept.",
+     "The gray the small kitten slept."
+    ],
+    "answerIndex": 2,
+    "explanation": "In The small gray kitten slept, both small and gray directly modify the noun kitten, and the article comes first.",
+    "difficulty": 2,
+    "skill": "Placing multiple adjectives before a noun",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q45",
+    "prompt": "According to the sentence, how many independent clauses does it contain? After the game ended, the players left the field, and the announcer summarized the match.",
+    "choices": [
+     "one",
+     "two",
+     "three",
+     "four"
+    ],
+    "answerIndex": 1,
+    "explanation": "The clauses about the players leaving and the announcer summarizing are independent, while the introductory clause beginning with after is dependent.",
+    "difficulty": 3,
+    "skill": "Counting independent clauses",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q29",
+    "prompt": "Choose the word that correctly completes the sentence as an adjective after the linking verb: The soup tasted ___.",
+    "choices": [
+     "salty",
+     "saltiness",
+     "salt",
+     "saltily"
+    ],
+    "answerIndex": 0,
+    "explanation": "Salty is an adjective that functions as a predicate adjective after the linking verb tasted.",
+    "difficulty": 3,
+    "skill": "Parts of Speech",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q44",
+    "prompt": "Which sentence is in the conditional mood?",
+    "choices": [
+     "If the deadline extends, we can submit the form later.",
+     "The deadline extends, so we can submit the form later.",
+     "How can we submit the form after the deadline?",
+     "Submit the form after the deadline."
+    ],
+    "answerIndex": 0,
+    "explanation": "The if-clause states a condition and the main clause gives its consequence, which makes the sentence conditional.",
+    "difficulty": 2,
+    "skill": "Conditional mood",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q15",
+    "prompt": "Looking forward to ___ you again.",
+    "choices": [
+     "hear",
+     "hearing",
+     "heard",
+     "hears"
+    ],
+    "answerIndex": 1,
+    "explanation": "Hearing is a gerund, which is required after the preposition to in the phrase looking forward to.",
+    "difficulty": 4,
+    "skill": "Using gerunds after prepositions",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q36",
+    "prompt": "Complete the sentence with the correct present-tense verb: The captain and the two guards ___ in the gym now.",
+    "choices": [
+     "has",
+     "have",
+     "had",
+     "is"
+    ],
+    "answerIndex": 1,
+    "explanation": "The compound subject the captain and the two guards is plural, so it takes have in the present tense.",
+    "difficulty": 2,
+    "skill": "Subject-verb agreement with compound subjects",
+    "topic": "Entry Check, Part 1 of 9: Subject-Verb Agreement"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which sentence uses a colon to introduce a complete clause?",
+    "choices": [
+     "The rule is simple: arrive by eight.",
+     "The rule is simple: to arrive by eight.",
+     "The rule is simple: arriving by eight.",
+     "The rule is simple: arrived by eight."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon introduces the complete imperative clause arrive by eight.",
+    "difficulty": 3,
+    "skill": "Colon introduction",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q1",
+    "prompt": "The students completed the assignment, and ___ turned it in on time.",
+    "choices": [
+     "it",
+     "they",
+     "them",
+     "their"
+    ],
+    "answerIndex": 1,
+    "explanation": "The plural antecedent students requires the plural subject pronoun they in the second independent clause.",
+    "difficulty": 2,
+    "skill": "Pronoun-antecedent agreement",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which sentence correctly uses an em dash to separate two complete sentences?",
+    "choices": [
+     "The experiment failed—the sample had been contaminated.",
+     "The experiment failed – the sample had been contaminated.",
+     "The experiment failed; the sample had been contaminated—.",
+     "The experiment failed—the sample had been contaminated, the results were unreliable."
+    ],
+    "answerIndex": 0,
+    "explanation": "The em dash separates two complete sentences while adding information that explains why the experiment failed.",
+    "difficulty": 3,
+    "skill": "Em dashes in compound sentences",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which sentence presents three actions in parallel structure?",
+    "choices": [
+     "The volunteers sorted, packed, and labeled the donated books.",
+     "The volunteers sorted, packed, and were labeling the donated books.",
+     "The volunteers sorted, to pack, and labeled the donated books.",
+     "The volunteers sorting, packed, and labeled the donated books."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option uses three simple past-tense verbs in the same grammatical form: sorted, packed, and labeled.",
+    "difficulty": 4,
+    "skill": "Parallel structure",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which sentence uses the simple past tense consistently for both main verbs?",
+    "choices": [
+     "Yesterday, the guide answers questions and pointed out several details.",
+     "Yesterday, the guide answered questions and points out several details.",
+     "Yesterday, the guide answered questions and will point out several details.",
+     "Yesterday, the guide answered questions and pointed out several details."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option uses the simple past tense for both coordinated verbs, answered and pointed, consistently with the time marker yesterday.",
+    "difficulty": 3,
+    "skill": "Verb tense consistency",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which determiner correctly completes the sentence? ___ students attended the workshop than had registered.",
+    "choices": [
+     "Fewer",
+     "Less",
+     "Little",
+     "Much"
+    ],
+    "answerIndex": 0,
+    "explanation": "Fewer is the correct determiner for the countable plural noun students.",
+    "difficulty": 2,
+    "skill": "Countable nouns with fewer",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which sentence uses the possessive apostrophe correctly?",
+    "choices": [
+     "The scientists report was cited by the review panel.",
+     "The scientist's report was cited by the review panel.",
+     "The scientist report's was cited by the review panel.",
+     "The scientist's were cited by the review panel."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option places the apostrophe in scientist's to show that the report belongs to one scientist.",
+    "difficulty": 2,
+    "skill": "Possessive apostrophes",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q49",
+    "prompt": "Of the two bicycles, the red one is ___ than the blue one.",
+    "choices": [
+     "faster",
+     "fastest",
+     "more fast",
+     "most fast"
+    ],
+    "answerIndex": 0,
+    "explanation": "Because the sentence compares exactly two bicycles, faster is the correct comparative form.",
+    "difficulty": 3,
+    "skill": "Forming a Comparative with Two Items",
+    "topic": "Entry Check, Part 1 of 9: Comparative Adjectives"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which sentence correctly uses the subjunctive mood?",
+    "choices": [
+     "The director insisted that the report be finished by Friday.",
+     "The director insisted that the report was finished by Friday.",
+     "The director insisted that the report is finished by Friday.",
+     "The director insisted that the report has finished by Friday."
+    ],
+    "answerIndex": 0,
+    "explanation": "After an expression of insistence, the subjunctive uses the base form be rather than a conjugated form of be.",
+    "difficulty": 4,
+    "skill": "Subjunctive mood",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q46",
+    "prompt": "Which sentence is an exclamatory sentence?",
+    "choices": [
+     "How brilliantly the young pianist performed!",
+     "The young pianist performed brilliantly at the recital.",
+     "Did the young pianist perform brilliantly at the recital?",
+     "Perform brilliantly at the recital tonight."
+    ],
+    "answerIndex": 0,
+    "explanation": "The how construction and exclamation mark express strong admiration rather than merely asking for information.",
+    "difficulty": 2,
+    "skill": "Exclamatory sentences and sentence purpose",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which sentence uses hyphens correctly in a compound modifier?",
+    "choices": [
+     "The state-of-the-art design won an award.",
+     "The state-of-the art design won an award.",
+     "The state of the art design won an award.",
+     "The state-of-the-art-design won an award."
+    ],
+    "answerIndex": 0,
+    "explanation": "State-of-the-art is a fully hyphenated compound modifier placed before the noun design.",
+    "difficulty": 3,
+    "skill": "Hyphenation of compound modifiers",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q39",
+    "prompt": "Select the sentence that correctly uses the past progressive to describe an action in progress at a specific past time.",
+    "choices": [
+     "At eight o'clock, the students were reviewing the lesson when the fire alarm sounded.",
+     "At eight o'clock, the students reviewed the lesson when the fire alarm sounded.",
+     "At eight o'clock, the students are reviewing the lesson when the fire alarm sounded.",
+     "At eight o'clock, the students was reviewing the lesson when the fire alarm sounded."
+    ],
+    "answerIndex": 0,
+    "explanation": "The past progressive was reviewing describes the students' action in progress at the stated past time.",
+    "difficulty": 3,
+    "skill": "Using the past progressive for actions in progress",
+    "topic": "Entry Check, Part 1 of 9: Verb Tense and Aspect"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which conjunction correctly expresses the direct reason in this sentence? ___ the evidence was incomplete, the researchers repeated the experiment.",
+    "choices": [
+     "Because",
+     "Although",
+     "Unless",
+     "Until"
+    ],
+    "answerIndex": 0,
+    "explanation": "Because introduces the incomplete evidence as the direct reason the researchers repeated the experiment.",
+    "difficulty": 2,
+    "skill": "Subordinating Conjunctions",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which noun phrase follows the conventional English order of size, age, color, and material?",
+    "choices": [
+     "a small old brown leather suitcase",
+     "an old small brown leather suitcase",
+     "a leather old brown small suitcase",
+     "a brown old small leather suitcase"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first option follows the conventional sequence of size, age, color, and material before the noun.",
+    "difficulty": 4,
+    "skill": "Adjective order",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q13",
+    "prompt": "The tutor recommended the exercise to Priya and ___.",
+    "choices": [
+     "me",
+     "I",
+     "myself",
+     "mine"
+    ],
+    "answerIndex": 0,
+    "explanation": "Me is an object pronoun because it follows the preposition to and identifies who received the recommendation.",
+    "difficulty": 3,
+    "skill": "Using object pronouns after prepositions",
+    "topic": "Entry Check, Part 1 of 9"
+   },
+   {
+    "id": "q21",
+    "prompt": "Which sentence contains a correctly punctuated appositive?",
+    "choices": [
+     "My neighbor, a retired engineer, restored the antique clock.",
+     "My neighbor a retired engineer, restored the antique clock.",
+     "My neighbor, a retired engineer restored the antique clock.",
+     "My neighbor a retired engineer restored, the antique clock."
+    ],
+    "answerIndex": 0,
+    "explanation": "The noun phrase a retired engineer identifies My neighbor and is correctly enclosed by a pair of commas.",
+    "difficulty": 2,
+    "skill": "Appositive Punctuation",
+    "topic": "Tester 1 of 9: Entry Check, Part 1 of 9"
+   }
+  ],
+  "feedback": {
+   "correct": "Correct — another card flips.",
+   "incorrect": "Not quite. The card stays face down; read the explanation and try the next one.",
+   "win": "All pairs matched! Your grammar fundamentals are solid — on to the next check.",
+   "lose": "Good effort — the pairing didn't come together this time, but you saw which grammar spots need another look.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "The students completed the assignment, and ___ turned it in on time.",
+   "choices": [
+    "it",
+    "they",
+    "them",
+    "their"
+   ],
+   "answerIndex": 1,
+   "explanation": "The plural antecedent students requires the plural subject pronoun they in the second independent clause.",
+   "difficulty": 2,
+   "skill": "Pronoun-antecedent agreement",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a semicolon correctly?",
+   "choices": [
+    "The library closes at six p.m.; students must return books before then.",
+    "The library closes at six p.m., students must return books before then.",
+    "The library closes at six p.m.; and students must return books before then.",
+    "The library closes at six p.m. students must return books before then."
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon can join two complete independent clauses, and the clause after it should not begin with the conjunction and.",
+   "difficulty": 3,
+   "skill": "Semicolon usage",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which sentence is written in the passive voice?",
+   "choices": [
+    "The committee approved the proposal after a long meeting.",
+    "The proposal was approved after a long meeting.",
+    "After a long meeting, the committee approved the proposal.",
+    "The committee will approve the proposal after a long meeting."
+   ],
+   "answerIndex": 1,
+   "explanation": "The passive voice puts the subject in the subject position and uses a form of be with the past participle approved.",
+   "difficulty": 3,
+   "skill": "Identifying passive voice",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses the subjunctive mood?",
+   "choices": [
+    "The director insisted that the report be finished by Friday.",
+    "The director insisted that the report was finished by Friday.",
+    "The director insisted that the report is finished by Friday.",
+    "The director insisted that the report has finished by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "After an expression of insistence, the subjunctive uses the base form be rather than a conjugated form of be.",
+   "difficulty": 4,
+   "skill": "Subjunctive mood",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence avoids a dangling modifier?",
+   "choices": [
+    "Walking into the room, the trophy was placed on the table.",
+    "Walking into the room, she placed the trophy on the table.",
+    "The trophy was placed on the table while walking into the room.",
+    "While walking into the room, the trophy was placed on the table."
+   ],
+   "answerIndex": 1,
+   "explanation": "In the correct sentence, she is the subject of the main clause, so the introductory phrase Walking into the room logically modifies her.",
+   "difficulty": 4,
+   "skill": "Dangling modifiers",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence is a sentence fragment?",
+   "choices": [
+    "Because the roads were flooded, the buses were delayed all morning.",
+    "While the roads were flooded, the buses were delayed all morning.",
+    "Because the roads were flooded and the buses were delayed all morning.",
+    "After the roads were flooded, the buses were delayed and the drivers waited."
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct option is a sentence fragment because the dependent clause introduced by because has no main clause.",
+   "difficulty": 2,
+   "skill": "Identifying sentence fragments",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence contains a comma splice?",
+   "choices": [
+    "The band began playing and the audience began clapping.",
+    "The band began playing; the audience began clapping.",
+    "The band began playing when the audience began clapping.",
+    "The band began playing, the audience began clapping."
+   ],
+   "answerIndex": 3,
+   "explanation": "The correct option is a comma splice because it joins two independent clauses with only a comma.",
+   "difficulty": 3,
+   "skill": "Identifying comma splices",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence presents three actions in parallel structure?",
+   "choices": [
+    "The volunteers sorted, packed, and labeled the donated books.",
+    "The volunteers sorted, packed, and were labeling the donated books.",
+    "The volunteers sorted, to pack, and labeled the donated books.",
+    "The volunteers sorting, packed, and labeled the donated books."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option uses three simple past-tense verbs in the same grammatical form: sorted, packed, and labeled.",
+   "difficulty": 4,
+   "skill": "Parallel structure",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the possessive apostrophe correctly?",
+   "choices": [
+    "The scientists report was cited by the review panel.",
+    "The scientist's report was cited by the review panel.",
+    "The scientist report's was cited by the review panel.",
+    "The scientist's were cited by the review panel."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct option places the apostrophe in scientist's to show that the report belongs to one scientist.",
+   "difficulty": 2,
+   "skill": "Possessive apostrophes",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the simple past tense consistently for both main verbs?",
+   "choices": [
+    "Yesterday, the guide answers questions and pointed out several details.",
+    "Yesterday, the guide answered questions and points out several details.",
+    "Yesterday, the guide answered questions and will point out several details.",
+    "Yesterday, the guide answered questions and pointed out several details."
+   ],
+   "answerIndex": 3,
+   "explanation": "The correct option uses the simple past tense for both coordinated verbs, answered and pointed, consistently with the time marker yesterday.",
+   "difficulty": 3,
+   "skill": "Verb tense consistency",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly describes an unreal condition and result in the past?",
+   "choices": [
+    "If Leah left earlier, she will catch the train.",
+    "If Leah had left earlier, she would have caught the train.",
+    "If Leah had left earlier, she would catch the train.",
+    "If Leah would leave earlier, she would have caught the train."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct option uses the third conditional: had left sets an unreal past condition, and would have caught states its unreal result.",
+   "difficulty": 4,
+   "skill": "Third conditional",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "In which sentence do both adjectives directly modify the noun kitten?",
+   "choices": [
+    "The small kitten gray slept.",
+    "The kitten small gray slept.",
+    "The small gray kitten slept.",
+    "The gray the small kitten slept."
+   ],
+   "answerIndex": 2,
+   "explanation": "In The small gray kitten slept, both small and gray directly modify the noun kitten, and the article comes first.",
+   "difficulty": 2,
+   "skill": "Placing multiple adjectives before a noun",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "The tutor recommended the exercise to Priya and ___.",
+   "choices": [
+    "me",
+    "I",
+    "myself",
+    "mine"
+   ],
+   "answerIndex": 0,
+   "explanation": "Me is an object pronoun because it follows the preposition to and identifies who received the recommendation.",
+   "difficulty": 3,
+   "skill": "Using object pronouns after prepositions",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the preposition correctly?",
+   "choices": [
+    "Despite of the rain, the soccer match continued.",
+    "Despite from the rain, the soccer match continued.",
+    "Despite to the rain, the soccer match continued.",
+    "Despite the rain, the soccer match continued."
+   ],
+   "answerIndex": 3,
+   "explanation": "Despite is followed directly by the noun phrase the rain, so no second preposition belongs after it.",
+   "difficulty": 2,
+   "skill": "Using prepositions with noun phrases",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Looking forward to ___ you again.",
+   "choices": [
+    "hear",
+    "hearing",
+    "heard",
+    "hears"
+   ],
+   "answerIndex": 1,
+   "explanation": "Hearing is a gerund, which is required after the preposition to in the phrase looking forward to.",
+   "difficulty": 4,
+   "skill": "Using gerunds after prepositions",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "By the time the teacher noticed the folder was missing, another pupil ___ it.",
+   "choices": [
+    "has taken",
+    "takes",
+    "had taken",
+    "is taking"
+   ],
+   "answerIndex": 2,
+   "explanation": "Had taken is in the past perfect because the pupil took the folder before the teacher noticed that it was missing.",
+   "difficulty": 3,
+   "skill": "Forming the past perfect",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses subject-verb inversion after a fronted negative phrase?",
+   "choices": [
+    "Only after the bell did the guests leave.",
+    "Only after the bell the guests did leave.",
+    "Only after the bell left the guests did.",
+    "Only after the bell did the guests left."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only after the bell is a fronted negative phrase, so did the guests leave correctly inverts the subject and verb.",
+   "difficulty": 4,
+   "skill": "Applying subject-verb inversion",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Choose the verb that correctly agrees with the singular subject and fits the present-tense sentence: The committee ___ the work among four teams every week.",
+   "choices": [
+    "divides",
+    "divide",
+    "dividing",
+    "divided"
+   ],
+   "answerIndex": 0,
+   "explanation": "The singular subject committee takes the present-tense verb divides.",
+   "difficulty": 2,
+   "skill": "Subject-Verb Agreement",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly forms an embedded question?",
+   "choices": [
+    "The coach asked the players where they should meet.",
+    "The coach asked the players where should they meet.",
+    "The coach asked the players where did they meet.",
+    "The coach asked the players where they did meet."
+   ],
+   "answerIndex": 0,
+   "explanation": "An embedded question after asked uses statement-like word order, with the subject they before the auxiliary should.",
+   "difficulty": 4,
+   "skill": "Embedded Question Word Order",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a restrictive clause without implying that every student volunteers at the library?",
+   "choices": [
+    "Students who volunteer at the library will receive a thank-you gift.",
+    "Students, who volunteer at the library, will receive a thank-you gift.",
+    "Students who volunteer at the library, will receive a thank-you gift.",
+    "Students, who volunteer at the library will receive a thank-you gift."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the clause identifies which students qualify, it is restrictive and should not be set off by commas.",
+   "difficulty": 3,
+   "skill": "Restrictive Clauses",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence contains a correctly punctuated appositive?",
+   "choices": [
+    "My neighbor, a retired engineer, restored the antique clock.",
+    "My neighbor a retired engineer, restored the antique clock.",
+    "My neighbor, a retired engineer restored the antique clock.",
+    "My neighbor a retired engineer restored, the antique clock."
+   ],
+   "answerIndex": 0,
+   "explanation": "The noun phrase a retired engineer identifies My neighbor and is correctly enclosed by a pair of commas.",
+   "difficulty": 2,
+   "skill": "Appositive Punctuation",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which conjunction correctly expresses the direct reason in this sentence? ___ the evidence was incomplete, the researchers repeated the experiment.",
+   "choices": [
+    "Because",
+    "Although",
+    "Unless",
+    "Until"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because introduces the incomplete evidence as the direct reason the researchers repeated the experiment.",
+   "difficulty": 2,
+   "skill": "Subordinating Conjunctions",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the infinitive correctly after the verb require?",
+   "choices": [
+    "The rules require every participant to check in before the final round.",
+    "The rules require every participant to checks in before the final round.",
+    "The rules require every participant to checked in before the final round.",
+    "The rules require every participant to checking in before the final round."
+   ],
+   "answerIndex": 0,
+   "explanation": "The infinitive to is followed by the base verb check in, not an inflected or -ing form.",
+   "difficulty": 2,
+   "skill": "Infinitive Complements",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Choose the present-tense verb that agrees with the singular subject: The author of the essays ___ revising each chapter now.",
+   "choices": [
+    "is",
+    "are",
+    "am",
+    "be"
+   ],
+   "answerIndex": 0,
+   "explanation": "The singular subject author takes the present-tense verb is, even though the prepositional phrase of the essays comes between them.",
+   "difficulty": 2,
+   "skill": "Subject-Verb Agreement",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Choose the relative pronoun that correctly completes the sentence: The student ___ essay won the contest was recognized at the assembly.",
+   "choices": [
+    "whose",
+    "who",
+    "which",
+    "where"
+   ],
+   "answerIndex": 0,
+   "explanation": "Whose expresses possession and identifies the essay that belongs to the student.",
+   "difficulty": 3,
+   "skill": "Relative Pronouns",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which conjunction correctly introduces the contrast in this sentence? ___ the deadline had passed, Maya asked whether the office could still accept her application.",
+   "choices": [
+    "Even though",
+    "As",
+    "Provided that",
+    "Before"
+   ],
+   "answerIndex": 0,
+   "explanation": "Even though introduces a contrast between the deadline having passed and Maya's request that the office might still accept her application.",
+   "difficulty": 3,
+   "skill": "Subordinating Conjunctions",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses the imperative mood?",
+   "choices": [
+    "Close the door when you leave.",
+    "Closes the door when you leave.",
+    "Closed the door when you leave.",
+    "Closing the door when you leave."
+   ],
+   "answerIndex": 0,
+   "explanation": "The imperative mood gives a direct command, so the sentence begins with the base-form verb Close without a subject.",
+   "difficulty": 2,
+   "skill": "Mood",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Choose the object pronoun that correctly fills the blank: After the judges selected the winners, the reporters asked ___ for comments.",
+   "choices": [
+    "them",
+    "they",
+    "their",
+    "theirs"
+   ],
+   "answerIndex": 0,
+   "explanation": "Them is the object pronoun for the reporters, who are the people doing the asking.",
+   "difficulty": 2,
+   "skill": "Pronoun Case",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Choose the word that correctly completes the sentence as an adjective after the linking verb: The soup tasted ___.",
+   "choices": [
+    "salty",
+    "saltiness",
+    "salt",
+    "saltily"
+   ],
+   "answerIndex": 0,
+   "explanation": "Salty is an adjective that functions as a predicate adjective after the linking verb tasted.",
+   "difficulty": 3,
+   "skill": "Parts of Speech",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which determiner correctly completes the sentence? ___ students attended the workshop than had registered.",
+   "choices": [
+    "Fewer",
+    "Less",
+    "Little",
+    "Much"
+   ],
+   "answerIndex": 0,
+   "explanation": "Fewer is the correct determiner for the countable plural noun students.",
+   "difficulty": 2,
+   "skill": "Countable nouns with fewer",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "After the collision, Carlos hurt ___.",
+   "choices": [
+    "himself",
+    "themselves",
+    "herself",
+    "itself"
+   ],
+   "answerIndex": 0,
+   "explanation": "The reflexive pronoun agrees with the singular antecedent Carlos, so himself is correct.",
+   "difficulty": 2,
+   "skill": "Reflexive pronoun agreement",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a colon to introduce a complete clause?",
+   "choices": [
+    "The rule is simple: arrive by eight.",
+    "The rule is simple: to arrive by eight.",
+    "The rule is simple: arriving by eight.",
+    "The rule is simple: arrived by eight."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the complete imperative clause arrive by eight.",
+   "difficulty": 3,
+   "skill": "Colon introduction",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses a modal to express certainty based on the available evidence?",
+   "choices": [
+    "The measurements match exactly, so the device must be working.",
+    "The measurements match exactly, so the device might be working.",
+    "The measurements match exactly, so the device may be working.",
+    "The measurements match exactly, so the device can be working."
+   ],
+   "answerIndex": 0,
+   "explanation": "Must expresses the certainty inferred from the speaker's conclusion.",
+   "difficulty": 3,
+   "skill": "Modal verbs for certainty",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which noun phrase follows the conventional English order of size, age, color, and material?",
+   "choices": [
+    "a small old brown leather suitcase",
+    "an old small brown leather suitcase",
+    "a leather old brown small suitcase",
+    "a brown old small leather suitcase"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first option follows the conventional sequence of size, age, color, and material before the noun.",
+   "difficulty": 4,
+   "skill": "Adjective order",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "By the time the judges arrive, the technicians ___ the winner's trophy.",
+   "choices": [
+    "will have polished",
+    "will polish",
+    "had polished",
+    "have polished"
+   ],
+   "answerIndex": 0,
+   "explanation": "The future perfect will have polished indicates that the polishing will be complete before the judges arrive.",
+   "difficulty": 3,
+   "skill": "Future perfect tense",
+   "topic": "Tester 1 of 9: Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Complete the sentence with the correct present-tense verb: The captain and the two guards ___ in the gym now.",
+   "choices": [
+    "has",
+    "have",
+    "had",
+    "is"
+   ],
+   "answerIndex": 1,
+   "explanation": "The compound subject the captain and the two guards is plural, so it takes have in the present tense.",
+   "difficulty": 2,
+   "skill": "Subject-verb agreement with compound subjects",
+   "topic": "Entry Check, Part 1 of 9: Subject-Verb Agreement",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Identify the sentence that correctly punctuates an introductory dependent clause.",
+   "choices": [
+    "After the storm had damaged the eastern entrance, the maintenance crew cleared the fallen branches.",
+    "After the storm had damaged the eastern entrance the maintenance crew cleared the fallen branches.",
+    "After the storm had damaged the eastern entrance; the maintenance crew cleared the fallen branches.",
+    "After the storm had damaged the eastern entrance, and the maintenance crew cleared the fallen branches."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory clause After the storm had damaged the eastern entrance is followed by a comma before the independent clause.",
+   "difficulty": 2,
+   "skill": "Punctuating introductory dependent clauses",
+   "topic": "Entry Check, Part 1 of 9: Clauses and Comma Usage",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Select the sentence in which the participial phrase tasting the soup logically modifies the chef.",
+   "choices": [
+    "Tasting the soup, the table was set for dinner.",
+    "The chef, tasting the soup, decided that it needed salt.",
+    "After tasting the soup, the waiter carried the empty bowl away.",
+    "Tasting the soup, it was the chef who decided that it needed salt."
+   ],
+   "answerIndex": 1,
+   "explanation": "In the selected sentence, tasting the soup describes the chef, who is the subject of the main clause.",
+   "difficulty": 3,
+   "skill": "Attaching participial modifiers",
+   "topic": "Entry Check, Part 1 of 9: Participial Modifiers",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Select the sentence that correctly uses the past progressive to describe an action in progress at a specific past time.",
+   "choices": [
+    "At eight o'clock, the students were reviewing the lesson when the fire alarm sounded.",
+    "At eight o'clock, the students reviewed the lesson when the fire alarm sounded.",
+    "At eight o'clock, the students are reviewing the lesson when the fire alarm sounded.",
+    "At eight o'clock, the students was reviewing the lesson when the fire alarm sounded."
+   ],
+   "answerIndex": 0,
+   "explanation": "The past progressive was reviewing describes the students' action in progress at the stated past time.",
+   "difficulty": 3,
+   "skill": "Using the past progressive for actions in progress",
+   "topic": "Entry Check, Part 1 of 9: Verb Tense and Aspect",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Identify the sentence that uses the interrogative mood.",
+   "choices": [
+    "Where will the team practice after the tournament?",
+    "The team will practice after the tournament.",
+    "Although the team will practice after the tournament, the coaches will watch.",
+    "The coaches will watch the team practice after the tournament."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence asks where the team will practice, so it uses the interrogative mood.",
+   "difficulty": 2,
+   "skill": "Distinguishing sentence moods and purposes",
+   "topic": "Entry Check, Part 1 of 9: Sentence Mood",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Select the sentence in which used to expresses a past habit rather than a state of being accustomed.",
+   "choices": [
+    "Amara used to work later than usual when she lived abroad.",
+    "Amara is used to work later than usual when she lived abroad.",
+    "Amara used to working later than usual when she lived abroad.",
+    "Amara is used to working later than usual now."
+   ],
+   "answerIndex": 0,
+   "explanation": "Used to followed by the base verb work describes Amara's past habit.",
+   "difficulty": 4,
+   "skill": "Distinguishing used to from be used to",
+   "topic": "Entry Check, Part 1 of 9: Tricky Verb Usage",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence uses hyphens correctly in a compound modifier?",
+   "choices": [
+    "The state-of-the-art design won an award.",
+    "The state-of-the art design won an award.",
+    "The state of the art design won an award.",
+    "The state-of-the-art-design won an award."
+   ],
+   "answerIndex": 0,
+   "explanation": "State-of-the-art is a fully hyphenated compound modifier placed before the noun design.",
+   "difficulty": 3,
+   "skill": "Hyphenation of compound modifiers",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly uses an em dash to separate two complete sentences?",
+   "choices": [
+    "The experiment failed—the sample had been contaminated.",
+    "The experiment failed – the sample had been contaminated.",
+    "The experiment failed; the sample had been contaminated—.",
+    "The experiment failed—the sample had been contaminated, the results were unreliable."
+   ],
+   "answerIndex": 0,
+   "explanation": "The em dash separates two complete sentences while adding information that explains why the experiment failed.",
+   "difficulty": 3,
+   "skill": "Em dashes in compound sentences",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which sentence is in the conditional mood?",
+   "choices": [
+    "If the deadline extends, we can submit the form later.",
+    "The deadline extends, so we can submit the form later.",
+    "How can we submit the form after the deadline?",
+    "Submit the form after the deadline."
+   ],
+   "answerIndex": 0,
+   "explanation": "The if-clause states a condition and the main clause gives its consequence, which makes the sentence conditional.",
+   "difficulty": 2,
+   "skill": "Conditional mood",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "According to the sentence, how many independent clauses does it contain? After the game ended, the players left the field, and the announcer summarized the match.",
+   "choices": [
+    "one",
+    "two",
+    "three",
+    "four"
+   ],
+   "answerIndex": 1,
+   "explanation": "The clauses about the players leaving and the announcer summarizing are independent, while the introductory clause beginning with after is dependent.",
+   "difficulty": 3,
+   "skill": "Counting independent clauses",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which sentence is an exclamatory sentence?",
+   "choices": [
+    "How brilliantly the young pianist performed!",
+    "The young pianist performed brilliantly at the recital.",
+    "Did the young pianist perform brilliantly at the recital?",
+    "Perform brilliantly at the recital tonight."
+   ],
+   "answerIndex": 0,
+   "explanation": "The how construction and exclamation mark express strong admiration rather than merely asking for information.",
+   "difficulty": 2,
+   "skill": "Exclamatory sentences and sentence purpose",
+   "topic": "Entry Check, Part 1 of 9",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Choose the verb that agrees with the singular subject: On the bulletin board, a list of approved names ___.",
+   "choices": [
+    "appears",
+    "appear",
+    "appearing",
+    "appeared"
+   ],
+   "answerIndex": 0,
+   "explanation": "The subject is the singular noun phrase a list of approved names, so appears is the correct present-tense verb.",
+   "difficulty": 2,
+   "skill": "Agreement with a Singular Noun Phrase",
+   "topic": "Entry Check, Part 1 of 9: Subject-Verb Agreement",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which sentence reports the statement I am ready to begin using the standard shift to reported speech?",
+   "choices": [
+    "She said that she was ready to begin.",
+    "She said that she is ready to begin.",
+    "She said that she has been ready to begin.",
+    "She said that she had been ready to begin."
+   ],
+   "answerIndex": 0,
+   "explanation": "The simple present in the direct statement normally shifts to the simple past in reported speech, producing she was ready to begin.",
+   "difficulty": 4,
+   "skill": "Shifting Tense in Reported Speech",
+   "topic": "Entry Check, Part 1 of 9: Reported Speech",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Of the two bicycles, the red one is ___ than the blue one.",
+   "choices": [
+    "faster",
+    "fastest",
+    "more fast",
+    "most fast"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the sentence compares exactly two bicycles, faster is the correct comparative form.",
+   "difficulty": 3,
+   "skill": "Forming a Comparative with Two Items",
+   "topic": "Entry Check, Part 1 of 9: Comparative Adjectives",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which sentence expresses its action in the active voice?",
+   "choices": [
+    "The engineers redesigned the ventilation system.",
+    "The ventilation system was redesigned by the engineers.",
+    "The ventilation system had been redesigned by the engineers.",
+    "The ventilation system is being redesigned by the engineers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The engineers are the subject performing the action, so the sentence uses the active voice.",
+   "difficulty": 3,
+   "skill": "Identifying the Active Voice",
+   "topic": "Entry Check, Part 1 of 9: Voice",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax-m3.1-flash:free (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Each of the students in the class ___ the essay on time last Friday.",
+   "choices": [
+    "have submitted",
+    "has submitted",
+    "is submitting",
+    "were submitting"
+   ],
+   "answerIndex": 1,
+   "explanation": "The singular subject Each takes the singular verb phrase has submitted, even though the phrase in the class names many students.",
+   "reason": "B: picked -1 not 1 (No option provides the correct singular simple past form 'submitted'; all options are wrong tense or number.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Choose the relative pronoun that correctly completes the sentence: The manager called the designer ___ she needed the revised plans.",
+   "choices": [
+    "who",
+    "whom",
+    "whose",
+    "which"
+   ],
+   "answerIndex": 1,
+   "explanation": "The pronoun refers to the designer as the object of called, so the objective form whom is required.",
+   "reason": "A: picked 0 not 1 (“Who” is correct because it serves as the subject of “she needed the revised plans.”) | B: not exactly one correct (The sentence lacks a preposition (e.g., 'from whom' or 'because') or needs a conjunction/adverb like 'because' or 'from whom' to link 'she n)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Ms. Ortiz, ___ teaches biology at our school, will lead the workshop.",
+   "choices": [
+    "who",
+    "whom",
+    "whose",
+    "which"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the relative clause is nonrestrictive and refers to Ms. Ortiz, the subject pronoun who is required.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Each volunteer received three ___ for the event.",
+   "choices": [
+    "assignments",
+    "assignment",
+    "assignment's",
+    "assignments'"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because three is a plural number word, the count noun assignment takes the plural form assignments.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Choose the pronoun that correctly completes the sentence: Although the museum was busy, the guide unlocked the entrance to ___.",
+   "choices": [
+    "it",
+    "its",
+    "it's",
+    "them"
+   ],
+   "answerIndex": 0,
+   "explanation": "The pronoun it refers to the museum and correctly serves as the object of the preposition to.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Choose the verb that correctly completes the sentence: The puppy carried the toy to its bed and ___ down beside it.",
+   "choices": [
+    "laid",
+    "lay",
+    "lied",
+    "lays"
+   ],
+   "answerIndex": 1,
+   "explanation": "The intransitive verb lay correctly describes the puppy reclining after carrying the toy.",
+   "reason": "surplus"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Choose the conjunction that correctly completes the sentence by expressing a direct result: The battery was nearly empty, ___ the flashlight suddenly went dark.",
+   "choices": [
+    "because",
+    "although",
+    "so",
+    "unless"
+   ],
+   "answerIndex": 2,
+   "explanation": "The conjunction so correctly joins two independent clauses and signals that the flashlight went dark as a result of the nearly empty battery.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax-m3.1-flash:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  }
+ ],
+ "applied": false
+}

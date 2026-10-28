@@ -1,0 +1,1444 @@
+<style>
+  #base-lesson-body{
+    --base:#030712;
+    --surface:#08131F;
+    --surface-2:#0D1F2E;
+    --surface-3:#12293A;
+    --line:#1B4A5C;
+    --line-soft:#123340;
+    --accent:#0D9488;
+    --accent-dark:#06514B;
+    --accent-glow:rgba(13,148,136,.55);
+    --lime:#84CC16;
+    --lime-dark:#3F6212;
+    --lime-glow:rgba(132,204,22,.45);
+    --amber:#F97316;
+    --amber-dark:#9A3412;
+    --amber-glow:rgba(249,115,22,.45);
+    --text:#D9F2EE;
+    --muted:#7FA8A4;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    position:relative;
+    display:block;
+    background:
+      radial-gradient(1200px 600px at 12% -8%, rgba(13,148,136,.16), transparent 62%),
+      radial-gradient(900px 520px at 96% 4%, rgba(132,204,22,.09), transparent 60%),
+      var(--base);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    font-size:16px;
+    padding:14px 14px 40px;
+    border-radius:16px;
+  }
+  #base-lesson-body *{ box-sizing:border-box; }
+  #base-lesson-body::before{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(180deg, rgba(255,255,255,.026) 0 1px, transparent 1px 3px);
+    border-radius:16px;
+    z-index:0;
+  }
+  #base-lesson-body > *{ position:relative; z-index:1; }
+
+  /* ---------- HUD ---------- */
+  #base-lesson-body .hud{
+    position:sticky; top:0; z-index:60;
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px;
+    padding:10px 12px;
+    margin-bottom:14px;
+    background:linear-gradient(180deg, rgba(8,19,31,.98), rgba(6,15,25,.94));
+    border:2px solid var(--line);
+    border-radius:12px;
+    box-shadow:0 4px 0 rgba(0,0,0,.55), 0 0 26px rgba(13,148,136,.16);
+    backdrop-filter:blur(6px);
+  }
+  #base-lesson-body .badge{
+    font-family:var(--mono);
+    font-size:.68rem;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    padding:5px 9px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(18,41,58,.9), rgba(10,25,38,.9));
+    color:var(--text);
+    box-shadow:0 2px 0 rgba(0,0,0,.45);
+    white-space:nowrap;
+  }
+  #base-lesson-body .badge.level{ border-color:var(--lime); color:var(--lime); box-shadow:0 2px 0 rgba(0,0,0,.45), 0 0 12px rgba(132,204,22,.25); }
+  #base-lesson-body .badge.subject{ border-color:var(--accent); color:#5EEAD4; }
+  #base-lesson-body .badge.xp{ border-color:var(--amber); color:#FDBA74; }
+  #base-lesson-body .badge input{
+    background:transparent; border:none; outline:none;
+    color:var(--lime); font-family:var(--mono); font-size:.68rem;
+    letter-spacing:.07em; text-transform:uppercase; width:92px;
+    border-bottom:1px dashed rgba(132,204,22,.45);
+  }
+  #base-lesson-body .gauge{
+    flex:1 1 220px; min-width:190px;
+    display:flex; flex-direction:column; gap:4px;
+  }
+  #base-lesson-body .gauge-track{
+    height:14px; border-radius:8px;
+    border:2px solid var(--line);
+    background:linear-gradient(180deg, #04101A, #071A26);
+    overflow:hidden;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.7);
+  }
+  #base-lesson-body .gauge-fill{
+    height:100%; width:25%;
+    background:linear-gradient(90deg, var(--accent), var(--lime));
+    box-shadow:0 0 14px var(--accent-glow);
+    transition:width .9s cubic-bezier(.4,0,.2,1), box-shadow .9s ease;
+  }
+  #base-lesson-body .gauge.full .gauge-fill{ box-shadow:0 0 22px var(--lime-glow); }
+  #base-lesson-body .gauge-label{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.11em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  #base-lesson-body .gauge.full .gauge-label{ color:var(--lime); }
+
+  /* ---------- Mission ---------- */
+  #base-lesson-body .mission{
+    border:2px solid var(--line-soft);
+    border-left:5px solid var(--lime);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:16px;
+    background:linear-gradient(180deg, rgba(13,31,46,.85), rgba(8,19,31,.85));
+    box-shadow:0 4px 0 rgba(0,0,0,.4);
+    font-size:.94rem;
+  }
+  #base-lesson-body .mission strong{ color:var(--lime); }
+
+  /* ---------- Panels ---------- */
+  #base-lesson-body .panel{
+    background:linear-gradient(180deg, rgba(13,31,46,.9), rgba(8,19,31,.94));
+    border:2px solid var(--line-soft);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:16px;
+    box-shadow:0 6px 0 rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  #base-lesson-body .eyebrow{
+    font-family:var(--mono); font-size:.66rem; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--accent);
+    border-bottom:1px dashed var(--line);
+    padding-bottom:6px; margin-bottom:12px;
+    display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  }
+  #base-lesson-body .eyebrow span:last-child{ color:var(--muted); }
+  #base-lesson-body h2.sec-title{
+    font-size:1.22rem; line-height:1.3; margin:0 0 10px;
+    color:#EAFFFB; letter-spacing:.01em;
+  }
+  #base-lesson-body h3{ font-size:1rem; margin:0 0 8px; color:#CFF7F0; }
+  #base-lesson-body h4{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--lime); margin:0 0 6px;
+  }
+  #base-lesson-body p{ margin:0 0 10px; }
+  #base-lesson-body .lede{ font-size:.96rem; color:#C6E6E1; }
+  #base-lesson-body strong{ color:#F0FFFC; }
+  #base-lesson-body em{ color:#A7E8DF; font-style:italic; }
+  #base-lesson-body ul, #base-lesson-body ol{ margin:0 0 10px; padding-left:20px; }
+  #base-lesson-body li{ margin-bottom:5px; font-size:.9rem; }
+  #base-lesson-body .muted{ color:var(--muted); font-size:.85rem; }
+
+  /* ---------- Tags ---------- */
+  #base-lesson-body .tag{
+    display:inline-block; font-family:var(--mono); font-size:.6rem;
+    letter-spacing:.09em; text-transform:uppercase;
+    padding:3px 7px; border-radius:6px; border:1px solid;
+    white-space:nowrap;
+  }
+  #base-lesson-body .tag-grounds{ color:var(--lime); border-color:rgba(132,204,22,.5); background:rgba(132,204,22,.1); }
+  #base-lesson-body .tag-bridge{ color:var(--amber); border-color:rgba(249,115,22,.5); background:rgba(249,115,22,.1); }
+  #base-lesson-body .tag-claim{ color:#2DD4BF; border-color:rgba(45,212,191,.5); background:rgba(45,212,191,.1); }
+  #base-lesson-body .tag-scope{ color:#E2F5F1; border-color:rgba(226,245,241,.35); background:rgba(226,245,241,.07); }
+  #base-lesson-body .tag-bound{ color:var(--muted); border-color:rgba(127,168,164,.45); background:rgba(127,168,164,.08); }
+
+  /* ---------- Model stack ---------- */
+  #base-lesson-body .stack{ display:flex; flex-direction:column; gap:9px; margin-bottom:14px; }
+  #base-lesson-body .mrow{
+    display:grid; grid-template-columns:120px minmax(0,1fr); gap:10px;
+    padding:10px 12px;
+    border:2px solid var(--line-soft);
+    border-radius:10px;
+    background:linear-gradient(180deg, rgba(18,41,58,.7), rgba(10,25,38,.7));
+    box-shadow:0 3px 0 rgba(0,0,0,.4);
+  }
+  #base-lesson-body .mrow .mname{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.09em;
+    text-transform:uppercase; color:#7FE9DC; padding-top:2px;
+  }
+  #base-lesson-body .mrow .mbody{ font-size:.9rem; }
+  #base-lesson-body .mrow .mbody .ex{ display:block; margin-top:4px; color:var(--muted); font-size:.82rem; }
+  @media(max-width:640px){
+    #base-lesson-body .mrow{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Grids ---------- */
+  #base-lesson-body .grid2{
+    display:grid; grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:12px; margin-bottom:14px;
+  }
+  @media(max-width:740px){
+    #base-lesson-body .grid2{ grid-template-columns:1fr; }
+  }
+  #base-lesson-body .card{
+    border:2px solid var(--line-soft);
+    border-radius:12px;
+    padding:12px;
+    background:linear-gradient(180deg, rgba(18,41,58,.72), rgba(9,22,34,.85));
+    box-shadow:0 4px 0 rgba(0,0,0,.42);
+  }
+  #base-lesson-body .card p:last-child{ margin-bottom:0; }
+  #base-lesson-body .card ul{ margin-bottom:0; }
+
+  /* ---------- Worked examples ---------- */
+  #base-lesson-body .excerpt{
+    font-size:.9rem; padding:10px 12px; border-radius:10px;
+    background:rgba(3,7,18,.72);
+    border:1px dashed var(--line);
+    margin-bottom:10px;
+  }
+  #base-lesson-body .hl-claim{ color:#2DD4BF; font-weight:600; }
+  #base-lesson-body .hl-bridge{ color:var(--amber); font-weight:600; }
+  #base-lesson-body .hl-grounds{ color:var(--lime); font-weight:600; }
+  #base-lesson-body .hl-scope{ color:#E2F5F1; font-weight:600; border-bottom:1px dotted rgba(226,245,241,.5); }
+  #base-lesson-body .decoder{ display:flex; flex-direction:column; gap:7px; }
+  #base-lesson-body .drow{
+    display:grid; grid-template-columns:112px minmax(0,1fr); gap:9px;
+    font-size:.83rem; align-items:start;
+  }
+  @media(max-width:640px){ #base-lesson-body .drow{ grid-template-columns:1fr; gap:3px; } }
+
+  /* ---------- Pods ---------- */
+  #base-lesson-body .pod{
+    border:2px solid var(--line-soft);
+    border-radius:12px;
+    padding:13px;
+    background:linear-gradient(180deg, rgba(18,41,58,.75), rgba(8,19,31,.9));
+    box-shadow:0 4px 0 rgba(0,0,0,.45);
+    display:flex; flex-direction:column;
+  }
+  #base-lesson-body .pod-num{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.16em;
+    color:var(--amber); display:block; margin-bottom:3px;
+  }
+  #base-lesson-body .pod h3{ font-size:.98rem; margin-bottom:8px; }
+  #base-lesson-body .pod-block{ margin-bottom:9px; }
+  #base-lesson-body .pod-block:last-child{ margin-bottom:0; }
+  #base-lesson-body .pod blockquote{
+    margin:0 0 6px; padding:8px 10px;
+    border-left:3px solid var(--amber);
+    background:rgba(3,7,18,.6);
+    border-radius:0 8px 8px 0;
+    font-size:.83rem; font-style:italic; color:#C9E9E4;
+  }
+  #base-lesson-body .pod .dx{ font-size:.8rem; color:var(--muted); margin:0; }
+  #base-lesson-body .pod ul{ padding-left:17px; }
+  #base-lesson-body .pod li{ font-size:.82rem; }
+
+  /* ---------- Buttons ---------- */
+  #base-lesson-body .btn{
+    font-family:var(--mono);
+    font-size:.74rem; letter-spacing:.07em; text-transform:uppercase; font-weight:700;
+    color:#03231F;
+    background:linear-gradient(180deg, #14B8A6, #0A7C72);
+    border:2px solid #0FA396;
+    border-radius:10px;
+    padding:10px 14px;
+    cursor:pointer;
+    box-shadow:0 4px 0 var(--accent-dark);
+    transition:transform .09s ease, box-shadow .2s ease, filter .2s ease;
+    user-select:none;
+  }
+  #base-lesson-body .btn:hover{
+    box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 var(--accent-dark);
+    filter:brightness(1.08);
+  }
+  #base-lesson-body .btn:active{
+    transform:translateY(2px);
+    box-shadow:0 2px 0 var(--accent-dark);
+  }
+  #base-lesson-body .btn[disabled]{
+    opacity:.42; cursor:not-allowed; transform:none;
+    box-shadow:0 4px 0 var(--accent-dark); filter:none;
+  }
+  #base-lesson-body .btn-lime{
+    color:#12250A;
+    background:linear-gradient(180deg, #A3E635, #65A30D);
+    border-color:#BEF264;
+    box-shadow:0 4px 0 var(--lime-dark);
+  }
+  #base-lesson-body .btn-lime:hover{ box-shadow:0 4px 16px var(--lime-glow), 0 4px 0 var(--lime-dark); }
+  #base-lesson-body .btn-lime:active{ box-shadow:0 2px 0 var(--lime-dark); }
+  #base-lesson-body .btn-amber{
+    color:#2A1204;
+    background:linear-gradient(180deg, #FB923C, #EA580C);
+    border-color:#FDBA74;
+    box-shadow:0 4px 0 var(--amber-dark);
+  }
+  #base-lesson-body .btn-amber:hover{ box-shadow:0 4px 16px var(--amber-glow), 0 4px 0 var(--amber-dark); }
+  #base-lesson-body .btn-amber:active{ box-shadow:0 2px 0 var(--amber-dark); }
+  #base-lesson-body .btn-ghost{
+    color:#9FE7DC;
+    background:linear-gradient(180deg, rgba(18,41,58,.9), rgba(8,19,31,.9));
+    border-color:var(--line);
+    box-shadow:0 4px 0 rgba(0,0,0,.5);
+  }
+  #base-lesson-body .btn-ghost:hover{ box-shadow:0 4px 14px var(--accent-glow), 0 4px 0 rgba(0,0,0,.5); }
+  #base-lesson-body .btn-ghost:active{ box-shadow:0 2px 0 rgba(0,0,0,.5); }
+  #base-lesson-body .btn-xl{ font-size:.92rem; padding:16px 34px; border-radius:12px; }
+  #base-lesson-body .btn-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+
+  /* ---------- Acid tank ---------- */
+  #base-lesson-body .acid-shell{
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:12px;
+    background:linear-gradient(180deg, rgba(6,16,26,.95), rgba(3,8,15,.95));
+    box-shadow:inset 0 0 40px rgba(13,148,136,.1), 0 5px 0 rgba(0,0,0,.5);
+    margin-bottom:14px;
+  }
+  #base-lesson-body .acid-claim{
+    font-size:.86rem; padding:10px 12px; border-radius:10px;
+    border:1px dashed var(--line);
+    background:rgba(3,7,18,.7);
+    margin-bottom:12px;
+    color:#C6E6E1;
+  }
+  #base-lesson-body .crane{
+    height:16px; border-radius:8px 8px 0 0;
+    background:linear-gradient(180deg, #1E3D4F, #0E2432);
+    border:2px solid var(--line);
+    border-bottom:none;
+    position:relative;
+    margin:0 8px;
+  }
+  #base-lesson-body .crane::before{
+    content:""; position:absolute; left:50%; top:100%;
+    width:4px; height:14px; transform:translateX(-50%);
+    background:linear-gradient(180deg,#4B7E8C,#1B4A5C);
+  }
+  #base-lesson-body .tank{
+    position:relative;
+    border:3px solid var(--line);
+    border-top:none;
+    border-radius:0 0 14px 14px;
+    padding:16px 14px 52px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 2px, transparent 2px 22px),
+      linear-gradient(180deg, rgba(4,12,20,.9), rgba(6,20,26,.95));
+    overflow:hidden;
+    transition:box-shadow .6s ease, border-color .6s ease;
+  }
+  #base-lesson-body .tank.solved{
+    border-color:var(--lime);
+    box-shadow:0 0 34px var(--lime-glow), inset 0 0 30px rgba(132,204,22,.14);
+  }
+  #base-lesson-body .tank.corroded{
+    border-color:var(--amber);
+    box-shadow:0 0 30px var(--amber-glow), inset 0 0 30px rgba(249,115,22,.14);
+  }
+  #base-lesson-body .rig{
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; gap:7px;
+  }
+  #base-lesson-body .strut{
+    display:flex; flex-wrap:wrap; align-items:center; gap:9px;
+    padding:8px 10px;
+    border:2px solid var(--line);
+    border-radius:10px;
+    background:linear-gradient(180deg, rgba(24,52,72,.95), rgba(11,27,40,.95));
+    box-shadow:0 3px 0 rgba(0,0,0,.5);
+    overflow:hidden;
+    transition:border-color .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  #base-lesson-body .strut-idx{
+    font-family:var(--mono); font-size:.64rem; letter-spacing:.1em;
+    color:var(--muted); min-width:20px;
+  }
+  #base-lesson-body .strut-text{ flex:1 1 190px; font-size:.83rem; }
+  #base-lesson-body .strut.clad{
+    border-color:var(--lime);
+    background:linear-gradient(180deg, rgba(34,62,32,.95), rgba(14,32,20,.95));
+    box-shadow:0 0 16px rgba(132,204,22,.28), 0 3px 0 rgba(0,0,0,.5);
+  }
+  #base-lesson-body .strut.survive{
+    border-color:var(--lime);
+    box-shadow:0 0 22px var(--lime-glow), 0 3px 0 rgba(0,0,0,.5);
+  }
+  #base-lesson-body .strut.dissolve{
+    animation:abl-dissolve 1s cubic-bezier(.4,0,.6,1) forwards;
+    border-color:var(--amber);
+  }
+  #base-lesson-body .strut.falseclad{ animation:abl-fizz .55s ease-in-out 2, abl-dissolve 1.05s .1s cubic-bezier(.4,0,.6,1) forwards; }
+  @keyframes abl-fizz{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-3px); }
+    75%{ transform:translateX(3px); }
+  }
+  @keyframes abl-dissolve{
+    0%{ opacity:1; filter:blur(0); max-height:260px; }
+    35%{ opacity:.82; filter:blur(1px); }
+    70%{ opacity:.36; filter:blur(2.4px); }
+    100%{ opacity:0; filter:blur(5px); max-height:0; padding-top:0; padding-bottom:0; margin-bottom:-7px; border-width:0; }
+  }
+  #base-lesson-body .clamp{
+    font-family:var(--mono); font-size:.62rem; letter-spacing:.08em;
+    text-transform:uppercase; font-weight:700;
+    padding:7px 10px; border-radius:8px; cursor:pointer;
+    color:#9FE7DC;
+    background:linear-gradient(180deg, rgba(18,41,58,.95), rgba(8,19,31,.95));
+    border:2px solid var(--line);
+    box-shadow:0 3px 0 rgba(0,0,0,.5);
+    transition:transform .09s ease, box-shadow .2s ease, filter .2s ease;
+    white-space:nowrap;
+  }
+  #base-lesson-body .clamp:hover{ box-shadow:0 3px 12px var(--accent-glow), 0 3px 0 rgba(0,0,0,.5); filter:brightness(1.12); }
+  #base-lesson-body .clamp:active{ transform:translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,.5); }
+  #base-lesson-body .strut.clad .clamp{
+    color:#12250A;
+    background:linear-gradient(180deg, #A3E635, #65A30D);
+    border-color:#BEF264;
+    box-shadow:0 3px 0 var(--lime-dark);
+  }
+  #base-lesson-body .acid{
+    position:absolute; left:0; right:0; bottom:0;
+    height:10%;
+    z-index:3;
+    background:linear-gradient(180deg, rgba(132,204,22,.30), rgba(63,98,18,.82));
+    transition:height 1.7s cubic-bezier(.4,0,.2,1);
+    pointer-events:none;
+    overflow:hidden;
+  }
+  #base-lesson-body .acid::after{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, rgba(132,204,22,.15), rgba(190,242,100,.95), rgba(132,204,22,.15));
+    box-shadow:0 0 16px rgba(132,204,22,.85);
+  }
+  #base-lesson-body .bub{
+    position:absolute; bottom:-12px; border-radius:50%;
+    background:rgba(190,242,100,.55);
+    box-shadow:0 0 8px rgba(132,204,22,.7);
+    animation:abl-bub linear infinite;
+  }
+  @keyframes abl-bub{
+    0%{ transform:translateY(0) scale(.7); opacity:0; }
+    12%{ opacity:.85; }
+    100%{ transform:translateY(-360px) scale(1.1); opacity:0; }
+  }
+  #base-lesson-body .debrief{
+    margin-top:12px;
+    border:2px solid var(--line);
+    border-radius:10px;
+    padding:11px 13px;
+    font-size:.86rem;
+    background:rgba(3,7,18,.72);
+    display:none;
+  }
+  #base-lesson-body .debrief.show{ display:block; animation:abl-pop .35s ease-out; }
+  #base-lesson-body .debrief.good{ border-color:var(--lime); box-shadow:0 0 20px rgba(132,204,22,.2); }
+  #base-lesson-body .debrief.bad{ border-color:var(--amber); box-shadow:0 0 20px rgba(249,115,22,.2); }
+  #base-lesson-body .debrief h4{ margin-bottom:6px; }
+  #base-lesson-body .debrief.good h4{ color:var(--lime); }
+  #base-lesson-body .debrief.bad h4{ color:var(--amber); }
+  @keyframes abl-pop{ from{ transform:translateY(8px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+
+  /* ---------- Detonator ---------- */
+  #base-lesson-body .det-wrap{ position:relative; }
+  #base-lesson-body .det-card{
+    position:relative;
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:14px;
+    background:linear-gradient(180deg, rgba(18,41,58,.85), rgba(8,19,31,.92));
+    box-shadow:0 5px 0 rgba(0,0,0,.5);
+    overflow:hidden;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  #base-lesson-body .det-card.armed{
+    animation:abl-shake .32s ease-in-out 3;
+    border-color:var(--amber);
+    box-shadow:0 0 30px var(--amber-glow), 0 5px 0 rgba(0,0,0,.5);
+  }
+  #base-lesson-body .det-card.collapsed{ opacity:.35; filter:grayscale(.7) blur(1px); }
+  @keyframes abl-shake{
+    0%,100%{ transform:translate(0,0); }
+    20%{ transform:translate(-5px,2px); }
+    40%{ transform:translate(5px,-2px); }
+    60%{ transform:translate(-4px,-2px); }
+    80%{ transform:translate(4px,2px); }
+  }
+  #base-lesson-body .det-plate{
+    border:2px dashed var(--amber);
+    border-radius:10px;
+    padding:12px;
+    background:radial-gradient(circle at 50% 0%, rgba(249,115,22,.16), rgba(3,7,18,.85));
+    box-shadow:inset 0 0 22px rgba(249,115,22,.18);
+    margin-bottom:12px;
+  }
+  #base-lesson-body .det-plate .plate-label{
+    font-family:var(--mono); font-size:.6rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--amber); display:block; margin-bottom:6px;
+  }
+  #base-lesson-body .det-plate .plate-text{ font-size:.92rem; color:#FFE4CE; }
+  #base-lesson-body .cracklayer{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; opacity:0; transition:opacity .4s ease;
+    z-index:5;
+  }
+  #base-lesson-body .det-card.cracked .cracklayer{ opacity:1; }
+  #base-lesson-body .cracklayer path{
+    fill:none; stroke:var(--amber); stroke-width:1.6;
+    filter:drop-shadow(0 0 5px rgba(249,115,22,.9));
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation:abl-crack 1s ease-out forwards;
+  }
+  @keyframes abl-crack{ to{ stroke-dashoffset:0; } }
+  #base-lesson-body .frag{
+    position:absolute; width:7px; height:7px; border-radius:2px;
+    background:var(--amber); box-shadow:0 0 10px var(--amber-glow);
+    top:50%; left:50%; pointer-events:none; z-index:6;
+    animation:abl-fly .95s ease-out forwards;
+  }
+  @keyframes abl-fly{
+    0%{ transform:translate(-50%,-50%) scale(1) rotate(0deg); opacity:1; }
+    100%{ transform:translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(.3) rotate(var(--rot)); opacity:0; }
+  }
+  #base-lesson-body .det-result{
+    display:none; margin-top:12px;
+    border:2px solid var(--lime); border-radius:10px;
+    padding:12px 13px; font-size:.86rem;
+    background:rgba(10,25,15,.72);
+    box-shadow:0 0 22px rgba(132,204,22,.2);
+  }
+  #base-lesson-body .det-result.show{ display:block; animation:abl-pop .4s ease-out; }
+  #base-lesson-body .det-result h4{ color:var(--lime); }
+
+  /* ---------- Forensics ---------- */
+  #base-lesson-body .forensics{
+    display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);
+    gap:12px; margin-bottom:14px;
+  }
+  @media(max-width:840px){ #base-lesson-body .forensics{ grid-template-columns:1fr; } }
+  #base-lesson-body .passage{
+    border:2px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    background:linear-gradient(180deg, rgba(6,16,26,.94), rgba(3,8,15,.94));
+    box-shadow:inset 0 0 34px rgba(13,148,136,.08);
+    font-size:.9rem; line-height:1.75;
+  }
+  #base-lesson-body .tk{
+    border-radius:4px; padding:1px 2px;
+    transition:opacity .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+  }
+  #base-lesson-body .passage[data-mode] .tk{ opacity:.3; }
+  #base-lesson-body .passage[data-mode="grounds"] .tk[data-tag="grounds"],
+  #base-lesson-body .passage[data-mode="claims"] .tk[data-tag="claims"],
+  #base-lesson-body .passage[data-mode="warrants"] .tk[data-tag="warrants"]{ opacity:1; }
+  #base-lesson-body .passage[data-mode="grounds"] .tk[data-tag="grounds"]{
+    background:rgba(132,204,22,.18); color:#D9F99D; box-shadow:0 0 12px rgba(132,204,22,.3);
+  }
+  #base-lesson-body .passage[data-mode="claims"] .tk[data-tag="claims"]{
+    background:rgba(45,212,191,.18); color:#99F6E4; box-shadow:0 0 12px rgba(45,212,191,.3);
+  }
+  #base-lesson-body .passage[data-mode="warrants"] .tk[data-tag="warrants"]{
+    background:rgba(249,115,22,.2); color:#FED7AA; box-shadow:0 0 12px rgba(249,115,22,.32);
+  }
+  #base-lesson-body .inspector{
+    border:2px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    background:linear-gradient(180deg, rgba(13,31,46,.85), rgba(8,19,31,.92));
+    box-shadow:0 4px 0 rgba(0,0,0,.42);
+    font-size:.82rem;
+  }
+  #base-lesson-body .inspector ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px; }
+  #base-lesson-body .inspector li{
+    border-left:3px solid var(--accent);
+    padding:6px 0 6px 9px;
+    background:rgba(3,7,18,.5);
+    border-radius:0 8px 8px 0;
+    margin:0;
+  }
+  #base-lesson-body .ins-q{ display:block; color:#A7E8DF; font-style:italic; margin-bottom:3px; }
+  #base-lesson-body .ins-n{ display:block; color:var(--muted); font-size:.78rem; }
+  #base-lesson-body .ins-empty{ color:var(--muted); font-style:italic; }
+  #base-lesson-body .mode-row{ display:flex; flex-wrap:wrap; gap:9px; margin-bottom:12px; }
+  #base-lesson-body .hypo{
+    display:block; width:100%; text-align:left;
+    font-family:var(--sans); font-size:.86rem; text-transform:none; letter-spacing:0;
+    color:#CFEAE5;
+    background:linear-gradient(180deg, rgba(18,41,58,.9), rgba(8,19,31,.92));
+    border:2px solid var(--line);
+    border-radius:10px; padding:11px 13px; margin-bottom:9px;
+    cursor:pointer;
+    box-shadow:0 4px 0 rgba(0,0,0,.5);
+    transition:transform .09s ease, box-shadow .2s ease, border-color .2s ease, filter .2s ease;
+  }
+  #base-lesson-body .hypo:hover{ border-color:var(--accent); box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 rgba(0,0,0,.5); }
+  #base-lesson-body .hypo:active{ transform:translateY(2px); box-shadow:0 2px 0 rgba(0,0,0,.5); }
+  #base-lesson-body .hypo.right{ border-color:var(--lime); box-shadow:0 0 22px var(--lime-glow), 0 4px 0 rgba(0,0,0,.5); }
+  #base-lesson-body .hypo.wrong{ border-color:var(--amber); animation:abl-shake .3s ease-in-out 2; }
+  #base-lesson-body .clearance{
+    display:none; margin-top:12px; border:2px solid var(--lime);
+    border-radius:10px; padding:12px 13px; font-size:.86rem;
+    background:rgba(10,25,15,.72);
+    box-shadow:0 0 24px rgba(132,204,22,.22);
+  }
+  #base-lesson-body .clearance.show{ display:block; animation:abl-pop .4s ease-out; }
+  #base-lesson-body .clearance h4{ color:var(--lime); }
+
+  /* ---------- Matrix ---------- */
+  #base-lesson-body table.matrix{
+    width:100%; border-collapse:collapse; font-size:.82rem;
+    margin-bottom:16px;
+    border:2px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  #base-lesson-body table.matrix th{
+    font-family:var(--mono); font-size:.62rem; letter-spacing:.12em;
+    text-transform:uppercase; text-align:left;
+    padding:9px 10px;
+    background:linear-gradient(180deg, rgba(18,41,58,.95), rgba(10,25,38,.95));
+    color:var(--lime);
+    border-bottom:2px solid var(--line);
+  }
+  #base-lesson-body table.matrix td{
+    padding:9px 10px; border-bottom:1px solid var(--line-soft);
+    vertical-align:top;
+  }
+  #base-lesson-body table.matrix tr:last-child td{ border-bottom:none; }
+  #base-lesson-body table.matrix td:first-child{ color:#9FE7DC; font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; }
+  #base-lesson-body table.matrix td:nth-child(2){ color:#FDBA74; }
+  #base-lesson-body .protocol li{ font-size:.88rem; margin-bottom:9px; }
+  #base-lesson-body .protocol strong{ color:var(--lime); }
+
+  /* ---------- Finish ---------- */
+  #base-lesson-body .finish-wrap{
+    display:flex; justify-content:center; align-items:center;
+    padding:26px 0 10px;
+  }
+</style>
+
+<div id="base-lesson-body">
+
+  <!-- ============ 1. HUD ============ -->
+  <header class="hud">
+    <span class="badge level">LVL 137</span>
+    <span class="badge subject">English: Idiom, Allusion &amp; Reference</span>
+    <span class="badge">9th&ndash;10th Grade | Ages 12&ndash;16</span>
+    <span class="badge xp">XP <strong id="abl-xp">0</strong></span>
+    <span class="badge">OPERATOR <input id="abl-callsign" type="text" value="CADET-16" maxlength="12" aria-label="Operator callsign"></span>
+    <div class="gauge" id="abl-gauge">
+      <div class="gauge-track"><div class="gauge-fill" id="abl-gauge-fill"></div></div>
+      <div class="gauge-label" id="abl-gauge-label">25% &middot; CALIBRATING</div>
+    </div>
+  </header>
+
+  <div class="mission">
+    <strong>MISSION BRIEF:</strong> You are the corrosion engineer aboard Deep-Ref Station Theta, where claims about literature are lowered into falsification acid to see which parts hold.
+    Your job is to separate <strong>verifiable textual and source evidence</strong> from <strong>unstated assumptions</strong>, then decide what a passage about myth, Scripture, or history can actually be said to mean.
+  </div>
+
+  <!-- ============ 2. SECTION 01 ============ -->
+  <section class="panel">
+    <div class="eyebrow"><span>Section 01</span><span>Comprehensive Textbook Foundation</span></div>
+    <h2 class="sec-title">The Anatomy of an Idiom, an Allusion, and a Reference</h2>
+
+    <p class="lede">
+      An <strong>idiom</strong> is a fixed expression whose meaning cannot be recovered from its individual words &mdash; <em>kick the bucket</em>, <em>under the weather</em>, <em>wash one&rsquo;s hands of</em>. An <strong>allusion</strong> is an indirect reference that asks a reader to import knowledge from an outside source: a myth, a scriptural passage, a historical event, or another literary work. A <strong>reference</strong> is the broadest category of the three: any pointing gesture toward an outside source, whether explicit (<em>as in Genesis</em>) or implicit (<em>a garden, a serpent, a forbidden tree</em>).
+    </p>
+    <p>
+      All three are <strong>arguments in miniature</strong>. Each one makes a compressed claim of the form: <em>knowledge from Source A should reshape how you read Passage B.</em> That claim has parts, and every part can be inspected, tested, and falsified. Below is the complete structural model.
+    </p>
+
+    <h3>1.1 &mdash; The Five-Component Structural Model</h3>
+    <div class="stack">
+      <div class="mrow">
+        <div class="mname"><span class="tag tag-claim">Core Claim</span></div>
+        <div class="mbody">
+          <strong>The Core Assertion / Outcome.</strong> The interpretive conclusion the writer wants you to accept about the passage.
+          <span class="ex">Example: &ldquo;The CFO is refusing moral accountability.&rdquo; A core claim should be stated in bounded, testable language. Watch for absolute scope markers &mdash; <em>always</em>, <em>proves</em>, <em>outright</em>, <em>the whole meaning of</em> &mdash; which silently enlarge the claim past what any evidence could support.</span>
+        </div>
+      </div>
+      <div class="mrow">
+        <div class="mname"><span class="tag tag-grounds">Grounds</span></div>
+        <div class="mbody">
+          <strong>Empirical Grounds / Inputs.</strong> The checkable evidence: exact quotations, documented source meanings, dates, attributions, textual patterns a second reader can verify independently.
+          <span class="ex">Example: the phrase literally appears in the passage; the idiom is documented as deriving from Matthew 27:24. Grounds must be <em>cited</em>, not merely <em>felt</em>.</span>
+        </div>
+      </div>
+      <div class="mrow">
+        <div class="mname"><span class="tag tag-bridge">Bridge</span></div>
+        <div class="mbody">
+          <strong>Connecting Bridge / Mechanism.</strong> The inference principle that carries you from grounds to claim. In allusion analysis this is the allusive link itself: <em>the phrase echoes Source X, and Source X carries meaning M, therefore the passage carries meaning M.</em>
+          <span class="ex">This component is the one most often left unstated &mdash; and the one that does the most work. A bridge you cannot state is a bridge you cannot defend.</span>
+        </div>
+      </div>
+      <div class="mrow">
+        <div class="mname"><span class="tag tag-scope">Scope</span></div>
+        <div class="mbody">
+          <strong>Scope Qualifiers.</strong> Words and phrases that limit how far the claim reaches: <em>in this passage</em>, <em>for this speaker</em>, <em>in the opening chapter</em>, <em>as one thread among several</em>.
+          <span class="ex">A reading of one line does not license a reading of an entire novel. Qualifiers keep the claim honest and make it falsifiable.</span>
+        </div>
+      </div>
+      <div class="mrow">
+        <div class="mname"><span class="tag tag-bound">Boundary</span></div>
+        <div class="mbody">
+          <strong>Boundary Conditions.</strong> The conditions under which the claim would fail: an unreliable narrator, an ironic tone, a competing allusion in the same paragraph, a reader who does not share the source canon.
+          <span class="ex">If you cannot name a single piece of evidence that would disconfirm your reading, you have not made an argument &mdash; you have made a preference.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>1.2 &mdash; The Four Core Verification Criteria</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>1. Relevance</h4>
+        <p>Does the cited source actually connect to the claim being made? A quotation from Job is not relevant evidence for a claim about Genesis imagery unless you explain how the two interact.</p>
+        <p class="muted">Test: state, in one sentence, the link between the evidence and the conclusion. If you cannot, relevance has failed.</p>
+      </div>
+      <div class="card">
+        <h4>2. Sufficiency</h4>
+        <p>Is there enough evidence? One repeated verb and one word (&ldquo;formless&rdquo;) may establish that a Genesis echo is <em>present</em>. They do not establish that the novel&rsquo;s <em>total meaning</em> is Genesis-shaped.</p>
+        <p class="muted">Test: ask what the claim requires, then count what is actually supplied.</p>
+      </div>
+      <div class="card">
+        <h4>3. Accuracy</h4>
+        <p>Is each ground actually true? Does the phrase really appear? Does the myth really say what the critic says it says? Is the historical date correct?</p>
+        <p class="muted">Test: verify every quotable item against the primary text or a reliable source, not against memory.</p>
+      </div>
+      <div class="card">
+        <h4>4. Independence</h4>
+        <p>Do the grounds support the claim independently, or do they all trace back to one observation restated three ways? Three phrasings of the same single echo are one piece of evidence, not three.</p>
+        <p class="muted">Test: ask whether removing one ground would leave the others standing on their own.</p>
+      </div>
+    </div>
+
+    <h3>1.3 &mdash; Structural Validity vs. Soundness</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>Structural Validity</h4>
+        <p><strong>Internal consistency.</strong> If the stated premises were true, would the conclusion follow? Validity is about the <em>shape</em> of the reasoning, not the truth of its parts.</p>
+        <p class="muted">Valid form: &ldquo;If the text names Sisyphus, and Sisyphus is the figure condemned to endless futile labour, then the text invokes futile labour.&rdquo; The form holds even if the source claim is wrong.</p>
+      </div>
+      <div class="card">
+        <h4>Soundness</h4>
+        <p><strong>Validity + verified truth.</strong> A sound argument is valid <em>and</em> every premise is factually correct. Soundness is the standard you actually want.</p>
+        <p class="muted">A critic can produce a perfectly valid allusion argument built on a misremembered myth. Valid but unsound &mdash; and worthless as interpretation.</p>
+      </div>
+    </div>
+
+    <h3>1.4 &mdash; Deductive vs. Inductive Reasoning in Reference Analysis</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>Deductive Systems &mdash; Truth-Preserving Certainty</h4>
+        <p>Move from a general rule plus a specific fact to a guaranteed conclusion. In allusion study: <em>All uses of &ldquo;Pandora&rsquo;s box&rdquo; in this period draw on Hesiod&rsquo;s <span style="white-space:nowrap">Theogony</span>; this poem uses the phrase; therefore this poem draws on Hesiod.</em></p>
+        <p class="muted">Certainty is only as good as the general rule. A false universal produces a false conclusion with total confidence.</p>
+      </div>
+      <div class="card">
+        <h4>Inductive Systems &mdash; Probabilistic Strength</h4>
+        <p>Move from specific instances to a general pattern. <em>Across twelve novels that allude to the Prodigal Son, ten use it to signal forgiveness; therefore this novel&rsquo;s Prodigal allusion probably signals forgiveness.</em></p>
+        <p class="muted">Strength depends on sample size, representativeness, and whether the sample was chosen before or after you knew the answer.</p>
+      </div>
+    </div>
+
+    <h3>1.5 &mdash; Key Presumption Traps in This Domain</h3>
+    <ul>
+      <li><strong>The totality trap:</strong> assuming an allusion must carry the source&rsquo;s <em>complete</em> meaning rather than one selected feature of it.</li>
+      <li><strong>The canon trap:</strong> assuming every reader shares the writer&rsquo;s cultural and religious canon, so that the allusion &ldquo;obviously&rdquo; lands.</li>
+      <li><strong>The drift trap:</strong> assuming a modern idiom&rsquo;s current sense equals the source text&rsquo;s sense (see the <em>Pandora&rsquo;s box</em> problem in Pod 03).</li>
+      <li><strong>The monolith trap:</strong> assuming a source tradition has one uncontested reading. Genesis, Job, and the Gospels have centuries of competing interpretation.</li>
+      <li><strong>The presence-equals-purpose trap:</strong> assuming that because an allusion is <em>present</em>, it is <em>load-bearing</em>. Many allusions are decorative, ironic, or deliberately misleading.</li>
+    </ul>
+
+    <h3>1.6 &mdash; Two Fully Analyzed Worked Examples</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>Worked Example A &mdash; Idiom with a Scriptural Source</h4>
+        <p class="excerpt">
+          &ldquo;When the audit failed, the CFO <span class="hl-bridge">washed his hands of</span> the whole ledger and let the junior analysts take the blame.&rdquo;
+        </p>
+        <div class="decoder">
+          <div class="drow"><span class="tag tag-grounds">Grounds</span><span>The exact phrase <em>washed his hands of</em> appears in the sentence. The idiom is documented as deriving from Pilate&rsquo;s public gesture in Matthew 27:24.</span></div>
+          <div class="drow"><span class="tag tag-bridge">Bridge</span><span>The idiom imports the source gesture&rsquo;s function: a <em>public disclaiming of responsibility</em> for an outcome one has the power to affect.</span></div>
+          <div class="drow"><span class="tag tag-claim">Core Claim</span><span>The CFO is refusing accountability rather than performing a hygiene action. The phrase is figurative, not literal.</span></div>
+          <div class="drow"><span class="tag tag-scope">Scope</span><span><em>In this sentence.</em> The idiom establishes a stance, not a crime. It does not prove the CFO committed fraud.</span></div>
+          <div class="drow"><span class="tag tag-bound">Boundary</span><span>If the narrator is unreliable, or the phrase is used with comic irony, the accountability reading weakens considerably.</span></div>
+        </div>
+        <p class="muted" style="margin-top:9px;"><strong>Decoder note:</strong> the allusion supplies a <em>frame</em>, not a <em>verdict</em>. Confusing the two is the single most common error in allusion analysis.</p>
+      </div>
+
+      <div class="card">
+        <h4>Worked Example B &mdash; Historical Allusion Reversed</h4>
+        <p class="excerpt">
+          &ldquo;The editorial warned that the new tariff was <span class="hl-bridge">a Boston Tea Party in reverse</span> &mdash; <span class="hl-scope">we are the ones</span> throwing the tea into our own harbour.&rdquo;
+        </p>
+        <div class="decoder">
+          <div class="drow"><span class="tag tag-grounds">Grounds</span><span>The phrase names the Boston Tea Party (1773), a documented act of colonial resistance to taxation without representation. The sentence explicitly reverses the direction of the act.</span></div>
+          <div class="drow"><span class="tag tag-bridge">Bridge</span><span>The allusion imports the source event&rsquo;s structure: resistance against an imposed economic policy. The reversal marker <em>in reverse</em> inverts who is harmed.</span></div>
+          <div class="drow"><span class="tag tag-claim">Core Claim</span><span>The tariff is self-destructive rather than liberating &mdash; the nation is damaging its own harbour.</span></div>
+          <div class="drow"><span class="tag tag-scope">Scope</span><span><em>In reverse</em> limits the analogy to structure, not to political legitimacy. The editorial is not calling the tariff heroic.</span></div>
+          <div class="drow"><span class="tag tag-bound">Boundary</span><span>The allusion presumes the reader knows 1773. For a reader without that knowledge, the irony collapses into a plain metaphor and the claim survives only weakly.</span></div>
+        </div>
+        <p class="muted" style="margin-top:9px;"><strong>Decoder note:</strong> reversal markers (<em>in reverse</em>, <em>a kind of</em>, <em>not quite</em>) are scope qualifiers. Ignoring them inflates the claim.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. SECTION 02 ============ -->
+  <section class="panel">
+    <div class="eyebrow"><span>Section 02</span><span>The Four Hazard Pods</span></div>
+    <h2 class="sec-title">Four Structural Failure Modes in Reference Analysis</h2>
+    <p class="lede">These are the four ways allusion arguments break. Learn to name them and you can diagnose any reading &mdash; including your own &mdash; in under a minute.</p>
+
+    <div class="grid2">
+      <article class="pod">
+        <span class="pod-num">POD 01</span>
+        <h3>The Value Trap</h3>
+        <p class="muted" style="font-size:.82rem;">Presupposing unstated priorities, moral hierarchies, or preferences.</p>
+        <div class="pod-block">
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>Evaluative adjectives smuggled into descriptive claims: <em>noble</em>, <em>obviously cruel</em>, <em>betrays</em>, <em>shamefully</em>.</li>
+            <li>The conclusion is moral rather than interpretive &mdash; it tells you what to <em>approve of</em>, not what the text <em>does</em>.</li>
+            <li>The source tradition&rsquo;s own verdict is treated as the passage&rsquo;s verdict, with no textual link shown.</li>
+          </ul>
+        </div>
+        <div class="pod-block">
+          <h4>Catastrophic Failure Risk</h4>
+          <p style="font-size:.83rem;">Your ethical reaction is mistaken for the text&rsquo;s argument. The reading becomes unfalsifiable: no evidence could ever dislodge it, because it was never really about evidence.</p>
+        </div>
+        <div class="pod-block">
+          <h4>Domain Excerpt</h4>
+          <blockquote>&ldquo;Because Atticus Finch is a Christ-figure, the novel endorses passive suffering as the correct response to injustice.&rdquo;</blockquote>
+          <p class="dx"><strong>Diagnostic:</strong> the Christ parallel is arguable, but &ldquo;correct response&rdquo; is a value judgment the text never states. The reader&rsquo;s own view of passivity is doing the structural work while wearing the costume of textual analysis.</p>
+        </div>
+      </article>
+
+      <article class="pod">
+        <span class="pod-num">POD 02</span>
+        <h3>The Causal Leap</h3>
+        <p class="muted" style="font-size:.82rem;">Conflating correlation or sequence with direct causation; omitted variable bias.</p>
+        <div class="pod-block">
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>The argument claims the allusion <em>produces</em> an effect (tone, theme, reader response) without describing a mechanism.</li>
+            <li>Two features co-occur in the same passage and one is declared the cause of the other.</li>
+            <li>Alternative causes &mdash; diction, syntax, line breaks, structure &mdash; go unexamined.</li>
+          </ul>
+        </div>
+        <div class="pod-block">
+          <h4>Catastrophic Failure Risk</h4>
+          <p style="font-size:.83rem;">You credit the allusion for an effect produced by something else entirely, and the omitted variable stays invisible because it was never named.</p>
+        </div>
+        <div class="pod-block">
+          <h4>Domain Excerpt</h4>
+          <blockquote>&ldquo;The poem&rsquo;s mood darkens because of the Orpheus allusion.&rdquo;</blockquote>
+          <p class="dx"><strong>Diagnostic:</strong> the allusion and the dark mood co-occur, but nothing establishes the allusion as the cause. The line&rsquo;s harsh consonants and clipped syntax are unexamined rival explanations. Reverse causation is also possible: a dark mood may have attracted the Orpheus reference in the first place.</p>
+        </div>
+      </article>
+
+      <article class="pod">
+        <span class="pod-num">POD 03</span>
+        <h3>The Definitional Shift</h3>
+        <p class="muted" style="font-size:.82rem;">Equivocation; sliding between colloquial and source definitions mid-argument.</p>
+        <div class="pod-block">
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>The same word or phrase carries two different senses across the argument.</li>
+            <li>The source sense and the modern sense are never explicitly separated.</li>
+            <li>An idiom&rsquo;s drift away from its origin is invisible because nobody checked the origin.</li>
+          </ul>
+        </div>
+        <div class="pod-block">
+          <h4>Catastrophic Failure Risk</h4>
+          <p style="font-size:.83rem;">An entire reading is built on the wrong sense. The argument looks airtight because both halves are true &mdash; of different meanings.</p>
+        </div>
+        <div class="pod-block">
+          <h4>Domain Excerpt</h4>
+          <blockquote>&ldquo;The scientist opened a Pandora&rsquo;s box, so the novel claims that scientific inquiry releases only evil.&rdquo;</blockquote>
+          <p class="dx"><strong>Diagnostic:</strong> in Hesiod, the jar releases evils but <em>hope remains inside</em>. The modern idiom drops the hope and keeps only the disaster. The argument slides from the source sense to the colloquial sense without flagging the change &mdash; the word &ldquo;only&rdquo; is doing the equivocation.</p>
+        </div>
+      </article>
+
+      <article class="pod">
+        <span class="pod-num">POD 04</span>
+        <h3>The Micro-Sample Mirage</h3>
+        <p class="muted" style="font-size:.82rem;">Generalising from non-representative samples, voluntary cohorts, or survivor bias.</p>
+        <div class="pod-block">
+          <h4>Identification Rules</h4>
+          <ul>
+            <li>How many instances were examined? Four? One dictionary entry? One footnote?</li>
+            <li>Who selected the sample &mdash; and did they select it <em>before</em> or <em>after</em> forming the hypothesis?</li>
+            <li>Is this a survivor set? We only catalogue the allusions we still recognise, so the &ldquo;shared canon&rdquo; looks far more shared than it is.</li>
+          </ul>
+        </div>
+        <div class="pod-block">
+          <h4>Catastrophic Failure Risk</h4>
+          <p style="font-size:.83rem;">The pattern you claim to have measured is an artefact of what survived, what got annotated, and what you happened to read. The mirage is convincing precisely because the sample is small enough to hold in one hand.</p>
+        </div>
+        <div class="pod-block">
+          <h4>Domain Excerpt</h4>
+          <blockquote>&ldquo;Every allusion to the Prodigal Son in modern fiction signals forgiveness &mdash; I checked four novels from my syllabus.&rdquo;</blockquote>
+          <p class="dx"><strong>Diagnostic:</strong> four texts chosen by the reader is a voluntary, non-representative cohort. The universal quantifier <em>every</em> is supported by a sample of four. This is a mirage built on selection, not a measured pattern.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 4. SECTION 03 ============ -->
+  <section class="panel">
+    <div class="eyebrow"><span>Section 03</span><span>Signature Engine &middot; Variant 16</span></div>
+    <h2 class="sec-title">The Corrosive Acid Dip Tank</h2>
+    <p class="lede">
+      The crane holds an <strong>argument framework</strong> &mdash; five struts supporting one claim about allusion. You must decide which struts deserve <strong>acid-resistant cladding</strong>.
+      Cladding means: <em>&ldquo;I can cite verifiable evidence for this.&rdquo;</em> Documented grounds hold. Unstated assumptions dissolve. But clad a strut you cannot evidence, and the acid seeps underneath and eats it anyway.
+    </p>
+    <p class="muted">Rule of the tank: <strong>clad every verifiable strut, leave every unstated assumption bare.</strong> Any other configuration corrodes the structure.</p>
+
+    <div class="acid-shell">
+      <div class="eyebrow" style="margin-bottom:8px;"><span id="abl-acid-round">CHALLENGE 01</span><span id="abl-acid-status">RIG LOADED &middot; AWAITING CLADDING DECISIONS</span></div>
+      <div class="acid-claim" id="abl-acid-claim"></div>
+
+      <div class="crane"></div>
+      <div class="tank" id="abl-tank">
+        <div class="rig" id="abl-rig"></div>
+        <div class="acid" id="abl-acid"></div>
+      </div>
+
+      <div class="btn-row" style="margin-top:12px;">
+        <button class="btn btn-amber" id="abl-dip" type="button">⚗️ LOWER RIG INTO ACID</button>
+        <button class="btn btn-ghost" id="abl-reset" type="button">🔄 RESET RIG CLADDING</button>
+        <button class="btn btn-lime" id="abl-next" type="button" style="display:none;">▶ ADVANCE TO NEXT CHALLENGE</button>
+      </div>
+
+      <div class="debrief" id="abl-acid-debrief"></div>
+    </div>
+  </section>
+
+  <!-- ============ 5. SECTION 04 ============ -->
+  <section class="panel">
+    <div class="eyebrow"><span>Section 04</span><span>Active Heuristic Destruction</span></div>
+    <h2 class="sec-title">The Negation Detonator</h2>
+    <p class="lede">Below is a real interpretive argument under synthetic load. Its load-bearing assumption is bolted to the detonator plate. Negate that assumption &mdash; prove its opposite &mdash; and watch whether the whole structure survives the blast.</p>
+
+    <div class="det-wrap">
+      <div class="det-card" id="abl-det-card">
+        <svg class="cracklayer" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M200 0 L188 46 L214 72 L176 116 L198 150 L182 200"/>
+          <path d="M188 46 L118 84 L94 148"/>
+          <path d="M214 72 L302 96 L342 166"/>
+          <path d="M176 116 L112 132"/>
+          <path d="M198 150 L262 178"/>
+        </svg>
+
+        <h4 style="color:#FDBA74;">Scenario Under Load</h4>
+        <p style="font-size:.9rem;">
+          A critic writes: <em>&ldquo;The novel&rsquo;s title echoes the Battle Hymn of the Republic; the hymn is a marching song of righteous violence; therefore the novel endorses violent revolution.&rdquo;</em>
+        </p>
+
+        <div class="det-plate">
+          <span class="plate-label">⚡ Target Implicit Warrant &mdash; Load-Bearing Assumption</span>
+          <span class="plate-text">&ldquo;Any allusion to a source text automatically endorses that source&rsquo;s most militant reading.&rdquo;</span>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-amber" id="abl-detonate" type="button">💣 DETONATE NEGATION TEST</button>
+        </div>
+
+        <div class="det-result" id="abl-det-result">
+          <h4>DETONATION SUCCESSFUL!</h4>
+          <p style="margin:0 0 8px;">By proving the opposite of the implicit assumption &mdash; that allusions may be ironic, selective, critical, or purely decorative &mdash; the entire premise collapsed. The Negation Test proves this assumption was a fatal structural dependency: remove it and the conclusion has nothing left to stand on.</p>
+          <p class="muted" style="margin:0;"><strong>Rebuild note:</strong> replace the warrant with a bounded, testable version &mdash; &ldquo;the title borrows the hymn&rsquo;s <em>judgment</em> imagery, which the novel may be turning against its own speaker&rdquo; &mdash; and the argument becomes examinable rather than fatal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. SECTION 05 ============ -->
+  <section class="panel">
+    <div class="eyebrow"><span>Section 05</span><span>Interactive Text X-Ray</span></div>
+    <h2 class="sec-title">Live Fire Forensics</h2>
+    <p class="lede">Run the scanner across the critical passage below. Each channel isolates one structural layer. Then identify the single fatal flaw in the critics&rsquo; argument.</p>
+
+    <div class="mode-row">
+      <button class="btn btn-lime" data-mode="grounds" type="button">🟢 SCAN FOUNDATION / GROUNDS</button>
+      <button class="btn" data-mode="claims" type="button">🔵 SCAN CORE CLAIMS / OUTCOMES</button>
+      <button class="btn btn-amber" data-mode="warrants" type="button">🟠 DETECT UNSTATED MECHANISMS / WARRANTS</button>
+    </div>
+
+    <div class="forensics">
+      <div class="passage" id="abl-passage">
+        <p>
+          Since its publication,
+          <span class="tk" data-tag="claims" data-note="Reported interpretive claim. This is an assertion about the text, not a quotation from it.">critics have treated the narrator&rsquo;s remark that the factory owner &ldquo;played God&rdquo; as an allusion to the Genesis creation narrative</span>,
+          and
+          <span class="tk" data-tag="warrants" data-note="The bridge is asserted in four words. No principle is offered for why a motif should yield a whole-theme conclusion.">on that basis they conclude</span>
+          that
+          <span class="tk" data-tag="claims" data-note="Core assertion. The absolute scope marker &ldquo;outright&rdquo; admits no boundary condition whatsoever.">the novel condemns industrial ambition outright</span>.
+          The phrase does echo Genesis 1 &mdash;
+          <span class="tk" data-tag="grounds" data-note="Verifiable textual ground: a countable lexical repetition any second reader can check.">the verb &ldquo;created&rdquo; appears twice in the surrounding paragraph</span>, and
+          <span class="tk" data-tag="grounds" data-note="Direct paraphrase of a textual detail. Checkable and relevant, but not sufficient on its own.">the owner&rsquo;s workshop is described as &ldquo;formless&rdquo; before he reorganises it</span>.
+          Yet the same paragraph
+          <span class="tk" data-tag="grounds" data-note="A second source tradition cited as evidence. Note that it cuts against a single-allusion reading.">borrows its closing cadence from the Book of Job</span>, where the divine speech humbles rather than condemns.
+          The critics&rsquo; reading
+          <span class="tk" data-tag="warrants" data-note="This names the load-bearing warrant. Negate it and the critics&rsquo; conclusion collapses entirely.">therefore treats a single borrowed motif as the text&rsquo;s total meaning</span>
+          rather than one thread among several.
+        </p>
+      </div>
+
+      <aside class="inspector">
+        <h4 id="abl-inspector-title">Inspector Notes &mdash; No Channel Active</h4>
+        <ul id="abl-inspector">
+          <li class="ins-empty">Select a scan channel to isolate structural components in the passage.</li>
+        </ul>
+      </aside>
+    </div>
+
+    <h3 style="margin-top:6px;">Interactive Challenge &mdash; Find the Fatal Flaw</h3>
+    <button class="hypo" data-correct="false" type="button"><strong>A.</strong> The flaw is definitional: the word &ldquo;created&rdquo; is used in an ordinary sense, so it cannot participate in any allusion to Genesis.</button>
+    <button class="hypo" data-correct="true" type="button"><strong>B.</strong> The critics&rsquo; conclusion rests on the unstated warrant that a single borrowed motif carries the source tradition&rsquo;s <em>total</em> meaning; because the same paragraph also draws on Job, and the narrator&rsquo;s reliability is never established, the inference overreaches its scope.</button>
+    <button class="hypo" data-correct="false" type="button"><strong>C.</strong> The flaw is sampling: one paragraph is too small a sample for any interpretive claim, so the whole reading must be discarded.</button>
+
+    <div class="clearance" id="abl-clearance">
+      <h4>✅ STRUCTURAL CLEARANCE GRANTED</h4>
+      <p style="margin:0;">You located the load-bearing warrant and named the boundary condition that limits it. The Genesis echo is real and the grounds are accurate &mdash; the failure is one of <strong>sufficiency and scope</strong>, not of fact. A sound revision would read: <em>&ldquo;In this paragraph the narrator&rsquo;s Genesis echo frames creation as imitation; the competing Job cadence complicates any claim that the novel condemns industrial ambition outright.&rdquo;</em></p>
+    </div>
+  </section>
+
+  <!-- ============ 7. SECTION 06 ============ -->
+  <section class="panel">
+    <div class="eyebrow"><span>Section 06</span><span>Transfer &amp; Error Detection Triage</span></div>
+    <h2 class="sec-title">Quick-Reference Procedural Protocol</h2>
+
+    <table class="matrix">
+      <thead>
+        <tr><th>Component</th><th>Failure Mode</th><th>Elimination Move</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Core Claim</td>
+          <td>Absolute scope markers (&ldquo;always&rdquo;, &ldquo;proves&rdquo;, &ldquo;outright&rdquo;, &ldquo;total meaning&rdquo;)</td>
+          <td>Strip the quantifier, restate the bounded version, then ask what evidence the bounded version actually needs.</td>
+        </tr>
+        <tr>
+          <td>Empirical Grounds</td>
+          <td>One quotation treated as proof of an entire reading; grounds restated three ways and counted as three</td>
+          <td>Require at least two <em>independent</em> textual signals and verify each against the primary text.</td>
+        </tr>
+        <tr>
+          <td>Connecting Bridge</td>
+          <td>Source meaning asserted but never demonstrated; the inference step left unstated</td>
+          <td>Name the source, cite its documented sense, then write out the inference in one explicit sentence.</td>
+        </tr>
+        <tr>
+          <td>Scope Qualifier</td>
+          <td>Missing; a reading of one line is globalised into a reading of the whole work</td>
+          <td>Insert the qualifier: &ldquo;in this passage&rdquo;, &ldquo;for this speaker&rdquo;, &ldquo;as one thread among several&rdquo;.</td>
+        </tr>
+        <tr>
+          <td>Boundary Condition</td>
+          <td>Falsification never attempted; the reading cannot fail, therefore it cannot inform</td>
+          <td>Ask what textual evidence would disconfirm the reading. If none exists, the reading is a preference.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The Universal 5-Step Deconstruction Protocol</h3>
+    <ol class="protocol">
+      <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits.</strong> Separate the central assertion from background context and mark certainty limiters such as <em>may</em>, <em>suggests</em>, <em>in this scene</em>.</li>
+      <li><strong>Step 2: Audit Empirical Grounds for Sufficiency.</strong> Check for sample representation, bias, and source independence. Two independent signals beat five restatements of one.</li>
+      <li><strong>Step 3: Extract the Unstated Bridge / Mechanism.</strong> Formulate the implicit connecting principle linking the source tradition to the interpretive outcome, and write it as a full sentence.</li>
+      <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test.</strong> Logically negate the bridge. If the outcome collapses when the bridge is negated, the component is load-bearing and must be defended or replaced.</li>
+      <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal.</strong> Check for alternative explanations, bidirectional causality, and definitional shifts between source sense and modern sense.</li>
+    </ol>
+  </section>
+
+  <!-- ============ 8. TERMINATION ============ -->
+  <div class="finish-wrap">
+    <button class="btn btn-lime btn-xl" id="abl-finish" type="button">🎓 FINISH LESSON</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ---------------- XP & INTEGRITY GAUGE ---------------- */
+  const MILESTONES = ['acid-r1', 'acid-r2', 'acid-r3', 'detonate', 'forensics'];
+  const state = { xp: 0, done: new Set() };
+
+  const xpEl = document.getElementById('abl-xp');
+  const gaugeEl = document.getElementById('abl-gauge');
+  const gaugeFill = document.getElementById('abl-gauge-fill');
+  const gaugeLabel = document.getElementById('abl-gauge-label');
+
+  function render() {
+    xpEl.textContent = state.xp;
+    const pct = Math.round(25 + 75 * (state.done.size / MILESTONES.length));
+    gaugeFill.style.width = pct + '%';
+    if (pct >= 100) {
+      gaugeEl.classList.add('full');
+      gaugeLabel.textContent = '100% \u00B7 STRUCTURE SECURED & VERIFIED';
+    } else {
+      gaugeEl.classList.remove('full');
+      gaugeLabel.textContent = pct + '% \u00B7 CALIBRATING';
+    }
+  }
+
+  function award(key) {
+    if (!key || state.done.has(key)) return;
+    state.done.add(key);
+    state.xp += 100;
+    render();
+  }
+
+  function wait(ms) { return new Promise(res => setTimeout(res, ms)); }
+  render();
+
+  /* ---------------- ACID TANK ENGINE ---------------- */
+  const ACID_ROUNDS = [
+    {
+      id: 'acid-r1',
+      label: 'CHALLENGE 01 \u00B7 THE WASHED HANDS',
+      claim: 'CLAIM UNDER TEST: The narrator\u2019s phrase \u201Che washed his hands of the deal\u201D alludes to Pontius Pilate and therefore signals the character\u2019s refusal of moral responsibility.',
+      struts: [
+        { t: 'The passage contains the exact phrase \u201Cwashed his hands of the deal.\u201D', v: true },
+        { t: 'The idiom \u201Cwash one\u2019s hands of\u201D is documented as deriving from Pilate\u2019s public gesture in Matthew 27:24.', v: true },
+        { t: 'The author intends readers to recall the Pilate narrative specifically, not merely the dead idiom.', v: false },
+        { t: 'In the source narrative, the gesture publicly disclaims responsibility for an outcome the actor had power to affect.', v: true },
+        { t: 'Any character who uses this phrase must be evading moral responsibility.', v: false }
+      ],
+      ok: 'Three documented grounds survive as clean steel, and the two unstated warrants dissolved on contact. The remaining skeleton supports only the bounded reading: the phrase carries a disclaiming frame \u2014 it does not certify the character\u2019s guilt.'
+    },
+    {
+      id: 'acid-r2',
+      label: 'CHALLENGE 02 \u00B7 SISYPHUS AT THE DMV',
+      claim: 'CLAIM UNDER TEST: The poem\u2019s title \u201CSisyphus at the DMV\u201D is a comic allusion to Greek myth that argues modern bureaucracy is absurd.',
+      struts: [
+        { t: 'Sisyphus is a figure from Greek myth condemned to roll a boulder uphill for eternity.', v: true },
+        { t: 'The title places the name \u201CSisyphus\u201D and the abbreviation \u201CDMV\u201D in a single noun phrase.', v: true },
+        { t: 'The poem\u2019s core semantic feature borrowed from the myth is futile, endlessly repeated labour.', v: true },
+        { t: 'The poet intends the juxtaposition as social critique rather than an affectionate joke.', v: false },
+        { t: 'Juxtaposing a mythic figure with a modern institution always produces satiric critique.', v: false }
+      ],
+      ok: 'The myth\u2019s documented feature and the title\u2019s observable juxtaposition survived; the intent claim and the absolute \u201Calways\u201D rule dissolved. The framework now supports only this: the title invokes futile repetition \u2014 the satiric tone remains a hypothesis, not a finding.'
+    },
+    {
+      id: 'acid-r3',
+      label: 'CHALLENGE 03 \u00B7 THE ENEMY IS US',
+      claim: 'CLAIM UNDER TEST: The speech\u2019s line \u201Cwe have met the enemy and he is us\u201D is a historical reference to Commodore Perry\u2019s 1813 dispatch and turns its triumphalism inward.',
+      struts: [
+        { t: '\u201CWe have met the enemy and they are ours\u201D is documented as Oliver Hazard Perry\u2019s dispatch after the Battle of Lake Erie, 1813.', v: true },
+        { t: 'The speech substitutes the pronoun \u201Che is us\u201D for Perry\u2019s \u201Cthey are ours.\u201D', v: true },
+        { t: 'Substituting a self-referential pronoun for an external enemy structurally reverses the original\u2019s triumphalism.', v: true },
+        { t: 'The speaker can rely on the audience recognising the 1813 dispatch and reading the substitution as self-indictment.', v: false },
+        { t: 'Any audience unfamiliar with the dispatch will still grasp the self-indictment unaided.', v: false }
+      ],
+      ok: 'The dated attribution, the observable substitution, and the structural reading of that substitution held firm. The audience-competence assumptions dissolved. The claim now rests on what the text does \u2014 not on what the audience is presumed to know.'
+    }
+  ];
+
+  const rigEl = document.getElementById('abl-rig');
+  const acidEl = document.getElementById('abl-acid');
+  const tankEl = document.getElementById('abl-tank');
+  const claimEl = document.getElementById('abl-acid-claim');
+  const roundLabelEl = document.getElementById('abl-acid-round');
+  const statusEl = document.getElementById('abl-acid-status');
+  const dipBtn = document.getElementById('abl-dip');
+  const resetBtn = document.getElementById('abl-reset');
+  const nextBtn = document.getElementById('abl-next');
+  const debriefEl = document.getElementById('abl-acid-debrief');
+
+  let acidBusy = false;
+  let currentRound = 0;
+  let roundSolved = [false, false, false];
+
+  for (let i = 0; i < 16; i++) {
+    const b = document.createElement('span');
+    b.className = 'bub';
+    b.style.left = (Math.random() * 94) + '%';
+    b.style.animationDelay = (Math.random() * 4.5) + 's';
+    b.style.animationDuration = (3 + Math.random() * 3.2) + 's';
+    const size = 4 + Math.random() * 8;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    acidEl.appendChild(b);
+  }
+
+  function buildRound(i) {
+    currentRound = i;
+    acidBusy = false;
+    const r = ACID_ROUNDS[i];
+
+    roundLabelEl.textContent = r.label;
+    statusEl.textContent = 'RIG LOADED \u00B7 AWAITING CLADDING DECISIONS';
+    claimEl.textContent = r.claim;
+
+    rigEl.innerHTML = '';
+    r.struts.forEach((s, idx) => {
+      const el = document.createElement('div');
+      el.className = 'strut';
+      el.dataset.verified = s.v ? 'true' : 'false';
+      el.dataset.clad = 'false';
+
+      const idxSpan = document.createElement('span');
+      idxSpan.className = 'strut-idx';
+      idxSpan.textContent = String(idx + 1).padStart(2, '0');
+
+      const txtSpan = document.createElement('span');
+      txtSpan.className = 'strut-text';
+      txtSpan.textContent = s.t;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'clamp';
+      btn.textContent = '\uD83D\uDD29 CLAD STRUT';
+      btn.addEventListener('click', () => { if (!acidBusy) toggleClad(el); });
+
+      el.appendChild(idxSpan);
+      el.appendChild(txtSpan);
+      el.appendChild(btn);
+      rigEl.appendChild(el);
+    });
+
+    acidEl.style.height = '10%';
+    tankEl.classList.remove('solved', 'corroded');
+    debriefEl.className = 'debrief';
+    debriefEl.innerHTML = '';
+    nextBtn.style.display = 'none';
+    dipBtn.disabled = false;
+    dipBtn.textContent = '\u2697\uFE0F LOWER RIG INTO ACID';
+  }
+
+  function toggleClad(el) {
+    const clad = el.dataset.clad === 'true';
+    const btn = el.querySelector('.clamp');
+    if (clad) {
+      el.dataset.clad = 'false';
+      el.classList.remove('clad');
+      btn.textContent = '\uD83D\uDD29 CLAD STRUT';
+    } else {
+      el.dataset.clad = 'true';
+      el.classList.add('clad');
+      btn.textContent = '\uD83D\uDD13 STRIP CLAD';
+    }
+  }
+
+  async function runDip() {
+    if (acidBusy) return;
+    acidBusy = true;
+    dipBtn.disabled = true;
+    dipBtn.textContent = '\u2697\uFE0F ACID ENGAGED\u2026';
+    statusEl.textContent = 'ACID LEVEL RISING \u00B7 STRUCTURAL TEST IN PROGRESS';
+
+    acidEl.style.height = '82%';
+    await wait(1700);
+
+    const struts = Array.from(rigEl.querySelectorAll('.strut'));
+    let falseClad = 0, missedFacts = 0, correct = 0;
+
+    for (const el of struts) {
+      const verified = el.dataset.verified === 'true';
+      const clad = el.dataset.clad === 'true';
+      el.style.maxHeight = el.offsetHeight + 'px';
+
+      if (verified && clad) {
+        el.classList.add('survive');
+        correct++;
+      } else {
+        if (!verified && clad) { falseClad++; el.classList.add('falseclad'); }
+        if (verified && !clad) { missedFacts++; }
+        el.classList.add('dissolve');
+      }
+      await wait(300);
+    }
+
+    await wait(700);
+    acidEl.style.height = '10%';
+    await wait(1300);
+
+    const success = (falseClad === 0 && missedFacts === 0);
+    showAcidDebrief(success, falseClad, missedFacts, correct, struts.length);
+    acidBusy = false;
+  }
+
+  function showAcidDebrief(success, falseClad, missedFacts, correct, total) {
+    const r = ACID_ROUNDS[currentRound];
+    let head, body;
+
+    if (success) {
+      head = '\u2705 RIG STABLE \u2014 VERIFIED SKELETON RECOVERED';
+      body = r.ok;
+      tankEl.classList.add('solved');
+      tankEl.classList.remove('corroded');
+      statusEl.textContent = 'TEST PASSED \u00B7 ' + correct + '/' + total + ' STRUTS RESOLVED CORRECTLY';
+      if (!roundSolved[currentRound]) {
+        roundSolved[currentRound] = true;
+        award(r.id);
+      }
+    } else {
+      head = '\u26A0\uFE0F CORROSION EVENT \u2014 STRUCTURE COMPROMISED';
+      const parts = [];
+      if (falseClad > 0) {
+        parts.push('You clad ' + falseClad + ' strut' + (falseClad > 1 ? 's' : '') + ' that no citable evidence supports. Cladding an unstated warrant is wishful thinking: the acid seeps under the plate and the strut dissolves anyway, and the false claim of support corrupts every reading built on it.');
+      }
+      if (missedFacts > 0) {
+        parts.push('You left ' + missedFacts + ' documented ground' + (missedFacts > 1 ? 's' : '') + ' unclad, so evidence you could have cited was eaten for lack of a warrant. Evidence you possess is not evidence you have used.');
+      }
+      body = parts.join(' ');
+      tankEl.classList.add('corroded');
+      tankEl.classList.remove('solved');
+      statusEl.textContent = 'TEST FAILED \u00B7 RE-CLAD AND RE-RUN';
+    }
+
+    debriefEl.className = 'debrief show ' + (success ? 'good' : 'bad');
+    debriefEl.innerHTML = '<h4>' + head + '</h4><p style="margin:0;">' + body + '</p>';
+
+    dipBtn.disabled = false;
+    dipBtn.textContent = '\u2697\uFE0F LOWER RIG INTO ACID';
+
+    if (success) {
+      if (currentRound < ACID_ROUNDS.length - 1) {
+        nextBtn.style.display = 'inline-block';
+        nextBtn.textContent = '\u25B6 ADVANCE TO CHALLENGE 0' + (currentRound + 2);
+      } else {
+        nextBtn.style.display = 'inline-block';
+        nextBtn.textContent = '\u2705 ACID PROTOCOL COMPLETE \u2014 RIG SECURED';
+        nextBtn.disabled = true;
+      }
+    }
+  }
+
+  dipBtn.addEventListener('click', runDip);
+  resetBtn.addEventListener('click', () => { if (!acidBusy) buildRound(currentRound); });
+  nextBtn.addEventListener('click', () => {
+    if (currentRound < ACID_ROUNDS.length - 1) buildRound(currentRound + 1);
+  });
+
+  buildRound(0);
+
+  /* ---------------- NEGATION DETONATOR ---------------- */
+  const detCard = document.getElementById('abl-det-card');
+  const detBtn = document.getElementById('abl-detonate');
+  const detResult = document.getElementById('abl-det-result');
+  let detonated = false;
+
+  detBtn.addEventListener('click', async () => {
+    if (detonated) return;
+    detonated = true;
+    detBtn.disabled = true;
+    detBtn.textContent = '\uD83D\uDCA5 DETONATION SEQUENCE ACTIVE';
+
+    detCard.classList.add('armed');
+    await wait(950);
+    detCard.classList.add('cracked');
+    await wait(500);
+
+    for (let i = 0; i < 18; i++) {
+      const f = document.createElement('span');
+      f.className = 'frag';
+      const ang = Math.random() * Math.PI * 2;
+      const dist = 70 + Math.random() * 190;
+      f.style.setProperty('--tx', Math.cos(ang) * dist + 'px');
+      f.style.setProperty('--ty', Math.sin(ang) * dist + 'px');
+      f.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+      f.style.animationDelay = (Math.random() * 0.12) + 's';
+      if (i % 3 === 0) f.style.background = '#84CC16';
+      detCard.appendChild(f);
+      setTimeout(() => { if (f.parentNode) f.parentNode.removeChild(f); }, 1400);
+    }
+
+    await wait(700);
+    detCard.classList.add('collapsed');
+    detResult.classList.add('show');
+    detBtn.textContent = '\u2705 NEGATION VERIFIED';
+    award('detonate');
+  });
+
+  /* ---------------- LIVE FIRE FORENSICS ---------------- */
+  const passageEl = document.getElementById('abl-passage');
+  const inspectorList = document.getElementById('abl-inspector');
+  const inspectorTitle = document.getElementById('abl-inspector-title');
+  const modeButtons = Array.from(root.querySelectorAll('[data-mode]'));
+
+  const MODE_NAMES = {
+    grounds: 'Inspector Notes \u2014 Foundation / Grounds',
+    claims: 'Inspector Notes \u2014 Core Claims / Outcomes',
+    warrants: 'Inspector Notes \u2014 Unstated Mechanisms / Warrants'
+  };
+
+  modeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      passageEl.dataset.mode = mode;
+      inspectorTitle.textContent = MODE_NAMES[mode];
+
+      const spans = Array.from(passageEl.querySelectorAll('.tk[data-tag="' + mode + '"]'));
+      if (!spans.length) {
+        inspectorList.innerHTML = '<li class="ins-empty">No components of this type detected in the passage.</li>';
+        return;
+      }
+      inspectorList.innerHTML = spans.map(s => {
+        const q = s.textContent.trim();
+        const note = s.dataset.note || '';
+        return '<li><span class="ins-q">&ldquo;' + q + '&rdquo;</span><span class="ins-n">' + note + '</span></li>';
+      }).join('');
+    });
+  });
+
+  const hypoes = Array.from(root.querySelectorAll('.hypo'));
+  const clearance = document.getElementById('abl-clearance');
+  let flawFound = false;
+
+  hypoes.forEach(h => {
+    h.addEventListener('click', () => {
+      if (flawFound) return;
+      if (h.dataset.correct === 'true') {
+        flawFound = true;
+        h.classList.add('right');
+        clearance.classList.add('show');
+        hypoes.forEach(x => { x.disabled = true; x.style.opacity = x === h ? '1' : '.45'; });
+        award('forensics');
+      } else {
+        h.classList.add('wrong');
+        setTimeout(() => h.classList.remove('wrong'), 700);
+        if (!h.dataset.hinted) {
+          h.dataset.hinted = 'true';
+          const hint = document.createElement('span');
+          hint.style.display = 'block';
+          hint.style.marginTop = '6px';
+          hint.style.color = '#FDBA74';
+          hint.style.fontSize = '.78rem';
+          hint.textContent = '\u26A0\uFE0F This names the wrong hazard archetype. Re-read the sentence beginning \u201Con that basis they conclude\u201D and ask what principle it silently assumes.';
+          h.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  /* ---------------- FINISH ---------------- */
+  const finishBtn = document.getElementById('abl-finish');
+  finishBtn.addEventListener('click', () => {
+    try {
+      if (typeof window.polymathFinishLesson === 'function') {
+        window.polymathFinishLesson();
+      }
+    } catch (e) {
+      /* silent */
+    }
+  });
+});
+</script>

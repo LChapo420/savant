@@ -1,0 +1,985 @@
+diff --git a/public/css/style.css b/public/css/style.css
+index a428d0a..deb27b8 100644
+--- a/public/css/style.css
++++ b/public/css/style.css
+@@ -1066,6 +1066,28 @@ body:has(#item > .verdict .verdict-actions [data-act="next"]) main { padding-bot
+   .path-actions .btn-lg { width: 100%; }
+ }
+ 
++/* Today's review (staged round 3): its row at the head of the path, and its
++   page. The row is a level row with "Today" on the rail. */
++.node-review { border-bottom: 1px solid var(--line); margin-bottom: var(--s-2); }
++.node.node-review .badge { font-family: var(--font); font-size: 0.75rem; font-weight: 700; color: var(--subj); border-right: 3px solid var(--subj); padding-right: 12px; }
++.node.node-review.node-done .badge { border-right-color: var(--line-strong); }
++.review-now { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 320px); gap: var(--s-6) var(--s-10); align-items: start; margin-top: var(--s-6); }
++.review-lede { font-size: 1.125rem; line-height: 1.5; max-width: 60ch; margin: 0 0 var(--s-4); }
++.review-facts { margin: 0 0 var(--s-2); }
++.review-section { margin-top: var(--s-8); max-width: 760px; }
++.review-note { max-width: 64ch; margin: 0 0 var(--s-3); }
++.review-list { list-style: none; margin: 0; padding: 0; }
++.review-row { display: flex; align-items: center; gap: var(--s-2) var(--s-5); padding: 12px 0; border-top: 1px solid var(--line); }
++.review-row > span:first-child { flex: 1; min-width: 0; }
++.review-title { display: block; font-weight: 600; }
++.review-why { display: block; font-size: var(--t-meta); color: var(--ink-3); max-width: 64ch; }
++.review-kind { font-size: var(--t-meta); color: var(--ink-2); white-space: nowrap; }
++@media (max-width: 760px) {
++  .review-now { grid-template-columns: 1fr; }
++  .review-row { flex-wrap: wrap; }
++  .review-now .path-actions .btn-lg { width: 100%; }
++}
++
+ /* The path, grouped by unit. A unit is a heading line with its level range
+    and a row of tiny marks; only the unit you are in is open. */
+ .units { display: grid; gap: 0; border-top: 1px solid var(--line); }
+diff --git a/public/js/path.js b/public/js/path.js
+index 7dc1452..730d3fe 100644
+--- a/public/js/path.js
++++ b/public/js/path.js
+@@ -19,6 +19,9 @@ App.mount(async () => {
+     App.api.get(`/api/path/${enrollmentId}`),
+     App.api.get(`/api/placement/path/${enrollmentId}`).catch(() => null),
+   ]);
++  // Today's review (staged round 3, ADAPT_REVIEW_SESSION), asked for beside the
++  // path: while it is off the route answers 404 and the path is drawn as before.
++  const reviewReply = App.api.get(`/api/review/${enrollmentId}`).catch(() => null);
+   const plan = (planReply && (planReply.summary || planReply)) || null;
+   // The same reply also says how the catch-up stands (the ordered route this
+   // grade is the end of) and whether this grade's placement can be retaken.
+@@ -285,6 +288,47 @@ App.mount(async () => {
+    * marks, and only the group the learner is in is open: a path of a few
+    * hundred levels reads as a few dozen lines.
+    */
++  /**
++   * Today's review as the first row of the path: what is due from the
++   * learner's own record (memory checks, fading, not yet lasting; lessons to
++   * learn again) and the way in. Nothing when the review is off, the grade has
++   * no objective record, or the track is finished.
++   */
++  function reviewNode(reply) {
++    const r = reply && reply.review;
++    if (!r || enrollment.status !== 'active') return '';
++    const n = r.retrieve.length;
++    const relearn = r.reteach.length;
++    if (!n && !relearn) {
++      return r.done_today ? `
++      <div class="node node-review node-done">
++        <span class="badge">${window.mark('tick', 'mark-plain')}</span>
++        <span><span class="title">Today's review is done<span class="kind">Review</span></span></span>
++        <span class="spacer"></span><span class="row-wrap"></span>
++      </div>` : '';
++    }
++    const counts = r.counts || {};
++    const what = [
++      counts.memory_check ? `${counts.memory_check} memory check${counts.memory_check === 1 ? '' : 's'}` : '',
++      counts.fading ? `${counts.fading} fading` : '',
++      counts.durability ? `${counts.durability} to make last` : '',
++    ].filter(Boolean);
++    const detail = [
++      n ? `${n} question${n === 1 ? '' : 's'}, about ${Math.max(1, Math.round(r.minutes))} min${what.length ? `: ${what.join(', ')}` : ''}` : '',
++      relearn ? `${relearn} to learn again` : '',
++    ].filter(Boolean).join('. ');
++    return `
++      <div class="node node-review is-next" data-subject="${App.escapeHtml(track.id)}">
++        <span class="badge">Today</span>
++        <span>
++          <span class="title">Today's review<span class="kind">Review</span></span>
++          <span class="tiny muted detail">${App.escapeHtml(detail)}.</span>
++        </span>
++        <span class="spacer"></span>
++        <span class="row-wrap"><a class="btn btn-sm" href="/review?enrollment=${enrollment.id}">${r.open_session ? 'Carry on' : 'Review'}<span class="visually-hidden"> today's review</span></a></span>
++      </div>`;
++  }
++
+   function pathGroups() {
+     const groups = [];
+     let current = null;
+@@ -663,7 +707,7 @@ App.mount(async () => {
+       </div>` : ''}
+ 
+     <h2 class="section-title">The path</h2>
+-    <div class="path path-units">${pathRows()}</div>
++    <div class="path path-units">${reviewNode(await reviewReply)}${pathRows()}</div>
+ 
+     <h2 class="section-title">Skills at this level</h2>
+     <div class="table-scroll" tabindex="0" role="region" aria-label="Skills at this level">
+diff --git a/public/js/review.js b/public/js/review.js
+new file mode 100644
+index 0000000..07a152f
+--- /dev/null
++++ b/public/js/review.js
+@@ -0,0 +1,271 @@
++/* Today's review: one short sitting a day that keeps what this grade already
++ * taught (staged round 3, ADAPT_REVIEW_SESSION).
++ *
++ * The page says what is due and why, from the learner's own record: memory
++ * checks on what they proved a day or more ago, things the forgetting curve
++ * says are fading, and things that will not last a month yet. Each is one
++ * question, answered with feedback. Anything they have forgotten is not a
++ * question here: it is listed to learn again, from its own lesson.
++ *
++ * Nothing on this page moves the learner's level.
++ */
++App.mount(async () => {
++  const user = await App.currentUser({ require: true });
++  if (!user) return;
++  App.header(user, 'dashboard');
++
++  const host = document.getElementById('review');
++  const enrollmentId = Number(App.query('enrollment'));
++  const esc = App.escapeHtml;
++  if (!enrollmentId) {
++    host.innerHTML = '<div class="notice notice-error">No subject selected. <a href="/dashboard">Back to dashboard</a>.</div>';
++    return;
++  }
++  const pathHref = `/path?enrollment=${enrollmentId}`;
++
++  let data;
++  try {
++    data = await App.api.get(`/api/review/${enrollmentId}`);
++  } catch (err) {
++    host.innerHTML = `<div class="notice notice-error">${esc(err.status === 404 ? 'There is no daily review on this subject.' : err.message)}
++      <div style="margin-top:10px"><a class="btn btn-sm" href="${pathHref}">Back to your path</a></div></div>`;
++    return;
++  }
++  const { track, grade } = data;
++  let plan = data.review;
++
++  // Why an objective is in today's review, in the learner's words.
++  const WHY = {
++    memory_check: 'Memory check',
++    fading: 'Fading',
++    durability: 'Make it last',
++  };
++  const WHY_LONG = {
++    memory_check: 'You proved it a day or more ago. One question now shows whether it stuck, and counts it as kept.',
++    fading: 'Not asked for a while, and likely to be slipping.',
++    durability: 'Kept for now, but not yet likely to last a month.',
++  };
++
++  function head(title, sub) {
++    const [gradeMain] = App.gradeParts(grade.name);
++    return `
++      <div class="path-top review-top" data-subject="${esc(track.id)}">
++        <div>
++          <a class="back-link" href="${pathHref}">${window.icon('arrow-left')}Your path</a>
++          <div class="track-heading">
++            ${App.symbol(track, { size: 'lg' })}
++            <div>
++              <h1>${esc(title)}</h1>
++              <span class="tiny">${esc(track.name)}, ${esc(gradeMain)}.${sub ? ` ${sub}` : ''}</span>
++            </div>
++          </div>
++        </div>
++      </div>`;
++  }
++
++  function gateMeters(p) {
++    if (!p) return '';
++    const kept = p.gate.total - p.gate.blocking;
++    return `
++      <div class="tmeters review-meters">
++        ${App.tmeter({ label: 'Objectives proven and kept', value: kept, target: p.gate.total, max: p.gate.total, unit: 'count' })}
++        ${App.tmeter({ label: `Likely to last ${p.durability.horizon} days`, value: p.durability.share, target: p.durability.at })}
++      </div>`;
++  }
++
++  function reteachList(rows) {
++    if (!rows || !rows.length) return '';
++    return `
++      <section class="review-section" aria-labelledby="relearn-h">
++        <h2 class="section-title" id="relearn-h">Learn again</h2>
++        <p class="small muted review-note">You proved ${rows.length === 1 ? 'this' : 'these'} once and ${rows.length === 1 ? 'it has' : 'they have'} slipped since. Open the lesson and answer its questions; that is what proves it again. About <span class="num">${rows[0].minutes}</span> minutes each.</p>
++        <ol class="review-list">
++          ${rows.map((r) => `
++            <li class="review-row">
++              <span>
++                <span class="review-title">${esc(App.cleanTitle(r.title))}</span>
++                <span class="review-why">${esc(r.covers)}</span>
++              </span>
++              <a class="btn btn-sm" href="/session?enrollment=${enrollmentId}&level=${r.lesson_level}">Open the lesson<span class="visually-hidden">: ${esc(App.cleanTitle(r.title))}</span></a>
++            </li>`).join('')}
++        </ol>
++      </section>`;
++  }
++
++  function overview() {
++    if (!plan) {
++      host.innerHTML = `${head("Today's review")}
++        <div class="notice" style="margin-top:20px">This grade has no objective record to review from yet.</div>`;
++      return;
++    }
++    const n = plan.retrieve.length;
++    const counts = plan.counts || {};
++    const resume = !!plan.open_session;
++    const lede = n
++      ? `<span class="num">${n}</span> question${n === 1 ? '' : 's'}, about <span class="num">${Math.max(1, Math.round(plan.minutes))}</span> minute${Math.round(plan.minutes) === 1 ? '' : 's'}. Each one is on something this grade has already taught you.`
++      : plan.done_today
++        ? 'Done for today. The next review is ready tomorrow or once something is due.'
++        : 'Nothing is due for review today.';
++    host.innerHTML = `
++      ${head("Today's review")}
++      <div class="review-now">
++        <div>
++          ${n ? '' : `<p class="path-done-line">${window.mark('tick')}${esc(plan.done_today ? 'Review done for today.' : 'Nothing to review today.')}</p>`}
++          <p class="review-lede">${lede}</p>
++          ${n ? `
++            <dl class="facts review-facts">
++              ${counts.memory_check ? `<div><dt>Memory checks</dt><dd>${counts.memory_check}</dd></div>` : ''}
++              ${counts.fading ? `<div><dt>Fading</dt><dd>${counts.fading}</dd></div>` : ''}
++              ${counts.durability ? `<div><dt>Make it last</dt><dd>${counts.durability}</dd></div>` : ''}
++            </dl>
++            <div class="path-actions">
++              <button class="btn btn-primary btn-lg" type="button" id="start">${resume ? 'Carry on with the review' : 'Start the review'}</button>
++              <span class="small">Answers are marked as you go. Nothing here changes your level.</span>
++            </div>` : `<div class="path-actions"><a class="btn btn-primary" href="${pathHref}">Back to your path</a></div>`}
++          ${plan.more ? `<p class="tiny muted">${plan.more} more ${plan.more === 1 ? 'is' : 'are'} due and will come up in the next review.</p>` : ''}
++        </div>
++        <div class="hero-body">${gateMeters(plan)}</div>
++      </div>
++      ${n ? `
++        <section class="review-section" aria-labelledby="due-h">
++          <h2 class="section-title" id="due-h">What is in it</h2>
++          <ol class="review-list">
++            ${plan.retrieve.map((r) => `
++              <li class="review-row">
++                <span>
++                  <span class="review-title">${esc(App.cleanTitle(r.title))}</span>
++                  <span class="review-why">${esc(WHY_LONG[r.reason] || '')}</span>
++                </span>
++                <span class="review-kind">${esc(WHY[r.reason] || 'Review')}</span>
++              </li>`).join('')}
++          </ol>
++        </section>` : ''}
++      ${reteachList(plan.reteach)}`;
++    const start = document.getElementById('start');
++    if (start) start.addEventListener('click', () => begin(start));
++  }
++
++  // ── the sitting ──────────────────────────────────────────────────────────
++  let sitting = null;
++  let items = [];
++  let index = 0;
++  let askedAt = Date.now();
++
++  async function begin(button) {
++    button.disabled = true;
++    button.innerHTML = '<span class="spinner"></span>Setting up';
++    try {
++      sitting = await App.api.post(`/api/review/${enrollmentId}/start`, {});
++    } catch (err) {
++      App.toast(err.message, 'error');
++      button.disabled = false;
++      button.textContent = 'Start the review';
++      return;
++    }
++    items = sitting.items;
++    index = items.findIndex((i) => !i.answered);
++    if (index === -1) index = items.length;
++    host.innerHTML = `
++      <div class="player" data-subject="${esc(track.id)}">
++        <div class="player-head">
++          <a class="icon-btn player-close" href="${pathHref}" title="Leave and go back to your path" aria-label="Leave and go back to your path">${window.icon('x')}</a>
++          <div class="player-titles">
++            <h1 id="title">Today's review</h1>
++            <div id="subtitle">${esc(track.name)}. Questions on what this grade already taught you.</div>
++          </div>
++          <div class="player-chips"><span class="chip counter" id="counter"></span></div>
++          <div class="player-meter">
++            <div class="segments" id="segments" aria-hidden="true"></div>
++            <span class="visually-hidden" id="pct"></span>
++          </div>
++        </div>
++        <div class="card" id="item"></div>
++      </div>`;
++    if (index >= items.length) { finish(); return; }
++    show();
++  }
++
++  function progress() {
++    const answered = items.filter((i) => i.answered).length;
++    document.getElementById('counter').textContent = `${Math.min(index + 1, items.length)} / ${items.length}`;
++    document.getElementById('pct').textContent = `${answered} of ${items.length} answered`;
++    document.getElementById('segments').innerHTML = items.map((it, i) => `<i class="${it.answered
++      ? (it.correct === true ? 'is-correct' : it.correct === false ? 'is-wrong' : 'is-answered')
++      : i === index ? 'is-now' : ''}"></i>`).join('');
++  }
++
++  function show() {
++    const item = items[index];
++    const itemHost = document.getElementById('item');
++    progress();
++    askedAt = Date.now();
++    Player.render(itemHost, item, {
++      label: WHY[item.review_reason] || null,
++      // A memory check is answered unaided; the coach would turn it into a lesson.
++      coach: false,
++      onSubmit: async (answer, meta = {}) => {
++        let result;
++        try {
++          result = await App.api.post(`/api/sessions/${sitting.session_id}/answer`, {
++            item_id: item.id,
++            answer,
++            ms: Date.now() - askedAt,
++            confidence: meta.confidence || null,
++            changes: meta.changes || 0,
++          });
++        } catch (err) {
++          App.toast(err.message, 'error');
++          return;
++        }
++        item.answered = true;
++        item.correct = result.correct === undefined ? null : result.correct;
++        progress();
++        const last = index + 1 >= items.length;
++        Player.reveal(itemHost, item, result, {
++          nextLabel: last ? 'Finish the review' : 'Next question',
++          onNext: () => { index += 1; if (index >= items.length) finish(); else show(); },
++        });
++      },
++    });
++  }
++
++  async function finish() {
++    host.innerHTML = '<div class="loading"><span class="spinner"></span>Saving your review</div>';
++    let out;
++    try {
++      out = await App.api.post(`/api/review/sessions/${sitting.session_id}/finish`, {});
++    } catch (err) {
++      host.innerHTML = `<div class="notice notice-error">${esc(err.message)}</div>`;
++      return;
++    }
++    let fresh = null;
++    try { fresh = (await App.api.get(`/api/review/${enrollmentId}`)).review; } catch { fresh = null; }
++    plan = fresh || plan;
++    const kept = out.gate ? out.gate.total - out.gate.blocking : null;
++    host.innerHTML = `
++      ${head('Review done')}
++      <div class="review-now">
++        <div>
++          <p class="path-done-line">${out.answered && out.right === out.answered ? window.mark('tick') : ''}${out.right} of ${out.answered} right.</p>
++          <dl class="facts review-facts">
++            <div><dt>Right</dt><dd>${App.pct(out.accuracy)}</dd></div>
++            ${out.xp ? `<div><dt>XP</dt><dd>+${out.xp}</dd></div>` : ''}
++            ${out.streak ? `<div><dt>Days in a row</dt><dd>${out.streak}</dd></div>` : ''}
++            ${kept !== null ? `<div><dt>Kept in this grade</dt><dd>${kept} / ${out.gate.total}</dd></div>` : ''}
++          </dl>
++          <p class="small">${out.right < out.answered
++    ? 'What you missed comes back soon, and anything that has slipped is listed to learn again.'
++    : 'Every one held. Each right answer a day or more apart makes it last longer.'}</p>
++          <div class="path-actions">
++            <a class="btn btn-primary" href="${pathHref}">Back to your path</a>
++            <a class="btn btn-text" href="/dashboard">Dashboard</a>
++          </div>
++        </div>
++        <div class="hero-body">${gateMeters(plan)}</div>
++      </div>
++      ${reteachList(out.reteach)}`;
++    App.announce(`Review done. ${out.right} of ${out.answered} right.`);
++  }
++
++  overview();
++});
+diff --git a/public/review.html b/public/review.html
+new file mode 100644
+index 0000000..1f9137c
+--- /dev/null
++++ b/public/review.html
+@@ -0,0 +1,27 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>Today's review | Savant</title>
++  <meta name="color-scheme" content="light dark">
++  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
++  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
++  <link rel="stylesheet" href="/fonts/fonts.css">
++  <link rel="stylesheet" href="/css/style.css">
++</head>
++<body>
++  <header class="site-header" id="header"></header>
++  <main class="page">
++    <div class="wrap">
++      <div id="review">
++        <div class="loading"><span class="spinner"></span>Reading your record</div>
++      </div>
++    </div>
++  </main>
++  <script src="/js/icons.js"></script>
++  <script src="/js/app.js"></script>
++  <script src="/js/player.js"></script>
++  <script src="/js/review.js"></script>
++</body>
++</html>
+diff --git a/routes/review.js b/routes/review.js
+new file mode 100644
+index 0000000..47e84b8
+--- /dev/null
++++ b/routes/review.js
+@@ -0,0 +1,74 @@
++/**
++ * The daily review (services/review-session.js; staged patch
++ * round3/01-daily-review). Off unless ADAPT_REVIEW_SESSION=on: every route here
++ * then answers 404, the same as before the patch.
++ *
++ *   GET  /api/review/:enrollmentId          today's review: what is due and why
++ *   POST /api/review/:enrollmentId/start    open (or resume) today's sitting
++ *   POST /api/review/sessions/:id/finish    close it: score, XP, what is kept now
++ *
++ * Answers go through the ordinary answer route (POST /api/sessions/:id/answer),
++ * which grades them, feeds mastery and the scorecard, and reveals each verdict.
++ */
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const sessions = require('../services/sessions');
++const review = require('../services/review-session');
++const { requireAuth } = require('../middleware/auth');
++const { limit } = require('../utils/rate-limit');
++
++const router = express.Router();
++
++router.use('/review', (req, res, next) => {
++  if (!review.enabled()) return res.status(404).json({ error: 'No such endpoint.' });
++  next();
++});
++
++function ownEnrollment(req) {
++  const enrollment = db.byId('enrollments', req.params.enrollmentId);
++  if (!enrollment || enrollment.user_id !== req.user.id) return null;
++  return enrollment;
++}
++
++router.get('/review/:enrollmentId', requireAuth, (req, res) => {
++  const enrollment = ownEnrollment(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  const track = curriculum.getTrack(enrollment.track_id);
++  if (!grade || !track) return res.status(400).json({ error: 'That subject is no longer available.' });
++  res.json({
++    enrollment: { id: enrollment.id, status: enrollment.status, current_level: enrollment.current_level },
++    track: { id: track.id, name: track.name },
++    grade: { id: grade.id, name: grade.name },
++    review: review.today(req.user.id, enrollment),
++  });
++});
++
++router.post('/review/:enrollmentId/start', requireAuth, limit('review-start', 60, 60 * 60 * 1000), (req, res) => {
++  const enrollment = ownEnrollment(req);
++  if (!enrollment) return res.status(404).json({ error: 'Enrollment not found.' });
++  if (enrollment.status !== 'active') return res.status(409).json({ error: 'There is no review on this subject right now.' });
++  const out = review.start(req.user.id, enrollment);
++  if (out.error) return res.status(out.status || 400).json({ error: out.error });
++  res.status(out.resumed ? 200 : 201).json({
++    session_id: out.session.id,
++    resumed: !!out.resumed,
++    track_id: enrollment.track_id,
++    items: out.items.map((it) => ({
++      ...sessions.sanitize(it),
++      // Why this objective is in today's review, said on the question.
++      review_reason: it.review_reason || null,
++    })),
++  });
++});
++
++router.post('/review/sessions/:id/finish', requireAuth, (req, res) => {
++  const session = db.byId('sessions', req.params.id);
++  if (!session || session.user_id !== req.user.id || session.kind !== 'review') {
++    return res.status(404).json({ error: 'Session not found.' });
++  }
++  res.json(review.finish(req.user.id, session));
++});
++
++module.exports = router;
+diff --git a/scripts/round3-review-test.js b/scripts/round3-review-test.js
+new file mode 100644
+index 0000000..cc836be
+--- /dev/null
++++ b/scripts/round3-review-test.js
+@@ -0,0 +1,224 @@
++/**
++ * Tests for the daily review (staged round 3, patch 01-daily-review):
++ * services/review-session.js, routes/review.js and adaptation.dailyReview.
++ *
++ *   node scripts/round3-review-test.js
++ *
++ * Runs on its own throwaway data file with every model key blanked: no model
++ * call, no network, nothing real touched.
++ */
++const os = require('os');
++const path = require('path');
++const fs = require('fs');
++const http = require('http');
++
++process.env.NODE_ENV = 'test';
++for (const k of Object.keys(process.env)) if (/_API_KEY$|_KEY$|ANTHROPIC|OPENROUTER|NVIDIA|GEMINI|MIMO|MODELFLARE|XKIRO/.test(k) && k !== 'NODE_ENV') process.env[k] = '';
++const tmp = path.join(os.tmpdir(), `${path.basename(__filename, '.js')}-${process.pid}.json`);
++process.env.DB_FILE = tmp;
++for (const k of ['COVERAGE_GATE', 'COVERAGE_RULE', 'ADAPTIVE_TEACHING', 'ADAPT_REVIEW_SESSION', 'ADAPT_CONSOLIDATE', 'ADAPT_EFFORT', 'ADAPT_REMEDIATION', 'ADAPT_OWNER', 'ADMIN_EMAILS', 'OWNER_EMAIL']) delete process.env[k];
++
++const express = require('express');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const coverage = require('../services/coverage');
++
++let failures = 0;
++function check(label, ok, detail) {
++  if (ok) { console.log(`  ok   ${label}`); return; }
++  failures++;
++  console.log(`  FAIL ${label}${detail === undefined ? '' : ` — ${JSON.stringify(detail).slice(0, 400)}`}`);
++}
++
++const DAY = coverage.DAY;
++const TRACK = 'math';
++const GRADE = 'numbers_to_10';
++const grade = curriculum.getGrade(TRACK, GRADE);
++const model = coverage.modelFor(TRACK, GRADE);
++const FINAL = grade.levels.find((l) => l.kind === 'graduation').level;
++
++/** A learner enrolled in numbers_to_10, standing on `level`. */
++function learner(email, level, extra = {}) {
++  const user = db.insert('users', { email, name: email.split('@')[0], password_hash: 'x', streak: 0, xp: 0, onboarded: true });
++  const enrollment = db.insert('enrollments', {
++    user_id: user.id, track_id: TRACK, grade_id: GRADE, target_level: grade.pathLength, current_level: level,
++    level_items: 0, levels_completed: 0, xp: 0, status: 'active', pending_checkpoint: null, placed_at: new Date().toISOString(), ...extra,
++  });
++  const session = db.insert('sessions', {
++    user_id: user.id, enrollment_id: enrollment.id, track_id: TRACK, grade_id: GRADE, level: 1, kind: 'lesson',
++    blocks: [{ index: 0, level: 1, kind: 'practice', resolved: true }], started_at: new Date(Date.now() - 30 * DAY).toISOString(), ended_at: new Date().toISOString(),
++  });
++  return { user, enrollment, session };
++}
++
++/** One answered question on objective i, `daysAgo` days back: its lesson's check question, typed unless choices given. */
++function answer(who, i, daysAgo, correct = true, { choices = null, ms = 9000, role = 'check', level = null } = {}) {
++  const o = model.objectives[i];
++  const at = new Date(Date.now() - daysAgo * DAY).toISOString();
++  return db.insert('items', {
++    user_id: who.user.id, session_id: who.session.id, skill_id: o.skill, difficulty: 3, format: choices ? 'multiple_choice' : 'short_answer',
++    prompt: `q ${i} ${daysAgo} ${Math.random()}`, answer: '1', choices, role, level: level || o.lesson_level, block: 0, index: 0,
++    user_answer: correct ? '1' : '2', correct, ms, coach_used: false, answered_at: at,
++  });
++}
++
++/** Proven `daysAgo` days back (five typed right answers to its lesson's questions, minutes apart). */
++function prove(who, i, daysAgo) {
++  for (let k = 0; k < 5; k++) answer(who, i, daysAgo - k * 0.002);
++}
++
++/** Proven, then kept: a right typed memory check `checkDaysAgo` days back. */
++function keep(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo);
++}
++
++/** Proven, then forgotten: a wrong memory check. */
++function lapse(who, i, provenDaysAgo, checkDaysAgo) {
++  prove(who, i, provenDaysAgo);
++  answer(who, i, checkDaysAgo, false, { choices: ['1', '2', '3', '4'] });
++}
++
++function stateOf(who, i) {
++  return coverage.forEnrollment(who.user.id, db.byId('enrollments', who.enrollment.id)).states[i];
++}
++
++/** An app with the given routers mounted under /api, signed in as the x-user header's account. */
++function serve(routers) {
++  const app = express();
++  app.use(express.json());
++  app.use((req, res, next) => { req.user = db.byId('users', Number(req.headers['x-user'])) || null; next(); });
++  for (const r of routers) app.use('/api', r);
++  app.use('/api', (req, res) => res.status(404).json({ error: 'No such endpoint.' }));
++  return new Promise((resolve) => {
++    const server = app.listen(0, '127.0.0.1', () => {
++      const port = server.address().port;
++      const call = (method, url, body, uid) => new Promise((done, fail) => {
++        const data = body ? JSON.stringify(body) : null;
++        const req = http.request({ host: '127.0.0.1', port, path: url, method, headers: { 'content-type': 'application/json', 'x-user': String(uid || ''), ...(data ? { 'content-length': Buffer.byteLength(data) } : {}) } }, (res) => {
++          let text = '';
++          res.on('data', (c) => { text += c; });
++          res.on('end', () => { let json = null; try { json = JSON.parse(text); } catch { json = null; } done({ status: res.statusCode, body: json }); });
++        });
++        req.on('error', fail);
++        if (data) req.write(data);
++        req.end();
++      });
++      resolve({ call, close: () => server.close() });
++    });
++  });
++}
++
++function done() {
++  try { fs.unlinkSync(tmp); } catch { /* already gone */ }
++  console.log(failures ? `\n${failures} check(s) FAILED` : '\nall checks passed');
++  process.exit(failures ? 1 : 0);
++}
++
++
++(async () => {
++  const adaptation = require('../services/adaptation');
++  const review = require('../services/review-session');
++  const sessions = require('../services/sessions');
++  const app = await serve([require('../routes/review'), require('../routes/learn')]);
++  const PRACTICE = model.objectives[3].practice[0];
++
++  // A learner partway through the grade: 0 proven two days ago (a memory check
++  // is due), 1 proven then forgotten (to learn again), 2 kept, 3 kept long ago.
++  const a = learner('review-a@example.test', PRACTICE);
++  prove(a, 0, 2);
++  lapse(a, 1, 6, 3);
++  keep(a, 2, 6, 4);
++  keep(a, 3, 60, 58);
++  check('fixture: 0 proven, 1 lapsed, 2 kept', stateOf(a, 0).status === 'proven' && stateOf(a, 1).status === 'lapsed' && stateOf(a, 2).status === 'retained',
++    [0, 1, 2].map((i) => stateOf(a, i).status));
++
++  console.log('off by default');
++  {
++    const r = await app.call('GET', `/api/review/${a.enrollment.id}`, null, a.user.id);
++    check('GET /api/review answers 404 while ADAPT_REVIEW_SESSION is unset', r.status === 404, r.status);
++    const s = await app.call('POST', `/api/review/${a.enrollment.id}/start`, {}, a.user.id);
++    check('start answers 404 while off', s.status === 404, s.status);
++    check('nothing in the live app calls dailyReview while off (review.enabled() is false)', review.enabled() === false);
++  }
++
++  process.env.ADAPT_REVIEW_SESSION = 'on';
++  console.log('what is due');
++  let today;
++  {
++    const r = await app.call('GET', `/api/review/${a.enrollment.id}`, null, a.user.id);
++    today = r.body && r.body.review;
++    check('GET /api/review answers 200 when on', r.status === 200 && !!today, r.status);
++    check('the memory check due on objective 0 comes first', today.retrieve[0] && today.retrieve[0].objective === model.objectives[0].id && today.retrieve[0].reason === 'memory_check', today.retrieve[0]);
++    check('the forgotten objective is listed to learn again, not as a question', today.reteach.some((x) => x.objective === model.objectives[1].id) && !today.retrieve.some((x) => x.objective === model.objectives[1].id));
++    check('a re-taught objective carries its lesson level', today.reteach[0].lesson_level === model.objectives[1].lesson_level);
++    check('the questions fit the time budget (10 minutes)', today.minutes <= 10 + 1e-9, today.minutes);
++    check('counts by reason add up', today.counts.memory_check + today.counts.fading + today.counts.durability === today.retrieve.length, today.counts);
++    check('the gate and durability are reported', today.gate.total === model.objectives.length && today.durability.total === model.objectives.length);
++    process.env.ADAPT_REVIEW_MINUTES = '0.5';
++    const small = adaptation.dailyReview({ userId: a.user.id, enrollment: a.enrollment });
++    check('a tiny budget still serves one question, and says how many more are due', small.retrieve.length === 1 && small.more === today.retrieve.length - 1, { n: small.retrieve.length, more: small.more });
++    delete process.env.ADAPT_REVIEW_MINUTES;
++  }
++
++  console.log('the sitting');
++  let started;
++  {
++    const r = await app.call('POST', `/api/review/${a.enrollment.id}/start`, {}, a.user.id);
++    started = r.body;
++    check('start answers 201 with one question per objective due', r.status === 201 && started.items.length === today.retrieve.length, { status: r.status, n: started && started.items && started.items.length });
++    const rows = sessions.itemsFor(started.session_id);
++    const session = db.byId('sessions', started.session_id);
++    check('it is a review sitting that moves nothing (kind review, preview)', session.kind === 'review' && session.preview === true);
++    check('every question is tagged with its objective, as a test of it', rows.every((it) => it.objective_id && it.objective_test === true && it.role === 'review'));
++    check('the questions follow the plan, objective by objective', rows.map((it) => it.objective_id).join() === today.retrieve.map((x) => x.objective).join());
++    check('each question is on its objective\'s skill', rows.every((it, k) => it.skill_id === today.retrieve[k].skill));
++    const again = await app.call('POST', `/api/review/${a.enrollment.id}/start`, {}, a.user.id);
++    check('starting again resumes the same sitting', again.status === 200 && again.body.session_id === started.session_id && again.body.resumed === true);
++    // Answer every question right, a little over a second each.
++    for (const it of rows) {
++      const res = await app.call('POST', `/api/sessions/${started.session_id}/answer`, { item_id: it.id, answer: it.answer, ms: 4000 }, a.user.id);
++      if (!(res.status === 200 && res.body.reveal === true && res.body.correct === true)) check(`answer ${it.id} graded and revealed`, false, res);
++    }
++    check('answers are graded through the ordinary route, with the verdict shown', sessions.itemsFor(started.session_id).every((it) => it.correct === true));
++    check('objective 0 now has its memory check on record', stateOf(a, 0).checks >= 1, stateOf(a, 0));
++    const fin = await app.call('POST', `/api/review/sessions/${started.session_id}/finish`, {}, a.user.id);
++    check('finish scores the sitting', fin.status === 200 && fin.body.right === rows.length && fin.body.accuracy === 1, fin.body);
++    check('finish reports the gate after the review', fin.body.gate && fin.body.gate.total === model.objectives.length);
++    const e = db.byId('enrollments', a.enrollment.id);
++    check('the learner\'s level did not move', e.current_level === PRACTICE && e.status === 'active', e.current_level);
++    check('XP is awarded', (db.byId('users', a.user.id).xp || 0) > 0);
++    const after = await app.call('GET', `/api/review/${a.enrollment.id}`, null, a.user.id);
++    check('the review is marked done for today', after.body.review.done_today === 1 && after.body.review.open_session === null);
++    check('objective 0 is no longer due for a memory check today', !after.body.review.retrieve.some((x) => x.objective === model.objectives[0].id && x.reason === 'memory_check'));
++  }
++
++  console.log('a review left open is never taken for the level');
++  {
++    const b = learner('review-b@example.test', PRACTICE);
++    prove(b, 0, 3);
++    prove(b, 2, 3);
++    const s = await app.call('POST', `/api/review/${b.enrollment.id}/start`, {}, b.user.id);
++    check('a second learner\'s review opens', s.status === 201, s.status);
++    const level = await app.call('POST', '/api/sessions', { enrollment_id: b.enrollment.id }, b.user.id);
++    check('starting their level builds the level\'s own sitting, not the review', [200, 201].includes(level.status) && level.body.kind !== 'review' && level.body.session_id !== s.body.session_id, { status: level.status, kind: level.body && level.body.kind });
++    const old = db.byId('sessions', s.body.session_id);
++    check('the open review is closed, not resumed, and its answers stay on record', !!old.ended_at);
++  }
++
++  console.log('nothing due, other people, the owner');
++  {
++    const c = learner('review-c@example.test', PRACTICE);
++    const r = await app.call('GET', `/api/review/${c.enrollment.id}`, null, c.user.id);
++    check('a learner with nothing proven has nothing due', r.status === 200 && r.body.review.due === 0, r.body.review && r.body.review.due);
++    const s = await app.call('POST', `/api/review/${c.enrollment.id}/start`, {}, c.user.id);
++    check('and starting answers 409', s.status === 409, s.status);
++    const other = await app.call('GET', `/api/review/${a.enrollment.id}`, null, c.user.id);
++    check('another learner\'s review is not found', other.status === 404, other.status);
++    const anon = await app.call('GET', `/api/review/${a.enrollment.id}`, null, null);
++    check('signed out answers 401', anon.status === 401, anon.status);
++  }
++
++  app.close();
++  done();
++})().catch((err) => { console.error(err); process.exit(1); });
+diff --git a/server.js b/server.js
+index 0baa2b0..71ac8d7 100644
+--- a/server.js
++++ b/server.js
+@@ -107,6 +107,8 @@ app.use('/api', (req, res, next) => {
+ app.use('/api/auth', require('./routes/auth'));
+ app.use('/api/consent', consent.router);
+ app.use('/api', require('./routes/catalog').router);
++// The daily review (staged round 3; ADAPT_REVIEW_SESSION=on, 404 while off).
++app.use('/api', require('./routes/review'));
+ app.use('/api/placement', require('./routes/placement'));
+ // The subject-level quiz: one walk up a whole subject, ending in a recommended
+ // percentage per grade for the learner who does not know where to start.
+diff --git a/services/review-session.js b/services/review-session.js
+new file mode 100644
+index 0000000..314ffed
+--- /dev/null
++++ b/services/review-session.js
+@@ -0,0 +1,242 @@
++/**
++ * The daily review: one short sitting a day that keeps what a grade has already
++ * taught (curriculum-build/ADAPTIVE-COVERAGE.md section 7, decision 6; staged
++ * patch round3/01-daily-review).
++ *
++ * What is in it comes from the learner's own record (services/adaptation.js
++ * `dailyReview`): memory checks first, because the coverage gate waits on
++ * them, then objectives the forgetting curve says have faded, then the least
++ * durable ones, one question each, cut to a time budget (ADAPT_REVIEW_MINUTES,
++ * 10). Objectives the record says were forgotten are not questions: they are
++ * listed to be taught again, from their own lesson.
++ *
++ * A review sitting is a session of kind `review`. It moves nothing: it is
++ * stored as a look away from the learner's level (`preview`), so closing it,
++ * finishing it or leaving it half done never clears, advances or holds a level.
++ * Every question is tagged with its objective (`objective_id`), which is what
++ * makes the answer count as evidence on that objective and no other
++ * (coverage.attribute).
++ *
++ * Off unless ADAPT_REVIEW_SESSION=on.
++ */
++const fs = require('fs');
++const path = require('path');
++const db = require('../config/db');
++const curriculum = require('../config/curriculum');
++const bank = require('../content/bank');
++const adaptation = require('./adaptation');
++const mastery = require('./mastery');
++const sessions = require('./sessions');
++
++function enabled() {
++  return String(process.env.ADAPT_REVIEW_SESSION || 'off').toLowerCase() === 'on';
++}
++
++/**
++ * Questions written for one objective each (the pilot in
++ * curriculum-build/staged/adaptation/objective-items.*), once they are imported
++ * into content/objective-items/<track>.<grade>.json. Until then the bank's
++ * question on the objective's skill, at its lesson's difficulty, is used.
++ */
++const objectiveItemCache = new Map();
++function objectiveItems(trackId, gradeId) {
++  const key = `${trackId}/${gradeId}`;
++  if (objectiveItemCache.has(key)) return objectiveItemCache.get(key);
++  const byObjective = new Map();
++  try {
++    const file = path.join(__dirname, '..', 'content', 'objective-items', `${trackId}.${gradeId}.json`);
++    if (fs.existsSync(file)) {
++      const data = JSON.parse(fs.readFileSync(file, 'utf8'));
++      for (const item of data.items || []) {
++        if (!item.objective_id || !item.prompt || item.answer === undefined) continue;
++        byObjective.set(item.objective_id, [...(byObjective.get(item.objective_id) || []), item]);
++      }
++    }
++  } catch (err) {
++    console.warn(`review: objective items for ${key} unreadable: ${err.message}`);
++  }
++  objectiveItemCache.set(key, byObjective);
++  return byObjective;
++}
++
++/** Everything this learner has been asked on these skills, so a review does not repeat a recent question. */
++function askedBefore(userId, skills) {
++  const wanted = new Set(skills);
++  return new Set(db.find('items', (i) => i.user_id === userId && wanted.has(i.skill_id)).slice(-600).map((i) => bank.itemKey(i)));
++}
++
++/** One question on one objective: a written-for-it item when there is one not yet asked, else the bank's. */
++function questionFor(row, grade, avoid, trackId) {
++  const written = (objectiveItems(trackId, grade.id).get(row.objective) || [])
++    .find((q) => !avoid.has(bank.itemKey(q)));
++  if (written) {
++    const { verified, ...item } = written;
++    return { ...item, skill_id: item.skill_id || row.skill, difficulty: item.difficulty || 5, source: 'objective_item' };
++  }
++  const plan = curriculum.levelPlan(grade, row.lesson_level);
++  const difficulty = Math.max(1, Math.min(10, Math.round(plan.difficulty * 10) / 10));
++  // Typed answers where the skill has them: one right typed recall is a whole
++  // memory check, where a multiple-choice one is half of one.
++  return sessions.generateWithPreference({ skillId: row.skill, difficulty, role: 'review' }, true, avoid);
++}
++
++/** The review sitting left open on this enrollment, if any. */
++function openFor(userId, enrollmentId) {
++  return db.findOne('sessions', (s) => s.user_id === userId && s.enrollment_id === enrollmentId
++    && s.kind === 'review' && !s.ended_at) || null;
++}
++
++/** Review sittings finished today (UTC day), for "done for today". */
++function doneToday(userId, enrollmentId, now = Date.now()) {
++  const day = new Date(now).toISOString().slice(0, 10);
++  return db.find('sessions', (s) => s.user_id === userId && s.enrollment_id === enrollmentId
++    && s.kind === 'review' && s.ended_at && !s.abandoned && String(s.ended_at).slice(0, 10) === day);
++}
++
++/**
++ * Today's review for one enrollment, as the path and the review page show it.
++ * Null when the grade has no objective model (or the learner is the owner).
++ */
++function today(userId, enrollment, { now = Date.now() } = {}) {
++  if (enrollment.status !== 'active') return null;
++  const plan = adaptation.dailyReview({ userId, enrollment, now });
++  if (!plan) return null;
++  const open = openFor(userId, enrollment.id);
++  const done = doneToday(userId, enrollment.id, now);
++  return {
++    ...plan,
++    open_session: open ? open.id : null,
++    done_today: done.length,
++    counts: {
++      memory_check: plan.retrieve.filter((r) => r.reason === 'memory_check').length,
++      fading: plan.retrieve.filter((r) => r.reason === 'fading').length,
++      durability: plan.retrieve.filter((r) => r.reason === 'durability').length,
++      reteach: plan.reteach.length,
++    },
++  };
++}
++
++/**
++ * Start (or resume) today's review sitting: one question per objective on the
++ * retrieval list, interleaved across skills as the list already is.
++ *
++ * @returns {{session, items, plan}|{error, status}}
++ */
++function start(userId, enrollment, { now = Date.now() } = {}) {
++  const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
++  if (!grade) return { error: 'That subject is no longer available.', status: 400 };
++  const open = openFor(userId, enrollment.id);
++  if (open && sessions.itemsFor(open.id).length) {
++    return { session: open, items: sessions.itemsFor(open.id), resumed: true };
++  }
++  const plan = adaptation.dailyReview({ userId, enrollment, now });
++  if (!plan || !plan.retrieve.length) return { error: 'Nothing to review today.', status: 409 };
++
++  const session = db.insert('sessions', {
++    user_id: userId,
++    enrollment_id: enrollment.id,
++    track_id: enrollment.track_id,
++    grade_id: enrollment.grade_id,
++    level: enrollment.current_level,
++    start_level: enrollment.current_level,
++    end_level: enrollment.current_level,
++    levels: [enrollment.current_level],
++    blocks: [{ index: 0, level: enrollment.current_level, kind: 'review', resolved: false }],
++    kind: 'review',
++    // Stored as a look away from the level, so nothing about this sitting can
++    // clear, advance or hold one (services/sessions.js reads `preview`).
++    preview: true,
++    at_level: enrollment.current_level,
++    // Feedback on every answer: retrieval with feedback is the point.
++    params: { itemCount: plan.retrieve.length, immediateFeedback: true },
++    review_plan: { at: plan.at, minutes: plan.minutes, objectives: plan.retrieve.map((r) => ({ objective: r.objective, reason: r.reason, recall: r.recall })) },
++    started_at: new Date(now).toISOString(),
++    ended_at: null,
++    score: null,
++    analysis: null,
++    xp_awarded: 0,
++  });
++
++  const avoid = askedBefore(userId, plan.retrieve.map((r) => r.skill));
++  const items = plan.retrieve.map((row, index) => {
++    const q = questionFor(row, grade, avoid, enrollment.track_id);
++    avoid.add(bank.itemKey(q));
++    return db.insert('items', {
++      ...q,
++      session_id: session.id,
++      user_id: userId,
++      role: 'review',
++      level: row.lesson_level,
++      block: 0,
++      index,
++      objective_id: row.objective,
++      // A memory check tests the objective; it does not teach it.
++      objective_test: true,
++      review_reason: row.reason,
++      user_answer: null,
++      correct: null,
++      ms: null,
++      coach_used: false,
++    });
++  });
++  return { session: db.byId('sessions', session.id), items, plan, resumed: false };
++}
++
++/**
++ * Close a review sitting: its score, XP and the day's streak, and what the
++ * record says now (how many objectives are kept, how many still due).
++ */
++function finish(userId, session, { now = Date.now() } = {}) {
++  const items = sessions.itemsFor(session.id);
++  const answered = items.filter((i) => i.correct !== null && i.correct !== undefined);
++  const right = answered.filter((i) => i.correct).length;
++  const accuracy = answered.length ? right / answered.length : 0;
++  const xp = mastery.xpForItems(answered);
++  let streak = null;
++  if (!session.ended_at) {
++    db.update('sessions', session.id, {
++      ended_at: new Date(now).toISOString(),
++      score: accuracy,
++      xp_awarded: xp,
++      blocks: (session.blocks || []).map((b) => ({ ...b, resolved: true })),
++    });
++    const user = db.byId('users', userId);
++    const day = new Date(now).toISOString().slice(0, 10);
++    streak = user.streak || 0;
++    if (user.last_active_day !== day) {
++      const yesterday = new Date(now - 24 * 3600 * 1000).toISOString().slice(0, 10);
++      streak = user.last_active_day === yesterday ? streak + 1 : 1;
++      db.update('users', userId, { streak, last_active_day: day, xp: (user.xp || 0) + xp });
++    } else {
++      db.update('users', userId, { xp: (user.xp || 0) + xp });
++    }
++    const enrollment = db.byId('enrollments', session.enrollment_id);
++    if (enrollment) db.update('enrollments', enrollment.id, { xp: (enrollment.xp || 0) + xp, last_review_at: new Date(now).toISOString() });
++  }
++  const enrollment = db.byId('enrollments', session.enrollment_id);
++  const after = enrollment ? adaptation.dailyReview({ userId, enrollment, now }) : null;
++  return {
++    asked: items.length,
++    answered: answered.length,
++    right,
++    accuracy,
++    xp,
++    streak,
++    by_objective: answered.map((i) => ({ objective: i.objective_id, reason: i.review_reason, correct: !!i.correct })),
++    gate: after ? after.gate : null,
++    durability: after ? after.durability : null,
++    still_due: after ? after.retrieve.filter((r) => r.reason === 'memory_check').length : null,
++    reteach: after ? after.reteach : [],
++  };
++}
++
++module.exports = {
++  enabled,
++  today,
++  start,
++  finish,
++  openFor,
++  doneToday,
++  questionFor,
++  objectiveItems,
++};

@@ -1,0 +1,709 @@
+{
+ "subject": "piano",
+ "version": 1,
+ "status": "STAGED, not live. Owner approval needed (see curriculum-build/SKILL-CURRICULA.md, section 9).",
+ "doc": "Novice-to-elite progression for the playing path P01-P11, the professional path P12-P17 and the frontier P18-P19. Each stage maps onto existing grades (content/piano-grades.js) and says what the learner can PLAY, HEAR, READ and KNOW at its end, how that is proved on the device (MIDI exact, microphone estimated), how practice is built and how feedback fades. Numbers marked [R] are design values to be normed; exam-board tempo tables were NOT verified this session, so tempo targets are per piece and per grade as set in each lesson, checked by a teacher before release.",
+ "evidence_tags": {
+  "V": "opened and read",
+  "S": "search summary only",
+  "P": "Savant's earlier research (curriculum-build/piano/research)",
+  "L": "computed by code in this folder",
+  "R": "design inference"
+ },
+ "sources": {
+  "duke2009": {
+   "cite": "Duke, Simmons & Cash (2009) 'It's not how much; it's how': next-day performance predicted by the share of correct trials and error handling, not time or repetitions; 8 strategies of the best practisers",
+   "tag": "P"
+  },
+  "hallam2012": {
+   "cite": "Hallam et al. (2012), 3,325 learners: strategy use rises with expertise; beginners default to play-through",
+   "tag": "P"
+  },
+  "abushanab2013": {
+   "cite": "Abushanab & Bishara (2013) Memory & Cognition: random-order melody practice retained better at 2 days; learners' judgments of learning predicted the reverse",
+   "tag": "P"
+  },
+  "verwey2021": {
+   "cite": "Verwey, Wright & Immink (2021): random-practice benefit only for short sequences early in practice",
+   "tag": "P"
+  },
+  "wiseheart2017": {
+   "cite": "Wiseheart, D'Souza & Chae (2017) PLoS ONE, 100 piano novices: no spacing effect at 0-15 min gaps (no forgetting)",
+   "tag": "P"
+  },
+  "allen2013": {
+   "cite": "Allen (2013): a second similar melody learned straight after the first cancelled the overnight gain",
+   "tag": "P"
+  },
+  "furuya": {
+   "cite": "Furuya et al.: submaximal-tempo training doubled max speed with no accuracy loss (n=6+6)",
+   "tag": "P"
+  },
+  "bernardi2013": {
+   "cite": "Bernardi et al. (2013): mental practice ~63% recall v 84% physical; mental + 10 min physical ~= physical",
+   "tag": "P"
+  },
+  "kopiez2008": {
+   "cite": "Kopiez & Lee (2008): trilling speed, sight-reading experience to age 15, mental speed and inner hearing explain 59.6% of sight-reading variance",
+   "tag": "P"
+  },
+  "mishra2014": {
+   "cite": "Mishra (2014) meta-analyses: aural training largest sight-reading intervention effect; rhythm training helps; altered notation does not",
+   "tag": "P"
+  },
+  "chaffin2002": {
+   "cite": "Chaffin & Imreh (2002) performance cues as retrieval scheme for memorised performance",
+   "tag": "P"
+  },
+  "guidance": {
+   "cite": "Salmoni, Schmidt & Walter (1984) guidance hypothesis; bandwidth KR (mixed replication)",
+   "tag": "P"
+  },
+  "wulf2016": {
+   "cite": "Wulf & Lewthwaite (2016) OPTIMAL theory; Duke, Cash & Allen (2011) focus on the sound",
+   "tag": "P"
+  },
+  "jabusch": {
+   "cite": "Jabusch, Vauth & Altenmuller (2004) MIDI-based scale-evenness quantification; Van Vugt, Jabusch & Altenmuller (2012, 2013 Front Psychol) timing variability in C-major scales on a MIDI keyboard (https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2013.00134/full)",
+   "tag": "S"
+  },
+  "pianomarvel": {
+   "cite": "Piano Marvel: mic mode is for basic note detection; 'Use MIDI keyboard for accurate scoring'; SASR adaptive sight-reading (>=80% harder, 3 strikes)",
+   "tag": "P"
+  },
+  "apparev": {
+   "cite": "2022 review: automatic piano performance assessment not ready for classroom (accuracy, data, bias)",
+   "tag": "P"
+  },
+  "injury": {
+   "cite": "PRMD prevalence 26-93% in pianists (Bragge 2006); risk from sudden increases and long sessions without breaks",
+   "tag": "P"
+  },
+  "guadagnoli2004": {
+   "cite": "Guadagnoli & Lee (2004) challenge point framework",
+   "tag": "S"
+  },
+  "kalyuga2005": {
+   "cite": "Kalyuga & Sweller (2005) rapid dynamic assessment of expertise (first-step diagnosis)",
+   "tag": "S"
+  },
+  "mechanics": {
+   "cite": "curriculum-build/SKILL-APPS-MECHANICS.md: YIN single-note mic, chord bug, expected-notes verifier 50/50 synthetic, MIDI exact",
+   "tag": "L"
+  }
+ },
+ "competence_model": {
+  "components": [
+   {
+    "id": "technique",
+    "what": "Scales, arpeggios, chords, hand shapes at tempo, evenly, without tension",
+    "evidence": "played takes scored by piano-core scorePerformance: noteAccuracy, timing.onBeatShare, timing.meanAbsMs, evenness.cv, dynamics (MIDI)",
+    "source": "midi | mic"
+   },
+   {
+    "id": "repertoire",
+    "what": "Pieces learned, kept and performed",
+    "evidence": "cold takes (first take of a day, day 2+), stops/restarts, then a recorded performance with self-rating against a rubric",
+    "source": "midi | mic + self + optional teacher"
+   },
+   {
+    "id": "reading",
+    "what": "Notation to keys, and sight-reading new music at a steady pulse",
+    "evidence": "staff items (bank) and a sight-reading staircase scored on pitch and rhythm separately",
+    "source": "midi | mic | on-screen keys"
+   },
+   {
+    "id": "aural",
+    "what": "Hearing intervals, chords, rhythms; playing back by ear; inner hearing",
+    "evidence": "ear items, echo-play (Piano_EarEcho) scored as pitch-and-rhythm match",
+    "source": "midi | mic"
+   },
+   {
+    "id": "theory_harmony",
+    "what": "Keys, scales, chords, cadences, form, lead sheets",
+    "evidence": "computed bank (content/piano-theory.js) through unit_belief; chord-symbol realisations played",
+    "source": "items + played"
+   },
+   {
+    "id": "creative",
+    "what": "Improvising and composing in a style",
+    "evidence": "rubric self-assessment and optional review; machine proxies (stays in key/chord, steady pulse) shown as information only",
+    "source": "self + proxies"
+   },
+   {
+    "id": "practice_skill",
+    "what": "Practising well: locate, slow, fix, rejoin; self-assessment calibration",
+    "evidence": "practice logs, hotspot-loop use, calibration of self-rating vs measured score (scorecard confidence_calibration)",
+    "source": "behaviour"
+   },
+   {
+    "id": "musicality",
+    "what": "Phrasing, tone, character",
+    "evidence": "never auto-graded (apparev); rubric self-assessment against model recordings; optional teacher/peer review; MIDI proxies (dynamic range, voicing) shown as information",
+    "source": "self + human"
+   }
+  ]
+ },
+ "gate_rules": {
+  "proof_only": "Skipping or passing needs measured evidence. A self-rating never proves a gate; it is compared with the measured score to train calibration.",
+  "cold": "Technique and repertoire gates count only cold takes: the first take of a day, 20+ hours after that item was last practised (the two-day lesson's day-2 take; research/02 rule 'two-day lessons').",
+  "two_days": "Every performance gate needs passes on two different days.",
+  "source_honesty": "MIDI results are exact. Microphone results are estimates: single-line gates accept mic takes with confidence >= 0.8; any gate that includes chords needs MIDI, the on-screen keys, the expected-notes verifier (piano agent, tonight) with a second take, or a listener's confirmation, and is labelled 'estimated' (mechanics: YIN reads a C-major triad as C2).",
+  "musicality": "Musicality is never auto-graded or gated by the machine; recital gates use a rubric and the learner's self-rating, with optional teacher review.",
+  "unit_belief": "Theory and knowledge units use learnerPath.unitBelief exactly as other subjects."
+ },
+ "performance_metrics": {
+  "doc": "Thresholds used by the stages below, all from scorePerformance outputs. [R] until normed.",
+  "note_accuracy_midi": ">= 0.97 (at most 1 slip in ~35 notes)",
+  "note_accuracy_mic_single_line": ">= 0.95 with confidence >= 0.8",
+  "on_beat_share": ">= 0.90 (tolerance: max(80 ms, 15% of a beat), as piano-core uses)",
+  "evenness_cv_scales": "P04-P05 <= 0.12, P06-P08 <= 0.09, P09-P11 <= 0.06 (provisional, MIDI only; norm against learners and the Jabusch method)",
+  "tempo": ">= 100% of the lesson's target tempo; the ladder below it is practice, not a gate",
+  "no_stops": "repertoire cold take with no restart (a slip played through is fine: 'keep going' norm)"
+ },
+ "stages": [
+  {
+   "id": "PI0",
+   "name": "Keyboard explorer",
+   "grades": [
+    "piano_keyboard_explorer"
+   ],
+   "draft": "P01",
+   "who": "Age 4+ or adult day one; no reading",
+   "objectives": [
+    "Finds black-key groups, C and D anywhere; high/low; loud/soft",
+    "Plays rote black-key songs with a steady beat",
+    "Echoes 2-3 note patterns by ear",
+    "Sits well; stops when something hurts"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "find_keys",
+      "test": "find 10 named landmark keys",
+      "threshold": ">= 9/10, two days",
+      "source": "midi | mic | on-screen"
+     },
+     {
+      "metric": "steady_beat",
+      "test": "tap or play along with a 70-90 bpm beat for 16 beats",
+      "threshold": "on_beat_share >= 0.75",
+      "source": "midi | mic | tap",
+      "tag": "R"
+     },
+     {
+      "metric": "echo",
+      "test": "echo 5 two- or three-note patterns",
+      "threshold": ">= 4/5 pitches right",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "rote_song",
+      "test": "a black-key song from memory, cold",
+      "threshold": "completes; noteAccuracy >= 0.85",
+      "source": "midi | mic",
+      "tag": "R"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "5-10 (age 4-6), 10-15 older",
+    "days": "daily short",
+    "mix": {
+     "games_and_songs": 0.6,
+     "ear": 0.25,
+     "technique_play": 0.15
+    }
+   },
+   "feedback": [
+    "Real-time key highlights, voice-led",
+    "Stars, never red marks"
+   ],
+   "evidence": [
+    "wulf2016",
+    "injury"
+   ]
+  },
+  {
+   "id": "PI1",
+   "name": "Pre-reader",
+   "grades": [
+    "piano_pre_reader"
+   ],
+   "draft": "P02",
+   "objectives": [
+    "Reads off-staff letter and finger notation; C five-finger patterns each hand",
+    "Keeps a steady pulse with quarter/half/whole notes",
+    "Plays by ear simple tunes; hears high/low and step/skip",
+    "Meets treble and bass clef and the grand staff"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "five_finger",
+      "test": "C five-finger pattern RH and LH at 60-80 bpm",
+      "threshold": "noteAccuracy 1.0, on_beat_share >= 0.8, two cold days",
+      "source": "midi | mic",
+      "tag": "R"
+     },
+     {
+      "metric": "piece",
+      "test": "2 pieces from the grade (one by ear/rote, one read)",
+      "threshold": "cold take noteAccuracy >= 0.9, no stops",
+      "source": "midi | mic",
+      "tag": "R"
+     },
+     {
+      "metric": "ear_by_ear",
+      "test": "find a 5-note tune by ear",
+      "threshold": "plays it correctly within 3 tries",
+      "source": "midi | mic"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "10-15 (children), 15-20 (adults)",
+    "mix": {
+     "repertoire": 0.25,
+     "reading_rhythm": 0.3,
+     "ear_improv": 0.2,
+     "technique": 0.15,
+     "theory": 0.1
+    }
+   },
+   "feedback": [
+    "Real-time in guided stages (wait mode), then end-of-take summary"
+   ],
+   "evidence": [
+    "guidance",
+    "mishra2014"
+   ]
+  },
+  {
+   "id": "PI2",
+   "name": "First reader",
+   "grades": [
+    "piano_first_reader"
+   ],
+   "draft": "P03",
+   "objectives": [
+    "Reads the grand staff with landmark and interval reading in several five-finger positions",
+    "Hands together in parallel and contrary motion",
+    "Sight-reads 4-bar pieces keeping the pulse past slips",
+    "C major scale one octave with thumb under; first triads"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "c_scale",
+      "test": "C major one octave hands separately at the lesson target",
+      "threshold": "MIDI: note_accuracy_midi and on_beat_share; mic: single-line rule",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "pieces",
+      "test": "3 grade pieces cold",
+      "threshold": "noteAccuracy >= 0.95 MIDI (0.93 mic), on_beat_share >= 0.85, no stops",
+      "source": "midi | mic",
+      "tag": "R"
+     },
+     {
+      "metric": "sight_reading_level",
+      "test": "sight-reading staircase",
+      "threshold": "level >= SR2 at >= 80%",
+      "source": "midi | mic | on-screen"
+     },
+     {
+      "metric": "aural",
+      "test": "major or minor chord by ear, 10 items",
+      "threshold": ">= 9/10",
+      "source": "tap"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "15-20",
+    "mix": {
+     "repertoire": 0.25,
+     "reading_sightreading_rhythm": 0.3,
+     "ear_improv_composition": 0.15,
+     "technique": 0.15,
+     "theory_chords": 0.1,
+     "practice_skills": 0.05
+    }
+   },
+   "feedback": [
+    "Feedback fades within each lesson: highlights -> summary -> errors only -> self-rate first"
+   ],
+   "evidence": [
+    "guidance",
+    "kopiez2008"
+   ]
+  },
+  {
+   "id": "PI3",
+   "name": "Elementary 1 (about ABRSM Grade 1 / RCM Level 1)",
+   "grades": [
+    "piano_elementary_1"
+   ],
+   "draft": "P04",
+   "objectives": [
+    "Major scales C, G, D, F and natural/harmonic minors from tones and semitones, hands together",
+    "Eighth notes, dotted rhythms, simple key signatures",
+    "Tempo ladder and hard-spot practice",
+    "Chord symbols C, F, G, Am, Dm, Em with LH"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "scales",
+      "test": "the grade's scales, random order, hands together",
+      "threshold": "note_accuracy_midi, on_beat_share, evenness_cv_scales <= 0.12 at target",
+      "source": "midi | mic(single-line, HS only)"
+     },
+     {
+      "metric": "pieces",
+      "test": "3 pieces cold on two days",
+      "threshold": "noteAccuracy >= 0.97 MIDI / 0.95 mic, on_beat_share >= 0.9, no stops",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "sight_reading_level",
+      "test": "staircase",
+      "threshold": ">= SR3",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "recital",
+      "test": "record and self-assess one piece with the rubric",
+      "threshold": "completed; self-rating compared with score (calibration, not a gate)",
+      "source": "self"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "15-30",
+    "mix": {
+     "repertoire": 0.25,
+     "reading_sightreading_rhythm": 0.25,
+     "ear_improv_composition": 0.15,
+     "technique": 0.15,
+     "theory_chords": 0.1,
+     "practice_performance_wellbeing": 0.1
+    }
+   },
+   "feedback": [
+    "Bandwidth feedback in the independent take: only wrong notes and timing beyond tolerance are flagged"
+   ],
+   "evidence": [
+    "duke2009",
+    "furuya",
+    "abushanab2013"
+   ]
+  },
+  {
+   "id": "PI4",
+   "name": "Elementary 2 (about Grade 2 / Level 2)",
+   "grades": [
+    "piano_elementary_2"
+   ],
+   "draft": "P05",
+   "objectives": [
+    "More keys; triplets, cut time; I-IV-V7-I and inversions",
+    "Diagnoses why a mistake happens; chunk-and-link practice",
+    "Daily sight-reading below level",
+    "Warm-up and pain rules as sessions grow"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "scales_arps",
+      "test": "grade's scales and arpeggios",
+      "threshold": "as PI3 at the new targets",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "cadence",
+      "test": "I-IV-V7-I in the grade's keys",
+      "threshold": "right chords (MIDI / on-screen / verifier+confirm)",
+      "source": "midi | on-screen | mic-verifier"
+     },
+     {
+      "metric": "pieces",
+      "test": "3 pieces cold",
+      "threshold": "as PI3",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "sight_reading_level",
+      "test": "staircase",
+      "threshold": ">= SR4",
+      "source": "midi | mic"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "20-30",
+    "mix": {
+     "repertoire": 0.28,
+     "technique": 0.15,
+     "reading_sightreading_rhythm": 0.17,
+     "ear_improv_composition": 0.12,
+     "theory_chords": 0.15,
+     "practice_performance_wellbeing": 0.13
+    }
+   },
+   "evidence": [
+    "duke2009",
+    "hallam2012"
+   ]
+  },
+  {
+   "id": "PI5-7",
+   "name": "Lower intermediate to upper intermediate (about Grades 3-5)",
+   "grades": [
+    "piano_lower_intermediate",
+    "piano_intermediate",
+    "piano_upper_intermediate"
+   ],
+   "draft": "P06-P08",
+   "objectives": [
+    "All keys round the circle of fifths; seventh chords; modulation awareness",
+    "Memorise by structure with performance cues; start from any entry point",
+    "Read ahead; sight-read with hairpins and compound time",
+    "Lead sheets realised at sight; improvise over progressions"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "technique",
+      "test": "the grade's scales/arpeggios at target",
+      "threshold": "evenness_cv_scales <= 0.09; note_accuracy_midi; on_beat_share",
+      "source": "midi (mic HS only)"
+     },
+     {
+      "metric": "repertoire",
+      "test": "3-4 pieces, one memorised, started from 3 random entry points",
+      "threshold": "cold takes as PI3; memorised piece restarts at each cue",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "sight_reading_level",
+      "test": "staircase",
+      "threshold": ">= stage grade minus 2 levels (SR5-SR7)",
+      "source": "midi | mic"
+     },
+     {
+      "metric": "dynamics_midi",
+      "test": "a passage marked p and f",
+      "threshold": "median velocity of f notes > median of p notes by >= 15 (MIDI only; shown as information if mic)",
+      "source": "midi",
+      "tag": "R"
+     },
+     {
+      "metric": "recital",
+      "test": "recorded performance, rubric self-assessment, optional teacher/peer review",
+      "threshold": "completed; musicality never machine-graded",
+      "source": "self + human"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "30-45 with a break after ~20",
+    "mix": {
+     "repertoire": 0.28,
+     "technique": 0.15,
+     "reading_sightreading_rhythm": 0.17,
+     "ear_improv_composition": 0.12,
+     "theory_chords": 0.15,
+     "practice_performance_wellbeing": 0.13
+    }
+   },
+   "evidence": [
+    "chaffin2002",
+    "kopiez2008",
+    "jabusch"
+   ]
+  },
+  {
+   "id": "PI8-10",
+   "name": "Early advanced to pre-professional (about Grades 6-8)",
+   "grades": [
+    "piano_early_advanced",
+    "piano_advanced",
+    "piano_pre_professional"
+   ],
+   "draft": "P09-P11",
+   "objectives": [
+    "Full technical requirements at speed, evenly and without tension",
+    "Programme of contrasting periods, memorised, performed under simulated pressure",
+    "Sight-reads full pages, chorales, changing metres",
+    "Learns a new piece independently"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "technique",
+      "test": "requirements at target",
+      "threshold": "evenness_cv_scales <= 0.06; note_accuracy_midi; on_beat_share",
+      "source": "midi"
+     },
+     {
+      "metric": "programme",
+      "test": "recorded performance of the programme",
+      "threshold": "cold, from memory where set; rubric; teacher review strongly recommended",
+      "source": "midi/mic + human"
+     },
+     {
+      "metric": "pedal_midi",
+      "test": "legato pedalling across chord changes",
+      "threshold": "CC64 lifted within 150 ms after each chord change and re-pressed after the new chord's onset in >= 90% of changes",
+      "source": "midi",
+      "tag": "R"
+     },
+     {
+      "metric": "independent_learning",
+      "test": "a new piece learned from score in 2 weeks with a practice log",
+      "threshold": "cold take passes PI3 rules",
+      "source": "midi | mic"
+     }
+    ]
+   },
+   "practice": {
+    "session_minutes": "45-120 in blocks of 25-50 with breaks; weekly minutes raised gradually",
+    "mix": {
+     "repertoire": 0.33,
+     "technique": 0.15,
+     "reading_sightreading": 0.1,
+     "ear_improv": 0.1,
+     "theory_chords": 0.15,
+     "practice_performance_wellbeing": 0.17
+    }
+   },
+   "evidence": [
+    "duke2009",
+    "injury"
+   ]
+  },
+  {
+   "id": "PI11-16",
+   "name": "Diploma to master (taught as what such artists know and do)",
+   "grades": [
+    "piano_diploma",
+    "piano_licentiate",
+    "piano_fellowship",
+    "piano_professional",
+    "piano_concert_artist",
+    "piano_master"
+   ],
+   "draft": "P12-P17",
+   "objectives": [
+    "Programmes, interpretation, collaboration, pedagogy, jazz/commercial, technology and health tracks"
+   ],
+   "exit": {
+    "performance": [
+     {
+      "metric": "capstones",
+      "test": "recorded recitals and applied tasks (teach a lesson, prepare a competition programme, accompany)",
+      "threshold": "rubric + human review; machine proxies as information",
+      "source": "human"
+     }
+    ]
+   },
+   "honesty": "The app does not award diplomas, prizes or careers; it builds and records the skills, and points to real exams and teachers for certification."
+  }
+ ],
+ "sight_reading_staircase": "Defined in piano/drills.json (levels SR1-SR10 with keys, metres, note values, range and length, all checked by verify-skill-curricula.js). Rule: >= 80% (pitch and rhythm each scored) moves up a level; 3 failed excerpts at a level move down (SASR rule, pianomarvel). New, never-seen excerpts only.",
+ "practice_engine": {
+  "two_day_lessons": "Day 1: model, guided, faded, hinted, independent, free recall. Day 2: cold take first (the learning score), then transfer and spot-the-error.",
+  "tempo_ladder": "New material starts at 60-70% of target; +10% after 2 clean takes in a row (noteAccuracy 1.0, on_beat_share >= 0.9); back one step after 2 failed takes. Steps are listed in piano/drills.json and checked.",
+  "hotspot_loop": "align() errors per bar -> the 1-2 worst bars -> loop at 65% -> +10% per clean pass -> rejoin with one bar either side (mechanics P2).",
+  "interleaving": "Short units (scales, chord changes, 1-4 bar figures) are interleaved only after each has had one correct run; long pieces are practised by section, not shuffled (verwey2021). The app shows learners their own day-2 results, because their own sense of learning points the wrong way (abushanab2013).",
+  "spacing": "Reviews by days (1, 3, 7, 14+), never minutes (wiseheart2017); a piece enters the review queue once learned.",
+  "interference": "Two similar new passages are never taught back to back without replaying the first (allen2013).",
+  "away_from_piano": "Score study and inner hearing are real practice on phone-only days, always followed by playing (bernardi2013).",
+  "safety": "Session caps by age; weekly minutes rise gradually; a break prompt every ~25 minutes; pain = stop, logged."
+ },
+ "feedback_rules": [
+  "Fade within a lesson: real-time key highlights (guided) -> end-of-take summary -> bandwidth (only wrong notes and timing beyond tolerance) -> self-rate first, then the score (guidance)",
+  "Cue the sound, not the body (except posture and injury lessons) (wulf2016)",
+  "Mic results always say 'estimated' and show confidence; when unsure the app asks for the bar again rather than marking a mistake",
+  "Musicality: rubric and model recordings, never a machine score"
+ ],
+ "adaptation": {
+  "levers": [
+   {
+    "id": "entry",
+    "rule": "Subject and in-grade placement (theory items through unit_belief) plus a played baseline: a scale, a piece of the learner's choice at their level and a sight-reading staircase run. A played baseline can place a learner later but each skipped unit still needs unit_belief proof (theory) or a cold played pass (technique/repertoire objectives)."
+   },
+   {
+    "id": "probe_first",
+    "rule": "Each lesson opens with the independent take (P5) as a probe; clean and cold -> provisional; known after a cold day-2 take. Otherwise the full ladder runs.",
+    "evidence": [
+     "kalyuga2005"
+    ]
+   },
+   {
+    "id": "tempo_and_load",
+    "rule": "Tempo ladder start and step size come from the learner's measured history (fast climbers start at 70%, slow at 60%); repeated failures shrink the step to +5%. Challenge point: aim for ~70-80% clean takes in practice.",
+    "evidence": [
+     "guadagnoli2004",
+     "furuya"
+    ]
+   },
+   {
+    "id": "feedback_fade_speed",
+    "rule": "Learners whose accuracy holds when highlights are removed fade faster; those who collapse get one more guided round. Hint dependency from the scorecard slows the fade.",
+    "evidence": [
+     "guidance"
+    ]
+   },
+   {
+    "id": "reading_route",
+    "rule": "Notation fade (falling notes -> ghost notes -> staff) set by measured reading accuracy, never by preference alone."
+   },
+   {
+    "id": "repertoire_choice",
+    "rule": "Learners choose pieces from a set for each objective (same skill, different music); choice never removes a technical objective.",
+    "evidence": [
+     "wulf2016"
+    ]
+   },
+   {
+    "id": "hotspots",
+    "rule": "Bars with repeated errors across takes get the hotspot loop automatically."
+   },
+   {
+    "id": "review_timing",
+    "rule": "Pieces and technique items re-surface by the forgetting model once fitted; cold takes falling below threshold re-open the item."
+   },
+   {
+    "id": "device",
+    "rule": "With MIDI the app grades notes, timing, dynamics and pedal; with mic only it grades single lines and verifies expected chords, and routes chord gates to a confirmation path."
+   }
+  ],
+  "never": [
+   "Never pass a gate on a warm take",
+   "Never machine-grade musicality",
+   "Never treat a mic chord as proof without the verifier and a confirmation",
+   "Never raise weekly practice minutes sharply (no streak that rewards it)"
+  ]
+ },
+ "needs_from_other_builds": [
+  {
+   "from": "piano chord-detection agent (public/engine/piano/piano-core.js hearNotes, piano-io)",
+   "need": "per-take confidence for chord frames and an 'expected chord verified' flag the gates can read; AudioWorklet onset times for the timing metrics"
+  },
+  {
+   "from": "piano-checks (services/piano-checks.js)",
+   "need": "server grading of the same scorePerformance outputs for gate takes, with the take's day stamp so 'cold' can be enforced"
+  }
+ ],
+ "tracks_any_level": {
+  "grades": [
+   "piano_frontier_foundations",
+   "piano_frontier_research"
+  ],
+  "doc": "Frontier knowledge grades (performance science, cognition, acoustics, tuning, AI): gated by unit_belief on items plus applied research tasks; open at any playing level."
+ }
+}

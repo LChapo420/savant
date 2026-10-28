@@ -1,0 +1,45 @@
+{
+ "started_at": "2026-10-23T02:27:24.746Z",
+ "per_objective": 3,
+ "writer": [
+  {
+   "model": "deepseek-ai/deepseek-v4.1-flash",
+   "effort": "high"
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "effort": "high"
+  }
+ ],
+ "judge_a": [
+  {
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "effort": "medium"
+  }
+ ],
+ "judge_b": [
+  {
+   "model": "z-ai/glm-5.3",
+   "effort": "high"
+  }
+ ],
+ "grades": {
+  "math:volume_coordinates_and_expressions": {
+   "objectives": 2,
+   "written": 6,
+   "kept": 5,
+   "objectives_with_two_or_more": 2,
+   "objectives_with_none": [],
+   "errors": [],
+   "rejected": [
+    {
+     "objective": "volume_coordinates_and_expressions:L10",
+     "prompt": "A solid figure is built from unit cubes with no gaps or overlaps. Its bottom layer has 8 cubes, its middle layer has 5 cubes, and its top layer has 0 cubes. How many unit cubes are in the figure, and what is its volume in cubic units?",
+     "reason": "code: needs a picture or audio"
+    }
+   ],
+   "file": "objective-items.math.volume_coordinates_and_expressions.json"
+  }
+ },
+ "seconds": 294
+}

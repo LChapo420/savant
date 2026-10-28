@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choose your subjects | Savant</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="header"></header>
+  <main class="page">
+    <!-- Asked once of an account made before the age screen existed, and of a
+         child account that still needs a parent's email (js/onboarding.js). -->
+    <div class="wrap wrap-narrow hidden" id="age-step">
+      <h1 id="age-title">Two questions before you go on</h1>
+      <div id="age-error" class="notice notice-error hidden" role="alert"></div>
+      <section id="age-ask">
+        <p class="muted">We now ask everyone for their date of birth and where they live. We keep the month and year with your account. <a href="/privacy">Privacy policy</a></p>
+        <form id="age-form" class="age-form" novalidate>
+          <fieldset class="field dob">
+            <legend>Date of birth</legend>
+            <div class="dob-row">
+              <label><span class="visually-hidden">Month</span>
+                <select id="birth_month" required><option value="">Month</option></select>
+              </label>
+              <label><span class="visually-hidden">Year</span>
+                <select id="birth_year" required><option value="">Year</option></select>
+              </label>
+            </div>
+          </fieldset>
+          <label class="field"><span>Country you live in</span>
+            <select id="country" required><option value="">Choose a country</option></select>
+          </label>
+          <button class="btn btn-primary btn-lg" id="age-submit" type="submit">Continue</button>
+        </form>
+      </section>
+      <section id="age-parent" class="hidden">
+        <p class="muted">A parent or guardian needs to agree before everything in your account opens. We will send them one email. Until they agree, the camera, the microphone and AI chat stay off, and everything with taps and buttons still works.</p>
+        <form id="parent-form" class="age-form" novalidate>
+          <label class="field"><span>Your parent's or guardian's email</span>
+            <input type="email" id="parent_email" autocomplete="off" required>
+          </label>
+          <button class="btn btn-primary btn-lg" id="parent-submit" type="submit">Email my parent</button>
+        </form>
+        <p class="tiny muted">If nobody answers in <span id="age-days">14</span> days, this account and its progress are deleted.</p>
+      </section>
+    </div>
+    <div class="wrap" id="subjects-step">
+      <h1>What do you want to learn?</h1>
+      <p class="muted" style="max-width:62ch">
+        Pick a subject and the level you are aiming at. Each choice gets its own
+        placement quiz, which starts at the basics and ends just above the level you
+        picked, so the result is measured rather than assumed.
+      </p>
+      <div id="already" class="notice hidden" style="margin-bottom:18px"></div>
+      <div id="tracks" class="grid grid-2">
+        <div class="loading"><span class="spinner"></span>Loading subjects</div>
+      </div>
+      <div class="card" id="footer-bar" style="position:sticky; bottom:16px; margin-top:22px">
+        <div class="row-between">
+          <div>
+            <div style="font-weight:650" id="summary">Nothing selected yet</div>
+            <div class="tiny muted" id="summary-detail">Choose at least one subject and level.</div>
+          </div>
+          <button class="btn btn-primary btn-lg" id="start" disabled>Continue</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="/js/icons.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/age-screen.js"></script>
+  <script src="/js/onboarding.js"></script>
+</body>
+</html>

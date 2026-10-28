@@ -1,0 +1,157 @@
+{
+ "collection": "lessons",
+ "row_id": 2850,
+ "shared": false,
+ "user_id": 4,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P59",
+   "wrong": "\"Jaw-broken silence\" or the classic \"deafening silence\" is an oxymoron: silent and loud are opposites, yet one is piled on the other.",
+   "correct": "\"Jaw-broken silence\" is not an oxymoron (its words do not contradict each other); \"deafening silence\" is.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "\"Jaw-broken silence\" or the classic \"deafening silence\" is an oxymoron: silent and loud are opposites, yet one is piled on the other.",
+   "replace": "\"Jaw-broken silence\" is not an oxymoron: its words do not contradict each other. The classic \"deafening silence\" is: silent and loud are opposites, yet one is piled on the other.",
+   "fixes": [
+    "P59"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[1].example",
+   "before": "\"Jaw-broken silence\" or the classic \"deafening silence\" is an oxymoron: silent and loud are opposites, yet one is piled on the other. Other clean cases: \"bittersweet,\" \"open secret,\" \"alive dead.\" Notice the structure: opposite adjective + noun (or two conflicting words side by side). The phrase is not a complete claim that is secretly true; it is a compressed, contradictory image.",
+   "after": "\"Jaw-broken silence\" is not an oxymoron: its words do not contradict each other. The classic \"deafening silence\" is: silent and loud are opposites, yet one is piled on the other. Other clean cases: \"bittersweet,\" \"open secret,\" \"alive dead.\" Notice the structure: opposite adjective + noun (or two conflicting words side by side). The phrase is not a complete claim that is secretly true; it is a compressed, contradictory image.",
+   "fixes": [
+    "P59"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Euphemism, Oxymoron, and Paradox: Three Different Devices, Three Different Jobs",
+  "intro": "These three terms sound alike because they all involve some kind of tension, but they do different things. A euphemism softens, an oxymoron fuses two opposites into one compact phrase, and a paradox is a statement that looks wrong but is true. At difficulty 3 you should be able to tell them apart the moment you see the structure, not just the feeling.",
+  "sections": [
+   {
+    "heading": "Euphemism: A softener that stands in for a harsher word",
+    "body": "The rule: a euphemism replaces a blunt or unpleasant term with a milder one, and the softening is the entire point. The tell-tale sign is that you can always name the harsher word the phrase is hiding. If you cannot point to what is being softened, it is not a euphemism. It operates at the word or short-phrase level and it changes how the listener feels, not whether the claim is literally true.",
+    "example": "\"Pass away\" is a euphemism for \"die.\" The structure gives it away: a polite action (pass away) standing in for a blunt event (die). Likewise \"let go of\" stands in for \"fire,\" and \"senior citizen\" stands in for \"old person.\" Each one you can replace with a cruder word and the sentence still means the same thing. Note what it is NOT: it is not a contradiction. \"Pass away\" contains no two opposite words jammed together."
+   },
+   {
+    "heading": "Oxymoron: Two opposites fused into one compact phrase",
+    "body": "The rule: an oxymoron joins two contradictory or opposite words directly, usually as an adjective-plus-noun pair, to create a single compressed image. The words genuinely conflict on their face (one means present, the other absent), and the power comes from that clash. The test: you can pull the two words apart and see that they contradict each other in isolation. It is a figure of speech at the phrase level, and it does not have to be true.",
+    "example": "\"Jaw-broken silence\" is not an oxymoron: its words do not contradict each other. The classic \"deafening silence\" is: silent and loud are opposites, yet one is piled on the other. Other clean cases: \"bittersweet,\" \"open secret,\" \"alive dead.\" Notice the structure: opposite adjective + noun (or two conflicting words side by side). The phrase is not a complete claim that is secretly true; it is a compressed, contradictory image."
+   },
+   {
+    "heading": "Paradox: A statement that seems self-contradictory but holds a truth",
+    "body": "The rule: a paradox is a full statement that appears to contradict itself or common sense, yet reveals a deeper truth once you let it sit. It works at the sentence or idea level, and its value is the insight that survives the contradiction. The test: read it as a claim, feel it ring false, then find the truth it is pointing at. A paradox earns its name by being true in the end; an oxymoron only needs to clash.",
+    "example": "\"I must be cruel to be kind\" (Hamlet) looks contradictory, but it means that a harsh act can produce a kind outcome. \"The more you learn, the more you know what you do not know\" seems to cancel itself, but it is literally true: greater knowledge exposes greater ignorance. Each of these is a complete thought that you can argue about, and the argument resolves in favor of the statement."
+   }
+  ],
+  "worked_example": {
+   "problem": "Read each phrase below and classify it as a euphemism, an oxymoron, a paradox, or none of the three. (1) \"a deafening silence\" (2) \"the price of freedom is eternal vigilance\" (3) \"they passed away last week\" (4) \"a loud whisper\"",
+   "steps": [
+    "(1) \"a deafening silence.\" Pull the adjectives apart: deafening means extremely loud, silence means no sound. Two opposites fused into one phrase, no larger claim to argue about. That is an oxymoron.",
+    "(2) \"the price of freedom is eternal vigilance.\" This is a full statement. It sounds odd, but it is a truth: to keep freedom you must keep watching. It does not soften a harsher word, and it is not two opposites glued together. That is a paradox.",
+    "(3) \"they passed away last week.\" \"Passed away\" stands in for \"died.\" You can name the harsher word it hides, and the sentence means the same thing if you swap it in. That is a euphemism.",
+    "(4) \"a loud whisper.\" Loud and quiet are opposites; here they are jammed together as adjective and noun into a compressed image. That is an oxymoron, the same structure as (1)."
+   ],
+   "answer": "(1) oxymoron, (2) paradox, (3) euphemism, (4) oxymoron."
+  },
+  "common_mistakes": [
+   "Calling every oxymoron a paradox because both involve tension. The wrong move is skipping the test for a complete claim. An oxymoron is a phrase with no truth to resolve (\"bittersweet\" is not a claim you can prove or disprove); a paradox is a full statement that survives contradiction. If you cannot extend the item into a sentence you would defend as true, it is an oxymoron, not a paradox.",
+   "Calling a mild or polite word a euphemism when it is just neutral vocabulary. The wrong move is assuming politeness equals softening. A euphemism requires a harsher word you are hiding: \"died\" is plain, so a sentence that says \"died\" is not a euphemism. \"Passed away\" is, because it stands in for a blunter option.",
+   "Treating euphemism and oxymoron as the same device because both involve two words. They do not. A euphemism has no internal contradiction; it just swaps register (\"let go of\" for \"fired\"). An oxymoron has a direct clash built into the phrase itself (\"deafening silence\"). Check whether the two words disagree with each other: if they do, you are looking at an oxymoron, not a euphemism."
+  ],
+  "summary": "Euphemism softens a harsher word; the giveaway is that a cruder replacement exists. Oxymoron fuses two opposites into one compact phrase; the giveaway is a direct clash you can see in isolation. Paradox is a full statement that seems false but is true; the giveaway is a claim that resolves into insight. Run the structure test first, then the truth test.",
+  "check_questions": [
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2.7111517367458866,
+    "prompt": "Which of the following is a euphemism?",
+    "answer": "he was let go from the company",
+    "rationale": "This is the step that names the harsher word it hides. \"Let go\" stands in for \"fired,\" a blunter term, and the sentence means the same if you swap it in. The other options are a paradox (last), an oxymoron (second), and a definition (first).",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "a paradox is a statement that seems false but is true",
+     "gently aggressive",
+     "he was let go from the company",
+     "the only way out is through"
+    ]
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2.7111517367458866,
+    "prompt": "\"Bittersweet\" is a classic example of which device?",
+    "answer": "oxymoron",
+    "rationale": "The deciding move is the structural test: two opposing qualities, bitter and sweet, fused into one compact word. It is not a full claim to argue about, so it cannot be a paradox, and nothing is being softened, so it is not a euphemism.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "euphemism",
+     "oxymoron",
+     "paradox",
+     "metaphor"
+    ]
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2.7111517367458866,
+    "prompt": "Type the single word that names the device at work in: \"The more I learn, the more I realize how little I know.\"",
+    "answer": "paradox",
+    "rationale": "The deciding step is the truth test: the sentence sounds self-contradictory but resolves into a genuine truth, and it is a complete claim, not a compressed phrase. That is the definition of a paradox, not an oxymoron or a euphemism.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "word_choice",
+    "skill_name": "Commonly confused words",
+    "difficulty": 2.7111517367458866,
+    "prompt": "Why is \"a living death\" an oxymoron rather than a euphemism?",
+    "answer": "because it fuses two opposites, living and death, into one phrase with no larger claim to argue about",
+    "rationale": "The deciding step is the structural test: living and death contradict each other directly, and the phrase carries no softening of a harsher word and no full claim to resolve. That clash-without-a-claim is the signature of an oxymoron.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "because it names a harsher word it is hiding",
+     "because it fuses two opposites, living and death, into one phrase with no larger claim to argue about",
+     "because it is a full statement that turns out to be true",
+     "because it is a polite way of saying someone died"
+    ]
+   }
+  ]
+ }
+}

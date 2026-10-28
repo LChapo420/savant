@@ -1,0 +1,140 @@
+{
+ "collection": "lessons",
+ "row_id": 1510,
+ "shared": false,
+ "user_id": 2163,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P47",
+   "wrong": "removing it leaves \"kip\", which is a different word.",
+   "correct": "Removing \"ch\" from \"chip\" leaves \"ip\", not \"kip\".",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "\"ch\" in \"chip\" makes the ch sound, and removing it leaves \"kip\", which is a different word.",
+   "replace": "\"ch\" in \"chip\" makes the ch sound, and removing it leaves \"ip\", which is a different word.",
+   "fixes": [
+    "P47"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[1].body",
+   "before": "\"ch\" in \"chip\" makes the ch sound, and removing it leaves \"kip\", which is a different word.",
+   "after": "\"ch\" in \"chip\" makes the ch sound, and removing it leaves \"ip\", which is a different word.",
+   "fixes": [
+    "P47"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax-m3.1-flash:free",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Listening and Attention",
+  "intro": "This lesson is about listening and attention. Listening to a read-aloud, staying focused, and answering simple questions about what was heard. Work through the examples, then answer the questions at the end.",
+  "sections": [
+   {
+    "heading": "Listening and Attention",
+    "body": "Listening to a read-aloud, staying focused, and answering simple questions about what was heard."
+   },
+   {
+    "heading": "An example, worked through",
+    "body": "\"ch\" in \"chip\" makes the ch sound, and removing it leaves \"ip\", which is a different word.",
+    "example": "Which two letters make the first sound in \"chip\"?\nAnswer: ch"
+   },
+   {
+    "heading": "One step harder",
+    "body": "\"ur\" makes the vowel say er, which is why \"turn\" is spelled that way.",
+    "example": "In \"turn\", the letter r changes the vowel to which sound?\nAnswer: er"
+   }
+  ],
+  "worked_example": {
+   "problem": "In \"turn\", the letter r changes the vowel to which sound?",
+   "steps": [
+    "\"ur\" makes the vowel say er, which is why \"turn\" is spelled that way."
+   ],
+   "answer": "er"
+  },
+  "common_mistakes": [],
+  "summary": "Listening to a read-aloud, staying focused, and answering simple questions about what was heard.",
+  "check_questions": [
+   {
+    "skill_id": "phonics",
+    "skill_name": "Phonics, decoding and spelling",
+    "difficulty": 1.3,
+    "format": "multiple_choice",
+    "prompt": "What does the prefix \"dis-\" mean in \"disagree\"?",
+    "answer": "not, or the opposite of",
+    "rationale": "\"dis-\" means not, or the opposite of, so \"disagree\" is \"agree\" not, or the opposite of.",
+    "source": "bank",
+    "gen_seed": "phonics:1.2934782608695652:1790715259316:0:0:0.2989116326069414",
+    "choices": [
+     "before, in front of",
+     "again, twice",
+     "not, or the opposite of"
+    ],
+    "role": "check"
+   },
+   {
+    "skill_id": "phonics",
+    "skill_name": "Phonics, decoding and spelling",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "In \"play\", which letters work together to make the long a sound?",
+    "answer": "ay",
+    "rationale": "\"ay\" makes the long a sound in \"play\".",
+    "source": "bank",
+    "gen_seed": "phonics:1:1790715259316:0:0:0.7617854251829383",
+    "choices": [
+     "th",
+     "ay",
+     "sh",
+     "ar"
+    ],
+    "role": "check"
+   },
+   {
+    "skill_id": "phonics",
+    "skill_name": "Phonics, decoding and spelling",
+    "difficulty": 1.8,
+    "format": "multiple_choice",
+    "prompt": "In \"tree\", which letters work together to make the long e sound?",
+    "answer": "ee",
+    "rationale": "\"ee\" makes the long e sound in \"tree\".",
+    "source": "bank",
+    "gen_seed": "phonics:1.7934782608695652:1790715259316:1:0:0.5824535016923588",
+    "choices": [
+     "ar",
+     "sh",
+     "ee",
+     "th"
+    ],
+    "role": "check"
+   }
+  ]
+ }
+}

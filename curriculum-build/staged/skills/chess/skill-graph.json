@@ -1,0 +1,534 @@
+{
+ "subject": "chess",
+ "doc": "Prerequisite graph over the live curriculum's lessons (curriculum-build/chess/drafts/Cxx.txt, the source the app's CSV is built from). Each node is matched to lessons by a regex on the lesson TITLE; its position is its first lesson. An edge A -> B means A must be secure before B is introduced (research/03 section 2.4 chains, which are a synthesis [P/M], plus rules that are logically required). verify-skill-curricula.js checks every node matches a lesson and every edge is respected, and lists the lessons each node owns so the app can keep a per-node knowledge/skill state for adaptation. Stage = progression.json stage id where the node is first taught. Edges are only true prerequisites (B cannot be understood without A); a suggested teaching order is not an edge (e.g. grabbing a free, unprotected piece needs no piece values, so hanging pieces may come before points).",
+ "nodes": [
+  {
+   "id": "board",
+   "label": "The board and its squares",
+   "title": "Checkered Chessboard"
+  },
+  {
+   "id": "rook",
+   "label": "Rook moves",
+   "title": "Rook Rolls"
+  },
+  {
+   "id": "bishop",
+   "label": "Bishop moves",
+   "title": "Bishop Slides"
+  },
+  {
+   "id": "queen",
+   "label": "Queen moves",
+   "title": "Queen Moves Like"
+  },
+  {
+   "id": "king",
+   "label": "King moves",
+   "title": "King Takes One Small Step"
+  },
+  {
+   "id": "knight",
+   "label": "Knight moves",
+   "title": "Knight Jumps"
+  },
+  {
+   "id": "pawn",
+   "label": "Pawn moves and captures",
+   "title": "Pawn Marches|Pawns Capture Diagonally"
+  },
+  {
+   "id": "capture",
+   "label": "Capturing",
+   "title": "Snack Attack"
+  },
+  {
+   "id": "setup",
+   "label": "Starting position",
+   "title": "Setting Up the Back Row"
+  },
+  {
+   "id": "coordinates",
+   "label": "Square names",
+   "title": "Letters and Numbers Name Every Square"
+  },
+  {
+   "id": "check",
+   "label": "Check",
+   "title": "^Check Means the King Is Attacked"
+  },
+  {
+   "id": "mate",
+   "label": "Checkmate",
+   "title": "^Checkmate Ends the Game"
+  },
+  {
+   "id": "mate_in_1",
+   "label": "Mate in one",
+   "title": "Find the Mate in One"
+  },
+  {
+   "id": "stalemate",
+   "label": "Stalemate",
+   "title": "^Stalemate"
+  },
+  {
+   "id": "castling",
+   "label": "Castling",
+   "title": "Castling Kingside and Queenside"
+  },
+  {
+   "id": "promotion",
+   "label": "Promotion",
+   "title": "Pawn Promotion"
+  },
+  {
+   "id": "en_passant",
+   "label": "En passant",
+   "title": "Capturing En Passant"
+  },
+  {
+   "id": "draw_rules",
+   "label": "Draw rules",
+   "title": "Threefold Repetition|Fifty-Move Rule"
+  },
+  {
+   "id": "piece_values",
+   "label": "Piece values",
+   "title": "Points for Every Piece"
+  },
+  {
+   "id": "hanging",
+   "label": "Hanging pieces",
+   "title": "Hanging Piece"
+  },
+  {
+   "id": "trades",
+   "label": "Equal and unequal trades",
+   "title": "Good Trades and Bad Trades"
+  },
+  {
+   "id": "cct",
+   "label": "Checks, captures, threats scan",
+   "title": "Checks, Captures and Threats"
+  },
+  {
+   "id": "notation",
+   "label": "Writing moves",
+   "title": "^Writing Moves"
+  },
+  {
+   "id": "kqk",
+   "label": "K+Q v K mate",
+   "title": "Queen and King Box Mate"
+  },
+  {
+   "id": "two_rooks",
+   "label": "Two-rook ladder",
+   "title": "Rook Roller"
+  },
+  {
+   "id": "krk",
+   "label": "K+R v K mate",
+   "title": "King and Rook Box Mate"
+  },
+  {
+   "id": "back_rank",
+   "label": "Back-rank mate",
+   "title": "The Back-Rank Mate"
+  },
+  {
+   "id": "fork",
+   "label": "Forks",
+   "title": "Knight Fork"
+  },
+  {
+   "id": "pin",
+   "label": "Pins",
+   "title": "Absolute Pin"
+  },
+  {
+   "id": "skewer",
+   "label": "Skewers",
+   "title": "^Skewers"
+  },
+  {
+   "id": "discovered",
+   "label": "Discovered attack",
+   "title": "The Discovered Attack"
+  },
+  {
+   "id": "double_check",
+   "label": "Double check",
+   "title": "^Double Check"
+  },
+  {
+   "id": "remove_defender",
+   "label": "Removing the defender",
+   "title": "Removing the Defender"
+  },
+  {
+   "id": "overload",
+   "label": "Overloading",
+   "title": "Overloaded Defenders"
+  },
+  {
+   "id": "deflection",
+   "label": "Deflection",
+   "title": "^Deflection"
+  },
+  {
+   "id": "decoy",
+   "label": "Decoy",
+   "title": "^Decoy"
+  },
+  {
+   "id": "zwischenzug",
+   "label": "In-between move",
+   "title": "Zwischenzug: An In-Between"
+  },
+  {
+   "id": "candidate_moves",
+   "label": "Candidate moves",
+   "title": "Candidate Moves: List Before"
+  },
+  {
+   "id": "blunder_check",
+   "label": "Blunder check",
+   "title": "Blunder-Checking"
+  },
+  {
+   "id": "pawn_race",
+   "label": "Pawn races",
+   "title": "Pawn Races to Promotion"
+  },
+  {
+   "id": "square_rule",
+   "label": "Square of the pawn",
+   "title": "The Square of the Pawn"
+  },
+  {
+   "id": "opposition",
+   "label": "Opposition",
+   "title": "Direct Opposition"
+  },
+  {
+   "id": "key_squares",
+   "label": "Key squares",
+   "title": "^Key Squares"
+  },
+  {
+   "id": "triangulation",
+   "label": "Triangulation",
+   "title": "^Triangulation: Losing"
+  },
+  {
+   "id": "corresponding",
+   "label": "Corresponding squares",
+   "title": "Corresponding Squares"
+  },
+  {
+   "id": "lucena",
+   "label": "Lucena",
+   "title": "Lucena Position"
+  },
+  {
+   "id": "philidor_rook",
+   "label": "Philidor defence",
+   "title": "Philidor Position"
+  },
+  {
+   "id": "vancura",
+   "label": "Vancura",
+   "title": "Vancura Defence"
+  },
+  {
+   "id": "zugzwang",
+   "label": "Zugzwang",
+   "title": "^Zugzwang"
+  },
+  {
+   "id": "weak_pawns",
+   "label": "Weak pawns",
+   "title": "Weak Pawns: Isolated"
+  },
+  {
+   "id": "outposts",
+   "label": "Outposts",
+   "title": "^Outposts"
+  },
+  {
+   "id": "iqp",
+   "label": "IQP and hanging pawns",
+   "title": "IQP and Hanging Pawns"
+  },
+  {
+   "id": "minority",
+   "label": "Minority attack",
+   "title": "Minority Attack and Plans"
+  },
+  {
+   "id": "prophylaxis",
+   "label": "Prophylaxis",
+   "title": "^Prophylaxis: Stopping"
+  },
+  {
+   "id": "kbnk",
+   "label": "Bishop and knight mate",
+   "title": "Bishop and Knight Mate"
+  },
+  {
+   "id": "greek_gift",
+   "label": "Greek gift",
+   "title": "Greek Gift"
+  },
+  {
+   "id": "visual_1",
+   "label": "One move ahead without moving",
+   "title": "See One Move Ahead Without Moving"
+  },
+  {
+   "id": "visual_squares",
+   "label": "Blindfold squares and knight paths",
+   "title": "Square Colours and Knight Paths Blindfold"
+  },
+  {
+   "id": "visual_lines",
+   "label": "Blindfold lines",
+   "title": "Blindfold Basics"
+  },
+  {
+   "id": "opening_principles",
+   "label": "Opening principles",
+   "title": "Don't Bring the Queen Out Early|How to Start Your First Games"
+  },
+  {
+   "id": "repertoire",
+   "label": "A repertoire",
+   "title": "A White Repertoire"
+  },
+  {
+   "id": "own_game_review",
+   "label": "Reviewing own games",
+   "title": "Review Your Games"
+  }
+ ],
+ "edges": [
+  [
+   "board",
+   "rook"
+  ],
+  [
+   "rook",
+   "bishop"
+  ],
+  [
+   "rook",
+   "queen"
+  ],
+  [
+   "bishop",
+   "queen"
+  ],
+  [
+   "rook",
+   "capture"
+  ],
+  [
+   "king",
+   "check"
+  ],
+  [
+   "knight",
+   "check"
+  ],
+  [
+   "pawn",
+   "promotion"
+  ],
+  [
+   "pawn",
+   "en_passant"
+  ],
+  [
+   "board",
+   "coordinates"
+  ],
+  [
+   "check",
+   "mate"
+  ],
+  [
+   "mate",
+   "mate_in_1"
+  ],
+  [
+   "mate",
+   "stalemate"
+  ],
+  [
+   "check",
+   "castling"
+  ],
+  [
+   "piece_values",
+   "trades"
+  ],
+  [
+   "hanging",
+   "cct"
+  ],
+  [
+   "cct",
+   "fork"
+  ],
+  [
+   "cct",
+   "blunder_check"
+  ],
+  [
+   "coordinates",
+   "notation"
+  ],
+  [
+   "mate_in_1",
+   "kqk"
+  ],
+  [
+   "kqk",
+   "krk"
+  ],
+  [
+   "stalemate",
+   "kqk"
+  ],
+  [
+   "mate_in_1",
+   "back_rank"
+  ],
+  [
+   "queen",
+   "kqk"
+  ],
+  [
+   "fork",
+   "pin"
+  ],
+  [
+   "pin",
+   "skewer"
+  ],
+  [
+   "discovered",
+   "double_check"
+  ],
+  [
+   "fork",
+   "remove_defender"
+  ],
+  [
+   "remove_defender",
+   "overload"
+  ],
+  [
+   "overload",
+   "deflection"
+  ],
+  [
+   "candidate_moves",
+   "blunder_check"
+  ],
+  [
+   "promotion",
+   "pawn_race"
+  ],
+  [
+   "pawn_race",
+   "square_rule"
+  ],
+  [
+   "square_rule",
+   "opposition"
+  ],
+  [
+   "opposition",
+   "key_squares"
+  ],
+  [
+   "key_squares",
+   "triangulation"
+  ],
+  [
+   "opposition",
+   "corresponding"
+  ],
+  [
+   "key_squares",
+   "corresponding"
+  ],
+  [
+   "krk",
+   "lucena"
+  ],
+  [
+   "krk",
+   "philidor_rook"
+  ],
+  [
+   "lucena",
+   "vancura"
+  ],
+  [
+   "philidor_rook",
+   "vancura"
+  ],
+  [
+   "opposition",
+   "zugzwang"
+  ],
+  [
+   "weak_pawns",
+   "outposts"
+  ],
+  [
+   "weak_pawns",
+   "iqp"
+  ],
+  [
+   "iqp",
+   "minority"
+  ],
+  [
+   "krk",
+   "kbnk"
+  ],
+  [
+   "castling",
+   "greek_gift"
+  ],
+  [
+   "visual_1",
+   "visual_squares"
+  ],
+  [
+   "visual_squares",
+   "visual_lines"
+  ],
+  [
+   "coordinates",
+   "visual_squares"
+  ],
+  [
+   "opening_principles",
+   "repertoire"
+  ],
+  [
+   "notation",
+   "own_game_review"
+  ],
+  [
+   "hanging",
+   "trades"
+  ]
+ ]
+}

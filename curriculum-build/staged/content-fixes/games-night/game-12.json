@@ -1,0 +1,2835 @@
+{
+ "row_id": 12,
+ "engine_id": "hangman",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 17,
+ "generated_at": "2026-10-24T10:47:05.243Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 63,
+  "code_rejected": 0,
+  "sent_to_judges": 63,
+  "kept": 50,
+  "keep_rate_of_written": 0.794,
+  "judges": {
+   "both_answered": 63,
+   "picked_same_option": 57,
+   "a_picked_key": 58,
+   "b_picked_key": 60,
+   "models_a": [
+    "minimax/minimax-m3.1-flash"
+   ],
+   "models_b": [
+    "nemotron-3-ultra-550b-a55b:free",
+    "gemini-3.6-flash:free",
+    "nvidia/nemotron-3-ultra-550b-a55b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "hangman",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 17,
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "title": "Rubric Check: Advanced Grammar Review",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 8,
+    "end": 10,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q48",
+    "prompt": "In the sentence The students who studied abroad received awards, which one-word term describes whether who studied abroad limits the meaning of students?",
+    "choices": [
+     "restrictive",
+     "parenthetical",
+     "nominal",
+     "absolute"
+    ],
+    "answerIndex": 0,
+    "explanation": "The clause who studied abroad narrows the reference of students to a particular group, so it is restrictive.",
+    "difficulty": 9,
+    "skill": "Restrictive clause function",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which verb correctly completes the sentence: The final report is scheduled to ___ at noon?",
+    "choices": [
+     "publishes",
+     "published",
+     "publish",
+     "publishing"
+    ],
+    "answerIndex": 2,
+    "explanation": "A passive infinitive uses to followed by the base verb publish.",
+    "difficulty": 8,
+    "skill": "Passive Infinitive",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q45",
+    "prompt": "A writer checks the sentence The crew repaired the roof after the storm passed. Which one-word label identifies the function of the clause after the storm passed within the sentence?",
+    "choices": [
+     "adverbial",
+     "adjectival",
+     "nominal",
+     "predicative"
+    ],
+    "answerIndex": 0,
+    "explanation": "The clause after the storm passed functions adverbially because it tells when the crew repaired the roof.",
+    "difficulty": 9,
+    "skill": "Identifying adverbial clauses",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q34",
+    "prompt": "A writer checks the sentence The roster of new volunteers are scheduled to arrive before noon. Which one-word rubric category should flag the error?",
+    "choices": [
+     "agreement",
+     "reference",
+     "structure",
+     "emphasis"
+    ],
+    "answerIndex": 0,
+    "explanation": "Because roster is singular, the verb should be is, making the error one of subject-verb agreement.",
+    "difficulty": 8,
+    "skill": "Subject-Verb Agreement",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q5",
+    "prompt": "In the sentence The visitors, a group of students, were waiting outside, which verb agrees with the subject?",
+    "choices": [
+     "were",
+     "was",
+     "is",
+     "are"
+    ],
+    "answerIndex": 0,
+    "explanation": "The plural subject visitors takes the plural verb were, while the appositive phrase does not control agreement.",
+    "difficulty": 9,
+    "skill": "Appositives and agreement",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q49",
+    "prompt": "In the sentence The committee has approved the revised proposal, which one-word term names the grammatical function of has?",
+    "choices": [
+     "auxiliary",
+     "copular",
+     "linking",
+     "predicative"
+    ],
+    "answerIndex": 0,
+    "explanation": "Has combines with approved to form the present perfect verb phrase, so it functions as an auxiliary.",
+    "difficulty": 8,
+    "skill": "Auxiliary verb function",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q6",
+    "prompt": "How should the sentence The bell rang, and the students left the building, be classified?",
+    "choices": [
+     "simple",
+     "compound",
+     "complex",
+     "run-on"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence is compound because it contains two independent clauses joined by the coordinating conjunction and.",
+    "difficulty": 10,
+    "skill": "Sentence classification",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which word correctly completes the sentence: If the alarm had sounded earlier, the firefighters would have ___ to the smoke?",
+    "choices": [
+     "respond",
+     "responds",
+     "responded",
+     "responding"
+    ],
+    "answerIndex": 2,
+    "explanation": "Responded is the past participle required after would have in a third conditional sentence.",
+    "difficulty": 9,
+    "skill": "Conditional sentences",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q44",
+    "prompt": "A writer checks the sentence Each of the students submitted a report. Which one-word grammar label identifies Each?",
+    "choices": [
+     "indefinite",
+     "definite",
+     "demonstrative",
+     "possessive"
+    ],
+    "answerIndex": 0,
+    "explanation": "Each is an indefinite pronoun because it refers to the students without identifying any one of them individually.",
+    "difficulty": 8,
+    "skill": "Classifying indefinite pronouns",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q31",
+    "prompt": "A writer revises Lena is more taller than Priya to Lena is taller than Priya. Which rubric category should identify the original error?",
+    "choices": [
+     "antecedent",
+     "agreement",
+     "modifier",
+     "comparison"
+    ],
+    "answerIndex": 3,
+    "explanation": "More cannot stand before the comparative form taller because standard English uses either more tall or taller, not both.",
+    "difficulty": 9,
+    "skill": "Comparative adjective construction",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which reflexive pronoun correctly completes the sentence: Ms. Alvarez asked Elena to describe ___ to the class?",
+    "choices": [
+     "herself",
+     "himself",
+     "themselves",
+     "itself"
+    ],
+    "answerIndex": 0,
+    "explanation": "The reflexive pronoun herself refers to Elena, the person performing the action of describing.",
+    "difficulty": 8,
+    "skill": "Reflexive Pronoun Reference",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q3",
+    "prompt": "In the sentence The scientist whose experiment failed requested a review, which noun does whose modify?",
+    "choices": [
+     "scientist",
+     "experiment",
+     "failed",
+     "review"
+    ],
+    "answerIndex": 0,
+    "explanation": "Whose functions as a possessive determiner and indicates that the experiment belongs to the scientist.",
+    "difficulty": 9,
+    "skill": "Possessive relative pronouns",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q28",
+    "prompt": "A writer checks the sentence Priya, a marathon champion, finished the race. What grammatical term names the phrase a marathon champion?",
+    "choices": [
+     "adjective",
+     "predicate",
+     "adverbial",
+     "appositive"
+    ],
+    "answerIndex": 3,
+    "explanation": "The phrase a marathon champion renames Priya in apposition, so it is an appositive.",
+    "difficulty": 8,
+    "skill": "Identifying appositives",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which grammatical function does the phrase rehearsing for weeks have in The finalists, rehearsing for weeks, delivered a confident presentation?",
+    "choices": [
+     "predicate",
+     "subject",
+     "modifier",
+     "object"
+    ],
+    "answerIndex": 2,
+    "explanation": "The participial phrase rehearsing for weeks modifies the noun finalists and therefore functions as a modifier.",
+    "difficulty": 9,
+    "skill": "Participial phrase function",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q14",
+    "prompt": "In formal edited prose, which relative pronoun belongs in the sentence: The candidate ___ the voters chose became mayor?",
+    "choices": [
+     "whose",
+     "which",
+     "whom",
+     "where"
+    ],
+    "answerIndex": 2,
+    "explanation": "Because the pronoun is the object of chose, formal edited prose requires the objective-case relative pronoun whom.",
+    "difficulty": 8,
+    "skill": "Relative Pronoun Case",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which conjunction correctly completes the sentence: No sooner had the game ended ___ the crowd began chanting?",
+    "choices": [
+     "when",
+     "than",
+     "while",
+     "until"
+    ],
+    "answerIndex": 1,
+    "explanation": "The fixed correlative construction no sooner...than pairs had with than to express the earlier event.",
+    "difficulty": 9,
+    "skill": "Inverted Correlative Structure",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which one-word rubric category should flag Because the roads were icy and the bus service had been suspended as a complete sentence?",
+    "choices": [
+     "modifier",
+     "fragment",
+     "agreement",
+     "antecedent"
+    ],
+    "answerIndex": 1,
+    "explanation": "This construction is a fragment because the Because-clause is dependent and no independent clause completes the thought.",
+    "difficulty": 8,
+    "skill": "Sentence completeness",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q26",
+    "prompt": "A writer checks the sentence When Maria told Elena that she had won the scholarship, they celebrated together. Which one-word problem makes the sentence unclear?",
+    "choices": [
+     "antecedent",
+     "reference",
+     "attachment",
+     "ambiguity"
+    ],
+    "answerIndex": 3,
+    "explanation": "The pronoun she can refer to either Maria or Elena, creating ambiguity.",
+    "difficulty": 9,
+    "skill": "Diagnosing pronoun ambiguity",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which verb correctly completes the sentence: Each of the judges currently ___ a different scorecard?",
+    "choices": [
+     "hold",
+     "holds",
+     "held",
+     "holding"
+    ],
+    "answerIndex": 1,
+    "explanation": "The singular subject each takes the third-person singular present-tense verb holds.",
+    "difficulty": 8,
+    "skill": "Subject-Verb Agreement",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q23",
+    "prompt": "Which word correctly completes the sentence: After moving to a new city, Elena is used to ___ early?",
+    "choices": [
+     "awoke",
+     "waking",
+     "woke",
+     "wake"
+    ],
+    "answerIndex": 1,
+    "explanation": "Waking is a gerund, which is the form required after the phrase is used to.",
+    "difficulty": 9,
+    "skill": "Idiomatic Use of Used To",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which verb correctly completes the sentence: A set of rare coins from Spain was auctioned at the charity event last weekend?",
+    "choices": [
+     "is",
+     "are",
+     "was",
+     "were"
+    ],
+    "answerIndex": 2,
+    "explanation": "Was agrees with the singular noun set, and the time expression last weekend requires the past tense.",
+    "difficulty": 8,
+    "skill": "Subject-verb agreement across phrases",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q33",
+    "prompt": "In the formal sentence The manager insisted that every employee complete the form by Friday, what mood labels the clause after that?",
+    "choices": [
+     "indicative",
+     "infinitive",
+     "subjunctive",
+     "imperative"
+    ],
+    "answerIndex": 2,
+    "explanation": "The verb complete is in the mandative subjunctive because it follows insisted that and expresses the employee's required action.",
+    "difficulty": 9,
+    "skill": "Mandative subjunctive",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q1",
+    "prompt": "In the sentence The committee, along with several advisers, are reviewing the proposal, which noun determines the verb agreement under standard subject-verb agreement rules?",
+    "choices": [
+     "committee",
+     "advisers",
+     "proposal",
+     "review"
+    ],
+    "answerIndex": 0,
+    "explanation": "The committee is the subject, and the intervening phrase along with several advisers does not change its number.",
+    "difficulty": 8,
+    "skill": "Subject-verb agreement",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q4",
+    "prompt": "In the sentence Having completed the analysis, the laptop was closed, which noun creates the dangling modifier?",
+    "choices": [
+     "laptop",
+     "analysis",
+     "completed",
+     "closed"
+    ],
+    "answerIndex": 0,
+    "explanation": "The laptop is the main-clause subject, so it cannot logically perform the action of completing the analysis.",
+    "difficulty": 9,
+    "skill": "Dangling modifiers",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which construction is created by placing the auxiliary Had before the subject in Had the warning sounded, everyone would have evacuated?",
+    "choices": [
+     "coordination",
+     "concession",
+     "inversion",
+     "substitution"
+    ],
+    "answerIndex": 2,
+    "explanation": "Inversion is the placement of the auxiliary before the subject in the fronted conditional clause.",
+    "difficulty": 10,
+    "skill": "Recognizing inversion in complex sentences",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q46",
+    "prompt": "A writer checks the sentence The team practiced carefully, but the final performance was uneven. Which grammatical class does but belong to?",
+    "choices": [
+     "coordinating",
+     "subordinating",
+     "correlative",
+     "interrogative"
+    ],
+    "answerIndex": 0,
+    "explanation": "But is a coordinating conjunction because it joins two independent clauses that could stand alone separately.",
+    "difficulty": 8,
+    "skill": "Classifying conjunctions",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q21",
+    "prompt": "Which auxiliary correctly completes the sentence: By the time the ambulance arrived, the injured cyclist ___ already been treated and transported to the hospital?",
+    "choices": [
+     "has",
+     "was",
+     "had",
+     "did"
+    ],
+    "answerIndex": 2,
+    "explanation": "Had forms the past perfect tense required for the earlier treatment in the past time frame.",
+    "difficulty": 9,
+    "skill": "Sequence of Tenses",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which past-tense form correctly completes the sentence: The nurse ___ the child down gently?",
+    "choices": [
+     "lain",
+     "lied",
+     "lay",
+     "laid"
+    ],
+    "answerIndex": 3,
+    "explanation": "Laid is the past tense of lay and means placed the child down.",
+    "difficulty": 8,
+    "skill": "Transitive and Intransitive Verbs",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which word correctly completes the sentence: The revised essay discusses, analyzes, and ___ the evidence?",
+    "choices": [
+     "evaluates",
+     "evaluate",
+     "evaluating",
+     "evaluated"
+    ],
+    "answerIndex": 0,
+    "explanation": "Evaluates maintains third-person singular present tense and parallels discusses and analyzes.",
+    "difficulty": 9,
+    "skill": "Parallel Sentence Structure",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which grammatical term names the noun or noun phrase for which a pronoun stands?",
+    "choices": [
+     "pronoun",
+     "possessive",
+     "antecedent",
+     "reference"
+    ],
+    "answerIndex": 2,
+    "explanation": "An antecedent is the noun or noun phrase that a pronoun stands for.",
+    "difficulty": 8,
+    "skill": "Identifying antecedents in a grammar rubric",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q27",
+    "prompt": "A writer checks the sentence The hikers reach the trailhead at noon and then hiked for three hours. Which grammatical feature changes unexpectedly within the sentence?",
+    "choices": [
+     "voices",
+     "tenses",
+     "clauses",
+     "moods"
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence shifts from the present-tense verb reach to the past-tense verb hiked without establishing a time shift.",
+    "difficulty": 9,
+    "skill": "Maintaining tense consistency",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q7",
+    "prompt": "Which reflexive pronoun correctly completes the sentence: The director thanked the volunteers for organizing the event by themselves?",
+    "choices": [
+     "themselves",
+     "ourselves",
+     "yourselves",
+     "herselves"
+    ],
+    "answerIndex": 0,
+    "explanation": "Themselves is the plural reflexive pronoun that refers to the volunteers, the subject of organizing.",
+    "difficulty": 8,
+    "skill": "Reflexive pronoun agreement",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q11",
+    "prompt": "Which word correctly completes the sentence: The evidence was collected, analyzed, and ___ in the final report?",
+    "choices": [
+     "summarize",
+     "summarizes",
+     "summarizing",
+     "summarized"
+    ],
+    "answerIndex": 3,
+    "explanation": "Summarized is the past-tense participle that matches collected and analyzed in the passive parallel list.",
+    "difficulty": 9,
+    "skill": "Parallel participles",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q2",
+    "prompt": "In the sentence The professor, who had invited the students, entered the lecture hall, what does the relative pronoun who refer to?",
+    "choices": [
+     "professor",
+     "students",
+     "classroom",
+     "invitation"
+    ],
+    "answerIndex": 0,
+    "explanation": "The relative pronoun who refers to the professor and introduces the clause that had invited the students.",
+    "difficulty": 8,
+    "skill": "Relative pronouns",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which form correctly completes the present-tense sentence: Either of the two options ___ a valid solution for this task?",
+    "choices": [
+     "offering",
+     "offered",
+     "offer",
+     "offers"
+    ],
+    "answerIndex": 3,
+    "explanation": "Offers agrees with the singular antecedent either and preserves the present tense.",
+    "difficulty": 9,
+    "skill": "Subject-Verb Agreement with Indefinite Pronouns",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q47",
+    "prompt": "A writer checks the formal sentence: The prize was shared between the teacher and I. Which one-word case label applies to the pronoun required after between?",
+    "choices": [
+     "objective",
+     "subjective",
+     "possessive",
+     "reflexive"
+    ],
+    "answerIndex": 0,
+    "explanation": "Between is a preposition, so the pronoun after it is me, which takes the objective case.",
+    "difficulty": 8,
+    "skill": "Formal pronoun case",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which conjunction introduces an indirect question that asks whether one of two alternatives is true?",
+    "choices": [
+     "because",
+     "whether",
+     "although",
+     "whereas"
+    ],
+    "answerIndex": 1,
+    "explanation": "Whether introduces an indirect question that presents two or more alternatives.",
+    "difficulty": 9,
+    "skill": "Using conjunctions in indirect questions",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q24",
+    "prompt": "A writer checks the sentence The train was delayed, we took a different route. Which one-word rubric category should flag its punctuation problem?",
+    "choices": [
+     "clause",
+     "phrase",
+     "splice",
+     "period"
+    ],
+    "answerIndex": 2,
+    "explanation": "The two independent clauses are joined only by a comma, creating a splice.",
+    "difficulty": 8,
+    "skill": "Identifying comma splices",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q38",
+    "prompt": "In The panel approved the budget after reviewing both proposals, which one-word label names the complete verb phrase?",
+    "choices": [
+     "predicate",
+     "adjective",
+     "preposition",
+     "article"
+    ],
+    "answerIndex": 0,
+    "explanation": "The complete verb phrase, approved the budget after reviewing both proposals, functions as the sentence's predicate.",
+    "difficulty": 9,
+    "skill": "Sentence Structure",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q39",
+    "prompt": "Which one-word linguistic term names the omission of repeated words in Maria likes jazz, and Peter does too?",
+    "choices": [
+     "ellipsis",
+     "cadence",
+     "epizeuxis",
+     "anacoluthon"
+    ],
+    "answerIndex": 0,
+    "explanation": "In Peter does too, the understood phrase is Peter likes jazz, creating ellipsis.",
+    "difficulty": 10,
+    "skill": "Ellipsis Identification",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q36",
+    "prompt": "In the possessive phrase the coaches whistle, which one-word punctuation label names the mark needed after coaches?",
+    "choices": [
+     "apostrophe",
+     "quotation",
+     "parenthesis",
+     "conjunction"
+    ],
+    "answerIndex": 0,
+    "explanation": "To show possession, coaches becomes coaches', and the required mark is an apostrophe.",
+    "difficulty": 8,
+    "skill": "Possessive Punctuation",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q50",
+    "prompt": "In the sentence The exhausted hikers rested beneath a shady tree, which one-word term identifies the verb form exhausted?",
+    "choices": [
+     "participle",
+     "gerund",
+     "infinitive",
+     "finite"
+    ],
+    "answerIndex": 0,
+    "explanation": "Exhausted is a past participle used adjectivally to describe the hikers.",
+    "difficulty": 9,
+    "skill": "Participial verb form",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which word correctly completes the sentence: The instructor asked the students to ___ their conclusions with evidence?",
+    "choices": [
+     "defend",
+     "defends",
+     "defended",
+     "defending"
+    ],
+    "answerIndex": 0,
+    "explanation": "Defend is the base form required after the infinitive marker to.",
+    "difficulty": 8,
+    "skill": "Infinitives",
+    "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q25",
+    "prompt": "A writer checks the sentence The finalists prepared slides, rehearsed speeches, and were answering questions. Which grammatical problem should the writer correct?",
+    "choices": [
+     "redundancy",
+     "parallelism",
+     "attachment",
+     "contradiction"
+    ],
+    "answerIndex": 1,
+    "explanation": "The list mixes simple active verb forms with a passive form, so its grammatical elements are not parallel.",
+    "difficulty": 9,
+    "skill": "Diagnosing faulty parallelism",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q41",
+    "prompt": "In The proposal was praised by the committee, which voice is used?",
+    "choices": [
+     "passive",
+     "active",
+     "middle",
+     "reflexive"
+    ],
+    "answerIndex": 0,
+    "explanation": "The construction is passive because the subject receives the action rather than performing it.",
+    "difficulty": 8,
+    "skill": "Identifying grammatical voice",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q10",
+    "prompt": "Which gerund should replace the phrase to cycle in the sentence She enjoys hiking, swimming, and to cycle while preserving the original meaning?",
+    "choices": [
+     "cycling",
+     "riding",
+     "running",
+     "sailing"
+    ],
+    "answerIndex": 0,
+    "explanation": "Cycling creates parallel gerund forms for hiking, swimming, and cycling while retaining the meaning of the original phrase to cycle.",
+    "difficulty": 9,
+    "skill": "Parallel structure in lists",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q35",
+    "prompt": "A writer checks the sentence After the game ended, the spectators returned back to their homes. Which one-word rubric category should flag the repeated meaning?",
+    "choices": [
+     "redundancy",
+     "capitalization",
+     "hyphenation",
+     "abbreviation"
+    ],
+    "answerIndex": 0,
+    "explanation": "The word back repeats the meaning already expressed by returned, making the phrase a redundancy.",
+    "difficulty": 8,
+    "skill": "Redundancy Detection",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q32",
+    "prompt": "Which rubric category best describes the problem in The problem is the budget is too small?",
+    "choices": [
+     "predication",
+     "antecedent",
+     "comparison",
+     "agreement"
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence has faulty predication because the linking verb is is followed by a second subject and verb, and inserting that produces The problem is that the budget is too small.",
+    "difficulty": 9,
+    "skill": "Faulty predication",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which preposition correctly completes the sentence: The committee avoided making changes, but insisted on reviewing the proposal?",
+    "choices": [
+     "on",
+     "in",
+     "at",
+     "of"
+    ],
+    "answerIndex": 0,
+    "explanation": "The phrase insisted on reviewing correctly pairs the verb insist with on followed by a gerund.",
+    "difficulty": 8,
+    "skill": "Preposition and gerund collocation",
+    "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which one-word punctuation mark most directly joins the two independent clauses in The first round ended the judges began comparing scores?",
+    "choices": [
+     "semicolon",
+     "comma",
+     "colon",
+     "period"
+    ],
+    "answerIndex": 0,
+    "explanation": "A semicolon can directly join two related independent clauses without creating a comma splice.",
+    "difficulty": 9,
+    "skill": "Independent-Clause Punctuation",
+    "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review"
+   }
+  ],
+  "feedback": {
+   "correct": "Nice catch — that word fits the rule exactly.",
+   "incorrect": "Not quite — check which choice follows the grammar rule being tested.",
+   "win": "Two words solved — you clearly know your advanced grammar review.",
+   "lose": "Keep reviewing those tricky usage rules and try again.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "In the sentence The committee, along with several advisers, are reviewing the proposal, which noun determines the verb agreement under standard subject-verb agreement rules?",
+   "choices": [
+    "committee",
+    "advisers",
+    "proposal",
+    "review"
+   ],
+   "answerIndex": 0,
+   "explanation": "The committee is the subject, and the intervening phrase along with several advisers does not change its number.",
+   "difficulty": 8,
+   "skill": "Subject-verb agreement",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In the sentence The professor, who had invited the students, entered the lecture hall, what does the relative pronoun who refer to?",
+   "choices": [
+    "professor",
+    "students",
+    "classroom",
+    "invitation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The relative pronoun who refers to the professor and introduces the clause that had invited the students.",
+   "difficulty": 8,
+   "skill": "Relative pronouns",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In the sentence The scientist whose experiment failed requested a review, which noun does whose modify?",
+   "choices": [
+    "scientist",
+    "experiment",
+    "failed",
+    "review"
+   ],
+   "answerIndex": 0,
+   "explanation": "Whose functions as a possessive determiner and indicates that the experiment belongs to the scientist.",
+   "difficulty": 9,
+   "skill": "Possessive relative pronouns",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In the sentence Having completed the analysis, the laptop was closed, which noun creates the dangling modifier?",
+   "choices": [
+    "laptop",
+    "analysis",
+    "completed",
+    "closed"
+   ],
+   "answerIndex": 0,
+   "explanation": "The laptop is the main-clause subject, so it cannot logically perform the action of completing the analysis.",
+   "difficulty": 9,
+   "skill": "Dangling modifiers",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In the sentence The visitors, a group of students, were waiting outside, which verb agrees with the subject?",
+   "choices": [
+    "were",
+    "was",
+    "is",
+    "are"
+   ],
+   "answerIndex": 0,
+   "explanation": "The plural subject visitors takes the plural verb were, while the appositive phrase does not control agreement.",
+   "difficulty": 9,
+   "skill": "Appositives and agreement",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "How should the sentence The bell rang, and the students left the building, be classified?",
+   "choices": [
+    "simple",
+    "compound",
+    "complex",
+    "run-on"
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence is compound because it contains two independent clauses joined by the coordinating conjunction and.",
+   "difficulty": 10,
+   "skill": "Sentence classification",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which reflexive pronoun correctly completes the sentence: The director thanked the volunteers for organizing the event by themselves?",
+   "choices": [
+    "themselves",
+    "ourselves",
+    "yourselves",
+    "herselves"
+   ],
+   "answerIndex": 0,
+   "explanation": "Themselves is the plural reflexive pronoun that refers to the volunteers, the subject of organizing.",
+   "difficulty": 8,
+   "skill": "Reflexive pronoun agreement",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which verb correctly completes the sentence: A set of rare coins from Spain was auctioned at the charity event last weekend?",
+   "choices": [
+    "is",
+    "are",
+    "was",
+    "were"
+   ],
+   "answerIndex": 2,
+   "explanation": "Was agrees with the singular noun set, and the time expression last weekend requires the past tense.",
+   "difficulty": 8,
+   "skill": "Subject-verb agreement across phrases",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which preposition correctly completes the sentence: The committee avoided making changes, but insisted on reviewing the proposal?",
+   "choices": [
+    "on",
+    "in",
+    "at",
+    "of"
+   ],
+   "answerIndex": 0,
+   "explanation": "The phrase insisted on reviewing correctly pairs the verb insist with on followed by a gerund.",
+   "difficulty": 8,
+   "skill": "Preposition and gerund collocation",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which gerund should replace the phrase to cycle in the sentence She enjoys hiking, swimming, and to cycle while preserving the original meaning?",
+   "choices": [
+    "cycling",
+    "riding",
+    "running",
+    "sailing"
+   ],
+   "answerIndex": 0,
+   "explanation": "Cycling creates parallel gerund forms for hiking, swimming, and cycling while retaining the meaning of the original phrase to cycle.",
+   "difficulty": 9,
+   "skill": "Parallel structure in lists",
+   "topic": "Activity 7 of 9: Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which word correctly completes the sentence: The evidence was collected, analyzed, and ___ in the final report?",
+   "choices": [
+    "summarize",
+    "summarizes",
+    "summarizing",
+    "summarized"
+   ],
+   "answerIndex": 3,
+   "explanation": "Summarized is the past-tense participle that matches collected and analyzed in the passive parallel list.",
+   "difficulty": 9,
+   "skill": "Parallel participles",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which word correctly completes the sentence: If the alarm had sounded earlier, the firefighters would have ___ to the smoke?",
+   "choices": [
+    "respond",
+    "responds",
+    "responded",
+    "responding"
+   ],
+   "answerIndex": 2,
+   "explanation": "Responded is the past participle required after would have in a third conditional sentence.",
+   "difficulty": 9,
+   "skill": "Conditional sentences",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which word correctly completes the sentence: The instructor asked the students to ___ their conclusions with evidence?",
+   "choices": [
+    "defend",
+    "defends",
+    "defended",
+    "defending"
+   ],
+   "answerIndex": 0,
+   "explanation": "Defend is the base form required after the infinitive marker to.",
+   "difficulty": 8,
+   "skill": "Infinitives",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "In formal edited prose, which relative pronoun belongs in the sentence: The candidate ___ the voters chose became mayor?",
+   "choices": [
+    "whose",
+    "which",
+    "whom",
+    "where"
+   ],
+   "answerIndex": 2,
+   "explanation": "Because the pronoun is the object of chose, formal edited prose requires the objective-case relative pronoun whom.",
+   "difficulty": 8,
+   "skill": "Relative Pronoun Case",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which verb correctly completes the sentence: Each of the judges currently ___ a different scorecard?",
+   "choices": [
+    "hold",
+    "holds",
+    "held",
+    "holding"
+   ],
+   "answerIndex": 1,
+   "explanation": "The singular subject each takes the third-person singular present-tense verb holds.",
+   "difficulty": 8,
+   "skill": "Subject-Verb Agreement",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which verb correctly completes the sentence: The final report is scheduled to ___ at noon?",
+   "choices": [
+    "publishes",
+    "published",
+    "publish",
+    "publishing"
+   ],
+   "answerIndex": 2,
+   "explanation": "A passive infinitive uses to followed by the base verb publish.",
+   "difficulty": 8,
+   "skill": "Passive Infinitive",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which reflexive pronoun correctly completes the sentence: Ms. Alvarez asked Elena to describe ___ to the class?",
+   "choices": [
+    "herself",
+    "himself",
+    "themselves",
+    "itself"
+   ],
+   "answerIndex": 0,
+   "explanation": "The reflexive pronoun herself refers to Elena, the person performing the action of describing.",
+   "difficulty": 8,
+   "skill": "Reflexive Pronoun Reference",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which conjunction correctly completes the sentence: No sooner had the game ended ___ the crowd began chanting?",
+   "choices": [
+    "when",
+    "than",
+    "while",
+    "until"
+   ],
+   "answerIndex": 1,
+   "explanation": "The fixed correlative construction no sooner...than pairs had with than to express the earlier event.",
+   "difficulty": 9,
+   "skill": "Inverted Correlative Structure",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which form correctly completes the present-tense sentence: Either of the two options ___ a valid solution for this task?",
+   "choices": [
+    "offering",
+    "offered",
+    "offer",
+    "offers"
+   ],
+   "answerIndex": 3,
+   "explanation": "Offers agrees with the singular antecedent either and preserves the present tense.",
+   "difficulty": 9,
+   "skill": "Subject-Verb Agreement with Indefinite Pronouns",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which word correctly completes the sentence: The revised essay discusses, analyzes, and ___ the evidence?",
+   "choices": [
+    "evaluates",
+    "evaluate",
+    "evaluating",
+    "evaluated"
+   ],
+   "answerIndex": 0,
+   "explanation": "Evaluates maintains third-person singular present tense and parallels discusses and analyzes.",
+   "difficulty": 9,
+   "skill": "Parallel Sentence Structure",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which auxiliary correctly completes the sentence: By the time the ambulance arrived, the injured cyclist ___ already been treated and transported to the hospital?",
+   "choices": [
+    "has",
+    "was",
+    "had",
+    "did"
+   ],
+   "answerIndex": 2,
+   "explanation": "Had forms the past perfect tense required for the earlier treatment in the past time frame.",
+   "difficulty": 9,
+   "skill": "Sequence of Tenses",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which past-tense form correctly completes the sentence: The nurse ___ the child down gently?",
+   "choices": [
+    "lain",
+    "lied",
+    "lay",
+    "laid"
+   ],
+   "answerIndex": 3,
+   "explanation": "Laid is the past tense of lay and means placed the child down.",
+   "difficulty": 8,
+   "skill": "Transitive and Intransitive Verbs",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "Which word correctly completes the sentence: After moving to a new city, Elena is used to ___ early?",
+   "choices": [
+    "awoke",
+    "waking",
+    "woke",
+    "wake"
+   ],
+   "answerIndex": 1,
+   "explanation": "Waking is a gerund, which is the form required after the phrase is used to.",
+   "difficulty": 9,
+   "skill": "Idiomatic Use of Used To",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence The train was delayed, we took a different route. Which one-word rubric category should flag its punctuation problem?",
+   "choices": [
+    "clause",
+    "phrase",
+    "splice",
+    "period"
+   ],
+   "answerIndex": 2,
+   "explanation": "The two independent clauses are joined only by a comma, creating a splice.",
+   "difficulty": 8,
+   "skill": "Identifying comma splices",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence The finalists prepared slides, rehearsed speeches, and were answering questions. Which grammatical problem should the writer correct?",
+   "choices": [
+    "redundancy",
+    "parallelism",
+    "attachment",
+    "contradiction"
+   ],
+   "answerIndex": 1,
+   "explanation": "The list mixes simple active verb forms with a passive form, so its grammatical elements are not parallel.",
+   "difficulty": 9,
+   "skill": "Diagnosing faulty parallelism",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence When Maria told Elena that she had won the scholarship, they celebrated together. Which one-word problem makes the sentence unclear?",
+   "choices": [
+    "antecedent",
+    "reference",
+    "attachment",
+    "ambiguity"
+   ],
+   "answerIndex": 3,
+   "explanation": "The pronoun she can refer to either Maria or Elena, creating ambiguity.",
+   "difficulty": 9,
+   "skill": "Diagnosing pronoun ambiguity",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence The hikers reach the trailhead at noon and then hiked for three hours. Which grammatical feature changes unexpectedly within the sentence?",
+   "choices": [
+    "voices",
+    "tenses",
+    "clauses",
+    "moods"
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence shifts from the present-tense verb reach to the past-tense verb hiked without establishing a time shift.",
+   "difficulty": 9,
+   "skill": "Maintaining tense consistency",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence Priya, a marathon champion, finished the race. What grammatical term names the phrase a marathon champion?",
+   "choices": [
+    "adjective",
+    "predicate",
+    "adverbial",
+    "appositive"
+   ],
+   "answerIndex": 3,
+   "explanation": "The phrase a marathon champion renames Priya in apposition, so it is an appositive.",
+   "difficulty": 8,
+   "skill": "Identifying appositives",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which one-word rubric category should flag Because the roads were icy and the bus service had been suspended as a complete sentence?",
+   "choices": [
+    "modifier",
+    "fragment",
+    "agreement",
+    "antecedent"
+   ],
+   "answerIndex": 1,
+   "explanation": "This construction is a fragment because the Because-clause is dependent and no independent clause completes the thought.",
+   "difficulty": 8,
+   "skill": "Sentence completeness",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which grammatical function does the phrase rehearsing for weeks have in The finalists, rehearsing for weeks, delivered a confident presentation?",
+   "choices": [
+    "predicate",
+    "subject",
+    "modifier",
+    "object"
+   ],
+   "answerIndex": 2,
+   "explanation": "The participial phrase rehearsing for weeks modifies the noun finalists and therefore functions as a modifier.",
+   "difficulty": 9,
+   "skill": "Participial phrase function",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A writer revises Lena is more taller than Priya to Lena is taller than Priya. Which rubric category should identify the original error?",
+   "choices": [
+    "antecedent",
+    "agreement",
+    "modifier",
+    "comparison"
+   ],
+   "answerIndex": 3,
+   "explanation": "More cannot stand before the comparative form taller because standard English uses either more tall or taller, not both.",
+   "difficulty": 9,
+   "skill": "Comparative adjective construction",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "Which rubric category best describes the problem in The problem is the budget is too small?",
+   "choices": [
+    "predication",
+    "antecedent",
+    "comparison",
+    "agreement"
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence has faulty predication because the linking verb is is followed by a second subject and verb, and inserting that produces The problem is that the budget is too small.",
+   "difficulty": 9,
+   "skill": "Faulty predication",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "In the formal sentence The manager insisted that every employee complete the form by Friday, what mood labels the clause after that?",
+   "choices": [
+    "indicative",
+    "infinitive",
+    "subjunctive",
+    "imperative"
+   ],
+   "answerIndex": 2,
+   "explanation": "The verb complete is in the mandative subjunctive because it follows insisted that and expresses the employee's required action.",
+   "difficulty": 9,
+   "skill": "Mandative subjunctive",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence The roster of new volunteers are scheduled to arrive before noon. Which one-word rubric category should flag the error?",
+   "choices": [
+    "agreement",
+    "reference",
+    "structure",
+    "emphasis"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because roster is singular, the verb should be is, making the error one of subject-verb agreement.",
+   "difficulty": 8,
+   "skill": "Subject-Verb Agreement",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence After the game ended, the spectators returned back to their homes. Which one-word rubric category should flag the repeated meaning?",
+   "choices": [
+    "redundancy",
+    "capitalization",
+    "hyphenation",
+    "abbreviation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The word back repeats the meaning already expressed by returned, making the phrase a redundancy.",
+   "difficulty": 8,
+   "skill": "Redundancy Detection",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In the possessive phrase the coaches whistle, which one-word punctuation label names the mark needed after coaches?",
+   "choices": [
+    "apostrophe",
+    "quotation",
+    "parenthesis",
+    "conjunction"
+   ],
+   "answerIndex": 0,
+   "explanation": "To show possession, coaches becomes coaches', and the required mark is an apostrophe.",
+   "difficulty": 8,
+   "skill": "Possessive Punctuation",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which one-word punctuation mark most directly joins the two independent clauses in The first round ended the judges began comparing scores?",
+   "choices": [
+    "semicolon",
+    "comma",
+    "colon",
+    "period"
+   ],
+   "answerIndex": 0,
+   "explanation": "A semicolon can directly join two related independent clauses without creating a comma splice.",
+   "difficulty": 9,
+   "skill": "Independent-Clause Punctuation",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In The panel approved the budget after reviewing both proposals, which one-word label names the complete verb phrase?",
+   "choices": [
+    "predicate",
+    "adjective",
+    "preposition",
+    "article"
+   ],
+   "answerIndex": 0,
+   "explanation": "The complete verb phrase, approved the budget after reviewing both proposals, functions as the sentence's predicate.",
+   "difficulty": 9,
+   "skill": "Sentence Structure",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which one-word linguistic term names the omission of repeated words in Maria likes jazz, and Peter does too?",
+   "choices": [
+    "ellipsis",
+    "cadence",
+    "epizeuxis",
+    "anacoluthon"
+   ],
+   "answerIndex": 0,
+   "explanation": "In Peter does too, the understood phrase is Peter likes jazz, creating ellipsis.",
+   "difficulty": 10,
+   "skill": "Ellipsis Identification",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which grammatical term names the noun or noun phrase for which a pronoun stands?",
+   "choices": [
+    "pronoun",
+    "possessive",
+    "antecedent",
+    "reference"
+   ],
+   "answerIndex": 2,
+   "explanation": "An antecedent is the noun or noun phrase that a pronoun stands for.",
+   "difficulty": 8,
+   "skill": "Identifying antecedents in a grammar rubric",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In The proposal was praised by the committee, which voice is used?",
+   "choices": [
+    "passive",
+    "active",
+    "middle",
+    "reflexive"
+   ],
+   "answerIndex": 0,
+   "explanation": "The construction is passive because the subject receives the action rather than performing it.",
+   "difficulty": 8,
+   "skill": "Identifying grammatical voice",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which construction is created by placing the auxiliary Had before the subject in Had the warning sounded, everyone would have evacuated?",
+   "choices": [
+    "coordination",
+    "concession",
+    "inversion",
+    "substitution"
+   ],
+   "answerIndex": 2,
+   "explanation": "Inversion is the placement of the auxiliary before the subject in the fronted conditional clause.",
+   "difficulty": 10,
+   "skill": "Recognizing inversion in complex sentences",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "Which conjunction introduces an indirect question that asks whether one of two alternatives is true?",
+   "choices": [
+    "because",
+    "whether",
+    "although",
+    "whereas"
+   ],
+   "answerIndex": 1,
+   "explanation": "Whether introduces an indirect question that presents two or more alternatives.",
+   "difficulty": 9,
+   "skill": "Using conjunctions in indirect questions",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence Each of the students submitted a report. Which one-word grammar label identifies Each?",
+   "choices": [
+    "indefinite",
+    "definite",
+    "demonstrative",
+    "possessive"
+   ],
+   "answerIndex": 0,
+   "explanation": "Each is an indefinite pronoun because it refers to the students without identifying any one of them individually.",
+   "difficulty": 8,
+   "skill": "Classifying indefinite pronouns",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence The crew repaired the roof after the storm passed. Which one-word label identifies the function of the clause after the storm passed within the sentence?",
+   "choices": [
+    "adverbial",
+    "adjectival",
+    "nominal",
+    "predicative"
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause after the storm passed functions adverbially because it tells when the crew repaired the roof.",
+   "difficulty": 9,
+   "skill": "Identifying adverbial clauses",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the sentence The team practiced carefully, but the final performance was uneven. Which grammatical class does but belong to?",
+   "choices": [
+    "coordinating",
+    "subordinating",
+    "correlative",
+    "interrogative"
+   ],
+   "answerIndex": 0,
+   "explanation": "But is a coordinating conjunction because it joins two independent clauses that could stand alone separately.",
+   "difficulty": 8,
+   "skill": "Classifying conjunctions",
+   "topic": "Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "A writer checks the formal sentence: The prize was shared between the teacher and I. Which one-word case label applies to the pronoun required after between?",
+   "choices": [
+    "objective",
+    "subjective",
+    "possessive",
+    "reflexive"
+   ],
+   "answerIndex": 0,
+   "explanation": "Between is a preposition, so the pronoun after it is me, which takes the objective case.",
+   "difficulty": 8,
+   "skill": "Formal pronoun case",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "nemotron-3-ultra-550b-a55b:free"
+   }
+  },
+  {
+   "prompt": "In the sentence The students who studied abroad received awards, which one-word term describes whether who studied abroad limits the meaning of students?",
+   "choices": [
+    "restrictive",
+    "parenthetical",
+    "nominal",
+    "absolute"
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause who studied abroad narrows the reference of students to a particular group, so it is restrictive.",
+   "difficulty": 9,
+   "skill": "Restrictive clause function",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "In the sentence The committee has approved the revised proposal, which one-word term names the grammatical function of has?",
+   "choices": [
+    "auxiliary",
+    "copular",
+    "linking",
+    "predicative"
+   ],
+   "answerIndex": 0,
+   "explanation": "Has combines with approved to form the present perfect verb phrase, so it functions as an auxiliary.",
+   "difficulty": 8,
+   "skill": "Auxiliary verb function",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  },
+  {
+   "prompt": "In the sentence The exhausted hikers rested beneath a shady tree, which one-word term identifies the verb form exhausted?",
+   "choices": [
+    "participle",
+    "gerund",
+    "infinitive",
+    "finite"
+   ],
+   "answerIndex": 0,
+   "explanation": "Exhausted is a past participle used adjectivally to describe the hikers.",
+   "difficulty": 9,
+   "skill": "Participial verb form",
+   "topic": "Activity 7 of 9 (quiz/game): Write Your Own (Rubric Check) - Advanced Grammar Review",
+   "verified": {
+    "code": true,
+    "judge_a": "minimax/minimax-m3.1-flash (blind pass)",
+    "judge_b": "gemini-3.6-flash:free"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which objective-case pronoun correctly completes the sentence: Between you and me, the disagreement was settled?",
+   "choices": [
+    "me",
+    "him",
+    "her",
+    "us"
+   ],
+   "answerIndex": 0,
+   "explanation": "Me is the objective-case pronoun that refers to the speaker in the expression between you and me.",
+   "reason": "B: not exactly one correct (Sentence already contains 'me'; no blank to complete. Other objective-case pronouns could also grammatically complete a similar sentence, ca)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which auxiliary correctly completes the sentence: At no time during the rehearsal did the volunteers complain about the delay?",
+   "choices": [
+    "did",
+    "do",
+    "does",
+    "were"
+   ],
+   "answerIndex": 0,
+   "explanation": "Did forms the inversion At no time during the rehearsal did the volunteers complain while leaving the base verb complain unchanged.",
+   "reason": "B: not exactly one correct (Sentence already contains 'did'; no blank to complete.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which word correctly completes the sentence: The committee needs the proposal ___ before Friday?",
+   "choices": [
+    "revise",
+    "revises",
+    "revising",
+    "revised"
+   ],
+   "answerIndex": 3,
+   "explanation": "Revised is the past participle required after needs when the proposal is the object of needs and the action is performed by someone else.",
+   "reason": "A: picked 2 not 3 (“The committee needs the proposal revising before Friday” correctly uses the gerund after “needs.”)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which word correctly completes the sentence: Neither the coach nor the players ___ ready for practice?",
+   "choices": [
+    "was",
+    "were",
+    "are",
+    "been"
+   ],
+   "answerIndex": 1,
+   "explanation": "Were agrees with players, the nearer subject in the neither nor construction.",
+   "reason": "A: picked 2 not 1 (In a “neither ... nor” construction, the plural verb “are” agrees with “the players.”) | B: not exactly one correct (Both option (1) 'were' (past tense, matching 'was collected/analyzed/sounded' context, or general past context) and option (2) 'are' (presen)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which word correctly completes the sentence: The proposal must ___ by the committee before Friday?",
+   "choices": [
+    "submit",
+    "submits",
+    "submitting",
+    "submitted"
+   ],
+   "answerIndex": 3,
+   "explanation": "Submitted is the past participle required after the modal must to form the passive voice.",
+   "reason": "A: not exactly one correct (The sentence needs the passive construction “must be submitted,” but “must submitted” is ungrammatical and no option supplies “be.”) | B: not exactly one correct (Grammatical error in passive construction: modal auxiliary 'must' requires 'be' before the past participle ('must be submitted'). None of th)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which verb correctly completes the sentence: The judge had the witness ___ beneath the display?",
+   "choices": [
+    "leaves",
+    "left",
+    "leaving",
+    "leave"
+   ],
+   "answerIndex": 3,
+   "explanation": "In a causative construction with had, the second verb appears in the bare infinitive form leave.",
+   "reason": "A: picked 2 not 3 (“Had the witness leaving” correctly uses a past participle followed by a present participle to express an ongoing action.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which verb form correctly completes the sentence: The number of applicants is ___ to arrive by nine?",
+   "choices": [
+    "expecting",
+    "expected",
+    "expects",
+    "expect"
+   ],
+   "answerIndex": 1,
+   "explanation": "Expected is the past participle required after the linking verb is.",
+   "reason": "A: picked 0 not 1 (“The number” is singular, so “is expecting” is correct.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "According to standard punctuation, how should a writer classify the clause who carried maps in The hikers who carried maps reached the summit?",
+   "choices": [
+    "conditional",
+    "attributive",
+    "restrictive",
+    "parenthetical"
+   ],
+   "answerIndex": 2,
+   "explanation": "The clause identifies which hikers reached the summit and is not set off by commas, making it restrictive.",
+   "reason": "A: not exactly one correct (The clause is restrictive, but it is also accurately described as an attributive relative clause, so two options are defensible.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "When editing She explained the procedure clear to everyone, which part-of-speech label belongs to clear?",
+   "choices": [
+    "adjective",
+    "adverb",
+    "gerund",
+    "preposition"
+   ],
+   "answerIndex": 1,
+   "explanation": "Because clear describes the verb explained rather than modifying a noun, it must take the adverb form clearly.",
+   "reason": "A: picked 0 not 1 (“Clear” functions as an adjective modifying “procedure,” though standard usage would normally be “explained the procedure clearly.”) | B: picked 0 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "In a grammar rubric, which term names a word or phrase that completes the meaning of a subject or verb?",
+   "choices": [
+    "adjective",
+    "complement",
+    "object",
+    "nominal"
+   ],
+   "answerIndex": 1,
+   "explanation": "A complement is a word or phrase that completes the meaning of a subject or verb.",
+   "reason": "B: picked 0 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which term names the smallest grammatical unit that must contain both a subject and a predicate?",
+   "choices": [
+    "phrase",
+    "sentence",
+    "structure",
+    "clause"
+   ],
+   "answerIndex": 3,
+   "explanation": "A clause is the smallest grammatical unit that must contain both a subject and a predicate.",
+   "reason": "B: picked 2 not 3"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "In the sentence The report, although submitted on time, was not approved, which one-word term labels the dependent clause although submitted on time?",
+   "choices": [
+    "concessive",
+    "conditional",
+    "comparative",
+    "resultative"
+   ],
+   "answerIndex": 0,
+   "explanation": "Although submitted on time contrasts with the main clause and presents a consideration despite the report's rejection, making the clause concessive.",
+   "reason": "surplus"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "In the sentence The committee reviewed the revised proposal, which one-word term describes reviewed because it receives the direct object proposal?",
+   "choices": [
+    "transitive",
+    "intransitive",
+    "reciprocal",
+    "iterative"
+   ],
+   "answerIndex": 0,
+   "explanation": "Reviewed takes the direct object proposal, so it is a transitive verb.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": false
+   },
+   "b": {
+    "pick": 3,
+    "one": false
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "gemini-3.6-flash:free"
+  }
+ ],
+ "applied": false
+}

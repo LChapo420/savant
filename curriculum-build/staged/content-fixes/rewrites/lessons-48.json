@@ -1,0 +1,157 @@
+{
+ "collection": "lessons",
+ "row_id": 48,
+ "shared": false,
+ "user_id": 120,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P9",
+   "wrong": "Multiplying both sides by 3 when you see 3x = 15, giving x = 45.",
+   "correct": "Multiplying both sides of 3x = 15 by 3 gives 9x = 45, not x = 45.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Multiplying both sides by 3 when you see 3x = 15, giving x = 45. The 3 is attached by multiplication, so the inverse is division: x = 15 / 3 = 5.",
+   "replace": "Multiplying both sides of 3x = 15 by 3 gives 9x = 45, not x = 45. The 3 is attached by multiplication, so the inverse is division: x = 15 / 3 = 5.",
+   "fixes": [
+    "P9"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[3]",
+   "before": "Multiplying both sides by 3 when you see 3x = 15, giving x = 45. The 3 is attached by multiplication, so the inverse is division: x = 15 / 3 = 5.",
+   "after": "Multiplying both sides of 3x = 15 by 3 gives 9x = 45, not x = 45. The 3 is attached by multiplication, so the inverse is division: x = 15 / 3 = 5.",
+   "fixes": [
+    "P9"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving Linear Equations: Undo Both Sides",
+  "intro": "A linear equation says two expressions are equal, and your job is to find the number that makes it true. To do that you undo whatever is being done to x. We will start with one-step equations and build up to two steps.",
+  "sections": [
+   {
+    "heading": "The rule: undo with the inverse, on both sides",
+    "body": "The rule is this: whatever operation is attached to x, undo it with its opposite operation, and do that same thing to both sides of the equation. Addition is undone by subtraction, and subtraction is undone by addition. Doing it to both sides keeps the equation true.\n\nExample: x + 7 = 12. The x has a + 7 stuck to it, so subtract 7 from both sides: x + 7 - 7 = 12 - 7. That gives x = 5. The + 7 and - 7 cancel on the left, which is exactly what you want.",
+    "example": "x + 7 = 12, so x = 5. Check: 5 + 7 = 12."
+   },
+   {
+    "heading": "Two steps: clear the add-on first",
+    "body": "When x is both multiplied and added to, undo the addition or subtraction first, then undo the multiplication or division. That order keeps the numbers whole and simple.\n\nExample: 3x + 4 = 19. First subtract 4 from both sides to get 3x = 15. Then divide both sides by 3 to get x = 5. If you had divided first, you would be stuck dividing 4 by 3, which is the mess you want to avoid.",
+    "example": "3x + 4 = 19. Subtract 4: 3x = 15. Divide by 3: x = 5."
+   },
+   {
+    "heading": "Check your answer by plugging it in",
+    "body": "A solution is only right if it makes the original equation true, so substitute your number back into the left side and see if it matches the right side. This catches almost every arithmetic slip. It takes ten seconds and it is the whole point of what solving means.\n\nExample: 2x - 3 = 9. Add 3 to both sides: 2x = 12. Divide by 2: x = 6. Now check: 2(6) - 3 = 12 - 3 = 9, which matches the right side, so 6 is correct.",
+    "example": "2x - 3 = 9 gives x = 6, and 2(6) - 3 = 9 confirms it."
+   },
+   {
+    "heading": "Why the two-sides rule matters",
+    "body": "An equation is a balanced scale. If you change only one side, the scale tips and the equality is broken. Every legal move is one you apply to both sides at once.\n\nExample: x + 7 = 12 is legal as x + 7 - 7 = 12 - 7. It is not legal to write x = 12 - 7 on the left while the right side stays 12, because the two sides no longer say the same thing.",
+    "example": "Both sides must change together: x + 7 - 7 = 12 - 7."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 4x + 5 = 29.",
+   "steps": [
+    "Identify what is done to x: x is multiplied by 4 and then 5 is added.",
+    "Undo the addition first. Subtract 5 from both sides: 4x + 5 - 5 = 29 - 5, which simplifies to 4x = 24.",
+    "Undo the multiplication. Divide both sides by 4: 4x / 4 = 24 / 4, which simplifies to x = 6.",
+    "Check by substituting x = 6 into the left side: 4(6) + 5 = 24 + 5 = 29. This matches the right side, so the solution is correct."
+   ],
+   "answer": "x = 6"
+  },
+  "common_mistakes": [
+   "Adding 4 instead of subtracting it in 3x + 4 = 19. That move gives 3x = 23 and then x = 23/3, which is wrong because the + 4 must be undone by subtraction.",
+   "Subtracting 5 from only one side in 4x + 5 = 29, writing 4x = 29 and getting x = 29/4. The 5 has to come off both sides, so the right side should become 24.",
+   "Dividing by 4 first in 4x + 5 = 29. This produces x + 5/4 = 29/4, with fractions that are easy to bungle. Clear the + 5 first.",
+   "Multiplying both sides of 3x = 15 by 3 gives 9x = 45, not x = 45. The 3 is attached by multiplication, so the inverse is division: x = 15 / 3 = 5."
+  ],
+  "summary": "To solve a linear equation, undo each operation on x using its inverse, doing the same thing to both sides. Clear addition or subtraction first, then multiplication or division. Substitute your answer back into the original equation to confirm it works.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x + 9 = 15.",
+    "answer": "x = 6",
+    "rationale": "The rule says undo the + 9 by subtracting 9 from both sides: x = 15 - 9 = 6.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "x = 6",
+     "x = 24",
+     "x = 5",
+     "x = 16"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 3x + 2 = 17. Give the value of x.",
+    "answer": "5",
+    "rationale": "Subtract 2 from both sides to get 3x = 15, then divide both sides by 3 to get x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "In the equation 5x - 7 = 18, what should you do first?",
+    "answer": "Add 7 to both sides",
+    "rationale": "Clear the subtraction before the multiplication. The inverse of - 7 is + 7, which gives 5x = 25.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Add 7 to both sides",
+     "Divide both sides by 5",
+     "Subtract 18 from both sides",
+     "Multiply both sides by 7"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 5x - 10 = 0. Give the value of x.",
+    "answer": "2",
+    "rationale": "Add 10 to both sides to get 5x = 10, then divide both sides by 5 to get x = 2.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

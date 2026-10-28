@@ -1,0 +1,749 @@
+[
+ {
+  "grade_id": "chess_rules_learner",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "When evaluating a trade, which description best matches a good trade for the side initiating it?",
+  "why": "Judges doubted the key: A: A is a good-trade description, but B is also defensible: capturing a higher-value piece while losing a lower-value piece is likewise a good trade. The keyed answer is not unique. | B: Option 1 (keyed) describes a free piece win, not a trade (recapture). Option 2 ('capture a piece of higher value than the piece you lose') accurately describes a winning trade (a good trade for the side initiating it).",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_rules_learner",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White king on f6, white queen on h7, black king on h8, black pawn on g7. White to move. Which move delivers checkmate?",
+  "why": "Judges doubted the key: A: Qh8# is illegal because the black king occupies h8. Qg7# is the mating move: it captures the pawn, attacks h8 and g8, and the king cannot capture on g7 because White's king on f6 protects it. | B: Qh8+ is blocked by the pawn or illegal/not mate if pawn/king can act, but on f6/h7 vs h8/g7, Qg7# is the Kiss of Death checkmate protected by Kf6. Qh8+ allows King or Pawn takes, or isn't mate.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "A white queen stands on d4. Black knights occupy b5 and f5. Which queen move attacks both knights simultaneously?",
+  "why": "Judges doubted the key: A: Qd5 attacks both b5 and f5 along the fifth rank, but Qe5 also attacks both knights, with c5 and d5 clear. The keyed answer is not unique. | B: From d5, a queen attacks b5 along the 5th rank, but d5 to f5 is blocked or diagonally not aligned (d5-e5-f5 is rank 5, so Qd5 does attack f5 along the 5th rank!). Wait, from d4: Qd5 attacks b5? No, d5 to b5 is along the 5th rank (b5-c5-d5). Qd5 to f5 is also along the 5th rank (d5-e5-f5). So Qd5 attacks both b5 and f5! But wait, is Qd5 a legal move from d4? Queen on d4 moving to d5 moves 1 square forward along the d-file, whic",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "White has a knight on e5. Black king on g8, black queen on h8, black rook on f8. Which knight move delivers a royal fork, attacking both the king and the queen?",
+  "why": "Judges doubted the key: A: No listed knight move attacks both g8 and h8. Ng6+ and Nf7+ attack the queen on h8 but not the king on g8, while Nc6+ and Nd7+ do not attack both. | B: From e5, Nf7+ attacks the king on g8 and the rook on f8, not the queen on h8. The royal fork of King on g8 and Queen on h8 is Ng6+.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "Black king on e8, black rook on e7, white bishop on a3 aimed along the a3‑f8 diagonal. The rook on e7 cannot move without exposing the king. Which statement correctly describes this pin?",
+  "why": "Judges doubted the key: A: The position is internally inconsistent. The a3-f8 diagonal contains e7 and f8, not e8, so the rook on e7 is not shielding the king and is not pinned. The bishop does attack e7, making option B's explanation false as well; no option is fully correct.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "Black queen on d8 is defended by a black rook on d7. White has a knight on f6 that can capture the rook on d7. After 1. Nxd7, what is the status of the black queen?",
+  "why": "Judges doubted the key: A: Nxd7 removes the rook that was defending the queen, but the knight on d7 does not attack d8. Thus the queen is undefended, yet the given position does not show that White can capture it on the next move, so the keyed option is not fully correct.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "Position: White king g1, White queen h5, White rook h1, White bishop f4. Black king g8, Black pawns f7, g7, h7, Black rook f8. White to move. Which first move forces mate in two?",
+  "why": "Judges doubted the key: A: Rh8+ is illegal because the black pawn on h7 blocks the rook's route from h1 to h8. Qh7+ actually denotes Qxh7#, which is immediate checkmate; thus it is the mating option if 'within two moves' was intended, though technically it is mate in one rather than mate in two.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White has a rook on d1 and a bishop on b2. Black king on e8, black queen on d5. It is White to move. If White plays Bxc3 (moving the bishop off the d1‑h5 diagonal), what is the immediate consequence?",
+  "why": "Judges doubted the key: A: The stated geometry is impossible: the bishop on b2 is not on the d1-h5 diagonal, and Bxc3 would not move it off that diagonal. Moreover, the black queen on d5 is also not on that diagonal, and the occupant of c3 is not supplied. No option correctly describes the move.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "Black king on g8. White queen on h7, white bishop on b2 delivering check along the long diagonal, and white knight on f6 also checking the king. It is Black to move. Which move is legal?",
+  "why": "Judges doubted the key: A: Kf8 is legal from the listed position. Kxh7 is illegal because the knight on f6 protects h7; gxf6 leaves the queen's check unanswered; and h8 is attacked by the queen on h7. The claim that the bishop on b2 checks g8 is also geometrically false.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "After 1. Qg8+ Rxg8, White has a knight on f7 and Black king on h8. Which move delivers smothered mate?",
+  "why": "Judges doubted the key: A: The knight is already on f7, so Nf7# is an illegal move. None of the listed moves deliver smothered mate from f7. | B: As written, the knight is already on f7, so Nf7# is not a legal next move and the position would already involve knight check. The intended Philidor position likely had the knight on h6, d6, d8, e5, or g5, in which case Nf7# is correct.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "In a rook‑and‑knight checkmate against a lone king on g8, the rook will give check on the eighth rank. Which square must the knight occupy to control the king's flight squares h7 and e8?",
+  "why": "Judges doubted the key: B: From f6, a knight controls h7 and e8 (as well as g8/d7/h5/d5/g4/e4). However, from e7, a knight controls g8, g6, f5, d5, c6, c8; from f7, it controls e5, g5, d6, h6, d8, h8; from h6, it controls g4, f5, f7, g8. To cover both h7 and e8, f6 is the correct square, but 1...Kh8 after a check on f8/g8/h8 depends on geometry; given the options, f6 covers both e8 and h7.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White to move. White queen on h5, white rook on e1, black king on g8, black rook on e8, black bishop on b7. White can play Qxe8 capturing the rook, but Black would then play Bxg2#. What should White play first?",
+  "why": "Judges doubted the key: A: The position is incomplete: it omits the white king and any piece on g2, making the claimed Bxg2# line impossible to verify. Qh7+ is evidently intended, but it cannot be established as the unique move from the supplied position. | B: Qxe8 is not a legal/logical answer here under normal description, but more importantly, after White plays 1. Qxe8+, Black cannot play 1... Bxg2# because the king is in check from the queen on e8; White is giving check and winning Black's rook.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White pawn on a5, Black king on c7, White king on h1. It is White to move. Assuming optimal play, will the pawn promote?",
+  "why": "Judges doubted the key: A: Black king on c7 is inside the square of the a5 pawn (square a5-a1-e1-e5). After 1. a6 Kb6 the pawn is caught. The keyed answer's reasoning is also nonsensical. | B: The correct answer is: No, because the black king can enter the square. The black king on c7 is outside the a5-pawn's square of the pawn and can move to b6 and then capture the advancing pawn.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "Which of the following is NOT a legal way to claim a draw in an over‑the‑board tournament according to the rules covered in this grade?",
+  "why": "Judges doubted the key: A: The governing tournament rules are not specified. Under FIDE rules insufficient material is an automatic dead-position draw rather than a formal claim, while some other tournament rules permit such a claim; consequently the unique NOT option cannot be established as written.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White king on g1, white queen on d1, white rook on e1, white bishop on c4, white knight on f3. Black king on g8, black queen on d8, black rook on f8, black bishop on c8, black pawns on f7, g7, h7. White plays the quiet move 1. Qd3. What is the immediate threat created by this move?",
+  "why": "Judges doubted the key: A: After 1.Qd3, the queen attacks Qd8 along the clear d-file. The rook on e1 has no discovered attack on d8, and Qxh7+ is not mate because Black can play ...Kxh7.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "After the moves 1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. 0‑0, White has a queen‑bishop battery aimed at h7. Which move completes the battery and threatens mate on h7?",
+  "why": "Judges doubted the key: A: The intended move is Qb3, but that creates a queen-bishop alignment on b3-c4-d5-e6-f7-g8, bearing on f7/g8, not h7. None of the options creates the stated h7 threat or a threat of Qh7#. | B: Qb3 targets f7 and b7 in the Italian/Giuoco Piano, not h7. The battery aimed at h7 would be Qd3 or Qc2, whereas Qb3 forms a queen-bishop battery targeting f7.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "White king on d4, black king on d6, white pawn on e4, black pawn on e5. It is White to move. Which king move gains the distant opposition and wins the pawn?",
+  "why": "Judges doubted the key: A: Ke5, Kc5 and Kd5 are illegal: e5 is occupied and defended by Kd6, while c5 and d5 are adjacent to Kd6. Kc3 is legal but does not gain the claimed distant opposition or win the pawn. White is also initially in check from the e5-pawn. | B: 1. Kc5 does not gain distant opposition ( distant opposition is separated by an odd number of squares like 3 or 5 along a line/grid), nor can White play 1. Ke5 stepping onto the pawn's square while the pawn on e5 is occupied by Black's pawn.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White has a king on g2, a queen on h5, a rook on e1, and a knight on f6. Black king on g8, pawns on f7, g7, h7, and a rook on f8. White to move. Which move initiates a ‘fox in the chicken coop’ king raid, forcing the black king into a mating net?",
+  "why": "Judges doubted the key: A: The diagram is illegal: Nf6 already checks Kg8 while it is White to move. Even if that defect is ignored, Qh7# is an immediate mate with the queen protected by Nf6, so Rh8+ is not uniquely best.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White has a knight on d5 (an outpost), bishop on e3, rook on c1, pawns on a2, b2, c3, e4. Black has knight on c6, bishop on d7, rook on c8, pawns on a7, b7, e6, f7. White to move. Which plan best exploits the outpost and weak squares near Black's king?",
+  "why": "Judges doubted the key: A: Black's king is not given, so squares near it cannot be assessed. Moreover, the proposed route d5-e3-f4 is obstructed by White's own bishop on e3, although the direct move Nf4 is legal. The question does not establish a uniquely sound plan as written.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "From an Italian Game, the position is: White – king g1, queen d1, rooks a1 and f1, bishops c4 and e3, knights c3 and f3, pawns a2, b2, c3, d4, e4, f2, g2, h2. Black – king g8, queen d8, rooks a8 and f8, bishops c5 and e7, knights c6 and f6, pawns a7, b7, d6, e5, f7, g7, h7. White to move. Which continuation demonstrates mastery of the grade’s themes: a pawn breakthrough on the centre, a rook lift to the seventh rank, and a knight outpost on d5?",
+  "why": "Judges doubted the key: A: The described position is illegal: White has pawns on both c3 and d4 while also having a knight on c3, plus two c-pawns and no c7 pawn for Black. The question cannot be answered as written. | B: No listed option is valid as written. In the keyed third line, 3.Rxf7 is illegal because White's pawn on f2 blocks the rook on f1. The intended themes require a corrected legal continuation.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White king on e4, black king on e6, white pawn on d5. It is White to move. Which move wins the direct opposition?",
+  "why": "Judges doubted the key: A: Kd5 is illegal (own pawn on d5). No legal move wins direct opposition here; the kings already stand in direct opposition with Black to move. The question is broken. | B: No option is valid as stated. Black's king on e6 is already in check from the white pawn on d5, making the position illegal, and Kd5 is also impossible because d5 is occupied by White's pawn. The position must be corrected before a direct-opposition move can be chosen.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "After 1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. 0-0, White threatens a queen‑bishop battery on the h1‑a8 diagonal aimed at h7. Which move by White creates the strongest immediate threat?",
+  "why": "Judges doubted the key: A: There is no queen-bishop battery on the h1-a8 diagonal, and h7 is not on that diagonal. Qb3, apparently the intended answer, instead aligns the queen and bishop toward f7/g8; Ng5 can be answered by ...Nxg5. | B: After 1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 Nf6 5.d4 exd4 6.cxd4 Bb4+ 7.Nc3 Nxe4 8.O-O, White's main theoretical moves are 8...Bxc3 9.d5 (or 9.bxc3) or 8...Nxc3 9.bxc3 d5. Neither of the choices listed (Qb3, Re1, Ng5, Bxf7+) is standard theory here, nor does White threaten a queen-bishop battery on h1-a8 (which is a main-diagonal/a1-h8 confusion). Moreover, both 8",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "In a rook ending, White has king on g2, rook on a7, pawn on h4; Black has king on g8, rook on b8, pawn on h7. White to move. Which move correctly applies the Philidor third‑rank defence idea to hold the draw?",
+  "why": "Judges doubted the key: B: The Philidor third-rank defense applies to Rook vs Rook + Pawn endings where the defending king is in front of the passed pawn (preventing its advance until the pawn reaches the 6th rank). In the given position, both sides have equal pawns on h4 and h7, so Ra3 is not the Philidor third-rank defense.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White to move. Position: White king d4, white queen h5, white rook e1, white bishop f4, white knight f6. Black king g8, black pawns f7, g7, h7, black rook f8, black bishop b7. Which move starts a forced mate‑in‑three combination?",
+  "why": "Judges doubted the key: A: Rh8+ Kxh8 Qxh7# is mate in two, not mate in three. Moreover, Qh7+ is already mate in one because the knight on f6 protects h7, so no option gives an exact mate in three. | B: 1.Rh8+ Kxh8 2.Nf7+ Kg8 3.Qh8# is a mate-in-three, but the question lists 1.Qh7+, 1.Nf8+, 1.Rh8+, 1.Bxe5 and claims Rh8+ is mate in 3. However, after 1.Rh8+ Kxh8 2.Nf7+ Kh7 3.Qh5+ Kg8 4.Qh8# it takes 4 moves if Black plays Kh7, or 1.Rh8+ Kxh8 2.Qh5+ Kg8 3.Qh7# is mate in 3 (1.Rh8+ Kxh8 2.Qh5+ Kg8 3.Qh7#). But Qb3 in options is not here. Rh8+ works in 3 via 2.Qh5+.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "From a typical middlegame arising after 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 (Najdorf), White has king g1, queen d1, rooks a1 and f1, bishops e3 and f4, knights c3 and d4, pawns a2, b2, e4, f2, g2, h2. Black has king g8, queen d8, rooks a8 and f8, bishops e7 and b7, knights b8 and f6, pawns a6, b7, d6, e6, f7, g7, h7. White to move. Which plan best exploits the long‑term strategic themes taught in this grade?",
+  "why": "Judges doubted the key: A: In the stated position, d5 is not an outpost: both the black pawn on e6 and the knight on f6 attack it, so Nc3-d5 can be met by exd5 or Nxd5. The g4-g5 plan is the defensible listed strategy.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_strong_club_player",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "Which condition must be satisfied for the Greek Gift sacrifice (Bxh7+) to be sound according to this grade?",
+  "why": "Judges doubted the key: B: The keyed answer says 'The attacker controls g5 and h5 while the h7 pawn is unprotected', but 'The defending king has no knight on f6' is also a well-known critical condition for the Greek Gift sacrifice to be sound.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_strong_club_player",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "When the opponent's king is confined to the back rank, which maneuver does the grade recommend to outflank it?",
+  "why": "Judges doubted the key: A: Placing a rook on the seventh rank attacks along the rank but does not specifically outflank a back-rank-confined king. Without knowing the exact curriculum referenced, this is the most plausible option, but 'Start a pawn storm on opposite wing' could also be argued as an outflanking maneuver.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White to move. Black threatens ...Qh4+ followed by ...Qxh2#. White's pieces: king on g1, queen on d1, rook on f1, bishop on e3, knight on f3, pawns on a2, b2, c3, d4, e4, g2, h2. Black's pieces: king on g8, queen on d8, rooks on a8 and f8, bishops on c8 and f5, knights on c6 and e7, pawns on a7, b7, c7, d6, e6, f7, g7, h7. Which move best stops Black's mating idea without creating new weaknesses?",
+  "why": "Judges doubted the key: A: No option is determinable as written. Black's queen on d8 cannot move to h4 because its own knight on e7 blocks the path, and Qxh2 would not be mate because White's king on g1 can capture the queen. The keyed 1. h3 is presumably intended after correcting the position. | B: Black does not currently threaten ...Qh4+ because white has a knight on f3 covering h4. Moreover, after 1.h3 or 1.g3 or 1.Rf2, Black cannot play Qh4+. However, 1.h3 creates a weak square (g3), whereas 1.g3 or other moves could be considered. More importantly, the premise of the question (Black thre",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "White has bishops on c4 and e2, knights on d4 and f3, queen on d2, rooks on a1 and e1, king on g1. Black's king on g8, queen on d8, rooks on a8 and f8, bishops on c8 and e6, knights on c6 and e7, pawns on a7, b7, c7, d6, e6, f7, g7, h7. White to move. Which move initiates Lasker's double bishop sacrifice on h7?",
+  "why": "Judges doubted the key: A: The position is illegal: Black has both a bishop and a pawn on e6. Moreover, no White bishop can legally play Bxh7+, while Bxf7+ is blocked by the piece on e6. The position and options must therefore be corrected.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White has a rook on a1, a knight on b3, and the black king on h8. It is White to move in a rook‑and‑knight versus lone king ending. Which move correctly begins the standard mating net by restricting the king to the a‑file?",
+  "why": "Judges doubted the key: A: 1.Ra7 confines the black king to the eighth rank by controlling the seventh rank; it does not restrict the king to the a-file. Thus no option satisfies the question as written. | B: Option '1. Ra7' puts the rook on the a-file (cutting off the b-file or a-file), but a rook on a7 does not restrict the king to the a-file (it restricts it behind the 7th rank). Additionally, if the black king is on h8, a rook on a7 or a knight on b3 cannot immediately restrict the king to the a-file.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "In a rook ending, White has king on g2, rook on a7, pawn on h4; Black has king on g8, rook on b8, pawn on h7. White to move. Applying the Philidor‑type defence, which move keeps the draw by checking from the side?",
+  "why": "Judges doubted the key: B: The question states White to move, but the listed moves (like 1. Ra3) are Black defensive moves in Philidor structures, and 1. Ra3 isn't even a valid rook move for White's rook on a7.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "A position from the Classical Sicilian reaches a critical moment: White king on g1, queen on d1, rooks on a1 and f1, bishops on e3 and g5, knights on c3 and d5, pawns on a2, b2, c3, d4, e4, f2, g2, h2. Black king on g8, queen on d8, rooks on a8 and f8, bishops on e7 and g7, knights on c6 and e5, pawns on a7, b7, c5, d6, e6, f7, g7, h7. White to move. Which plan best combines a rook lift to the h‑file, a pawn break on d5, and a forced mate in five moves?",
+  "why": "Judges doubted the key: A: The stated position is impossible because Black has both a bishop and a pawn on g7. Moreover, 1.d5 is illegal because White's own knight occupies d5, while 1.Rhf1 is not a legal move and the other options do not establish the claimed mating plan.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_expert",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "In a king and pawn endgame, White king on d4, Black king on d6, White pawn on e4. It is White to move. Which square is the corresponding square for White's king according to the Lasker‑Reichhelm theory?",
+  "why": "Judges doubted the key: B: The keyed answer c5 is incorrect for this classical corresponding squares setup (d4 corresponds to d6, c4 to c6/e6, etc.). The correct theoretical square depends on Black's waiting moves, but c5 is illegal or nonsense since Black's king is on d6 and White's pawn is on e4.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_expert",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "In a rook and pawn versus rook ending where the defending king is cut off on the sixth rank, the flowchart recommends the attacker first:",
+  "why": "Judges doubted the key: A: The question depends on a flowchart that is not provided, and no complete rook-and-pawn position is given. Bringing the rook behind the pawn is a common plan, but it cannot be established as the uniquely prescribed first step from the information supplied.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_expert",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "Which pawn structure is characterized by White pawns on c4 and e4 controlling d5, with Black's pawns on a6, b6, d6, e6?",
+  "why": "Judges doubted the key: B: The described pawn structure with White pawns on c4/e4 and Black pawns on a6, b6, d6, e6 is the Hedgehog, not the Maróczy Bind (which is White's pawn setup with pawns on c4 and e4 against Black's d6/e6/g6/etc. setup). The keyed answer 'Maroczy Bind' is wrong; the correct option is 'Hedgehog'.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_expert",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "Position: White – king on g1, queen on d2, rooks on a1 and f1, bishops on c4 and e3, knights on d5 and f3, pawns on a2, b2, c3, d4, e4, f2, g2, h2. Black – king on g8, queen on d8, rooks on a8 and f8, bishops on e7 and g7, knights on c6 and e5, pawns on a7, b7, c7, d6, e6, f7, g7, h7. White to move. Which move starts a forced combination that wins at least a rook?",
+  "why": "Judges doubted the key: A: The position is illegal because Black has both a bishop and a pawn on g7. Also, Rxf7 is blocked by White's f2-pawn and f3-knight, Qh5 by the bishop on e3, and Bxg7 by the knight on d5. | B: The keyed answer Rxf7 is an illegal move because White's rook is on f1 and Black's pawn on f7 is blocked/protected, or White's light-squared bishop is on c4. Looking at the position, White's c4 bishop cannot reach f7 if blocked, or if f7 is targeted by bishop/rook, but here White's rooks are on a1/f1 and Black's pawns are on e6/f7/g7/h7. Specifically, White has a knight on d5 atta",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_international_master",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "According to Aagaard, after you finish a concrete calculation line you should pause and ask yourself three specific questions. Which list correctly states those three questions?",
+  "why": "Judges doubted the key: A: Aagaard's method involves identifying candidate moves using checks, captures, and threats, not the three questions listed. None of the options correctly states Aagaard's three questions.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_grandmaster",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "When consulting a Syzygy tablebase for a position with a cursed win, what does the DTZ value indicate?",
+  "why": "Judges doubted the key: A: DTZ (Distance To Zeroing) measures the number of moves to win/convert the position while accounting for the 50-move rule; a cursed win is one whose DTZ exceeds the rule's limit. 'Number of moves to reach a zero-win position' is not a meaningful description — the correct option is that DTZ indicates the number of moves to convert the win under the 50-move rule (in a cursed win, this count exceeds 100, so the win is not realizable in a legal game). | B: In Syzygy DTZ tablebases, a 'cursed win' is a position that is winning without the 50-move rule, but cannot be won wi",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_elite_and_world_class",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White has 30 seconds left and must find the only move that avoids immediate loss. Position: White king g1, queen d2, rook f1, bishop e3, knight f3, pawns a2 b2 c3 d4 e4 f2 g2 h2. Black king g8, queen h4, rook f8, bishop c8, knight e5, pawns a7 b7 c7 d6 e6 f7 g7 h7. Black just played ...Qh4+, delivering a discovered check on the white king. Which move is the sole legal reply that keeps the game alive?",
+  "why": "Judges doubted the key: A: The queen on h4 does not check the king on g1, so there is no checking move to block or evade. Moreover, Kg2, Qg2, and Rf2 are illegal because g2 and f2 are occupied by White's own pawns. Although Kh1 is safe, it is not a sole reply to a nonexistent check. | B: In the given position, Black's queen is on h4 checking the king on g1. If ...Qh4+ was a discovered check (e.g. from a bishop or rook), Kh1 may or may not be legal, but here Qh4 gives a direct check from h4 to g1 along the diagonal e1-h4/h4-g1. However, Kh1 is a legal move away from check; but the premise says ",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_elite_and_world_class",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "During a world‑championship match a player deliberately chooses a rare sideline to avoid the opponent’s deep preparation. This practical decision illustrates which elite‑level concept?",
+  "why": "Judges doubted the key: A: Option D (applying engine-precision risk assessment) is also defensible, as modern elite players use engine-derived evaluations to justify practical sideline choices; neither option is uniquely correct.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_elite_and_world_class",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "In the 2016 World Championship Game 10, Magnus Carlsen saved a lost rook endgame against Sergey Karjakin by finding a single defensive resource that forced a draw. Which technique did Carlsen employ?",
+  "why": "Judges doubted the key: A: The premise is false: Carlsen won Game 10 in 51 moves; he did not save a lost rook endgame by forcing a draw. None of the options accurately describes what happened.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_elite_and_world_class",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "A grandmaster prepares a complete dossier on a named world‑championship opponent, integrates engine‑derived novelties, plans match‑specific psychological strategies, and rehearses critical endgames with a team of seconds. This comprehensive preparation exemplifies which final synthesis unit of the Elite and World‑Class grade?",
+  "why": "Judges doubted the key: A: The scenario specifically describes world-championship preparation with a team of seconds; it does not include the playing and explaining of a title game required by the keyed option.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_professional_foundations",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "In the FIDE trainer title ladder, which title is the entry‑level certification for a chess coach?",
+  "why": "Judges doubted the key: B: FIDE's entry-level trainer certification is National Instructor (or Development Instructor), while the options list FIDE Instructor, which is above DI/NI.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_professional_practitioner",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "In a half‑pin, the pinned piece can move but doing so exposes a more valuable piece behind it; which of the following best illustrates Black's correct defensive resource?",
+  "why": "Judges doubted the key: B: The option 'Interpose a third piece on the pin line' is incorrect for a half-pin (where moving the pinned piece unpins another piece or exposes a target, but interposing a third piece doesn't define standard defensive resources or half-pin definitions, or 'Capture the pinning piece' / moving away with check is standard). Moreover, the definition given in the prompt for half-pin is inaccurate/confused.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_professional_practitioner",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "In a domination study, the winning side typically achieves which of the following?",
+  "why": "Judges doubted the key: B: A domination study in chess composition involves depriving enemy piece(s) of safe squares (or restricting freedom/mobility to win material/control), not dominating the enemy king's flight squares while keeping material equal. Option 1 describes a mate net/restriction or misdefines domination.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_professional_authority",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "Which title is the entry‑level certification on the FIDE arbiter ladder?",
+  "why": "Judges doubted the key: A: The FIDE arbiter title ladder runs National Arbiter (NA) → FIDE Arbiter (FA) → International Arbiter (IA); NA is the entry-level certification, so the keyed FA is the second rung, not the entry level. | B: The entry-level certification on the FIDE arbiter qualification ladder is National Arbiter (NA), followed by FIDE Arbiter (FA) and International Arbiter (IA). The keyed answer 'FIDE Arbiter (FA)' is wrong; the correct option is 'National Arbiter (NA)'.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_professional_authority",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "Which annual publication does the World Federation for Chess Composition recognise as the official collection of the best studies?",
+  "why": "Judges doubted the key: B: The FIDE Album is published triennially (covering a 3-year period), not as an annual publication.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_frontier_literacy",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "During alpha‑beta pruning at a minimizing node, a beta cutoff occurs when:",
+  "why": "Judges doubted the key: A: The keyed answer gives the full cutoff condition, but the option stating that the value equals alpha is also literally defensible because equality is a special case of the same cutoff.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_frontier_research",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "Principal Variation Search narrows the window around the best score; what happens if the returned value falls outside the window?",
+  "why": "Judges doubted the key: A: D is the standard response to a fail-high in null-window PVS, but A is also defensible for an aspiration-window failure; the wording conflates PVS with aspiration search.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_frontier_contribution",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "In proof‑number search, what does the proof number of a leaf node represent?",
+  "why": "Judges doubted the key: A: A proven winning terminal leaf has proof number 1. More generally, a node's proof number is the minimum number of leaf proofs needed to prove that node; option B incorrectly refers to proving the parent.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_frontier_contribution",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "When configuring an SPRT to test a new engine version, which hypothesis pair is commonly used in the Frontier curriculum?",
+  "why": "Judges doubted the key: A: The Frontier curriculum is not supplied, so its specific SPRT hypothesis pair cannot be determined from the question as written; moreover, the hypotheses in A overlap at exactly +5 Elo.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_frontier_contribution",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "In the context of NNUE evaluation interpretability, which limitation is highlighted by the Frontier curriculum?",
+  "why": "Judges doubted the key: A: The Frontier curriculum is not supplied, so the curriculum-specific highlighted limitation cannot be established, although A is the only generally plausible claim about NNUE interpretability.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_frontier_contribution",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "According to the Frontier Map of open questions, which research direction is ranked as the highest priority for advancing human‑AI knowledge transfer in chess?",
+  "why": "Judges doubted the key: A: The referenced Frontier Map is not provided, so its ranking cannot be verified or uniquely reproduced from the question.",
+  "round": "runner-1",
+  "at": "2026-10-24T20:30:33.248Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White rook on d1. Black rook on d7, black queen on d8. No other pieces on the d‑file. White plays Rxd7. After this capture, what is the status of the black queen?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.494Z"
+ },
+ {
+  "grade_id": "chess_beginner_tactician",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "White king on g1, white queen on h5, white rook on h1, white bishop on f4. Black king on g8, black pawns on f7, g7, h7, black rook on f8. White to move. Which first move forces mate in two?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.494Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White rook on a1, white bishop on b2. Black king on a8, black queen on a5. White to move. If White plays Bc3, what is the immediate consequence?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.495Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "Black king on g8. White queen on h8, white bishop on c4, white knight on e6, white rook on h1. It is Black to move. Which move is legal?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.495Z"
+ },
+ {
+  "grade_id": "chess_novice_club_player",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White king on g1, white rook on e1, white queen on d2, black king on g8, black rook on e8, black bishop on b7, black pawns on f7, g7, h7. It is White to move. Which move prevents an immediate back‑rank mate threat?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.495Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White king on g1, white queen on d1, white rook on e1, white bishop on c4, white knight on f3. Black king on g8, black queen on e8, black rook on f8, black bishop on c8, black pawns on f7, g7, h7. White plays 1. Qd2. What is the immediate threat created by this move?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.496Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "White bishop on b1, white queen on a2, black king on h8, black pawn on h7. White to move. Which move creates a queen‑bishop battery on the b1‑h7 diagonal threatening mate on h7?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.497Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "White king on d4, white pawn on e4. Black king on d7, black pawn on e5. White to move. Which king move reaches a key square of the e‑pawn and secures a winning position?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.497Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White king on g1, queen on h5, rook on h1, bishop on f4, knight on e5. Black king on g8, pawns on f7, g7, h7, rook on f8, bishop on b7. White to move. Which move initiates a forced mate by decoying the black king?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.497Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White king on g1, queen on d1, rooks on a1 and f1, bishops on c4 and e3, knights on c3 and d5, pawns on a2, b2, c2, d4, e4, f2, g2, h2. Black king on g8, queen on d8, rooks on a8 and f8, bishops on c5 and e7, knights on c6 and f6, pawns on a7, b7, d6, e5, f7, g7, h7. White to move. Which plan best exploits the knight outpost on d5 and the weak squares around Black's king?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.498Z"
+ },
+ {
+  "grade_id": "chess_club_player",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "From the position described in the previous question (Italian‑type structure with a knight on d5), White to move. Which continuation demonstrates mastery of the grade’s three themes – a central pawn breakthrough, a rook lift to the seventh rank, and establishing a knight outpost on d5?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.498Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "White to move. White pieces: king g1, queen d1, rooks a1 and f1, bishops c4 and e3, knights c3 and f3, pawns a2, b2, c2, d4, e4, f2, g2, h2. Black pieces: king g8, queen d8, rooks a8 and f8, bishops e7 and g7, knights c6 and f6, pawns a7, b7, c7, d6, e5, f7, g7, h7. Which single move initiates a cross‑pin on the c‑file while simultaneously preparing a queenside pawn breakthrough?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.498Z"
+ },
+ {
+  "grade_id": "chess_strong_club_player",
+  "index": 3,
+  "action": "rewrite",
+  "prompt": "According to the grade’s unit on the Greek Gift sacrifice, which one of the following is a necessary condition for Bxh7+ to be sound?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.499Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White to move. White pieces: king g1, queen d1, rook f1, bishop e3, knight c3, pawns a2, b2, c3, d4, e4, f2, g2, h2. Black pieces: king g8, queen d8, rooks a8 and f8, bishops c8 and e7, knights c6 and e7, pawns a7, b7, c7, d6, e6, f7, g7, h7. Black threatens …Qh4+ followed by …Qxh2#. Which move best stops the mate without creating new weaknesses?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.499Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "White to move. White pieces: king g1, queen d1, rooks a1 and f1, bishops e4 and c1, knights c3 and f3, pawns a2, b2, c3, d4, f2, g2, h2. Black pieces: king g8, queen d8, rooks a8 and f8, bishops c8 and e7, knights c6 and f6, pawns a7, b7, c7, d6, e6, f7, g7, h7. Which move initiates Lasker’s double bishop sacrifice on h7?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.499Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White to move in a rook‑and‑knight versus lone king ending. White pieces: king g1, rook a1, knight b3. Black king h8. Which first move correctly begins the standard procedure to restrict the black king to the a‑file?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.500Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "Black to move in the following rook ending. White: king g2, rook a7, pawn h4. Black: king g8, rook b8, pawn h7. Which move by Black keeps the draw by establishing the Philidor‑type lateral checking defence?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.500Z"
+ },
+ {
+  "grade_id": "chess_advanced_club_player",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "A position from the Classical Sicilian reaches a critical moment: White king on g1, queen on d1, rooks on a1 and f1, bishops on e3 and g5, knights on c3 and d5, pawns on a2, b2, c3, d4, e4, f2, g2, h2. Black king on g8, queen on d8, rooks on a8 and f8, bishops on e7 and g7, knights on c6 and e5, pawns on a7, b7, c5, d6, e6, f7, g7, h7. White to move. Which plan best combines a rook lift to the h‑file, a pawn break on d5, and a forced mate in five moves?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.500Z"
+ },
+ {
+  "grade_id": "chess_expert",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "In the king‑and‑pawn endgame with White king on d4, Black king on d6, White pawn on e4, White to move. Black now plays …Kc6. According to the Lasker‑Reichhelm corresponding‑square table, which square must White's king move to in order to keep the draw?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.501Z"
+ },
+ {
+  "grade_id": "chess_elite_and_world_class",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "White king on g1, rook on f1, pawns on f2 and g2. Black delivers a double check: queen on h2 (rank check) and bishop on c5 (diagonal check). It is White to move. Which move is the sole legal reply that keeps the game alive?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.501Z"
+ },
+ {
+  "grade_id": "chess_elite_and_world_class",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "Which unit of the Elite and World‑Class grade represents the final synthesis in which a grandmaster prepares a complete dossier on a world‑championship opponent, integrates engine‑derived novelties, plans match‑specific psychological strategies, and rehearses critical endgames with a team of seconds?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.501Z"
+ },
+ {
+  "grade_id": "chess_professional_foundations",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "What is the entry‑level certification on the FIDE trainer title ladder?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.502Z"
+ },
+ {
+  "grade_id": "chess_professional_authority",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "Which annual publication does the World Federation for Chess Composition recognise as the official collection of the best studies?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.502Z"
+ },
+ {
+  "grade_id": "chess_frontier_literacy",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "A key difference between AlphaZero’s search and Stockfish’s NNUE‑augmented search is:",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:22:02.502Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 1,
+  "action": "rewrite",
+  "prompt": "After 1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 Nf6 5.d4 exd4 6.cxd4 Bb4+ 7.Nc3 Nxe4 8.0‑0, White threatens to win the e4‑knight. Which move creates the strongest immediate threat?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:34:37.583Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 4,
+  "action": "rewrite",
+  "prompt": "White king on g2, rook on a1, pawn on h4. Black king on g8, rook on b8, pawn on h7. White to move. Which move correctly establishes the Philidor third‑rank defence?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:34:37.585Z"
+ },
+ {
+  "grade_id": "chess_intermediate",
+  "index": 5,
+  "action": "rewrite",
+  "prompt": "White king on g1, queen on d4, rook on h1, bishop on f4, knight on f3. Black king on g8, pawns on f7 and h7, rook on f8, bishop on b7. White to move. Which first move forces mate in three?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:34:37.586Z"
+ },
+ {
+  "grade_id": "chess_expert",
+  "index": 6,
+  "action": "rewrite",
+  "prompt": "In a Grünfeld centre where White holds pawns on d4 and e4 and Black has …c5, …d6, …e6, the correct plan to attack the broad centre is to:",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:34:37.586Z"
+ },
+ {
+  "grade_id": "chess_international_master",
+  "index": 0,
+  "action": "rewrite",
+  "prompt": "According to Jacob Aagaard, after finishing a concrete calculation you should pause and ask yourself three specific questions. Which list correctly states those three questions?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:34:37.587Z"
+ },
+ {
+  "grade_id": "chess_frontier_research",
+  "index": 2,
+  "action": "rewrite",
+  "prompt": "In Principal Variation Search, a null‑window search at a non‑PV node returns a value that fails high (i.e., ≥ beta). What is the standard procedure the search must take next?",
+  "why": "Doubted after the free rounds; rewritten by the stronger model (Claude in-app) as the owner asked.",
+  "round": "stronger-model",
+  "at": "2026-10-25T04:34:37.588Z"
+ }
+]

@@ -1,0 +1,1197 @@
+<style>
+#base-lesson-body{
+  --base:#141416; --surface:#1b1b1f; --surface-2:#232329; --surface-3:#2c2c33;
+  --accent:#F59E0B; --accent-dark:#B45309; --accent-glow:rgba(245,158,11,.45);
+  --green:#22C55E; --green-dark:#15803D; --green-glow:rgba(34,197,94,.45);
+  --danger:#EF4444; --danger-dark:#991B1B; --danger-glow:rgba(239,68,68,.45);
+  --cyan:#38BDF8; --violet:#A78BFA;
+  --text:#EDE6D6; --muted:#A9A294; --line:rgba(245,158,11,.22);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  display:block; box-sizing:border-box; width:100%; max-width:1180px; margin:0 auto;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(245,158,11,.07), transparent 60%),
+    linear-gradient(180deg,#141416 0%, #101012 100%);
+  color:var(--text); font-family:var(--sans); font-size:16px; line-height:1.6;
+  padding:0 12px 40px; border-radius:14px; position:relative; overflow:hidden;
+}
+#base-lesson-body *{box-sizing:border-box;}
+#base-lesson-body h1,#base-lesson-body h2,#base-lesson-body h3,#base-lesson-body h4{
+  font-family:var(--mono); letter-spacing:.02em; margin:0 0 .5rem; line-height:1.25;
+}
+#base-lesson-body p{margin:0 0 .85rem;}
+#base-lesson-body strong{color:#fff;}
+#base-lesson-body em{color:var(--accent); font-style:italic;}
+
+/* ---------- HUD ---------- */
+.l189-hud{
+  position:sticky; top:0; z-index:60; margin:0 -12px 18px; padding:10px 14px;
+  background:linear-gradient(180deg,rgba(20,20,22,.98),rgba(20,20,22,.93));
+  border-bottom:2px solid var(--line);
+  box-shadow:0 8px 22px rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);
+}
+.l189-hud-row{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+.l189-badge{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.09em; text-transform:uppercase;
+  padding:5px 10px; border-radius:8px; border:2px solid var(--line);
+  background:linear-gradient(180deg,var(--surface-3),var(--surface));
+  box-shadow:0 3px 0 rgba(0,0,0,.6); white-space:nowrap;
+}
+.l189-badge--lvl{border-color:var(--accent); color:var(--accent); background:linear-gradient(180deg,rgba(245,158,11,.18),rgba(245,158,11,.05));}
+.l189-badge--sub{border-color:rgba(56,189,248,.5); color:var(--cyan);}
+.l189-badge--age{border-color:rgba(167,139,250,.5); color:var(--violet);}
+.l189-callsign{
+  font-family:var(--mono); font-size:.72rem; background:transparent; color:var(--green);
+  border:2px solid rgba(34,197,94,.45); border-radius:8px; padding:5px 8px; width:132px;
+  box-shadow:0 3px 0 rgba(0,0,0,.6);
+}
+.l189-callsign:focus{outline:none; border-color:var(--green); box-shadow:0 0 12px var(--green-glow),0 3px 0 rgba(0,0,0,.6);}
+.l189-xp{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+  padding:5px 10px; border-radius:8px; border:2px solid var(--green);
+  color:var(--green); background:linear-gradient(180deg,rgba(34,197,94,.16),rgba(34,197,94,.04));
+  box-shadow:0 3px 0 rgba(0,0,0,.6);
+}
+.l189-gauge-wrap{flex:1 1 240px; min-width:200px;}
+.l189-gauge-top{display:flex; justify-content:space-between; font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:3px;}
+.l189-gauge{height:12px; border-radius:8px; border:2px solid var(--line); background:#0c0c0e; overflow:hidden; box-shadow:inset 0 2px 6px rgba(0,0,0,.9);}
+.l189-gauge-fill{
+  height:100%; width:25%; border-radius:5px;
+  background:linear-gradient(90deg,var(--accent-dark),var(--accent));
+  transition:width .8s cubic-bezier(.3,0,.2,1), background .6s;
+  box-shadow:0 0 14px var(--accent-glow);
+}
+.is-complete .l189-gauge-fill{background:linear-gradient(90deg,var(--green-dark),var(--green)); box-shadow:0 0 18px var(--green-glow);}
+.l189-mission{
+  margin-top:10px; font-size:.86rem; color:var(--muted); border-left:3px solid var(--accent);
+  padding:6px 0 6px 12px; background:linear-gradient(90deg,rgba(245,158,11,.08),transparent);
+}
+
+/* ---------- Panels ---------- */
+.l189-sec{margin:0 0 26px;}
+.l189-sec-head{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  border-bottom:2px solid var(--line); padding-bottom:8px; margin-bottom:14px;
+}
+.l189-sec-num{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; color:#1a1206;
+  background:linear-gradient(180deg,var(--accent),var(--accent-dark));
+  padding:4px 10px; border-radius:6px; box-shadow:0 3px 0 #6d3a05;
+}
+.l189-sec-title{font-size:1.12rem; color:#fff; margin:0; text-transform:uppercase; letter-spacing:.06em;}
+.l189-panel{
+  position:relative; background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  border:2px solid var(--line); border-radius:12px; padding:16px;
+  box-shadow:0 5px 0 rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.045);
+  overflow:hidden;
+}
+.l189-panel::after{
+  content:""; position:absolute; inset:0; pointer-events:none; border-radius:10px;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px);
+}
+.l189-panel > *{position:relative; z-index:1;}
+.l189-grid-2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px;}
+.l189-grid-4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px;}
+@media(max-width:860px){
+  .l189-grid-2{grid-template-columns:1fr;}
+  .l189-grid-4{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:520px){
+  .l189-grid-4{grid-template-columns:1fr;}
+}
+
+/* ---------- Text bits ---------- */
+.l189-lead{color:var(--muted); font-size:.92rem;}
+.l189-h4{font-family:var(--mono); font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:14px 0 6px;}
+.l189-list{margin:0 0 .9rem 1.1rem; padding:0;}
+.l189-list li{margin-bottom:.4rem; font-size:.9rem;}
+.l189-table{width:100%; border-collapse:collapse; font-size:.85rem; margin:.4rem 0 1rem;}
+.l189-table th,.l189-table td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+.l189-table th{background:rgba(245,158,11,.1); font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);}
+.l189-table tr:nth-child(even) td{background:rgba(255,255,255,.018);}
+.l189-tag{
+  font-family:var(--mono); font-size:.72rem; padding:1px 6px; border-radius:5px; border:1px solid;
+  white-space:nowrap;
+}
+.t-core{color:#38BDF8; border-color:rgba(56,189,248,.55); background:rgba(56,189,248,.1);}
+.t-ground{color:#22C55E; border-color:rgba(34,197,94,.55); background:rgba(34,197,94,.1);}
+.t-bridge{color:#F59E0B; border-color:rgba(245,158,11,.55); background:rgba(245,158,11,.1);}
+.t-scope{color:#A78BFA; border-color:rgba(167,139,250,.55); background:rgba(167,139,250,.1);}
+.t-bound{color:#F87171; border-color:rgba(248,113,113,.55); background:rgba(248,113,113,.1);}
+
+/* ---------- Pods ---------- */
+.l189-pod{
+  position:relative; background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  border:2px solid var(--line); border-radius:12px; padding:14px;
+  box-shadow:0 5px 0 rgba(0,0,0,.65);
+}
+.l189-pod-head{display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+.l189-pod-ico{font-size:1.25rem;}
+.l189-pod h3{font-size:.9rem; color:#fff; margin:0; text-transform:uppercase; letter-spacing:.05em;}
+.l189-pod .l189-rule{font-size:.82rem; color:var(--muted); margin-bottom:8px;}
+.l189-pod .l189-risk{
+  font-size:.8rem; border-left:3px solid var(--danger); padding:6px 0 6px 9px;
+  background:linear-gradient(90deg,rgba(239,68,68,.1),transparent); margin-bottom:9px;
+}
+.l189-pod .l189-ex{
+  font-size:.82rem; font-style:italic; color:#d8d0be; border:1px dashed var(--line);
+  border-radius:8px; padding:8px 10px; background:rgba(0,0,0,.28); margin-bottom:8px;
+}
+.l189-pod .l189-diag{font-size:.8rem; color:var(--muted);}
+.l189-pod .l189-diag b{color:var(--accent); font-family:var(--mono); font-size:.7rem; letter-spacing:.07em;}
+
+/* ---------- Buttons ---------- */
+.l189-btn{
+  font-family:var(--mono); font-weight:700; font-size:.74rem; letter-spacing:.08em;
+  text-transform:uppercase; color:#1a1206; cursor:pointer; user-select:none;
+  background:linear-gradient(180deg,var(--accent),var(--accent-dark));
+  border:2px solid #7c3f06; border-radius:10px; padding:10px 14px;
+  box-shadow:0 4px 0 var(--accent-dark), 0 6px 14px rgba(0,0,0,.5);
+  transition:box-shadow .13s ease, transform .1s ease, filter .13s ease;
+  display:inline-flex; align-items:center; gap:7px; justify-content:center;
+}
+.l189-btn:hover:not(:disabled){box-shadow:0 4px 16px var(--accent-glow), 0 4px 0 var(--accent-dark); transform:translateY(-1px);}
+.l189-btn:active:not(:disabled){transform:translateY(2px); box-shadow:0 2px 0 var(--accent-dark);}
+.l189-btn:disabled{opacity:.4; cursor:not-allowed; filter:grayscale(.5);}
+.l189-btn--green{background:linear-gradient(180deg,var(--green),var(--green-dark)); border-color:#0d5228; color:#04180c; box-shadow:0 4px 0 #0d5228,0 6px 14px rgba(0,0,0,.5);}
+.l189-btn--green:hover:not(:disabled){box-shadow:0 4px 16px var(--green-glow),0 4px 0 #0d5228;}
+.l189-btn--green:active:not(:disabled){box-shadow:0 2px 0 #0d5228;}
+.l189-btn--danger{background:linear-gradient(180deg,#F87171,var(--danger-dark)); border-color:#5c1010; color:#1b0404; box-shadow:0 4px 0 #5c1010,0 6px 14px rgba(0,0,0,.5);}
+.l189-btn--danger:hover:not(:disabled){box-shadow:0 4px 16px var(--danger-glow),0 4px 0 #5c1010;}
+.l189-btn--danger:active:not(:disabled){box-shadow:0 2px 0 #5c1010;}
+.l189-btn--ghost{
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.2));
+  color:var(--accent); border-color:var(--accent-dark);
+  box-shadow:0 4px 0 rgba(0,0,0,.7), 0 6px 14px rgba(0,0,0,.4);
+}
+.l189-btn--ghost:hover:not(:disabled){box-shadow:0 4px 16px var(--accent-glow),0 4px 0 rgba(0,0,0,.7);}
+.l189-btn--ghost:active:not(:disabled){box-shadow:0 2px 0 rgba(0,0,0,.7);}
+.l189-btn--ghost.on{background:linear-gradient(180deg,var(--accent),var(--accent-dark)); color:#1a1206; border-color:#7c3f06;}
+.l189-btn-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;}
+
+/* ---------- Arch Simulator ---------- */
+.l189-sim{
+  display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:14px;
+}
+@media(max-width:900px){.l189-sim{grid-template-columns:1fr;}}
+.l189-stage{
+  position:relative; border-radius:12px; overflow:hidden;
+  border:2px solid var(--line); background:#0a0a0c;
+  box-shadow:inset 0 0 60px rgba(0,0,0,.95);
+}
+.l189-stage svg{display:block; width:100%; height:auto;}
+.l189-stage.fractured{animation:l189-shake .42s ease 2;}
+@keyframes l189-shake{
+  0%,100%{transform:translate(0,0);}
+  15%{transform:translate(-7px,3px) rotate(-.4deg);}
+  35%{transform:translate(6px,-3px) rotate(.4deg);}
+  55%{transform:translate(-5px,2px);}
+  75%{transform:translate(4px,-2px);}
+}
+.l189-stage.locked{border-color:var(--green); box-shadow:inset 0 0 70px rgba(34,197,94,.16), 0 0 26px var(--green-glow);}
+.l189-clamp-l{transform:translate(-60px,0); transition:transform .85s cubic-bezier(.55,.05,.25,1);}
+.l189-clamp-r{transform:translate(60px,0); transition:transform .85s cubic-bezier(.55,.05,.25,1);}
+.l189-stage.engaged .l189-clamp-l{transform:translate(0,0);}
+.l189-stage.engaged .l189-clamp-r{transform:translate(0,0);}
+.l189-keystone{
+  fill:#0d0d10; stroke:var(--accent); stroke-width:2.5; stroke-dasharray:7 5;
+  transform-box:fill-box; transform-origin:center; transition:all .45s ease;
+}
+.l189-keystone.seated{fill:rgba(245,158,11,.22); stroke-dasharray:none; filter:drop-shadow(0 0 8px var(--accent-glow));}
+.l189-keystone.locked{fill:rgba(34,197,94,.4); stroke:var(--green); stroke-dasharray:none; filter:drop-shadow(0 0 14px var(--green-glow));}
+.l189-stage.fractured .l189-keystone{transform:translate(70px,-90px) rotate(52deg); opacity:0;}
+.l189-stage.fractured .l189-archstones{opacity:.3;}
+.l189-archstones{transition:opacity .4s ease;}
+.l189-cracks{opacity:0; transition:opacity .2s ease;}
+.l189-stage.fractured .l189-cracks{opacity:1;}
+.l189-stage.locked .l189-archglow{opacity:1;}
+.l189-archglow{opacity:0; transition:opacity .7s ease;}
+.l189-pressure{margin-top:10px;}
+.l189-pressure-bar{height:14px; border-radius:8px; border:2px solid var(--line); background:#0b0b0d; overflow:hidden; box-shadow:inset 0 2px 6px rgba(0,0,0,.9);}
+.l189-pressure-fill{height:100%; width:0%; background:linear-gradient(90deg,#78350F,var(--accent)); transition:width .8s ease;}
+.l189-stage.locked ~ .l189-pressure .l189-pressure-fill,
+.l189-pressure.ok .l189-pressure-fill{background:linear-gradient(90deg,var(--green-dark),var(--green)); box-shadow:0 0 12px var(--green-glow);}
+.l189-pressure-lab{font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; margin-bottom:4px;}
+
+.l189-claimbox{
+  border:2px solid rgba(56,189,248,.45); border-radius:10px; padding:11px 12px;
+  background:linear-gradient(180deg,rgba(56,189,248,.09),rgba(56,189,248,.02));
+  font-size:.87rem; margin-bottom:11px;
+}
+.l189-claimbox .l189-cl{font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan); display:block; margin-bottom:4px;}
+.l189-grounds{list-style:none; margin:0 0 11px; padding:0;}
+.l189-grounds li{
+  font-size:.84rem; border:1px solid rgba(34,197,94,.35); border-radius:8px; padding:7px 9px;
+  background:linear-gradient(180deg,rgba(34,197,94,.08),transparent); margin-bottom:7px;
+}
+.l189-gnum{font-family:var(--mono); font-size:.62rem; color:var(--green); letter-spacing:.1em; margin-right:6px;}
+.l189-opts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px;}
+@media(max-width:640px){.l189-opts{grid-template-columns:1fr;}}
+.l189-opt{
+  text-align:left; font-family:var(--sans); font-size:.8rem; line-height:1.42; cursor:pointer;
+  color:var(--text); background:linear-gradient(180deg,var(--surface-3),var(--surface));
+  border:2px solid var(--line); border-radius:10px; padding:10px 11px;
+  box-shadow:0 4px 0 rgba(0,0,0,.7); transition:all .13s ease;
+}
+.l189-opt:hover{border-color:var(--accent); box-shadow:0 4px 14px var(--accent-glow),0 4px 0 rgba(0,0,0,.7); transform:translateY(-1px);}
+.l189-opt:active{transform:translateY(2px); box-shadow:0 2px 0 rgba(0,0,0,.7);}
+.l189-opt.sel{border-color:var(--accent); background:linear-gradient(180deg,rgba(245,158,11,.22),rgba(245,158,11,.05)); box-shadow:0 0 0 2px var(--accent-glow),0 4px 0 var(--accent-dark);}
+.l189-opt.good{border-color:var(--green); background:linear-gradient(180deg,rgba(34,197,94,.22),rgba(34,197,94,.05));}
+.l189-opt.bad{border-color:var(--danger); background:linear-gradient(180deg,rgba(239,68,68,.2),rgba(239,68,68,.04)); opacity:.75;}
+.l189-opt:disabled{cursor:not-allowed;}
+
+.l189-readout{
+  margin-top:12px; border:2px solid var(--line); border-radius:10px; padding:11px 12px;
+  background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.25));
+  font-family:var(--mono); font-size:.76rem; line-height:1.55; color:var(--muted);
+  min-height:76px;
+}
+.l189-readout b{display:block; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:5px; color:var(--accent);}
+.l189-readout.ok{border-color:var(--green); color:#c9f5d8;}
+.l189-readout.ok b{color:var(--green);}
+.l189-readout.bad{border-color:var(--danger); color:#f8cfcf;}
+.l189-readout.bad b{color:var(--danger);}
+
+/* ---------- Detonator ---------- */
+.l189-det-arena{position:relative; overflow:hidden; border-radius:12px;}
+.l189-det-arena.flash{animation:l189-flash .5s ease;}
+@keyframes l189-flash{0%,100%{background:transparent;}30%{background:rgba(239,68,68,.28);}60%{background:rgba(255,255,255,.14);}}
+.l189-det-plate{
+  position:relative; border:2px solid var(--danger); border-radius:12px; padding:14px;
+  background:linear-gradient(180deg,rgba(239,68,68,.14),rgba(239,68,68,.03));
+  box-shadow:0 0 22px rgba(239,68,68,.22), inset 0 0 30px rgba(239,68,68,.08);
+  margin-bottom:14px; overflow:hidden;
+}
+.l189-det-plate::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(135deg,rgba(239,68,68,.07) 0 8px,transparent 8px 16px);
+}
+.l189-det-lab{font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--danger); margin-bottom:6px; display:block;}
+.l189-det-warrant{font-size:.95rem; color:#fff;}
+.l189-negation{
+  margin-top:10px; font-size:.84rem; color:var(--green); border-left:3px solid var(--green);
+  padding:6px 0 6px 10px; background:linear-gradient(90deg,rgba(34,197,94,.1),transparent);
+  opacity:0; max-height:0; overflow:hidden; transition:opacity .4s ease, max-height .4s ease;
+}
+.l189-negation.show{opacity:1; max-height:160px;}
+.l189-claimcard{
+  position:relative; border:2px solid var(--line); border-radius:10px; padding:13px;
+  background:linear-gradient(180deg,var(--surface-3),var(--surface));
+  box-shadow:0 5px 0 rgba(0,0,0,.65);
+  transition:transform .7s cubic-bezier(.6,-.2,.8,.3), opacity .7s ease, filter .7s ease;
+  transform-origin:center bottom; overflow:hidden;
+}
+.l189-claimcard.collapsed{transform:scaleY(.04) scaleX(1.18); opacity:0; filter:blur(6px);}
+.l189-claimcard .l189-cl{font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:5px;}
+.l189-crackov{position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .25s;}
+.l189-crackov.show{opacity:1;}
+.l189-debris{position:absolute; width:10px; height:10px; border-radius:2px; background:var(--danger); pointer-events:none; opacity:0;}
+@keyframes l189-fly{
+  0%{opacity:1; transform:translate(0,0) rotate(0deg);}
+  100%{opacity:0; transform:translate(var(--dx),var(--dy)) rotate(var(--rot));}
+}
+.l189-debris.go{animation:l189-fly .95s cubic-bezier(.2,.7,.4,1) forwards;}
+.l189-debrief{
+  margin-top:14px; border:2px solid var(--green); border-radius:12px; padding:13px;
+  background:linear-gradient(180deg,rgba(34,197,94,.13),rgba(34,197,94,.02));
+  box-shadow:0 0 22px var(--green-glow);
+  opacity:0; transform:translateY(10px); transition:opacity .45s ease, transform .45s ease;
+  pointer-events:none;
+}
+.l189-debrief.show{opacity:1; transform:translateY(0); pointer-events:auto;}
+.l189-debrief h4{color:var(--green); font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px;}
+.l189-debrief p{font-size:.86rem; margin:0; color:#d5f7e0;}
+
+/* ---------- Forensics ---------- */
+.l189-forensics{display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:14px;}
+@media(max-width:900px){.l189-forensics{grid-template-columns:1fr;}}
+.l189-console{
+  border:2px solid var(--line); border-radius:12px; padding:14px;
+  background:linear-gradient(180deg,#101013,#0b0b0d);
+  box-shadow:inset 0 0 40px rgba(0,0,0,.9);
+  font-family:var(--mono); font-size:.82rem; line-height:1.85;
+}
+.l189-passage span{transition:background .3s, box-shadow .3s, color .3s; border-radius:4px; padding:1px 2px;}
+#base-lesson-body.mode-g .x-g{background:rgba(34,197,94,.24); box-shadow:0 0 0 1px rgba(34,197,94,.6); color:#e8ffee;}
+#base-lesson-body.mode-c .x-c{background:rgba(56,189,248,.24); box-shadow:0 0 0 1px rgba(56,189,248,.6); color:#e6f7ff;}
+#base-lesson-body.mode-w .x-w{background:rgba(245,158,11,.24); box-shadow:0 0 0 1px rgba(245,158,11,.6); color:#fff4e0;}
+.l189-inspector{
+  border:2px solid var(--line); border-radius:12px; padding:12px; background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  font-size:.82rem; max-height:420px; overflow-y:auto;
+}
+.l189-inspector h4{font-size:.68rem; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); margin-bottom:8px;}
+.l189-note{
+  border-left:3px solid var(--accent); padding:7px 0 7px 9px; margin-bottom:8px;
+  background:linear-gradient(90deg,rgba(245,158,11,.08),transparent); color:var(--muted); font-size:.79rem;
+}
+.l189-note b{color:#fff; display:block; font-size:.72rem; font-family:var(--mono); letter-spacing:.06em; margin-bottom:2px;}
+.l189-hypo{
+  width:100%; text-align:left; font-family:var(--sans); font-size:.82rem; line-height:1.45; cursor:pointer;
+  color:var(--text); background:linear-gradient(180deg,var(--surface-3),var(--surface));
+  border:2px solid var(--line); border-radius:10px; padding:11px 12px; margin-bottom:9px;
+  box-shadow:0 4px 0 rgba(0,0,0,.7); transition:all .13s ease;
+}
+.l189-hypo:hover{border-color:var(--accent); box-shadow:0 4px 14px var(--accent-glow),0 4px 0 rgba(0,0,0,.7); transform:translateY(-1px);}
+.l189-hypo:active{transform:translateY(2px); box-shadow:0 2px 0 rgba(0,0,0,.7);}
+.l189-hypo.good{border-color:var(--green); background:linear-gradient(180deg,rgba(34,197,94,.2),rgba(34,197,94,.04));}
+.l189-hypo.bad{border-color:var(--danger); background:linear-gradient(180deg,rgba(239,68,68,.18),rgba(239,68,68,.03)); opacity:.72;}
+
+/* ---------- Protocol matrix ---------- */
+.l189-matrix{width:100%; border-collapse:collapse; font-size:.82rem;}
+.l189-matrix th,.l189-matrix td{border:1px solid var(--line); padding:9px 10px; text-align:left; vertical-align:top;}
+.l189-matrix th{background:rgba(245,158,11,.12); font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent);}
+.l189-matrix td:first-child{font-family:var(--mono); font-size:.72rem; color:var(--cyan); white-space:nowrap;}
+.l189-matrix td:nth-child(2){color:#f3b7b7;}
+.l189-matrix tr:nth-child(even) td{background:rgba(255,255,255,.018);}
+.l189-protocol{counter-reset:step; list-style:none; margin:0; padding:0;}
+.l189-protocol li{
+  position:relative; padding:10px 12px 10px 44px; margin-bottom:9px; font-size:.87rem;
+  border:2px solid var(--line); border-radius:10px; background:linear-gradient(180deg,rgba(245,158,11,.07),transparent);
+}
+.l189-protocol li::before{
+  counter-increment:step; content:counter(step);
+  position:absolute; left:10px; top:50%; transform:translateY(-50%);
+  width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:.72rem; font-weight:700; color:#1a1206;
+  background:linear-gradient(180deg,var(--accent),var(--accent-dark)); box-shadow:0 3px 0 #6d3a05;
+}
+
+/* ---------- Finish ---------- */
+.l189-finish{display:flex; justify-content:center; padding:22px 0 6px;}
+.l189-finish-btn{
+  font-family:var(--mono); font-weight:700; font-size:1rem; letter-spacing:.12em; text-transform:uppercase;
+  color:#04180c; cursor:pointer; padding:18px 40px; border-radius:14px;
+  background:linear-gradient(180deg,var(--green),var(--green-dark));
+  border:3px solid #0a3d1e;
+  box-shadow:0 7px 0 #0a3d1e, 0 12px 26px rgba(0,0,0,.6);
+  transition:box-shadow .15s ease, transform .1s ease;
+}
+.l189-finish-btn:hover{box-shadow:0 7px 26px var(--green-glow),0 7px 0 #0a3d1e; transform:translateY(-1px);}
+.l189-finish-btn:active{transform:translateY(4px); box-shadow:0 3px 0 #0a3d1e;}
+</style>
+
+<div id="base-lesson-body" class="l189-root">
+
+  <!-- ============ HUD ============ -->
+  <div class="l189-hud">
+    <div class="l189-hud-row">
+      <span class="l189-badge l189-badge--lvl">⚙ Level 189</span>
+      <span class="l189-badge l189-badge--sub">English · Rhetorical Analysis: Writing the Essay</span>
+      <span class="l189-badge l189-badge--age">9th–10th Grade | Ages 12–16</span>
+      <input class="l189-callsign" id="l189-callsign" value="ANALYST-189" aria-label="Player callsign" spellcheck="false">
+      <span class="l189-xp">⚡ <span id="l189-xp">0</span> XP</span>
+      <div class="l189-gauge-wrap">
+        <div class="l189-gauge-top"><span>Structural Integrity</span><span id="l189-gauge-pct">25%</span></div>
+        <div class="l189-gauge"><div class="l189-gauge-fill" id="l189-gauge-fill"></div></div>
+        <div class="l189-gauge-top" style="margin-top:3px;"><span id="l189-gauge-label">Calibration in Progress</span><span>5 load tests</span></div>
+      </div>
+    </div>
+    <div class="l189-mission">
+      <strong>Mission:</strong> You are the load engineer for the Arch of Argument. Every rhetorical-analysis essay is a stone arch — a claim at the crown, evidence at the springing, and a keystone warrant that must transfer the load between them. Seat a sound keystone and the arch holds under full hydraulic tonnage; seat a circular or unstated one and it shatters into the abyss.
+    </div>
+  </div>
+
+  <!-- ============ SECTION 01 ============ -->
+  <section class="l189-sec">
+    <div class="l189-sec-head">
+      <span class="l189-sec-num">SECTION 01</span>
+      <h2 class="l189-sec-title">Comprehensive Textbook Foundation</h2>
+    </div>
+
+    <div class="l189-panel">
+      <p class="l189-lead">A rhetorical analysis essay is not a summary and it is not a device hunt. It is an <strong>engineering document</strong>: it makes a defensible claim about <em>how</em> a text produces an effect on a specific audience, and it supplies the structural members that carry that claim. Before you touch a single hydraulic control, you must be able to name every part of the structure.</p>
+
+      <h3 class="l189-h4">1.1 — The Five-Part Structural Model</h3>
+      <table class="l189-table">
+        <thead><tr><th>Component</th><th>Structural Function</th><th>Where It Lives in the Essay</th></tr></thead>
+        <tbody>
+          <tr><td><span class="l189-tag t-core">CORE ASSERTION / OUTCOME</span></td><td>The defensible, arguable claim about how and why the text persuades — the load the arch must carry.</td><td>Thesis statement; topic sentences of body paragraphs.</td></tr>
+          <tr><td><span class="l189-tag t-ground">EMPIRICAL GROUNDS / INPUTS</span></td><td>Verbatim textual evidence: diction, syntax, appeals, structure, tone, imagery, occasion. Raw material only.</td><td>Quoted and cited material inside body paragraphs.</td></tr>
+          <tr><td><span class="l189-tag t-bridge">CONNECTING BRIDGE / MECHANISM</span></td><td>The stated principle explaining <em>why</em> that evidence produces that effect on that audience. The keystone.</td><td>The "because…" clause; the analysis sentence that follows every quotation.</td></tr>
+          <tr><td><span class="l189-tag t-scope">SCOPE QUALIFIERS</span></td><td>Audience, occasion, medium, historical moment, and degree of certainty ("primarily," "in this context," "tends to").</td><td>Introductory framing; hedges embedded in the thesis.</td></tr>
+          <tr><td><span class="l189-tag t-bound">BOUNDARY CONDITIONS</span></td><td>The limits the claim does not cross; acknowledged counter-evidence and conceded ground.</td><td>Concession and refutation paragraph.</td></tr>
+        </tbody>
+      </table>
+      <p class="l189-lead"><strong>Failure signature:</strong> When a student essay collapses, it is almost never because the grounds are missing. It is because the <em>bridge</em> is missing — the writer quotes, then asserts an effect, and never supplies the principle that connects the two.</p>
+
+      <h3 class="l189-h4">1.2 — The Four Core Verification Criteria</h3>
+      <div class="l189-grid-4">
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">🎯</span><h3>Relevance</h3></div>
+          <p class="l189-rule">Does the evidence actually bear on <em>this</em> claim, in <em>this</em> context?</p>
+          <p class="l189-diag">A quotation about diction cannot support a claim about structural pacing. Relevance is the first gate: irrelevant grounds are dead weight that adds no compressive strength.</p>
+        </div>
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">📦</span><h3>Sufficiency</h3></div>
+          <p class="l189-rule">Is there <em>enough</em> evidence to carry the weight of the claim?</p>
+          <p class="l189-diag">One quoted adjective cannot support a claim about an entire essay's tone. Sufficiency scales with claim breadth: broaden the claim, and you must add members.</p>
+        </div>
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">🔍</span><h3>Accuracy</h3></div>
+          <p class="l189-rule">Is the quotation verbatim, correctly attributed, and quoted in context?</p>
+          <p class="l189-diag">Truncated or paraphrased quotations that shift meaning are structural forgeries. If the ground is inaccurate, every load above it is unsupported.</p>
+        </div>
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">🔗</span><h3>Independence</h3></div>
+          <p class="l189-rule">Do the grounds corroborate one another, or are they restatements of one point?</p>
+          <p class="l189-diag">Three quotations of the same metaphor are one piece of evidence counted three times. Independence is what gives a body paragraph real load capacity.</p>
+        </div>
+      </div>
+
+      <h3 class="l189-h4">1.3 — Structural Validity vs. Soundness</h3>
+      <div class="l189-grid-2">
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">📐</span><h3>Structural Validity</h3></div>
+          <p class="l189-rule"><strong>Formal internal consistency.</strong> If the stated bridge were true, would the claim actually follow from the grounds?</p>
+          <p class="l189-diag">A valid argument can still be wrong. "The author repeats 'we' eleven times; therefore she constructs a collective identity that shames dissenters" is <em>valid in form</em> — repetition → in-group pressure → exclusion of dissent — even if the intermediate step is false. Validity is about the shape of the load path, not the truth of its members.</p>
+        </div>
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">✅</span><h3>Soundness</h3></div>
+          <p class="l189-rule"><strong>Validity + verified factual truth of every member.</strong> A sound analysis has both a correct form and true, checkable grounds.</p>
+          <p class="l189-diag">Soundness is the standard a rhetorical analysis essay is graded against. Your job as the analyst is to test both: first whether the bridge holds, then whether the quotation actually says what you claim it says.</p>
+        </div>
+      </div>
+
+      <h3 class="l189-h4">1.4 — Deductive vs. Inductive Systems</h3>
+      <div class="l189-grid-2">
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">🔒</span><h3>Deductive Systems — Truth-Preserving Certainty</h3></div>
+          <p class="l189-rule">If the premises are true and the form is valid, the conclusion <em>must</em> be true. No probabilistic hedge is permitted.</p>
+          <p class="l189-diag"><strong>In analysis:</strong> "The text defines 'freedom' as the absence of a fee in ¶2 and as unlimited choice in ¶6. A term cannot carry two incompatible senses in one argument. Therefore the conclusion is not entailed by either sense." This is a deductive move — and it is airtight if the quotations are accurate.</p>
+        </div>
+        <div class="l189-pod">
+          <div class="l189-pod-head"><span class="l189-pod-ico">📈</span><h3>Inductive Systems — Probabilistic Strength</h3></div>
+          <p class="l189-rule">The grounds make the claim <em>likely</em>, not certain. Strength depends on sample robustness and representativeness.</p>
+          <p class="l189-diag"><strong>In analysis:</strong> "Across four separate paragraphs, the author pairs statistical evidence with a family anecdote. This pattern suggests a consistent strategy of pairing credibility with intimacy." Inductive claims must be hedged: <em>suggests</em>, <em>tends to</em>, <em>across the passages examined</em>.</p>
+        </div>
+      </div>
+
+      <h3 class="l189-h4">1.5 — Key Presumption Traps Specific to Rhetorical Analysis</h3>
+      <ul class="l189-list">
+        <li><strong>The Intent Fallacy:</strong> Claiming to know what the author <em>meant</em> rather than what the text <em>does</em>. You can only analyze the artifact, never the mind behind it.</li>
+        <li><strong>The Device-Hunt Substitution:</strong> Replacing analysis with a list of named devices ("she uses ethos, pathos, and logos"). Naming a device is classification, not mechanism — it is a label, not a load path.</li>
+        <li><strong>The Universal-Audience Assumption:</strong> Treating "the reader" as a single, stable entity. An effect claim is only meaningful relative to a specified audience in a specified moment.</li>
+        <li><strong>The Effect-Verification Leap:</strong> Asserting that a device <em>did</em> persuade real people, when the evidence only shows that the device is <em>designed</em> to persuade. Analysis of design ≠ measurement of outcome.</li>
+        <li><strong>The Quotation-Orphan:</strong> Dropping a quotation with no sentence after it that states the bridge. If the analysis sentence does not contain a "because," "by," or "which allows," the keystone is missing.</li>
+      </ul>
+
+      <h3 class="l189-h4">1.6 — Worked Example 01: A School-Board Address</h3>
+      <div class="l189-panel" style="background:linear-gradient(180deg,#191920,#131316);">
+        <p style="font-size:.88rem;"><span class="l189-tag t-core">CORE ASSERTION</span> In her 2021 school-board address, Principal Alvarez argues that later start times will improve student outcomes <span class="l189-tag t-scope">SCOPE: "primarily"</span> <em>primarily</em> by reframing the debate from <strong>convenience</strong> to <strong>safety</strong>.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-ground">GROUNDS G1</span> <em>"78% of our students are walking to the bus stop before sunrise."</em> — verbatim statistic, audience-facing.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-ground">GROUNDS G2</span> <em>"A teenager's brain is not awake at 7:10 a.m."</em> — physiological appeal stated in plain, non-clinical language.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-bridge">CONNECTING BRIDGE</span> By translating a scheduling question into a child-safety question, Alvarez forces opponents to argue <em>against safety itself</em> — a position no parent in the room can publicly occupy.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-scope">SCOPE QUALIFIER</span> "In this room" — the claim is bounded to the school board audience, 2021, in person. It does <strong>not</strong> claim that the speech persuades a general audience.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-bound">BOUNDARY CONDITION</span> The analysis concedes that Alvarez makes no achievement claim; she claims only that the <em>burden of proof</em> has shifted. This concession strengthens the arch by narrowing it.</p>
+        <div class="l189-readout ok" style="margin-top:10px;"><b>Component Decoder</b>G1 and G2 are <strong>inputs</strong>. The bridge is the <strong>keystone</strong>: it explains the mechanism (reclassification raises the social cost of dissent) rather than the content. The scope qualifier prevents the claim from being over-extended — the most common cause of arch failure in student essays.</div>
+      </div>
+
+      <h3 class="l189-h4" style="margin-top:18px;">1.7 — Worked Example 02: A Single-Use Plastics Op-Ed</h3>
+      <div class="l189-panel" style="background:linear-gradient(180deg,#191920,#131316);">
+        <p style="font-size:.88rem;"><span class="l189-tag t-core">CORE ASSERTION</span> In "Delete the Plastic Aisle" (2023), the author's case for <em>personal habit change</em> fails to establish that individual will is the binding constraint on plastic waste.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-ground">GROUNDS G1</span> <em>"Every year, Americans throw away 100 billion plastic bags."</em> — an aggregate volume statistic.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-ground">GROUNDS G2</span> <em>"Our grandparents carried canvas. We can too."</em> — a nostalgic generational appeal.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-bridge">CONNECTING BRIDGE (as stated)</span> Because the behavior was once normal, it can be normalized again by will alone.</p>
+        <p style="font-size:.88rem;"><span class="l189-tag t-bound">BOUNDARY BREACH</span> The essay is silent on whether individual action is <em>sufficient</em>. G1 measures a <strong>condition</strong> (how much waste exists); G2 supplies a <strong>memory</strong> (how shopping once worked). Neither measures a <strong>barrier</strong>. The bridge therefore assumes the obstacle is motivation rather than infrastructure — an unstated warrant carrying the entire conclusion.</p>
+        <div class="l189-readout bad" style="margin-top:10px;"><b>Diagnostic</b>The arch fails because the keystone is doing work no ground can support. The negated warrant — "readers already want to change and are blocked by availability, price, and store policy" — is at least as plausible as the stated one, and it collapses the recommendation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 02 ============ -->
+  <section class="l189-sec">
+    <div class="l189-sec-head">
+      <span class="l189-sec-num">SECTION 02</span>
+      <h2 class="l189-sec-title">The Four Hazard Pods</h2>
+    </div>
+    <p class="l189-lead" style="margin-bottom:14px;">These are the four structural failure archetypes you will encounter in every rhetorical-analysis essay you write, read, or grade. Learn to identify them on sight — the arch simulator in Section 03 tests nothing else.</p>
+
+    <div class="l189-grid-2">
+      <div class="l189-pod">
+        <div class="l189-pod-head"><span class="l189-pod-ico">⚖️</span><h3>Pod 1 — The Value Trap</h3></div>
+        <p class="l189-rule"><strong>Formal identification rule:</strong> The bridge can only hold if the reader already accepts an unstated priority, moral hierarchy, or preference. Test it by asking: "If I rejected this value, would the claim still follow from the grounds?" If no, you have a Value Trap.</p>
+        <p class="l189-risk"><strong>Catastrophic failure risk:</strong> The essay appears persuasive to readers who share the value and completely collapses for readers who do not. In graded analysis, this reads as an unearned assumption and forfeits the analysis point entirely.</p>
+        <p class="l189-ex">"Alvarez's appeal to student safety is effective because a child's wellbeing obviously outweighs any inconvenience a schedule change might cause."</p>
+        <p class="l189-diag"><b>ACTIVE DIAGNOSTIC</b> The grounds describe what the speech <em>says</em>; the claim is about <em>effectiveness</em>. The bridge smuggles in a moral ranking ("wellbeing > convenience") that the audience is assumed to hold — and that some board members, in fact, may not. <strong>Repair:</strong> state the value as the audience's value and cite evidence of it in the text or occasion.</p>
+      </div>
+
+      <div class="l189-pod">
+        <div class="l189-pod-head"><span class="l189-pod-ico">🔥</span><h3>Pod 2 — The Causal Leap</h3></div>
+        <p class="l189-rule"><strong>Formal identification rule:</strong> The bridge moves from <em>sequence</em> or <em>correlation</em> to <em>causation</em> without eliminating alternative explanations (omitted variable bias) or checking for reverse causation.</p>
+        <p class="l189-risk"><strong>Catastrophic failure risk:</strong> The analysis attributes an effect to a device when the effect is produced by occasion, speaker identity, prior audience belief, or the medium itself. Every load above the false cause is unsupported.</p>
+        <p class="l189-ex">"Alvarez's statistics caused the board to vote for the later start time."</p>
+        <p class="l189-diag"><b>ACTIVE DIAGNOSTIC</b> The vote may have been driven by a pre-existing majority, a district insurance report released the same week, or the superintendent's endorsement. Correlation between the speech and the vote is not evidence that the speech moved anyone. <strong>Repair:</strong> downgrade to an inductive claim about <em>design</em> — "the speech is structured to make opposition costly" — rather than a causal claim about outcome.</p>
+      </div>
+
+      <div class="l189-pod">
+        <div class="l189-pod-head"><span class="l189-pod-ico">🔄</span><h3>Pod 3 — The Definitional Shift</h3></div>
+        <p class="l189-rule"><strong>Formal identification rule:</strong> A key term appears twice with two different senses, and the conclusion requires both senses simultaneously. Track the term across paragraphs and write each local definition explicitly.</p>
+        <p class="l189-risk"><strong>Catastrophic failure risk:</strong> The argument inherits the emotional force of one sense while being logically entailed only by the other. This is equivocation, and it is a deductive failure — no amount of added evidence repairs it.</p>
+        <p class="l189-ex">"The author defends freedom. In ¶2 freedom means 'no government fee'; in ¶6 it means 'unlimited product choice.' The conclusion — 'regulation destroys freedom' — depends on reading both senses at once."</p>
+        <p class="l189-diag"><b>ACTIVE DIAGNOSTIC</b> The writer never signals the transition, so the reader carries the warm connotation of "choice" into a claim that is only literally about "fees." <strong>Repair:</strong> quote both definitions verbatim, name the shift explicitly, and show that neither sense alone entails the conclusion.</p>
+      </div>
+
+      <div class="l189-pod">
+        <div class="l189-pod-head"><span class="l189-pod-ico">🔬</span><h3>Pod 4 — The Micro-Sample Mirage</h3></div>
+        <p class="l189-rule"><strong>Formal identification rule:</strong> The evidence base is non-representative — a voluntary cohort, a self-selected poll, a single anecdote, a survivor-biased archive — yet the bridge generalizes to a whole population.</p>
+        <p class="l189-risk"><strong>Catastrophic failure risk:</strong> The generalization inherits the bias of the sample. Voluntary respondents systematically over-represent people with strong opinions; survivor bias systematically hides the failures.</p>
+        <p class="l189-ex">"Our survey of 412 students found that 89% of respondents said phones distract them, so phones distract the student body."</p>
+        <p class="l189-diag"><b>ACTIVE DIAGNOSTIC</b> The 412 students chose to respond to a phone survey about phones. Those most distracted — and those most opinionated — are the most likely to answer. The sample is a volunteer cohort, not a random draw. <strong>Repair:</strong> bound the claim to the respondents ("of those who chose to answer") or demand a representative sample before generalizing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 03 ============ -->
+  <section class="l189-sec">
+    <div class="l189-sec-head">
+      <span class="l189-sec-num">SECTION 03</span>
+      <h2 class="l189-sec-title">The Keystone Arch Squeezer</h2>
+    </div>
+    <div class="l189-panel">
+      <p class="l189-lead">Three arches stand over the abyss. Each is built from a <span class="l189-tag t-core">CORE CLAIM</span> at the crown and <span class="l189-tag t-ground">GROUNDS</span> at the springing — but each is missing its <span class="l189-tag t-bridge">KEYSTONE</span>. Four candidate keystones are on the rack. Seat the one that genuinely transfers load, then engage the hydraulic clamps. A sound keystone locks green under full tonnage. A circular, labeled, or value-laden keystone shatters the arch.</p>
+
+      <div class="l189-sim" style="margin-top:14px;">
+        <div>
+          <div class="l189-stage" id="l189-stage">
+            <svg viewBox="0 0 400 280" role="img" aria-label="Stone arch spanning an abyss with an empty keystone slot">
+              <defs>
+                <linearGradient id="l189-abyss" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#16161a"/>
+                  <stop offset="55%" stop-color="#0b0b0e"/>
+                  <stop offset="100%" stop-color="#050507"/>
+                </linearGradient>
+                <linearGradient id="l189-stone" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4a4640"/>
+                  <stop offset="100%" stop-color="#2c2a27"/>
+                </linearGradient>
+                <linearGradient id="l189-metal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4a4a55"/>
+                  <stop offset="100%" stop-color="#22222a"/>
+                </linearGradient>
+              </defs>
+
+              <rect x="0" y="0" width="400" height="280" fill="url(#l189-abyss)"/>
+              <!-- distant abyss glow -->
+              <ellipse cx="200" cy="262" rx="170" ry="26" fill="rgba(245,158,11,.07)"/>
+
+              <!-- cliffs -->
+              <path d="M0 280 L0 208 L96 208 L86 280 Z" fill="#2a2825" stroke="#443f38" stroke-width="2"/>
+              <path d="M400 280 L400 208 L304 208 L314 280 Z" fill="#2a2825" stroke="#443f38" stroke-width="2"/>
+
+              <!-- arch stones -->
+              <g class="l189-archstones">
+                <path d="M95 210 A105 105 0 0 1 176 107.8" fill="none" stroke="url(#l189-stone)" stroke-width="34" stroke-dasharray="28 5" stroke-linecap="butt"/>
+                <path d="M224 107.8 A105 105 0 0 1 305 210" fill="none" stroke="url(#l189-stone)" stroke-width="34" stroke-dasharray="28 5" stroke-linecap="butt"/>
+                <path d="M95 210 A105 105 0 0 1 176 107.8" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="2"/>
+                <path d="M224 107.8 A105 105 0 0 1 305 210" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="2"/>
+              </g>
+
+              <!-- success glow -->
+              <g class="l189-archglow">
+                <path d="M95 210 A105 105 0 0 1 176 107.8" fill="none" stroke="rgba(34,197,94,.6)" stroke-width="34" style="filter:blur(9px)"/>
+                <path d="M224 107.8 A105 105 0 0 1 305 210" fill="none" stroke="rgba(34,197,94,.6)" stroke-width="34" style="filter:blur(9px)"/>
+              </g>
+
+              <!-- fracture cracks -->
+              <g class="l189-cracks" stroke="#EF4444" stroke-width="2.4" fill="none" stroke-linecap="round">
+                <path d="M120 190 L150 168 L138 146 L172 130"/>
+                <path d="M280 190 L252 166 L266 144 L232 128"/>
+                <path d="M150 168 L176 176 L192 158"/>
+                <path d="M252 166 L226 174 L212 156"/>
+                <path d="M200 118 L200 176 L186 196"/>
+                <path d="M96 208 L124 212 L118 232"/>
+                <path d="M304 208 L276 212 L282 232"/>
+              </g>
+
+              <!-- keystone slot -->
+              <polygon id="l189-keystone" class="l189-keystone" points="180,124 172,91 228,91 220,124"/>
+
+              <!-- hydraulic clamps -->
+              <g class="l189-clamp-l">
+                <rect x="0" y="140" width="70" height="60" rx="6" fill="url(#l189-metal)" stroke="#5c5c68" stroke-width="2"/>
+                <rect x="64" y="162" width="26" height="16" rx="3" fill="#6a6a78" stroke="#84848f" stroke-width="1.5"/>
+                <rect x="88" y="118" width="20" height="104" rx="4" fill="#3a3a44" stroke="#F59E0B" stroke-width="2.5"/>
+                <circle cx="34" cy="170" r="9" fill="none" stroke="#F59E0B" stroke-width="2" opacity=".7"/>
+              </g>
+              <g class="l189-clamp-r">
+                <rect x="330" y="140" width="70" height="60" rx="6" fill="url(#l189-metal)" stroke="#5c5c68" stroke-width="2"/>
+                <rect x="310" y="162" width="26" height="16" rx="3" fill="#6a6a78" stroke="#84848f" stroke-width="1.5"/>
+                <rect x="292" y="118" width="20" height="104" rx="4" fill="#3a3a44" stroke="#F59E0B" stroke-width="2.5"/>
+                <circle cx="366" cy="170" r="9" fill="none" stroke="#F59E0B" stroke-width="2" opacity=".7"/>
+              </g>
+            </svg>
+          </div>
+          <div class="l189-pressure" id="l189-pressure">
+            <div class="l189-pressure-lab"><span>Hydraulic Tonnage</span><span id="l189-tonnage">0%</span></div>
+            <div class="l189-pressure-bar"><div class="l189-pressure-fill" id="l189-pressure-fill"></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="l189-claimbox">
+            <span class="l189-cl">Arch <span id="l189-arch-num">1</span> of 3 — Core Claim</span>
+            <span id="l189-arch-claim"></span>
+          </div>
+          <div style="font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--green); margin-bottom:6px;">Grounds at the springing</div>
+          <ul class="l189-grounds" id="l189-arch-grounds"></ul>
+          <div style="font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Candidate keystones — seat one</div>
+          <div class="l189-opts" id="l189-arch-options"></div>
+
+          <div class="l189-btn-row">
+            <button class="l189-btn" id="l189-engage">⚙️ Engage Hydraulic Clamps</button>
+            <button class="l189-btn l189-btn--ghost" id="l189-next" disabled>➡ Next Arch</button>
+          </div>
+
+          <div class="l189-readout" id="l189-arch-readout">
+            <b>Load Engineer Readout</b>
+            Select a candidate keystone, then engage the clamps. If the bridge is a mechanism, the arch locks. If it is a label, a restatement, or an unstated value, the stones shear apart.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 04 ============ -->
+  <section class="l189-sec">
+    <div class="l189-sec-head">
+      <span class="l189-sec-num">SECTION 04</span>
+      <h2 class="l189-sec-title">The Negation Detonator</h2>
+    </div>
+    <div class="l189-panel">
+      <p class="l189-lead">The Negation Test is the fastest way to find a load-bearing assumption. Take the bridge the argument never states, invert it, and see whether the whole structure survives. If the claim collapses when the assumption is negated, the assumption was holding it up — and it was never declared.</p>
+
+      <div class="l189-det-arena" id="l189-det-arena" style="margin-top:14px;">
+        <div class="l189-det-plate" id="l189-det-plate">
+          <span class="l189-det-lab">⟡ Target Implicit Warrant — Under Load</span>
+          <div class="l189-det-warrant" id="l189-det-warrant">
+            "A voluntary, self-selected survey of 412 students accurately represents the distraction behaviour of the entire 2,300-student school."
+          </div>
+          <div class="l189-negation" id="l189-negation">
+            <strong>NEGATION APPLIED:</strong> "The students who chose to answer were not representative — those most distracted, and those with the strongest opinions about phones, were the most likely to respond."
+          </div>
+        </div>
+
+        <div class="l189-claimcard" id="l189-claimcard">
+          <svg class="l189-crackov" id="l189-crackov" viewBox="0 0 600 140" preserveAspectRatio="none">
+            <g stroke="#EF4444" stroke-width="2.5" fill="none" stroke-linecap="round">
+              <path d="M300 0 L286 40 L312 62 L292 100 L304 140"/>
+              <path d="M286 40 L230 30 L196 54"/>
+              <path d="M312 62 L372 50 L404 74"/>
+              <path d="M292 100 L236 112"/>
+              <path d="M292 100 L348 118"/>
+              <path d="M60 8 L104 34 L86 66"/>
+              <path d="M540 12 L500 38 L520 70"/>
+            </g>
+          </svg>
+          <span class="l189-cl">Claim Under Test</span>
+          <span id="l189-det-claim-text">"The district should therefore ban phones during instructional time."</span>
+        </div>
+
+        <div class="l189-btn-row">
+          <button class="l189-btn l189-btn--danger" id="l189-detonate">💣 Detonate Negation Test</button>
+          <button class="l189-btn l189-btn--ghost" id="l189-reset-det">⟲ Reset Charge Bay</button>
+        </div>
+
+        <div class="l189-debrief" id="l189-debrief">
+          <h4>💥 Detonation Successful</h4>
+          <p>By proving the opposite of the implicit assumption, the entire premise collapsed. The Negation Test proves this assumption was a fatal structural dependency: the survey's representativeness was never stated, never tested, and never bounded — yet the policy recommendation cannot stand without it. In your own essay, this is the moment you write the sentence that names the unstated warrant out loud.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 05 ============ -->
+  <section class="l189-sec">
+    <div class="l189-sec-head">
+      <span class="l189-sec-num">SECTION 05</span>
+      <h2 class="l189-sec-title">Live Fire Forensics</h2>
+    </div>
+    <div class="l189-panel">
+      <p class="l189-lead">Below is a real student rhetorical-analysis paragraph. Run the three scan channels to expose its structural members, then locate the fatal flaw.</p>
+
+      <div class="l189-btn-row" style="margin-bottom:14px;">
+        <button class="l189-btn l189-btn--ghost" id="l189-mode-g">🟢 Scan Foundation / Grounds</button>
+        <button class="l189-btn l189-btn--ghost" id="l189-mode-c">🔵 Scan Core Claims / Outcomes</button>
+        <button class="l189-btn l189-btn--ghost" id="l189-mode-w">🟠 Detect Unstated Mechanisms / Warrants</button>
+      </div>
+
+      <div class="l189-forensics">
+        <div class="l189-console">
+          <div style="font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">▚ Terminal 05 — Specimen Essay Fragment</div>
+          <p class="l189-passage" id="l189-passage">
+            In her 2021 address to the school board,
+            <span class="x-c" data-note="Core claim (weak). This states the text's topic, not a defensible claim about HOW it persuades. A thesis must be arguable — this one merely reports.">Principal Alvarez argues for later start times</span>.
+            She reports that
+            <span class="x-g" data-note="GROUNDS G1 — verbatim statistic. Relevant, accurate, and audience-facing. Real compressive strength.">"78% of our students are walking to the bus stop before sunrise,"</span>
+            and she notes that
+            <span class="x-g" data-note="GROUNDS G2 — a physiological appeal rendered in plain language. Still evidence; still not analysis.">"a teenager's brain is not awake at 7:10 a.m."</span>
+            <span class="x-c" data-note="CORE CLAIM — and the fatal one. 'Prove' plus 'across the district' outruns everything the grounds can carry. The evidence concerns safety and alertness inside the room; the claim concerns achievement across a district.">These statistics prove that later start times will raise student achievement across the district.</span>
+            Alvarez also
+            <span class="x-c" data-note="Core claim (device label). Naming 'pathos' is classification, not analysis. It tells us what is present, never why it moves anyone.">uses pathos when she mentions sunrise</span>,
+            <span class="x-w" data-note="UNSTATED WARRANT — the bridge is entirely absent. The essay asserts that 'sunrise' produces sadness without supplying any principle connecting the image to this audience's emotional response.">because sunrise is a word that makes people feel sad</span>.
+            Throughout the speech,
+            <span class="x-c" data-note="Core claim (restatement). This repeats the thesis in different words and attaches no mechanism to it.">Alvarez relies on evidence and emotion to persuade her audience</span>
+            <span class="x-w" data-note="UNSTATED WARRANT — a summary sentence standing where an analysis sentence should be. It never explains why this evidence moves THIS audience to act, which is the only thing a warrant can do.">that the schedule should change</span>.
+          </p>
+        </div>
+
+        <div class="l189-inspector" id="l189-inspector">
+          <h4>◈ Inspector Notes</h4>
+          <div class="l189-note">Activate a scan channel to populate the inspector. Each channel isolates one structural component so you can audit it independently.</div>
+        </div>
+      </div>
+
+      <h3 class="l189-h4" style="margin-top:18px;">Find the Fatal Flaw</h3>
+      <div id="l189-hypos">
+        <button class="l189-hypo" data-ok="0">The paragraph quotes only two pieces of evidence, which is not enough for a full essay.</button>
+        <button class="l189-hypo" data-ok="1">The paragraph claims the evidence "proves" a district-wide achievement gain, but the grounds only support a safety-and-alertness claim inside the room — an unstated warrant bridges alertness to achievement, and the scope creeps from audience to district.</button>
+        <button class="l189-hypo" data-ok="0">The paragraph uses the technical term "pathos," which is too informal for academic writing.</button>
+      </div>
+      <div class="l189-readout" id="l189-hypo-readout">
+        <b>Flaw Analysis Readout</b>
+        Select the hypothesis that identifies the structural failure — not the stylistic one.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 06 ============ -->
+  <section class="l189-sec">
+    <div class="l189-sec-head">
+      <span class="l189-sec-num">SECTION 06</span>
+      <h2 class="l189-sec-title">Quick-Reference Procedural Protocol</h2>
+    </div>
+    <div class="l189-panel">
+      <h3 class="l189-h4">6.1 — Error Detection Triage Matrix</h3>
+      <div style="overflow-x:auto;">
+        <table class="l189-matrix">
+          <thead><tr><th>Component</th><th>Failure Mode</th><th>Elimination Move</th></tr></thead>
+          <tbody>
+            <tr><td>CORE ASSERTION</td><td>Unarguable summary; scope unbounded; certainty overstated ("proves," "always").</td><td>Rewrite as a claim about <em>how</em> the text works on a <em>named</em> audience; add a hedge and a scope limiter.</td></tr>
+            <tr><td>EMPIRICAL GROUNDS</td><td>Quotation orphaned with no analysis sentence; truncated quote; single source repeated three times.</td><td>Follow every quotation with a "because" sentence; verify verbatim accuracy; require at least two independent grounds.</td></tr>
+            <tr><td>CONNECTING BRIDGE</td><td>Missing entirely, or replaced by a device label ("uses pathos"), a value assumption, or a circular restatement.</td><td>Write the mechanism sentence out loud. If it contains no causal verb, there is no bridge.</td></tr>
+            <tr><td>SCOPE QUALIFIER</td><td>Effect claim about "the reader" in general; local evidence generalized to a national or district-wide conclusion.</td><td>Name the audience, the occasion, and the medium in the thesis; mark every generalization boundary explicitly.</td></tr>
+            <tr><td>BOUNDARY CONDITION</td><td>No concession paragraph; counter-evidence ignored; over-claiming in the conclusion.</td><td>Add a paragraph that concedes one genuine limitation and explains why the core claim survives it.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="l189-h4" style="margin-top:18px;">6.2 — The Universal 5-Step Deconstruction Protocol</h3>
+      <ol class="l189-protocol">
+        <li><strong>Step 1: Isolate Core Claims &amp; Scope Limits:</strong> Separate the central assertion from background context and mark certainty limiters.</li>
+        <li><strong>Step 2: Audit Empirical Grounds for Sufficiency:</strong> Check for sample representation, bias, and source independence.</li>
+        <li><strong>Step 3: Extract the Unstated Bridge / Mechanism:</strong> Formulate the implicit connecting principle linking inputs to outcomes.</li>
+        <li><strong>Step 4: Execute the Negation &amp; Counter-Model Test:</strong> Logically negate the bridge; if the outcome collapses, the component is load-bearing.</li>
+        <li><strong>Step 5: Probe for Confounding Variables &amp; Causal Reversal:</strong> Check for alternative explanations, bidirectional causality, and definitional shifts.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FINISH ============ -->
+  <div class="l189-finish">
+    <button class="l189-finish-btn" id="l189-finish">Finish Lesson</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('base-lesson-body');
+  if (!root) return;
+
+  /* ---------------- HUD STATE ---------------- */
+  const TOTAL = 5;
+  const state = { xp: 0, solved: new Set() };
+  const xpEl = document.getElementById('l189-xp');
+  const gaugeFill = document.getElementById('l189-gauge-fill');
+  const gaugePct = document.getElementById('l189-gauge-pct');
+  const gaugeLabel = document.getElementById('l189-gauge-label');
+
+  function updateHUD() {
+    xpEl.textContent = String(state.xp);
+    const pct = 25 + (state.solved.size / TOTAL) * 75;
+    gaugeFill.style.width = pct + '%';
+    gaugePct.textContent = Math.round(pct) + '%';
+    gaugeLabel.textContent =
+      pct >= 100 ? 'Structure Secured & Verified' :
+      pct >= 75 ? 'Load Path Stabilizing' :
+      pct >= 50 ? 'Partial Calibration' : 'Calibration in Progress';
+    if (pct >= 100) root.classList.add('is-complete');
+  }
+
+  function award(key, amount) {
+    if (state.solved.has(key)) return false;
+    state.solved.add(key);
+    state.xp += amount;
+    updateHUD();
+    return true;
+  }
+
+  updateHUD();
+
+  /* ---------------- SECTION 03: KEYSTONE ARCH SQUEEZER ---------------- */
+  const ARCHES = [
+    {
+      claim: 'In her 2021 school-board address, Principal Alvarez shifts the later-start-time debate from logistics to child safety, leaving opponents no publicly available objection.',
+      grounds: [
+        '"78% of our students are walking to the bus stop before sunrise."',
+        '"A teenager\u2019s brain is not awake at 7:10 a.m."'
+      ],
+      options: [
+        {
+          text: 'Alvarez\u2019s evidence is about sleep and safety, which are important topics for a school board to discuss.',
+          ok: false,
+          why: 'Relevance is not a bridge. This keystone restates that the evidence <em>matters</em> without explaining <em>how</em> it produces the claim\u2019s effect. The clamps find no connecting member and the arch shears.'
+        },
+        {
+          text: 'By reclassifying a scheduling proposal as a safety measure, Alvarez makes opposition sound like an endorsement of physical risk \u2014 a cost no parent in the room can publicly accept.',
+          ok: true,
+          why: 'This keystone names the mechanism: reclassification changes the <em>social cost of dissent</em> for this specific audience. It connects the quoted grounds to the claim without importing an unstated value.'
+        },
+        {
+          text: 'Alvarez uses statistics and pathos in her speech, which shows she is a skilled speaker.',
+          ok: false,
+          why: 'Device-spotting is not analysis. Labelling appeals tells us what is present in the text, never why it moves anyone. A label transfers no load.'
+        },
+        {
+          text: 'Everyone already agrees that a child\u2019s wellbeing matters more than a bus schedule.',
+          ok: false,
+          why: 'This is a <strong>Value Trap</strong>. It smuggles in an unstated moral hierarchy and is circular \u2014 it assumes the very concession the claim is supposed to earn.'
+        }
+      ]
+    },
+    {
+      claim: 'In "Delete the Plastic Aisle," the author\u2019s case for personal habit change never establishes that individual will is the binding constraint on plastic waste.',
+      grounds: [
+        '"Every year, Americans throw away 100 billion plastic bags." \u2014 an aggregate volume statistic.',
+        '"Our grandparents carried canvas. We can too." \u2014 a nostalgic generational appeal.'
+      ],
+      options: [
+        {
+          text: 'The author uses nostalgia, which makes readers feel guilty about their shopping habits.',
+          ok: false,
+          why: 'A tone label with no mechanism. "Guilt" is asserted, never derived from the quoted line. The keystone carries nothing.'
+        },
+        {
+          text: '100 billion is an enormous number, so the problem must be extremely serious.',
+          ok: false,
+          why: 'The magnitude of a problem is not evidence that individual will is its remedy. This keystone answers a question the claim never asked.'
+        },
+        {
+          text: 'The grounds supply a condition (volume of waste) and a memory (past behaviour), but neither establishes that the barrier facing readers today is motivation rather than infrastructure.',
+          ok: true,
+          why: 'Correct. This keystone isolates the unstated warrant \u2014 <em>will is the binding constraint</em> \u2014 and shows that the supplied grounds never reach it. The arch locks because the bridge is now explicit.'
+        },
+        {
+          text: 'Because plastic bags harm the environment, people should stop using them.',
+          ok: false,
+          why: 'This restates the conclusion as its own support. A circular keystone adds no new load-bearing capacity, and the clamps shear it instantly.'
+        }
+      ]
+    },
+    {
+      claim: 'The author\u2019s use of the word "freedom" does considerably more work than his evidence can support.',
+      grounds: [
+        'Paragraph 2: "freedom" = the absence of a government fee.',
+        'Paragraph 6: "freedom" = the ability to choose any product on the shelf.',
+        'The conclusion requires both senses to operate simultaneously.'
+      ],
+      options: [
+        {
+          text: 'The author repeats the word "freedom," which shows that it is important to his argument.',
+          ok: false,
+          why: 'Frequency is not function. Repetition tells you a word is doing work; it never tells you <em>what</em> work. No bridge, no lock.'
+        },
+        {
+          text: 'By sliding from a negative definition (no fee) to a positive one (unlimited choice) without signalling the change, the author lets the conclusion inherit the emotional force of both senses while being entailed by neither.',
+          ok: true,
+          why: 'This keystone names the equivocation precisely and shows why the shift is load-bearing: the conclusion needs both senses at once, and neither sense alone entails it. The arch holds.'
+        },
+        {
+          text: 'Freedom is a core American value, so an argument built on it is automatically persuasive.',
+          ok: false,
+          why: 'Value Trap. It substitutes a shared moral preference for a structural explanation, and it assumes the conclusion it was meant to prove.'
+        },
+        {
+          text: 'Paragraph 2 and paragraph 6 are about different things, which is confusing for the reader.',
+          ok: false,
+          why: 'A true observation with no mechanism. It never explains why the difference matters to the argument\u2019s conclusion, so no load is transferred.'
+        }
+      ]
+    }
+  ];
+
+  let archIndex = 0;
+  let selected = null;
+  let busy = false;
+
+  const stage = document.getElementById('l189-stage');
+  const keystoneEl = document.getElementById('l189-keystone');
+  const pressureWrap = document.getElementById('l189-pressure');
+  const pressureFill = document.getElementById('l189-pressure-fill');
+  const tonnageEl = document.getElementById('l189-tonnage');
+  const archNumEl = document.getElementById('l189-arch-num');
+  const archClaimEl = document.getElementById('l189-arch-claim');
+  const archGroundsEl = document.getElementById('l189-arch-grounds');
+  const archOptsEl = document.getElementById('l189-arch-options');
+  const archReadout = document.getElementById('l189-arch-readout');
+  const engageBtn = document.getElementById('l189-engage');
+  const nextBtn = document.getElementById('l189-next');
+
+  function setReadout(kind, title, body) {
+    archReadout.className = 'l189-readout' + (kind ? ' ' + kind : '');
+    archReadout.innerHTML = '<b>' + title + '</b>' + body;
+  }
+
+  function resetStage() {
+    stage.classList.remove('engaged', 'fractured', 'locked');
+    keystoneEl.classList.remove('seated', 'locked');
+    pressureWrap.classList.remove('ok');
+    pressureFill.style.width = '0%';
+    tonnageEl.textContent = '0%';
+    engageBtn.disabled = false;
+    busy = false;
+  }
+
+  function renderArch() {
+    const a = ARCHES[archIndex];
+    selected = null;
+    resetStage();
+    archNumEl.textContent = String(archIndex + 1);
+    archClaimEl.innerHTML = a.claim;
+    archGroundsEl.innerHTML = a.grounds
+      .map((g, i) => '<li><span class="l189-gnum">G' + (i + 1) + '</span>' + g + '</li>')
+      .join('');
+    archOptsEl.innerHTML = a.options
+      .map((o, i) => '<button class="l189-opt" data-i="' + i + '">' + o.text + '</button>')
+      .join('');
+    Array.from(archOptsEl.children).forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (busy) return;
+        Array.from(archOptsEl.children).forEach(b => b.classList.remove('sel'));
+        btn.classList.add('sel');
+        selected = parseInt(btn.dataset.i, 10);
+        keystoneEl.classList.add('seated');
+        setReadout('', 'Keystone Seated', 'Candidate bridge is in the slot. Engage the hydraulic clamps to apply full tonnage and test whether it transfers load.');
+      });
+    });
+    nextBtn.disabled = true;
+    setReadout('', 'Load Engineer Readout',
+      'Select a candidate keystone, then engage the clamps. If the bridge is a mechanism, the arch locks. If it is a label, a restatement, or an unstated value, the stones shear apart.');
+  }
+
+  engageBtn.addEventListener('click', () => {
+    if (busy) return;
+    if (selected === null) {
+      setReadout('bad', 'No Keystone Seated',
+        'An empty slot cannot transfer load. Seat a candidate bridge before engaging the clamps \u2014 an analysis with no stated warrant has exactly this shape.');
+      stage.classList.add('fractured');
+      setTimeout(() => stage.classList.remove('fractured'), 700);
+      return;
+    }
+    const a = ARCHES[archIndex];
+    const opt = a.options[selected];
+    busy = true;
+    engageBtn.disabled = true;
+    stage.classList.add('engaged');
+    pressureFill.style.width = '100%';
+    tonnageEl.textContent = '100%';
+
+    setTimeout(() => {
+      if (opt.ok) {
+        stage.classList.add('locked');
+        keystoneEl.classList.remove('seated');
+        keystoneEl.classList.add('locked');
+        pressureWrap.classList.add('ok');
+        setReadout('ok', '✔ Arch Locked — Load Path Verified',
+          opt.why + ' <br><br><strong>+100 XP</strong> awarded for a verified connecting bridge.');
+        award('arch' + archIndex, 100);
+        busy = false;
+        nextBtn.disabled = archIndex >= ARCHES.length - 1;
+      } else {
+        stage.classList.add('fractured');
+        keystoneEl.classList.remove('seated');
+        setReadout('bad', '✖ Torque Fracture — Arch Collapsed',
+          opt.why + ' <br><br>Re-seat a different keystone and re-engage.');
+        pressureFill.style.width = '0%';
+        tonnageEl.textContent = '0%';
+        setTimeout(() => {
+          stage.classList.remove('engaged', 'fractured');
+          pressureFill.style.width = '0%';
+          engageBtn.disabled = false;
+          busy = false;
+        }, 1400);
+      }
+    }, 900);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (archIndex < ARCHES.length - 1) {
+      archIndex += 1;
+      renderArch();
+    }
+  });
+
+  renderArch();
+
+  /* ---------------- SECTION 04: NEGATION DETONATOR ---------------- */
+  const detArena = document.getElementById('l189-det-arena');
+  const detPlate = document.getElementById('l189-det-plate');
+  const negation = document.getElementById('l189-negation');
+  const claimCard = document.getElementById('l189-claimcard');
+  const crackOv = document.getElementById('l189-crackov');
+  const detonateBtn = document.getElementById('l189-detonate');
+  const resetDetBtn = document.getElementById('l189-reset-det');
+  const debrief = document.getElementById('l189-debrief');
+  let detonated = false;
+
+  detonateBtn.addEventListener('click', () => {
+    if (detonated) return;
+    detonated = true;
+    detonateBtn.disabled = true;
+    negation.classList.add('show');
+    detArena.classList.add('flash');
+    crackOv.classList.add('show');
+    detPlate.style.animation = 'l189-shake .4s ease 2';
+    stageShake(detPlate);
+
+    setTimeout(() => {
+      claimCard.classList.add('collapsed');
+      spawnDebris();
+      debrief.classList.add('show');
+      award('detonator', 100);
+    }, 620);
+
+    setTimeout(() => {
+      detArena.classList.remove('flash');
+      crackOv.classList.remove('show');
+      detPlate.style.animation = '';
+    }, 1500);
+  });
+
+  function stageShake(el) {
+    el.style.animation = 'l189-shake .4s ease 2';
+    setTimeout(() => { el.style.animation = ''; }, 900);
+  }
+
+  function spawnDebris() {
+    const rect = claimCard.getBoundingClientRect();
+    for (let i = 0; i < 16; i++) {
+      const d = document.createElement('div');
+      d.className = 'l189-debris';
+      const x = Math.random() * Math.max(rect.width - 10, 10);
+      const y = Math.random() * Math.max(rect.height - 10, 10);
+      d.style.left = x + 'px';
+      d.style.top = y + 'px';
+      d.style.setProperty('--dx', (Math.random() * 220 - 110).toFixed(0) + 'px');
+      d.style.setProperty('--dy', (Math.random() * 160 + 60).toFixed(0) + 'px');
+      d.style.setProperty('--rot', (Math.random() * 720 - 360).toFixed(0) + 'deg');
+      d.style.background = i % 3 === 0 ? '#F59E0B' : (i % 3 === 1 ? '#EF4444' : '#6b6b74');
+      claimCard.appendChild(d);
+      requestAnimationFrame(() => d.classList.add('go'));
+      setTimeout(() => { if (d.parentNode) d.parentNode.removeChild(d); }, 1100);
+    }
+  }
+
+  resetDetBtn.addEventListener('click', () => {
+    detonated = false;
+    detonateBtn.disabled = false;
+    negation.classList.remove('show');
+    crackOv.classList.remove('show');
+    claimCard.classList.remove('collapsed');
+    debrief.classList.remove('show');
+    claimCard.style.transform = '';
+    claimCard.style.opacity = '';
+    claimCard.style.filter = '';
+  });
+
+  /* ---------------- SECTION 05: LIVE FIRE FORENSICS ---------------- */
+  const modeG = document.getElementById('l189-mode-g');
+  const modeC = document.getElementById('l189-mode-c');
+  const modeW = document.getElementById('l189-mode-w');
+  const inspector = document.getElementById('l189-inspector');
+  const passage = document.getElementById('l189-passage');
+
+  const MODES = {
+    g: { cls: 'x-g', root: 'mode-g', btn: modeG, label: 'Foundation / Grounds',
+         blurb: 'Verbatim textual evidence. These members supply raw compressive strength \u2014 nothing more. They never analyse themselves.' },
+    c: { cls: 'x-c', root: 'mode-c', btn: modeC, label: 'Core Claims / Outcomes',
+         blurb: 'Assertions the essay must defend. Each one is a load the structure above it must carry.' },
+    w: { cls: 'x-w', root: 'mode-w', btn: modeW, label: 'Unstated Mechanisms / Warrants',
+         blurb: 'Where a bridge is missing or merely implied. These are the sites of structural failure.' }
+  };
+
+  let activeMode = null;
+
+  function setMode(key) {
+    const m = MODES[key];
+    if (!m) return;
+    const wasActive = activeMode === key;
+    root.classList.remove('mode-g', 'mode-c', 'mode-w');
+    Object.values(MODES).forEach(x => x.btn.classList.remove('on'));
+
+    if (wasActive) {
+      activeMode = null;
+      inspector.innerHTML = '<h4>◈ Inspector Notes</h4><div class="l189-note">Scan channel disengaged. Reactivate a channel to inspect the specimen.</div>';
+      return;
+    }
+
+    activeMode = key;
+    root.classList.add(m.root);
+    m.btn.classList.add('on');
+
+    const spans = Array.from(passage.querySelectorAll('.' + m.cls));
+    let html = '<h4>◈ ' + m.label + '</h4><div class="l189-note"><b>CHANNEL</b>' + m.blurb + '</div>';
+    if (spans.length === 0) {
+      html += '<div class="l189-note"><b>NO SIGNAL</b>No members of this class detected in the specimen.</div>';
+    } else {
+      spans.forEach((s, i) => {
+        html += '<div class="l189-note"><b>' + m.label.toUpperCase().split(' ')[0] + ' #' + (i + 1) + '</b>' + (s.dataset.note || '') + '</div>';
+      });
+    }
+    inspector.innerHTML = html;
+  }
+
+  modeG.addEventListener('click', () => setMode('g'));
+  modeC.addEventListener('click', () => setMode('c'));
+  modeW.addEventListener('click', () => setMode('w'));
+
+  const hypoReadout = document.getElementById('l189-hypo-readout');
+  const hypoWrap = document.getElementById('l189-hypos');
+  let hypoSolved = false;
+
+  Array.from(hypoWrap.children).forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (hypoSolved) return;
+      const ok = btn.dataset.ok === '1';
+      if (ok) {
+        btn.classList.add('good');
+        hypoSolved = true;
+        Array.from(hypoWrap.children).forEach(b => { b.disabled = true; });
+        hypoReadout.className = 'l189-readout ok';
+        hypoReadout.innerHTML = '<b>✔ Structural Clearance Granted</b>' +
+          'You located the fatal flaw precisely: an over-claim plus a scope creep, held up by a warrant the essay never states. ' +
+          'The grounds establish that the room felt unsafe and that teenagers are sleepy at 7:10 a.m. — they cannot establish a district-wide achievement gain. ' +
+          'The missing bridge (<em>alertness in this room \u2192 measurable achievement across the district</em>) was carrying the whole paragraph, and it was never written down. ' +
+          '<br><br><strong>+100 XP</strong> awarded.';
+        award('forensics', 100);
+      } else {
+        btn.classList.add('bad');
+        btn.disabled = true;
+        hypoReadout.className = 'l189-readout bad';
+        hypoReadout.innerHTML = '<b>✖ Not the Structural Failure</b>' +
+          'That is a stylistic or quantitative complaint, not a structural one. Ask instead: which sentence asks the evidence to carry more weight than it can bear?';
+      }
+    });
+  });
+
+  /* ---------------- FINISH ---------------- */
+  const finishBtn = document.getElementById('l189-finish');
+  if (finishBtn) {
+    finishBtn.addEventListener('click', () => {
+      if (typeof window.polymathFinishLesson === 'function') {
+        window.polymathFinishLesson();
+      }
+    });
+  }
+});
+</script>

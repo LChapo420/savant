@@ -1,0 +1,162 @@
+{
+  "_doc": "Which local (Ollama) model answers which task, measured by scripts/local-model-eval.js against the NVIDIA lineup on the same cases. Read by services/providers/ollama.js. \"first\": local before NVIDIA (as accurate as the NVIDIA winner); \"fallback\": local after NVIDIA, before Claude (at least LOCAL_FALLBACK_RATIO of the winner). See curriculum-build/OPTIMAL-FREE-SYSTEM.md.",
+  "tasks": {
+    "grade_free_response": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "grading",
+        "best": "local:qwen3.5-4b@off",
+        "score": 0.854,
+        "nvidia_best": "nvidia:glm-5.3@max",
+        "nvidia_score": 0.938,
+        "cases": 48,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    },
+    "blind_mc": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "blind",
+        "best": "local:qwen3.5-4b@off",
+        "score": 0.75,
+        "nvidia_best": "nvidia:ultra@medium",
+        "nvidia_score": 1,
+        "cases": 48,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    },
+    "placement_key_judge": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "keys",
+        "best": "local:qwen3.5-4b@off",
+        "score": 1,
+        "nvidia_best": "nvidia:ultra@medium",
+        "nvidia_score": 1,
+        "cases": 40,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    },
+    "placement_unit_judge": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "units",
+        "best": "local:qwen3.5-4b@off",
+        "score": 0.8,
+        "nvidia_best": "nvidia:ultra@medium",
+        "nvidia_score": 0.9,
+        "cases": 30,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    },
+    "fact_verify": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "facts",
+        "best": "local:qwen3.5-4b@off",
+        "score": 0.5,
+        "nvidia_best": "nvidia:ds-flash@high",
+        "nvidia_score": 0.6,
+        "cases": 40,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    },
+    "fact_read": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "facts",
+        "best": "local:qwen3.5-4b@off",
+        "score": 0.5,
+        "nvidia_best": "nvidia:ds-flash@high",
+        "nvidia_score": 0.6,
+        "cases": 40,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    },
+    "fact_verify_grounded": {
+      "models": [
+        {
+          "model": "qwen3.5:4b",
+          "effort": "off"
+        },
+        {
+          "model": "nemotron-3-nano:4b",
+          "effort": "off"
+        }
+      ],
+      "eval": {
+        "task": "facts",
+        "best": "local:qwen3.5-4b@off",
+        "score": 0.475,
+        "nvidia_best": "nvidia:ds-flash@high",
+        "nvidia_score": 0.6,
+        "cases": 40,
+        "at": "2026-10-23T06:45:51.798Z"
+      }
+    }
+  },
+  "first": [],
+  "fallback": [
+    "grade_free_response",
+    "placement_key_judge"
+  ],
+  "default": {
+    "model": "qwen3.5:4b",
+    "effort": "off"
+  },
+  "embed": {
+    "model": "qwen3-embedding:0.6b"
+  },
+  "updated_at": "2026-10-23T06:45:51.937Z",
+  "first_note": "Owner 2026-10-23: NVIDIA (GLM 5.3 max, DeepSeek V4.1 Flash max, Nemotron) goes first for every task; local only after the NVIDIA tiers fail, or for learners without outside-AI consent."
+}

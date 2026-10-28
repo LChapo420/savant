@@ -1,0 +1,292 @@
+{
+ "drafts": {
+  "piano-P05-interleave": {
+   "line": "[Practice] Shuffle Short Units Once Each Plays Correctly | Practise your G, D, F and A major scales in a shuffled order after one correct run each, then check the next-day cold-take log.",
+   "model": "z-ai/glm-5.3-flash",
+   "effort": "high",
+   "at": "2026-10-23T02:43:20.162Z"
+  },
+  "basketball-B04-sample": {
+   "line": "[Analytics] Log Fifty Shots Before Judging A Change | Log at least fifty attempts over several days before deciding a change worked, because 7 of 10 on Monday and 5 of 10 on Tuesday overlap.",
+   "model": "z-ai/glm-5.3-flash",
+   "effort": "high",
+   "at": "2026-10-23T02:43:20.166Z"
+  },
+  "basketball-B05-cold-set": {
+   "line": "[Practice] Judge Shooting By The Next-Day Cold Set | Take ten elbow jump shots the next day before shooting from the elbow again, and log them as your cold score.",
+   "model": "z-ai/glm-5.3-flash",
+   "effort": "high",
+   "at": "2026-10-23T02:43:20.166Z"
+  }
+ },
+ "judges": {
+  "A": {
+   "C-squares": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-nbayouth": {
+    "verdict": "wrong",
+    "issue": "The NBA and USA Basketball Youth Guidelines recommend far fewer weekly hours (e.g., ~1 hr for 7‑8, ~2 hr for 9‑11, ~3 hr for 12‑14) and different rest‑day requirements than the 3/5/10/14 hr and 2/2/1/1 rest days stated.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "L-bb-aim-B03": {
+    "verdict": "wrong",
+    "issue": "Lesson tells shooters to drop the ball past the front rim into the middle, but the cited Tran & Silverberg 2008 evidence recommends aiming toward the back of the ring.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "L-bb-aim-B07": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "L-bb-semicircle-B06": {
+    "verdict": "wrong",
+    "issue": "FIBA's no‑charge semicircle radius is 1.25 m, not 1.30 m as stated.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "L-bb-sample-B04": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "L-bb-cold-B05": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "L-pi-interleave-P05": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "R-ncaa-10s": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "R-nfhs": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "R-nba-take": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "R-ring": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-rosch": {
+    "verdict": "unsure",
+    "issue": "Cannot verify the existence or reported statistics of Rosch, Schultz and Honer (2021) in IJERPH.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-tran": {
+    "verdict": "unsure",
+    "issue": "Cannot confirm the specific recommendations attributed to Tran and Silverberg (2008) in Journal of Sports Sciences.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-chua": {
+    "verdict": "unsure",
+    "issue": "Uncertain whether a 2021 Psychological Bulletin meta‑analysis by Chua, Jimenez‑Diaz, Lewthwaite, Kim and Wulf reports g = 0.58 for external‑focus benefits.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-guadagnoli": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-kalyuga": {
+    "verdict": "unsure",
+    "issue": "Cannot confirm the described 2005 ETR&D paper by Kalyuga and Sweller on rapid dynamic assessment.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-abushanab": {
+    "verdict": "unsure",
+    "issue": "Unsure if Abushanab and Bishara (2013) in Memory & Cognition reported the random‑vs‑blocked practice effect for piano melodies.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-burgoyne": {
+    "verdict": "unsure",
+    "issue": "Cannot verify the 2019 Burgoyne et al. finding about tournament play’s incremental variance.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-debruin": {
+    "verdict": "unsure",
+    "issue": "Uncertain whether de Bruin, Rikers and Schmidt (2007) demonstrated the stated prediction‑explanation advantage for K+R vs K learning.",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-act": {
+    "verdict": "unsure",
+    "issue": "Cannot confirm the Amsterdam Chess Test details and the response‑time validity claim from van der Maas and Wagenmakers (2005).",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   },
+   "C-tables": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "effort": "medium"
+   }
+  },
+  "B": {
+   "L-bb-aim-B03": {
+    "verdict": "wrong",
+    "issue": "The item instructs aiming past the front rim into the middle of the ring, which contradicts the provided evidence that Tran and Silverberg (2008) recommend aiming toward the back of the ring.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "L-bb-aim-B07": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "L-bb-semicircle-B06": {
+    "verdict": "unsure",
+    "issue": "I cannot verify whether FIBA Official Basketball Rules 2026 v1.0 article 2.5.7 specifies a 1.30-metre no-charge semicircle rather than the traditional 1.25 metres.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "L-bb-sample-B04": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "L-bb-cold-B05": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "L-pi-interleave-P05": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "R-ncaa-10s": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "R-nfhs": {
+    "verdict": "wrong",
+    "issue": "As of the 2025–26 season NFHS rules mandate a 30-second shot clock nationwide, so it is incorrect to state they use a shot clock only in states that adopt one.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "R-nba-take": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "R-ring": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-rosch": {
+    "verdict": "unsure",
+    "issue": "I cannot verify the exact authors, journal issue, split-half reliability value, or group accuracy percentages for this specific 2021 IJERPH article.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-tran": {
+    "verdict": "wrong",
+    "issue": "Tran and Silverberg (2008) recommended aiming toward the center of the hoop, not the back of the ring.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-chua": {
+    "verdict": "unsure",
+    "issue": "I cannot confirm that a meta-analysis by these exact authors was published in Psychological Bulletin in 2021 with an effect size of g = 0.58.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-guadagnoli": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-kalyuga": {
+    "verdict": "unsure",
+    "issue": "I cannot confirm the exact year, journal volume, or specific terminology ('first-step diagnosis') attributed to Kalyuga and Sweller's rapid dynamic assessment work.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-abushanab": {
+    "verdict": "unsure",
+    "issue": "I cannot verify that Abushanab and Bishara (2013) used piano-trained participants and melody retention rather than a different motor or memory task.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-burgoyne": {
+    "verdict": "unsure",
+    "issue": "I cannot confirm the exact year, finding, or phrasing regarding tournament play adding very little variance after accounting for study in Burgoyne et al.'s chess research.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-debruin": {
+    "verdict": "unsure",
+    "issue": "I cannot verify that de Bruin, Rikers, and Schmidt (2007) specifically used the king-and-rook-versus-king ending with those exact experimental conditions.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-act": {
+    "verdict": "wrong",
+    "issue": "The Amsterdam Chess Test was developed by de Bruin, van der Maas, and Wagenmakers, not solely by van der Maas and Wagenmakers.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-tables": {
+    "verdict": "wrong",
+    "issue": "Not every legal king-and-queen-versus-king position is a win because stalemate positions exist, and the longest forced mate takes up to 16 moves for KRvK, not 10 for KQvK as implied.",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-squares": {
+    "verdict": "correct",
+    "issue": "",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   },
+   "C-nbayouth": {
+    "verdict": "wrong",
+    "issue": "The NBA and USA Basketball Youth Guidelines recommend a maximum of 3 hours per week for ages 7-8, not the other values listed (e.g., they recommend 5 hours for ages 9-11, but the rest-day counts and some hour caps do not match the published guidelines exactly).",
+    "model": "xkiro:qwen/qwen3.8-max:free",
+    "effort": "default"
+   }
+  }
+ }
+}

@@ -1,0 +1,1808 @@
+{
+ "track_id": "act",
+ "grade_ids": [
+  "act_grade_1",
+  "act_grade_2",
+  "act_grade_3",
+  "act_grade_4",
+  "act_grade_5",
+  "act_grade_6",
+  "act_grade_7",
+  "act_grade_8",
+  "act_grade_9",
+  "act_grade_10",
+  "act_grade_11",
+  "act_grade_12",
+  "act_grade_13",
+  "act_grade_14",
+  "act_grade_15",
+  "act_grade_16"
+ ],
+ "grades": [
+  {
+   "grade_id": "act_grade_1",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Place value in large numbers",
+     "prompt": "In the number 4,052,681, what is the value of the digit 6?",
+     "choices": [
+      "6",
+      "60",
+      "600",
+      "6,000"
+     ],
+     "answer": "600",
+     "rationale": "The digit 6 is in the hundreds place, so its value is 6 × 100 = 600.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Linking verbs versus action verbs",
+     "prompt": "Which sentence uses a linking verb rather than an action verb?",
+     "choices": [
+      "Maria tasted the soup.",
+      "The soup tasted salty.",
+      "Marco runs every morning.",
+      "The dog barked loudly."
+     ],
+     "answer": "The soup tasted salty.",
+     "rationale": "\"Tasted\" in that sentence links the soup to a description rather than describing an action someone performs, while the other three verbs show actions.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Order of operations with parentheses",
+     "prompt": "What is the value of 3 + 4 × (6 − 2)?",
+     "choices": [
+      "19",
+      "25",
+      "16",
+      "28"
+     ],
+     "answer": "19",
+     "rationale": "Following order of operations, the parentheses come first (6 − 2 = 4), then the multiplication (4 × 4 = 16), and finally the addition (3 + 16 = 19).",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Identifying prepositional phrases",
+     "prompt": "Which of the following is a prepositional phrase?",
+     "choices": [
+      "the hiker",
+      "crossed bridge",
+      "at sunrise",
+      "rocky bridge"
+     ],
+     "answer": "at sunrise",
+     "rationale": "Only \"at sunrise\" consists of a preposition (\"at\") followed by its object (\"sunrise\"), forming a prepositional phrase. The other options are noun phrases or verb phrases lacking a preposition.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Simplifying fractions",
+     "prompt": "What is 18/24 written in simplest form?",
+     "choices": [
+      "2/3",
+      "3/4",
+      "4/5",
+      "5/6"
+     ],
+     "answer": "3/4",
+     "rationale": "The greatest common factor of 18 and 24 is 6, and dividing numerator and denominator by 6 gives 3/4.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Dividing decimals",
+     "prompt": "What is 0.6 ÷ 0.03?",
+     "choices": [
+      "0.2",
+      "2",
+      "0.02",
+      "20"
+     ],
+     "answer": "20",
+     "rationale": "Dividing means 0.6 ÷ 0.03 = 60 ÷ 3 after shifting both decimal points two places, which gives 20.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Exponents, negatives, and order of operations together",
+     "prompt": "What is the value of 2³ − (−4) × 5?",
+     "choices": [
+      "28",
+      "-12",
+      "60",
+      "-28"
+     ],
+     "answer": "28",
+     "rationale": "The exponent comes first (2³ = 8), then (−4) × 5 = −20, and subtracting a negative gives 8 − (−20) = 28.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_2",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Adding and subtracting fractions with common denominators",
+     "prompt": "A smoothie recipe calls for 2/8 cup of yogurt and 3/8 cup of milk. What is the total amount of these two liquids, in cups?",
+     "choices": [
+      "5/16",
+      "5/8",
+      "6/8",
+      "1/8"
+     ],
+     "answer": "5/8",
+     "rationale": "Fractions with the same denominator are added by adding the numerators: 2 + 3 = 5, so the sum is 5/8.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Independent clauses: complete thoughts",
+     "prompt": "Which of these is an independent clause — a complete thought that could stand alone as a sentence?",
+     "choices": [
+      "Because the museum closed at noon.",
+      "After the long rehearsal ended.",
+      "Whenever the crowd gets excited.",
+      "The trumpet player tuned her instrument."
+     ],
+     "answer": "The trumpet player tuned her instrument.",
+     "rationale": "Only \"The trumpet player tuned her instrument\" names a subject performing an action and expresses a full thought; the others leave the reader waiting for more information.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Adding unlike fractions using least common denominators",
+     "prompt": "What is 1/4 + 2/3?",
+     "choices": [
+      "11/12",
+      "3/7",
+      "5/12",
+      "3/4"
+     ],
+     "answer": "11/12",
+     "rationale": "The least common denominator is 12, so 1/4 + 2/3 = 3/12 + 8/12 = 11/12.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Run-on sentences and comma splices",
+     "prompt": "Which of these sentences is a comma splice, joining two complete sentences with only a comma?",
+     "choices": [
+      "Although the ferry was late, we made our connection.",
+      "We missed our connection; the ferry was late.",
+      "The ferry was late, we missed our connection.",
+      "The ferry was late, so we missed our connection."
+     ],
+     "answer": "The ferry was late, we missed our connection.",
+     "rationale": "\"The ferry was late, we missed our connection\" glues two independent clauses together with a bare comma; the other options correctly use a subordinating word, a semicolon, or a coordinating conjunction.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Mean, median, mode, and range",
+     "prompt": "On her five practice quizzes, a student scored 72, 85, 85, 91, and 99 points. What is the range of these scores?",
+     "choices": [
+      "85",
+      "99",
+      "91",
+      "27"
+     ],
+     "answer": "27",
+     "rationale": "The range is the highest score minus the lowest score: 99 − 72 = 27.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Combining like terms",
+     "prompt": "Simplify the expression 4x + 7 − 2x + 3.",
+     "choices": [
+      "6x + 10",
+      "2x + 10",
+      "2x + 4",
+      "6x + 4"
+     ],
+     "answer": "2x + 10",
+     "rationale": "Combining like terms gives (4x − 2x) + (7 + 3) = 2x + 10.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Discounts, sales tax, and fractions of a whole",
+     "prompt": "A sweater originally priced at $90 is marked down by 1/3 of its price. A sales tax of 6% is then added to the sale price. What is the final cost of the sweater?",
+     "choices": [
+      "$63.60",
+      "$60.00",
+      "$95.40",
+      "$56.40"
+     ],
+     "answer": "$63.60",
+     "rationale": "Taking 1/3 off leaves 2/3 of $90, a $60 sale price, and adding 6% tax gives $60 × 1.06 = $63.60.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_3",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Exponent rules: product of powers",
+     "prompt": "Simplify b⁶ · b².",
+     "choices": [
+      "b¹²",
+      "b⁸",
+      "b⁴",
+      "b¹⁶"
+     ],
+     "answer": "b⁸",
+     "rationale": "When multiplying powers with the same base, you keep the base and add the exponents: 6 + 2 = 8.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "English: semicolons joining two complete sentences",
+     "prompt": "Which sentence uses a semicolon correctly?",
+     "choices": [
+      "The trail is steep and rocky; so hikers should carry extra water.",
+      "Maria packed three things for the trip; a tent, a lantern, and a first-aid kit.",
+      "The wind toppled the old oak; the road was blocked for hours.",
+      "The bakery sold out of bread by noon; because it was a holiday weekend."
+     ],
+     "answer": "The wind toppled the old oak; the road was blocked for hours.",
+     "rationale": "A semicolon properly joins two complete sentences that could each stand alone, as in \"the wind toppled the old oak\" and \"the road was blocked for hours.\"",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Math: distributing and expanding expressions",
+     "prompt": "Expand the expression −4(3x − 7).",
+     "choices": [
+      "−12x + 28",
+      "−12x − 28",
+      "12x + 28",
+      "−12x + 7"
+     ],
+     "answer": "−12x + 28",
+     "rationale": "Distributing −4 across both terms gives (−4)(3x) = −12x and (−4)(−7) = +28.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "English: commas with nonessential information",
+     "prompt": "Which sentence is punctuated correctly?",
+     "choices": [
+      "Our neighbor a retired carpenter built the birdhouse for us.",
+      "Mrs. Okafor, assigned each group a different topic.",
+      "The coach, who had lost his voice gestured for a timeout.",
+      "The result was overturned on appeal, a decision that surprised no one."
+     ],
+     "answer": "The result was overturned on appeal, a decision that surprised no one.",
+     "rationale": "\"A decision that surprised no one\" is nonessential information that renames the whole preceding clause and is correctly set off by a comma.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Math: percent change",
+     "prompt": "A phone plan's monthly cost rose from $40 to $46. What was the percent increase?",
+     "choices": [
+      "6%",
+      "13%",
+      "15%",
+      "115%"
+     ],
+     "answer": "15%",
+     "rationale": "The percent increase is the change over the original amount: (46 − 40) ÷ 40 = 6 ÷ 40 = 15%.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "English: misplaced modifiers",
+     "prompt": "Which sentence contains a misplaced modifier?",
+     "choices": [
+      "Grumbling loudly, the toddler refused to take his nap.",
+      "The dog chased the squirrel wearing the red collar.",
+      "Pinned to the bulletin board, the flyer listed the tryout dates.",
+      "The coach praised the goalkeeper who made the winning save."
+     ],
+     "answer": "The dog chased the squirrel wearing the red collar.",
+     "rationale": "Placing \"wearing the red collar\" right after \"squirrel\" makes it describe the squirrel instead of the dog, so the modifier is misplaced.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Math: percent change with solving linear equations",
+     "prompt": "After a 20% price increase, a camping tent costs $84. What was the tent's price before the increase?",
+     "choices": [
+      "$67.20",
+      "$100.80",
+      "$63",
+      "$70"
+     ],
+     "answer": "$70",
+     "rationale": "Setting up and solving the equation 1.2p = 84 gives p = 84 ÷ 1.2 = 70, since the original price times 1.20 equals the new price.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_4",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Solving multi-step equations",
+     "prompt": "What is the solution to the equation 3(x − 4) = 21?",
+     "choices": [
+      "3",
+      "7",
+      "11",
+      "19"
+     ],
+     "answer": "11",
+     "rationale": "Dividing both sides by 3 gives x − 4 = 7, so x = 7 + 4 = 11.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Commas with coordinate adjectives",
+     "prompt": "Which sentence uses a comma correctly between two coordinate adjectives?",
+     "choices": [
+      "The jeweler set the ring with a deep, blue sapphire.",
+      "The jeweler set the ring with a flawless, sparkling diamond.",
+      "The jeweler set the ring with a heavy gold band.",
+      "The jeweler set the ring with a, sparkling emerald."
+     ],
+     "answer": "The jeweler set the ring with a flawless, sparkling diamond.",
+     "rationale": "\"Flawless\" and \"sparkling\" each describe the diamond independently, so they need a comma between them, while \"deep\" modifies the whole phrase \"blue sapphire\" and takes no comma.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Solving literal equations for one variable",
+     "prompt": "The volume of a rectangular box is given by V = hwd, where h is the height, w is the width, and d is the depth. Which equation expresses w in terms of V, h, and d?",
+     "choices": [
+      "w = V/(hd)",
+      "w = hd/V",
+      "w = Vhd",
+      "w = V − hd"
+     ],
+     "answer": "w = V/(hd)",
+     "rationale": "Dividing both sides of V = hwd by the product hd isolates w as V/(hd).",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Identifying flaws in experimental design",
+     "prompt": "A student wants to test whether a fertilizer increases tomato plant growth, so she gives it to her ten tomato plants while her neighbor's ten tomato plants, grown in a different yard with different soil, receive none. Which change would best fix the main flaw in her experiment?",
+     "choices": [
+      "Use more than ten plants in each of the two groups.",
+      "Give both groups the same fertilizer at the same time.",
+      "Measure the plants' height only once, at the end of the study.",
+      "Grow both groups in the same yard, soil, and sunlight."
+     ],
+     "answer": "Grow both groups in the same yard, soil, and sunlight.",
+     "rationale": "Because the two groups differ in yard, soil, and sunlight as well as fertilizer, any growth difference cannot be attributed to the fertilizer alone.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Systems of equations by substitution",
+     "prompt": "The equations y = 2x − 1 and x + y = 14 describe a system of equations. Using substitution, what is the value of y?",
+     "choices": [
+      "7",
+      "5",
+      "9",
+      "13"
+     ],
+     "answer": "9",
+     "rationale": "Substituting 2x − 1 for y gives x + 2x − 1 = 14, so 3x = 15, x = 5, and y = 2(5) − 1 = 9.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Pronoun reference: ambiguous and vague pronouns",
+     "prompt": "Which sentence contains a pronoun whose reference is unclear?",
+     "choices": [
+      "Ana met with her advisor, who suggested several essay topics.",
+      "Ana met with her advisor, and she asked which topics were allowed.",
+      "Ana asked her advisor which topics were allowed.",
+      "After meeting with her advisor, Ana chose a topic."
+     ],
+     "answer": "Ana met with her advisor, and she asked which topics were allowed.",
+     "rationale": "\"She\" could refer to either Ana or the advisor, so the sentence leaves the reader unsure of who asked the question.",
+     "writer": "z-ai/glm-5.3"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Interior angles of polygons",
+     "prompt": "Each interior angle of a regular polygon measures 156°. What is the sum of the polygon's interior angles?",
+     "choices": [
+      "2,028 degrees",
+      "2,160 degrees",
+      "2,496 degrees",
+      "2,340 degrees"
+     ],
+     "answer": "2,340 degrees",
+     "rationale": "Each exterior angle is 180° − 156° = 24°, so the polygon has 360 ÷ 24 = 15 sides, and its interior angles sum to (15 − 2) × 180° = 2,340°.",
+     "writer": "z-ai/glm-5.3"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_5",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Exponents and square roots of perfect powers",
+     "prompt": "What is the square root of 144?",
+     "choices": [
+      "10",
+      "12",
+      "11",
+      "13"
+     ],
+     "answer": "12",
+     "rationale": "The square root of 144 is 12 because 12 × 12 = 144.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Commas in series",
+     "prompt": "Which sentence uses commas correctly in a series of three items?",
+     "choices": [
+      "She bought apples, oranges and bananas.",
+      "She bought apples oranges, and bananas.",
+      "She bought, apples, oranges, and bananas.",
+      "She bought apples, oranges, and bananas."
+     ],
+     "answer": "She bought apples, oranges, and bananas.",
+     "rationale": "The ACT requires a comma before the conjunction in a series of three or more items.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Unit rates and unit conversion",
+     "prompt": "A car travels 180 miles in 3 hours. What is its speed in miles per hour?",
+     "choices": [
+      "60 mph",
+      "50 mph",
+      "70 mph",
+      "80 mph"
+     ],
+     "answer": "60 mph",
+     "rationale": "Speed = distance ÷ time = 180 mi ÷ 3 h = 60 mph.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Subject‑verb agreement with intervening phrase",
+     "prompt": "Select the sentence in which the verb agrees with its singular subject despite the intervening phrase.",
+     "choices": [
+      "The box of chocolates are on the table.",
+      "The boxes of chocolate is on the table.",
+      "The box of chocolates is on the table.",
+      "The boxes of chocolate are on the table."
+     ],
+     "answer": "The box of chocolates is on the table.",
+     "rationale": "The subject “box” is singular, so the verb must be the singular “is”.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Distributing and solving multi‑step equations",
+     "prompt": "Solve for x: 3(2x – 4) = 18.",
+     "choices": [
+      "5",
+      "4",
+      "6",
+      "7"
+     ],
+     "answer": "5",
+     "rationale": "Distribute to get 6x – 12 = 18, add 12 to obtain 6x = 30, then divide by 6 to get x = 5.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Interpolation and extrapolation from graphs",
+     "prompt": "A line graph shows a solution’s temperature at 0 min = 20 °C and at 5 min = 30 °C. Assuming a constant rate, what is the temperature at 8 min?",
+     "choices": [
+      "34°C",
+      "36°C",
+      "38°C",
+      "40°C"
+     ],
+     "answer": "36°C",
+     "rationale": "The temperature rises 2 °C per minute; after 8 minutes it is 20 + 2 × 8 = 36 °C.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Multi‑step word problem combining percent change, discounts, and equation solvin",
+     "prompt": "A store buys a jacket for $80, marks it up 25%, then offers a 10% discount on the marked price. What is the final sale price?",
+     "choices": [
+      "$85",
+      "$90",
+      "$95",
+      "$100"
+     ],
+     "answer": "$90",
+     "rationale": "Markup: $80 × 1.25 = $100; discount: $100 × 0.90 = $90.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_6",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Slope-Intercept Form and Reading Lines",
+     "prompt": "The line represented by the equation y = -2x + 7 has which slope and y‑intercept?",
+     "choices": [
+      "slope = -2, y‑intercept = 7",
+      "slope = 2, y‑intercept = -7",
+      "slope = -7, y‑intercept = 2",
+      "slope = 7, y‑intercept = -2"
+     ],
+     "answer": "slope = -2, y‑intercept = 7",
+     "rationale": "In slope‑intercept form y = mx + b, the coefficient of x is the slope (‑2) and the constant term is the y‑intercept (7).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Commas Around Nonrestrictive Elements",
+     "prompt": "Which sentence correctly places commas around the nonrestrictive clause?",
+     "choices": [
+      "My brother who lives in Chicago is visiting next week.",
+      "My brother, who lives in Chicago, is visiting next week.",
+      "My brother who, lives in Chicago, is visiting next week.",
+      "My brother, who lives in Chicago is visiting next week."
+     ],
+     "answer": "My brother, who lives in Chicago, is visiting next week.",
+     "rationale": "A nonrestrictive clause adds extra information and must be set off by commas on both sides.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Text Structure and the Function of Paragraphs",
+     "prompt": "In a passage, the first paragraph introduces a problem, the second presents evidence, the third offers a solution, and the fourth concludes. What is the function of the third paragraph?",
+     "choices": [
+      "To introduce the problem",
+      "To present evidence",
+      "To offer a solution",
+      "To conclude the argument"
+     ],
+     "answer": "To offer a solution",
+     "rationale": "The description states the third paragraph provides a solution to the problem introduced earlier.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Systems of Equations by Substitution",
+     "prompt": "Solve the system by substitution and give the value of y:\n{ x + y = 5 ; 2x - y = 1 }",
+     "choices": [
+      "y = 1",
+      "y = 2",
+      "y = 4",
+      "y = 3"
+     ],
+     "answer": "y = 3",
+     "rationale": "Solving gives x = 2 and then y = 3, so the correct value of y is 3.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Factoring Difference of Squares and Perfect Squares",
+     "prompt": "Factor completely: 16x^4 - 81.",
+     "choices": [
+      "(2x - 3)(2x + 3)(4x^2 + 9)",
+      "(4x^2 - 9)(4x^2 + 9)",
+      "(2x - 3)^2(4x^2 + 9)",
+      "(4x - 9)(4x + 9)(x^2 + 1)"
+     ],
+     "answer": "(2x - 3)(2x + 3)(4x^2 + 9)",
+     "rationale": "16x^4‑81 is a difference of squares: (4x^2)²‑9² = (4x^2‑9)(4x^2+9); further factor 4x^2‑9 as (2x‑3)(2x+3).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Weighted Averages and Hitting a Target Mean",
+     "prompt": "A student has scores of 78, 84, and 90 on three tests. The final test counts twice as much as each of the others. What score must the student earn on the final test to achieve an overall weighted average of 85?",
+     "choices": [
+      "84.5",
+      "86.5",
+      "88.5",
+      "90.5"
+     ],
+     "answer": "86.5",
+     "rationale": "Weighted average equation (78+84+90+2F)/5 = 85 solves to F = 86.5.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Volume and Surface Area of Prisms and Cylinders; Weighted Averages and Hitting a",
+     "prompt": "A rectangular prism has volume 240 cm³, height 5 cm, and width 6 cm. First find its length. Then compute the weighted average of the three dimensions (length, width, height) using weights 2, 3, and 5 respectively. What is the weighted average?",
+     "choices": [
+      "5.5",
+      "6.3",
+      "5.9",
+      "6.7"
+     ],
+     "answer": "5.9",
+     "rationale": "Length = 240/(5·6) = 8 cm; weighted average = (2·8 + 3·6 + 5·5)/(2+3+5) = 59/10 = 5.9.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_7",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Compound Inequalities and Interval Notation",
+     "prompt": "Which interval notation represents the solution set of the compound inequality 2 ≤ x < 7?",
+     "choices": [
+      "[2,7)",
+      "(2,7]",
+      "[2,7]",
+      "(2,7)"
+     ],
+     "answer": "[2,7)",
+     "rationale": "The inequality includes 2 (closed bracket) and excludes 7 (open parenthesis).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Semicolons With Conjunctive Adverbs",
+     "prompt": "Select the sentence that correctly uses a semicolon with a conjunctive adverb.",
+     "choices": [
+      "The experiment failed; however the team recorded the data.",
+      "The experiment failed; however, the team recorded the data.",
+      "The experiment failed, however; the team recorded the data.",
+      "The experiment failed however; the team recorded the data."
+     ],
+     "answer": "The experiment failed; however, the team recorded the data.",
+     "rationale": "A semicolon before the conjunctive adverb and a comma after it are required.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Factoring Trinomials With Leading Coefficient 1",
+     "prompt": "Factor completely: x^2 - 3x - 10.",
+     "choices": [
+      "(x+5)(x-2)",
+      "(x-10)(x+1)",
+      "(x-5)(x+2)",
+      "(x+10)(x-1)"
+     ],
+     "answer": "(x-5)(x+2)",
+     "rationale": "The factors of -10 that sum to -3 are -5 and +2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Subject‑Verb Agreement With Inverted and Compound Subjects",
+     "prompt": "Which sentence uses correct subject–verb agreement?",
+     "choices": [
+      "Either the manager or the employees is responsible for the report.",
+      "Neither the director nor the actors have arrived yet.",
+      "Both the teacher and the students was excited about the trip.",
+      "Each of the volunteers are organizing a booth."
+     ],
+     "answer": "Neither the director nor the actors have arrived yet.",
+     "rationale": "With neither/nor the verb agrees with the nearer subject (actors, plural: have); the others need are, were and is.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "Which sentence demonstrates correct subject‑verb agreement with an inverted or compound subject?"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "The Quadratic Formula",
+     "prompt": "Solve using the quadratic formula: 2x^2 - 4x - 6 = 0. Give the larger root.",
+     "choices": [
+      "3",
+      "-1",
+      "2",
+      "-3"
+     ],
+     "answer": "3",
+     "rationale": "The roots are (4 ± 8)/4 = 3 and -1; the larger is 3.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Parallel and Perpendicular Lines",
+     "prompt": "Line L passes through (2,5) with slope 3. Which equation represents a line perpendicular to L that also passes through (2,5)?",
+     "choices": [
+      "y = 3x - 1",
+      "y = -1/3 x + 17/3",
+      "y = -3x + 11",
+      "y = 1/3 x + 13/3"
+     ],
+     "answer": "y = -1/3 x + 17/3",
+     "rationale": "The perpendicular slope is -1/3; using point‑slope form gives y-5 = -1/3(x-2).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Linear Models in Context and Residuals",
+     "prompt": "A scientist models plant height with h = 2.5t + 10 (h in cm, t in weeks). The observed height at week 4 is 22 cm. What is the residual for week 4?",
+     "choices": [
+      "-2 cm",
+      "0 cm",
+      "2 cm",
+      "4 cm"
+     ],
+     "answer": "2 cm",
+     "rationale": "Predicted height = 2.5(4)+10 = 20 cm; residual = observed - predicted = 22 - 20 = 2 cm.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_8",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Function composition",
+     "prompt": "Given f(x) = 2x + 3 and g(x) = x^2, what is (f ∘ g)(2)?",
+     "choices": [
+      "7",
+      "11",
+      "15",
+      "5"
+     ],
+     "answer": "11",
+     "rationale": "First compute g(2)=4, then f(4)=2·4+3=11.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Paired dashes and parentheses",
+     "prompt": "Which sentence correctly uses paired dashes to set off a nonessential clause?",
+     "choices": [
+      "The committee—chaired by Dr. Lee, approved the budget yesterday.",
+      "The committee, chaired by Dr. Lee, approved the budget yesterday.",
+      "The committee—chaired by Dr. Lee—approved the budget yesterday.",
+      "The committee—chaired by Dr. Lee approved the budget yesterday."
+     ],
+     "answer": "The committee—chaired by Dr. Lee—approved the budget yesterday.",
+     "rationale": "Paired dashes must appear both before and after the inserted clause.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Piecewise functions",
+     "prompt": "For the piecewise function f(x) = { x+2 if x<0 ; 3x-1 if x≥0 }, what is f(−1)?",
+     "choices": [
+      "1",
+      "-1",
+      "3",
+      "5"
+     ],
+     "answer": "1",
+     "rationale": "Since −1 < 0, use the first rule: f(−1)=−1+2=1.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Perfect tenses and the subjunctive mood",
+     "prompt": "Select the sentence that correctly employs the subjunctive mood in a contrary‑to‑fact conditional.",
+     "choices": [
+      "If she was to arrive early, we would start sooner.",
+      "If she would arrive early, we would start sooner.",
+      "If she arrives early, we would start sooner.",
+      "If she were to arrive early, we would start sooner."
+     ],
+     "answer": "If she were to arrive early, we would start sooner.",
+     "rationale": "The subjunctive ‘were’ is required for a hypothetical condition contrary to fact.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Completing the square",
+     "prompt": "Write the quadratic x² + 6x + 2 = 0 in vertex form by completing the square and state the vertex.",
+     "choices": [
+      "(-3, 7)",
+      "(-3, -7)",
+      "(3, -7)",
+      "(3, 7)"
+     ],
+     "answer": "(-3, -7)",
+     "rationale": "x²+6x = (x+3)²−9, so (x+3)²−7=0 giving vertex (−3,−7).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Equation of a circle",
+     "prompt": "The equation (x−4)² + (y+2)² = 25 represents a circle. Identify its center and radius.",
+     "choices": [
+      "Center (-4, 2), radius 5",
+      "Center (4, -2), radius 25",
+      "Center (4, -2), radius 5",
+      "Center (-4, 2), radius 25"
+     ],
+     "answer": "Center (4, -2), radius 5",
+     "rationale": "The standard form (x−h)²+(y−k)²=r² gives center (h,k)=(4,−2) and r=√25=5.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Exponential growth and decay models",
+     "prompt": "A bacterial culture follows N(t)=N₀·e^{kt}. Initially N₀=200. After 3 hours the population is 800. Assuming the model holds, what is the population after 5 hours (rounded to the nearest whole number)?",
+     "choices": [
+      "2016",
+      "1600",
+      "2400",
+      "1280"
+     ],
+     "answer": "2016",
+     "rationale": "800=200·e^{3k} ⇒ e^{3k}=4 ⇒ k=ln4/3. Then N(5)=200·e^{5k}=200·4^{5/3}≈2016.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_9",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Simplifying Radicals",
+     "prompt": "Simplify √50 + 2√2.",
+     "choices": [
+      "7√2",
+      "5√2",
+      "√52",
+      "6√2"
+     ],
+     "answer": "7√2",
+     "rationale": "√50 simplifies to 5√2, and adding 2√2 gives 7√2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Colon Usage",
+     "prompt": "Which sentence uses a colon correctly?",
+     "choices": [
+      "The recipe calls for: flour, sugar, and eggs.",
+      "She brought three items: a notebook, a pen, and a calculator.",
+      "His goal: to win the race.",
+      "They visited: Paris, London, and Rome."
+     ],
+     "answer": "She brought three items: a notebook, a pen, and a calculator.",
+     "rationale": "A colon must follow an independent clause; only the second option does so.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Special Right Triangles",
+     "prompt": "In a 45°‑45°‑90° triangle, each leg measures 7 cm. What is the length of the hypotenuse?",
+     "choices": [
+      "7 cm",
+      "14 cm",
+      "7√2 cm",
+      "7/√2 cm"
+     ],
+     "answer": "7√2 cm",
+     "rationale": "In a 45‑45‑90 triangle the hypotenuse equals leg × √2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Interpolation on Graphs",
+     "prompt": "A scientist records the temperature of a solution at times 1 min, 2 min, and 3 min as 22 °C, 24 °C, and 26 °C respectively. Assuming a constant rate of change, what temperature is expected at 5 min?",
+     "choices": [
+      "28 °C",
+      "32 °C",
+      "34 °C",
+      "30 °C"
+     ],
+     "answer": "30 °C",
+     "rationale": "The temperature rises 2 °C per minute; from 26 °C at 3 min it adds 4 °C to reach 30 °C at 5 min.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Angles of Elevation",
+     "prompt": "From a point 30 m away from the base of a building, the angle of elevation to the top of the building is 60°. What is the height of the building?",
+     "choices": [
+      "30√3 m",
+      "30 m",
+      "15√3 m",
+      "60 m"
+     ],
+     "answer": "30√3 m",
+     "rationale": "Height = distance × tan 60° = 30 × √3.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Arc Length",
+     "prompt": "A circle has radius 10 cm. What is the length of the arc subtended by a central angle of 60°?",
+     "choices": [
+      "(20π/3) cm",
+      "(10π/3) cm",
+      "(5π/3) cm",
+      "(40π/3) cm"
+     ],
+     "answer": "(10π/3) cm",
+     "rationale": "Arc length = (60/360)·2π·10 = (1/6)·20π = 10π/3 cm.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Cones and Spheres Volume",
+     "prompt": "A right circular cone has a height of 12 cm and a slant height of 13 cm. What is its volume?",
+     "choices": [
+      "300π cm³",
+      "65π cm³",
+      "100π cm³",
+      "130π cm³"
+     ],
+     "answer": "100π cm³",
+     "rationale": "r = √(13² − 12²) = 5, so V = (1/3)π·5²·12 = 100π cm³; 300π forgets the 1/3 and 65π is the lateral area.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "A right circular cone has its vertex at the center of a sphere of radius 10 cm, and its base lies on the sphere’s surface. What is the volume of the cone? (Express your answer in terms of π.)"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_10",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Factoring by grouping (harder trinomials)",
+     "prompt": "Factor completely: 2x^3 + 4x^2 + 3x + 6.",
+     "choices": [
+      "(2x^2 + 3)(x + 2)",
+      "(2x^2 - 3)(x - 2)",
+      "(x^2 + 3)(2x + 2)",
+      "(2x + 3)(x^2 + 2)"
+     ],
+     "answer": "(2x^2 + 3)(x + 2)",
+     "rationale": "Grouping the terms as (2x^3+4x^2)+(3x+6) yields 2x^2(x+2)+3(x+2) = (2x^2+3)(x+2).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Subject‑verb agreement with separated subjects",
+     "prompt": "Which sentence uses the correct verb form for the subject?",
+     "choices": [
+      "The box of chocolates, along with the ribbons, are on the table.",
+      "The box of chocolates, together with the ribbons, are on the table.",
+      "The box of chocolates, along with the ribbons, is on the table.",
+      "The box of chocolates, together with the ribbons, were on the table."
+     ],
+     "answer": "The box of chocolates, along with the ribbons, is on the table.",
+     "rationale": "The true subject is the singular noun \"box\", so the verb must be singular \"is\".",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Evaluating experimental design flaws",
+     "prompt": "A study tests a new fertilizer on 10 tomato plants in a greenhouse and compares them to 10 plants grown outdoors without fertilizer. Which flaw most threatens internal validity?",
+     "choices": [
+      "The sample size of 10 per group is too small.",
+      "The fertilizer was not applied at the same time each day.",
+      "The researchers did not blind the participants to treatment.",
+      "The greenhouse and outdoor conditions differ in light, temperature, and humidity."
+     ],
+     "answer": "The greenhouse and outdoor conditions differ in light, temperature, and humidity.",
+     "rationale": "Confounding environmental variables prevent a clear causal link between fertilizer and growth.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Quadratic formula and discriminant",
+     "prompt": "For the quadratic equation 3x^2 - 4x + 2 = 0, what is the value of the discriminant, and what does it indicate about the roots?",
+     "choices": [
+      "Δ = -8; two distinct real roots",
+      "Δ = -8; two complex conjugate roots",
+      "Δ = 8; two distinct real roots",
+      "Δ = 8; one repeated real root"
+     ],
+     "answer": "Δ = -8; two complex conjugate roots",
+     "rationale": "The discriminant b²‑4ac = (-4)²‑4·3·2 = 16‑24 = -8, and a negative discriminant yields non‑real complex conjugate roots.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Remainder and Factor Theorems",
+     "prompt": "Let P(x) = x^4 - 3x^3 + 2x^2 + 5x - 6. What is the remainder when P(x) is divided by (x - 2)?",
+     "choices": [
+      "0",
+      "-2",
+      "4",
+      "6"
+     ],
+     "answer": "4",
+     "rationale": "By the Remainder Theorem the remainder equals P(2) = 16 - 24 + 8 + 10 - 6 = 4.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Plugging in answers and picking numbers",
+     "prompt": "Which value of k makes the equation (k+1)/(k-2) = 3 true?",
+     "choices": [
+      "k = 7/2",
+      "k = 5/2",
+      "k = 3",
+      "k = 4"
+     ],
+     "answer": "k = 7/2",
+     "rationale": "Solving (k+1)=3(k-2) gives 2k=7, so k=3.5 = 7/2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Function composition, inverse functions, and domain restrictions",
+     "prompt": "Let f(x) = (x^2 - 4)/(x - 2) for x ≠ 2. After simplifying, find the inverse function f⁻¹(x) and state its domain.",
+     "choices": [
+      "f⁻¹(x) = x - 2, domain: all real numbers",
+      "f⁻¹(x) = x - 2, domain: x ≠ 4",
+      "f⁻¹(x) = x + 2, domain: x ≠ 4",
+      "f⁻¹(x) = x + 2, domain: all real numbers"
+     ],
+     "answer": "f⁻¹(x) = x - 2, domain: x ≠ 4",
+     "rationale": "Simplifying gives f(x)=x+2 with a hole at x=2, so the range excludes 4; the inverse is x-2 with domain all reals except 4.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_11",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Logarithm Definition and Exponential Form",
+     "prompt": "Rewrite log_3(81) = 4 in exponential form.",
+     "choices": [
+      "3^4 = 81",
+      "4^3 = 81",
+      "81^3 = 4",
+      "3^81 = 4"
+     ],
+     "answer": "3^4 = 81",
+     "rationale": "By definition, log_b(a) = c is equivalent to b^c = a.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Elliptical Constructions and Comparisons With Than and As",
+     "prompt": "Choose the pronoun that correctly completes the sentence: \"The award was shared by Maya and ___.\"",
+     "choices": [
+      "I",
+      "me",
+      "myself",
+      "mine"
+     ],
+     "answer": "me",
+     "rationale": "The pronoun is an object of the preposition by, so the object form me is needed; myself has no antecedent in the sentence.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "Complete the comparison: \"She runs faster than ___.\""
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Complex Numbers: Powers of i and Arithmetic",
+     "prompt": "What is the value of i^7?",
+     "choices": [
+      "i",
+      "1",
+      "-i",
+      "-1"
+     ],
+     "answer": "-i",
+     "rationale": "Powers of i repeat every four: i^7 = i^(4+3) = i^3 = -i.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Rhetorical Devices: Irony, Analogy, and Hyperbole",
+     "prompt": "Identify the rhetorical device in: \"I have told you a million times to close the door.\"",
+     "choices": [
+      "Metaphor",
+      "Simile",
+      "Hyperbole",
+      "Personification"
+     ],
+     "answer": "Hyperbole",
+     "rationale": "A million times is a deliberate exaggeration; nothing is compared or given human traits.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "Identify the rhetorical device in: \"The tiny office was a vast cathedral of paperwork.\""
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Rational Functions: Asymptotes and Holes",
+     "prompt": "Find the vertical asymptote of f(x) = (x^2 - 4) / (x^2 - 5x + 6).",
+     "choices": [
+      "x = 2",
+      "x = -2",
+      "x = -3",
+      "x = 3"
+     ],
+     "answer": "x = 3",
+     "rationale": "After canceling the common factor (x-2), the denominator zero at x=3 gives the vertical asymptote.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Geometric Sequences and Series",
+     "prompt": "What is the sum of the infinite geometric series 5 + 5/3 + 5/9 + ... ?",
+     "choices": [
+      "14/2",
+      "15/2",
+      "13/2",
+      "12/2"
+     ],
+     "answer": "15/2",
+     "rationale": "Sum = a/(1-r) = 5/(1-1/3) = 5/(2/3) = 15/2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Natural Logarithms, Logarithmic Equations, and Combinatorics",
+     "prompt": "Solve ln(x) + ln(x-2) = ln(8) for x > 2, then compute C(x,2). What is the result?",
+     "choices": [
+      "5",
+      "6",
+      "7",
+      "8"
+     ],
+     "answer": "6",
+     "rationale": "The equation gives x(x-2)=8 → x=4; C(4,2)=6.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_12",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Vectors: addition and magnitude",
+     "prompt": "Given vectors a = ⟨3, -4⟩ and b = ⟨-1, 2⟩, what is the magnitude of a + b?",
+     "choices": [
+      "√10",
+      "2√2",
+      "2√5",
+      "4"
+     ],
+     "answer": "2√2",
+     "rationale": "a+b = ⟨2, -2⟩ whose magnitude is √(2²+(-2)²)=√8=2√2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Idioms and commonly confused words",
+     "prompt": "Which sentence correctly uses the idiom 'to hit the nail on the head'?",
+     "choices": [
+      "He hit the nail on the head when he missed the target.",
+      "She hit the nail on the head by guessing randomly.",
+      "The mechanic hit the nail on the head after fixing the wrong part.",
+      "When she identified the exact cause of the error, she hit the nail on the head."
+     ],
+     "answer": "When she identified the exact cause of the error, she hit the nail on the head.",
+     "rationale": "The idiom means to describe precisely what is correct, which only the last sentence does.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Sum, difference, and double-angle identities",
+     "prompt": "Simplify sin(2θ) using the double‑angle identity.",
+     "choices": [
+      "2 sinθ cosθ",
+      "sin²θ - cos²θ",
+      "1 - 2 sin²θ",
+      "2 cos²θ - 1"
+     ],
+     "answer": "2 sinθ cosθ",
+     "rationale": "The double‑angle identity for sine is sin(2θ)=2 sinθ cosθ.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Evaluating argument construction",
+     "prompt": "In a passage, the author presents a claim, then provides a counterexample, and finally refutes the counterexample. Which structural element does the refutation serve?",
+     "choices": [
+      "Concession",
+      "Illustration",
+      "Rebuttal",
+      "Qualification"
+     ],
+     "answer": "Rebuttal",
+     "rationale": "A rebuttal directly answers and dismisses a counterexample.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Ellipses: foci, axes, and equations",
+     "prompt": "An ellipse has equation (x²/25)+(y²/9)=1. What are the coordinates of its foci?",
+     "choices": [
+      "(±4, 0)",
+      "(±3, 0)",
+      "(±5, 0)",
+      "(0, ±4)"
+     ],
+     "answer": "(±4, 0)",
+     "rationale": "c = √(a²−b²)=√(25−9)=4, so foci at (±4,0).",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Hyperbolas and identifying conics",
+     "prompt": "Which equation represents a hyperbola centered at the origin with transverse axis along the y‑axis and asymptotes y = ±(3/2)x?",
+     "choices": [
+      "y²/9 − x²/4 = 1",
+      "x²/9 − y²/4 = 1",
+      "y²/4 − x²/9 = 1",
+      "x²/4 − y²/9 = 1"
+     ],
+     "answer": "y²/9 − x²/4 = 1",
+     "rationale": "For a vertical transverse axis the form is y²/a²−x²/b²=1 with slopes a/b=3/2 ⇒ a=3, b=2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Synthesis across units (capstone)",
+     "prompt": "A light wave of intensity I₀ passes through a polarizer aligned with its polarization, then through a second polarizer rotated 30° relative to the first. What fraction of I₀ emerges after the second polarizer?",
+     "choices": [
+      "1/2",
+      "3/4",
+      "√3/2",
+      "1/4"
+     ],
+     "answer": "3/4",
+     "rationale": "Malus’s law gives I = I₀ cos²θ; after the first polarizer θ=0 so I=I₀, after the second θ=30° so I = I₀ cos²30° = I₀·(√3/2)² = 3/4 I₀.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_13",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Baseline pacing strategy",
+     "prompt": "When taking the ACT, a test‑taker plans to spend an average of 42 seconds per English item. If the English section has 75 items, how many minutes should be allocated to this section?",
+     "choices": [
+      "50 minutes",
+      "52.5 minutes",
+      "55 minutes",
+      "48 minutes"
+     ],
+     "answer": "52.5 minutes",
+     "rationale": "75 items × 42 seconds = 3150 seconds = 52.5 minutes.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Mental arithmetic with fractions and percents",
+     "prompt": "What is 3/8 expressed as a percent?",
+     "choices": [
+      "37.5%",
+      "38%",
+      "37%",
+      "37.05%"
+     ],
+     "answer": "37.5%",
+     "rationale": "3 ÷ 8 = 0.375 = 37.5%.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Fast trend and interpolation on data figures",
+     "prompt": "A graph shows the temperature of a solution recorded at 0, 2, and 4 minutes as 15°C, 18°C, and 21°C respectively. Assuming a constant rate, what is the temperature at 6 minutes?",
+     "choices": [
+      "24°C",
+      "22°C",
+      "26°C",
+      "20°C"
+     ],
+     "answer": "24°C",
+     "rationale": "The temperature rises 1.5°C per minute; 21°C + 2×1.5°C = 24°C.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Tracking paragraph purpose in literary narrative",
+     "prompt": "In a literary narrative, the third paragraph describes the protagonist's childhood memory of a storm, emphasizing fear and wonder. What is the primary purpose of this paragraph?",
+     "choices": [
+      "To develop character through a vivid memory",
+      "To advance the plot by introducing a new conflict",
+      "To provide historical background on storms",
+      "To argue for the scientific explanation of thunder"
+     ],
+     "answer": "To develop character through a vivid memory",
+     "rationale": "The paragraph focuses on the protagonist's personal experience to deepen characterization.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Geometry formulas recalled without reference",
+     "prompt": "A sector of a circle has radius 10 cm and central angle 72°. What is the area of the sector?",
+     "choices": [
+      "20π cm²",
+      "25π cm²",
+      "15π cm²",
+      "30π cm²"
+     ],
+     "answer": "20π cm²",
+     "rationale": "Area = (72/360)×π×10² = (1/5)×100π = 20π cm².",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Statistics and probability setups done fast",
+     "prompt": "A bag contains 4 red, 5 blue, and 6 green marbles. Two marbles are drawn without replacement. What is the probability that both are blue?",
+     "choices": [
+      "2/21",
+      "1/7",
+      "5/21",
+      "4/21"
+     ],
+     "answer": "2/21",
+     "rationale": "(5/15)×(4/14) = 20/210 = 2/21.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integration of exponential, logarithmic, trigonometric, and function‑composition",
+     "prompt": "Let f(x)=2^x, g(x)=log₂(x), and h(x)=sin(πx/2). What is h(g(f(3)))?",
+     "choices": [
+      "-1",
+      "0",
+      "1",
+      "2"
+     ],
+     "answer": "-1",
+     "rationale": "f(3)=8, g(8)=3, h(3)=sin(3π/2)=−1.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_14",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Trap answers that overstate textual evidence",
+     "prompt": "A passage states: \"The new policy reduced costs by 15% in its first year.\" Which answer choice goes beyond what the passage supports?",
+     "choices": [
+      "The policy lowered costs during its first year.",
+      "The policy will keep reducing costs every year.",
+      "The policy cut first-year costs by 15 percent.",
+      "Costs fell by 15% in the policy's first year."
+     ],
+     "answer": "The policy will keep reducing costs every year.",
+     "rationale": "The passage reports only the first year; the other three restate it.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "In a passage the author writes, \"The new policy reduced costs by 15%.\" A question asks, \"What does the author imply about the policy's effectiveness?\" Which answer choice is a trap that overstates the"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Sign errors in algebraic evaluation",
+     "prompt": "Evaluate 2x² − 5x + 4 when x = −3. A student who mistakenly treats (−3)² as −9 (and makes no other error) gets which value?",
+     "choices": [
+      "37",
+      "7",
+      "1",
+      "−29"
+     ],
+     "answer": "1",
+     "rationale": "With (−3)² taken as −9: 2(−9) − 5(−3) + 4 = −18 + 15 + 4 = 1. The correct value is 37.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "A math problem states: \"If x = -3, evaluate 2x^2 - 5x + 4.\" A student rushes and forgets to square the negative sign. Which resulting value reflects that sign error?"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Paired‑passage synthesis of shared concessions",
+     "prompt": "Passage A: \"Remote work boosts focus, although its success depends heavily on reliable video tools.\" Passage B: \"Remote work weakens team bonds, especially when video tools are unreliable.\" Which statement do both passages support?",
+     "choices": [
+      "Remote work improves focus for most workers.",
+      "Remote work weakens the bonds within teams.",
+      "Video tools affect how remote work turns out.",
+      "Remote work should be ended at most companies."
+     ],
+     "answer": "Video tools affect how remote work turns out.",
+     "rationale": "Both passages tie remote work's results to video tools; the first two are each one passage's claim and the last is neither's.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "In a paired‑passage set, Passage A argues that remote work increases productivity, while Passage B claims it harms team cohesion. A question asks, \"Which statement is supported by both passages?\" Whic"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Geometry diagram assumptions and inscribed circles",
+     "prompt": "A geometry word problem gives a diagram described in words: a right triangle with legs 6 cm and 8 cm, and a circle inscribed in it. The question asks for the circle's radius. Which answer results from mistakenly using the triangle's hypotenuse as the diameter?",
+     "choices": [
+      "r = 2 cm",
+      "r = 3 cm",
+      "r = 4 cm",
+      "r = 5 cm"
+     ],
+     "answer": "r = 5 cm",
+     "rationale": "The hypotenuse is 10 cm; treating it as a diameter gives radius 5 cm, but the inscribed circle radius is (a+b−c)/2 = 2 cm.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Counting without replacement and order dependence",
+     "prompt": "A probability problem: A bag contains 3 red, 4 blue, and 5 green marbles. Two marbles are drawn without replacement. What is the probability that the first is blue and the second is green?",
+     "choices": [
+      "12/132",
+      "12/121",
+      "20/132",
+      "20/121"
+     ],
+     "answer": "20/132",
+     "rationale": "(4/12)·(5/11) = 20/132; 20/121 draws with replacement.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b (key fixed by claude after both judges and the working agreed on 20/132)",
+     "rewritten": "key-fix"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Correlation versus causation overreach",
+     "prompt": "In a science research summary, a study reports a correlation coefficient r = 0.78 between hours of study and test scores. The conclusion states, \"Increasing study time causes higher scores.\" Which flaw does this conclusion exhibit?",
+     "choices": [
+      "Confounding variables are ignored.",
+      "The sample size is too small.",
+      "The correlation is weak.",
+      "The direction of the relationship is reversed."
+     ],
+     "answer": "Confounding variables are ignored.",
+     "rationale": "Correlation alone cannot establish causation; other factors may influence both variables.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Vertex finding, piecewise modeling, and multi‑step projection",
+     "prompt": "A company's revenue, in thousands of dollars, follows R(t) = −2t² + 24t + 150, where t is years since 2020, until it reaches its peak. After the peak it falls by 10 (thousand dollars) each year instead. What is the projected revenue in 2028?",
+     "choices": [
+      "$214k",
+      "$202k",
+      "$212k",
+      "$192k"
+     ],
+     "answer": "$202k",
+     "rationale": "The peak is at t = 6 with R(6) = 222; two years of decline to t = 8 gives 222 − 20 = 202. Using the model at t = 8 gives the trap 214.",
+     "writer": "claude (in-app; tonight's fallback lane 6)",
+     "rewritten": "review",
+     "replaced_prompt": "A multi‑step modeling problem: A company's revenue R(t) in thousands of dollars is modeled by R(t) = -2t^2 + 24t + 150, where t is years since 2020. The company plans to launch a new product at the ve"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_15",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Setting Section Targets and Allowed Miss Counts",
+     "prompt": "If the English section has 75 questions and a raw score of 70 corresponds to a scaled score of 34, what is the maximum number of questions a student can answer incorrectly and still achieve at least a 34 on English?",
+     "choices": [
+      "5",
+      "4",
+      "6",
+      "7"
+     ],
+     "answer": "5",
+     "rationale": "A raw score of 70 out of 75 allows 5 incorrect answers.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Polynomial Remainder, Factor, and Root Relationship Items",
+     "prompt": "Find the remainder when Q(x) = 2x³ – 5x² + 4x – 1 is divided by (x – 3).",
+     "choices": [
+      "18",
+      "19",
+      "22",
+      "20"
+     ],
+     "answer": "20",
+     "rationale": "By the Remainder Theorem, Q(3) = 2·27 – 5·9 + 12 – 1 = 20.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Hardest Model Evaluation Questions With New Data",
+     "prompt": "A bacterial culture follows N(t) = N₀·e^{kt}. Initially N₀ = 150. After 2 hours the population is 600. Assuming the model holds, what is the predicted population after 4 hours?",
+     "choices": [
+      "1200",
+      "2400",
+      "1800",
+      "4800"
+     ],
+     "answer": "2400",
+     "rationale": "From 600 = 150 e^{2k} we get e^{2k}=4 → k = ln2; then N(4)=150 e^{4k}=150·4²=2400.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Concision Versus Precision When Both Choices Are Correct",
+     "prompt": "Which revision of the sentence best balances concision and precision?\nOriginal: \"The researcher, who had been studying the phenomenon for over a decade, concluded that the results were significant.\"",
+     "choices": [
+      "The researcher concluded the results were significant.",
+      "The researcher, studying the phenomenon for over a decade, concluded the results were significant.",
+      "Having studied the phenomenon for over a decade, the researcher concluded the results were significant.",
+      "The researcher, after more than ten years of study, concluded the results were significant."
+     ],
+     "answer": "Having studied the phenomenon for over a decade, the researcher concluded the results were significant.",
+     "rationale": "This version retains the essential time‑frame information while eliminating the wordy relative clause.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Complex Numbers and Matrices on Hard Items",
+     "prompt": "If matrix A = [[1,2],[3,4]] and B = [[0,1],[-1,0]], what is the determinant of the product AB?",
+     "choices": [
+      "-2",
+      "2",
+      "-4",
+      "4"
+     ],
+     "answer": "-2",
+     "rationale": "AB = [[-2,1],[-4,3]]; det(AB) = (-2)(3) - (1)(-4) = -6 + 4 = -2.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Trigonometry Identity and Graph Problems at Full Difficulty",
+     "prompt": "Which expression is equivalent to sin(3θ) written solely in terms of sinθ?",
+     "choices": [
+      "3 sinθ - 4 sin³θ",
+      "3 sinθ + 4 sin³θ",
+      "4 sin³θ - 3 sinθ",
+      "3 sinθ - 4 cos³θ"
+     ],
+     "answer": "3 sinθ - 4 sin³θ",
+     "rationale": "The triple‑angle identity states sin(3θ) = 3 sinθ – 4 sin³θ.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Building Your Pre‑Test Review Sheet",
+     "prompt": "A student allocates 120 minutes for ACT review proportionally to the inverse of her current section accuracies: English 92%, Math 78%, Reading 85%, Science 80%. How many minutes should she allocate to Math (rounded to the nearest minute)?",
+     "choices": [
+      "30",
+      "32",
+      "34",
+      "28"
+     ],
+     "answer": "32",
+     "rationale": "Inverse accuracies give weights 1.087, 1.282, 1.176, 1.25; Math’s share = 1.282/4.795 ≈ 0.2675 → 0.2675·120 ≈ 32 minutes.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    }
+   ]
+  },
+  {
+   "grade_id": "act_grade_16",
+   "questions": [
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Planning Retention Between Test Dates",
+     "prompt": "A student plans to keep ACT math formulas fresh between test dates that are six weeks apart. Which review schedule best supports long‑term retention without overload?",
+     "choices": [
+      "Review all formulas once per month",
+      "Review a mixed set of formulas twice per week",
+      "Re‑read the entire formula sheet daily",
+      "Complete a full practice math section every other day"
+     ],
+     "answer": "Review a mixed set of formulas twice per week",
+     "rationale": "Spaced, mixed practice twice weekly balances frequency and variety, which research shows maximizes retention for high‑stakes math.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "easy",
+     "stated_band": null,
+     "topic": "Maintaining English Accuracy With Weekly Rule Retrieval",
+     "prompt": "To preserve English rule accuracy across weeks, a test‑taker should incorporate which weekly habit?",
+     "choices": [
+      "Rewrite the entire grammar handbook each Sunday",
+      "Complete a timed English passage and review every error",
+      "Memorize one new rule each day and ignore old ones",
+      "Only study rules that appeared on the last practice test"
+     ],
+     "answer": "Complete a timed English passage and review every error",
+     "rationale": "A timed passage forces retrieval of many rules under test conditions, and error review consolidates the correct forms.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Maintaining Data Interpretation Skills for a Retake",
+     "prompt": "When retaking the ACT Science section, a student wants to keep data‑interpretation skill sharp. Which practice most directly maintains that skill?",
+     "choices": [
+      "Read popular science articles for 20 minutes daily",
+      "Solve two new data‑analysis passages under timed conditions each week",
+      "Watch a video on experimental design once per month",
+      "Re‑graph the same practice charts from memory weekly"
+     ],
+     "answer": "Solve two new data‑analysis passages under timed conditions each week",
+     "rationale": "Fresh, timed passages require active interpretation of novel data, mirroring the retake demands.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "medium",
+     "stated_band": null,
+     "topic": "Managing Test Anxiety With Reappraisal and Expressive Writing",
+     "prompt": "A test‑taker uses reappraisal and expressive writing to manage anxiety before each ACT sitting. Which description matches the recommended routine?",
+     "choices": [
+      "Write a 10‑minute journal about fears, then list three coping statements",
+      "Meditate silently for 30 minutes and avoid any writing",
+      "Read a motivational quote and immediately start the test",
+      "Discuss worries with a friend for an hour the night before"
+     ],
+     "answer": "Write a 10‑minute journal about fears, then list three coping statements",
+     "rationale": "Expressive writing followed by cognitive reappraisal (coping statements) is the evidence‑based protocol for test‑day anxiety.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Mixed Hard Math Set to Confirm Retention After a Break",
+     "prompt": "After a three‑week break, a student completes a mixed hard‑math set to verify retention. Which outcome signals that the break has not eroded mastery?",
+     "choices": [
+      "Score drops 15% compared to the last full‑length test",
+      "All geometry and trigonometry items are correct, but algebra items show occasional slips",
+      "Overall score matches the pre‑break benchmark within ±2 points",
+      "Only the easiest items are answered correctly; hard items are missed"
+     ],
+     "answer": "Overall score matches the pre‑break benchmark within ±2 points",
+     "rationale": "A stable overall score indicates that the spiral review has preserved proficiency across all hard topics.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "hard",
+     "stated_band": null,
+     "topic": "Maintaining 36-Level English When Content Feels Familiar",
+     "prompt": "During a timed English section, a student finds the passages familiar and begins to rush. Which strategy keeps performance at the 36 level?",
+     "choices": [
+      "Skip the familiar passages and spend extra time on the hardest one",
+      "Maintain the standard 42‑second per item pace and run a quick error‑check pass",
+      "Read each passage twice before answering any questions",
+      "Answer only the questions you are certain about and guess the rest"
+     ],
+     "answer": "Maintain the standard 42‑second per item pace and run a quick error‑check pass",
+     "rationale": "Consistent pacing plus a brief verification pass prevents careless errors that arise from overconfidence.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b"
+    },
+    {
+     "band": "capstone",
+     "stated_band": null,
+     "topic": "Integrating retention and test‑day strategies",
+     "prompt": "In the final week before an ACT retake, a student designs a comprehensive maintenance plan. Which plan incorporates all core retention and test‑day strategies emphasized in this grade?",
+     "choices": [
+      "Daily 30‑minute mixed math spiral, two timed English passages per week, one timed Science set per week, nightly 10‑minute anxiety journal, and a fixed test‑day wake‑up routine.",
+      "Daily 30‑minute mixed math spiral, one timed English passage per week, no Science practice, nightly 10‑minute anxiety journal, and a fixed test‑day wake‑up routine.",
+      "Daily 30‑minute mixed math spiral, two timed English passages per week, one timed Science set per week, no anxiety journal, and a variable wake‑up time.",
+      "Weekly 60‑minute math review, two timed English passages per week, one timed Science set per week, nightly 10‑minute anxiety journal, and a fixed test‑day wake‑up routine."
+     ],
+     "answer": "Daily 30‑minute mixed math spiral, two timed English passages per week, one timed Science set per week, nightly 10‑minute anxiety journal, and a fixed test‑day wake‑up routine.",
+     "rationale": "This option includes every core component taught in the grade: daily mixed‑math fluency work, regular timed English and Science practice, a nightly anxiety‑management journal, and a consistent wake‑up routine for test‑day readiness. Each of the other plans omits at least one essential element.",
+     "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+     "rewritten": "code-1"
+    }
+   ]
+  }
+ ],
+ "code_problems": [
+  "act_grade_7#3: all/none of the above"
+ ],
+ "model": "nvidia/nemotron-3-ultra-550b-a55b",
+ "written_at": "2026-10-24T07:15:31.178Z",
+ "complete": true
+}

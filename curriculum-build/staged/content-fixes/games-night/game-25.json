@@ -1,0 +1,2863 @@
+{
+ "row_id": 25,
+ "engine_id": "duck-hunt",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 33,
+ "generated_at": "2026-10-24T20:47:41.155Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 59,
+  "code_rejected": 1,
+  "sent_to_judges": 58,
+  "kept": 50,
+  "keep_rate_of_written": 0.847,
+  "judges": {
+   "both_answered": 58,
+   "picked_same_option": 54,
+   "a_picked_key": 55,
+   "b_picked_key": 55,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "minimax/minimax-m3.1-flash",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-max:free"
+   ],
+   "models_b": [
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-max:free",
+    "z-ai/glm-5.3"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "duck-hunt",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 33,
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "title": "Combine Two Sentences: Rhetorical Grammar",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q39",
+    "prompt": "The researcher collected the data. She published the findings. Which version correctly shows the chronological order using a subordinate conjunction?",
+    "choices": [
+     "After the researcher collected the data; she published the findings.",
+     "The researcher collected the data after she published the findings.",
+     "After the researcher collected the data, she published the findings.",
+     "The researcher collected the data, after she published the findings."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence begins with the subordinate clause “After the researcher collected the data,” followed by a comma and the main clause.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q5",
+    "prompt": "The librarian stamped our cards. The reading room was nearly empty. Which version combines these independent clauses with a semicolon rather than a comma splice?",
+    "choices": [
+     "The librarian stamped our cards; the reading room was nearly empty.",
+     "The librarian stamped our cards: the reading room was nearly empty.",
+     "The librarian stamped our cards, the reading room was nearly empty.",
+     "The librarian stamped our cards. The reading room was nearly empty."
+    ],
+    "answerIndex": 0,
+    "explanation": "A semicolon can join two complete independent clauses without creating a comma splice.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a semicolon",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q12",
+    "prompt": "The committee approved the budget. The project can now begin. Which version combines the sentences with a subordinate conjunction that shows cause?",
+    "choices": [
+     "The committee approved the budget, for the project can now begin.",
+     "The committee approved the budget; the project can now begin.",
+     "The committee approved the budget, so the project can now begin.",
+     "Since the committee approved the budget, the project can now begin."
+    ],
+    "answerIndex": 3,
+    "explanation": "“Since” introduces a causal subordinate clause linking the approval to the project’s start.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q48",
+    "prompt": "Consider this combined sentence: With the shutters opening, the photographer adjusted the lens. What does the opening phrase do?",
+    "choices": [
+     "It indicates that the photographer adjusted the lens before the shutters opened.",
+     "It identifies the photographer as the person who opened the shutters.",
+     "It states that the lens adjustment caused the shutters to open.",
+     "It presents the shutters opening as background context for the photographer adjusting the lens."
+    ],
+    "answerIndex": 3,
+    "explanation": "The absolute phrase presents the shutters opening as background context for the photographer adjusting the lens.",
+    "difficulty": 6,
+    "skill": "Absolute Phrases",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q30",
+    "prompt": "The rehearsal ended. The stage lights came on immediately. Which sentence uses the subordinating conjunction as soon as to express the immediate sequence?",
+    "choices": [
+     "After the rehearsal ended, the stage lights came on immediately.",
+     "As soon as the rehearsal ended, the stage lights came on immediately.",
+     "While the rehearsal ended, the stage lights came on immediately.",
+     "Before the rehearsal ended, the stage lights came on immediately."
+    ],
+    "answerIndex": 1,
+    "explanation": "The conjunction as soon as accurately presents the stage lights coming on immediately after the rehearsal ended.",
+    "difficulty": 5,
+    "skill": "Combining sentences to express an immediate sequence",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q4",
+    "prompt": "The wind died down. Campers emerged from their tents. Which version combines the two clauses with a colon that introduces the resulting action?",
+    "choices": [
+     "The wind died down, campers emerged from their tents.",
+     "The wind died down. Campers emerged from their tents.",
+     "The wind died down; campers emerged from their tents.",
+     "The wind died down: campers emerged from their tents."
+    ],
+    "answerIndex": 3,
+    "explanation": "The colon links the change in the wind to the campers' resulting emergence from their tents.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a colon",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q40",
+    "prompt": "The sculpture was marble. It stood in the garden. Which version correctly joins the facts with a nonrestrictive relative clause?",
+    "choices": [
+     "The sculpture which was marble, stood in the garden.",
+     "The sculpture which was marble stood in the garden.",
+     "The sculpture, which was marble stood in the garden.",
+     "The sculpture, which was marble, stood in the garden."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct version sets off the nonrestrictive clause “which was marble” with commas on both sides.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q28",
+    "prompt": "Maya ran late. She missed the bus. Which sentence combines the facts with a participial phrase that logically modifies Maya?",
+    "choices": [
+     "To run late, Maya missed the bus.",
+     "Late running, Maya missed the bus.",
+     "Running late, the bus was missed by Maya.",
+     "Running late, Maya missed the bus."
+    ],
+    "answerIndex": 3,
+    "explanation": "The introductory participial phrase Running late logically modifies Maya, indicating why she missed the bus.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a logically modifying participial phrase",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q49",
+    "prompt": "The drummer tightened the tuning peg. He counted the tempo. Which version combines the sentences with a compound predicate while preserving both actions?",
+    "choices": [
+     "The drummer tightened the tuning peg and counted the tempo.",
+     "The drummer, after tightening the tuning peg, counted the tempo.",
+     "After the drummer tightened the tuning peg, he counted the tempo.",
+     "While the drummer tightened the tuning peg, the metronome counted the tempo."
+    ],
+    "answerIndex": 0,
+    "explanation": "The compound predicate joins tightened and counted, two verbs that share the subject The drummer.",
+    "difficulty": 5,
+    "skill": "Compound Predicates",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q9",
+    "prompt": "The lights were dimmed. The audience settled into their seats. Which version uses a perfect passive participle in an absolute phrase to express the first action?",
+    "choices": [
+     "With the lights having been dimmed, the audience settled into their seats.",
+     "With the lights having dimmed, the audience settled into their seats.",
+     "With the lights being dimmed, the audience settled into their seats.",
+     "With the lights having been dim, the audience settled into their seats."
+    ],
+    "answerIndex": 0,
+    "explanation": "Having been dimmed is a perfect passive participle, and the absolute phrase adds the circumstances surrounding the audience's settling into their seats.",
+    "difficulty": 6,
+    "skill": "Combining Sentences with Absolute Phrases",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q7",
+    "prompt": "Ms. Ortiz started a tutoring club. She hoped more students would join. Which version combines the sentences with a so that clause expressing the club's purpose?",
+    "choices": [
+     "Ms. Ortiz started a tutoring club so that more students could joined.",
+     "Ms. Ortiz started a tutoring club so that more students would joining.",
+     "Ms. Ortiz started a tutoring club so that more students would join.",
+     "Ms. Ortiz started a tutoring club so that more students will join."
+    ],
+    "answerIndex": 2,
+    "explanation": "The so that clause expresses the intended purpose of starting the tutoring club, and would join correctly follows the past-tense context.",
+    "difficulty": 5,
+    "skill": "Combining Sentences with Purpose Clauses",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q41",
+    "prompt": "The engine overheated. The coolant level was low. Which version uses a colon to introduce an explanation of the first statement?",
+    "choices": [
+     "The engine overheated: the coolant level was low.",
+     "The engine overheated; the coolant level was low.",
+     "The engine overheated, the coolant level was low.",
+     "The engine overheated – the coolant level was low."
+    ],
+    "answerIndex": 0,
+    "explanation": "The colon correctly signals that the second independent clause explains the cause of the first.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q16",
+    "prompt": "Coach Rivera designed the playbook. The strategy won the final game. Which version uses a restrictive that-clause to identify the strategy and keeps Coach Rivera as the designer?",
+    "choices": [
+     "The strategy whom Coach Rivera designed won the final game.",
+     "The strategy, that Coach Rivera designed, won the final game.",
+     "The strategy that designed Coach Rivera won the final game.",
+     "The strategy that Coach Rivera designed won the final game."
+    ],
+    "answerIndex": 3,
+    "explanation": "The unpunctuated that-clause restricts the noun strategy to the one Coach Rivera designed and makes Rivera the active agent.",
+    "difficulty": 4,
+    "skill": "Restrictive relative clauses",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q43",
+    "prompt": "The river flows through the canyon. It carves limestone walls. Which version joins the two facts with a correctly punctuated nonrestrictive relative clause?",
+    "choices": [
+     "The river which flows through the canyon, carves limestone walls.",
+     "The river that flows through the canyon carves limestone walls.",
+     "The river, which flows through the canyon, carves limestone walls.",
+     "The river, that flows through the canyon, carves limestone walls."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct sentence uses commas around the nonrestrictive clause \"which flows through the canyon\" to add extra information without restricting the noun.",
+    "difficulty": 5,
+    "skill": "sentence combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q36",
+    "prompt": "The café had a short menu. The soup tasted excellent. Which sentence uses a coordinating conjunction to present the soup as an additional detail without suggesting cause, contrast, or an unexpected result?",
+    "choices": [
+     "The café had a short menu, yet the soup tasted excellent.",
+     "The café had a short menu, but the soup tasted excellent.",
+     "The café had a short menu, so the soup tasted excellent.",
+     "The café had a short menu, and the soup tasted excellent."
+    ],
+    "answerIndex": 3,
+    "explanation": "And joins two independent clauses to present the soup's quality as an additional detail without implying cause or contrast.",
+    "difficulty": 5,
+    "skill": "Combining independent clauses with a coordinating conjunction",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q31",
+    "prompt": "Maya reviewed vocabulary. She wanted to improve her quiz results. Which sentence combines the facts with a phrase that expresses purpose most directly?",
+    "choices": [
+     "Maya reviewed vocabulary so that improve her quiz results.",
+     "Maya reviewed vocabulary because improve her quiz results.",
+     "Maya reviewed vocabulary in order to improve her quiz results.",
+     "Maya reviewed vocabulary in order improving her quiz results."
+    ],
+    "answerIndex": 2,
+    "explanation": "The infinitive phrase in order to improve her quiz results states why Maya reviewed the vocabulary.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a purpose infinitive phrase",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q44",
+    "prompt": "Jenna set an alarm. She wanted to wake up early for practice. Which version combines the sentences with a purpose clause introduced by \"so that\"?",
+    "choices": [
+     "Jenna set an alarm to wake up early for practice.",
+     "Jenna set an alarm so she could wake up early for practice.",
+     "Jenna set an alarm in order to wake up early for practice.",
+     "Jenna set an alarm so that she could wake up early for practice."
+    ],
+    "answerIndex": 3,
+    "explanation": "The construction \"so that she could\" explicitly marks purpose with a subordinate clause, matching the required \"so that\" structure.",
+    "difficulty": 5,
+    "skill": "sentence combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q50",
+    "prompt": "The power outage lasted three hours. The server rebooted automatically. Which version correctly combines the sentences with a semicolon and a conjunctive adverb to show result?",
+    "choices": [
+     "The power outage lasted three hours, consequently the server rebooted automatically.",
+     "The power outage lasted three hours; consequently, the server rebooted automatically.",
+     "The power outage lasted three hours; the server rebooted automatically.",
+     "The power outage lasted three hours, so the server rebooted automatically."
+    ],
+    "answerIndex": 1,
+    "explanation": "The semicolon joins two independent clauses and the conjunctive adverb 'consequently' signals a result.",
+    "difficulty": 5,
+    "skill": "Using semicolons with conjunctive adverbs",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q6",
+    "prompt": "A heavy storm knocked over a bucket. Water spread across the kitchen floor. Which version most clearly presents the storm as the cause of the spreading water?",
+    "choices": [
+     "Although a heavy storm knocked over a bucket, water spread across the kitchen floor.",
+     "Because a heavy storm knocked over a bucket, water spread across the kitchen floor.",
+     "A heavy storm knocked over a bucket, and water spread across the kitchen floor.",
+     "A heavy storm knocked over a bucket because water spread across the kitchen floor."
+    ],
+    "answerIndex": 1,
+    "explanation": "The because clause makes the storm the stated cause of the water spreading across the kitchen floor.",
+    "difficulty": 4,
+    "skill": "Combining Sentences to Show Cause",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q45",
+    "prompt": "The trail was steep. The hikers reached the summit quickly. Which version combines the sentences with a concessive subordinate conjunction?",
+    "choices": [
+     "Although the trail was steep, the hikers reached the summit quickly.",
+     "Because the trail was steep, the hikers reached the summit quickly.",
+     "The trail was steep, yet the hikers reached the summit quickly.",
+     "The trail was steep; the hikers reached the summit quickly."
+    ],
+    "answerIndex": 0,
+    "explanation": "\"Although\" introduces a concession, showing that the steep trail did not prevent the quick ascent.",
+    "difficulty": 5,
+    "skill": "sentence combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q42",
+    "prompt": "The team celebrated. They had won the championship. Which version combines the sentences with an em dash to add emphatic detail?",
+    "choices": [
+     "The team celebrated, they had won the championship.",
+     "The team celebrated—they had won the championship.",
+     "The team celebrated; they had won the championship.",
+     "The team celebrated: they had won the championship."
+    ],
+    "answerIndex": 1,
+    "explanation": "The em dash creates a strong break that emphasizes the reason for the celebration.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q37",
+    "prompt": "The library will remain open late. The principal will approve the request. Which sentence uses a conditional conjunction to make the principal's approval a requirement for the library to remain open late?",
+    "choices": [
+     "The library will remain open late provided that the principal approves the request.",
+     "The library will remain open late although the principal approves the request.",
+     "The library will remain open late after the principal approves the request.",
+     "The library will remain open late because the principal approves the request."
+    ],
+    "answerIndex": 0,
+    "explanation": "Provided that makes the principal's approval the condition under which the library will remain open late.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a conditional conjunction",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q8",
+    "prompt": "The marathon began at dawn. It lasted for several hours. Which version uses a participial phrase that correctly modifies the marathon?",
+    "choices": [
+     "Began at dawn, the marathon lasted for several hours.",
+     "Beginning at dawn, the marathon's lasted for several hours.",
+     "Having began at dawn, the marathon lasted for several hours.",
+     "Beginning at dawn, the marathon lasted for several hours."
+    ],
+    "answerIndex": 3,
+    "explanation": "Beginning at dawn is a participial phrase whose implied subject is the marathon, so the modifier is correctly placed.",
+    "difficulty": 5,
+    "skill": "Combining Sentences with Participial Phrases",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q32",
+    "prompt": "Ms. Chen coached the team. The team won the championship. Which sentence correctly uses a whose clause to express possession?",
+    "choices": [
+     "Ms. Chen, who team won the championship, is the coach.",
+     "Ms. Chen, whose won the championship with her team, is the coach.",
+     "Ms. Chen, who won the championship with her team, is the coach.",
+     "Ms. Chen, whose team won the championship, is the coach."
+    ],
+    "answerIndex": 3,
+    "explanation": "The whose clause correctly identifies the championship-winning team as Ms. Chen's team.",
+    "difficulty": 7,
+    "skill": "Combining sentences with a whose clause",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q18",
+    "prompt": "The directions were printed in small type. The hikers still followed them. Which version uses despite to express the contrast?",
+    "choices": [
+     "Although the directions were printed in small type, the hikers still followed them.",
+     "Despite the directions being printed in small type, the hikers still followed them.",
+     "Because the directions were printed in small type, the hikers still followed them.",
+     "Unless the directions were printed in small type, the hikers still followed them."
+    ],
+    "answerIndex": 1,
+    "explanation": "The prepositional phrase beginning with despite places the small print in contrast with the hikers' decision to follow the directions.",
+    "difficulty": 5,
+    "skill": "Contrast with despite phrases",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q2",
+    "prompt": "Leah is the captain. She has led the team for two seasons. Which version joins the facts with a correctly punctuated nonessential appositive?",
+    "choices": [
+     "Leah the captain, has led the team for two seasons.",
+     "Leah, the captain, has led the team for two seasons.",
+     "Leah, the captain has led the team for two seasons.",
+     "Leah; the captain, has led the team for two seasons."
+    ],
+    "answerIndex": 1,
+    "explanation": "The appositive the captain correctly renames Leah and is enclosed by a pair of commas.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a nonessential appositive",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q17",
+    "prompt": "The forecast promised sunshine. Rain arrived at noon. Which version combines the clauses with while to show a contrast?",
+    "choices": [
+     "The forecast promised sunshine, while rain arrived at noon.",
+     "The forecast promised sunshine because rain arrived at noon.",
+     "The forecast promised sunshine when rain arrived at noon.",
+     "The forecast promised sunshine so rain arrived at noon."
+    ],
+    "answerIndex": 0,
+    "explanation": "The word while connects the two clauses and signals that the arrival of rain contrasted with the sunny forecast.",
+    "difficulty": 5,
+    "skill": "Contrast with while clauses",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q24",
+    "prompt": "Dr. Imani wrote the article. It was printed in the school newspaper. Which version combines the sentences with a restrictive relative clause?",
+    "choices": [
+     "The article whom Dr. Imani wrote was printed in the school newspaper.",
+     "The article, that Dr. Imani wrote was printed in the school newspaper.",
+     "The article that Dr. Imani wrote the school newspaper printed.",
+     "The article that Dr. Imani wrote was printed in the school newspaper."
+    ],
+    "answerIndex": 3,
+    "explanation": "The restrictive that-clause identifies which article was printed without adding nonessential information.",
+    "difficulty": 5,
+    "skill": "Using a restrictive relative clause",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q38",
+    "prompt": "Consider this combined sentence: The bell rang, and students entered the classroom. Which one-sentence explanation correctly describes its structure?",
+    "choices": [
+     "The comma separates a dependent clause from an independent clause, so the sentence is correctly punctuated.",
+     "The comma joins two independent clauses with the coordinating conjunction and, so the sentence is correctly punctuated.",
+     "The conjunction and joins two dependent clauses, so the sentence is correctly punctuated.",
+     "The coordinating conjunction and follows the subject, so the sentence is correctly punctuated."
+    ],
+    "answerIndex": 1,
+    "explanation": "The comma joins two independent clauses with the coordinating conjunction and, so the sentence is correctly punctuated.",
+    "difficulty": 6,
+    "skill": "Explaining how coordinating conjunctions combine independent clauses",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q1",
+    "prompt": "The museum opens at ten. It houses a rare space telescope. Which version correctly joins them with a nonrestrictive relative clause?",
+    "choices": [
+     "The museum, which opens at ten, houses a rare space telescope.",
+     "The museum which opens at ten houses a rare space telescope.",
+     "The museum, that opens at ten, houses a rare space telescope.",
+     "The museum, which opens at ten houses a rare space telescope."
+    ],
+    "answerIndex": 0,
+    "explanation": "The paired commas and which correctly set off the museum's opening time as nonrestrictive information.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a nonrestrictive relative clause",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q47",
+    "prompt": "Ana saved the file. It is stored in the shared folder. Which version combines the sentences with a restrictive that-clause?",
+    "choices": [
+     "The file, which Ana saved, is stored in the shared folder.",
+     "The file saved by Ana is stored in the shared folder.",
+     "The file that Ana saved is stored in the shared folder.",
+     "The file that Ana was saving is stored in the shared folder."
+    ],
+    "answerIndex": 2,
+    "explanation": "The restrictive that-clause identifies the particular file Ana saved without adding nonessential information.",
+    "difficulty": 5,
+    "skill": "Restrictive That-Clauses",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q19",
+    "prompt": "The battery was low. The flashlight dimmed. Which version uses so to express cause and result most directly?",
+    "choices": [
+     "The battery was low, and the flashlight dimmed.",
+     "The battery was low because the flashlight dimmed.",
+     "The battery was low, so the flashlight dimmed.",
+     "The flashlight dimmed, so the battery was low."
+    ],
+    "answerIndex": 2,
+    "explanation": "The coordinating conjunction so presents the low battery as the cause of the flashlight dimming and preserves the original order of events.",
+    "difficulty": 4,
+    "skill": "Cause and result with so",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q21",
+    "prompt": "The team practiced at noon. They wanted to improve before the game. Which version uses an infinitive phrase to express the purpose of practicing?",
+    "choices": [
+     "The team practiced at noon to improve before the game.",
+     "The team practiced at noon because they wanted to improve before the game.",
+     "The team practiced at noon so that they wanted to improve before the game.",
+     "The team practiced at noon for improving before the game."
+    ],
+    "answerIndex": 0,
+    "explanation": "The infinitive phrase to improve before the game explains why the team practiced at noon.",
+    "difficulty": 5,
+    "skill": "Purpose with infinitive phrases",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q23",
+    "prompt": "The oven was preheated. The baker placed the bread inside. Which version combines the facts with an absolute phrase?",
+    "choices": [
+     "While preheating the oven, the baker placed the bread inside.",
+     "After the oven was preheated, the baker placed the bread inside.",
+     "With the oven preheated, the baker placed the bread inside.",
+     "Preheated the oven, the baker placed the bread inside."
+    ],
+    "answerIndex": 2,
+    "explanation": "The opening absolute phrase presents the oven’s state as background while the main clause describes the baker’s action.",
+    "difficulty": 5,
+    "skill": "Combining sentences with an absolute phrase",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q13",
+    "prompt": "The orchestra tuned their instruments. The conductor raised the baton. Which version uses an absolute phrase with a perfect passive participle to express the completed tuning before the conductor’s action?",
+    "choices": [
+     "With the instruments having been tuned, the conductor raised the baton.",
+     "The orchestra tuned their instruments, and the conductor raised the baton.",
+     "The orchestra tuned their instruments; the conductor raised the baton.",
+     "Having tuned their instruments, the conductor raised the baton."
+    ],
+    "answerIndex": 0,
+    "explanation": "The absolute phrase “With the instruments having been tuned” uses a perfect passive participle to show the tuning was completed first.",
+    "difficulty": 6,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q29",
+    "prompt": "The climb was steep. The hikers reached the summit before sunset. Which sentence uses the coordinating conjunction but to make the contrast clear?",
+    "choices": [
+     "The climb was steep, but the hikers reached the summit before sunset.",
+     "The climb was steep because the hikers reached the summit before sunset.",
+     "The climb was steep, so the hikers reached the summit before sunset.",
+     "The climb was steep and the hikers reached the summit before sunset."
+    ],
+    "answerIndex": 0,
+    "explanation": "The coordinating conjunction but clearly contrasts the steep climb with the hikers' success.",
+    "difficulty": 5,
+    "skill": "Combining contrasting sentences with but",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q15",
+    "prompt": "The hikers reached the summit. They celebrated with a sunrise picnic. Which version uses a colon to introduce the resulting action?",
+    "choices": [
+     "The hikers reached the summit, and they celebrated with a sunrise picnic.",
+     "The hikers reached the summit; they celebrated with a sunrise picnic.",
+     "The hikers reached the summit: they celebrated with a sunrise picnic.",
+     "The hikers reached the summit, so they celebrated with a sunrise picnic."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon correctly signals that the second clause explains or follows from the first.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q22",
+    "prompt": "The trail was muddy. We hiked around the lake. Which version combines the sentences with although to express a concession?",
+    "choices": [
+     "Despite the trail was muddy, we hiked around the lake.",
+     "Although the trail was muddy, we hiked around the lake.",
+     "Although the trail was muddy but we hiked around the lake.",
+     "Although the muddy trail, we hiked around the lake."
+    ],
+    "answerIndex": 1,
+    "explanation": "This version uses although to subordinate the muddy-trail detail while making the hikers’ action the main clause.",
+    "difficulty": 4,
+    "skill": "Using although for concession",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q14",
+    "prompt": "The novel explores themes of identity. It won the national award. Which version combines the sentences with a not only … but also construction?",
+    "choices": [
+     "The novel explores themes of identity, and it won the national award.",
+     "The novel not only explores themes of identity but also won the national award.",
+     "The novel explores themes of identity; it won the national award.",
+     "The novel explores themes of identity, which won the national award."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correlative conjunction “not only … but also” joins two predicates that share the same subject.",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q46",
+    "prompt": "The experiment failed. The chemicals were contaminated. Which version combines the sentences with a colon that introduces an explanation of the first statement?",
+    "choices": [
+     "The experiment failed; the chemicals were contaminated.",
+     "The experiment failed: the chemicals were contaminated.",
+     "The experiment failed, because the chemicals were contaminated.",
+     "The experiment failed— the chemicals were contaminated."
+    ],
+    "answerIndex": 1,
+    "explanation": "A colon correctly signals that the second clause explains the reason for the failure stated in the first clause.",
+    "difficulty": 5,
+    "skill": "sentence combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q20",
+    "prompt": "The exhibit is open. The gallery closes at five. Which version uses until to express the end of the open period?",
+    "choices": [
+     "The exhibit is open since the gallery closes at five.",
+     "The exhibit is open while the gallery closes at five.",
+     "The exhibit is open as the gallery closes at five.",
+     "The exhibit is open until the gallery closes at five."
+    ],
+    "answerIndex": 3,
+    "explanation": "The conjunction until marks the gallery's closing time as the endpoint of the period during which the exhibit is open.",
+    "difficulty": 6,
+    "skill": "Time relationships with until clauses",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q3",
+    "prompt": "The gate was locked. We could not enter the building. Which version most clearly presents the locked gate as the reason we could not enter the building?",
+    "choices": [
+     "Although the gate was locked, we could not enter the building.",
+     "Unless the gate was locked, we could not enter the building.",
+     "Because the gate was locked, we could not enter the building.",
+     "While the gate was locked, we could not enter the building."
+    ],
+    "answerIndex": 2,
+    "explanation": "Beginning with Because makes the locked gate the cause of our inability to enter the building.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a causal clause",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q25",
+    "prompt": "Nia is an architect. She designed the new library. Which version joins the facts with a correctly punctuated nonessential appositive?",
+    "choices": [
+     "Nia, an architect, designed the new library.",
+     "Nia, an architect designed the new library.",
+     "Nia an architect, designed the new library.",
+     "Nia; an architect, designed the new library."
+    ],
+    "answerIndex": 0,
+    "explanation": "The paired commas mark an architect as a nonessential appositive that renames Nia.",
+    "difficulty": 4,
+    "skill": "Combining sentences with an appositive",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q11",
+    "prompt": "The archive contains rare manuscripts. Scholars travel from abroad to study them. Which version joins the facts with a correctly punctuated nonrestrictive relative clause?",
+    "choices": [
+     "The archive contains rare manuscripts; scholars travel from abroad to study them.",
+     "The archive contains rare manuscripts, which attracts scholars from abroad.",
+     "The archive, which contains rare manuscripts, attracts scholars from abroad.",
+     "The archive contains rare manuscripts, and scholars travel from abroad to study them."
+    ],
+    "answerIndex": 2,
+    "explanation": "The nonrestrictive clause “which contains rare manuscripts” is set off by commas and modifies “the archive.”",
+    "difficulty": 5,
+    "skill": "Sentence Combining",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q34",
+    "prompt": "The museum displays an ancient coin. It was found in a vacant lot. Which sentence uses a restrictive relative clause to identify the ancient coin?",
+    "choices": [
+     "The museum displays the ancient coin, which was found in a vacant lot.",
+     "The museum displays the ancient coin that was found in a vacant lot.",
+     "The museum displays the ancient coin discovered in a vacant lot.",
+     "The museum displays the ancient coin when it was found in a vacant lot."
+    ],
+    "answerIndex": 1,
+    "explanation": "The word that introduces a restrictive clause that identifies the specific ancient coin.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a restrictive relative clause",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q35",
+    "prompt": "Frost formed on the windshield. The morning was unusually cold. Which sentence uses a colon to introduce an explanation of the first statement?",
+    "choices": [
+     "Frost formed on the windshield, the morning was unusually cold.",
+     "Frost formed on the windshield because the morning was unusually cold.",
+     "Frost formed on the windshield: the morning was unusually cold.",
+     "Frost formed on the windshield; the morning was unusually cold."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon signals that the morning's unusual coldness explains why frost formed on the windshield.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a colon",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q26",
+    "prompt": "The editor reread the draft. She hoped to find overlooked errors. Which version combines the facts into one sentence that ends with an infinitive phrase expressing purpose?",
+    "choices": [
+     "To find overlooked errors, the editor reread the draft.",
+     "The editor reread the draft to find overlooked errors.",
+     "The editor reread the draft in order find overlooked errors.",
+     "The editor reread the draft to finding overlooked errors."
+    ],
+    "answerIndex": 1,
+    "explanation": "The final infinitive phrase to find overlooked errors explains the purpose of rereading the draft.",
+    "difficulty": 6,
+    "skill": "Using an infinitive phrase to express purpose",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q27",
+    "prompt": "The gym is usually crowded. Even the weight room is packed. Which version combines the sentences with a colon that explains the gym’s crowdedness?",
+    "choices": [
+     "The gym is usually crowded, even the weight room is packed.",
+     "The gym is usually crowded; even the weight room is packed.",
+     "The gym is usually crowded: even the weight room is packed.",
+     "The gym is usually crowded because even the weight room is packed."
+    ],
+    "answerIndex": 2,
+    "explanation": "The colon introduces the weight-room detail as an explanation of why the gym feels crowded.",
+    "difficulty": 5,
+    "skill": "Using a colon to introduce an explanation",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q33",
+    "prompt": "The bus reached the station. Students hurried inside. Which sentence combines the facts with once to show that the second action happened immediately after the first?",
+    "choices": [
+     "Once the bus reached the station, students hurried inside.",
+     "Before the bus reached the station, students hurried inside.",
+     "Because the bus reached the station, students hurried inside.",
+     "Although the bus reached the station, students hurried inside."
+    ],
+    "answerIndex": 0,
+    "explanation": "Once introduces the bus's arrival as the event that immediately preceded students hurrying inside.",
+    "difficulty": 4,
+    "skill": "Combining clauses with a temporal subordinating conjunction",
+    "topic": "Combine Two Sentences - Rhetorical Grammar"
+   },
+   {
+    "id": "q10",
+    "prompt": "In Hurrying toward the bus, Lena dropped her notebook, which sentence correctly explains the effect of the participial phrase?",
+    "choices": [
+     "The phrase indicates that Lena dropped the notebook after she reached the bus.",
+     "The phrase identifies Lena as the person hurrying toward the bus.",
+     "The phrase shows that the bus was hurrying toward Lena.",
+     "The phrase emphasizes the location of the dropped notebook rather than Lena's action."
+    ],
+    "answerIndex": 1,
+    "explanation": "The participial phrase modifies Lena, making her the person who is hurrying toward the bus.",
+    "difficulty": 5,
+    "skill": "Explaining the Effect of a Participial Phrase",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar"
+   }
+  ],
+  "feedback": {
+   "correct": "Good shot — you chose the combination that keeps the rhetorical effect the writer wanted.",
+   "incorrect": "The duck slipped away. Check which structure puts the emphasis in the right place before your next shot.",
+   "win": "Seven ducks down! You can now combine sentences with an eye on emphasis and rhythm.",
+   "lose": "The ducks outlasted you this time. Try again and watch what each combination choice emphasizes.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "The museum opens at ten. It houses a rare space telescope. Which version correctly joins them with a nonrestrictive relative clause?",
+   "choices": [
+    "The museum, that opens at ten, houses a rare space telescope.",
+    "The museum which opens at ten houses a rare space telescope.",
+    "The museum, which opens at ten, houses a rare space telescope.",
+    "The museum, which opens at ten houses a rare space telescope."
+   ],
+   "answerIndex": 2,
+   "explanation": "The paired commas and which correctly set off the museum's opening time as nonrestrictive information.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a nonrestrictive relative clause",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Leah is the captain. She has led the team for two seasons. Which version joins the facts with a correctly punctuated nonessential appositive?",
+   "choices": [
+    "Leah the captain, has led the team for two seasons.",
+    "Leah, the captain, has led the team for two seasons.",
+    "Leah, the captain has led the team for two seasons.",
+    "Leah; the captain, has led the team for two seasons."
+   ],
+   "answerIndex": 1,
+   "explanation": "The appositive the captain correctly renames Leah and is enclosed by a pair of commas.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a nonessential appositive",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The gate was locked. We could not enter the building. Which version most clearly presents the locked gate as the reason we could not enter the building?",
+   "choices": [
+    "Although the gate was locked, we could not enter the building.",
+    "Unless the gate was locked, we could not enter the building.",
+    "While the gate was locked, we could not enter the building.",
+    "Because the gate was locked, we could not enter the building."
+   ],
+   "answerIndex": 3,
+   "explanation": "Beginning with Because makes the locked gate the cause of our inability to enter the building.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a causal clause",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The wind died down. Campers emerged from their tents. Which version combines the two clauses with a colon that introduces the resulting action?",
+   "choices": [
+    "The wind died down, campers emerged from their tents.",
+    "The wind died down: campers emerged from their tents.",
+    "The wind died down; campers emerged from their tents.",
+    "The wind died down. Campers emerged from their tents."
+   ],
+   "answerIndex": 1,
+   "explanation": "The colon links the change in the wind to the campers' resulting emergence from their tents.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a colon",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The librarian stamped our cards. The reading room was nearly empty. Which version combines these independent clauses with a semicolon rather than a comma splice?",
+   "choices": [
+    "The librarian stamped our cards, the reading room was nearly empty.",
+    "The librarian stamped our cards: the reading room was nearly empty.",
+    "The librarian stamped our cards; the reading room was nearly empty.",
+    "The librarian stamped our cards. The reading room was nearly empty."
+   ],
+   "answerIndex": 2,
+   "explanation": "A semicolon can join two complete independent clauses without creating a comma splice.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a semicolon",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A heavy storm knocked over a bucket. Water spread across the kitchen floor. Which version most clearly presents the storm as the cause of the spreading water?",
+   "choices": [
+    "Because a heavy storm knocked over a bucket, water spread across the kitchen floor.",
+    "Although a heavy storm knocked over a bucket, water spread across the kitchen floor.",
+    "A heavy storm knocked over a bucket, and water spread across the kitchen floor.",
+    "A heavy storm knocked over a bucket because water spread across the kitchen floor."
+   ],
+   "answerIndex": 0,
+   "explanation": "The because clause makes the storm the stated cause of the water spreading across the kitchen floor.",
+   "difficulty": 4,
+   "skill": "Combining Sentences to Show Cause",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Ms. Ortiz started a tutoring club. She hoped more students would join. Which version combines the sentences with a so that clause expressing the club's purpose?",
+   "choices": [
+    "Ms. Ortiz started a tutoring club so that more students could joined.",
+    "Ms. Ortiz started a tutoring club so that more students would joining.",
+    "Ms. Ortiz started a tutoring club so that more students would join.",
+    "Ms. Ortiz started a tutoring club so that more students will join."
+   ],
+   "answerIndex": 2,
+   "explanation": "The so that clause expresses the intended purpose of starting the tutoring club, and would join correctly follows the past-tense context.",
+   "difficulty": 5,
+   "skill": "Combining Sentences with Purpose Clauses",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The marathon began at dawn. It lasted for several hours. Which version uses a participial phrase that correctly modifies the marathon?",
+   "choices": [
+    "Beginning at dawn, the marathon lasted for several hours.",
+    "Beginning at dawn, the marathon's lasted for several hours.",
+    "Having began at dawn, the marathon lasted for several hours.",
+    "Began at dawn, the marathon lasted for several hours."
+   ],
+   "answerIndex": 0,
+   "explanation": "Beginning at dawn is a participial phrase whose implied subject is the marathon, so the modifier is correctly placed.",
+   "difficulty": 5,
+   "skill": "Combining Sentences with Participial Phrases",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The lights were dimmed. The audience settled into their seats. Which version uses a perfect passive participle in an absolute phrase to express the first action?",
+   "choices": [
+    "With the lights having been dimmed, the audience settled into their seats.",
+    "With the lights having dimmed, the audience settled into their seats.",
+    "With the lights being dimmed, the audience settled into their seats.",
+    "With the lights having been dim, the audience settled into their seats."
+   ],
+   "answerIndex": 0,
+   "explanation": "Having been dimmed is a perfect passive participle, and the absolute phrase adds the circumstances surrounding the audience's settling into their seats.",
+   "difficulty": 6,
+   "skill": "Combining Sentences with Absolute Phrases",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In Hurrying toward the bus, Lena dropped her notebook, which sentence correctly explains the effect of the participial phrase?",
+   "choices": [
+    "The phrase identifies Lena as the person hurrying toward the bus.",
+    "The phrase indicates that Lena dropped the notebook after she reached the bus.",
+    "The phrase shows that the bus was hurrying toward Lena.",
+    "The phrase emphasizes the location of the dropped notebook rather than Lena's action."
+   ],
+   "answerIndex": 0,
+   "explanation": "The participial phrase modifies Lena, making her the person who is hurrying toward the bus.",
+   "difficulty": 5,
+   "skill": "Explaining the Effect of a Participial Phrase",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The archive contains rare manuscripts. Scholars travel from abroad to study them. Which version joins the facts with a correctly punctuated nonrestrictive relative clause?",
+   "choices": [
+    "The archive, which contains rare manuscripts, attracts scholars from abroad.",
+    "The archive contains rare manuscripts, which attracts scholars from abroad.",
+    "The archive contains rare manuscripts; scholars travel from abroad to study them.",
+    "The archive contains rare manuscripts, and scholars travel from abroad to study them."
+   ],
+   "answerIndex": 0,
+   "explanation": "The nonrestrictive clause “which contains rare manuscripts” is set off by commas and modifies “the archive.”",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The committee approved the budget. The project can now begin. Which version combines the sentences with a subordinate conjunction that shows cause?",
+   "choices": [
+    "Since the committee approved the budget, the project can now begin.",
+    "The committee approved the budget; the project can now begin.",
+    "The committee approved the budget, so the project can now begin.",
+    "The committee approved the budget, for the project can now begin."
+   ],
+   "answerIndex": 0,
+   "explanation": "“Since” introduces a causal subordinate clause linking the approval to the project’s start.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The orchestra tuned their instruments. The conductor raised the baton. Which version uses an absolute phrase with a perfect passive participle to express the completed tuning before the conductor’s action?",
+   "choices": [
+    "With the instruments having been tuned, the conductor raised the baton.",
+    "The orchestra tuned their instruments, and the conductor raised the baton.",
+    "The orchestra tuned their instruments; the conductor raised the baton.",
+    "Having tuned their instruments, the conductor raised the baton."
+   ],
+   "answerIndex": 0,
+   "explanation": "The absolute phrase “With the instruments having been tuned” uses a perfect passive participle to show the tuning was completed first.",
+   "difficulty": 6,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The novel explores themes of identity. It won the national award. Which version combines the sentences with a not only … but also construction?",
+   "choices": [
+    "The novel not only explores themes of identity but also won the national award.",
+    "The novel explores themes of identity, and it won the national award.",
+    "The novel explores themes of identity; it won the national award.",
+    "The novel explores themes of identity, which won the national award."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correlative conjunction “not only … but also” joins two predicates that share the same subject.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The hikers reached the summit. They celebrated with a sunrise picnic. Which version uses a colon to introduce the resulting action?",
+   "choices": [
+    "The hikers reached the summit: they celebrated with a sunrise picnic.",
+    "The hikers reached the summit; they celebrated with a sunrise picnic.",
+    "The hikers reached the summit, and they celebrated with a sunrise picnic.",
+    "The hikers reached the summit, so they celebrated with a sunrise picnic."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon correctly signals that the second clause explains or follows from the first.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Coach Rivera designed the playbook. The strategy won the final game. Which version uses a restrictive that-clause to identify the strategy and keeps Coach Rivera as the designer?",
+   "choices": [
+    "The strategy that Coach Rivera designed won the final game.",
+    "The strategy, that Coach Rivera designed, won the final game.",
+    "The strategy that designed Coach Rivera won the final game.",
+    "The strategy whom Coach Rivera designed won the final game."
+   ],
+   "answerIndex": 0,
+   "explanation": "The unpunctuated that-clause restricts the noun strategy to the one Coach Rivera designed and makes Rivera the active agent.",
+   "difficulty": 4,
+   "skill": "Restrictive relative clauses",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The forecast promised sunshine. Rain arrived at noon. Which version combines the clauses with while to show a contrast?",
+   "choices": [
+    "The forecast promised sunshine, while rain arrived at noon.",
+    "The forecast promised sunshine because rain arrived at noon.",
+    "The forecast promised sunshine when rain arrived at noon.",
+    "The forecast promised sunshine so rain arrived at noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The word while connects the two clauses and signals that the arrival of rain contrasted with the sunny forecast.",
+   "difficulty": 5,
+   "skill": "Contrast with while clauses",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The directions were printed in small type. The hikers still followed them. Which version uses despite to express the contrast?",
+   "choices": [
+    "Despite the directions being printed in small type, the hikers still followed them.",
+    "Although the directions were printed in small type, the hikers still followed them.",
+    "Because the directions were printed in small type, the hikers still followed them.",
+    "Unless the directions were printed in small type, the hikers still followed them."
+   ],
+   "answerIndex": 0,
+   "explanation": "The prepositional phrase beginning with despite places the small print in contrast with the hikers' decision to follow the directions.",
+   "difficulty": 5,
+   "skill": "Contrast with despite phrases",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The battery was low. The flashlight dimmed. Which version uses so to express cause and result most directly?",
+   "choices": [
+    "The battery was low, so the flashlight dimmed.",
+    "The battery was low because the flashlight dimmed.",
+    "The battery was low, and the flashlight dimmed.",
+    "The flashlight dimmed, so the battery was low."
+   ],
+   "answerIndex": 0,
+   "explanation": "The coordinating conjunction so presents the low battery as the cause of the flashlight dimming and preserves the original order of events.",
+   "difficulty": 4,
+   "skill": "Cause and result with so",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The exhibit is open. The gallery closes at five. Which version uses until to express the end of the open period?",
+   "choices": [
+    "The exhibit is open until the gallery closes at five.",
+    "The exhibit is open while the gallery closes at five.",
+    "The exhibit is open as the gallery closes at five.",
+    "The exhibit is open since the gallery closes at five."
+   ],
+   "answerIndex": 0,
+   "explanation": "The conjunction until marks the gallery's closing time as the endpoint of the period during which the exhibit is open.",
+   "difficulty": 6,
+   "skill": "Time relationships with until clauses",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The team practiced at noon. They wanted to improve before the game. Which version uses an infinitive phrase to express the purpose of practicing?",
+   "choices": [
+    "The team practiced at noon to improve before the game.",
+    "The team practiced at noon because they wanted to improve before the game.",
+    "The team practiced at noon so that they wanted to improve before the game.",
+    "The team practiced at noon for improving before the game."
+   ],
+   "answerIndex": 0,
+   "explanation": "The infinitive phrase to improve before the game explains why the team practiced at noon.",
+   "difficulty": 5,
+   "skill": "Purpose with infinitive phrases",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The trail was muddy. We hiked around the lake. Which version combines the sentences with although to express a concession?",
+   "choices": [
+    "Although the trail was muddy, we hiked around the lake.",
+    "Despite the trail was muddy, we hiked around the lake.",
+    "Although the trail was muddy but we hiked around the lake.",
+    "Although the muddy trail, we hiked around the lake."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version uses although to subordinate the muddy-trail detail while making the hikers’ action the main clause.",
+   "difficulty": 4,
+   "skill": "Using although for concession",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The oven was preheated. The baker placed the bread inside. Which version combines the facts with an absolute phrase?",
+   "choices": [
+    "With the oven preheated, the baker placed the bread inside.",
+    "After the oven was preheated, the baker placed the bread inside.",
+    "While preheating the oven, the baker placed the bread inside.",
+    "Preheated the oven, the baker placed the bread inside."
+   ],
+   "answerIndex": 0,
+   "explanation": "The opening absolute phrase presents the oven’s state as background while the main clause describes the baker’s action.",
+   "difficulty": 5,
+   "skill": "Combining sentences with an absolute phrase",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Dr. Imani wrote the article. It was printed in the school newspaper. Which version combines the sentences with a restrictive relative clause?",
+   "choices": [
+    "The article that Dr. Imani wrote was printed in the school newspaper.",
+    "The article, that Dr. Imani wrote was printed in the school newspaper.",
+    "The article that Dr. Imani wrote the school newspaper printed.",
+    "The article whom Dr. Imani wrote was printed in the school newspaper."
+   ],
+   "answerIndex": 0,
+   "explanation": "The restrictive that-clause identifies which article was printed without adding nonessential information.",
+   "difficulty": 5,
+   "skill": "Using a restrictive relative clause",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Nia is an architect. She designed the new library. Which version joins the facts with a correctly punctuated nonessential appositive?",
+   "choices": [
+    "Nia, an architect, designed the new library.",
+    "Nia, an architect designed the new library.",
+    "Nia an architect, designed the new library.",
+    "Nia; an architect, designed the new library."
+   ],
+   "answerIndex": 0,
+   "explanation": "The paired commas mark an architect as a nonessential appositive that renames Nia.",
+   "difficulty": 4,
+   "skill": "Combining sentences with an appositive",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The editor reread the draft. She hoped to find overlooked errors. Which version combines the facts into one sentence that ends with an infinitive phrase expressing purpose?",
+   "choices": [
+    "The editor reread the draft to find overlooked errors.",
+    "To find overlooked errors, the editor reread the draft.",
+    "The editor reread the draft in order find overlooked errors.",
+    "The editor reread the draft to finding overlooked errors."
+   ],
+   "answerIndex": 0,
+   "explanation": "The final infinitive phrase to find overlooked errors explains the purpose of rereading the draft.",
+   "difficulty": 6,
+   "skill": "Using an infinitive phrase to express purpose",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The gym is usually crowded. Even the weight room is packed. Which version combines the sentences with a colon that explains the gym’s crowdedness?",
+   "choices": [
+    "The gym is usually crowded: even the weight room is packed.",
+    "The gym is usually crowded; even the weight room is packed.",
+    "The gym is usually crowded, even the weight room is packed.",
+    "The gym is usually crowded because even the weight room is packed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon introduces the weight-room detail as an explanation of why the gym feels crowded.",
+   "difficulty": 5,
+   "skill": "Using a colon to introduce an explanation",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Maya ran late. She missed the bus. Which sentence combines the facts with a participial phrase that logically modifies Maya?",
+   "choices": [
+    "To run late, Maya missed the bus.",
+    "Late running, Maya missed the bus.",
+    "Running late, Maya missed the bus.",
+    "Running late, the bus was missed by Maya."
+   ],
+   "answerIndex": 2,
+   "explanation": "The introductory participial phrase Running late logically modifies Maya, indicating why she missed the bus.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a logically modifying participial phrase",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The climb was steep. The hikers reached the summit before sunset. Which sentence uses the coordinating conjunction but to make the contrast clear?",
+   "choices": [
+    "The climb was steep and the hikers reached the summit before sunset.",
+    "The climb was steep because the hikers reached the summit before sunset.",
+    "The climb was steep, so the hikers reached the summit before sunset.",
+    "The climb was steep, but the hikers reached the summit before sunset."
+   ],
+   "answerIndex": 3,
+   "explanation": "The coordinating conjunction but clearly contrasts the steep climb with the hikers' success.",
+   "difficulty": 5,
+   "skill": "Combining contrasting sentences with but",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The rehearsal ended. The stage lights came on immediately. Which sentence uses the subordinating conjunction as soon as to express the immediate sequence?",
+   "choices": [
+    "After the rehearsal ended, the stage lights came on immediately.",
+    "Before the rehearsal ended, the stage lights came on immediately.",
+    "While the rehearsal ended, the stage lights came on immediately.",
+    "As soon as the rehearsal ended, the stage lights came on immediately."
+   ],
+   "answerIndex": 3,
+   "explanation": "The conjunction as soon as accurately presents the stage lights coming on immediately after the rehearsal ended.",
+   "difficulty": 5,
+   "skill": "Combining sentences to express an immediate sequence",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Maya reviewed vocabulary. She wanted to improve her quiz results. Which sentence combines the facts with a phrase that expresses purpose most directly?",
+   "choices": [
+    "Maya reviewed vocabulary so that improve her quiz results.",
+    "Maya reviewed vocabulary because improve her quiz results.",
+    "Maya reviewed vocabulary in order to improve her quiz results.",
+    "Maya reviewed vocabulary in order improving her quiz results."
+   ],
+   "answerIndex": 2,
+   "explanation": "The infinitive phrase in order to improve her quiz results states why Maya reviewed the vocabulary.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a purpose infinitive phrase",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Ms. Chen coached the team. The team won the championship. Which sentence correctly uses a whose clause to express possession?",
+   "choices": [
+    "Ms. Chen, who team won the championship, is the coach.",
+    "Ms. Chen, whose team won the championship, is the coach.",
+    "Ms. Chen, who won the championship with her team, is the coach.",
+    "Ms. Chen, whose won the championship with her team, is the coach."
+   ],
+   "answerIndex": 1,
+   "explanation": "The whose clause correctly identifies the championship-winning team as Ms. Chen's team.",
+   "difficulty": 7,
+   "skill": "Combining sentences with a whose clause",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The bus reached the station. Students hurried inside. Which sentence combines the facts with once to show that the second action happened immediately after the first?",
+   "choices": [
+    "Before the bus reached the station, students hurried inside.",
+    "Once the bus reached the station, students hurried inside.",
+    "Because the bus reached the station, students hurried inside.",
+    "Although the bus reached the station, students hurried inside."
+   ],
+   "answerIndex": 1,
+   "explanation": "Once introduces the bus's arrival as the event that immediately preceded students hurrying inside.",
+   "difficulty": 4,
+   "skill": "Combining clauses with a temporal subordinating conjunction",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The museum displays an ancient coin. It was found in a vacant lot. Which sentence uses a restrictive relative clause to identify the ancient coin?",
+   "choices": [
+    "The museum displays the ancient coin that was found in a vacant lot.",
+    "The museum displays the ancient coin, which was found in a vacant lot.",
+    "The museum displays the ancient coin discovered in a vacant lot.",
+    "The museum displays the ancient coin when it was found in a vacant lot."
+   ],
+   "answerIndex": 0,
+   "explanation": "The word that introduces a restrictive clause that identifies the specific ancient coin.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a restrictive relative clause",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Frost formed on the windshield. The morning was unusually cold. Which sentence uses a colon to introduce an explanation of the first statement?",
+   "choices": [
+    "Frost formed on the windshield, the morning was unusually cold.",
+    "Frost formed on the windshield because the morning was unusually cold.",
+    "Frost formed on the windshield: the morning was unusually cold.",
+    "Frost formed on the windshield; the morning was unusually cold."
+   ],
+   "answerIndex": 2,
+   "explanation": "The colon signals that the morning's unusual coldness explains why frost formed on the windshield.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a colon",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The café had a short menu. The soup tasted excellent. Which sentence uses a coordinating conjunction to present the soup as an additional detail without suggesting cause, contrast, or an unexpected result?",
+   "choices": [
+    "The café had a short menu, and the soup tasted excellent.",
+    "The café had a short menu, but the soup tasted excellent.",
+    "The café had a short menu, so the soup tasted excellent.",
+    "The café had a short menu, yet the soup tasted excellent."
+   ],
+   "answerIndex": 0,
+   "explanation": "And joins two independent clauses to present the soup's quality as an additional detail without implying cause or contrast.",
+   "difficulty": 5,
+   "skill": "Combining independent clauses with a coordinating conjunction",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The library will remain open late. The principal will approve the request. Which sentence uses a conditional conjunction to make the principal's approval a requirement for the library to remain open late?",
+   "choices": [
+    "The library will remain open late because the principal approves the request.",
+    "The library will remain open late although the principal approves the request.",
+    "The library will remain open late after the principal approves the request.",
+    "The library will remain open late provided that the principal approves the request."
+   ],
+   "answerIndex": 3,
+   "explanation": "Provided that makes the principal's approval the condition under which the library will remain open late.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a conditional conjunction",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Consider this combined sentence: The bell rang, and students entered the classroom. Which one-sentence explanation correctly describes its structure?",
+   "choices": [
+    "The comma separates a dependent clause from an independent clause, so the sentence is correctly punctuated.",
+    "The comma joins two independent clauses with the coordinating conjunction and, so the sentence is correctly punctuated.",
+    "The conjunction and joins two dependent clauses, so the sentence is correctly punctuated.",
+    "The coordinating conjunction and follows the subject, so the sentence is correctly punctuated."
+   ],
+   "answerIndex": 1,
+   "explanation": "The comma joins two independent clauses with the coordinating conjunction and, so the sentence is correctly punctuated.",
+   "difficulty": 6,
+   "skill": "Explaining how coordinating conjunctions combine independent clauses",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The researcher collected the data. She published the findings. Which version correctly shows the chronological order using a subordinate conjunction?",
+   "choices": [
+    "After the researcher collected the data, she published the findings.",
+    "The researcher collected the data after she published the findings.",
+    "After the researcher collected the data; she published the findings.",
+    "The researcher collected the data, after she published the findings."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence begins with the subordinate clause “After the researcher collected the data,” followed by a comma and the main clause.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The sculpture was marble. It stood in the garden. Which version correctly joins the facts with a nonrestrictive relative clause?",
+   "choices": [
+    "The sculpture, which was marble, stood in the garden.",
+    "The sculpture which was marble stood in the garden.",
+    "The sculpture, which was marble stood in the garden.",
+    "The sculpture which was marble, stood in the garden."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct version sets off the nonrestrictive clause “which was marble” with commas on both sides.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The engine overheated. The coolant level was low. Which version uses a colon to introduce an explanation of the first statement?",
+   "choices": [
+    "The engine overheated: the coolant level was low.",
+    "The engine overheated; the coolant level was low.",
+    "The engine overheated, the coolant level was low.",
+    "The engine overheated – the coolant level was low."
+   ],
+   "answerIndex": 0,
+   "explanation": "The colon correctly signals that the second independent clause explains the cause of the first.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The team celebrated. They had won the championship. Which version combines the sentences with an em dash to add emphatic detail?",
+   "choices": [
+    "The team celebrated—they had won the championship.",
+    "The team celebrated, they had won the championship.",
+    "The team celebrated; they had won the championship.",
+    "The team celebrated: they had won the championship."
+   ],
+   "answerIndex": 0,
+   "explanation": "The em dash creates a strong break that emphasizes the reason for the celebration.",
+   "difficulty": 5,
+   "skill": "Sentence Combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The river flows through the canyon. It carves limestone walls. Which version joins the two facts with a correctly punctuated nonrestrictive relative clause?",
+   "choices": [
+    "The river, which flows through the canyon, carves limestone walls.",
+    "The river that flows through the canyon carves limestone walls.",
+    "The river which flows through the canyon, carves limestone walls.",
+    "The river, that flows through the canyon, carves limestone walls."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence uses commas around the nonrestrictive clause \"which flows through the canyon\" to add extra information without restricting the noun.",
+   "difficulty": 5,
+   "skill": "sentence combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Jenna set an alarm. She wanted to wake up early for practice. Which version combines the sentences with a purpose clause introduced by \"so that\"?",
+   "choices": [
+    "Jenna set an alarm so that she could wake up early for practice.",
+    "Jenna set an alarm so she could wake up early for practice.",
+    "Jenna set an alarm in order to wake up early for practice.",
+    "Jenna set an alarm to wake up early for practice."
+   ],
+   "answerIndex": 0,
+   "explanation": "The construction \"so that she could\" explicitly marks purpose with a subordinate clause, matching the required \"so that\" structure.",
+   "difficulty": 5,
+   "skill": "sentence combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The trail was steep. The hikers reached the summit quickly. Which version combines the sentences with a concessive subordinate conjunction?",
+   "choices": [
+    "Although the trail was steep, the hikers reached the summit quickly.",
+    "Because the trail was steep, the hikers reached the summit quickly.",
+    "The trail was steep, yet the hikers reached the summit quickly.",
+    "The trail was steep; the hikers reached the summit quickly."
+   ],
+   "answerIndex": 0,
+   "explanation": "\"Although\" introduces a concession, showing that the steep trail did not prevent the quick ascent.",
+   "difficulty": 5,
+   "skill": "sentence combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The experiment failed. The chemicals were contaminated. Which version combines the sentences with a colon that introduces an explanation of the first statement?",
+   "choices": [
+    "The experiment failed: the chemicals were contaminated.",
+    "The experiment failed; the chemicals were contaminated.",
+    "The experiment failed, because the chemicals were contaminated.",
+    "The experiment failed— the chemicals were contaminated."
+   ],
+   "answerIndex": 0,
+   "explanation": "A colon correctly signals that the second clause explains the reason for the failure stated in the first clause.",
+   "difficulty": 5,
+   "skill": "sentence combining",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Ana saved the file. It is stored in the shared folder. Which version combines the sentences with a restrictive that-clause?",
+   "choices": [
+    "The file, which Ana saved, is stored in the shared folder.",
+    "The file that Ana saved is stored in the shared folder.",
+    "The file saved by Ana is stored in the shared folder.",
+    "The file that Ana was saving is stored in the shared folder."
+   ],
+   "answerIndex": 1,
+   "explanation": "The restrictive that-clause identifies the particular file Ana saved without adding nonessential information.",
+   "difficulty": 5,
+   "skill": "Restrictive That-Clauses",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Consider this combined sentence: With the shutters opening, the photographer adjusted the lens. What does the opening phrase do?",
+   "choices": [
+    "It presents the shutters opening as background context for the photographer adjusting the lens.",
+    "It identifies the photographer as the person who opened the shutters.",
+    "It states that the lens adjustment caused the shutters to open.",
+    "It indicates that the photographer adjusted the lens before the shutters opened."
+   ],
+   "answerIndex": 0,
+   "explanation": "The absolute phrase presents the shutters opening as background context for the photographer adjusting the lens.",
+   "difficulty": 6,
+   "skill": "Absolute Phrases",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The drummer tightened the tuning peg. He counted the tempo. Which version combines the sentences with a compound predicate while preserving both actions?",
+   "choices": [
+    "The drummer tightened the tuning peg and counted the tempo.",
+    "The drummer, after tightening the tuning peg, counted the tempo.",
+    "After the drummer tightened the tuning peg, he counted the tempo.",
+    "While the drummer tightened the tuning peg, the metronome counted the tempo."
+   ],
+   "answerIndex": 0,
+   "explanation": "The compound predicate joins tightened and counted, two verbs that share the subject The drummer.",
+   "difficulty": 5,
+   "skill": "Compound Predicates",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The power outage lasted three hours. The server rebooted automatically. Which version correctly combines the sentences with a semicolon and a conjunctive adverb to show result?",
+   "choices": [
+    "The power outage lasted three hours; consequently, the server rebooted automatically.",
+    "The power outage lasted three hours, consequently the server rebooted automatically.",
+    "The power outage lasted three hours; the server rebooted automatically.",
+    "The power outage lasted three hours, so the server rebooted automatically."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon joins two independent clauses and the conjunctive adverb 'consequently' signals a result.",
+   "difficulty": 5,
+   "skill": "Using semicolons with conjunctive adverbs",
+   "topic": "Combine Two Sentences - Rhetorical Grammar",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "The sun set. The campers lit a fire. Which version combines the sentences with an absolute phrase that uses a perfect participle?",
+   "choices": [
+    "With the sun having set, the campers lit a fire.",
+    "With the sun set, the campers lit a fire.",
+    "With the sun having set; the campers lit a fire.",
+    "With the sun set, the campers lit a fire."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct absolute phrase uses the perfect participle “having set” and is followed by a comma before the main clause.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The science fair begins in one hour. The final project still needs a title. Which option best combines the deadline information with although and supplies an accurate one-sentence explanation of its rhetorical effect?",
+   "choices": [
+    "Although the science fair begins in one hour, the final project still needs a title; although highlights the contrast between the fixed schedule and the unfinished work.",
+    "Because the science fair begins in one hour, the final project still needs a title; because identifies the start time as the reason the title is needed.",
+    "While the science fair begins in one hour, the final project still needs a title; while shows that the two events happen at exactly the same moment.",
+    "Despite the science fair beginning in one hour, the final project still needs a title; despite suggests that the start time makes the unfinished task unimportant."
+   ],
+   "answerIndex": 0,
+   "explanation": "The although-clause creates a clear contrast between the approaching start time and the project's unfinished state.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The mural was colorful. It covered the entire west wall. Which version combines the facts with a not only...but also construction?",
+   "choices": [
+    "The mural was not only colorful but also covered the entire west wall.",
+    "The mural was not only colorful but also cover the entire west wall.",
+    "The mural was only not colorful but also covered the entire west wall.",
+    "The mural was not only colorful but also covering the entire west wall."
+   ],
+   "answerIndex": 0,
+   "explanation": "The not only...but also construction coordinates the two predicates and keeps their forms parallel.",
+   "reason": "A: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The robot whirred to life. Its sensors scanned the room. Which version combines the sentences with a present participial phrase that modifies the robot?",
+   "choices": [
+    "Whirring to life, the robot scanned the room with its sensors.",
+    "The robot whirred to life, its sensors scanned the room.",
+    "The robot whirred to life; its sensors scanned the room.",
+    "The robot whirred to life, and its sensors scanned the room."
+   ],
+   "answerIndex": 0,
+   "explanation": "The present participial phrase “Whirring to life” correctly modifies the subject “the robot.”",
+   "reason": "A: not exactly one correct (Option (0) changes the original meaning by making the robot, rather than its sensors, the agent that scans the room; a faithful version woul)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The sign was faded. We could barely read it. Which sentence combines the facts with a correctly formed result relationship and explains why reading was difficult?",
+   "choices": [
+    "The sign was very faded because we could barely read it.",
+    "The sign was so faded that we could barely read it.",
+    "The sign was enough faded that we could barely read it.",
+    "The sign was so faded we could barely read it."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correlative conjunction so...that correctly links the degree of fading to the difficulty of reading the sign.",
+   "reason": "B: picked 2 not 1"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The river flooded the valley. The bridges remained intact. Which version correctly combines the sentences with a concessive subordinate clause?",
+   "choices": [
+    "Although the river flooded the valley, the bridges remained intact.",
+    "The river flooded the valley, although the bridges remained intact.",
+    "The river flooded the valley; although the bridges remained intact.",
+    "Although the river flooded the valley; the bridges remained intact."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct version places the concessive clause first and follows it with a comma before the main clause.",
+   "reason": "A: picked -1 not 0 (Multiple defensible options)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The test was completed. The teacher collected the papers. Which version combines the sentences with an absolute phrase that uses a perfect passive participle?",
+   "choices": [
+    "With the test having been completed, the teacher collected the papers.",
+    "With the test completed, the teacher collected the papers.",
+    "The test having been completed, the teacher collected the papers.",
+    "Having completed the test, the teacher collected the papers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The absolute phrase \"With the test having been completed\" correctly uses a perfect passive participle to show the prior action before the main clause.",
+   "reason": "A: picked 2 not 0 | B: picked 2 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The reporter typed furiously. She wanted to meet the deadline. Which version combines the sentences with a present participial phrase that logically modifies the subject?",
+   "choices": [
+    "Typing furiously, the reporter tried to meet the deadline.",
+    "Typed furiously, the reporter tried to meet the deadline.",
+    "The reporter, typing furiously, tried to meet the deadline.",
+    "The reporter typed furiously to meet the deadline."
+   ],
+   "answerIndex": 0,
+   "explanation": "The opening participial phrase \"Typing furiously\" correctly modifies \"the reporter,\" showing simultaneous action.",
+   "reason": "A: not exactly one correct (Both options (0) and (2) present a logically‑modifying participial phrase, so the requirement is not uniquely satisfied.) | B: not exactly one correct (Both (0) 'Typing furiously, the reporter tried...' and (2) 'The reporter, typing furiously, tried...' contain a present participial phrase l)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "The manager finished the report. She left early. Which version correctly combines the sentences with a fronted perfect participial phrase indicating the first action occurred before the second?",
+   "choices": [
+    "Having finished the report, the manager left early.",
+    "Finishing the report, the manager left early.",
+    "The manager finished the report, and she left early.",
+    "The manager left early after finishing the report."
+   ],
+   "answerIndex": 0,
+   "explanation": "The perfect participle 'Having finished' shows the report was completed before the manager left.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

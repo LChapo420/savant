@@ -1,0 +1,3140 @@
+{
+ "row_id": 35,
+ "engine_id": "pac-man",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 43,
+ "generated_at": "2026-10-24T23:44:20.664Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 69,
+  "code_rejected": 2,
+  "sent_to_judges": 67,
+  "kept": 50,
+  "keep_rate_of_written": 0.725,
+  "judges": {
+   "both_answered": 67,
+   "picked_same_option": 63,
+   "a_picked_key": 63,
+   "b_picked_key": 63,
+   "models_a": [
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ],
+   "models_b": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-ultra-550b-a55b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "pac-man",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 43,
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "title": "Mood Shift Maze: Combine the Sentences",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q8",
+    "prompt": "Volunteers counted the birds. They checked the nests for damage. Which option makes the first action passive, keeps the volunteers' role clear, and preserves the sequence of events?",
+    "choices": [
+     "The birds counted the volunteers, who then checked the nests for damage.",
+     "The birds were counted by volunteers, although they checked the nests for damage.",
+     "The birds were counted, and volunteers checked the nests for damage.",
+     "The birds were counted by volunteers, who then checked the nests for damage."
+    ],
+    "answerIndex": 3,
+    "explanation": "The passive clause identifies the volunteers as the people who counted the birds, and the relative clause preserves the sequence of checking the nests afterward.",
+    "difficulty": 5,
+    "skill": "Combining active and passive actions",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which explanation best describes why this combined sentence is grammatically and logically sound? \"The proposal was approved by the committee, and it would be implemented if the budget were approved.\"",
+    "choices": [
+     "It shifts from past tense to future tense without a conjunction.",
+     "It mixes active and passive voice but keeps the indicative mood throughout.",
+     "It uses passive voice in the first clause and the subjunctive \"were\" in the second to express a hypothetical condition.",
+     "It omits the subject in the second clause, creating a fragment."
+    ],
+    "answerIndex": 2,
+    "explanation": "Option A correctly identifies the passive construction and the subjunctive mood indicating a contrary‑to‑fact condition.",
+    "difficulty": 6,
+    "skill": "Sentence combining with voice and mood consistency",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q33",
+    "prompt": "After the storm, the crew cleared the road. Residents helped nearby. Which option leaves both performers as the subjects of their actions in one sentence?",
+    "choices": [
+     "After the storm, the crew cleared the road, and residents helped nearby.",
+     "After the storm, the road was cleared by the crew, and help was given by residents nearby.",
+     "After the storm, the crew cleared the road, and nearby was helped by residents.",
+     "After the storm, the road was cleared by the crew, and residents helped nearby."
+    ],
+    "answerIndex": 0,
+    "explanation": "This option keeps both clauses active because the crew and the residents are the subjects performing clear actions.",
+    "difficulty": 4,
+    "skill": "Using active voice consistently",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q24",
+    "prompt": "Combine the two sentences using active voice consistently: 'The researcher collected the samples. The lab analyzed them.'",
+    "choices": [
+     "The researcher collects the samples, and the lab analyzes them.",
+     "The samples were collected by the researcher, and the lab analyzed them.",
+     "The researcher collected the samples, and they were analyzed by the lab.",
+     "The researcher collected the samples, and the lab analyzed them."
+    ],
+    "answerIndex": 3,
+    "explanation": "Both clauses remain in active voice, with the researcher and the lab as the subjects of their respective verbs.",
+    "difficulty": 5,
+    "skill": "Maintaining consistent active voice when combining sentences",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q23",
+    "prompt": "Combine the command and the action into one sentence without changing the force of the command: 'The captain ordered, \"Lower the sails.\" The crew lowered the sails.'",
+    "choices": [
+     "The sails were ordered to be lowered by the captain, and the crew lowered them.",
+     "The captain told the crew to lower the sails, and the crew lowered them.",
+     "The captain ordered the crew to lower the sails, and the crew lowered them.",
+     "The captain ordered the crew to lower the sails, the crew lowered them."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct version keeps the command force with 'ordered ... to' and joins the two clauses with a coordinating conjunction.",
+    "difficulty": 6,
+    "skill": "Combining direct commands with reported actions while preserving imperative force",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q5",
+    "prompt": "The scientist reviewed the data, and then the report was written. Which explanation best describes why this combined sentence is grammatically and logically effective?",
+    "choices": [
+     "It joins two independent clauses with a coordinating conjunction, retains active voice in the first clause and passive voice in the second, and preserves the order of events.",
+     "It joins two independent clauses with a subordinating conjunction, retains active voice in the first clause and passive voice in the second, and reverses the order of events.",
+     "It joins two independent clauses with a coordinating conjunction, changes active voice to passive in both clauses, and preserves the order of events.",
+     "It joins two dependent clauses with a coordinating conjunction, retains active voice in the first clause and passive voice in the second, and preserves the order of events."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence correctly combines an active clause and a passive clause with and while presenting the events chronologically.",
+    "difficulty": 7,
+    "skill": "Explaining a combination of active and passive clauses",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q26",
+    "prompt": "Combine the sentences keeping the obligation in passive voice and the hypothesis in the subjunctive: 'The form must be signed by the applicant. If the applicant were eligible, the process would start.'",
+    "choices": [
+     "The applicant must sign the form; if the applicant were eligible, the process would start.",
+     "The form must be signed by the applicant; if the applicant were eligible, the process would start.",
+     "The form must be signed by the applicant; if the applicant was eligible, the process would start.",
+     "The form must be signed by the applicant, if the applicant were eligible, the process would start."
+    ],
+    "answerIndex": 1,
+    "explanation": "The combined sentence retains the passive modal 'must be signed' and the subjunctive 'were' in the conditional clause, linked by a semicolon.",
+    "difficulty": 5,
+    "skill": "Combining passive obligation with subjunctive hypothesis",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q6",
+    "prompt": "The chef prepared the meal before noon. The table was decorated with flowers. Which option combines both sentences using passive voice consistently?",
+    "choices": [
+     "The chef prepared the meal before noon, and the table was decorated with flowers.",
+     "The meal was prepared by the chef before noon, and the table was decorated with flowers.",
+     "The meal was prepared before noon by the chef, and the flowers decorated the table.",
+     "The meal was prepared by the chef before noon, and the table decorated with flowers."
+    ],
+    "answerIndex": 1,
+    "explanation": "This version makes both actions passive, preserves the chef as the agent of the first action, and retains the table as the subject decorated with flowers.",
+    "difficulty": 4,
+    "skill": "Combining sentences with consistent passive voice",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q20",
+    "prompt": "Which explanation best describes the voice and mood in this sentence: The samples were collected by the field team, and the team will analyze them tomorrow.",
+    "choices": [
+     "It shifts from active voice in the first clause to passive voice in the second, while both clauses use subjunctive mood.",
+     "It uses passive voice in both clauses and shifts from indicative mood to subjunctive mood.",
+     "It uses active voice in both clauses and shifts from subjunctive mood to indicative mood.",
+     "It shifts from passive voice in the first clause to active voice in the second, while both clauses use indicative mood."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence uses passive voice for the completed collection and active voice for the future analysis, with indicative mood in both clauses.",
+    "difficulty": 6,
+    "skill": "Explaining shifts in voice and mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q46",
+    "prompt": "Which explanation correctly analyzes this sentence: The letters were sorted by the volunteers, and they will be delivered tomorrow.",
+    "choices": [
+     "The first clause is active, and the second clause is passive with a future indicative verb.",
+     "The first clause is passive, and the second clause is also passive with a future indicative verb.",
+     "The first clause is passive, and the second clause is active with a future indicative verb.",
+     "The first clause is passive, and the second clause is passive with a subjunctive verb."
+    ],
+    "answerIndex": 1,
+    "explanation": "Both clauses use passive voice because the letters receive the actions, and will be delivered expresses future indicative mood.",
+    "difficulty": 5,
+    "skill": "Analyzing voice and mood in combined clauses",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q36",
+    "prompt": "The bridge was cleared by workers. If the river were lower, we could cross safely. Which option preserves the original passive voice for clearing the bridge and the hypothetical mood for the river level?",
+    "choices": [
+     "The bridge was cleared by workers, and if the river were lower, we could crossed safely.",
+     "The workers cleared the bridge, and if the river were lower, we could cross safely.",
+     "The bridge was cleared by workers, and if the river was lower, we could cross safely.",
+     "The bridge was cleared by workers, and if the river were lower, we could cross safely."
+    ],
+    "answerIndex": 3,
+    "explanation": "This option makes the first clause passive and uses were with the conditional so that the second clause remains subjunctive.",
+    "difficulty": 6,
+    "skill": "Combining passive and subjunctive clauses",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q1",
+    "prompt": "Many people visited the museum. The museum was opened in 1910. Which option combines both facts in one sentence and uses passive voice consistently?",
+    "choices": [
+     "The museum was visited by many people and was opened in 1910.",
+     "The museum was visited by many people and opened in 1910.",
+     "The museum was visiting by many people and was opened in 1910.",
+     "The museum was visited from many people and was opened in 1910."
+    ],
+    "answerIndex": 0,
+    "explanation": "This version uses passive voice for both actions and includes a form of be with each past participle.",
+    "difficulty": 4,
+    "skill": "Combining sentences with consistent passive voice",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q2",
+    "prompt": "The judge said, Explain your decision. The witness explained it. Which option combines the command and the action into one sentence without changing either meaning?",
+    "choices": [
+     "The judge asked the witness to explain the decision, and the witness had explained it.",
+     "The judge asked the witness to explain the decision, and the witness explained it.",
+     "The judge asked the witness to explain the decision, and the witness explained him.",
+     "The judge asked the witness to explain the decision, and the judge explained it."
+    ],
+    "answerIndex": 1,
+    "explanation": "This version changes the direct command into an indirect statement while preserving the action and the order of events.",
+    "difficulty": 5,
+    "skill": "Combining a command with an indirect statement",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q30",
+    "prompt": "Analyze the voice and mood of this combined sentence: The sample was tested by the technician, and she would repeat the test if the results were unclear.",
+    "choices": [
+     "The first clause is active, while the second uses the subjunctive for a hypothetical condition.",
+     "The first clause is passive, while the second uses the subjunctive for a hypothetical condition.",
+     "The first clause is passive, while the second uses the indicative for a hypothetical condition.",
+     "Both clauses are passive, while the second uses the subjunctive for a hypothetical condition."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first clause uses passive voice, and the second uses the subjunctive to present the condition for repeating the test.",
+    "difficulty": 6,
+    "skill": "Identify voice and mood",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q18",
+    "prompt": "Combine the sentences while preserving the contrast and the subjunctive mood: The gallery is open today. If it were closed, we would visit another gallery.",
+    "choices": [
+     "Because the gallery is open today, we would visit another gallery if it were closed.",
+     "Although the gallery is open today, we would visit another gallery if it were closed.",
+     "The gallery is open today, and if it is closed, we will visit another gallery.",
+     "Even though the gallery is open today, we would visit another gallery if it was closed."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option keeps the hypothetical condition in the subjunctive by using were and would while contrasting it with the actual situation.",
+    "difficulty": 5,
+    "skill": "Combining actual and hypothetical statements",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q32",
+    "prompt": "The technician repaired the radio. The customer returned it last week. Which option recasts both actions in passive voice without changing either fact?",
+    "choices": [
+     "The technician repaired the radio, and the customer returned it last week.",
+     "The radio was repaired by the technician, and the customer returned it last week.",
+     "The radio had been repaired by the technician when the customer returned it last week.",
+     "The radio was repaired by the technician and was returned by the customer last week."
+    ],
+    "answerIndex": 3,
+    "explanation": "This option makes both actions passive with was repaired and was returned, and it identifies the actors in by-phrases.",
+    "difficulty": 4,
+    "skill": "Using passive voice consistently",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q9",
+    "prompt": "The manager said, 'Deliver the report by Friday.' The clerk delivered the report on Thursday evening. Which explanation best describes why this combined sentence is appropriate: The manager told the clerk to deliver the report by Friday, and the clerk delivered the report on Thursday evening?",
+    "choices": [
+     "It converts the command into a to-infinitive clause and preserves both the deadline and the actual delivery time.",
+     "It keeps the command as a direct quotation and changes the clerk's action to a conditional statement.",
+     "It converts the command into a passive clause and moves the actual delivery time into the future.",
+     "It converts the command into a to-infinitive clause but replaces the actual delivery time with the deadline."
+    ],
+    "answerIndex": 0,
+    "explanation": "The command is correctly reported with told ... to ..., and the second clause accurately states that the report was delivered on Thursday evening.",
+    "difficulty": 6,
+    "skill": "Explaining correct shifts in voice and mood",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q13",
+    "prompt": "Combine the two sentences using active voice consistently: \"The artist painted the mural. The mural was admired by tourists.\"",
+    "choices": [
+     "The artist painted the mural, and tourists admired it.",
+     "The mural was painted by the artist, and tourists admired it.",
+     "The artist painted the mural, and it was admired by tourists.",
+     "The mural painted the artist, and tourists admired it."
+    ],
+    "answerIndex": 0,
+    "explanation": "Both clauses are in active voice, giving a consistent voice throughout the combined sentence.",
+    "difficulty": 5,
+    "skill": "Combining sentences with consistent active voice",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q44",
+    "prompt": "The song was recorded by the band. The band won a music award. Which option combines the sentences with a relative clause, keeping the recording passive and the award result active?",
+    "choices": [
+     "The band recorded the song, which won a music award.",
+     "The song was recorded, and the band won a music award.",
+     "The song was recorded by the band, and a music award was won.",
+     "The song was recorded by the band, which won a music award."
+    ],
+    "answerIndex": 3,
+    "explanation": "The relative clause which won a music award refers to the band, so the first clause remains passive while the band's action stays active.",
+    "difficulty": 6,
+    "skill": "Using a relative clause to preserve a voice shift",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q22",
+    "prompt": "Combine the sentences while preserving the subjunctive mood and the contrast: 'If the weather were better, we would hike. The forecast predicts rain.'",
+    "choices": [
+     "If the weather was better, we would hike, but the forecast predicts rain.",
+     "Although the forecast predicts rain, we would hike if the weather were better.",
+     "The forecast predicts rain, so we would hike if the weather were better.",
+     "We would hike if the weather was better, yet the forecast predicts rain."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence uses 'Although' to show contrast and retains the subjunctive 'were' in the conditional clause.",
+    "difficulty": 5,
+    "skill": "Preserving subjunctive mood and contrast when combining sentences",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q27",
+    "prompt": "What is the best way to merge these two statements so that both actions remain passive? The technician repaired the camera. The lens was replaced.",
+    "choices": [
+     "The technician repaired the camera, and the lens was replaced.",
+     "The camera was repaired, and the technician replaced the lens.",
+     "The camera was repaired by the technician, and the lens was replaced.",
+     "The technician repaired the camera, and the technician replaced the lens."
+    ],
+    "answerIndex": 2,
+    "explanation": "The answer keeps both actions in passive voice and preserves the technician as the agent of the repair.",
+    "difficulty": 4,
+    "skill": "Combine sentences with consistent passive voice",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q39",
+    "prompt": "Combine the sentences while preserving the force of the command and both facts: The archivist said, 'Box the fragile manuscripts.' The staff boxed the manuscripts.",
+    "choices": [
+     "The archivist asked the staff whether they would box the fragile manuscripts, and the staff boxed the manuscripts.",
+     "The archivist said that the staff should box the fragile manuscripts, and the staff boxed the manuscripts.",
+     "The archivist told the staff to box the fragile manuscripts, and the staff boxed the manuscripts.",
+     "The archivist told the staff that they boxed the fragile manuscripts, and they boxed the manuscripts."
+    ],
+    "answerIndex": 2,
+    "explanation": "The to-infinitive clause preserves the command as a command while the second clause reports that the staff carried it out.",
+    "difficulty": 6,
+    "skill": "Converting commands into to-infinitive clauses",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q37",
+    "prompt": "The package was weighed at the counter, and then the clerk sent it. Which one-sentence explanation correctly analyzes the two clauses?",
+    "choices": [
+     "The package is acted upon in the first clause, making it passive, while the clerk performs the sending action in the active second clause.",
+     "Both clauses are passive because each action is presented as an event without a clear performer.",
+     "Both clauses are active because the package and the clerk are both named as subjects.",
+     "The first clause is active because the package is the subject, and the second clause is passive because the clerk is the subject."
+    ],
+    "answerIndex": 0,
+    "explanation": "The package is acted upon in the first clause, making it passive, while the clerk performs the sending action in the active second clause.",
+    "difficulty": 5,
+    "skill": "Explaining shifts between active and passive voice",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q41",
+    "prompt": "Which explanation best describes why this combined sentence is grammatically and logically sound? The evidence was examined by the team; if it had been clearer, the conclusion might have differed.",
+    "choices": [
+     "It uses passive voice for the completed examination and a past subjunctive conditional to express the hypothetical alternative.",
+     "It uses active voice for the completed examination and an indicative conditional to state a confirmed alternative.",
+     "It uses passive voice for the hypothetical examination and a subjunctive conditional to express a completed fact.",
+     "It uses active voice for the completed examination and a subjunctive conditional to connect two confirmed events."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses passive voice for the completed examination and a past subjunctive conditional to present the clearer evidence as a hypothetical situation.",
+    "difficulty": 7,
+    "skill": "Analyzing voice and mood in combined sentences",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q7",
+    "prompt": "If I were the captain, I would choose a different route. The map showed a closed road ahead. Which option combines the sentences with the subjunctive correctly and preserves the original hypothetical meaning?",
+    "choices": [
+     "If I would be the captain, I would choose a different route because the map showed a closed road ahead.",
+     "If I am the captain, I would choose a different route because the map showed a closed road ahead.",
+     "If I were the captain, I would choose a different route because the map showed a closed road ahead.",
+     "If I were the captain, I would have chosen a different route because the map showed a closed road ahead."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first conditional correctly uses were with would and preserves the present hypothetical meaning of the original statement.",
+    "difficulty": 5,
+    "skill": "Combining sentences with conditional mood",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q40",
+    "prompt": "Combine the sentences into one sentence that preserves the contrast and uses the subjunctive mood: The buses are running. If the roads were flooded, we would delay the journey.",
+    "choices": [
+     "Because the buses are running, we would delay the journey if the roads were flooded.",
+     "The buses are running, but if the roads are flooded, we would delay the journey.",
+     "If the roads were flooded, the buses are running, and we would delay the journey.",
+     "Although the buses are running, we would delay the journey if the roads were flooded."
+    ],
+    "answerIndex": 3,
+    "explanation": "Although contrasts the present situation with the hypothetical delay, and were correctly marks the subjunctive condition.",
+    "difficulty": 6,
+    "skill": "Combining contrast with subjunctive mood",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q31",
+    "prompt": "Which merger makes the hikers and ranger the active agents in both clauses? The hikers followed the marked trail. A ranger guided them across the river.",
+    "choices": [
+     "The marked trail was followed by the hikers, and a ranger guided them across the river.",
+     "The hikers followed the marked trail, and they were guided across the river by a ranger.",
+     "The hikers followed the marked trail, and a ranger guided them across the river.",
+     "The marked trail was followed by the hikers, and they were guided across the river by a ranger."
+    ],
+    "answerIndex": 2,
+    "explanation": "The answer places the hikers and the ranger in the subject positions and uses active voice in both clauses.",
+    "difficulty": 4,
+    "skill": "Combine sentences with consistent active voice",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q38",
+    "prompt": "Combine the two sentences into one sentence using passive voice consistently and preserving the original facts and past tense: The nurse checked the patient's blood pressure. The doctor recorded the result.",
+    "choices": [
+     "The nurse checked the patient's blood pressure, and the doctor recorded the result.",
+     "The patient's blood pressure was checked by the nurse, and the result was recorded by the doctor.",
+     "The patient's blood pressure was checked by the nurse, and the result was checked by the doctor.",
+     "The patient's blood pressure is checked by the nurse, and the result is recorded by the doctor."
+    ],
+    "answerIndex": 1,
+    "explanation": "The answer uses passive voice for both past-tense actions and correctly identifies the nurse and doctor as the agents of their respective actions.",
+    "difficulty": 5,
+    "skill": "Combining sentences with consistent passive voice",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q3",
+    "prompt": "The ticket is sold out. I would still buy it if it were available. Which combined sentence keeps the contrast and correctly uses the subjunctive in a counterfactual condition?",
+    "choices": [
+     "Although the ticket is sold out, I will buy it if it were available.",
+     "Although the ticket is sold out, I would buy it if it was available.",
+     "Although the ticket is sold out, I would buy it if it were available.",
+     "Although the ticket is sold out, I would buy it if it is available."
+    ],
+    "answerIndex": 2,
+    "explanation": "The form were expresses the unreal condition that the ticket might be available, while although preserves the contrast with its sold-out status.",
+    "difficulty": 6,
+    "skill": "Combining a contrast with a counterfactual conditional",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q47",
+    "prompt": "The veterinarian examined the kitten. The owner gave the kitten medicine. Which option combines both actions in active voice without changing either fact?",
+    "choices": [
+     "The veterinarian examined the kitten, while the kitten was given medicine by the owner.",
+     "The kitten was examined by the veterinarian, and the owner gave it medicine.",
+     "The veterinarian examined the kitten, and the owner gave the kitten medicine.",
+     "The veterinarian told the owner to examine the kitten, and the kitten was given medicine."
+    ],
+    "answerIndex": 2,
+    "explanation": "This sentence keeps both performers as subjects, so both clauses remain in active voice while preserving the original actions.",
+    "difficulty": 4,
+    "skill": "Combining sentences in active voice",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q49",
+    "prompt": "The coordinator said to the student, 'Submit the application online.' The student submitted it on Sunday. Which option reports the command and the action while preserving both meanings?",
+    "choices": [
+     "The coordinator told the student to submit the application online, and the student submitted it on Sunday.",
+     "The coordinator suggested that the student submit the application online, and the student submitted it on Sunday.",
+     "The coordinator asked the student whether to submit the application online, and the student submitted it on Sunday.",
+     "The coordinator told the student to submit the application online, and the student did not submit it on Sunday."
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence accurately converts the command into a to-infinitive clause and preserves the student's action and its timing.",
+    "difficulty": 5,
+    "skill": "Combining a command with its reported action",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q50",
+    "prompt": "The museum is open on Sundays. If the crowds were smaller, we would stay longer. Which option combines the sentences while preserving the contrast and the subjunctive mood?",
+    "choices": [
+     "Because the museum is open on Sundays, we would stay longer if the crowds were smaller.",
+     "Although the museum is open on Sundays, we would stay longer if the crowds were smaller.",
+     "Although the museum is open on Sundays, we would stay longer if the crowds are smaller.",
+     "Although the museum is open on Sundays, we stay longer if the crowds were smaller."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence preserves the contrast with although and retains the subjunctive forms were and would in the hypothetical condition.",
+    "difficulty": 6,
+    "skill": "Combining a contrast with a subjunctive condition",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q42",
+    "prompt": "The electrician rewired the panel. The inspector tested it afterward. Which option makes the first action passive and keeps the second action active?",
+    "choices": [
+     "The electrician rewired the panel, and the inspector tested it afterward.",
+     "The panel was rewired by the electrician, and the inspector tested it afterward.",
+     "The panel was rewired by the electrician, and it was tested by the inspector afterward.",
+     "The panel was rewired by the electrician, and the inspector had tested it afterward."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence makes the panel the subject of the first passive clause and keeps the inspector as the active subject of the second clause.",
+    "difficulty": 5,
+    "skill": "Recasting the first action in passive voice",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which merger keeps the road statement factual and the traffic condition hypothetical? The road is clear. If the traffic had been lighter, we would have arrived on time.",
+    "choices": [
+     "The road is clear, but we would have arrived on time if the traffic had been lighter.",
+     "The road is clear, but we would arrive on time if the traffic was lighter.",
+     "The road was clear, but we would have arrived on time if the traffic had been lighter.",
+     "The road is clear, and we would not have arrived on time if the traffic had been lighter."
+    ],
+    "answerIndex": 0,
+    "explanation": "The answer keeps the clear-road statement in the indicative mood and the unreal traffic condition in the subjunctive mood.",
+    "difficulty": 6,
+    "skill": "Distinguish indicative and subjunctive moods",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q16",
+    "prompt": "Combine the sentences into one sentence using active voice consistently: The architect designed the pavilion. Workers installed solar panels on it.",
+    "choices": [
+     "The pavilion was designed by the architect, and workers installed solar panels on it.",
+     "The architect designed the pavilion, and solar panels were installed on it by workers.",
+     "The architect was the designer of the pavilion, and the solar panels were installed on it by workers.",
+     "The architect designed the pavilion, and workers installed solar panels on it."
+    ],
+    "answerIndex": 3,
+    "explanation": "The correct option keeps both actions in the active voice by naming the architect and the workers as the performers.",
+    "difficulty": 4,
+    "skill": "Combining sentences with consistent active voice",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which merger retains the original passive-first, active-second pattern? The parcel was packed by Mia. Mia labeled it.",
+    "choices": [
+     "The parcel was packed by Mia, and it was labeled by Mia.",
+     "Mia packed the parcel and labeled it.",
+     "Mia packed the parcel, and it was labeled by her.",
+     "The parcel was packed by Mia, who then labeled it."
+    ],
+    "answerIndex": 3,
+    "explanation": "The answer preserves the passive voice of the packing action and the active voice of the labeling action.",
+    "difficulty": 5,
+    "skill": "Preserve a passive-to-active voice shift",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q25",
+    "prompt": "Combine the sentences preserving a shift from indicative to subjunctive mood: 'The data show a decline. If the trend continued, the model would predict a crash.'",
+    "choices": [
+     "The data show a decline; if the trend continued, the model would predict a crash.",
+     "The data shows a decline; if the trend continued, the model would predict a crash.",
+     "The data show a decline, if the trend continued, the model would predict a crash.",
+     "The data show a decline; if the trend continues, the model would predict a crash."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses a semicolon to join the indicative clause with the subjunctive conditional, keeping 'show' plural and 'continued' subjunctive.",
+    "difficulty": 6,
+    "skill": "Combining indicative and subjunctive clauses with correct punctuation and mood",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q48",
+    "prompt": "The technician calibrated the microscope. The school purchased the microscope. Which option combines both actions in passive voice and keeps the original simple past tense?",
+    "choices": [
+     "The technician calibrated the microscope, and the school purchased it.",
+     "The microscope was calibrated by the technician, and the school is purchasing it.",
+     "The microscope was calibrated by the technician, and the school purchased it.",
+     "The microscope was calibrated by the technician, and it was purchased by the school."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence makes both the microscope the subject of passive clauses and retains the simple past tense for both actions.",
+    "difficulty": 5,
+    "skill": "Combining sentences in passive voice",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q21",
+    "prompt": "The gardener planted the flowers. The neighbors watered them. Which option combines both sentences using active voice consistently?",
+    "choices": [
+     "The gardener planted the flowers, and the neighbors watered them.",
+     "The flowers were planted by the gardener, and the neighbors watered them.",
+     "The gardener planted the flowers, and they were watered by the neighbors.",
+     "The flowers were planted by the gardener, and they were watered by the neighbors."
+    ],
+    "answerIndex": 0,
+    "explanation": "Both clauses name the person performing the action as the subject, so the sentence consistently uses active voice.",
+    "difficulty": 4,
+    "skill": "Maintaining active voice",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q4",
+    "prompt": "Because the road was icy, the bus moved slowly. The passengers remained calm. Which option combines the ideas with one clear contrast and preserves the stated cause?",
+    "choices": [
+     "Although the passengers remained calm, the bus moved slowly although the road was icy.",
+     "Because the passengers remained calm, the bus moved slowly because the road was icy.",
+     "Although the passengers remained calm, the bus moved slowly because the road was wet.",
+     "Although the passengers remained calm, the bus moved slowly because the road was icy."
+    ],
+    "answerIndex": 3,
+    "explanation": "Although introduces the contrast between the passengers' calmness and the slow movement, while because identifies the icy road as the cause.",
+    "difficulty": 6,
+    "skill": "Combining cause and contrast in one sentence",
+    "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q14",
+    "prompt": "Combine the two sentences into one sentence that uses passive voice for the first clause and subjunctive mood for the second: \"The manuscript was edited by the reviewer. The reviewer would accept it if it were clearer.\"",
+    "choices": [
+     "The manuscript was edited by the reviewer, and the reviewer would accept it if it was clearer.",
+     "The manuscript was edited by the reviewer, who would accept it if it were clearer.",
+     "The manuscript edited by the reviewer, who would accept it if it were clearer.",
+     "The manuscript was edited by the reviewer, who would accept it if it is clearer."
+    ],
+    "answerIndex": 1,
+    "explanation": "Option A keeps the first clause passive and uses the subjunctive \"were\" in the relative clause.",
+    "difficulty": 5,
+    "skill": "Sentence combining with voice and mood consistency",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q45",
+    "prompt": "The storm caused delays. If the crew had left earlier, they would have finished on time. Which option combines the sentences while preserving the contrast and the past-tense counterfactual condition?",
+    "choices": [
+     "The storm caused delays, but the crew would have finished on time if they had left earlier.",
+     "The storm caused delays, but the crew would finish on time if they had left earlier.",
+     "The storm caused delays, but the crew would have finished on time if they left earlier.",
+     "The storm caused delays, and the crew would have finished on time if they had left earlier."
+    ],
+    "answerIndex": 0,
+    "explanation": "This option uses but to preserve the contrast and pairs would have finished with the past counterfactual condition if they had left earlier.",
+    "difficulty": 7,
+    "skill": "Preserving counterfactual conditionals",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q43",
+    "prompt": "The venue seats 300. If it were larger, we could host the whole district. Which sentence begins with Although, preserves the present-tense fact, and keeps the hypothetical condition in the subjunctive mood?",
+    "choices": [
+     "Although the venue was seating 300, we could host the whole district if it were larger.",
+     "Although the venue seats 300, we would have hosted the whole district if it were larger.",
+     "Although the venue seats 300, we could host the whole district if it were larger.",
+     "Although the venue seats 300, we could have hosted the whole district if it were larger."
+    ],
+    "answerIndex": 2,
+    "explanation": "This option preserves the present-tense statement about the venue and uses were in the subjunctive clause to express the hypothetical condition.",
+    "difficulty": 6,
+    "skill": "Combining indicative and subjunctive clauses",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q11",
+    "prompt": "Combine the sentences while preserving the subjunctive mood: \"If I were you, I would study harder. The test is tomorrow.\"",
+    "choices": [
+     "I would study harder if I was you, because the test is tomorrow.",
+     "If I was you, I would study harder because the test is tomorrow.",
+     "If I were you, I would study harder because the test is tomorrow.",
+     "If I were you, I study harder because the test is tomorrow."
+    ],
+    "answerIndex": 2,
+    "explanation": "Only this option retains the subjunctive \"were\" and correctly links the reason with a causal clause.",
+    "difficulty": 5,
+    "skill": "Maintaining subjunctive mood when combining sentences",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q12",
+    "prompt": "Combine the command and the action into one sentence without changing the force of the command: \"The coach said, 'Run five laps.' The team ran five laps.\"",
+    "choices": [
+     "The coach told the team that they run five laps, and the team ran five laps.",
+     "The coach told the team run five laps, and the team ran five laps.",
+     "The coach said the team to run five laps, and the team ran five laps.",
+     "The coach told the team to run five laps, and the team ran five laps."
+    ],
+    "answerIndex": 3,
+    "explanation": "This option correctly converts the direct command into a to‑infinitive clause and keeps both actions clear.",
+    "difficulty": 4,
+    "skill": "Reporting commands while preserving mood",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q19",
+    "prompt": "Combine the sentences while keeping the obligation in passive voice and the hypothesis in the subjunctive: The permit must be approved today. If the application were incomplete, the permit would be delayed.",
+    "choices": [
+     "The permit must be approved today, and if the application is incomplete, the permit will be delayed.",
+     "The permit was approved today; if the application were incomplete, the permit would have been delayed.",
+     "The permit must be approved today; if the application were incomplete, the permit would be delayed.",
+     "The officials must approve the permit today; if the application were incomplete, the permit would be delayed."
+    ],
+    "answerIndex": 2,
+    "explanation": "The correct option preserves the modal passive obligation and the counterfactual subjunctive condition from the original sentences.",
+    "difficulty": 6,
+    "skill": "Combining passive and subjunctive clauses",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q34",
+    "prompt": "The librarian said, Return the books by Thursday. The student returned the books on Wednesday. Which option reports the directive and the response in one sentence while keeping the directive authoritative?",
+    "choices": [
+     "The librarian reminded the student to return the books by Thursday, and the student returned the books on Wednesday.",
+     "The librarian told the student to return the books by Thursday, and the student returned the books on Wednesday.",
+     "The librarian asked the student to return the books by Thursday, and the student returned the books on Wednesday.",
+     "The librarian told the student not to return the books by Thursday, and the student returned the books on Wednesday."
+    ],
+    "answerIndex": 1,
+    "explanation": "Telling someone to return the books reports the original directive without weakening it, and the second clause preserves the student's action.",
+    "difficulty": 5,
+    "skill": "Reporting commands without changing their force",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q17",
+    "prompt": "Combine the sentences into one sentence using passive voice for both actions: The engineers inspected the bridge. They replaced two damaged beams.",
+    "choices": [
+     "The bridge was inspected by the engineers, and two damaged beams were replaced.",
+     "The bridge was inspected by the engineers, and they replaced two damaged beams.",
+     "The engineers were the inspectors of the bridge, and the beams were replaced.",
+     "The engineers inspected the bridge, and two damaged beams were replaced."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct option uses passive constructions for both the inspection and the replacement without changing which events occurred.",
+    "difficulty": 4,
+    "skill": "Combining sentences with consistent passive voice",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q35",
+    "prompt": "If I were the editor, I would use shorter sentences. The draft contains long paragraphs. Which option joins the hypothetical editing choice to the reason for it without changing the conditional mood?",
+    "choices": [
+     "If I was the editor, I would use shorter sentences because the draft contains long paragraphs.",
+     "If I were the editor, I used shorter sentences because the draft contains long paragraphs.",
+     "If I were the editor, I would use shorter sentences because the draft contains long paragraphs.",
+     "If I were the editor, I would use longer sentences because the draft contains long paragraphs."
+    ],
+    "answerIndex": 2,
+    "explanation": "The option keeps the subjunctive pairing of were and would, and the because-clause retains the draft's long paragraphs as the stated reason.",
+    "difficulty": 6,
+    "skill": "Preserving the subjunctive in a combined sentence",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q10",
+    "prompt": "Combine the two sentences into one sentence that uses passive voice consistently: \"The committee approved the proposal. The proposal was submitted yesterday.\"",
+    "choices": [
+     "The committee approved the proposal, and it was submitted yesterday.",
+     "The proposal was approved by the committee and was submitted yesterday.",
+     "The committee approved the proposal, and the proposal was submitted yesterday.",
+     "The proposal approved the committee and was submitted yesterday."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct option puts both clauses in passive voice, keeping the voice consistent throughout the combined sentence.",
+    "difficulty": 5,
+    "skill": "Combining sentences with consistent voice",
+    "topic": "Combine Two Sentences - Shifts in Voice and Mood"
+   }
+  ],
+  "feedback": {
+   "correct": "Clean rewrite — the voice and mood hold steady from start to finish.",
+   "incorrect": "That version shifts voice or mood partway through, so the two halves no longer match.",
+   "win": "Two grids cleared! You can now combine sentences without letting voice or mood wander.",
+   "lose": "The run ends here. Look back at each half of the sentence: who performs the action, and what mood each verb is in?",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Many people visited the museum. The museum was opened in 1910. Which option combines both facts in one sentence and uses passive voice consistently?",
+   "choices": [
+    "The museum was visited by many people and was opened in 1910.",
+    "The museum was visited by many people and opened in 1910.",
+    "The museum was visiting by many people and was opened in 1910.",
+    "The museum was visited from many people and was opened in 1910."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version uses passive voice for both actions and includes a form of be with each past participle.",
+   "difficulty": 4,
+   "skill": "Combining sentences with consistent passive voice",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The judge said, Explain your decision. The witness explained it. Which option combines the command and the action into one sentence without changing either meaning?",
+   "choices": [
+    "The judge asked the witness to explain the decision, and the witness explained it.",
+    "The judge asked the witness to explain the decision, and the witness had explained it.",
+    "The judge asked the witness to explain the decision, and the witness explained him.",
+    "The judge asked the witness to explain the decision, and the judge explained it."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version changes the direct command into an indirect statement while preserving the action and the order of events.",
+   "difficulty": 5,
+   "skill": "Combining a command with an indirect statement",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The ticket is sold out. I would still buy it if it were available. Which combined sentence keeps the contrast and correctly uses the subjunctive in a counterfactual condition?",
+   "choices": [
+    "Although the ticket is sold out, I would buy it if it were available.",
+    "Although the ticket is sold out, I would buy it if it was available.",
+    "Although the ticket is sold out, I will buy it if it were available.",
+    "Although the ticket is sold out, I would buy it if it is available."
+   ],
+   "answerIndex": 0,
+   "explanation": "The form were expresses the unreal condition that the ticket might be available, while although preserves the contrast with its sold-out status.",
+   "difficulty": 6,
+   "skill": "Combining a contrast with a counterfactual conditional",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Because the road was icy, the bus moved slowly. The passengers remained calm. Which option combines the ideas with one clear contrast and preserves the stated cause?",
+   "choices": [
+    "Although the passengers remained calm, the bus moved slowly because the road was icy.",
+    "Because the passengers remained calm, the bus moved slowly because the road was icy.",
+    "Although the passengers remained calm, the bus moved slowly because the road was wet.",
+    "Although the passengers remained calm, the bus moved slowly although the road was icy."
+   ],
+   "answerIndex": 0,
+   "explanation": "Although introduces the contrast between the passengers' calmness and the slow movement, while because identifies the icy road as the cause.",
+   "difficulty": 6,
+   "skill": "Combining cause and contrast in one sentence",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The scientist reviewed the data, and then the report was written. Which explanation best describes why this combined sentence is grammatically and logically effective?",
+   "choices": [
+    "It joins two independent clauses with a coordinating conjunction, retains active voice in the first clause and passive voice in the second, and preserves the order of events.",
+    "It joins two independent clauses with a subordinating conjunction, retains active voice in the first clause and passive voice in the second, and reverses the order of events.",
+    "It joins two independent clauses with a coordinating conjunction, changes active voice to passive in both clauses, and preserves the order of events.",
+    "It joins two dependent clauses with a coordinating conjunction, retains active voice in the first clause and passive voice in the second, and preserves the order of events."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence correctly combines an active clause and a passive clause with and while presenting the events chronologically.",
+   "difficulty": 7,
+   "skill": "Explaining a combination of active and passive clauses",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The chef prepared the meal before noon. The table was decorated with flowers. Which option combines both sentences using passive voice consistently?",
+   "choices": [
+    "The chef prepared the meal before noon, and the table was decorated with flowers.",
+    "The meal was prepared before noon by the chef, and the flowers decorated the table.",
+    "The meal was prepared by the chef before noon, and the table was decorated with flowers.",
+    "The meal was prepared by the chef before noon, and the table decorated with flowers."
+   ],
+   "answerIndex": 2,
+   "explanation": "This version makes both actions passive, preserves the chef as the agent of the first action, and retains the table as the subject decorated with flowers.",
+   "difficulty": 4,
+   "skill": "Combining sentences with consistent passive voice",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If I were the captain, I would choose a different route. The map showed a closed road ahead. Which option combines the sentences with the subjunctive correctly and preserves the original hypothetical meaning?",
+   "choices": [
+    "If I would be the captain, I would choose a different route because the map showed a closed road ahead.",
+    "If I am the captain, I would choose a different route because the map showed a closed road ahead.",
+    "If I were the captain, I would have chosen a different route because the map showed a closed road ahead.",
+    "If I were the captain, I would choose a different route because the map showed a closed road ahead."
+   ],
+   "answerIndex": 3,
+   "explanation": "The first conditional correctly uses were with would and preserves the present hypothetical meaning of the original statement.",
+   "difficulty": 5,
+   "skill": "Combining sentences with conditional mood",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Volunteers counted the birds. They checked the nests for damage. Which option makes the first action passive, keeps the volunteers' role clear, and preserves the sequence of events?",
+   "choices": [
+    "The birds counted the volunteers, who then checked the nests for damage.",
+    "The birds were counted by volunteers, who then checked the nests for damage.",
+    "The birds were counted, and volunteers checked the nests for damage.",
+    "The birds were counted by volunteers, although they checked the nests for damage."
+   ],
+   "answerIndex": 1,
+   "explanation": "The passive clause identifies the volunteers as the people who counted the birds, and the relative clause preserves the sequence of checking the nests afterward.",
+   "difficulty": 5,
+   "skill": "Combining active and passive actions",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The manager said, 'Deliver the report by Friday.' The clerk delivered the report on Thursday evening. Which explanation best describes why this combined sentence is appropriate: The manager told the clerk to deliver the report by Friday, and the clerk delivered the report on Thursday evening?",
+   "choices": [
+    "It converts the command into a passive clause and moves the actual delivery time into the future.",
+    "It keeps the command as a direct quotation and changes the clerk's action to a conditional statement.",
+    "It converts the command into a to-infinitive clause and preserves both the deadline and the actual delivery time.",
+    "It converts the command into a to-infinitive clause but replaces the actual delivery time with the deadline."
+   ],
+   "answerIndex": 2,
+   "explanation": "The command is correctly reported with told ... to ..., and the second clause accurately states that the report was delivered on Thursday evening.",
+   "difficulty": 6,
+   "skill": "Explaining correct shifts in voice and mood",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the two sentences into one sentence that uses passive voice consistently: \"The committee approved the proposal. The proposal was submitted yesterday.\"",
+   "choices": [
+    "The proposal was approved by the committee and was submitted yesterday.",
+    "The committee approved the proposal, and it was submitted yesterday.",
+    "The committee approved the proposal, and the proposal was submitted yesterday.",
+    "The proposal approved the committee and was submitted yesterday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option puts both clauses in passive voice, keeping the voice consistent throughout the combined sentence.",
+   "difficulty": 5,
+   "skill": "Combining sentences with consistent voice",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences while preserving the subjunctive mood: \"If I were you, I would study harder. The test is tomorrow.\"",
+   "choices": [
+    "If I were you, I would study harder because the test is tomorrow.",
+    "If I was you, I would study harder because the test is tomorrow.",
+    "I would study harder if I was you, because the test is tomorrow.",
+    "If I were you, I study harder because the test is tomorrow."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only this option retains the subjunctive \"were\" and correctly links the reason with a causal clause.",
+   "difficulty": 5,
+   "skill": "Maintaining subjunctive mood when combining sentences",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the command and the action into one sentence without changing the force of the command: \"The coach said, 'Run five laps.' The team ran five laps.\"",
+   "choices": [
+    "The coach told the team to run five laps, and the team ran five laps.",
+    "The coach told the team run five laps, and the team ran five laps.",
+    "The coach said the team to run five laps, and the team ran five laps.",
+    "The coach told the team that they run five laps, and the team ran five laps."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option correctly converts the direct command into a to‑infinitive clause and keeps both actions clear.",
+   "difficulty": 4,
+   "skill": "Reporting commands while preserving mood",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the two sentences using active voice consistently: \"The artist painted the mural. The mural was admired by tourists.\"",
+   "choices": [
+    "The artist painted the mural, and tourists admired it.",
+    "The mural was painted by the artist, and tourists admired it.",
+    "The artist painted the mural, and it was admired by tourists.",
+    "The mural painted the artist, and tourists admired it."
+   ],
+   "answerIndex": 0,
+   "explanation": "Both clauses are in active voice, giving a consistent voice throughout the combined sentence.",
+   "difficulty": 5,
+   "skill": "Combining sentences with consistent active voice",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the two sentences into one sentence that uses passive voice for the first clause and subjunctive mood for the second: \"The manuscript was edited by the reviewer. The reviewer would accept it if it were clearer.\"",
+   "choices": [
+    "The manuscript was edited by the reviewer, who would accept it if it were clearer.",
+    "The manuscript was edited by the reviewer, and the reviewer would accept it if it was clearer.",
+    "The manuscript edited by the reviewer, who would accept it if it were clearer.",
+    "The manuscript was edited by the reviewer, who would accept it if it is clearer."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A keeps the first clause passive and uses the subjunctive \"were\" in the relative clause.",
+   "difficulty": 5,
+   "skill": "Sentence combining with voice and mood consistency",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation best describes why this combined sentence is grammatically and logically sound? \"The proposal was approved by the committee, and it would be implemented if the budget were approved.\"",
+   "choices": [
+    "It uses passive voice in the first clause and the subjunctive \"were\" in the second to express a hypothetical condition.",
+    "It mixes active and passive voice but keeps the indicative mood throughout.",
+    "It shifts from past tense to future tense without a conjunction.",
+    "It omits the subject in the second clause, creating a fragment."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A correctly identifies the passive construction and the subjunctive mood indicating a contrary‑to‑fact condition.",
+   "difficulty": 6,
+   "skill": "Sentence combining with voice and mood consistency",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences into one sentence using active voice consistently: The architect designed the pavilion. Workers installed solar panels on it.",
+   "choices": [
+    "The pavilion was designed by the architect, and workers installed solar panels on it.",
+    "The architect designed the pavilion, and workers installed solar panels on it.",
+    "The architect was the designer of the pavilion, and the solar panels were installed on it by workers.",
+    "The architect designed the pavilion, and solar panels were installed on it by workers."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct option keeps both actions in the active voice by naming the architect and the workers as the performers.",
+   "difficulty": 4,
+   "skill": "Combining sentences with consistent active voice",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences into one sentence using passive voice for both actions: The engineers inspected the bridge. They replaced two damaged beams.",
+   "choices": [
+    "The engineers inspected the bridge, and two damaged beams were replaced.",
+    "The bridge was inspected by the engineers, and they replaced two damaged beams.",
+    "The engineers were the inspectors of the bridge, and the beams were replaced.",
+    "The bridge was inspected by the engineers, and two damaged beams were replaced."
+   ],
+   "answerIndex": 3,
+   "explanation": "The correct option uses passive constructions for both the inspection and the replacement without changing which events occurred.",
+   "difficulty": 4,
+   "skill": "Combining sentences with consistent passive voice",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences while preserving the contrast and the subjunctive mood: The gallery is open today. If it were closed, we would visit another gallery.",
+   "choices": [
+    "Although the gallery is open today, we would visit another gallery if it were closed.",
+    "Because the gallery is open today, we would visit another gallery if it were closed.",
+    "The gallery is open today, and if it is closed, we will visit another gallery.",
+    "Even though the gallery is open today, we would visit another gallery if it was closed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct option keeps the hypothetical condition in the subjunctive by using were and would while contrasting it with the actual situation.",
+   "difficulty": 5,
+   "skill": "Combining actual and hypothetical statements",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences while keeping the obligation in passive voice and the hypothesis in the subjunctive: The permit must be approved today. If the application were incomplete, the permit would be delayed.",
+   "choices": [
+    "The permit must be approved today, and if the application is incomplete, the permit will be delayed.",
+    "The permit must be approved today; if the application were incomplete, the permit would be delayed.",
+    "The permit was approved today; if the application were incomplete, the permit would have been delayed.",
+    "The officials must approve the permit today; if the application were incomplete, the permit would be delayed."
+   ],
+   "answerIndex": 1,
+   "explanation": "The correct option preserves the modal passive obligation and the counterfactual subjunctive condition from the original sentences.",
+   "difficulty": 6,
+   "skill": "Combining passive and subjunctive clauses",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation best describes the voice and mood in this sentence: The samples were collected by the field team, and the team will analyze them tomorrow.",
+   "choices": [
+    "It shifts from active voice in the first clause to passive voice in the second, while both clauses use subjunctive mood.",
+    "It uses passive voice in both clauses and shifts from indicative mood to subjunctive mood.",
+    "It uses active voice in both clauses and shifts from subjunctive mood to indicative mood.",
+    "It shifts from passive voice in the first clause to active voice in the second, while both clauses use indicative mood."
+   ],
+   "answerIndex": 3,
+   "explanation": "The sentence uses passive voice for the completed collection and active voice for the future analysis, with indicative mood in both clauses.",
+   "difficulty": 6,
+   "skill": "Explaining shifts in voice and mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The gardener planted the flowers. The neighbors watered them. Which option combines both sentences using active voice consistently?",
+   "choices": [
+    "The gardener planted the flowers, and the neighbors watered them.",
+    "The flowers were planted by the gardener, and the neighbors watered them.",
+    "The gardener planted the flowers, and they were watered by the neighbors.",
+    "The flowers were planted by the gardener, and they were watered by the neighbors."
+   ],
+   "answerIndex": 0,
+   "explanation": "Both clauses name the person performing the action as the subject, so the sentence consistently uses active voice.",
+   "difficulty": 4,
+   "skill": "Maintaining active voice",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Active voice requires the subject to perform the verb.",
+      "url": "https://en.wikipedia.org/wiki/Active_Voice",
+      "quote": "a verb is typically in the active voice when the subject of the verb is the doer of the action",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Combine the sentences while preserving the subjunctive mood and the contrast: 'If the weather were better, we would hike. The forecast predicts rain.'",
+   "choices": [
+    "Although the forecast predicts rain, we would hike if the weather were better.",
+    "If the weather was better, we would hike, but the forecast predicts rain.",
+    "The forecast predicts rain, so we would hike if the weather were better.",
+    "We would hike if the weather was better, yet the forecast predicts rain."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses 'Although' to show contrast and retains the subjunctive 'were' in the conditional clause.",
+   "difficulty": 5,
+   "skill": "Preserving subjunctive mood and contrast when combining sentences",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the command and the action into one sentence without changing the force of the command: 'The captain ordered, \"Lower the sails.\" The crew lowered the sails.'",
+   "choices": [
+    "The captain ordered the crew to lower the sails, and the crew lowered them.",
+    "The captain told the crew to lower the sails, and the crew lowered them.",
+    "The sails were ordered to be lowered by the captain, and the crew lowered them.",
+    "The captain ordered the crew to lower the sails, the crew lowered them."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct version keeps the command force with 'ordered ... to' and joins the two clauses with a coordinating conjunction.",
+   "difficulty": 6,
+   "skill": "Combining direct commands with reported actions while preserving imperative force",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the two sentences using active voice consistently: 'The researcher collected the samples. The lab analyzed them.'",
+   "choices": [
+    "The researcher collected the samples, and the lab analyzed them.",
+    "The samples were collected by the researcher, and the lab analyzed them.",
+    "The researcher collected the samples, and they were analyzed by the lab.",
+    "The researcher collects the samples, and the lab analyzes them."
+   ],
+   "answerIndex": 0,
+   "explanation": "Both clauses remain in active voice, with the researcher and the lab as the subjects of their respective verbs.",
+   "difficulty": 5,
+   "skill": "Maintaining consistent active voice when combining sentences",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences preserving a shift from indicative to subjunctive mood: 'The data show a decline. If the trend continued, the model would predict a crash.'",
+   "choices": [
+    "The data show a decline; if the trend continued, the model would predict a crash.",
+    "The data shows a decline; if the trend continued, the model would predict a crash.",
+    "The data show a decline, if the trend continued, the model would predict a crash.",
+    "The data show a decline; if the trend continues, the model would predict a crash."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses a semicolon to join the indicative clause with the subjunctive conditional, keeping 'show' plural and 'continued' subjunctive.",
+   "difficulty": 6,
+   "skill": "Combining indicative and subjunctive clauses with correct punctuation and mood",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences keeping the obligation in passive voice and the hypothesis in the subjunctive: 'The form must be signed by the applicant. If the applicant were eligible, the process would start.'",
+   "choices": [
+    "The form must be signed by the applicant; if the applicant were eligible, the process would start.",
+    "The applicant must sign the form; if the applicant were eligible, the process would start.",
+    "The form must be signed by the applicant; if the applicant was eligible, the process would start.",
+    "The form must be signed by the applicant, if the applicant were eligible, the process would start."
+   ],
+   "answerIndex": 0,
+   "explanation": "The combined sentence retains the passive modal 'must be signed' and the subjunctive 'were' in the conditional clause, linked by a semicolon.",
+   "difficulty": 5,
+   "skill": "Combining passive obligation with subjunctive hypothesis",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "What is the best way to merge these two statements so that both actions remain passive? The technician repaired the camera. The lens was replaced.",
+   "choices": [
+    "The technician repaired the camera, and the lens was replaced.",
+    "The camera was repaired, and the technician replaced the lens.",
+    "The camera was repaired by the technician, and the lens was replaced.",
+    "The technician repaired the camera, and the technician replaced the lens."
+   ],
+   "answerIndex": 2,
+   "explanation": "The answer keeps both actions in passive voice and preserves the technician as the agent of the repair.",
+   "difficulty": 4,
+   "skill": "Combine sentences with consistent passive voice",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which merger retains the original passive-first, active-second pattern? The parcel was packed by Mia. Mia labeled it.",
+   "choices": [
+    "The parcel was packed by Mia, and it was labeled by Mia.",
+    "The parcel was packed by Mia, who then labeled it.",
+    "Mia packed the parcel, and it was labeled by her.",
+    "Mia packed the parcel and labeled it."
+   ],
+   "answerIndex": 1,
+   "explanation": "The answer preserves the passive voice of the packing action and the active voice of the labeling action.",
+   "difficulty": 5,
+   "skill": "Preserve a passive-to-active voice shift",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which merger keeps the road statement factual and the traffic condition hypothetical? The road is clear. If the traffic had been lighter, we would have arrived on time.",
+   "choices": [
+    "The road is clear, but we would have arrived on time if the traffic had been lighter.",
+    "The road is clear, but we would arrive on time if the traffic was lighter.",
+    "The road was clear, but we would have arrived on time if the traffic had been lighter.",
+    "The road is clear, and we would not have arrived on time if the traffic had been lighter."
+   ],
+   "answerIndex": 0,
+   "explanation": "The answer keeps the clear-road statement in the indicative mood and the unreal traffic condition in the subjunctive mood.",
+   "difficulty": 6,
+   "skill": "Distinguish indicative and subjunctive moods",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Analyze the voice and mood of this combined sentence: The sample was tested by the technician, and she would repeat the test if the results were unclear.",
+   "choices": [
+    "The first clause is active, while the second uses the subjunctive for a hypothetical condition.",
+    "The first clause is passive, while the second uses the subjunctive for a hypothetical condition.",
+    "The first clause is passive, while the second uses the indicative for a hypothetical condition.",
+    "Both clauses are passive, while the second uses the subjunctive for a hypothetical condition."
+   ],
+   "answerIndex": 1,
+   "explanation": "The first clause uses passive voice, and the second uses the subjunctive to present the condition for repeating the test.",
+   "difficulty": 6,
+   "skill": "Identify voice and mood",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which merger makes the hikers and ranger the active agents in both clauses? The hikers followed the marked trail. A ranger guided them across the river.",
+   "choices": [
+    "The marked trail was followed by the hikers, and a ranger guided them across the river.",
+    "The hikers followed the marked trail, and they were guided across the river by a ranger.",
+    "The hikers followed the marked trail, and a ranger guided them across the river.",
+    "The marked trail was followed by the hikers, and they were guided across the river by a ranger."
+   ],
+   "answerIndex": 2,
+   "explanation": "The answer places the hikers and the ranger in the subject positions and uses active voice in both clauses.",
+   "difficulty": 4,
+   "skill": "Combine sentences with consistent active voice",
+   "topic": "Activity 3 of 9 (quiz/game): Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The technician repaired the radio. The customer returned it last week. Which option recasts both actions in passive voice without changing either fact?",
+   "choices": [
+    "The technician repaired the radio, and the customer returned it last week.",
+    "The radio was repaired by the technician, and the customer returned it last week.",
+    "The radio was repaired by the technician and was returned by the customer last week.",
+    "The radio had been repaired by the technician when the customer returned it last week."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option makes both actions passive with was repaired and was returned, and it identifies the actors in by-phrases.",
+   "difficulty": 4,
+   "skill": "Using passive voice consistently",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "After the storm, the crew cleared the road. Residents helped nearby. Which option leaves both performers as the subjects of their actions in one sentence?",
+   "choices": [
+    "After the storm, the road was cleared by the crew, and residents helped nearby.",
+    "After the storm, the road was cleared by the crew, and help was given by residents nearby.",
+    "After the storm, the crew cleared the road, and nearby was helped by residents.",
+    "After the storm, the crew cleared the road, and residents helped nearby."
+   ],
+   "answerIndex": 3,
+   "explanation": "This option keeps both clauses active because the crew and the residents are the subjects performing clear actions.",
+   "difficulty": 4,
+   "skill": "Using active voice consistently",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The librarian said, Return the books by Thursday. The student returned the books on Wednesday. Which option reports the directive and the response in one sentence while keeping the directive authoritative?",
+   "choices": [
+    "The librarian reminded the student to return the books by Thursday, and the student returned the books on Wednesday.",
+    "The librarian told the student to return the books by Thursday, and the student returned the books on Wednesday.",
+    "The librarian asked the student to return the books by Thursday, and the student returned the books on Wednesday.",
+    "The librarian told the student not to return the books by Thursday, and the student returned the books on Wednesday."
+   ],
+   "answerIndex": 1,
+   "explanation": "Telling someone to return the books reports the original directive without weakening it, and the second clause preserves the student's action.",
+   "difficulty": 5,
+   "skill": "Reporting commands without changing their force",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "If I were the editor, I would use shorter sentences. The draft contains long paragraphs. Which option joins the hypothetical editing choice to the reason for it without changing the conditional mood?",
+   "choices": [
+    "If I was the editor, I would use shorter sentences because the draft contains long paragraphs.",
+    "If I were the editor, I used shorter sentences because the draft contains long paragraphs.",
+    "If I were the editor, I would use longer sentences because the draft contains long paragraphs.",
+    "If I were the editor, I would use shorter sentences because the draft contains long paragraphs."
+   ],
+   "answerIndex": 3,
+   "explanation": "The option keeps the subjunctive pairing of were and would, and the because-clause retains the draft's long paragraphs as the stated reason.",
+   "difficulty": 6,
+   "skill": "Preserving the subjunctive in a combined sentence",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The bridge was cleared by workers. If the river were lower, we could cross safely. Which option preserves the original passive voice for clearing the bridge and the hypothetical mood for the river level?",
+   "choices": [
+    "The bridge was cleared by workers, and if the river were lower, we could cross safely.",
+    "The workers cleared the bridge, and if the river were lower, we could cross safely.",
+    "The bridge was cleared by workers, and if the river was lower, we could cross safely.",
+    "The bridge was cleared by workers, and if the river were lower, we could crossed safely."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option makes the first clause passive and uses were with the conditional so that the second clause remains subjunctive.",
+   "difficulty": 6,
+   "skill": "Combining passive and subjunctive clauses",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The package was weighed at the counter, and then the clerk sent it. Which one-sentence explanation correctly analyzes the two clauses?",
+   "choices": [
+    "Both clauses are active because the package and the clerk are both named as subjects.",
+    "Both clauses are passive because each action is presented as an event without a clear performer.",
+    "The package is acted upon in the first clause, making it passive, while the clerk performs the sending action in the active second clause.",
+    "The first clause is active because the package is the subject, and the second clause is passive because the clerk is the subject."
+   ],
+   "answerIndex": 2,
+   "explanation": "The package is acted upon in the first clause, making it passive, while the clerk performs the sending action in the active second clause.",
+   "difficulty": 5,
+   "skill": "Explaining shifts between active and passive voice",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the two sentences into one sentence using passive voice consistently and preserving the original facts and past tense: The nurse checked the patient's blood pressure. The doctor recorded the result.",
+   "choices": [
+    "The nurse checked the patient's blood pressure, and the doctor recorded the result.",
+    "The patient's blood pressure was checked by the nurse, and the result was recorded by the doctor.",
+    "The patient's blood pressure was checked by the nurse, and the result was checked by the doctor.",
+    "The patient's blood pressure is checked by the nurse, and the result is recorded by the doctor."
+   ],
+   "answerIndex": 1,
+   "explanation": "The answer uses passive voice for both past-tense actions and correctly identifies the nurse and doctor as the agents of their respective actions.",
+   "difficulty": 5,
+   "skill": "Combining sentences with consistent passive voice",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences while preserving the force of the command and both facts: The archivist said, 'Box the fragile manuscripts.' The staff boxed the manuscripts.",
+   "choices": [
+    "The archivist told the staff to box the fragile manuscripts, and the staff boxed the manuscripts.",
+    "The archivist said that the staff should box the fragile manuscripts, and the staff boxed the manuscripts.",
+    "The archivist asked the staff whether they would box the fragile manuscripts, and the staff boxed the manuscripts.",
+    "The archivist told the staff that they boxed the fragile manuscripts, and they boxed the manuscripts."
+   ],
+   "answerIndex": 0,
+   "explanation": "The to-infinitive clause preserves the command as a command while the second clause reports that the staff carried it out.",
+   "difficulty": 6,
+   "skill": "Converting commands into to-infinitive clauses",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences into one sentence that preserves the contrast and uses the subjunctive mood: The buses are running. If the roads were flooded, we would delay the journey.",
+   "choices": [
+    "Because the buses are running, we would delay the journey if the roads were flooded.",
+    "The buses are running, but if the roads are flooded, we would delay the journey.",
+    "If the roads were flooded, the buses are running, and we would delay the journey.",
+    "Although the buses are running, we would delay the journey if the roads were flooded."
+   ],
+   "answerIndex": 3,
+   "explanation": "Although contrasts the present situation with the hypothetical delay, and were correctly marks the subjunctive condition.",
+   "difficulty": 6,
+   "skill": "Combining contrast with subjunctive mood",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation best describes why this combined sentence is grammatically and logically sound? The evidence was examined by the team; if it had been clearer, the conclusion might have differed.",
+   "choices": [
+    "It uses active voice for the completed examination and an indicative conditional to state a confirmed alternative.",
+    "It uses passive voice for the completed examination and a past subjunctive conditional to express the hypothetical alternative.",
+    "It uses passive voice for the hypothetical examination and a subjunctive conditional to express a completed fact.",
+    "It uses active voice for the completed examination and a subjunctive conditional to connect two confirmed events."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence uses passive voice for the completed examination and a past subjunctive conditional to present the clearer evidence as a hypothetical situation.",
+   "difficulty": 7,
+   "skill": "Analyzing voice and mood in combined sentences",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The electrician rewired the panel. The inspector tested it afterward. Which option makes the first action passive and keeps the second action active?",
+   "choices": [
+    "The panel was rewired by the electrician, and the inspector tested it afterward.",
+    "The electrician rewired the panel, and the inspector tested it afterward.",
+    "The panel was rewired by the electrician, and it was tested by the inspector afterward.",
+    "The panel was rewired by the electrician, and the inspector had tested it afterward."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence makes the panel the subject of the first passive clause and keeps the inspector as the active subject of the second clause.",
+   "difficulty": 5,
+   "skill": "Recasting the first action in passive voice",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The venue seats 300. If it were larger, we could host the whole district. Which sentence begins with Although, preserves the present-tense fact, and keeps the hypothetical condition in the subjunctive mood?",
+   "choices": [
+    "Although the venue seats 300, we could host the whole district if it were larger.",
+    "Although the venue seats 300, we would have hosted the whole district if it were larger.",
+    "Although the venue was seating 300, we could host the whole district if it were larger.",
+    "Although the venue seats 300, we could have hosted the whole district if it were larger."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option preserves the present-tense statement about the venue and uses were in the subjunctive clause to express the hypothetical condition.",
+   "difficulty": 6,
+   "skill": "Combining indicative and subjunctive clauses",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The song was recorded by the band. The band won a music award. Which option combines the sentences with a relative clause, keeping the recording passive and the award result active?",
+   "choices": [
+    "The song was recorded by the band, which won a music award.",
+    "The song was recorded, and the band won a music award.",
+    "The song was recorded by the band, and a music award was won.",
+    "The band recorded the song, which won a music award."
+   ],
+   "answerIndex": 0,
+   "explanation": "The relative clause which won a music award refers to the band, so the first clause remains passive while the band's action stays active.",
+   "difficulty": 6,
+   "skill": "Using a relative clause to preserve a voice shift",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The storm caused delays. If the crew had left earlier, they would have finished on time. Which option combines the sentences while preserving the contrast and the past-tense counterfactual condition?",
+   "choices": [
+    "The storm caused delays, but the crew would have finished on time if they had left earlier.",
+    "The storm caused delays, but the crew would finish on time if they had left earlier.",
+    "The storm caused delays, but the crew would have finished on time if they left earlier.",
+    "The storm caused delays, and the crew would have finished on time if they had left earlier."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option uses but to preserve the contrast and pairs would have finished with the past counterfactual condition if they had left earlier.",
+   "difficulty": 7,
+   "skill": "Preserving counterfactual conditionals",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which explanation correctly analyzes this sentence: The letters were sorted by the volunteers, and they will be delivered tomorrow.",
+   "choices": [
+    "The first clause is active, and the second clause is passive with a future indicative verb.",
+    "The first clause is passive, and the second clause is active with a future indicative verb.",
+    "The first clause is passive, and the second clause is also passive with a future indicative verb.",
+    "The first clause is passive, and the second clause is passive with a subjunctive verb."
+   ],
+   "answerIndex": 2,
+   "explanation": "Both clauses use passive voice because the letters receive the actions, and will be delivered expresses future indicative mood.",
+   "difficulty": 5,
+   "skill": "Analyzing voice and mood in combined clauses",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The veterinarian examined the kitten. The owner gave the kitten medicine. Which option combines both actions in active voice without changing either fact?",
+   "choices": [
+    "The veterinarian examined the kitten, and the owner gave the kitten medicine.",
+    "The kitten was examined by the veterinarian, and the owner gave it medicine.",
+    "The veterinarian examined the kitten, while the kitten was given medicine by the owner.",
+    "The veterinarian told the owner to examine the kitten, and the kitten was given medicine."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence keeps both performers as subjects, so both clauses remain in active voice while preserving the original actions.",
+   "difficulty": 4,
+   "skill": "Combining sentences in active voice",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The technician calibrated the microscope. The school purchased the microscope. Which option combines both actions in passive voice and keeps the original simple past tense?",
+   "choices": [
+    "The technician calibrated the microscope, and the school purchased it.",
+    "The microscope was calibrated by the technician, and it was purchased by the school.",
+    "The microscope was calibrated by the technician, and the school purchased it.",
+    "The microscope was calibrated by the technician, and the school is purchasing it."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence makes both the microscope the subject of passive clauses and retains the simple past tense for both actions.",
+   "difficulty": 5,
+   "skill": "Combining sentences in passive voice",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The coordinator said to the student, 'Submit the application online.' The student submitted it on Sunday. Which option reports the command and the action while preserving both meanings?",
+   "choices": [
+    "The coordinator asked the student whether to submit the application online, and the student submitted it on Sunday.",
+    "The coordinator suggested that the student submit the application online, and the student submitted it on Sunday.",
+    "The coordinator told the student to submit the application online, and the student submitted it on Sunday.",
+    "The coordinator told the student to submit the application online, and the student did not submit it on Sunday."
+   ],
+   "answerIndex": 2,
+   "explanation": "This sentence accurately converts the command into a to-infinitive clause and preserves the student's action and its timing.",
+   "difficulty": 5,
+   "skill": "Combining a command with its reported action",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The museum is open on Sundays. If the crowds were smaller, we would stay longer. Which option combines the sentences while preserving the contrast and the subjunctive mood?",
+   "choices": [
+    "Because the museum is open on Sundays, we would stay longer if the crowds were smaller.",
+    "Although the museum is open on Sundays, we would stay longer if the crowds were smaller.",
+    "Although the museum is open on Sundays, we would stay longer if the crowds are smaller.",
+    "Although the museum is open on Sundays, we stay longer if the crowds were smaller."
+   ],
+   "answerIndex": 1,
+   "explanation": "This sentence preserves the contrast with although and retains the subjunctive forms were and would in the hypothetical condition.",
+   "difficulty": 6,
+   "skill": "Combining a contrast with a subjunctive condition",
+   "topic": "Combine Two Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Combine the sentences while keeping the subjunctive mood for a contrary‑to‑fact wish: \"She wishes she were taller. She cannot reach the top shelf.\"",
+   "choices": [
+    "She wishes she were taller so she could reach the top shelf.",
+    "She wishes she was taller so she could reach the top shelf.",
+    "She wishes she were taller, but she cannot reach the top shelf.",
+    "She wishes she were taller; therefore she can reach the top shelf."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A maintains the subjunctive \"were\" and pairs it with the conditional \"could\" to show the unreal result.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which sentence reports the librarian's directive and the student's response while keeping today's deadline? The librarian said, Return the books today. The student returned the books.",
+   "choices": [
+    "The librarian asked the student whether to return the books today, and the student did so.",
+    "The librarian told the student to return the books eventually, and the student did so.",
+    "The librarian reminded the student that the books were due, and the student returned them.",
+    "The librarian told the student to return the books today, and the student did so."
+   ],
+   "answerIndex": 3,
+   "explanation": "It reports the original command with a to-infinitive and retains the requirement that the books be returned that day.",
+   "reason": "explanation-key: the explanation describes option 3 (score 1.00) more than the keyed option 4 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The director said, 'Call the client now.' The assistant called the client immediately. Which option combines the sentences while preserving the force of the command?",
+   "choices": [
+    "The director told the assistant to call the client, and the assistant called the client immediately.",
+    "The director ordered the assistant to call the client, and the assistant called the client immediately.",
+    "The director told the assistant that the client should be called, and the assistant called the client immediately.",
+    "The director asked the assistant if the client could be called, and the assistant called the client immediately."
+   ],
+   "answerIndex": 0,
+   "explanation": "Reporting the command with told ... to ... preserves the director's request, and the second clause keeps the assistant's action and its timing unchanged.",
+   "reason": "A: picked 1 not 0 | B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A sign at the museum said, 'Do not touch the exhibit.' A visitor left a fingerprint on the glass. Which option preserves the prohibition and clearly expresses the contrast?",
+   "choices": [
+    "The sign warned visitors not to touch the exhibit, but a visitor left a fingerprint on the glass.",
+    "The sign warned visitors that they should not touch the exhibit, but a visitor left a fingerprint on the glass.",
+    "The sign asked visitors not to touch the exhibit, but a visitor left a fingerprint on the glass.",
+    "The sign forbade visitors to touch the exhibit, but a visitor left a fingerprint on the glass."
+   ],
+   "answerIndex": 0,
+   "explanation": "Warned visitors not to preserves the directive's prohibitive force, and but clearly signals the contrast with the visitor's fingerprint.",
+   "reason": "A: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the sentences while keeping the subjunctive mood for a contrary‑to‑fact wish: \"She wishes she were taller. She cannot reach the top shelf.\"",
+   "choices": [
+    "She wishes she were taller so she could reach the top shelf.",
+    "She wishes she was taller so she could reach the top shelf.",
+    "She wishes she were taller, but she cannot reach the top shelf.",
+    "She wishes she was taller, but she cannot reach the top shelf."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option retains the subjunctive \"were\" and links the wish to the result with a purpose clause.",
+   "reason": "A: not exactly one correct | B: picked 2 not 0 (Option 2 preserves both the contrary-to-fact subjunctive wish and the original meaning of the second sentence.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the sentences preserving passive voice for the first clause and subjunctive mood for the second: \"The document must be signed by the manager. If the manager were here, he would sign it.\"",
+   "choices": [
+    "The document must be signed by the manager, who would sign it if he were here.",
+    "The document must be signed by the manager, who would sign it if he was here.",
+    "The manager must sign the document, who would sign it if he were here.",
+    "The document must be signed by the manager, and he would sign it if he was here."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option keeps the first clause passive and uses the subjunctive \"were\" in the relative clause.",
+   "reason": "B: not exactly one correct (Both options 0 and 3 preserve passive voice in the first clause and the subjunctive conditional in the second, so there is no unique answer.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the command and the action into one sentence without changing the force of the command: \"The officer said, 'Stop the vehicle.' The driver stopped the vehicle immediately.\"",
+   "choices": [
+    "The officer ordered the driver to stop the vehicle, and the driver stopped it immediately.",
+    "The officer told the driver to stop the vehicle, and the driver had stopped it immediately.",
+    "The officer said to stop the vehicle, and the driver stopped it immediately.",
+    "The officer ordered that the driver stop the vehicle, and the driver stopped it immediately."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A converts the direct command into an infinitive clause after \"ordered\" and keeps both verbs in the simple past.",
+   "reason": "B: not exactly one correct (Options 0 and 3 both preserve the command's force and combine it accurately with the driver's action.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the two sentences using passive voice consistently: \"The city council approved the budget. The budget was published yesterday.\"",
+   "choices": [
+    "The budget was approved by the city council and was published yesterday.",
+    "The city council approved the budget, and it was published yesterday.",
+    "The budget approved by the city council was published yesterday.",
+    "The budget was approved by the city council, and the city council published it yesterday."
+   ],
+   "answerIndex": 0,
+   "explanation": "Option A makes both verbs passive (\"was approved\", \"was published\") preserving consistent voice.",
+   "reason": "B: not exactly one correct (Options 0 and 2 both combine the sentences using passive constructions consistently; option 2 is a valid reduced relative clause.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the sentences preserving the shift from indicative to subjunctive mood: \"The data indicate a rising trend. If the trend continued, the model would predict growth.\"",
+   "choices": [
+    "The data indicate a rising trend, and the model would predict growth if the trend continued.",
+    "The data indicate a rising trend; if the trend continued, the model would predict growth.",
+    "The data indicate a rising trend, so the model would predict growth if the trend continues.",
+    "The data indicate a rising trend, but the model would predict growth if the trend had continued."
+   ],
+   "answerIndex": 1,
+   "explanation": "Option B retains the indicative statement and follows with a subordinate conditional clause using the subjunctive \"continued.\"",
+   "reason": "A: picked 0 not 1 (Two defensible options: 0 and 1) | B: picked 0 not 1 (Options 0 and 1 both preserve the indicative-to-subjunctive mood shift accurately.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the command and the action into one sentence while preserving the command’s force and both facts: The supervisor said, 'Submit the attendance report by noon.' The aide submitted the attendance report.",
+   "choices": [
+    "The supervisor asked the aide to submit the attendance report by noon, and the aide submitted it.",
+    "The supervisor told the aide to submit the attendance report by noon, and the aide did not submit it.",
+    "The supervisor told the aide to submit the attendance report by noon, and the aide submitted it.",
+    "The supervisor said that the aide would submit the attendance report by noon, and the aide submitted it."
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct option uses a to-infinitive clause to report the command and retains the fact that the aide did submit the report.",
+   "reason": "A: not exactly one correct (None of the options fully preserves the command’s force and the factual outcome as stated in the prompt.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "The teacher said, 'Open your notebooks.' The students opened their notebooks. Which option combines the command and action into one sentence without changing the force of the command?",
+   "choices": [
+    "The teacher told the students to open their notebooks, and the students opened them.",
+    "The teacher told the students opening their notebooks, and the students opened them.",
+    "The teacher told the students to opening their notebooks, and the students opened them.",
+    "The teacher told the students to open their notebooks, and the students have opened them."
+   ],
+   "answerIndex": 0,
+   "explanation": "The to-infinitive clause reports the command faithfully, and the second clause preserves the original past-tense action.",
+   "reason": "source: \"Reported clauses of commands use 'told someone to...' followed by an infinitive.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "If the alarm had sounded, we would have evacuated. No alarm sounded. Which option combines the sentences while preserving the past subjunctive mood and both facts?",
+   "choices": [
+    "If the alarm had sounded, we would have evacuated, but no alarm sounded.",
+    "If the alarm had sound, we would have evacuated, but no alarm sounded.",
+    "If the alarm had sounded, we would evacuate, but no alarm sounded.",
+    "If the alarm would have sounded, we would have evacuated, but no alarm sounded."
+   ],
+   "answerIndex": 0,
+   "explanation": "The past perfect had sounded and the conditional would have evacuated correctly form the past subjunctive mood.",
+   "reason": "source: \"The past perfect subjunctive uses 'had' + past participle in the if-clause.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which explanation best describes the voice of this sentence: The librarian selected the books, and they were catalogued by the assistant?",
+   "choices": [
+    "It uses active voice in the first clause and passive voice in the second, and both agents are identified.",
+    "It uses passive voice in the first clause and active voice in the second, and both agents are identified.",
+    "It uses passive voice in both clauses, and both agents are identified.",
+    "It uses subjunctive mood in the first clause and indicative mood in the second, and both agents are identified."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first clause makes the librarian the subject, while the second uses the assistant in a by-phrase.",
+   "reason": "source: \"Active voice has a subject performing the action; passive uses 'was' + past participle.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The grant application must be submitted by Monday. If the committee approved it, the project could begin in May. Which option combines the sentences while preserving the obligation and the simple past subjunctive condition?",
+   "choices": [
+    "The grant application must be submitted by Monday, and if the committee approved it, the project could begin in May.",
+    "The grant application must be submitting by Monday, and if the committee approves it, the project could begin in May.",
+    "The grant application is submitted by Monday, and if the committee approved it, the project could begin in May.",
+    "The grant application must be submitted by Monday, and if the committee had approved it, the project could begin in May."
+   ],
+   "answerIndex": 0,
+   "explanation": "Must be submitted preserves the obligation, and approved in the if-clause preserves the simple past subjunctive condition.",
+   "reason": "B: picked 3 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "The parcel was dropped by the courier. It reached the office before noon. Which option combines the sentences while keeping the first action passive and making the second action active?",
+   "choices": [
+    "The parcel was dropped by the courier, and it reached the office before noon.",
+    "The parcel dropped by the courier, and it reached the office before noon.",
+    "The parcel was dropped by the courier, and it was reached the office before noon.",
+    "The parcel was dropped by the courier, and it reached the office by noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first clause uses passive voice with the courier in a by-phrase, while the second uses the parcel as the active subject.",
+   "reason": "source: \"Passive construction uses 'was' + past participle; active uses simple past tense.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the two sentences into one sentence that uses passive voice consistently: 'The committee reviewed the proposal. The proposal was rejected.'",
+   "choices": [
+    "The proposal was reviewed by the committee and was rejected.",
+    "The committee reviewed the proposal, and it was rejected.",
+    "The proposal was reviewed by the committee, and the committee rejected it.",
+    "The proposal is reviewed by the committee and is rejected."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct sentence keeps both actions in passive voice, using 'was reviewed' and 'was rejected'.",
+   "reason": "B: not exactly one correct (Option 0 correctly uses passive voice consistently and preserves the original past tense, but option 3 also uses passive voice consistently,)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "The director said, Submit the revised budget. The analyst submitted it on Friday. Which option reports the command and response in one sentence while preserving the command's force and both facts?",
+   "choices": [
+    "The director told the analyst to submit the revised budget, and the analyst submitted it on Friday.",
+    "The director ordered the analyst to submit the revised budget, and the analyst submitted it on Friday.",
+    "The director asked the analyst to submit the revised budget, and the analyst submitted it on Friday.",
+    "The director told the analyst that she should submit the revised budget, and the analyst submitted it on Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "Told the analyst to submit converts the command into a to-infinitive clause without making it stronger or weaker than the original directive.",
+   "reason": "A: picked 1 not 0"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Which one-sentence explanation best analyzes this combined sentence: The letters were sorted by the clerk, and she would file them if the labels were missing?",
+   "choices": [
+    "The first clause is active because the clerk performs the sorting, while the second is conditional because it contains would.",
+    "Both clauses are passive because the letters and the labels are the subjects of their respective actions.",
+    "The first clause is passive, but the second is indicative because it describes an action that will actually happen.",
+    "The first clause is passive because the letters receive the action, while the second uses the subjunctive were and would to express a hypothetical filing action."
+   ],
+   "answerIndex": 3,
+   "explanation": "The explanation correctly identifies the passive first clause and the subjunctive forms were and would in the hypothetical second clause.",
+   "reason": "surplus"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A nurse triaged the patient. The doctor called the family. Which option changes only the first action to passive voice while preserving both actions and their agents?",
+   "choices": [
+    "A nurse triaged the patient, and the doctor called the family.",
+    "The patient was triaged, and the doctor called the family.",
+    "The nurse triaged the patient, and the family was called by the doctor.",
+    "The patient was triaged by a nurse, and the doctor called the family."
+   ],
+   "answerIndex": 3,
+   "explanation": "This sentence makes the first action passive while keeping both the nurse and the doctor as the agents of their respective actions.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

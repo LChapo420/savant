@@ -1,0 +1,111 @@
+{
+ "doc": "Proposed edits to the live curricula's source lists (curriculum-build/<subject>/drafts/*.txt, from which data/*.csv and content/*-grades.js are built). STAGED: nothing here is applied. verify-skill-curricula.js applies them to a scratch copy, runs each subject's own validate.js on the result and checks the facts by code; two free judges review the final lines. To apply after approval: edit the drafts, rebuild with the subject's build.js, copy the CSV to data/, run npm run build:<subject> and the subject's items test.",
+ "changes": [
+  {
+   "id": "bb-aim-B03",
+   "subject": "basketball",
+   "draft": "B03",
+   "action": "edit_description",
+   "title": "One-Hand Form Shots From One Metre",
+   "from": "Make one-hand shots from one metre, swishing them over the front rim, as the first five minutes of every session.",
+   "to": "Make one-hand shots from one metre, dropping them past the front rim into the middle of the ring, as each session's first five minutes.",
+   "why": "The aim cue said 'over the front rim'. Simulation of optimal free throws recommends aiming toward the back of the ring (Tran and Silverberg 2008, J Sports Sci 26(11)); a ball skimming the front rim is the commonest short miss. The cue stays external, as the external-focus evidence requires.",
+   "evidence": [
+    "tran2008",
+    "chua2021"
+   ],
+   "priority": "medium"
+  },
+  {
+   "id": "bb-aim-B07",
+   "subject": "basketball",
+   "draft": "B07",
+   "action": "edit_description",
+   "title": "External Focus Cues: Aim at the Target",
+   "from": "Use a cue outside your body, such as swish over the front rim, instead of thinking about your elbow, and compare makes over fifty shots.",
+   "to": "Use a cue outside your body, such as drop it past the middle, instead of thinking about your elbow, and compare makes over fifty shots.",
+   "why": "Same aim correction as bb-aim-B03 (tran2008); the external-focus point of the lesson is unchanged.",
+   "evidence": [
+    "tran2008",
+    "chua2021"
+   ],
+   "priority": "medium"
+  },
+  {
+   "id": "bb-semicircle-B06",
+   "subject": "basketball",
+   "draft": "B06",
+   "action": "edit_description",
+   "title": "FIBA Versus NBA: Semicircle, Backboard and Defensive Three Seconds",
+   "from": "Compare the 1.25 metre FIBA and 4 foot NBA semicircles, balls passing over the backboard, and NBA defensive three seconds as of 2026.",
+   "to": "Compare FIBA's 1.30-metre no-charge semicircle with the NBA's 4-foot arc, balls passing over the backboard, and NBA defensive three seconds as of 2026.",
+   "why": "FIBA Official Basketball Rules 2026 v1.0, 2.5.7: radius 1.30 m measured to the OUTER edge (the older '1.25 m' was to the inner edge of the 5 cm line). Checked by code against the rulebook text (fact fiba-no-charge).",
+   "evidence": [
+    "fiba2026"
+   ],
+   "priority": "low (the old figure was right for its measuring convention; the new one matches the current text)"
+  },
+  {
+   "id": "bb-sample-B04",
+   "subject": "basketball",
+   "draft": "B04",
+   "action": "insert_after",
+   "anchor": "Box Score and Shooting Percentages From Your Games",
+   "line": "[Analytics] Log Fifty Shots Before Judging a Change | Log fifty attempts over several days before deciding a change worked, because 7 of 10 and 5 of 10 can come from one shooter.",
+   "drafted_by": "z-ai/glm-5.3-flash (free); description tightened in review",
+   "why": "Learners (and the app's own gates) must not read meaning into ten shots. Computed: Wilson 95% intervals 7/10 = 0.40-0.89 and 5/10 = 0.24-0.76 overlap; a 60% shooter makes 7 of 10 about 21% of the time and 5 of 10 about 20%. Supports the honest combine gates and the 'own baseline' rule.",
+   "evidence": [
+    "binomial (L)"
+   ],
+   "priority": "medium"
+  },
+  {
+   "id": "bb-cold-B05",
+   "subject": "basketball",
+   "draft": "B05",
+   "action": "insert_after",
+   "anchor": "Short Daily Sessions Beat One Long Cram",
+   "line": "[Practice] Judge Shooting by the Next-Day Cold Set | Take ten elbow jump shots the next day before shooting from the elbow again, because a block of the same shot inflates today's percentage.",
+   "drafted_by": "z-ai/glm-5.3-flash (free); 'why' clause added in review",
+   "why": "Contextual interference: blocked practice scores best during practice, varied practice retains and transfers better (Shamshiri et al. 2025 in novices' jump shots; increasing-schedule RCT). The app's gates already use the day-2 cold set; this lesson tells the learner why.",
+   "evidence": [
+    "shamshiri2025",
+    "increasing_ci"
+   ],
+   "priority": "medium"
+  },
+  {
+   "id": "pi-interleave-P05",
+   "subject": "piano",
+   "draft": "P05",
+   "action": "insert_after",
+   "anchor": "Shape One Practice Session From Warm-Up to Review",
+   "line": "[Practice] Shuffle Short Units Once Each Plays Correctly | Shuffle your G, D, F and A major scales once each plays correctly, because mixed practice feels harder but your next-day cold take improves.",
+   "drafted_by": "z-ai/glm-5.3-flash (free); 'why' clause added in review",
+   "why": "Learners' own judgement of learning points the wrong way: random-order melody practice retained better at two days while learners predicted the reverse (Abushanab and Bishara 2013); benefit holds for short units once learned (Verwey et al. 2021). The live path only teaches interleaving explicitly at P09 ('Interleaving and Spacing Pieces Across the Week'), though [Mixed] rounds already interleave from P04.",
+   "evidence": [
+    "abushanab2013",
+    "verwey2021"
+   ],
+   "priority": "medium"
+  },
+  {
+   "id": "pi-minor-order-P04",
+   "subject": "piano",
+   "draft": "P04",
+   "action": "swap",
+   "a": "A and D Natural Minor Scales",
+   "b": "Minor Keys Sharing Major Signatures",
+   "why": "Skill-graph check: the relative-minor key-signature lesson (concept) comes one line after the A and D natural minor scales (procedure); D natural minor's B-flat is explained by sharing F major's signature. Ordering rule 1 (concept, then procedure). Low impact either way.",
+   "evidence": [
+    "ordering rule 1, INSTRUCTIONS.md"
+   ],
+   "priority": "low, optional"
+  }
+ ],
+ "not_changed": [
+  "Chess: the 54 prerequisite edges checked over 62 concept nodes all hold in the live order (after removing one edge that was not a true prerequisite: grabbing an unprotected piece needs no piece values). The chess gaps are in measurement and practice design, not in lesson order, so they are staged as progression gates and drills, not as lesson edits.",
+  "Basketball: all 25 prerequisite edges over 36 nodes hold; the head-knock and pain rules are already in B01-B03.",
+  "Piano: 35 of 36 edges hold; the one exception is the optional swap above."
+ ]
+}

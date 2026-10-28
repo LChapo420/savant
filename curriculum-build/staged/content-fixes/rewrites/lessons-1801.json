@@ -1,0 +1,52 @@
+{
+ "collection": "lessons",
+ "row_id": 1801,
+ "shared": false,
+ "user_id": 2500,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P49",
+   "wrong": "\"More than\" keeps the order the same, so 5 more than a number is x + 5.",
+   "correct": "\"5 more than a number\" names 5 first but is written x + 5, so \"more than\" does not keep the word order (5 + x is also right because addition commutes; with \"less than\" the order matters)."
+  }
+ ],
+ "edits": [
+  {
+   "path": "sections[0].body",
+   "before": "Rule: \"sum\" and \"more than\" mean add, and \"less than\" means subtract with the words in reverse order. \"More than\" keeps the order the same, so 5 more than a number is x + 5. \"Less than\" flips it, so 3 less than a number is x - 3, never 3 - x.",
+   "after": "Rule: \"sum\" and \"more than\" mean add, and \"less than\" means subtract with the words in reverse order. With \"more than\" either order is right, because addition can be done in either order: 5 more than a number is x + 5 or 5 + x. \"Less than\" flips it, so 3 less than a number is x - 3, never 3 - x."
+  }
+ ],
+ "diff": [
+  {
+   "path": "sections[0].body",
+   "before": "Rule: \"sum\" and \"more than\" mean add, and \"less than\" means subtract with the words in reverse order. \"More than\" keeps the order the same, so 5 more than a number is x + 5. \"Less than\" flips it, so 3 less than a number is x - 3, never 3 - x.",
+   "after": "Rule: \"sum\" and \"more than\" mean add, and \"less than\" means subtract with the words in reverse order. With \"more than\" either order is right, because addition can be done in either order: 5 more than a number is x + 5 or 5 + x. \"Less than\" flips it, so 3 less than a number is x - 3, never 3 - x."
+  }
+ ],
+ "judge_a": {
+  "index": 2,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 2,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "judge B saw a cut-off excerpt (\"than' mean add\") and called it a grammar error; reworded and judged on the full text",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

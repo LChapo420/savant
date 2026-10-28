@@ -1,0 +1,63 @@
+{
+  "engineId": "hangman",
+  "displayName": "Hangman",
+  "difficulty": "very-high",
+  "mechanic": "Normal hangman letter guessing. A correct curriculum question unlocks exactly one unused letter guess; wrong question answers retry with no letter penalty. Incorrect letters add a gallows part; six letter misses lose. Solve two words. The hidden word is supplied by the question content, not game code.",
+  "questionType": "multiple_choice",
+  "questionCount": 50,
+  "questionCountNote": "50 unique questions per level. A round only ever moves forward through them: losing, answering wrong, or pressing Play again continues at the next unseen question, so the pool must outlast many rounds.",
+  "choicesPerQuestion": 4,
+  "answerIndexRange": [
+    0,
+    3
+  ],
+  "difficultyScale": {
+    "start": 8,
+    "end": 10,
+    "curve": "flat",
+    "label": "very-high"
+  },
+  "requiresExplanation": true,
+  "requiresTopicTag": true,
+  "plainTextOnly": true,
+  "distractorRules": "Wrong options must be single words of the same kind as the hidden word — same part of speech, similar length and letter count, same difficulty. No option may be identifiable by its shape or position; each must be a word a learner at this level could plausibly mistake for the answer.",
+  "payloadShape": {
+    "schemaVersion": 1,
+    "meta": [
+      "subject",
+      "grade",
+      "level",
+      "topic",
+      "title",
+      "ageRange"
+    ],
+    "settings": {
+      "questionCount": 50,
+      "choicesPerTurn": 4,
+      "difficulty": {
+        "start": 8,
+        "end": 10,
+        "curve": "flat"
+      },
+      "timeLimitSec": null
+    },
+    "questions": [
+      "id",
+      "prompt",
+      "choices[4]",
+      "answerIndex",
+      "explanation",
+      "difficulty",
+      "skill",
+      "topic"
+    ],
+    "feedback": [
+      "correct",
+      "incorrect",
+      "win",
+      "lose",
+      "draw",
+      "outOfQuestions"
+    ]
+  }
+}

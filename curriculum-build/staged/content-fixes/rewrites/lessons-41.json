@@ -1,0 +1,189 @@
+{
+ "collection": "lessons",
+ "row_id": 41,
+ "shared": false,
+ "user_id": 108,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 0,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P6",
+   "wrong": "In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = 17 written as 2x + 5 = 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "correct": "Subtracting x from only the left of 3x + 5 = x + 17 gives 2x + 5 = x + 17; the bullet garbles this (\"gives 2x + 5 = 17 written as 2x + 5 = 17 while the right still has x\").",
+   "action": "rewrite_text"
+  },
+  {
+   "ref": "Q3",
+   "wrong": "Key: \"Subtract x from both sides\"",
+   "correct": "Both \"Subtract x from both sides\" and \"Subtract 3 from both sides\" are valid first steps; there is no rule that x terms must be collected first.",
+   "action": "rewrite"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Subtracting the x term from one side only. In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = 17 written as 2x + 5 = 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "replace": "Subtracting the x term from one side only. In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = x + 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "fixes": [
+    "P6"
+   ]
+  },
+  {
+   "find": "In 4x + 3 = x + 15, what should you do first?",
+   "replace": "In 4x + 3 = x + 15, which first step leaves x on only one side?",
+   "fixes": [
+    "Q3"
+   ]
+  },
+  {
+   "find": "The x terms are on both sides, so the rule says collect them first by subtracting the smaller x term, x, from both sides. Only after that do you clear the constant.",
+   "replace": "Subtracting x from both sides gives 3x + 3 = 15, so x is on only one side. Subtracting 3 from both sides gives 4x = x + 12, which still has x on both sides.",
+   "fixes": [
+    "Q3"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Subtracting the x term from one side only. In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = 17 written as 2x + 5 = 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "after": "Subtracting the x term from one side only. In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = x + 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "fixes": [
+    "P6"
+   ]
+  },
+  {
+   "path": "check_questions[0].prompt",
+   "before": "In 4x + 3 = x + 15, what should you do first?",
+   "after": "In 4x + 3 = x + 15, which first step leaves x on only one side?",
+   "fixes": [
+    "Q3"
+   ]
+  },
+  {
+   "path": "check_questions[0].rationale",
+   "before": "The x terms are on both sides, so the rule says collect them first by subtracting the smaller x term, x, from both sides. Only after that do you clear the constant.",
+   "after": "Subtracting x from both sides gives 3x + 3 = 15, so x is on only one side. Subtracting 3 from both sides gives 4x = x + 12, which still has x on both sides.",
+   "fixes": [
+    "Q3"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Linear equations with x on both sides",
+  "intro": "You already know how to get x alone when it sits on one side of the equals sign. Now x shows up on BOTH sides, like 3x + 5 = x + 17. The fix is one new move at the start: gather all the x terms on one side first, then solve the way you already know.",
+  "sections": [
+   {
+    "heading": "The new rule: collect the x terms first",
+    "body": "When x appears on both sides, subtract the smaller x term from BOTH sides before doing anything else. Subtracting the smaller one keeps the x term positive, which avoids sign trouble. After that, the equation is just a one-sided equation you already know how to solve.",
+    "example": "3x + 5 = x + 17. The x terms are 3x and x. Subtract x from both sides: 3x - x + 5 = x - x + 17, which gives 2x + 5 = 17. The x terms now live on one side only."
+   },
+   {
+    "heading": "Then finish the way you already know",
+    "body": "Once the x terms are together, undo the constant with addition or subtraction, then undo the multiplication with division. Do those on both sides, in that order.",
+    "example": "From 2x + 5 = 17, subtract 5 from both sides: 2x = 12. Then divide both sides by 2: x = 6. That is the solution."
+   },
+   {
+    "heading": "Check by substituting",
+    "body": "Put your answer into BOTH original sides and see if they match. This catches every sign slip you can make along the way, so never skip it.",
+    "example": "With x = 6 in 3x + 5 = x + 17: the left side is 3(6) + 5 = 18 + 5 = 23. The right side is 6 + 17 = 23. Both sides are 23, so x = 6 is correct."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve 7x - 2 = 3x + 18.",
+   "steps": [
+    "Name the x terms: 7x on the left, 3x on the right. Subtract the smaller one, 3x, from both sides.",
+    "7x - 3x - 2 = 3x - 3x + 18 gives 4x - 2 = 18. The x terms are now all on the left.",
+    "Undo the -2 by adding 2 to both sides: 4x - 2 + 2 = 18 + 2, so 4x = 20.",
+    "Undo the multiplication by 4 by dividing both sides by 4: x = 20 / 4 = 5.",
+    "Check by substituting x = 5. Left: 7(5) - 2 = 35 - 2 = 33. Right: 3(5) + 18 = 15 + 18 = 33. Both sides are 33, so x = 5 is correct."
+   ],
+   "answer": "x = 5"
+  },
+  "common_mistakes": [
+   "Subtracting the x term from one side only. In 3x + 5 = x + 17, subtracting x from just the left gives 2x + 5 = x + 17 while the right still has x, so the two sides are no longer equal and every later step is wrong.",
+   "Dropping the constant after collecting x terms. In 3x + 5 = x + 17, subtracting x gives 2x + 5 = 17; forgetting the +5 and writing 2x = 17 leads to x = 17/2, which fails the check (3(17/2)+5 is not 17/2 + 17).",
+   "Subtracting the larger x term and then losing a negative sign. In 2x + 9 = 5x - 3, subtracting 5x gives -3x + 9 = -3, then -3x = -12. Dividing gives x = 4, not x = -4. Both negatives cancel.",
+   "Collecting x terms and then dividing before removing the constant. From 2x + 5 = 17, dividing by 2 first gives x + 5/2 = 17/2 and a wrong answer; subtract 5 first."
+  ],
+  "summary": "When x is on both sides, subtract the smaller x term from both sides first to collect the x terms on one side. Then subtract or add to clear the constant, then divide. Check by substituting your answer into both original sides.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "In 4x + 3 = x + 15, which first step leaves x on only one side?",
+    "answer": "Subtract x from both sides",
+    "rationale": "Subtracting x from both sides gives 3x + 3 = 15, so x is on only one side. Subtracting 3 from both sides gives 4x = x + 12, which still has x on both sides.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Subtract x from both sides",
+     "Subtract 3 from both sides",
+     "Divide both sides by 4",
+     "Add 4x to both sides"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve 7x - 2 = 3x + 18.",
+    "answer": "x = 5",
+    "rationale": "Subtract 3x from both sides to get 4x - 2 = 18, add 2 to get 4x = 20, then divide by 4 to get x = 5.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "After subtracting 3x from both sides of 3x + 8 = 7x - 4, what equation do you have?",
+    "answer": "8 = 4x - 4",
+    "rationale": "The left becomes 3x - 3x + 8 = 8, and the right becomes 7x - 3x - 4 = 4x - 4. The constant -4 is not affected by subtracting 3x.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "8 = 4x - 4",
+     "8 = 7x - 4",
+     "0 = 4x - 4",
+     "8 = 4x + 4"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.6867469879518073,
+    "prompt": "Solve 2x + 10 = 5x - 8.",
+    "answer": "x = 6",
+    "rationale": "Subtract 2x from both sides to get 10 = 3x - 8, add 8 to get 18 = 3x, then divide by 3 to get x = 6. Checking: 2(6) + 10 = 22 and 5(6) - 8 = 22.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

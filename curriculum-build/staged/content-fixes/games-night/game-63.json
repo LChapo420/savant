@@ -1,0 +1,2999 @@
+{
+ "row_id": 63,
+ "engine_id": "crossy-road",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 87,
+ "generated_at": "2026-10-25T06:42:24.292Z",
+ "writer": "minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 67,
+  "code_rejected": 9,
+  "sent_to_judges": 58,
+  "kept": 50,
+  "keep_rate_of_written": 0.746,
+  "judges": {
+   "both_answered": 58,
+   "picked_same_option": 54,
+   "a_picked_key": 57,
+   "b_picked_key": 55,
+   "models_a": [
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "z-ai/glm-5.3",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ],
+   "models_b": [
+    "z-ai/glm-5.3",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "crossy-road",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 87,
+   "topic": "Activity 5 of 9 (quiz/game): Timed Try 2 - Usage Debates and Style Guides",
+   "title": "Timed Try 2: Usage Debates and Style Guides",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q45",
+    "prompt": "A school guide says to use that for defining clauses that identify a specific group. Which sentence follows the rule?",
+    "choices": [
+     "Students that attend the workshop earn extra credit.",
+     "Students who attend the workshop earn extra credit.",
+     "Students that attends the workshop earns extra credit.",
+     "Students whom attends the workshop earn extra credit."
+    ],
+    "answerIndex": 0,
+    "explanation": "The clause that attend the workshop identifies the students who qualify, so it is a defining clause introduced by that.",
+    "difficulty": 5,
+    "skill": "Distinguishing defining clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q29",
+    "prompt": "A transit guide requires the 24-hour clock and prohibits a.m. and p.m. after the time. Which sentence follows the guide?",
+    "choices": [
+     "The bus leaves at 19:45 from the north platform.",
+     "The bus leaves at 7:45 p.m. from the north platform.",
+     "The bus leaves at 7:45 a.m. from the north platform.",
+     "The bus leaves at 19:45 p.m. from the north platform."
+    ],
+    "answerIndex": 0,
+    "explanation": "The 24-hour system represents 7:45 p.m. as 19:45 and does not add a.m. or p.m.",
+    "difficulty": 4,
+    "skill": "Formatting times consistently",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q47",
+    "prompt": "A style guide says to use criterion for one standard and criteria for several standards. Which sentence follows the rule?",
+    "choices": [
+     "The rubric includes one criterias for evaluating a project.",
+     "The rubric includes three criterions for evaluating a project.",
+     "The rubric includes three criteria for evaluating a project.",
+     "The rubric includes one criteria for evaluating a project."
+    ],
+    "answerIndex": 2,
+    "explanation": "Because the rubric includes several standards, the plural noun criteria is correct in The rubric includes three criteria for evaluating a project.",
+    "difficulty": 6,
+    "skill": "Using singular and plural forms",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q19",
+    "prompt": "A style guide says to form the possessive of a plural noun ending in s by adding an apostrophe after the s. Which phrase follows the rule?",
+    "choices": [
+     "the coach's travel bags",
+     "the coaches's travel bags",
+     "the coaches' travel bags",
+     "the coaches travel bags"
+    ],
+    "answerIndex": 2,
+    "explanation": "The plural noun coaches takes an apostrophe after the s to show possession in the phrase coaches' travel bags.",
+    "difficulty": 5,
+    "skill": "Forming plural possessives",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q21",
+    "prompt": "A travel publication's style guide says to use different from rather than different than when comparing two things. Which sentence follows the guide?",
+    "choices": [
+     "This route is different from the route we took yesterday.",
+     "This route is different than the route we took yesterday.",
+     "This route is different to the route we took yesterday.",
+     "This route is different of the route we took yesterday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses different from, the comparison phrase required by the publication's style guide.",
+    "difficulty": 4,
+    "skill": "Applying comparative prepositions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q49",
+    "prompt": "A committee's style guide says to use comprise directly with its object, without of or the passive construction is comprised of. Which sentence follows the rule?",
+    "choices": [
+     "The review committee comprises 12 members.",
+     "The review committee comprises of 12 members.",
+     "The review committee is comprised of 12 members.",
+     "The review committee comprises 12 of members."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence places the object members directly after comprises and avoids both prohibited constructions.",
+    "difficulty": 6,
+    "skill": "Following a guide on verb usage",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q34",
+    "prompt": "A publication's style guide says to use whose for possession and who's for the contraction of who is. Which sentence follows the guide?",
+    "choices": [
+     "The writer who latest novel received an award spoke to students.",
+     "The writer whose latest novel received an award spoke to students.",
+     "The writer who's latest novel received an award spoke to students.",
+     "The writer whom latest novel received an award spoke to students."
+    ],
+    "answerIndex": 1,
+    "explanation": "Whose shows that the latest novel belongs to the writer, which is the possessive use required by the guide.",
+    "difficulty": 5,
+    "skill": "Distinguishing whose from who's and similar forms",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q8",
+    "prompt": "A magazine's style guide requires a single em dash with no spaces on either side. Which sentence follows the guide?",
+    "choices": [
+     "The train arrived at noon--the visitors were ready.",
+     "The train arrived at noon — the visitors were ready.",
+     "The train arrived at noon - the visitors were ready.",
+     "The train arrived at noon—the visitors were ready."
+    ],
+    "answerIndex": 3,
+    "explanation": "This sentence uses one em dash without spaces on either side, matching the magazine's rule.",
+    "difficulty": 4,
+    "skill": "Applying em-dash spacing rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q35",
+    "prompt": "A nonprofit's guide says to use ensure for making certain, assure for reassuring someone, and insure for providing financial protection. Which sentence follows the guide?",
+    "choices": [
+     "The coordinator will assure that the welcome desk has enough copies.",
+     "The coordinator will insure that the welcome desk has enough copies.",
+     "The coordinator will ensure that the welcome desk has enough copies.",
+     "The coordinator will assert that the welcome desk has enough copies."
+    ],
+    "answerIndex": 2,
+    "explanation": "Ensure means to make certain, which matches the coordinator's goal of confirming that the welcome desk has enough copies.",
+    "difficulty": 6,
+    "skill": "Distinguishing ensure, assure, and insure",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q46",
+    "prompt": "A research organization's style guide says to treat data as a plural noun. Which sentence follows the rule?",
+    "choices": [
+     "The data shows a consistent pattern.",
+     "The data show a consistent pattern.",
+     "The datum show a consistent pattern.",
+     "The datas show a consistent pattern."
+    ],
+    "answerIndex": 1,
+    "explanation": "Treating data as plural requires the plural verb show in The data show a consistent pattern.",
+    "difficulty": 5,
+    "skill": "Applying noun-number conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q3",
+    "prompt": "A newspaper's style guide says to use toward rather than towards. What should a writer do in an article for the newspaper?",
+    "choices": [
+     "Alternate between toward and towards from one paragraph to the next",
+     "Use towards rather than toward in the article",
+     "Use toward rather than towards in the article",
+     "Replace both forms with in the direction of throughout the article"
+    ],
+    "answerIndex": 2,
+    "explanation": "Following the stated house style means using toward rather than towards in the newspaper's copy.",
+    "difficulty": 4,
+    "skill": "Applying a house-style decision",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q39",
+    "prompt": "A research guide says imply means to suggest and infer means to reach a conclusion from evidence. Which sentence follows the guide?",
+    "choices": [
+     "The data imply a trend, and readers can imply the cause.",
+     "The data infer a trend, and readers can imply the cause.",
+     "The data imply a trend, and readers can infer the cause.",
+     "The data infer a trend, and readers can infer the cause."
+    ],
+    "answerIndex": 2,
+    "explanation": "The data suggest a trend through implication, while readers infer the cause by drawing a conclusion from the evidence.",
+    "difficulty": 6,
+    "skill": "Distinguishing imply and infer",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q37",
+    "prompt": "A rescue center's style guide says to use lay for put or rest and lie for recline. Which sentence follows the guide?",
+    "choices": [
+     "The tired cat lay on the blanket yesterday.",
+     "The tired cat laid on the blanket yesterday.",
+     "The tired cat lie on the blanket yesterday.",
+     "The tired cat lain on the blanket yesterday."
+    ],
+    "answerIndex": 0,
+    "explanation": "The past-tense form of lie is lay, so the sentence correctly describes the cat resting on the blanket.",
+    "difficulty": 5,
+    "skill": "Distinguishing lay and lie in a specified tense",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q40",
+    "prompt": "A school guide says principal means a leader or chief, while principle means a basic rule or belief. Which sentence follows the guide?",
+    "choices": [
+     "The principal explained the school's important principal to the students.",
+     "The principle explained the school's important principal to the students.",
+     "The principle explained the school's important principle to the students.",
+     "The principal explained the school's important principle to the students."
+    ],
+    "answerIndex": 3,
+    "explanation": "The principal is the school leader who explains the school's important principle, which is a basic rule or belief.",
+    "difficulty": 4,
+    "skill": "Distinguishing principal and principle",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q48",
+    "prompt": "A British publisher's style guide uses storeys for floors of a building and stories for floors of a ship. Which sentence follows the rule?",
+    "choices": [
+     "The apartment has three stories, and the ship has five storeys.",
+     "The apartment has three stories, and the ship has five stories.",
+     "The apartment has three storeys, and the ship has five storeys.",
+     "The apartment has three storeys, and the ship has five stories."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence correctly uses storeys for the apartment's floors and stories for the ship's floors.",
+    "difficulty": 6,
+    "skill": "Distinguishing words with different meanings",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q14",
+    "prompt": "In these sentences, affect is intended to mean influence, and effect is intended to mean a result. Which sentence uses both words correctly?",
+    "choices": [
+     "The delay may effect attendance, and missed classes may have an affect on grades.",
+     "The delay may affect attendance, and missed classes may have an effect on grades.",
+     "The delay may affect attendance, and missed classes may have an affect on grades.",
+     "The delay may effect attendance, and missed classes may have an effect on grades."
+    ],
+    "answerIndex": 1,
+    "explanation": "Affect functions as the verb meaning influence, while effect functions as the noun meaning a result.",
+    "difficulty": 5,
+    "skill": "Distinguishing affect from effect",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q11",
+    "prompt": "A magazine's style guide says book titles should be italicized and article titles should be placed in quotation marks. The sentence names the book The Glass Harbor and the article Inside the Harbor. Which formatting choice follows the guide?",
+    "choices": [
+     "Set The Glass Harbor in bold and Inside the Harbor in italics.",
+     "Set The Glass Harbor in quotation marks and Inside the Harbor in italics.",
+     "Set The Glass Harbor in italics and Inside the Harbor in quotation marks.",
+     "Set both titles in italics and capitalize every word in them."
+    ],
+    "answerIndex": 2,
+    "explanation": "This formats the book title in italics and the article title in quotation marks, exactly as the magazine's guide requires.",
+    "difficulty": 4,
+    "skill": "Applying title-formatting conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q33",
+    "prompt": "A newsletter guide requires a semicolon to join two closely related independent clauses. Which sentence follows the guide?",
+    "choices": [
+     "The first round ended; the judges announced the results immediately.",
+     "The first round ended, the judges announced the results immediately.",
+     "The first round ended: the judges announced the results immediately.",
+     "The first round ended the judges announced the results immediately."
+    ],
+    "answerIndex": 0,
+    "explanation": "The semicolon correctly joins two independent clauses that express closely related ideas.",
+    "difficulty": 5,
+    "skill": "Using a semicolon between independent clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which guideline most clearly states a standard house rule for compound modifiers?",
+    "choices": [
+     "Replace a hyphen in a compound modifier with a space whenever possible",
+     "Use a hyphen only when a compound modifier comes after the noun it modifies",
+     "Leave every compound modifier unhyphenated when it appears before a noun",
+     "Use a hyphen when a compound modifier comes before the noun it modifies"
+    ],
+    "answerIndex": 3,
+    "explanation": "A compound modifier that comes before the noun it modifies is normally joined with hyphens.",
+    "difficulty": 6,
+    "skill": "Writing a consistent style rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q26",
+    "prompt": "A newspaper's guide requires one l in both traveling and canceled. Which sentence follows the guide?",
+    "choices": [
+     "The traveling team cancelled its game because of rain.",
+     "The traveling team canceled its game because of rain.",
+     "The cancelled traveling team rescheduled its game.",
+     "The traveled team canceled its game before the storm arrived."
+    ],
+    "answerIndex": 1,
+    "explanation": "Traveling and canceled each use one l, exactly as the guide requires.",
+    "difficulty": 4,
+    "skill": "Following spelling conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q12",
+    "prompt": "Which sentence correctly follows the standard distinction between fewer and less and also keeps the verb in agreement with the subject?",
+    "choices": [
+     "Less than 20 tickets is remaining.",
+     "Less than 20 tickets remain.",
+     "Fewer than 20 tickets remains.",
+     "Fewer than 20 tickets remain."
+    ],
+    "answerIndex": 3,
+    "explanation": "Fewer is used with the countable noun tickets, and the plural subject requires the verb remain.",
+    "difficulty": 5,
+    "skill": "Distinguishing fewer from less",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which sentence meets a nonprofit guide that requires whom for a person functioning as the object of a preposition?",
+    "choices": [
+     "Who should I send the completed forms to?",
+     "To who should I send the completed forms?",
+     "To whom should I send the completed forms?",
+     "To whom should I sent the completed forms?"
+    ],
+    "answerIndex": 2,
+    "explanation": "Because whom is the object of the preposition to, the opening phrase should read To whom.",
+    "difficulty": 6,
+    "skill": "Distinguishing who from whom",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q18",
+    "prompt": "A nonprofit's style guide says to write percentages as numerals followed by the percent sign, with no space. Which sentence follows the rule?",
+    "choices": [
+     "Only twelve percent of the forms were returned by Friday.",
+     "Only 12% of the forms were returned by Friday.",
+     "Only 12 percent of the forms were returned by Friday.",
+     "Only 12 % of the forms were returned by Friday."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence correctly expresses the percentage as the numeral 12 followed immediately by the percent sign.",
+    "difficulty": 4,
+    "skill": "Formatting percentages",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q16",
+    "prompt": "A style guide says to use farther for physical distance and further for an additional amount or degree. Which sentence follows the guide?",
+    "choices": [
+     "The trail is further from the school, and the extra reading requires further study.",
+     "The trail is further from the school, and the extra reading requires farther study.",
+     "The trail is farther from the school, and the extra reading requires farther study.",
+     "The trail is farther from the school, and the extra reading requires further study."
+    ],
+    "answerIndex": 3,
+    "explanation": "Farther correctly describes the trail's physical distance from the school, while further describes the additional amount of study required.",
+    "difficulty": 5,
+    "skill": "Applying farther and further",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q9",
+    "prompt": "A nonprofit's guide says to write an organization's full name followed by its abbreviation in parentheses at first mention and use the abbreviation afterward. Which paragraph follows the guide?",
+    "choices": [
+     "The National Association of Environmental Educators (NAEE) published a guide. The NAEE shared it with local schools.",
+     "The National Association of Environmental Educators (NAEE) published a guide. The organization shared it with local schools.",
+     "The National Association of Environmental Educators (NAEE) published a guide. The National Association of Environmental Educators shared it with local schools.",
+     "The NAEE published a guide. The National Association of Environmental Educators shared it with local schools."
+    ],
+    "answerIndex": 0,
+    "explanation": "This paragraph gives the organization's full name with its abbreviation at first mention and uses the abbreviation in the next sentence.",
+    "difficulty": 6,
+    "skill": "Introducing organizational abbreviations",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q24",
+    "prompt": "A school style guide says to use a singular verb after the phrase a couple of. Which sentence follows the guide?",
+    "choices": [
+     "A couple of forms remain on the desk.",
+     "A couple of form remains on the desk.",
+     "A couple of form remain on the desk.",
+     "A couple of forms remains on the desk."
+    ],
+    "answerIndex": 3,
+    "explanation": "The sentence correctly treats a couple of as the singular subject and uses the singular verb remains.",
+    "difficulty": 4,
+    "skill": "Applying subject-verb agreement",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q38",
+    "prompt": "A school guide says complement means something that completes or agrees with something, while compliment means praise. Which sentence follows the guide?",
+    "choices": [
+     "The blue scarf compliments her coat, and the teacher gave her a complement.",
+     "The blue scarf complements her coat, and the teacher gave her a compliment.",
+     "The blue scarf compliments her coat, and the teacher gave her a compliment.",
+     "The blue scarf complements her coat, and the teacher gave her a complement."
+    ],
+    "answerIndex": 1,
+    "explanation": "The scarf complements the coat by completing its appearance, and the compliment expresses the teacher's praise.",
+    "difficulty": 5,
+    "skill": "Distinguishing complement and compliment",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q36",
+    "prompt": "A shelter's style guide says to use stationary for fixed in one place and stationery for writing supplies. Which sentence follows the guide?",
+    "choices": [
+     "The wheels remain stationery while the stationery is sorted.",
+     "The wheels remain stationary while the stationary is sorted.",
+     "The wheels remain stationery while the stationary is sorted.",
+     "The wheels remain stationary while the stationery is sorted."
+    ],
+    "answerIndex": 3,
+    "explanation": "The wheels are stationary because they remain fixed in place, while the paper and other writing materials are stationery.",
+    "difficulty": 4,
+    "skill": "Applying a stationary and stationery style rule",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q30",
+    "prompt": "Why can a style guide help resolve a disputed usage within a publication?",
+    "choices": [
+     "A single convention makes one variant correct in every English-speaking community.",
+     "A single convention helps writers and editors apply the same rule consistently.",
+     "A single convention removes the need to consider the publication's audience.",
+     "A single convention prevents style guides from recording preferred practices."
+    ],
+    "answerIndex": 1,
+    "explanation": "A house convention gives writers and editors one consistent rule to apply.",
+    "difficulty": 6,
+    "skill": "Justifying house-style choices",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q2",
+    "prompt": "Which statement best explains why reputable style guides sometimes recommend different usages?",
+    "choices": [
+     "Usage changes over time, but every style guide must reach the same final decision",
+     "Usage changes over time, and different audiences may favor different conventions",
+     "Most disputed usages are settled permanently by the oldest surviving rules",
+     "All disputed usages become incorrect once a newer form appears"
+    ],
+    "answerIndex": 1,
+    "explanation": "Style guides reflect both changing language and the needs of their particular audiences, so their recommendations can differ.",
+    "difficulty": 5,
+    "skill": "Explaining language change",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q1",
+    "prompt": "What is the main role of a publication's style guide?",
+    "choices": [
+     "To record the publication's preferred conventions for language and formatting",
+     "To prove that every disputed usage is grammatically correct",
+     "To replace dictionaries and other grammar references",
+     "To show which rules every English speaker has always followed"
+    ],
+    "answerIndex": 0,
+    "explanation": "A style guide establishes the publication's preferred conventions so writers and editors can apply them consistently.",
+    "difficulty": 4,
+    "skill": "Identifying the purpose of a style guide",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q50",
+    "prompt": "A publisher's style guide says to use afterwards for the adverb meaning later and afterwords for remarks printed at the end of a book. Which sentence follows the rule?",
+    "choices": [
+     "We can meet afterwords, and the afterwards discuss the new edition.",
+     "We can meet afterwards, and the afterwords discuss the new edition.",
+     "We can meet afterwards, and the afterwards discuss the new edition.",
+     "We can meet afterwords, and the afterwords discuss the new edition."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence correctly uses afterwards to mean later and afterwords to refer to the closing remarks in a book.",
+    "difficulty": 6,
+    "skill": "Distinguishing words with different parts of speech",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q7",
+    "prompt": "A school style guide says to spell out numbers from zero through nine, use numerals for 10 and above, and use numerals for ages and percentages. Which sentence follows all three rules?",
+    "choices": [
+     "The club has 12 members; 25 percent joined last year, and the youngest member is eight years old.",
+     "The club has 12 members; twenty-five percent joined last year, and the youngest member is 8 years old.",
+     "The club has 12 members; 25 percent joined last year, and the youngest member is 8 years old.",
+     "The club has twelve members; twenty-five percent joined last year, and the youngest member is eight years old."
+    ],
+    "answerIndex": 2,
+    "explanation": "This option uses numerals for 12 and 25 and for the age 8, exactly as the guide requires.",
+    "difficulty": 5,
+    "skill": "Applying numerical style rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q42",
+    "prompt": "Under a newsletter rule requiring a comma after an introductory prepositional phrase of three or more words, which sentence is punctuated correctly?",
+    "choices": [
+     "After the opening ceremony the finalists met the judges.",
+     "After the opening ceremony, the finalists met the judges.",
+     "After the opening ceremony the finalists, met the judges.",
+     "After the opening ceremony, the finalists, met the judges."
+    ],
+    "answerIndex": 1,
+    "explanation": "The introductory phrase After the opening ceremony is followed by the required comma.",
+    "difficulty": 4,
+    "skill": "Applying introductory-phrase punctuation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q32",
+    "prompt": "A style guide requires an en dash without spaces for a range of page numbers. Which range is formatted correctly?",
+    "choices": [
+     "Pages 20-35",
+     "Pages 20 – 35",
+     "Pages 20—35",
+     "Pages 20–35"
+    ],
+    "answerIndex": 3,
+    "explanation": "The en dash joins 20 and 35 directly without spaces, as the style guide requires.",
+    "difficulty": 5,
+    "skill": "Formatting numerical ranges with an en dash",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q28",
+    "prompt": "A style guide says that a singular name ending in s takes an apostrophe followed by s to show possession. Which phrase follows the rule?",
+    "choices": [
+     "the bosses's recommendation",
+     "the boss' recommendation",
+     "the bosses' recommendation",
+     "the boss's recommendation"
+    ],
+    "answerIndex": 3,
+    "explanation": "The boss is singular and ends in s, so the guide's rule calls for boss's.",
+    "difficulty": 6,
+    "skill": "Forming possessives",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q20",
+    "prompt": "A style guide says to use among for more than two people or things and between for exactly two. Which sentence follows the guide?",
+    "choices": [
+     "The decision was discussed between the three finalists.",
+     "The decision was discussed between the four finalists.",
+     "The decision was discussed among the two finalists.",
+     "The decision was discussed among the four finalists."
+    ],
+    "answerIndex": 3,
+    "explanation": "Among correctly takes the group of four finalists because the group contains more than two members.",
+    "difficulty": 4,
+    "skill": "Choosing between and among",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q23",
+    "prompt": "A community newspaper's style guide says to use in spite of, followed by a comma, to introduce a concession. Which sentence follows the guide?",
+    "choices": [
+     "In spite of the rain the outdoor concert began on time.",
+     "Despite of the rain, the outdoor concert began on time.",
+     "In spite of the rain, the outdoor concert began on time.",
+     "Despite the rain, the outdoor concert began on time."
+    ],
+    "answerIndex": 2,
+    "explanation": "The sentence uses the required phrase in spite of and correctly sets off the introductory phrase with a comma.",
+    "difficulty": 5,
+    "skill": "Applying introductory phrase punctuation",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q22",
+    "prompt": "A tennis club's style guide says to spell the noun practice with a c and the verb practise with an s. Which sentence follows the guide?",
+    "choices": [
+     "The team's regular practise will help them practice serves.",
+     "The team's regular practice will help them practise serves.",
+     "The team's regular practice will help them practice serves.",
+     "The team's regular practise will help them practise serves."
+    ],
+    "answerIndex": 1,
+    "explanation": "The sentence uses practice as a noun and practise as a verb, matching the club's stated spellings.",
+    "difficulty": 6,
+    "skill": "Distinguishing noun and verb spellings",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q31",
+    "prompt": "A school style guide says to use it's for it is and its for possession. Which sentence follows the guide?",
+    "choices": [
+     "The committee postponed it's vote because it needed more time.",
+     "The committee postponed its vote because it's needed more time.",
+     "The committee postponed its vote because it needed more time.",
+     "The committee postponed it's vote because it's needed more time."
+    ],
+    "answerIndex": 2,
+    "explanation": "Here its shows possession of the vote, while it's stands for it is in the because clause.",
+    "difficulty": 4,
+    "skill": "Distinguishing possessive its from the contraction it's",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q5",
+    "prompt": "A magazine's style guide requires the serial comma. Which sentence follows that rule?",
+    "choices": [
+     "The package contains a pen, a notebook, and a folder.",
+     "The package contains a pen a notebook and a folder.",
+     "The package contains a pen; a notebook; and a folder.",
+     "The package contains a pen: a notebook and a folder."
+    ],
+    "answerIndex": 0,
+    "explanation": "The required serial comma appears before and in a list of three items.",
+    "difficulty": 5,
+    "skill": "Applying serial-comma style",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q10",
+    "prompt": "A style guide says to use third-person singular they, their, and them when a person's pronouns are not stated. Which sentence follows the guide?",
+    "choices": [
+     "The new student forgot to bring his or her permission form.",
+     "The new student forgot to bring their permission form.",
+     "The new student forgot to bring him or her permission form.",
+     "The new student forgot to bring theirself permission form."
+    ],
+    "answerIndex": 1,
+    "explanation": "This sentence uses third-person singular agreement with the subject and their as the possessive, matching the guide's singular-they pattern.",
+    "difficulty": 6,
+    "skill": "Applying singular-they conventions",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which phrase correctly shows that one student owns the cafeteria?",
+    "choices": [
+     "the student's cafeteria",
+     "the students' cafeteria",
+     "the students cafeteria",
+     "the student cafeteria's"
+    ],
+    "answerIndex": 0,
+    "explanation": "The singular possessive student's shows that the cafeteria belongs to one student.",
+    "difficulty": 4,
+    "skill": "Forming singular possessives",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q25",
+    "prompt": "A newspaper's style guide says to write dates with the month first, followed by the day, and to omit an ordinal suffix. Which date follows the rule?",
+    "choices": [
+     "July 4",
+     "July 4th",
+     "4 July",
+     "the 4th of July"
+    ],
+    "answerIndex": 0,
+    "explanation": "The date July 4 places the month first and omits the ordinal suffix as the style guide requires.",
+    "difficulty": 5,
+    "skill": "Formatting calendar dates",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q41",
+    "prompt": "A newsletter guide says altogether means entirely or in total, while all together means in one group. Which sentence follows the guide?",
+    "choices": [
+     "The judges considered the proposal altogether, and the team stood all together near the door.",
+     "The judges considered the proposal all together, and the team stood altogether near the door.",
+     "The judges considered the proposal altogether, and the team stood altogether near the door.",
+     "The judges considered the proposal all together, and the team stood all together near the door."
+    ],
+    "answerIndex": 0,
+    "explanation": "The judges considered the proposal in total, while the team stood all together as a group near the door.",
+    "difficulty": 6,
+    "skill": "Distinguishing altogether and all together",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q17",
+    "prompt": "A style guide says to begin a sentence with Although and set off the rest of the dependent clause with a comma. Which sentence follows the guide?",
+    "choices": [
+     "Although the buses were late, the class began on time.",
+     "Although, the buses were late, the class began on time.",
+     "Although the buses were late the class began on time.",
+     "Although the buses were late; the class began on time."
+    ],
+    "answerIndex": 0,
+    "explanation": "This sentence places the comma correctly after the introductory dependent clause beginning with Although.",
+    "difficulty": 4,
+    "skill": "Punctuating introductory dependent clauses",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q15",
+    "prompt": "A community newspaper's style guide says to refer to the group as people with visual impairments, not as the visually impaired. Which sentence follows the guide exactly?",
+    "choices": [
+     "Visually impaired people attended the evening workshop.",
+     "The visually impaired attended the evening workshop.",
+     "People with visual impairments attended the evening workshop.",
+     "People with blindness attended the evening workshop."
+    ],
+    "answerIndex": 2,
+    "explanation": "This uses the exact phrase people with visual impairments that the newspaper's style guide requires.",
+    "difficulty": 5,
+    "skill": "Following inclusive-language guidelines",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q6",
+    "prompt": "A publication's style guide does not address whether to use who or that to introduce a defining clause. What is the best next step for a writer?",
+    "choices": [
+     "Choose whichever form feels more familiar and proceed",
+     "Ask the editor which form the publication wants",
+     "Assume the older form is correct because it has existed longer",
+     "Use both forms together so the sentence remains consistent"
+    ],
+    "answerIndex": 1,
+    "explanation": "When the guide is silent on a disputed usage, asking the editor is the best way to identify the publication's chosen convention.",
+    "difficulty": 6,
+    "skill": "Resolving an uncovered usage question",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q44",
+    "prompt": "A newsletter's style guide says to treat each as the singular subject in a sentence. Which sentence follows the rule?",
+    "choices": [
+     "Each of the volunteers are completing the training.",
+     "Each of the volunteers have completed the training.",
+     "Each of the volunteer have completed the training.",
+     "Each of the volunteers has completed the training."
+    ],
+    "answerIndex": 3,
+    "explanation": "Because the guide treats each as singular, it takes the singular verb has in Each of the volunteers has completed the training.",
+    "difficulty": 4,
+    "skill": "Applying subject-verb agreement rules",
+    "topic": "Usage Debates and Style Guides"
+   },
+   {
+    "id": "q27",
+    "prompt": "A magazine's guide says to use e.g. followed by a comma when introducing an example within a sentence. Which sentence follows the guide?",
+    "choices": [
+     "Some studies, i.e., this one, show a clear pattern.",
+     "Some studies, e.g. this one, show a clear pattern.",
+     "Some studies, e.g., this one, show a clear pattern.",
+     "Some studies, e.g. those by Rao, show a clear pattern."
+    ],
+    "answerIndex": 2,
+    "explanation": "The abbreviation e.g. introduces an example and is followed by the required comma.",
+    "difficulty": 5,
+    "skill": "Applying abbreviation punctuation",
+    "topic": "Usage Debates and Style Guides"
+   }
+  ],
+  "feedback": {
+   "correct": "undefined",
+   "incorrect": "undefined",
+   "win": "undefined",
+   "lose": "undefined",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "What is the main role of a publication's style guide?",
+   "choices": [
+    "To record the publication's preferred conventions for language and formatting",
+    "To prove that every disputed usage is grammatically correct",
+    "To replace dictionaries and other grammar references",
+    "To show which rules every English speaker has always followed"
+   ],
+   "answerIndex": 0,
+   "explanation": "A style guide establishes the publication's preferred conventions so writers and editors can apply them consistently.",
+   "difficulty": 4,
+   "skill": "Identifying the purpose of a style guide",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which statement best explains why reputable style guides sometimes recommend different usages?",
+   "choices": [
+    "Usage changes over time, and different audiences may favor different conventions",
+    "Usage changes over time, but every style guide must reach the same final decision",
+    "Most disputed usages are settled permanently by the oldest surviving rules",
+    "All disputed usages become incorrect once a newer form appears"
+   ],
+   "answerIndex": 0,
+   "explanation": "Style guides reflect both changing language and the needs of their particular audiences, so their recommendations can differ.",
+   "difficulty": 5,
+   "skill": "Explaining language change",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newspaper's style guide says to use toward rather than towards. What should a writer do in an article for the newspaper?",
+   "choices": [
+    "Use toward rather than towards in the article",
+    "Use towards rather than toward in the article",
+    "Alternate between toward and towards from one paragraph to the next",
+    "Replace both forms with in the direction of throughout the article"
+   ],
+   "answerIndex": 0,
+   "explanation": "Following the stated house style means using toward rather than towards in the newspaper's copy.",
+   "difficulty": 4,
+   "skill": "Applying a house-style decision",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which guideline most clearly states a standard house rule for compound modifiers?",
+   "choices": [
+    "Use a hyphen when a compound modifier comes before the noun it modifies",
+    "Use a hyphen only when a compound modifier comes after the noun it modifies",
+    "Leave every compound modifier unhyphenated when it appears before a noun",
+    "Replace a hyphen in a compound modifier with a space whenever possible"
+   ],
+   "answerIndex": 0,
+   "explanation": "A compound modifier that comes before the noun it modifies is normally joined with hyphens.",
+   "difficulty": 6,
+   "skill": "Writing a consistent style rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's style guide requires the serial comma. Which sentence follows that rule?",
+   "choices": [
+    "The package contains a pen, a notebook, and a folder.",
+    "The package contains a pen a notebook and a folder.",
+    "The package contains a pen; a notebook; and a folder.",
+    "The package contains a pen: a notebook and a folder."
+   ],
+   "answerIndex": 0,
+   "explanation": "The required serial comma appears before and in a list of three items.",
+   "difficulty": 5,
+   "skill": "Applying serial-comma style",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publication's style guide does not address whether to use who or that to introduce a defining clause. What is the best next step for a writer?",
+   "choices": [
+    "Ask the editor which form the publication wants",
+    "Choose whichever form feels more familiar and proceed",
+    "Assume the older form is correct because it has existed longer",
+    "Use both forms together so the sentence remains consistent"
+   ],
+   "answerIndex": 0,
+   "explanation": "When the guide is silent on a disputed usage, asking the editor is the best way to identify the publication's chosen convention.",
+   "difficulty": 6,
+   "skill": "Resolving an uncovered usage question",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school style guide says to spell out numbers from zero through nine, use numerals for 10 and above, and use numerals for ages and percentages. Which sentence follows all three rules?",
+   "choices": [
+    "The club has 12 members; 25 percent joined last year, and the youngest member is 8 years old.",
+    "The club has 12 members; twenty-five percent joined last year, and the youngest member is 8 years old.",
+    "The club has 12 members; 25 percent joined last year, and the youngest member is eight years old.",
+    "The club has twelve members; twenty-five percent joined last year, and the youngest member is eight years old."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option uses numerals for 12 and 25 and for the age 8, exactly as the guide requires.",
+   "difficulty": 5,
+   "skill": "Applying numerical style rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's style guide requires a single em dash with no spaces on either side. Which sentence follows the guide?",
+   "choices": [
+    "The train arrived at noon—the visitors were ready.",
+    "The train arrived at noon — the visitors were ready.",
+    "The train arrived at noon - the visitors were ready.",
+    "The train arrived at noon--the visitors were ready."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence uses one em dash without spaces on either side, matching the magazine's rule.",
+   "difficulty": 4,
+   "skill": "Applying em-dash spacing rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A nonprofit's guide says to write an organization's full name followed by its abbreviation in parentheses at first mention and use the abbreviation afterward. Which paragraph follows the guide?",
+   "choices": [
+    "The National Association of Environmental Educators (NAEE) published a guide. The NAEE shared it with local schools.",
+    "The National Association of Environmental Educators (NAEE) published a guide. The organization shared it with local schools.",
+    "The National Association of Environmental Educators (NAEE) published a guide. The National Association of Environmental Educators shared it with local schools.",
+    "The NAEE published a guide. The National Association of Environmental Educators shared it with local schools."
+   ],
+   "answerIndex": 0,
+   "explanation": "This paragraph gives the organization's full name with its abbreviation at first mention and uses the abbreviation in the next sentence.",
+   "difficulty": 6,
+   "skill": "Introducing organizational abbreviations",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says to use third-person singular they, their, and them when a person's pronouns are not stated. Which sentence follows the guide?",
+   "choices": [
+    "The new student forgot to bring their permission form.",
+    "The new student forgot to bring his or her permission form.",
+    "The new student forgot to bring him or her permission form.",
+    "The new student forgot to bring theirself permission form."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence uses third-person singular agreement with the subject and their as the possessive, matching the guide's singular-they pattern.",
+   "difficulty": 6,
+   "skill": "Applying singular-they conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's style guide says book titles should be italicized and article titles should be placed in quotation marks. The sentence names the book The Glass Harbor and the article Inside the Harbor. Which formatting choice follows the guide?",
+   "choices": [
+    "Set The Glass Harbor in italics and Inside the Harbor in quotation marks.",
+    "Set The Glass Harbor in quotation marks and Inside the Harbor in italics.",
+    "Set The Glass Harbor in bold and Inside the Harbor in italics.",
+    "Set both titles in italics and capitalize every word in them."
+   ],
+   "answerIndex": 0,
+   "explanation": "This formats the book title in italics and the article title in quotation marks, exactly as the magazine's guide requires.",
+   "difficulty": 4,
+   "skill": "Applying title-formatting conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence correctly follows the standard distinction between fewer and less and also keeps the verb in agreement with the subject?",
+   "choices": [
+    "Fewer than 20 tickets remain.",
+    "Less than 20 tickets remain.",
+    "Fewer than 20 tickets remains.",
+    "Less than 20 tickets is remaining."
+   ],
+   "answerIndex": 0,
+   "explanation": "Fewer is used with the countable noun tickets, and the plural subject requires the verb remain.",
+   "difficulty": 5,
+   "skill": "Distinguishing fewer from less",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which phrase correctly shows that one student owns the cafeteria?",
+   "choices": [
+    "the student's cafeteria",
+    "the students' cafeteria",
+    "the students cafeteria",
+    "the student cafeteria's"
+   ],
+   "answerIndex": 0,
+   "explanation": "The singular possessive student's shows that the cafeteria belongs to one student.",
+   "difficulty": 4,
+   "skill": "Forming singular possessives",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In these sentences, affect is intended to mean influence, and effect is intended to mean a result. Which sentence uses both words correctly?",
+   "choices": [
+    "The delay may affect attendance, and missed classes may have an effect on grades.",
+    "The delay may effect attendance, and missed classes may have an affect on grades.",
+    "The delay may affect attendance, and missed classes may have an affect on grades.",
+    "The delay may effect attendance, and missed classes may have an effect on grades."
+   ],
+   "answerIndex": 0,
+   "explanation": "Affect functions as the verb meaning influence, while effect functions as the noun meaning a result.",
+   "difficulty": 5,
+   "skill": "Distinguishing affect from effect",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A community newspaper's style guide says to refer to the group as people with visual impairments, not as the visually impaired. Which sentence follows the guide exactly?",
+   "choices": [
+    "People with visual impairments attended the evening workshop.",
+    "The visually impaired attended the evening workshop.",
+    "Visually impaired people attended the evening workshop.",
+    "People with blindness attended the evening workshop."
+   ],
+   "answerIndex": 0,
+   "explanation": "This uses the exact phrase people with visual impairments that the newspaper's style guide requires.",
+   "difficulty": 5,
+   "skill": "Following inclusive-language guidelines",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says to use farther for physical distance and further for an additional amount or degree. Which sentence follows the guide?",
+   "choices": [
+    "The trail is farther from the school, and the extra reading requires further study.",
+    "The trail is further from the school, and the extra reading requires farther study.",
+    "The trail is farther from the school, and the extra reading requires farther study.",
+    "The trail is further from the school, and the extra reading requires further study."
+   ],
+   "answerIndex": 0,
+   "explanation": "Farther correctly describes the trail's physical distance from the school, while further describes the additional amount of study required.",
+   "difficulty": 5,
+   "skill": "Applying farther and further",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": [
+     {
+      "claim": "Use \"farther\" for physical distance; use \"further\" for extent or additional amount.",
+      "url": "https://en.wikipedia.org/wiki/List_of_English_words_with_disputed_usage",
+      "quote": "Many adhere to the rule that farther only should refer to matters of physical distance or position, while further should be reserved for more abstract usages involving time or degree (as well as undisputed descriptions of moreover and in addition).",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A style guide says to begin a sentence with Although and set off the rest of the dependent clause with a comma. Which sentence follows the guide?",
+   "choices": [
+    "Although the buses were late, the class began on time.",
+    "Although, the buses were late, the class began on time.",
+    "Although the buses were late the class began on time.",
+    "Although the buses were late; the class began on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence places the comma correctly after the introductory dependent clause beginning with Although.",
+   "difficulty": 4,
+   "skill": "Punctuating introductory dependent clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A nonprofit's style guide says to write percentages as numerals followed by the percent sign, with no space. Which sentence follows the rule?",
+   "choices": [
+    "Only 12% of the forms were returned by Friday.",
+    "Only twelve percent of the forms were returned by Friday.",
+    "Only 12 percent of the forms were returned by Friday.",
+    "Only 12 % of the forms were returned by Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence correctly expresses the percentage as the numeral 12 followed immediately by the percent sign.",
+   "difficulty": 4,
+   "skill": "Formatting percentages",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says to form the possessive of a plural noun ending in s by adding an apostrophe after the s. Which phrase follows the rule?",
+   "choices": [
+    "the coaches' travel bags",
+    "the coaches's travel bags",
+    "the coach's travel bags",
+    "the coaches travel bags"
+   ],
+   "answerIndex": 0,
+   "explanation": "The plural noun coaches takes an apostrophe after the s to show possession in the phrase coaches' travel bags.",
+   "difficulty": 5,
+   "skill": "Forming plural possessives",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says to use among for more than two people or things and between for exactly two. Which sentence follows the guide?",
+   "choices": [
+    "The decision was discussed among the four finalists.",
+    "The decision was discussed between the four finalists.",
+    "The decision was discussed among the two finalists.",
+    "The decision was discussed between the three finalists."
+   ],
+   "answerIndex": 0,
+   "explanation": "Among correctly takes the group of four finalists because the group contains more than two members.",
+   "difficulty": 4,
+   "skill": "Choosing between and among",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A travel publication's style guide says to use different from rather than different than when comparing two things. Which sentence follows the guide?",
+   "choices": [
+    "This route is different from the route we took yesterday.",
+    "This route is different than the route we took yesterday.",
+    "This route is different to the route we took yesterday.",
+    "This route is different of the route we took yesterday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses different from, the comparison phrase required by the publication's style guide.",
+   "difficulty": 4,
+   "skill": "Applying comparative prepositions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A tennis club's style guide says to spell the noun practice with a c and the verb practise with an s. Which sentence follows the guide?",
+   "choices": [
+    "The team's regular practice will help them practise serves.",
+    "The team's regular practise will help them practice serves.",
+    "The team's regular practice will help them practice serves.",
+    "The team's regular practise will help them practise serves."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses practice as a noun and practise as a verb, matching the club's stated spellings.",
+   "difficulty": 6,
+   "skill": "Distinguishing noun and verb spellings",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A community newspaper's style guide says to use in spite of, followed by a comma, to introduce a concession. Which sentence follows the guide?",
+   "choices": [
+    "In spite of the rain, the outdoor concert began on time.",
+    "Despite of the rain, the outdoor concert began on time.",
+    "In spite of the rain the outdoor concert began on time.",
+    "Despite the rain, the outdoor concert began on time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses the required phrase in spite of and correctly sets off the introductory phrase with a comma.",
+   "difficulty": 5,
+   "skill": "Applying introductory phrase punctuation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school style guide says to use a singular verb after the phrase a couple of. Which sentence follows the guide?",
+   "choices": [
+    "A couple of forms remain on the desk.",
+    "A couple of forms remains on the desk.",
+    "A couple of form remain on the desk.",
+    "A couple of form remains on the desk."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence correctly treats a couple of as the singular subject and uses the singular verb remains.",
+   "difficulty": 4,
+   "skill": "Applying subject-verb agreement",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newspaper's style guide says to write dates with the month first, followed by the day, and to omit an ordinal suffix. Which date follows the rule?",
+   "choices": [
+    "July 4",
+    "July 4th",
+    "4 July",
+    "the 4th of July"
+   ],
+   "answerIndex": 0,
+   "explanation": "The date July 4 places the month first and omits the ordinal suffix as the style guide requires.",
+   "difficulty": 5,
+   "skill": "Formatting calendar dates",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newspaper's guide requires one l in both traveling and canceled. Which sentence follows the guide?",
+   "choices": [
+    "The traveling team canceled its game because of rain.",
+    "The traveling team cancelled its game because of rain.",
+    "The cancelled traveling team rescheduled its game.",
+    "The traveled team canceled its game before the storm arrived."
+   ],
+   "answerIndex": 0,
+   "explanation": "Traveling and canceled each use one l, exactly as the guide requires.",
+   "difficulty": 4,
+   "skill": "Following spelling conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A magazine's guide says to use e.g. followed by a comma when introducing an example within a sentence. Which sentence follows the guide?",
+   "choices": [
+    "Some studies, e.g., this one, show a clear pattern.",
+    "Some studies, e.g. this one, show a clear pattern.",
+    "Some studies, i.e., this one, show a clear pattern.",
+    "Some studies, e.g. those by Rao, show a clear pattern."
+   ],
+   "answerIndex": 0,
+   "explanation": "The abbreviation e.g. introduces an example and is followed by the required comma.",
+   "difficulty": 5,
+   "skill": "Applying abbreviation punctuation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide says that a singular name ending in s takes an apostrophe followed by s to show possession. Which phrase follows the rule?",
+   "choices": [
+    "the boss's recommendation",
+    "the boss' recommendation",
+    "the bosses' recommendation",
+    "the bosses's recommendation"
+   ],
+   "answerIndex": 0,
+   "explanation": "The boss is singular and ends in s, so the guide's rule calls for boss's.",
+   "difficulty": 6,
+   "skill": "Forming possessives",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A transit guide requires the 24-hour clock and prohibits a.m. and p.m. after the time. Which sentence follows the guide?",
+   "choices": [
+    "The bus leaves at 7:45 a.m. from the north platform.",
+    "The bus leaves at 7:45 p.m. from the north platform.",
+    "The bus leaves at 19:45 from the north platform.",
+    "The bus leaves at 19:45 p.m. from the north platform."
+   ],
+   "answerIndex": 2,
+   "explanation": "The 24-hour system represents 7:45 p.m. as 19:45 and does not add a.m. or p.m.",
+   "difficulty": 4,
+   "skill": "Formatting times consistently",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Why can a style guide help resolve a disputed usage within a publication?",
+   "choices": [
+    "A single convention helps writers and editors apply the same rule consistently.",
+    "A single convention makes one variant correct in every English-speaking community.",
+    "A single convention removes the need to consider the publication's audience.",
+    "A single convention prevents style guides from recording preferred practices."
+   ],
+   "answerIndex": 0,
+   "explanation": "A house convention gives writers and editors one consistent rule to apply.",
+   "difficulty": 6,
+   "skill": "Justifying house-style choices",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school style guide says to use it's for it is and its for possession. Which sentence follows the guide?",
+   "choices": [
+    "The committee postponed it's vote because it needed more time.",
+    "The committee postponed its vote because it needed more time.",
+    "The committee postponed its vote because it's needed more time.",
+    "The committee postponed it's vote because it's needed more time."
+   ],
+   "answerIndex": 1,
+   "explanation": "Here its shows possession of the vote, while it's stands for it is in the because clause.",
+   "difficulty": 4,
+   "skill": "Distinguishing possessive its from the contraction it's",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A style guide requires an en dash without spaces for a range of page numbers. Which range is formatted correctly?",
+   "choices": [
+    "Pages 20-35",
+    "Pages 20 – 35",
+    "Pages 20—35",
+    "Pages 20–35"
+   ],
+   "answerIndex": 3,
+   "explanation": "The en dash joins 20 and 35 directly without spaces, as the style guide requires.",
+   "difficulty": 5,
+   "skill": "Formatting numerical ranges with an en dash",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "The en dash is the character '–' (U+2013).",
+      "url": "https://en.wikipedia.org/wiki/Dash_character",
+      "quote": "the en dash – (U+2013 – EN DASH) is generally used for a range of values.",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A newsletter guide requires a semicolon to join two closely related independent clauses. Which sentence follows the guide?",
+   "choices": [
+    "The first round ended; the judges announced the results immediately.",
+    "The first round ended, the judges announced the results immediately.",
+    "The first round ended: the judges announced the results immediately.",
+    "The first round ended the judges announced the results immediately."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon correctly joins two independent clauses that express closely related ideas.",
+   "difficulty": 5,
+   "skill": "Using a semicolon between independent clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publication's style guide says to use whose for possession and who's for the contraction of who is. Which sentence follows the guide?",
+   "choices": [
+    "The writer who latest novel received an award spoke to students.",
+    "The writer whose latest novel received an award spoke to students.",
+    "The writer who's latest novel received an award spoke to students.",
+    "The writer whom latest novel received an award spoke to students."
+   ],
+   "answerIndex": 1,
+   "explanation": "Whose shows that the latest novel belongs to the writer, which is the possessive use required by the guide.",
+   "difficulty": 5,
+   "skill": "Distinguishing whose from who's and similar forms",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A nonprofit's guide says to use ensure for making certain, assure for reassuring someone, and insure for providing financial protection. Which sentence follows the guide?",
+   "choices": [
+    "The coordinator will assure that the welcome desk has enough copies.",
+    "The coordinator will insure that the welcome desk has enough copies.",
+    "The coordinator will ensure that the welcome desk has enough copies.",
+    "The coordinator will assert that the welcome desk has enough copies."
+   ],
+   "answerIndex": 2,
+   "explanation": "Ensure means to make certain, which matches the coordinator's goal of confirming that the welcome desk has enough copies.",
+   "difficulty": 6,
+   "skill": "Distinguishing ensure, assure, and insure",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A shelter's style guide says to use stationary for fixed in one place and stationery for writing supplies. Which sentence follows the guide?",
+   "choices": [
+    "The wheels remain stationery while the stationery is sorted.",
+    "The wheels remain stationary while the stationary is sorted.",
+    "The wheels remain stationery while the stationary is sorted.",
+    "The wheels remain stationary while the stationery is sorted."
+   ],
+   "answerIndex": 3,
+   "explanation": "The wheels are stationary because they remain fixed in place, while the paper and other writing materials are stationery.",
+   "difficulty": 4,
+   "skill": "Applying a stationary and stationery style rule",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A rescue center's style guide says to use lay for put or rest and lie for recline. Which sentence follows the guide?",
+   "choices": [
+    "The tired cat lie on the blanket yesterday.",
+    "The tired cat laid on the blanket yesterday.",
+    "The tired cat lay on the blanket yesterday.",
+    "The tired cat lain on the blanket yesterday."
+   ],
+   "answerIndex": 2,
+   "explanation": "The past-tense form of lie is lay, so the sentence correctly describes the cat resting on the blanket.",
+   "difficulty": 5,
+   "skill": "Distinguishing lay and lie in a specified tense",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school guide says complement means something that completes or agrees with something, while compliment means praise. Which sentence follows the guide?",
+   "choices": [
+    "The blue scarf compliments her coat, and the teacher gave her a complement.",
+    "The blue scarf complements her coat, and the teacher gave her a compliment.",
+    "The blue scarf compliments her coat, and the teacher gave her a compliment.",
+    "The blue scarf complements her coat, and the teacher gave her a complement."
+   ],
+   "answerIndex": 1,
+   "explanation": "The scarf complements the coat by completing its appearance, and the compliment expresses the teacher's praise.",
+   "difficulty": 5,
+   "skill": "Distinguishing complement and compliment",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A research guide says imply means to suggest and infer means to reach a conclusion from evidence. Which sentence follows the guide?",
+   "choices": [
+    "The data imply a trend, and readers can infer the cause.",
+    "The data infer a trend, and readers can imply the cause.",
+    "The data imply a trend, and readers can imply the cause.",
+    "The data infer a trend, and readers can infer the cause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The data suggest a trend through implication, while readers infer the cause by drawing a conclusion from the evidence.",
+   "difficulty": 6,
+   "skill": "Distinguishing imply and infer",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school guide says principal means a leader or chief, while principle means a basic rule or belief. Which sentence follows the guide?",
+   "choices": [
+    "The principal explained the school's important principal to the students.",
+    "The principle explained the school's important principal to the students.",
+    "The principal explained the school's important principle to the students.",
+    "The principle explained the school's important principle to the students."
+   ],
+   "answerIndex": 2,
+   "explanation": "The principal is the school leader who explains the school's important principle, which is a basic rule or belief.",
+   "difficulty": 4,
+   "skill": "Distinguishing principal and principle",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newsletter guide says altogether means entirely or in total, while all together means in one group. Which sentence follows the guide?",
+   "choices": [
+    "The judges considered the proposal all together, and the team stood altogether near the door.",
+    "The judges considered the proposal altogether, and the team stood all together near the door.",
+    "The judges considered the proposal altogether, and the team stood altogether near the door.",
+    "The judges considered the proposal all together, and the team stood all together near the door."
+   ],
+   "answerIndex": 1,
+   "explanation": "The judges considered the proposal in total, while the team stood all together as a group near the door.",
+   "difficulty": 6,
+   "skill": "Distinguishing altogether and all together",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Under a newsletter rule requiring a comma after an introductory prepositional phrase of three or more words, which sentence is punctuated correctly?",
+   "choices": [
+    "After the opening ceremony, the finalists met the judges.",
+    "After the opening ceremony the finalists met the judges.",
+    "After the opening ceremony the finalists, met the judges.",
+    "After the opening ceremony, the finalists, met the judges."
+   ],
+   "answerIndex": 0,
+   "explanation": "The introductory phrase After the opening ceremony is followed by the required comma.",
+   "difficulty": 4,
+   "skill": "Applying introductory-phrase punctuation",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence meets a nonprofit guide that requires whom for a person functioning as the object of a preposition?",
+   "choices": [
+    "To whom should I send the completed forms?",
+    "To who should I send the completed forms?",
+    "Who should I send the completed forms to?",
+    "To whom should I sent the completed forms?"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because whom is the object of the preposition to, the opening phrase should read To whom.",
+   "difficulty": 6,
+   "skill": "Distinguishing who from whom",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A newsletter's style guide says to treat each as the singular subject in a sentence. Which sentence follows the rule?",
+   "choices": [
+    "Each of the volunteers has completed the training.",
+    "Each of the volunteers have completed the training.",
+    "Each of the volunteer have completed the training.",
+    "Each of the volunteers are completing the training."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the guide treats each as singular, it takes the singular verb has in Each of the volunteers has completed the training.",
+   "difficulty": 4,
+   "skill": "Applying subject-verb agreement rules",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A school guide says to use that for defining clauses that identify a specific group. Which sentence follows the rule?",
+   "choices": [
+    "Students that attend the workshop earn extra credit.",
+    "Students who attend the workshop earn extra credit.",
+    "Students that attends the workshop earns extra credit.",
+    "Students whom attends the workshop earn extra credit."
+   ],
+   "answerIndex": 0,
+   "explanation": "The clause that attend the workshop identifies the students who qualify, so it is a defining clause introduced by that.",
+   "difficulty": 5,
+   "skill": "Distinguishing defining clauses",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A research organization's style guide says to treat data as a plural noun. Which sentence follows the rule?",
+   "choices": [
+    "The data show a consistent pattern.",
+    "The data shows a consistent pattern.",
+    "The datum show a consistent pattern.",
+    "The datas show a consistent pattern."
+   ],
+   "answerIndex": 0,
+   "explanation": "Treating data as plural requires the plural verb show in The data show a consistent pattern.",
+   "difficulty": 5,
+   "skill": "Applying noun-number conventions",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "In the style guide, the word ‘data’ is treated as a plural noun.",
+      "url": "https://en.wikipedia.org/wiki/Data_(word)",
+      "quote": "the word data is always plural, never singular",
+      "reader": "nvidia/nemotron-3.5-lightning-30b-a3b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "A style guide says to use criterion for one standard and criteria for several standards. Which sentence follows the rule?",
+   "choices": [
+    "The rubric includes three criteria for evaluating a project.",
+    "The rubric includes three criterions for evaluating a project.",
+    "The rubric includes one criterias for evaluating a project.",
+    "The rubric includes one criteria for evaluating a project."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the rubric includes several standards, the plural noun criteria is correct in The rubric includes three criteria for evaluating a project.",
+   "difficulty": 6,
+   "skill": "Using singular and plural forms",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A British publisher's style guide uses storeys for floors of a building and stories for floors of a ship. Which sentence follows the rule?",
+   "choices": [
+    "The apartment has three stories, and the ship has five storeys.",
+    "The apartment has three storeys, and the ship has five stories.",
+    "The apartment has three storeys, and the ship has five storeys.",
+    "The apartment has three stories, and the ship has five stories."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence correctly uses storeys for the apartment's floors and stories for the ship's floors.",
+   "difficulty": 6,
+   "skill": "Distinguishing words with different meanings",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A committee's style guide says to use comprise directly with its object, without of or the passive construction is comprised of. Which sentence follows the rule?",
+   "choices": [
+    "The review committee comprises 12 members.",
+    "The review committee comprises of 12 members.",
+    "The review committee is comprised of 12 members.",
+    "The review committee comprises 12 of members."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence places the object members directly after comprises and avoids both prohibited constructions.",
+   "difficulty": 6,
+   "skill": "Following a guide on verb usage",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "A publisher's style guide says to use afterwards for the adverb meaning later and afterwords for remarks printed at the end of a book. Which sentence follows the rule?",
+   "choices": [
+    "We can meet afterwards, and the afterwords discuss the new edition.",
+    "We can meet afterwords, and the afterwards discuss the new edition.",
+    "We can meet afterwards, and the afterwards discuss the new edition.",
+    "We can meet afterwords, and the afterwords discuss the new edition."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence correctly uses afterwards to mean later and afterwords to refer to the closing remarks in a book.",
+   "difficulty": 6,
+   "skill": "Distinguishing words with different parts of speech",
+   "topic": "Usage Debates and Style Guides",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A university style guide says to spell out academic degree names in lowercase in prose but use standard abbreviations in bylines. Which byline follows the guide?",
+   "choices": [
+    "Rina Patel, B.S., M.A.",
+    "Rina Patel, bachelor of science, master of arts.",
+    "Rina Patel, B.S., master of arts.",
+    "Rina Patel, bachelor of science, M.A."
+   ],
+   "answerIndex": 0,
+   "explanation": "This byline uses standard abbreviations rather than spelling out the degree names, as the guide requires for bylines.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A student newspaper's style guide says to capitalize every word of a headline except articles such as the. Which headline follows the rule?",
+   "choices": [
+    "The Secret Garden",
+    "the Secret Garden",
+    "The Secret garden",
+    "The secret Garden"
+   ],
+   "answerIndex": 0,
+   "explanation": "It capitalizes every content word while leaving the article The lowercase, as the guide requires.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A nonprofit's style guide says to spell email as one word, even when it comes before another noun. Which sentence follows the guide?",
+   "choices": [
+    "The teacher sent your e-mail address to the office.",
+    "The teacher sent your E-mail address to the office.",
+    "The teacher sent your email address to the office.",
+    "The teacher sent your email-address to the office."
+   ],
+   "answerIndex": 2,
+   "explanation": "The guide requires email as one word even before another noun, so email address is the approved form.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A magazine's style guide says to lowercase color names in ordinary prose. Which sentence follows the guide?",
+   "choices": [
+    "The bedroom walls are pale blue.",
+    "The bedroom walls are Pale Blue.",
+    "The bedroom walls are pale Blue.",
+    "The bedroom walls are PALE BLUE."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because the color name is not at the beginning of the sentence, the guide requires it to appear as pale blue.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A local guide says to use the American spelling aluminum. Which sentence follows the guide?",
+   "choices": [
+    "The bridge uses aluminium in its framework.",
+    "The bridge uses aluminum in its framework.",
+    "The bridge uses Aluminium in its framework.",
+    "The bridge uses ALUMINUM in its framework."
+   ],
+   "answerIndex": 1,
+   "explanation": "The guide specifies aluminum, so that spelling is required in the sentence.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A style guide says to write website as one word. Which sentence follows the guide?",
+   "choices": [
+    "The club's website explains how to join.",
+    "The club's web site explains how to join.",
+    "The club's Website explains how to join.",
+    "The club's web-site explains how to join."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide requires website as one word, so the sentence uses the approved spelling.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "A classroom guide requires a colon to introduce a complete instruction and a capital letter for its first word. Which sentence follows the guide?",
+   "choices": [
+    "The instructions were clear everyone should bring a pencil.",
+    "The instructions were clear: everyone should bring a pencil.",
+    "The instructions were clear; everyone should bring a pencil.",
+    "The instructions were clear: Everyone should bring a pencil."
+   ],
+   "answerIndex": 3,
+   "explanation": "The colon introduces the complete instruction Everyone should bring a pencil, and Everyone begins with a capital letter.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A publication uses the American convention of placing periods and commas inside closing quotation marks. Which sentence follows that convention?",
+   "choices": [
+    "The sign read, \"No parking after 6 p.m.\"",
+    "The sign read \"No parking after 6 p.m\".",
+    "The sign read, \"No parking after 6 p.m\".",
+    "The sign read \"No parking after 6 p.m.\"."
+   ],
+   "answerIndex": 0,
+   "explanation": "This sentence places both the comma and the final period inside the closing quotation marks, as the stated convention requires.",
+   "reason": "A: picked 3 not 0 (Period placed inside quotation marks as required by American convention.)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A style guide says to use each other for two people and one another for more than two. Which sentence follows the guide?",
+   "choices": [
+    "The two teammates encouraged one another after the match.",
+    "The two teammates encouraged themselves after the match.",
+    "The two teammates encouraged another after the match.",
+    "The two teammates encouraged each other after the match."
+   ],
+   "answerIndex": 3,
+   "explanation": "The guide reserves each other for two people, so it is the appropriate phrase for the two teammates.",
+   "reason": "source: \"Rule: 'each other' is used for two people; 'one another' for more than two.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "A style guide says to use a number of with countable plural nouns. Which sentence follows the guide?",
+   "choices": [
+    "We need an amount of chairs for the meeting.",
+    "We need a count of chairs for the meeting.",
+    "We need a number of chairs for the meeting.",
+    "We need a quantity of chairs for the meeting."
+   ],
+   "answerIndex": 2,
+   "explanation": "The guide calls for a number of with countable plural nouns such as chairs.",
+   "reason": "source: \"Rule: 'a number of' is used with a countable plural noun.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A style guide says to use which for nonrestrictive clauses and that for restrictive clauses. Which sentence follows the guide?",
+   "choices": [
+    "The hikers reached the summit, which was covered in snow.",
+    "The hikers reached the summit that was covered in snow.",
+    "The hikers reached the summit which was covered in snow.",
+    "The hikers reached the summit, that was covered in snow."
+   ],
+   "answerIndex": 0,
+   "explanation": "The comma makes the clause nonrestrictive, and the sentence correctly uses which to introduce that clause.",
+   "reason": "B: not exactly one correct (two defensible options (0 and 1 both correctly apply the rule for nonrestrictive and restrictive respectively))"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A local news guide says to treat the word news as a singular noun when it means reports of current events. Which sentence follows the guide?",
+   "choices": [
+    "The news is surprising this morning.",
+    "The news are surprising this morning.",
+    "The news were surprising this morning.",
+    "The news have been surprising this morning."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses the singular verb is with news, following the guide's stated agreement rule.",
+   "reason": "B: picked 1 not 0"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "A school guide requires job titles to be capitalized when they immediately precede a person's name and lowercase in all other uses. Which sentence follows the guide?",
+   "choices": [
+    "The Mayor and the council chair attended the meeting.",
+    "The principal opened the ceremony and welcomed the students.",
+    "Maya Ortiz, the principal, opened the ceremony.",
+    "President Elena Ruiz opened the ceremony and welcomed the students."
+   ],
+   "answerIndex": 3,
+   "explanation": "President Elena Ruiz opens the ceremony uses President immediately before Elena Ruiz, and the guide requires capitalization in that position.",
+   "reason": "A: not exactly one correct (More than one option follows the guide (options 1, 2, and 3 all correctly apply the capitalization rule).) | B: picked -1 not 3 (Multiple correct options found)"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "When applying the wildlife guide's rule that lay is the past tense of lie, which sentence uses both forms correctly?",
+   "choices": [
+    "The fox lay down, and now the dog lies beside it.",
+    "The fox laid down, and now the dog lies beside it.",
+    "The fox lie down, and now the dog laid beside it.",
+    "The fox lies down, and now the dog laid beside it."
+   ],
+   "answerIndex": 0,
+   "explanation": "The fox's past action takes lay, while the dog's present position takes lie.",
+   "reason": "source: \"The past tense of 'lie' (to recline) is 'lay'.\": not_addressed"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A city newspaper's style guide says to capitalize a formal title immediately before a person's name. Which sentence follows the rule?",
+   "choices": [
+    "Mayor Alvarez attended the hearing.",
+    "mayor Alvarez attended the hearing.",
+    "Mayor alvarez attended the hearing.",
+    "ALDERMAN Alvarez attended the hearing."
+   ],
+   "answerIndex": 0,
+   "explanation": "The guide capitalizes a formal title before a name, so Mayor is correctly capitalized in Mayor Alvarez attended the hearing.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "code",
+   "prompt": "A library's style guide requires the one-word term website, written with a lowercase w. Which sentence follows the rule?",
+   "choices": [
+    "The library's website lists the opening hours.",
+    "The library's Web site lists the opening hours.",
+    "The library's web site lists the opening hours.",
+    "The library's Website lists the opening hours."
+   ],
+   "answerIndex": 0,
+   "explanation": "The sentence uses website as one word with a lowercase w, exactly as the library's guide requires.",
+   "reason": "two choices are the same"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "A style guide says to use a before words beginning with a consonant sound and an before words beginning with a vowel sound. Which phrase follows the rule?",
+   "choices": [
+    "an honest answer",
+    "a honest answer",
+    "an honest answers",
+    "a honest answers"
+   ],
+   "answerIndex": 0,
+   "explanation": "Because honest begins with a consonant sound, the correct phrase is an honest answer.",
+   "reason": "B: picked 1 not 0"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": false
+   },
+   "b": {
+    "pick": -1,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

@@ -1,0 +1,93 @@
+{
+ "collection": "block_plans",
+ "row_id": 4,
+ "shared": true,
+ "user_id": null,
+ "round": 1,
+ "status": "verified: code checks + MiniMax review + cross-family review (owner-review agent, 2026-10-24)",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P74",
+   "wrong": "Option b: \"The committee voted on the proposal, and the results was announced by the chair.\"",
+   "correct": "\"the results were announced\" (subject-verb agreement)."
+  },
+  {
+   "ref": "P75",
+   "wrong": "Feedback for option d (\"First stir the batter slowly, and then pour it into the pan.\"): \"Starting active and then issuing a command can be a mood shift, but this option's shift is smooth and there is no jarring change here.\"",
+   "correct": "Option d is imperative and active throughout; it has no shift at all."
+  },
+  {
+   "ref": "Q145",
+   "wrong": "Type-in check (key already re-keyed to \"be\") still accepts \"should be\", \"should stay\", \"must be\", \"must stay\".",
+   "correct": "The subjunctive form is the one word \"be\" (\"It is required that you be on time\"); accept only \"be\" forms."
+  }
+ ],
+ "edits": [
+  {
+   "path": "blocks[4].data.options[1].text",
+   "before": "The committee voted on the proposal, and the results was announced by the chair.",
+   "after": "The committee voted on the proposal, and the results were announced by the chair."
+  },
+  {
+   "path": "blocks[4].data.feedback.byOption.d",
+   "before": "Starting active and then issuing a command can be a mood shift, but this option's shift is smooth and there is no jarring change here.",
+   "after": "This sentence is imperative and active throughout (stir, then pour), so neither the voice nor the mood shifts."
+  },
+  {
+   "path": "checks[3].accepts",
+   "before": [
+    "should be",
+    "should stay",
+    "must be",
+    "must stay"
+   ],
+   "after": [
+    "be"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[4].data.options[1].text",
+   "before": "The committee voted on the proposal, and the results was announced by the chair.",
+   "after": "The committee voted on the proposal, and the results were announced by the chair."
+  },
+  {
+   "path": "blocks[4].data.feedback.byOption.d",
+   "before": "Starting active and then issuing a command can be a mood shift, but this option's shift is smooth and there is no jarring change here.",
+   "after": "This sentence is imperative and active throughout (stir, then pour), so neither the voice nor the mood shifts."
+  },
+  {
+   "path": "checks[3].accepts",
+   "before": [
+    "should be",
+    "should stay",
+    "must be",
+    "must stay"
+   ],
+   "after": [
+    "be"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 2,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 2,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "why_it_failed_first": "two edits used JSON syntax (\"answer\": ..., \"accepts\": [...]) and matched 0 places",
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "apply_with": "curriculum-build/staged/content-fixes/owner-review/apply-owner-review.js (db-changes.json)"
+}

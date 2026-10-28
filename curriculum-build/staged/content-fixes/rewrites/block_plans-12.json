@@ -1,0 +1,542 @@
+{
+ "collection": "block_plans",
+ "row_id": 12,
+ "shared": true,
+ "user_id": null,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": null,
+ "errors": [
+  {
+   "ref": "P90",
+   "wrong": "Two clauses are okay when they are joined correctly with because.",
+   "correct": "\"Although the movie was long, nobody left the theater.\" is joined with \"although\", not \"because\".",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Two clauses are okay when they are joined correctly with because.",
+   "replace": "Two clauses are okay when they are joined correctly with although.",
+   "fixes": [
+    "P90"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "blocks[1].data.cards[5].explanation",
+   "before": "Two clauses are okay when they are joined correctly with because.",
+   "after": "Two clauses are okay when they are joined correctly with although.",
+   "fixes": [
+    "P90"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 1,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax-m3.1-flash:free",
+ "model_b": "gemini-3.6-flash:free",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "blocks": [
+   {
+    "block": "Ret_UncuedReconstruct",
+    "purpose": "Free recall: the learner rebuilds, with no cues or options, the three requirements of a complete sentence and the definitions of fragment, run-on, and comma splice from level 10.",
+    "data": {
+     "answerLabel": "Reconstructed rule",
+     "chunks": [
+      {
+       "text": "a subject"
+      },
+      {
+       "text": "a finite verb"
+      },
+      {
+       "text": "a complete thought"
+      },
+      {
+       "text": "a semicolon"
+      },
+      {
+       "text": "a topic sentence"
+      }
+     ],
+     "completeMessage": "All three core definitions rebuilt from memory. Now let's use them at speed.",
+     "feedback": {
+      "explanation": "These three definitions come straight from level 10; recall them without options.",
+      "incorrect": "None of those chunks are in place yet — recall the level 10 definitions again.",
+      "partial": "Some slots are right. Match each chunk to its exact slot.",
+      "correct": "Rebuilt perfectly from memory."
+     },
+     "items": [
+      {
+       "chunks": [
+        {
+         "text": "a subject"
+        },
+        {
+         "text": "a finite verb"
+        },
+        {
+         "text": "a complete thought"
+        },
+        {
+         "text": "a semicolon"
+        },
+        {
+         "text": "a topic sentence"
+        }
+       ],
+       "feedback": {
+        "explanation": "Every sentence stands on three legs: subject, finite verb, complete thought. Anything missing makes it a fragment.",
+        "incorrect": "Try again — only three of these chunks are correct.",
+        "partial": "Some slots are right — match each chunk to its exact slot.",
+        "correct": "Exact recall of the three requirements."
+       },
+       "id": "req1",
+       "label": "The three requirements of a complete sentence",
+       "solution": [
+        "a subject",
+        "a finite verb",
+        "a complete thought"
+       ]
+      }
+     ],
+     "placeholder": "type from memory",
+     "prompt": "Rebuild the rule from memory: what three things does a complete sentence need? Drag the pieces into the slots — no hints, no word bank labels.",
+     "title": "Free Recall: The Complete-Sentence Rule"
+    },
+    "repaired": true,
+    "index": 0
+   },
+   {
+    "block": "Ret_SpeedCategorizer",
+    "purpose": "Rapid sorting of example sentences into Complete, Fragment, Run-on, or Comma splice, building automatic identification of the level 10 categories.",
+    "data": {
+     "buckets": [
+      {
+       "id": "complete",
+       "label": "Complete",
+       "color": "success"
+      },
+      {
+       "id": "frag",
+       "label": "Fragment",
+       "color": "caution",
+       "hint": "Missing a subject, verb, or complete thought"
+      },
+      {
+       "id": "runon",
+       "label": "Run-on / Splice",
+       "color": "error",
+       "hint": "Two independent clauses joined wrong"
+      }
+     ],
+     "cards": [
+      {
+       "correctBucket": "complete",
+       "explanation": "One subject (The storm), one finite verb (knocked), one complete thought.",
+       "id": "c1",
+       "text": "The storm knocked out the power for three hours."
+      },
+      {
+       "correctBucket": "frag",
+       "explanation": "Because makes this a dependent clause — no complete thought, so it is a fragment.",
+       "id": "f1",
+       "text": "Because the bus arrived late."
+      },
+      {
+       "correctBucket": "runon",
+       "explanation": "Two independent clauses with no punctuation at all — a fused run-on.",
+       "id": "r1",
+       "text": "We finished the essay Maya proofread it twice."
+      },
+      {
+       "correctBucket": "runon",
+       "explanation": "Two independent clauses joined by only a comma — a comma splice.",
+       "id": "s1",
+       "text": "The recipe looked easy, the batter turned out lumpy."
+      },
+      {
+       "correctBucket": "frag",
+       "explanation": "No subject for the verb — who was waiting? Fragment.",
+       "id": "f2",
+       "text": "Waited patiently by the door until the bell rang."
+      },
+      {
+       "correctBucket": "complete",
+       "explanation": "Two clauses are okay when they are joined correctly with although.",
+       "id": "c2",
+       "text": "Although the movie was long, nobody left the theater."
+      },
+      {
+       "correctBucket": "runon",
+       "explanation": "Fused: two independent clauses, no comma, no conjunction, nothing.",
+       "id": "r2",
+       "text": "The alarm rang I hit snooze twice anyway."
+      }
+     ],
+     "prompt": "Sort each sentence into the right bucket as fast as you can. Trust your first instinct — speed builds the habit.",
+     "seconds": 75,
+     "showExplanations": true,
+     "title": "Sorting Sprint: Complete, Fragment, or Run-on?"
+    },
+    "repaired": false,
+    "index": 1
+   },
+   {
+    "block": "Ret_MisconceptionTrap",
+    "purpose": "Targets the classic mistake of labeling a subordinate-clause fragment (starting with because/when/although) as complete, with tempting flawed options.",
+    "data": {
+     "correctId": "frag",
+     "notQuiteMessage": "That's the trap.",
+     "options": [
+      {
+       "id": "complete",
+       "text": "Complete — it has a subject (the bells) and a verb (rang), so it is a full sentence.",
+       "whyNot": "It does have those parts, but the word Although turns the whole thing into a dependent clause. A dependent clause leaning on nothing is still a fragment."
+      },
+      {
+       "id": "frag",
+       "text": "Fragment — Although makes this a dependent clause, so the thought is incomplete on its own.",
+       "whyNot": "Correct. The subordinating word stops the clause from standing alone; it needs an independent clause to attach to."
+      },
+      {
+       "id": "fix",
+       "text": "Fixable with just a comma — write: Although the bells rang, and leave it there.",
+       "whyNot": "A comma cannot finish a dependent clause. You must add an independent clause, not just punctuation."
+      }
+     ],
+     "prompt": "Is this a complete sentence or a fragment? Although the bells rang across the whole town.",
+     "successMessage": "Survives scrutiny."
+    },
+    "repaired": false,
+    "index": 2
+   },
+   {
+    "block": "Ret_ForensicAudit",
+    "purpose": "The learner hunts down the exact error in a short paragraph containing a run-on, a comma splice, and a fragment, then taps the flawed words.",
+    "data": {
+     "artifactLabel": "Runner's Log — draft entry",
+     "artifactType": "essay",
+     "brief": "One paragraph, three flaws: a run-on, a comma splice, and a fragment. Click the flawed line.",
+     "completionMessage": "Three flaws found. That paragraph now needs: a period or semicolon for the fused clauses, a conjunction or semicolon for the splice, and an added subject or an attached clause for the fragment.",
+     "id": "audit",
+     "lines": [
+      {
+       "explanation": "Clean: one subject (my first 5K), one finite verb (ended), complete thought.",
+       "id": "l1",
+       "isError": false,
+       "label": "1",
+       "text": "My first 5K ended in the rain."
+      },
+      {
+       "explanation": "Comma splice: two independent clauses joined by only a comma. Fix with a semicolon, comma + FANBOYS, or a period.",
+       "id": "l2",
+       "isError": true,
+       "label": "2",
+       "text": "My shoes were soaked, I kept running anyway."
+      },
+      {
+       "explanation": "Fused run-on: two independent clauses with no punctuation between them.",
+       "id": "l3",
+       "isError": true,
+       "label": "3",
+       "text": "The finish line appeared I sprinted the last hundred meters."
+      },
+      {
+       "explanation": "Clean: complete sentence with subject and verb.",
+       "id": "l4",
+       "isError": false,
+       "label": "4",
+       "text": "My sister waited with a dry towel at the gate."
+      },
+      {
+       "explanation": "Subordinate-clause fragment: Because makes this a dependent clause with no independent clause attached.",
+       "id": "l5",
+       "isError": true,
+       "label": "5",
+       "text": "Because crossing the line felt better than any trophy."
+      }
+     ],
+     "maxMisses": 3,
+     "revealLabel": "Reveal the flaw",
+     "title": "Forensic Audit: the Race Day Paragraph"
+    },
+    "repaired": false,
+    "index": 3
+   },
+   {
+    "block": "Ret_InterleavedMatrix",
+    "purpose": "A mixed grid where the learner chooses the best fix (period, semicolon, comma + FANBOYS, or subordinating word) for each broken sentence, mixing all fix strategies from level 10.",
+    "data": {
+     "cells": [
+      {
+       "acceptedAnswers": [
+        "a period",
+        "period",
+        "split into two sentences",
+        "a period or question mark"
+       ],
+       "answer": "a period",
+       "colId": "fix",
+       "feedback": "Simplest fix: split into two sentences with a period.",
+       "placeholder": "e.g. a period",
+       "rowId": "fused"
+      },
+      {
+       "acceptedAnswers": [
+        "a semicolon",
+        "semicolon between closely related clauses"
+       ],
+       "answer": "a semicolon",
+       "colId": "fix",
+       "feedback": "A semicolon works well here because the two ideas are closely related.",
+       "placeholder": "e.g. a semicolon",
+       "rowId": "splice"
+      },
+      {
+       "acceptedAnswers": [
+        "comma + FANBOYS",
+        "a comma plus a coordinating conjunction",
+        "comma plus FANBOYS"
+       ],
+       "answer": "comma + a coordinating conjunction (FANBOYS: for, and, nor, but, or, yet, so)",
+       "colId": "fix",
+       "feedback": "The FANBOYS conjunction is chosen for the meaning: for, and, nor, but, or, yet, so.",
+       "placeholder": "e.g. comma + for/but/and/so...",
+       "rowId": "meaning"
+      },
+      {
+       "acceptedAnswers": [
+        "a subordinating word",
+        "add a subordinating conjunction",
+        "subordinating word"
+       ],
+       "answer": "add a subordinating word (like because, when, although) to make one clause dependent",
+       "colId": "fix",
+       "feedback": "Making one clause dependent with because, when, or although folds the two clauses into one correct sentence.",
+       "placeholder": "e.g. add because/when/although...",
+       "rowId": "cause"
+      }
+     ],
+     "columns": [
+      {
+       "id": "fix",
+       "label": "Best fix"
+      }
+     ],
+     "completionMessage": "Every broken sentence matched to its strongest fix — that's the whole toolbox from level 10.",
+     "matrixSubtitle": "Retrieval grid: match each broken sentence to its strongest fix strategy.",
+     "matrixTitle": "Repair Matrix: run-ons and splices",
+     "rows": [
+      {
+       "id": "fused",
+       "label": "Two independent clauses slammed together with no punctuation at all",
+       "sourceUnit": "Run-ons (fused sentences)"
+      },
+      {
+       "id": "splice",
+       "label": "Two independent clauses joined with only a comma",
+       "sourceUnit": "Comma splices"
+      },
+      {
+       "id": "meaning",
+       "label": "Two related clauses you want to keep in one sentence, joined by a joining word",
+       "sourceUnit": "Comma + FANBOYS"
+      },
+      {
+       "id": "cause",
+       "label": "One clause explains or depends on the other (a cause, time, or contrast)",
+       "sourceUnit": "Subordinating words"
+      }
+     ]
+    },
+    "repaired": true,
+    "index": 4
+   },
+   {
+    "block": "Ret_FarTransferWorkbench",
+    "purpose": "The learner combines old and new patterns by building correct new sentences from scrambled clauses, applying every fixing strategy to unfamiliar material.",
+    "data": {
+     "contextItems": [
+      {
+       "label": "Source text",
+       "value": "Two drafts, both broken"
+      },
+      {
+       "label": "Goal",
+       "value": "One correct paragraph"
+      }
+     ],
+     "decisionKeywords": [
+      "although the stage was crowded",
+      "period",
+      "semicolon"
+     ],
+     "decisionPlaceholder": "Type your fixed sentence here.",
+     "decisionPrompt": "Rewrite the broken sentence so it is fully correct. You may add punctuation, a joining word (FANBOYS), or a subordinating word — and you may split it into more than one sentence if that is cleanest.",
+     "eyebrow": "ENGLISH — EDITOR'S DESK",
+     "misconception": {
+      "detail": "Fixing the fragment or the splice with only a comma does not work. A comma alone cannot join independent clauses (that creates a splice), and no punctuation can complete a dependent clause on its own. Use a period, semicolon, or comma + FANBOYS for the clauses, and attach the dependent clause to a complete sentence.",
+      "title": "The comma-only trap"
+     },
+     "nextLabel": "Print-ready",
+     "rationaleKeywords": [
+      "comma splice",
+      "fragment",
+      "semicolon"
+     ],
+     "rationalePlaceholder": "Explain the fixes you made.",
+     "rationalePrompt": "Which repair rules did you use? Name the problems you found and the fix for each.",
+     "referenceNote": "Fixes available: period, semicolon, comma + FANBOYS, or a subordinating word.",
+     "retryLabel": "Rewrite it",
+     "rule": {
+      "name": "The Repair Rules",
+      "statement": "A complete sentence needs a subject, a finite verb, and a complete thought. Fix a fused run-on with a period, a semicolon, a comma + FANBOYS, or a subordinating word. Never join two independent clauses with only a comma."
+     },
+     "scenarioBody": "A student submitted this sentence to the school paper: Although the stage was crowded the soloist found her spotlight, she sang the final verse the audience fell silent. Two problems are hiding in it: a fused run-on, and a subordinate clause left standing alone. Your job is to rebuild the sentence so it is fully correct — and say which repair rules you used.",
+     "scenarioTitle": "Fix the Yearbook Quote",
+     "submitLabel": "Lock in the fix",
+     "targetAnswer": {
+      "decision": "Although the stage was crowded, the soloist found her spotlight. She sang the final verse, and the audience fell silent. (Also correct: use a semicolon — 'She sang the final verse; the audience fell silent.')",
+      "rationale": "The original hides three problems. 'Although the stage was crowded' is a subordinate-clause fragment standing alone, so it must be attached to a complete sentence with a comma after 'crowded.' 'The soloist found her spotlight, she sang the final verse' is a comma splice: a comma alone cannot join two independent clauses. Fix it by starting a new sentence with a period, or keep it in one sentence with a semicolon or a comma + FANBOYS. Finally, 'the final verse the audience fell silent' is a fused run-on with no punctuation at all, so it needs a period, a semicolon, or a comma plus a FANBOYS conjunction (here 'and' works well)."
+     }
+    },
+    "repaired": true,
+    "index": 5
+   }
+  ],
+  "checks": [
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "What exactly makes a group of words a fragment?",
+    "answer": "A fragment is missing a subject, a verb, or a complete thought.",
+    "rationale": "The deciding step: a complete sentence needs a subject, a finite verb, and a complete thought, so a fragment is defined by missing one of those three — not by length or its first word.",
+    "source": "ai",
+    "hint": "Recall the three requirements of a complete sentence — a fragment is missing one of them.",
+    "choices": [
+     "A fragment is missing a subject, a verb, or a complete thought.",
+     "A fragment is a very short sentence with only a few words.",
+     "A fragment is any sentence that starts with a subordinating word.",
+     "A fragment is a sentence with more than one subject."
+    ],
+    "id": "c1",
+    "after": 0,
+    "focus": "Definitions of complete sentence, fragment, run-on, comma splice"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "Into the box. In the final minute, kicked the ball over the fence.",
+    "answer": "Fragment — there is no subject: who was kicking?",
+    "rationale": "Kicked is a finite verb and the thought is complete, but there is no subject telling us who kicked — so it fails one of the three requirements and is a fragment.",
+    "source": "ai",
+    "hint": "Check the three requirements one at a time. Kicked is a verb — but whose foot did the kicking?",
+    "choices": [
+     "Fragment — there is no subject: who was kicking?",
+     "Complete — the ball receives the action of kicked.",
+     "Complete — kicked is a finite verb, so it counts.",
+     "Fragment — a sentence cannot start with the word In."
+    ],
+    "id": "c2",
+    "after": 1,
+    "focus": "Identifying a fragment missing a subject"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "type_in",
+    "prompt": "Is this a complete sentence or a fragment? Answer with one word. When the lights went out during the play.",
+    "answer": "fragment",
+    "rationale": "The subordinating word When makes the clause dependent, and a dependent clause with nothing attached lacks a complete thought — so it is a fragment.",
+    "source": "ai",
+    "accepts": [
+     "fragment",
+     "Fragment",
+     "a fragment"
+    ],
+    "hint": "Because is a subordinating word. Can a clause it starts with stand alone?",
+    "id": "c3",
+    "after": 2,
+    "focus": "Subordinate-clause fragment vs complete sentence"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "multiple_choice",
+    "prompt": "The concert ended the crowd sang the last chorus together. What is the error?",
+    "answer": "Run-on — the second clause is fused on with no punctuation at all.",
+    "rationale": "The crowd sang... is an independent clause attached with no punctuation whatsoever between the clauses — that fusion is the definition of a run-on, distinct from a comma splice.",
+    "source": "ai",
+    "hint": "Look closely at what sits between the two clauses. Is there anything there?",
+    "choices": [
+     "Run-on — the second clause is fused on with no punctuation at all.",
+     "Comma splice — a comma sits between the two clauses.",
+     "Complete — the semicolon joins the two clauses correctly.",
+     "Fragment — the second part has no subject."
+    ],
+    "id": "c4",
+    "after": 3,
+    "focus": "Spotting a run-on in running text"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "type_in",
+    "prompt": "The museum closed at six, we had forty minutes left. One word of punctuation fixes this while keeping both clauses closely linked. Which single punctuation mark is the best fix here? (One word.)",
+    "answer": "semicolon",
+    "rationale": "The clauses are closely related and the sentence needs no added conjunction, so the semicolon is the best single-mark fix; a comma alone would still be a splice.",
+    "source": "ai",
+    "accepts": [
+     "semicolon",
+     "a semicolon",
+     "use a semicolon"
+    ],
+    "hint": "The two clauses are closely related, and you want the punctuation alone to do the joining — no extra word needed.",
+    "id": "c5",
+    "after": 4,
+    "focus": "Choosing the correct fix (semicolon vs comma + FANBOYS)"
+   },
+   {
+    "skill_id": "sentence_struct",
+    "skill_name": "Fragments and run-ons",
+    "difficulty": 1,
+    "format": "type_in",
+    "prompt": "Fix this broken sentence in full: Because the rehearsal ran late. The stage crew worked until midnight. (Write the whole corrected sentence, joining it into one.)",
+    "answer": "Because the rehearsal ran late, the stage crew worked until midnight.",
+    "rationale": "Because... is a subordinate-clause fragment; attaching it to the independent clause with a comma makes one correct complex sentence.",
+    "source": "ai",
+    "accepts": [
+     "Because the rehearsal ran late, the stage crew worked until midnight.",
+     "because the rehearsal ran late, the stage crew worked until midnight"
+    ],
+    "hint": "Make the first clause dependent with a subordinating word so it attaches to the complete second clause.",
+    "id": "c6",
+    "after": 5,
+    "focus": "Fixing a combined fragment/run-on sentence"
+   }
+  ]
+ }
+}

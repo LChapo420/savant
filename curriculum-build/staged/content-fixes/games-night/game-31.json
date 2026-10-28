@@ -1,0 +1,2875 @@
+{
+ "row_id": 31,
+ "engine_id": "pong-breakout",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 41,
+ "generated_at": "2026-10-24T22:03:27.363Z",
+ "writer": "qwen/qwen3.8-max:free, minimax/minimax-m3.1-flash",
+ "stats": {
+  "written": 60,
+  "code_rejected": 3,
+  "sent_to_judges": 57,
+  "kept": 50,
+  "keep_rate_of_written": 0.833,
+  "judges": {
+   "both_answered": 57,
+   "picked_same_option": 53,
+   "a_picked_key": 53,
+   "b_picked_key": 57,
+   "models_a": [
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "openai/gpt-oss-20b",
+    "z-ai/glm-5.3",
+    "qwen/qwen3.8-max:free",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ],
+   "models_b": [
+    "z-ai/glm-5.3",
+    "minimax/minimax-m3.1-flash",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3.5-lightning-30b-a3b"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "pong-breakout",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 41,
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "title": "Breakout: Shifts in Voice and Mood",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 2,
+    "end": 5,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q26",
+    "prompt": "Model text: The coach selected the squad. Which rewritten sentence changes the active voice to passive voice?",
+    "choices": [
+     "The coach chose the squad.",
+     "The squad was selected by the coach.",
+     "The squad selected the coach.",
+     "The coach was selected by the squad."
+    ],
+    "answerIndex": 1,
+    "explanation": "The rewritten sentence makes the squad the subject of a passive construction while the coach remains the doer of the action.",
+    "difficulty": 3,
+    "skill": "Recognize an active-to-passive revision",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q24",
+    "prompt": "Read this passage: Close the window before the storm arrives. The forecast predicts heavy rain tonight. What shift in mood occurs between the two sentences?",
+    "choices": [
+     "Indicative mood to subjunctive mood",
+     "Imperative mood to subjunctive mood",
+     "Active voice to passive voice",
+     "Imperative mood to indicative mood"
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence gives a command in the imperative mood, while the second makes a factual statement in the indicative mood.",
+    "difficulty": 2,
+    "skill": "Identify an imperative-to-indicative mood shift",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which rewrite changes the passive sentence The essay was submitted by Jonah into active voice while keeping the simple past tense and the original meaning?",
+    "choices": [
+     "Jonah submitted the essay.",
+     "Jonah was submitting the essay.",
+     "Jonah has submitted the essay.",
+     "Jonah will submit the essay."
+    ],
+    "answerIndex": 0,
+    "explanation": "Jonah submitted the essay makes Jonah the subject and keeps the sentence in active voice and simple past tense.",
+    "difficulty": 4,
+    "skill": "Rewrite a passive sentence in active voice",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q13",
+    "prompt": "Read this passage: Submit all forms before noon. Were I the manager, I would extend the deadline until Friday. What shift occurs between the two sentences?",
+    "choices": [
+     "Imperative mood to subjunctive mood",
+     "Indicative mood to imperative mood",
+     "Active voice to passive voice",
+     "Subjunctive mood to indicative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence uses imperative mood to give a command, and the second shifts to subjunctive mood to express a hypothetical situation.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q33",
+    "prompt": "Follow the marked path. The trail continues beyond the ridge. Which pair preserves the mood progression of the text?",
+    "choices": [
+     "Check the map. The route ends at the lake.",
+     "The route ends at the lake. Check the map.",
+     "If the route had ended at the lake, we would have taken the path.",
+     "Open the gate. Keep it closed."
+    ],
+    "answerIndex": 0,
+    "explanation": "The pair moves from a command in the imperative mood to a factual statement in the indicative mood, as the text does.",
+    "difficulty": 2,
+    "skill": "Track a shift from imperative to indicative mood",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q38",
+    "prompt": "Which sentence pair contains a shift from active voice to passive voice?",
+    "choices": [
+     "The catalog was updated by the librarian. The librarian updated it yesterday.",
+     "The librarian updated the catalog. The catalog was updated by the librarian.",
+     "The librarian updated the catalog. The catalog listed new arrivals.",
+     "The librarian updated the catalog. The visitors consulted the new listings."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence makes the librarian the doer, while the second makes the catalog the subject of a passive construction.",
+    "difficulty": 3,
+    "skill": "Identifying an active-to-passive voice shift",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q36",
+    "prompt": "The package was checked by the clerk. If the address were correct, the clerk would release it. Which option matches the first sentence's voice and the second sentence's mood and main-clause voice?",
+    "choices": [
+     "The ticket was inspected by the agent. If the name had been valid, the pass would have been issued by the agent.",
+     "The agent inspected the ticket. If the name were valid, the agent would issue the pass.",
+     "The ticket was inspected by the agent. The name is valid, so the agent issued the pass.",
+     "The ticket was inspected by the agent. If the name were valid, the agent would issue the pass."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence is passive, while the second shifts to a subjunctive condition whose main clause gives the agent active voice.",
+    "difficulty": 4,
+    "skill": "Distinguish passive voice from a subjunctive conditional",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q8",
+    "prompt": "Read this passage: The new bridge was completed last spring. City officials celebrated the opening yesterday. What shift occurs between the two sentences?",
+    "choices": [
+     "Subjunctive mood to imperative mood",
+     "Active voice to passive voice",
+     "Indicative mood to subjunctive mood",
+     "Passive voice to active voice"
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence is written in passive voice because the bridge receives the action, and the second shifts to active voice because the officials perform it.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q41",
+    "prompt": "Read this passage: The pottery was fired by Ada. Ada inspected each piece before it was displayed. What shift occurs between the two sentences?",
+    "choices": [
+     "Passive voice to active voice",
+     "Active voice to passive voice",
+     "Indicative mood to subjunctive mood",
+     "Imperative mood to indicative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence uses passive voice, while the second uses active voice with Ada as the subject.",
+    "difficulty": 2,
+    "skill": "Identify a shift from passive to active voice",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q16",
+    "prompt": "Read this passage: A detailed map was drawn by the cartographer. She labeled every river and mountain range in red ink. What shift occurs between the two sentences?",
+    "choices": [
+     "Imperative mood to indicative mood",
+     "Active voice to passive voice",
+     "Indicative mood to subjunctive mood",
+     "Passive voice to active voice"
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence uses passive voice because the map receives the action, and the second shifts to active voice with the cartographer performing the labeling.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which passage contains both an active-to-passive voice shift and an indicative-to-imperative mood shift?",
+    "choices": [
+     "The gardener planted the herbs. The pots were moved beside the door. The plants need regular watering.",
+     "The gardener planted the herbs. The pots stood beside the door. Water them each morning.",
+     "The pots were moved by the gardener. The gardener planted the herbs. Water them each morning.",
+     "The gardener planted the herbs. The pots were moved beside the door. Water them each morning."
+    ],
+    "answerIndex": 3,
+    "explanation": "The passage moves from active to passive voice in its first two sentences and from indicative to imperative mood in its final sentence.",
+    "difficulty": 5,
+    "skill": "Identifying combined voice and mood shifts",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q39",
+    "prompt": "Which revision should be flagged for an inappropriate active-to-passive shift?",
+    "choices": [
+     "The gardener planted tomatoes. Weeds surrounded the plants.",
+     "The gardener planted tomatoes. The seedlings grew quickly.",
+     "The gardener planted tomatoes. The tomatoes were planted by the gardener.",
+     "The tomatoes were planted by the gardener. The gardener planted them in spring."
+    ],
+    "answerIndex": 2,
+    "explanation": "The revision unnecessarily changes the active statement into a passive statement that repeats the gardener and the tomatoes.",
+    "difficulty": 4,
+    "skill": "Marking an unnecessary voice shift",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q2",
+    "prompt": "Read this passage: The storm destroyed several buildings. Many families have been relocated by emergency services. What shift occurs between the two sentences?",
+    "choices": [
+     "Passive voice to active voice",
+     "Active voice to passive voice",
+     "Indicative mood to subjunctive mood",
+     "Interrogative mood to indicative mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence uses active voice with the storm as the subject performing the destruction, and the second uses passive voice with families receiving the action of relocation.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q22",
+    "prompt": "Read this passage: The organizers decorated the community center. The banners were hung by local artists. What shift occurs between the two sentences?",
+    "choices": [
+     "Passive voice to active voice",
+     "Active voice to passive voice",
+     "Imperative mood to indicative mood",
+     "Indicative mood to subjunctive mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence uses active voice to emphasize the organizers’ action, while the second uses passive voice to focus on the banners.",
+    "difficulty": 2,
+    "skill": "Identify an active-to-passive voice shift",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q5",
+    "prompt": "Read this passage: Every student should read chapter four before class. Chapter five will be discussed by the teacher tomorrow. What shift in voice occurs between the two sentences?",
+    "choices": [
+     "Active voice to passive voice",
+     "Passive voice to active voice",
+     "Indicative mood to imperative mood",
+     "Subjunctive mood to indicative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence has the student actively performing the reading, while the second places chapter five as the subject receiving the discussion.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q9",
+    "prompt": "Read this passage: The sun sets behind the mountains each evening. Were it not for that view, we would move elsewhere. What shift in mood occurs between the two sentences?",
+    "choices": [
+     "Indicative mood to subjunctive mood",
+     "Imperative mood to indicative mood",
+     "Subjunctive mood to imperative mood",
+     "Indicative mood to imperative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence states a fact in the indicative mood, while the second introduces a hypothetical condition using the subjunctive mood.",
+    "difficulty": 4,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q50",
+    "prompt": "Read this model text: The teacher collected the assignments. The assignments were sorted by the principal. The principal returned them on Friday. Which label best describes the voice pattern?",
+    "choices": [
+     "Passive, active, passive",
+     "Active, passive, active",
+     "Active, active, passive",
+     "Passive, passive, active"
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence makes the teacher the doer, the second makes the assignments the subject receiving the action, and the third again makes the principal the doer.",
+    "difficulty": 3,
+    "skill": "Trace a voice pattern through a model text",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q32",
+    "prompt": "The veterinarian examined the dog. The owner was given clear instructions. Which option follows the same voice-and-mood pattern as this text?",
+    "choices": [
+     "If the hedge had been pruned, the gardener would have collected the branches.",
+     "The hedge was pruned by the gardener. The branches were gathered by workers.",
+     "The gardener pruned the hedge. The gardener gathered the branches.",
+     "The gardener pruned the hedge. The branches were gathered by workers."
+    ],
+    "answerIndex": 3,
+    "explanation": "This option moves from an active indicative clause to a passive indicative clause, matching the voice-and-mood pattern of the text.",
+    "difficulty": 2,
+    "skill": "Match active and passive voice patterns",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q11",
+    "prompt": "Read this passage: Turn off the lights before leaving the room. The electricity bill rose sharply last month. What shift in mood occurs between the two sentences?",
+    "choices": [
+     "Subjunctive mood to indicative mood",
+     "Indicative mood to imperative mood",
+     "Imperative mood to indicative mood",
+     "Imperative mood to subjunctive mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence issues a direct command in the imperative mood, and the second simply reports a fact in the indicative mood.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q46",
+    "prompt": "Read this model text: The greenhouse was repaired by the volunteer group. The volunteer group replaced several broken panes. Several broken panes needed replacement. The repairs were completed before winter. Which sentence should be marked as the shift from passive voice to active voice?",
+    "choices": [
+     "The greenhouse was repaired by the volunteer group.",
+     "The volunteer group replaced several broken panes.",
+     "Several broken panes needed replacement.",
+     "The repairs were completed before winter."
+    ],
+    "answerIndex": 1,
+    "explanation": "The second sentence is active because the volunteer group performs the action, replacing the passive construction in the first sentence.",
+    "difficulty": 2,
+    "skill": "Identify a passive-to-active voice shift in a model text",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q35",
+    "prompt": "The parcel was sent by the seller. The buyer received it the next day. Which option uses the same sequence of voices as the text?",
+    "choices": [
+     "The clerk sorted the letters. The clerk mailed them on Friday.",
+     "The clerk sorted the letters. They were mailed on Friday.",
+     "The letters were sorted by the clerk. The clerk mailed them on Friday.",
+     "The letters were sorted by the clerk. They were mailed on Friday."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence is passive and the second is active, with both sentences remaining in the indicative mood.",
+    "difficulty": 3,
+    "skill": "Track a shift from passive to active voice",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q31",
+    "prompt": "Read this model text: Volunteers collected donations. The donations were counted in the lobby. Count every donation carefully. What two shifts occur from the first sentence to the second and from the second sentence to the third?",
+    "choices": [
+     "Active voice to passive voice, then imperative mood to indicative mood",
+     "Passive voice to active voice, then indicative mood to imperative mood",
+     "Active voice to passive voice, then indicative mood to imperative mood",
+     "Passive voice to active voice, then imperative mood to indicative mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence uses an active subject, the second puts the donations in a passive construction, and the third gives an imperative command.",
+    "difficulty": 4,
+    "skill": "Identifying sequential voice and mood shifts",
+    "topic": "Shifts in Voice and Mood in a Model Text"
+   },
+   {
+    "id": "q21",
+    "prompt": "Model text: Several volunteers collected pledges during the drive. The pledges were sorted by amount at the office. Each donor received a receipt after giving. The campaign team thanked everyone at noon. Which sentence uses passive voice?",
+    "choices": [
+     "The pledges were sorted by amount at the office.",
+     "Several volunteers collected pledges during the drive.",
+     "Each donor received a receipt after giving.",
+     "The campaign team thanked everyone at noon."
+    ],
+    "answerIndex": 0,
+    "explanation": "The sentence uses the passive construction were sorted, with the pledges receiving the action rather than performing it.",
+    "difficulty": 3,
+    "skill": "Identifying a passive-voice sentence in a model text",
+    "topic": "Shifts in Voice and Mood in Model Texts"
+   },
+   {
+    "id": "q27",
+    "prompt": "Which sentence pair contains a shift from passive voice to active voice?",
+    "choices": [
+     "The letter was mailed yesterday. The package was sent by courier.",
+     "The gardener planted roses. The roses need water each morning.",
+     "The recipe was shared by Ana. Ana shared it with the class.",
+     "The bell rang twice. The class had already started."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence makes the recipe the object of a passive verb, while the second makes Ana the active subject of shared.",
+    "difficulty": 2,
+    "skill": "Identifying passive-to-active voice shifts",
+    "topic": "Shifts in Voice and Mood in a Model Text"
+   },
+   {
+    "id": "q25",
+    "prompt": "Read this model text: The mural was painted by the art club. The club received applause from visitors. If the club had not painted it, the wall would have remained plain. Which pair of shifts occurs across the model text?",
+    "choices": [
+     "Passive voice to active voice, then indicative to subjunctive mood",
+     "Active voice to passive voice, then imperative to indicative mood",
+     "Active voice to passive voice, then passive to active voice",
+     "Imperative to indicative mood, then indicative to subjunctive mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The text moves from passive voice in the first sentence to active voice in the second, then from indicative mood to subjunctive mood in the conditional sentence.",
+    "difficulty": 4,
+    "skill": "Identify sequential voice and mood shifts",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q37",
+    "prompt": "Which revision changes the indicative mood of the first sentence to imperative mood?",
+    "choices": [
+     "Visitors should view the telescope from the terrace. View the telescope from the terrace.",
+     "Visitors should view the telescope from the terrace. Visitors may view the telescope from the terrace.",
+     "Visitors should view the telescope from the terrace. The telescope can be viewed from the terrace.",
+     "Visitors should view the telescope from the terrace. The terrace overlooks the museum gardens."
+    ],
+    "answerIndex": 0,
+    "explanation": "The revised sentence addresses the visitor directly and gives a command, so its mood is imperative.",
+    "difficulty": 3,
+    "skill": "Identifying an indicative-to-imperative mood shift",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q15",
+    "prompt": "Read this passage: Water the plants every morning. They grow much faster when they receive consistent moisture. What shift in mood occurs between the two sentences?",
+    "choices": [
+     "Subjunctive mood to indicative mood",
+     "Indicative mood to imperative mood",
+     "Imperative mood to indicative mood",
+     "Imperative mood to subjunctive mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence issues a direct command in the imperative mood, while the second states a fact in the indicative mood.",
+    "difficulty": 2,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which revision changes the indicative sentence The choir tunes the instruments before rehearsal into the imperative mood without changing its meaning?",
+    "choices": [
+     "The choir should tune the instruments before rehearsal.",
+     "Tune the instruments before rehearsal.",
+     "Tuning the instruments before rehearsal.",
+     "If the choir were here, it would tune the instruments."
+    ],
+    "answerIndex": 1,
+    "explanation": "Tune the instruments before rehearsal gives the reader a direct command and therefore uses the imperative mood.",
+    "difficulty": 3,
+    "skill": "Revise a sentence into the imperative mood",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q43",
+    "prompt": "Read this model text: The trail markers were replaced by the maintenance crew. The crew repainted the signs. Please keep away from the wet paint. What two shifts occur in the model text?",
+    "choices": [
+     "Active voice to passive voice, then imperative mood to indicative mood",
+     "Imperative mood to indicative mood, then passive voice to active voice",
+     "Passive voice to active voice, then indicative mood to imperative mood",
+     "Indicative mood to subjunctive mood, then active voice to passive voice"
+    ],
+    "answerIndex": 2,
+    "explanation": "The text moves from passive voice in the first sentence to active voice in the second, then from indicative mood to imperative mood.",
+    "difficulty": 4,
+    "skill": "Track two voice-and-mood shifts in a model text",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q47",
+    "prompt": "Read this model text: Sentence 1: The trail was marked by the park staff. Sentence 2: The staff reminded hikers to pack water. Sentence 3: If the trail had been marked more clearly, hikers would have reached the lake safely. Sentence 4: Hikers reached the lake safely. Which sentence contains the shift from indicative mood to subjunctive mood?",
+    "choices": [
+     "Sentence 1",
+     "Sentence 2",
+     "Sentence 3",
+     "Sentence 4"
+    ],
+    "answerIndex": 2,
+    "explanation": "Sentence 3 uses a past subjunctive conditional beginning with If the trail had been marked more clearly.",
+    "difficulty": 3,
+    "skill": "Identify an indicative-to-subjunctive mood shift in a model text",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q17",
+    "prompt": "Model text: The scout troop repainted the gate on Saturday. The gate was admired by every neighbor. A storm later loosened two hinges. The scout troop repaired them before dusk. The parents praised the crew. Which adjacent sentence pair contains a shift from active voice to passive voice?",
+    "choices": [
+     "The scout troop repainted the gate on Saturday; the gate was admired by every neighbor.",
+     "The gate was admired by every neighbor; a storm later loosened two hinges.",
+     "A storm later loosened two hinges; the scout troop repaired them before dusk.",
+     "The scout troop repaired them before dusk; the parents praised the crew."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence uses active voice, while the second uses passive voice, so this pair contains the requested shift.",
+    "difficulty": 2,
+    "skill": "Locating a shift from active voice to passive voice",
+    "topic": "Shifts in Voice and Mood in Model Texts"
+   },
+   {
+    "id": "q44",
+    "prompt": "Read this passage: The athlete stretched before practice. The muscles were stretched by the athlete. Which revision best preserves the meaning while avoiding the unnecessary shift in voice?",
+    "choices": [
+     "Stretch before practice.",
+     "The muscles were stretched before practice.",
+     "The athlete was stretching before practice.",
+     "The athlete stretched the muscles."
+    ],
+    "answerIndex": 3,
+    "explanation": "The athlete stretched the muscles keeps both sentences in active voice and preserves the original meaning and simple past tense.",
+    "difficulty": 3,
+    "skill": "Revise an unnecessary active-to-passive shift",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q3",
+    "prompt": "Read this passage: Please close the door behind you. The hallway was cleaned earlier today. What two shifts occur between these sentences?",
+    "choices": [
+     "Subjunctive to indicative mood and active to passive voice",
+     "Indicative to imperative mood and passive to active voice",
+     "Imperative to indicative mood and active to passive voice",
+     "Indicative to subjunctive mood and passive to active voice"
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence is an imperative command in active voice, while the second is an indicative statement in passive voice.",
+    "difficulty": 5,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q19",
+    "prompt": "Model text: The parcel was delivered to the warehouse on Monday. Workers unpacked it immediately. A supervisor checked the shipping label. A clerk entered the inventory count. The figures were saved on the office computer. Which adjacent sentence pair contains a shift from passive voice to active voice?",
+    "choices": [
+     "A supervisor checked the shipping label; a clerk entered the inventory count.",
+     "Workers unpacked it immediately; a supervisor checked the shipping label.",
+     "The parcel was delivered to the warehouse on Monday; workers unpacked it immediately.",
+     "A clerk entered the inventory count; the figures were saved on the office computer."
+    ],
+    "answerIndex": 2,
+    "explanation": "The delivery is presented in passive voice, while workers perform the unpacking in active voice.",
+    "difficulty": 3,
+    "skill": "Locating a shift from passive voice to active voice",
+    "topic": "Shifts in Voice and Mood in Model Texts"
+   },
+   {
+    "id": "q28",
+    "prompt": "Which sentence pair contains a shift from imperative mood to indicative mood?",
+    "choices": [
+     "We compared the maps carefully. We found several differences.",
+     "The maps compare the two regions. The newer map shows their boundaries.",
+     "The committee compared the maps. The results were checked.",
+     "Compare the maps. The older map shows the north district."
+    ],
+    "answerIndex": 3,
+    "explanation": "Compare is an imperative command, while shows states a fact in the indicative mood.",
+    "difficulty": 2,
+    "skill": "Identifying imperative-to-indicative mood shifts",
+    "topic": "Shifts in Voice and Mood in a Model Text"
+   },
+   {
+    "id": "q48",
+    "prompt": "Model text: The librarian selected the new books. The new books were displayed by the teacher. Which revision changes the second sentence to active voice while preserving its simple past tense and original meaning?",
+    "choices": [
+     "The new books were displayed by the teacher.",
+     "The librarian displayed the new books.",
+     "The teacher will display the new books.",
+     "The teacher displayed the new books."
+    ],
+    "answerIndex": 3,
+    "explanation": "This revision makes the teacher the actor and keeps the original past-tense action and meaning.",
+    "difficulty": 4,
+    "skill": "Revise a passive sentence into active voice while preserving meaning",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q1",
+    "prompt": "Read this passage: The committee reviewed the proposal carefully. All objections were dismissed by the chair. What shift occurs between the two sentences?",
+    "choices": [
+     "Active voice to passive voice",
+     "Passive voice to active voice",
+     "Indicative mood to imperative mood",
+     "Subjunctive mood to indicative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence uses active voice with the committee performing the action, while the second uses passive voice with the objections receiving the action.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q6",
+    "prompt": "Read this passage: The chef prepared a five-course meal. Every dish was praised by the guests. What shift occurs between the two sentences?",
+    "choices": [
+     "Indicative mood to imperative mood",
+     "Active voice to passive voice",
+     "Passive voice to active voice",
+     "Subjunctive mood to indicative mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence uses active voice with the chef performing the action, while the second shifts to passive voice with the dishes receiving the action.",
+    "difficulty": 2,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q18",
+    "prompt": "Model text: Please return the map to the front desk. The librarian stamped it after I arrived. We visited the exhibit gallery. The curator answered our questions. We left before closing time. Which adjacent sentence pair contains a shift from imperative mood to indicative mood?",
+    "choices": [
+     "The librarian stamped it after I arrived; we visited the exhibit gallery.",
+     "Please return the map to the front desk; the librarian stamped it after I arrived.",
+     "We visited the exhibit gallery; the curator answered our questions.",
+     "The curator answered our questions; we left before closing time."
+    ],
+    "answerIndex": 1,
+    "explanation": "The command in the first sentence is imperative, while the factual statement in the second sentence is indicative.",
+    "difficulty": 3,
+    "skill": "Locating a shift from imperative mood to indicative mood",
+    "topic": "Shifts in Voice and Mood in Model Texts"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which sentence pair contains a shift from subjunctive mood to indicative mood?",
+    "choices": [
+     "The bell rang at noon. The students entered quietly.",
+     "If the bell had rung, the students would have left. The bell rang at noon.",
+     "The bell was rung by the guard. The students entered quietly.",
+     "The students had left early. The bell rang at noon."
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence expresses an unreal condition in the subjunctive mood, while the second reports an actual event in the indicative mood.",
+    "difficulty": 4,
+    "skill": "Identifying subjunctive-to-indicative mood shifts",
+    "topic": "Shifts in Voice and Mood in a Model Text"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which rewrite changes the passive sentence The roof was damaged by the storm into active voice while keeping the original simple past tense?",
+    "choices": [
+     "The storm damaged the roof.",
+     "The storm had damaged the roof.",
+     "The storm was damaging the roof.",
+     "The storm had been damaging the roof."
+    ],
+    "answerIndex": 0,
+    "explanation": "The storm damaged the roof makes the storm the active subject and uses the simple past tense to express the original action.",
+    "difficulty": 3,
+    "skill": "Recognizing active voice in a revision",
+    "topic": "Shifts in Voice and Mood in a Model Text"
+   },
+   {
+    "id": "q23",
+    "prompt": "Read this passage: The archive was reorganized by the staff last month. The staff then catalogued each photograph. What shift occurs between the two sentences?",
+    "choices": [
+     "Active voice to passive voice",
+     "Imperative mood to indicative mood",
+     "Passive voice to active voice",
+     "Indicative mood to subjunctive mood"
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence makes the staff perform the action in passive voice, while the second makes the staff the active subject of catalogued.",
+    "difficulty": 2,
+    "skill": "Identify a passive-to-active voice shift",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q34",
+    "prompt": "The crew assembled the display. If the museum had needed more space, the exhibit would have moved to the east wing. Which option matches both the voice sequence and mood sequence of the text?",
+    "choices": [
+     "The song was rehearsed by the choir. If the hall had been larger, the choir would have performed there.",
+     "The choir rehearsed the song. If the hall had been larger, the choir would have performed there.",
+     "The choir rehearsed the song. The choir performed there after lunch.",
+     "The choir rehearsed the song. If the hall had been larger, the song would have been performed there."
+    ],
+    "answerIndex": 1,
+    "explanation": "The option uses active voice with indicative mood and then an active subjunctive conditional, matching the text.",
+    "difficulty": 3,
+    "skill": "Match voice and mood across a conditional",
+    "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q4",
+    "prompt": "Read this passage: The researchers conducted three trials. Had the results been different, the team would have published sooner. What shift in mood occurs between the two sentences?",
+    "choices": [
+     "Indicative mood to imperative mood",
+     "Subjunctive mood to indicative mood",
+     "Imperative mood to indicative mood",
+     "Indicative mood to subjunctive mood"
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence states a fact in the indicative mood, while the second presents a hypothetical condition using the subjunctive mood.",
+    "difficulty": 4,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q12",
+    "prompt": "Read this passage: The orchestra performed the symphony flawlessly. Standing ovations were given by the entire audience. What shift occurs between the two sentences?",
+    "choices": [
+     "Subjunctive mood to indicative mood",
+     "Indicative mood to imperative mood",
+     "Passive voice to active voice",
+     "Active voice to passive voice"
+    ],
+    "answerIndex": 3,
+    "explanation": "The first sentence uses active voice with the orchestra performing, while the second shifts to passive voice with standing ovations being given by the audience.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q10",
+    "prompt": "Read this passage: Several mistakes were made during the experiment. The instructor recorded them in her notes. What shift occurs between the two sentences?",
+    "choices": [
+     "Active voice to passive voice",
+     "Passive voice to active voice",
+     "Subjunctive mood to indicative mood",
+     "Imperative mood to indicative mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence hides the doer of the action in passive voice, and the second names the instructor as the actor in active voice.",
+    "difficulty": 2,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q49",
+    "prompt": "Read this model text: The photographer took the portraits. The portraits were displayed in the school hallway. If more prints had been received, they would have been displayed beside the windows. Which annotation correctly identifies the two shifts?",
+    "choices": [
+     "Active voice to passive voice, then indicative mood to conditional mood",
+     "Active voice to passive voice, then conditional mood to indicative mood",
+     "Passive voice to active voice, then indicative mood to conditional mood",
+     "Passive voice to active voice, then conditional mood to indicative mood"
+    ],
+    "answerIndex": 0,
+    "explanation": "The first sentence is active, the second is passive, and the third is conditional, so the shifts are active to passive and then indicative to conditional.",
+    "difficulty": 3,
+    "skill": "Identify consecutive shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q20",
+    "prompt": "Model text: The band performed at the festival. The crowd applauded loudly. The drummer had practiced every evening. If the drummer had practiced less, the performance would have suffered. The audience asked for an encore. Which adjacent sentence pair contains a shift from indicative mood to subjunctive mood?",
+    "choices": [
+     "The band performed at the festival; the crowd applauded loudly.",
+     "The crowd applauded loudly; the drummer had practiced every evening.",
+     "If the drummer had practiced less, the performance would have suffered; the audience asked for an encore.",
+     "The drummer had practiced every evening; if the drummer had practiced less, the performance would have suffered."
+    ],
+    "answerIndex": 3,
+    "explanation": "The third sentence makes a factual statement in indicative mood, while the fourth presents an unrealized condition in subjunctive mood.",
+    "difficulty": 4,
+    "skill": "Locating a shift from indicative mood to subjunctive mood",
+    "topic": "Shifts in Voice and Mood in Model Texts"
+   },
+   {
+    "id": "q14",
+    "prompt": "Read this passage: The ancient ruins were discovered by local farmers. Archaeologists excavated the site over three summers. What shift occurs between the two sentences?",
+    "choices": [
+     "Active voice to passive voice",
+     "Passive voice to active voice",
+     "Indicative mood to subjunctive mood",
+     "Imperative mood to indicative mood"
+    ],
+    "answerIndex": 1,
+    "explanation": "The first sentence is written in passive voice because the ruins received the action, and the second shifts to active voice with archaeologists performing the excavation.",
+    "difficulty": 2,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q7",
+    "prompt": "Read this passage: Wear your safety goggles at all times. I wish you were more careful in the lab. What shift occurs between the two sentences?",
+    "choices": [
+     "Subjunctive mood to indicative mood",
+     "Indicative mood to imperative mood",
+     "Imperative mood to subjunctive mood",
+     "Passive voice to active voice"
+    ],
+    "answerIndex": 2,
+    "explanation": "The first sentence gives a command in the imperative mood, and the second expresses a wish using the subjunctive mood.",
+    "difficulty": 3,
+    "skill": "Identifying shifts in voice and mood",
+    "topic": "Notice It in a Model Text - Shifts in Voice and Mood"
+   }
+  ],
+  "feedback": {
+   "correct": "Sharp catch — you spotted the shift.",
+   "incorrect": "Not quite. Reread for who performs the action and what the verb signals.",
+   "win": "Clean sweep! Every shift in the model text is marked.",
+   "lose": "The shift got away this time. Watch the verbs and try again.",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Read this passage: The committee reviewed the proposal carefully. All objections were dismissed by the chair. What shift occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Passive voice to active voice",
+    "Indicative mood to imperative mood",
+    "Subjunctive mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice with the committee performing the action, while the second uses passive voice with the objections receiving the action.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The storm destroyed several buildings. Many families have been relocated by emergency services. What shift occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Passive voice to active voice",
+    "Indicative mood to subjunctive mood",
+    "Interrogative mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice with the storm as the subject performing the destruction, and the second uses passive voice with families receiving the action of relocation.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Please close the door behind you. The hallway was cleaned earlier today. What two shifts occur between these sentences?",
+   "choices": [
+    "Imperative to indicative mood and active to passive voice",
+    "Indicative to imperative mood and passive to active voice",
+    "Subjunctive to indicative mood and active to passive voice",
+    "Indicative to subjunctive mood and passive to active voice"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is an imperative command in active voice, while the second is an indicative statement in passive voice.",
+   "difficulty": 5,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The researchers conducted three trials. Had the results been different, the team would have published sooner. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Indicative mood to subjunctive mood",
+    "Subjunctive mood to indicative mood",
+    "Imperative mood to indicative mood",
+    "Indicative mood to imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence states a fact in the indicative mood, while the second presents a hypothetical condition using the subjunctive mood.",
+   "difficulty": 4,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Every student should read chapter four before class. Chapter five will be discussed by the teacher tomorrow. What shift in voice occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Passive voice to active voice",
+    "Indicative mood to imperative mood",
+    "Subjunctive mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence has the student actively performing the reading, while the second places chapter five as the subject receiving the discussion.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The chef prepared a five-course meal. Every dish was praised by the guests. What shift occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Indicative mood to imperative mood",
+    "Passive voice to active voice",
+    "Subjunctive mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice with the chef performing the action, while the second shifts to passive voice with the dishes receiving the action.",
+   "difficulty": 2,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Wear your safety goggles at all times. I wish you were more careful in the lab. What shift occurs between the two sentences?",
+   "choices": [
+    "Imperative mood to subjunctive mood",
+    "Indicative mood to imperative mood",
+    "Subjunctive mood to indicative mood",
+    "Passive voice to active voice"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence gives a command in the imperative mood, and the second expresses a wish using the subjunctive mood.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The new bridge was completed last spring. City officials celebrated the opening yesterday. What shift occurs between the two sentences?",
+   "choices": [
+    "Passive voice to active voice",
+    "Active voice to passive voice",
+    "Indicative mood to subjunctive mood",
+    "Subjunctive mood to imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is written in passive voice because the bridge receives the action, and the second shifts to active voice because the officials perform it.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The sun sets behind the mountains each evening. Were it not for that view, we would move elsewhere. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Indicative mood to subjunctive mood",
+    "Imperative mood to indicative mood",
+    "Subjunctive mood to imperative mood",
+    "Indicative mood to imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence states a fact in the indicative mood, while the second introduces a hypothetical condition using the subjunctive mood.",
+   "difficulty": 4,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Several mistakes were made during the experiment. The instructor recorded them in her notes. What shift occurs between the two sentences?",
+   "choices": [
+    "Passive voice to active voice",
+    "Active voice to passive voice",
+    "Subjunctive mood to indicative mood",
+    "Imperative mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence hides the doer of the action in passive voice, and the second names the instructor as the actor in active voice.",
+   "difficulty": 2,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Turn off the lights before leaving the room. The electricity bill rose sharply last month. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Imperative mood to indicative mood",
+    "Indicative mood to imperative mood",
+    "Subjunctive mood to indicative mood",
+    "Imperative mood to subjunctive mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence issues a direct command in the imperative mood, and the second simply reports a fact in the indicative mood.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The orchestra performed the symphony flawlessly. Standing ovations were given by the entire audience. What shift occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Indicative mood to imperative mood",
+    "Passive voice to active voice",
+    "Subjunctive mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice with the orchestra performing, while the second shifts to passive voice with standing ovations being given by the audience.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Submit all forms before noon. Were I the manager, I would extend the deadline until Friday. What shift occurs between the two sentences?",
+   "choices": [
+    "Imperative mood to subjunctive mood",
+    "Indicative mood to imperative mood",
+    "Active voice to passive voice",
+    "Subjunctive mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses imperative mood to give a command, and the second shifts to subjunctive mood to express a hypothetical situation.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The ancient ruins were discovered by local farmers. Archaeologists excavated the site over three summers. What shift occurs between the two sentences?",
+   "choices": [
+    "Passive voice to active voice",
+    "Active voice to passive voice",
+    "Indicative mood to subjunctive mood",
+    "Imperative mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is written in passive voice because the ruins received the action, and the second shifts to active voice with archaeologists performing the excavation.",
+   "difficulty": 2,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Water the plants every morning. They grow much faster when they receive consistent moisture. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Imperative mood to indicative mood",
+    "Indicative mood to imperative mood",
+    "Subjunctive mood to indicative mood",
+    "Imperative mood to subjunctive mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence issues a direct command in the imperative mood, while the second states a fact in the indicative mood.",
+   "difficulty": 2,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: A detailed map was drawn by the cartographer. She labeled every river and mountain range in red ink. What shift occurs between the two sentences?",
+   "choices": [
+    "Passive voice to active voice",
+    "Active voice to passive voice",
+    "Indicative mood to subjunctive mood",
+    "Imperative mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses passive voice because the map receives the action, and the second shifts to active voice with the cartographer performing the labeling.",
+   "difficulty": 3,
+   "skill": "Identifying shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "qwen/qwen3.8-max:free",
+    "writer_family": "qwen",
+    "judge_a": "minimax/minimax-m3.1-flash (blind)",
+    "judge_b": "z-ai/glm-5.3 (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Model text: The scout troop repainted the gate on Saturday. The gate was admired by every neighbor. A storm later loosened two hinges. The scout troop repaired them before dusk. The parents praised the crew. Which adjacent sentence pair contains a shift from active voice to passive voice?",
+   "choices": [
+    "The scout troop repainted the gate on Saturday; the gate was admired by every neighbor.",
+    "The gate was admired by every neighbor; a storm later loosened two hinges.",
+    "A storm later loosened two hinges; the scout troop repaired them before dusk.",
+    "The scout troop repaired them before dusk; the parents praised the crew."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice, while the second uses passive voice, so this pair contains the requested shift.",
+   "difficulty": 2,
+   "skill": "Locating a shift from active voice to passive voice",
+   "topic": "Shifts in Voice and Mood in Model Texts",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Model text: Please return the map to the front desk. The librarian stamped it after I arrived. We visited the exhibit gallery. The curator answered our questions. We left before closing time. Which adjacent sentence pair contains a shift from imperative mood to indicative mood?",
+   "choices": [
+    "Please return the map to the front desk; the librarian stamped it after I arrived.",
+    "The librarian stamped it after I arrived; we visited the exhibit gallery.",
+    "We visited the exhibit gallery; the curator answered our questions.",
+    "The curator answered our questions; we left before closing time."
+   ],
+   "answerIndex": 0,
+   "explanation": "The command in the first sentence is imperative, while the factual statement in the second sentence is indicative.",
+   "difficulty": 3,
+   "skill": "Locating a shift from imperative mood to indicative mood",
+   "topic": "Shifts in Voice and Mood in Model Texts",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Model text: The parcel was delivered to the warehouse on Monday. Workers unpacked it immediately. A supervisor checked the shipping label. A clerk entered the inventory count. The figures were saved on the office computer. Which adjacent sentence pair contains a shift from passive voice to active voice?",
+   "choices": [
+    "The parcel was delivered to the warehouse on Monday; workers unpacked it immediately.",
+    "Workers unpacked it immediately; a supervisor checked the shipping label.",
+    "A supervisor checked the shipping label; a clerk entered the inventory count.",
+    "A clerk entered the inventory count; the figures were saved on the office computer."
+   ],
+   "answerIndex": 0,
+   "explanation": "The delivery is presented in passive voice, while workers perform the unpacking in active voice.",
+   "difficulty": 3,
+   "skill": "Locating a shift from passive voice to active voice",
+   "topic": "Shifts in Voice and Mood in Model Texts",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Model text: The band performed at the festival. The crowd applauded loudly. The drummer had practiced every evening. If the drummer had practiced less, the performance would have suffered. The audience asked for an encore. Which adjacent sentence pair contains a shift from indicative mood to subjunctive mood?",
+   "choices": [
+    "The band performed at the festival; the crowd applauded loudly.",
+    "The crowd applauded loudly; the drummer had practiced every evening.",
+    "The drummer had practiced every evening; if the drummer had practiced less, the performance would have suffered.",
+    "If the drummer had practiced less, the performance would have suffered; the audience asked for an encore."
+   ],
+   "answerIndex": 2,
+   "explanation": "The third sentence makes a factual statement in indicative mood, while the fourth presents an unrealized condition in subjunctive mood.",
+   "difficulty": 4,
+   "skill": "Locating a shift from indicative mood to subjunctive mood",
+   "topic": "Shifts in Voice and Mood in Model Texts",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Model text: Several volunteers collected pledges during the drive. The pledges were sorted by amount at the office. Each donor received a receipt after giving. The campaign team thanked everyone at noon. Which sentence uses passive voice?",
+   "choices": [
+    "Several volunteers collected pledges during the drive.",
+    "The pledges were sorted by amount at the office.",
+    "Each donor received a receipt after giving.",
+    "The campaign team thanked everyone at noon."
+   ],
+   "answerIndex": 1,
+   "explanation": "The sentence uses the passive construction were sorted, with the pledges receiving the action rather than performing it.",
+   "difficulty": 3,
+   "skill": "Identifying a passive-voice sentence in a model text",
+   "topic": "Shifts in Voice and Mood in Model Texts",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The organizers decorated the community center. The banners were hung by local artists. What shift occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Passive voice to active voice",
+    "Imperative mood to indicative mood",
+    "Indicative mood to subjunctive mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses active voice to emphasize the organizers’ action, while the second uses passive voice to focus on the banners.",
+   "difficulty": 2,
+   "skill": "Identify an active-to-passive voice shift",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The archive was reorganized by the staff last month. The staff then catalogued each photograph. What shift occurs between the two sentences?",
+   "choices": [
+    "Active voice to passive voice",
+    "Passive voice to active voice",
+    "Imperative mood to indicative mood",
+    "Indicative mood to subjunctive mood"
+   ],
+   "answerIndex": 1,
+   "explanation": "The first sentence makes the staff perform the action in passive voice, while the second makes the staff the active subject of catalogued.",
+   "difficulty": 2,
+   "skill": "Identify a passive-to-active voice shift",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: Close the window before the storm arrives. The forecast predicts heavy rain tonight. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Indicative mood to subjunctive mood",
+    "Imperative mood to subjunctive mood",
+    "Imperative mood to indicative mood",
+    "Active voice to passive voice"
+   ],
+   "answerIndex": 2,
+   "explanation": "The first sentence gives a command in the imperative mood, while the second makes a factual statement in the indicative mood.",
+   "difficulty": 2,
+   "skill": "Identify an imperative-to-indicative mood shift",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: The mural was painted by the art club. The club received applause from visitors. If the club had not painted it, the wall would have remained plain. Which pair of shifts occurs across the model text?",
+   "choices": [
+    "Active voice to passive voice, then imperative to indicative mood",
+    "Passive voice to active voice, then indicative to subjunctive mood",
+    "Active voice to passive voice, then passive to active voice",
+    "Imperative to indicative mood, then indicative to subjunctive mood"
+   ],
+   "answerIndex": 1,
+   "explanation": "The text moves from passive voice in the first sentence to active voice in the second, then from indicative mood to subjunctive mood in the conditional sentence.",
+   "difficulty": 4,
+   "skill": "Identify sequential voice and mood shifts",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Model text: The coach selected the squad. Which rewritten sentence changes the active voice to passive voice?",
+   "choices": [
+    "The squad was selected by the coach.",
+    "The coach chose the squad.",
+    "The squad selected the coach.",
+    "The coach was selected by the squad."
+   ],
+   "answerIndex": 0,
+   "explanation": "The rewritten sentence makes the squad the subject of a passive construction while the coach remains the doer of the action.",
+   "difficulty": 3,
+   "skill": "Recognize an active-to-passive revision",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence pair contains a shift from passive voice to active voice?",
+   "choices": [
+    "The recipe was shared by Ana. Ana shared it with the class.",
+    "The gardener planted roses. The roses need water each morning.",
+    "The letter was mailed yesterday. The package was sent by courier.",
+    "The bell rang twice. The class had already started."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence makes the recipe the object of a passive verb, while the second makes Ana the active subject of shared.",
+   "difficulty": 2,
+   "skill": "Identifying passive-to-active voice shifts",
+   "topic": "Shifts in Voice and Mood in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence pair contains a shift from imperative mood to indicative mood?",
+   "choices": [
+    "Compare the maps. The older map shows the north district.",
+    "The maps compare the two regions. The newer map shows their boundaries.",
+    "The committee compared the maps. The results were checked.",
+    "We compared the maps carefully. We found several differences."
+   ],
+   "answerIndex": 0,
+   "explanation": "Compare is an imperative command, while shows states a fact in the indicative mood.",
+   "difficulty": 2,
+   "skill": "Identifying imperative-to-indicative mood shifts",
+   "topic": "Shifts in Voice and Mood in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rewrite changes the passive sentence The roof was damaged by the storm into active voice while keeping the original simple past tense?",
+   "choices": [
+    "The storm damaged the roof.",
+    "The storm had damaged the roof.",
+    "The storm was damaging the roof.",
+    "The storm had been damaging the roof."
+   ],
+   "answerIndex": 0,
+   "explanation": "The storm damaged the roof makes the storm the active subject and uses the simple past tense to express the original action.",
+   "difficulty": 3,
+   "skill": "Recognizing active voice in a revision",
+   "topic": "Shifts in Voice and Mood in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence pair contains a shift from subjunctive mood to indicative mood?",
+   "choices": [
+    "If the bell had rung, the students would have left. The bell rang at noon.",
+    "The bell rang at noon. The students entered quietly.",
+    "The bell was rung by the guard. The students entered quietly.",
+    "The students had left early. The bell rang at noon."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence expresses an unreal condition in the subjunctive mood, while the second reports an actual event in the indicative mood.",
+   "difficulty": 4,
+   "skill": "Identifying subjunctive-to-indicative mood shifts",
+   "topic": "Shifts in Voice and Mood in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: Volunteers collected donations. The donations were counted in the lobby. Count every donation carefully. What two shifts occur from the first sentence to the second and from the second sentence to the third?",
+   "choices": [
+    "Active voice to passive voice, then indicative mood to imperative mood",
+    "Passive voice to active voice, then indicative mood to imperative mood",
+    "Active voice to passive voice, then imperative mood to indicative mood",
+    "Passive voice to active voice, then imperative mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses an active subject, the second puts the donations in a passive construction, and the third gives an imperative command.",
+   "difficulty": 4,
+   "skill": "Identifying sequential voice and mood shifts",
+   "topic": "Shifts in Voice and Mood in a Model Text",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The veterinarian examined the dog. The owner was given clear instructions. Which option follows the same voice-and-mood pattern as this text?",
+   "choices": [
+    "The gardener pruned the hedge. The branches were gathered by workers.",
+    "The hedge was pruned by the gardener. The branches were gathered by workers.",
+    "The gardener pruned the hedge. The gardener gathered the branches.",
+    "If the hedge had been pruned, the gardener would have collected the branches."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option moves from an active indicative clause to a passive indicative clause, matching the voice-and-mood pattern of the text.",
+   "difficulty": 2,
+   "skill": "Match active and passive voice patterns",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Follow the marked path. The trail continues beyond the ridge. Which pair preserves the mood progression of the text?",
+   "choices": [
+    "Check the map. The route ends at the lake.",
+    "The route ends at the lake. Check the map.",
+    "If the route had ended at the lake, we would have taken the path.",
+    "Open the gate. Keep it closed."
+   ],
+   "answerIndex": 0,
+   "explanation": "The pair moves from a command in the imperative mood to a factual statement in the indicative mood, as the text does.",
+   "difficulty": 2,
+   "skill": "Track a shift from imperative to indicative mood",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The crew assembled the display. If the museum had needed more space, the exhibit would have moved to the east wing. Which option matches both the voice sequence and mood sequence of the text?",
+   "choices": [
+    "The choir rehearsed the song. If the hall had been larger, the choir would have performed there.",
+    "The song was rehearsed by the choir. If the hall had been larger, the choir would have performed there.",
+    "The choir rehearsed the song. The choir performed there after lunch.",
+    "The choir rehearsed the song. If the hall had been larger, the song would have been performed there."
+   ],
+   "answerIndex": 0,
+   "explanation": "The option uses active voice with indicative mood and then an active subjunctive conditional, matching the text.",
+   "difficulty": 3,
+   "skill": "Match voice and mood across a conditional",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The parcel was sent by the seller. The buyer received it the next day. Which option uses the same sequence of voices as the text?",
+   "choices": [
+    "The letters were sorted by the clerk. The clerk mailed them on Friday.",
+    "The clerk sorted the letters. They were mailed on Friday.",
+    "The clerk sorted the letters. The clerk mailed them on Friday.",
+    "The letters were sorted by the clerk. They were mailed on Friday."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is passive and the second is active, with both sentences remaining in the indicative mood.",
+   "difficulty": 3,
+   "skill": "Track a shift from passive to active voice",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "The package was checked by the clerk. If the address were correct, the clerk would release it. Which option matches the first sentence's voice and the second sentence's mood and main-clause voice?",
+   "choices": [
+    "The ticket was inspected by the agent. If the name were valid, the agent would issue the pass.",
+    "The agent inspected the ticket. If the name were valid, the agent would issue the pass.",
+    "The ticket was inspected by the agent. The name is valid, so the agent issued the pass.",
+    "The ticket was inspected by the agent. If the name had been valid, the pass would have been issued by the agent."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is passive, while the second shifts to a subjunctive condition whose main clause gives the agent active voice.",
+   "difficulty": 4,
+   "skill": "Distinguish passive voice from a subjunctive conditional",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which revision changes the indicative mood of the first sentence to imperative mood?",
+   "choices": [
+    "Visitors should view the telescope from the terrace. View the telescope from the terrace.",
+    "Visitors should view the telescope from the terrace. Visitors may view the telescope from the terrace.",
+    "Visitors should view the telescope from the terrace. The telescope can be viewed from the terrace.",
+    "Visitors should view the telescope from the terrace. The terrace overlooks the museum gardens."
+   ],
+   "answerIndex": 0,
+   "explanation": "The revised sentence addresses the visitor directly and gives a command, so its mood is imperative.",
+   "difficulty": 3,
+   "skill": "Identifying an indicative-to-imperative mood shift",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which sentence pair contains a shift from active voice to passive voice?",
+   "choices": [
+    "The librarian updated the catalog. The catalog was updated by the librarian.",
+    "The catalog was updated by the librarian. The librarian updated it yesterday.",
+    "The librarian updated the catalog. The catalog listed new arrivals.",
+    "The librarian updated the catalog. The visitors consulted the new listings."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence makes the librarian the doer, while the second makes the catalog the subject of a passive construction.",
+   "difficulty": 3,
+   "skill": "Identifying an active-to-passive voice shift",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which revision should be flagged for an inappropriate active-to-passive shift?",
+   "choices": [
+    "The gardener planted tomatoes. The tomatoes were planted by the gardener.",
+    "The gardener planted tomatoes. The seedlings grew quickly.",
+    "The gardener planted tomatoes. Weeds surrounded the plants.",
+    "The tomatoes were planted by the gardener. The gardener planted them in spring."
+   ],
+   "answerIndex": 0,
+   "explanation": "The revision unnecessarily changes the active statement into a passive statement that repeats the gardener and the tomatoes.",
+   "difficulty": 4,
+   "skill": "Marking an unnecessary voice shift",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which passage contains both an active-to-passive voice shift and an indicative-to-imperative mood shift?",
+   "choices": [
+    "The gardener planted the herbs. The pots were moved beside the door. Water them each morning.",
+    "The gardener planted the herbs. The pots stood beside the door. Water them each morning.",
+    "The pots were moved by the gardener. The gardener planted the herbs. Water them each morning.",
+    "The gardener planted the herbs. The pots were moved beside the door. The plants need regular watering."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passage moves from active to passive voice in its first two sentences and from indicative to imperative mood in its final sentence.",
+   "difficulty": 5,
+   "skill": "Identifying combined voice and mood shifts",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The pottery was fired by Ada. Ada inspected each piece before it was displayed. What shift occurs between the two sentences?",
+   "choices": [
+    "Passive voice to active voice",
+    "Active voice to passive voice",
+    "Indicative mood to subjunctive mood",
+    "Imperative mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses passive voice, while the second uses active voice with Ada as the subject.",
+   "difficulty": 2,
+   "skill": "Identify a shift from passive to active voice",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which revision changes the indicative sentence The choir tunes the instruments before rehearsal into the imperative mood without changing its meaning?",
+   "choices": [
+    "The choir should tune the instruments before rehearsal.",
+    "Tune the instruments before rehearsal.",
+    "Tuning the instruments before rehearsal.",
+    "If the choir were here, it would tune the instruments."
+   ],
+   "answerIndex": 1,
+   "explanation": "Tune the instruments before rehearsal gives the reader a direct command and therefore uses the imperative mood.",
+   "difficulty": 3,
+   "skill": "Revise a sentence into the imperative mood",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: The trail markers were replaced by the maintenance crew. The crew repainted the signs. Please keep away from the wet paint. What two shifts occur in the model text?",
+   "choices": [
+    "Active voice to passive voice, then imperative mood to indicative mood",
+    "Imperative mood to indicative mood, then passive voice to active voice",
+    "Passive voice to active voice, then indicative mood to imperative mood",
+    "Indicative mood to subjunctive mood, then active voice to passive voice"
+   ],
+   "answerIndex": 2,
+   "explanation": "The text moves from passive voice in the first sentence to active voice in the second, then from indicative mood to imperative mood.",
+   "difficulty": 4,
+   "skill": "Track two voice-and-mood shifts in a model text",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this passage: The athlete stretched before practice. The muscles were stretched by the athlete. Which revision best preserves the meaning while avoiding the unnecessary shift in voice?",
+   "choices": [
+    "The athlete stretched the muscles.",
+    "The muscles were stretched before practice.",
+    "The athlete was stretching before practice.",
+    "Stretch before practice."
+   ],
+   "answerIndex": 0,
+   "explanation": "The athlete stretched the muscles keeps both sentences in active voice and preserves the original meaning and simple past tense.",
+   "difficulty": 3,
+   "skill": "Revise an unnecessary active-to-passive shift",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which rewrite changes the passive sentence The essay was submitted by Jonah into active voice while keeping the simple past tense and the original meaning?",
+   "choices": [
+    "Jonah submitted the essay.",
+    "Jonah was submitting the essay.",
+    "Jonah has submitted the essay.",
+    "Jonah will submit the essay."
+   ],
+   "answerIndex": 0,
+   "explanation": "Jonah submitted the essay makes Jonah the subject and keeps the sentence in active voice and simple past tense.",
+   "difficulty": 4,
+   "skill": "Rewrite a passive sentence in active voice",
+   "topic": "Activity 1 of 9 (quiz/game): Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: The greenhouse was repaired by the volunteer group. The volunteer group replaced several broken panes. Several broken panes needed replacement. The repairs were completed before winter. Which sentence should be marked as the shift from passive voice to active voice?",
+   "choices": [
+    "The greenhouse was repaired by the volunteer group.",
+    "The volunteer group replaced several broken panes.",
+    "Several broken panes needed replacement.",
+    "The repairs were completed before winter."
+   ],
+   "answerIndex": 1,
+   "explanation": "The second sentence is active because the volunteer group performs the action, replacing the passive construction in the first sentence.",
+   "difficulty": 2,
+   "skill": "Identify a passive-to-active voice shift in a model text",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: Sentence 1: The trail was marked by the park staff. Sentence 2: The staff reminded hikers to pack water. Sentence 3: If the trail had been marked more clearly, hikers would have reached the lake safely. Sentence 4: Hikers reached the lake safely. Which sentence contains the shift from indicative mood to subjunctive mood?",
+   "choices": [
+    "Sentence 1",
+    "Sentence 2",
+    "Sentence 3",
+    "Sentence 4"
+   ],
+   "answerIndex": 2,
+   "explanation": "Sentence 3 uses a past subjunctive conditional beginning with If the trail had been marked more clearly.",
+   "difficulty": 3,
+   "skill": "Identify an indicative-to-subjunctive mood shift in a model text",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": [
+     {
+      "claim": "The subjunctive mood is used for counterfactual conditionals.",
+      "url": "https://en.wikipedia.org/wiki/Subjunctive_mood_in_english",
+      "quote": "For instance, conditionals with a counterfactual or modally remote meaning are sometimes referred to as \"counterfactual conditionals\".",
+      "reader": "openai/gpt-oss-20b"
+     }
+    ]
+   }
+  },
+  {
+   "prompt": "Model text: The librarian selected the new books. The new books were displayed by the teacher. Which revision changes the second sentence to active voice while preserving its simple past tense and original meaning?",
+   "choices": [
+    "The teacher displayed the new books.",
+    "The librarian displayed the new books.",
+    "The teacher will display the new books.",
+    "The new books were displayed by the teacher."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision makes the teacher the actor and keeps the original past-tense action and meaning.",
+   "difficulty": 4,
+   "skill": "Revise a passive sentence into active voice while preserving meaning",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: The photographer took the portraits. The portraits were displayed in the school hallway. If more prints had been received, they would have been displayed beside the windows. Which annotation correctly identifies the two shifts?",
+   "choices": [
+    "Active voice to passive voice, then indicative mood to conditional mood",
+    "Active voice to passive voice, then conditional mood to indicative mood",
+    "Passive voice to active voice, then indicative mood to conditional mood",
+    "Passive voice to active voice, then conditional mood to indicative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is active, the second is passive, and the third is conditional, so the shifts are active to passive and then indicative to conditional.",
+   "difficulty": 3,
+   "skill": "Identify consecutive shifts in voice and mood",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Read this model text: The teacher collected the assignments. The assignments were sorted by the principal. The principal returned them on Friday. Which label best describes the voice pattern?",
+   "choices": [
+    "Active, passive, active",
+    "Passive, active, passive",
+    "Active, active, passive",
+    "Passive, passive, active"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence makes the teacher the doer, the second makes the assignments the subject receiving the action, and the third again makes the principal the doer.",
+   "difficulty": 3,
+   "skill": "Trace a voice pattern through a model text",
+   "topic": "Notice It in a Model Text - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which sentence pair contains a shift from indicative mood to subjunctive mood?",
+   "choices": [
+    "The team completed the project. If the team had completed it sooner, they could have tested it.",
+    "The road was cleared. The workers left after lunch.",
+    "The bell rang. The students entered quietly.",
+    "We packed sandwiches. We ate lunch."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence states a fact in the indicative mood, while the second presents an unreal condition in the subjunctive mood.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which sentence pair contains a shift from passive voice to active voice?",
+   "choices": [
+    "The photographs were taken by Lena. Lena took them at dawn.",
+    "Lena took the photographs. The photographs were taken by Lena.",
+    "The photographs were taken by Lena. The camera was packed in its case.",
+    "Lena took the photographs. The film was developed by the shop."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence uses passive voice for the photographs, while the second uses active voice with Lena as the doer.",
+   "reason": "repeats a question already in the set"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Which pair preserves the same indicative-to-imperative mood progression as the model text?",
+   "choices": [
+    "The coach chose the lineup. Arrive at the gym by six.",
+    "The coach chose the lineup. If the coach had chosen another player, the outcome might have changed.",
+    "The coach chose the lineup. The gym opens at five.",
+    "The coach chose the lineup. Players warmed up along the sideline."
+   ],
+   "answerIndex": 0,
+   "explanation": "The model moves from an indicative statement to a command, and the correct pair follows that same indicative-to-imperative progression.",
+   "reason": "the answer is identifiable by its length"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Read this passage: You must submit your assignment by Friday. If I were you, I would start working on it tonight. What shift occurs between the two sentences?",
+   "choices": [
+    "Imperative mood to subjunctive mood",
+    "Subjunctive mood to imperative mood",
+    "Active voice to passive voice",
+    "Passive voice to active voice"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence gives a command in the imperative mood, while the second expresses a hypothetical situation using the subjunctive mood.",
+   "reason": "A: picked -1 not 0 (No option correctly describes the shift; the first sentence is indicative mood, not imperative, and both sentences are active voice.) | B: not exactly one correct (The first sentence ('You must submit your assignment by Friday') is a declarative sentence in the indicative mood, not the imperative mood ()"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Read this passage: The company launched the product last Tuesday. If the marketing team had waited another week, sales might have doubled. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Indicative mood to subjunctive mood",
+    "Subjunctive mood to indicative mood",
+    "Imperative mood to indicative mood",
+    "Indicative mood to imperative mood"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence states a fact in the indicative mood, and the second shifts to the subjunctive mood to describe a hypothetical condition contrary to fact.",
+   "reason": "A: picked -1 not 0 (The second sentence is a third conditional in the indicative mood, so there is no mood shift and none of the options is correct.)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which revision should be marked because it changes active voice to passive voice?",
+   "choices": [
+    "The editor reviewed the draft; the draft was reviewed by the editor.",
+    "The editor reviewed the draft; the editor was reviewing the draft.",
+    "The editor reviewed the draft; the editor reviewed the draft again.",
+    "The editor was reviewing the draft; the draft was reviewed by the editor."
+   ],
+   "answerIndex": 0,
+   "explanation": "This revision moves from active voice in the first sentence to passive voice in the second sentence.",
+   "reason": "B: not exactly one correct (multiple defensible options (0 and 3 both change active to passive))"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Read this passage: The bus was delayed by traffic. If the bus had left on time, we would have reached the museum before noon. What shift in mood occurs between the two sentences?",
+   "choices": [
+    "Imperative mood to indicative mood",
+    "Passive voice to active voice",
+    "Active voice to passive voice",
+    "Indicative mood to subjunctive mood"
+   ],
+   "answerIndex": 3,
+   "explanation": "The first sentence states a fact in the indicative mood, while the second presents a hypothetical condition in the subjunctive mood.",
+   "reason": "source: \"The clause \"If the bus had left on time\" is in the subjunctive mood.\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "The stage was cleared by the crew. Please remain seated until the show begins. The lights dimmed overhead. Which option follows the same three-part voice-and-mood pattern?",
+   "choices": [
+    "The mural was painted by students. Do not touch it while it dries. The class returned to the studio.",
+    "The crew cleared the stage. Please remain seated until the show begins. The lights dimmed overhead.",
+    "The stage was cleared by the crew. The audience took its seats quietly. Please wait for the performance.",
+    "The stage was cleared by the crew. Please remain seated until the show begins. The lights were dimmed overhead."
+   ],
+   "answerIndex": 0,
+   "explanation": "The option follows the text's sequence of passive voice, imperative mood, and then indicative mood.",
+   "reason": "A: not exactly one correct (Multiple correct options)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Read this passage: The records were copied by the archivist. If more folders had arrived, the archivist would have copied them. Which option has the same voice-and-mood pattern in its two sentences?",
+   "choices": [
+    "The gardener waters the seedlings. If the soil had dried, the gardener would have watered them again.",
+    "The package was handled by the courier. The courier confirmed its location.",
+    "The samples were tested by the technician. If a sample had failed, the technician would have replaced it.",
+    "Check the map. The route ends at the lake."
+   ],
+   "answerIndex": 2,
+   "explanation": "The correct option begins in passive voice and shifts to subjunctive mood in its conditional second sentence, matching the model pattern.",
+   "reason": "A: picked -1 not 2 (No option matches the same voice‑and‑mood pattern in both sentences.)"
+  },
+  {
+   "round": 1,
+   "stage": "judges",
+   "prompt": "Read this model text: The team practices at six. If practice began at six, the team would be ready by seven. I wish the season had lasted longer. Which label best describes the mood pattern?",
+   "choices": [
+    "Indicative, conditional, subjunctive",
+    "Indicative, subjunctive, conditional",
+    "Conditional, indicative, subjunctive",
+    "Subjunctive, conditional, indicative"
+   ],
+   "answerIndex": 0,
+   "explanation": "The first sentence is indicative, the second states a conditional situation, and the third uses a wish in the subjunctive mood.",
+   "reason": "A: picked 1 not 0"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "minimax/minimax-m3.1-flash",
+   "modelB": "z-ai/glm-5.3"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": -1,
+    "one": false
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 1,
+   "ki": 0,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "openai/gpt-oss-20b"
+  }
+ ],
+ "applied": false
+}

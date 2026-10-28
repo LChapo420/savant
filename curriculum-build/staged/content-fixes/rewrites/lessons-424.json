@@ -1,0 +1,153 @@
+{
+ "collection": "lessons",
+ "row_id": 424,
+ "shared": false,
+ "user_id": 833,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 2,
+  "after": 1
+ },
+ "errors": [
+  {
+   "ref": "P34",
+   "wrong": "In 5x = 20, subtracting 5 from both sides. That gives 5x = 15, which still has x multiplied by 5, so x is not alone.",
+   "correct": "Subtracting 5 from both sides of 5x = 20 gives 5x - 5 = 15, not 5x = 15.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "In 5x = 20, subtracting 5 from both sides. That gives 5x = 15, which still has x multiplied by 5, so x is not alone.",
+   "replace": "In 5x = 20, subtracting 5 from both sides gives 5x - 5 = 15, not 5x = 15.",
+   "fixes": [
+    "P34"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[2]",
+   "before": "In 5x = 20, subtracting 5 from both sides. That gives 5x = 15, which still has x multiplied by 5, so x is not alone.",
+   "after": "In 5x = 20, subtracting 5 from both sides gives 5x - 5 = 15, not 5x = 15.",
+   "fixes": [
+    "P34"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving One-Step Linear Equations",
+  "intro": "A linear equation says that two expressions are equal, and it has an unknown like x hiding in one of them. Solving it means finding the number that makes the statement true. Right now you only need one move: the inverse move that undoes what is happening to x.",
+  "sections": [
+   {
+    "heading": "The balance rule",
+    "body": "The rule is this: whatever you do to one side of the equation, do the same thing to the other side. The equation stays balanced, like a scale. To get x alone, undo the number attached to it with the opposite operation. Adding is undone by subtracting, and multiplying is undone by dividing.",
+    "example": "Solve x + 3 = 10. The +3 is stuck to x, so subtract 3 from both sides: x + 3 - 3 = 10 - 3. That gives x = 7. Check it: 7 + 3 = 10, so the answer is right."
+   },
+   {
+    "heading": "Undoing subtraction",
+    "body": "When x has something subtracted from it, add that number to both sides. That is the inverse move. Then simplify and you have x alone.",
+    "example": "Solve x - 4 = 9. Add 4 to both sides: x - 4 + 4 = 9 + 4. That gives x = 13. Check it: 13 - 4 = 9, so the answer is right."
+   },
+   {
+    "heading": "Undoing multiplication",
+    "body": "When x is multiplied by a number, divide both sides by that number. This isolates x in one move. The same check works here: put your answer back into the original equation.",
+    "example": "Solve 5x = 20. Divide both sides by 5: 5x / 5 = 20 / 5. That gives x = 4. Check it: 5 times 4 = 20, so the answer is right."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve x - 7 = 12.",
+   "steps": [
+    "Name what is happening to x: 7 is being subtracted from it.",
+    "Write down the inverse move: adding 7 undoes subtracting 7.",
+    "Apply it to both sides to keep the equation balanced: x - 7 + 7 = 12 + 7.",
+    "Simplify each side: the left side becomes x, and 12 + 7 = 19, so x = 19.",
+    "Check by substituting back: 19 - 7 = 12, which matches the original equation."
+   ],
+   "answer": "x = 19"
+  },
+  "common_mistakes": [
+   "In x + 5 = 12, adding 5 to both sides instead of subtracting. That gives x = 17, and 17 + 5 = 22 does not equal 12, so the check fails.",
+   "In x - 4 = 9, subtracting 4 again instead of adding. That gives x = 5, and 5 - 4 = 1 does not equal 9.",
+   "In 5x = 20, subtracting 5 from both sides gives 5x - 5 = 15, not 5x = 15.",
+   "In 5x = 20, dividing only the right side. That gives 5x = 4, and the 5 is still attached to x, so the equation is not solved."
+  ],
+  "summary": "To solve a one-step equation, name what is happening to x and apply the inverse move to both sides. Subtracting is undone by adding, adding is undone by subtracting, and multiplying is undone by dividing. Always check by substituting your answer back into the original equation.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "To solve x + 5 = 12, what is the correct first move?",
+    "answer": "Subtract 5 from both sides",
+    "rationale": "The inverse of adding 5 is subtracting 5, so subtracting 5 from both sides is the move that leaves x alone.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Add 5 to both sides",
+     "Subtract 5 from both sides",
+     "Divide both sides by 5",
+     "Multiply both sides by 5"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x - 4 = 9. Type the value of x.",
+    "answer": "13",
+    "rationale": "Adding 4 to both sides gives x = 9 + 4, which is 13.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve 7x = 42. What is x?",
+    "answer": "6",
+    "rationale": "The inverse of multiplying by 7 is dividing by 7, so x = 42 / 7 = 6.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "35",
+     "6",
+     "49",
+     "42"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x + 11 = 3. Type the value of x.",
+    "answer": "-8",
+    "rationale": "Subtracting 11 from both sides gives x = 3 - 11, which is -8.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

@@ -1,0 +1,154 @@
+{
+ "collection": "lessons",
+ "row_id": 234,
+ "shared": false,
+ "user_id": 431,
+ "round": 0,
+ "status": "verified: code checks + MiniMax review + cross-family review",
+ "code_problems": [],
+ "math_claims": {
+  "before": 1,
+  "after": 0
+ },
+ "errors": [
+  {
+   "ref": "P29",
+   "wrong": "Adding 7 to both sides of x + 7 = 12. You must undo the addition, so this move gives 19 on the right and x = 19, which is wrong.",
+   "correct": "Adding 7 to both sides of x + 7 = 12 gives x + 14 = 19 (x = 5), not x = 19.",
+   "action": "rewrite_text"
+  }
+ ],
+ "edits": [
+  {
+   "find": "Adding 7 to both sides of x + 7 = 12. You must undo the addition, so this move gives 19 on the right and x = 19, which is wrong. The fix is to subtract 7.",
+   "replace": "Mistake: adding 7 to both sides of x + 7 = 12 and writing x = 19. This move gives x + 14 = 19, so x = 5, not x = 19. You must undo the addition by subtracting 7 from both sides.",
+   "fixes": [
+    "P29"
+   ]
+  }
+ ],
+ "diff": [
+  {
+   "path": "common_mistakes[0]",
+   "before": "Adding 7 to both sides of x + 7 = 12. You must undo the addition, so this move gives 19 on the right and x = 19, which is wrong. The fix is to subtract 7.",
+   "after": "Mistake: adding 7 to both sides of x + 7 = 12 and writing x = 19. This move gives x + 14 = 19, so x = 5, not x = 19. You must undo the addition by subtracting 7 from both sides.",
+   "fixes": [
+    "P29"
+   ]
+  }
+ ],
+ "judge_a": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "judge_b": {
+  "index": 0,
+  "all_fixed": true,
+  "all_true": true,
+  "note": ""
+ },
+ "model_a": "minimax/minimax-m3.1-flash",
+ "model_b": "nvidia/nemotron-3-ultra-550b-a55b",
+ "note": "Learner names were replaced by \"the learner\" before the text was sent; apply the diff to the stored row (the names are not in any edited span unless shown).",
+ "applied": false,
+ "new_content": {
+  "title": "Solving one-step linear equations",
+  "intro": "An equation is a balance: both sides hold the same value. To solve for x, you undo whatever is being done to x. You will practice that on the simplest equations first.",
+  "sections": [
+   {
+    "heading": "The rule: do the same thing to both sides",
+    "body": "An equation stays true only if you treat both sides the same way. So every move you make, you make on the left AND on the right. The goal is to get x alone on one side.",
+    "example": "If x + 7 = 12, the 7 is added to x. To undo an addition, you subtract. So subtract 7 from both sides."
+   },
+   {
+    "heading": "When x has something added, subtract it",
+    "body": "Rule: if the equation is x + a = b, subtract a from both sides. The left side collapses to x, and the right side becomes b - a. That value is your answer.",
+    "example": "x + 7 = 12\nSubtract 7 from both sides: x + 7 - 7 = 12 - 7\nLeft side: x + 0 = x\nRight side: 12 - 7 = 5\nSo x = 5.\nCheck: 5 + 7 = 12. True."
+   },
+   {
+    "heading": "When x has something subtracted, add it",
+    "body": "Rule: if the equation is x - a = b, add a to both sides. This undoes the subtraction, so x stands alone. Then check by putting your answer back into the original equation.",
+    "example": "x - 3 = 8\nAdd 3 to both sides: x - 3 + 3 = 8 + 3\nLeft side: x - 0 = x\nRight side: 8 + 3 = 11\nSo x = 11.\nCheck: 11 - 3 = 8. True."
+   }
+  ],
+  "worked_example": {
+   "problem": "Solve x + 7 = 12.",
+   "steps": [
+    "Look at what is done to x: 7 is added to x.",
+    "To undo an addition, subtract. Subtract 7 from both sides so the equation stays balanced.",
+    "Left side: x + 7 - 7 = x + 0 = x.",
+    "Right side: 12 - 7 = 5.",
+    "So x = 5.",
+    "Check by substituting: 5 + 7 = 12, which matches the original equation."
+   ],
+   "answer": "x = 5"
+  },
+  "common_mistakes": [
+   "Mistake: adding 7 to both sides of x + 7 = 12 and writing x = 19. This move gives x + 14 = 19, so x = 5, not x = 19. You must undo the addition by subtracting 7 from both sides.",
+   "Subtracting 7 from only one side, for example writing x = 12 - 7 on the left but leaving the right side at 12. That writes x = 5 while the equation is no longer balanced. Subtract 7 from both sides.",
+   "In x - 3 = 8, subtracting 3 again instead of adding. This gives x = 5, and 5 - 3 = 2, not 8. The subtraction is undone by addition, so add 3 to get x = 11.",
+   "Reading x + 7 = 12 as x = 7 + 12. The 7 is being added to x, so removing it means subtracting, not adding. That answer gives 19 + 7 = 26."
+  ],
+  "summary": "An equation is a balance, so every move touches both sides. Undo addition by subtracting, and undo subtraction by adding. Then substitute your answer back to check it.",
+  "check_questions": [
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "To solve x + 4 = 11, which move should you make first?",
+    "answer": "Subtract 4 from both sides",
+    "rationale": "The 4 is added to x, so the move that undoes it is subtraction. Subtracting 4 from both sides leaves x alone on the left.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "Add 4 to both sides",
+     "Subtract 4 from both sides",
+     "Subtract 11 from both sides",
+     "Divide both sides by 4"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x + 6 = 15. Type the value of x.",
+    "answer": "9",
+    "rationale": "Subtract 6 from both sides: x = 15 - 6 = 9. Checking, 9 + 6 = 15.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x - 3 = 8. What is x?",
+    "answer": "11",
+    "rationale": "The 3 is subtracted from x, so the move that undoes it is adding. Adding 3 to both sides gives x = 8 + 3 = 11.",
+    "source": "ai",
+    "role": "check",
+    "format": "multiple_choice",
+    "choices": [
+     "5",
+     "11",
+     "-5",
+     "24"
+    ]
+   },
+   {
+    "skill_id": "linear_eq",
+    "skill_name": "Linear equations",
+    "difficulty": 1.3253012048192772,
+    "prompt": "Solve x - 9 = 4. Type the value of x.",
+    "answer": "13",
+    "rationale": "Add 9 to both sides to undo the subtraction: x = 4 + 9 = 13. Checking, 13 - 9 = 4.",
+    "source": "ai",
+    "role": "check",
+    "format": "type_in"
+   }
+  ]
+ }
+}

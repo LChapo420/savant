@@ -1,0 +1,914 @@
+{
+  "Ret_UncuedReconstruct": {
+    "id": 1,
+    "name": "Uncued Reconstruct",
+    "category": "Retention",
+    "interactive": true,
+    "description": "Word bank slots, formula fill, or scrambled clause assembly - the learner rebuilds the answer from scratch with no cues.",
+    "bestFor": "Verbal/syntactic learners; low working memory load",
+    "file": "./blocks/Ret_UncuedReconstruct.js",
+    "schema": {
+      "type": "object",
+      "title": "Ret_UncuedReconstruct",
+      "$id": "Ret_UncuedReconstruct",
+      "description": "Uncued Reconstruct: the learner rebuilds a target from scratch by assembling chunks (words, formula terms, or clauses) into ordered slots, with no cues given. Supports word-bank / formula-fill / scrambled-clause modes through a single slot-plus-bank interaction.",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short activity heading shown at the top of the block."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Instruction line telling the learner what to reconstruct (no answer content)."
+        },
+        "context": {
+          "type": "string",
+          "description": "Optional stimulus text (quotation, scenario, derivation context) displayed above the slots."
+        },
+        "contextLabel": {
+          "type": "string",
+          "description": "Optional small caption for the context block, e.g. 'The Gettysburg Address, para. 2'."
+        },
+        "answerLabel": {
+          "type": "string",
+          "description": "Optional caption over the slot row, e.g. 'Reconstructed sentence' or 'Kinetic energy'."
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Optional placeholder text shown inside empty slots."
+        },
+        "items": {
+          "type": "array",
+          "description": "One or more reconstruction rounds, presented one at a time.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "chunks",
+              "solution",
+              "feedback"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable identifier for the round."
+              },
+              "label": {
+                "type": "string",
+                "description": "Optional per-round caption (e.g. 'Sentence 2 of 4' or 'ΔG')."
+              },
+              "context": {
+                "type": "string",
+                "description": "Optional round-specific context override; falls back to the block-level context."
+              },
+              "contextLabel": {
+                "type": "string",
+                "description": "Optional round-specific context caption override."
+              },
+              "answerLabel": {
+                "type": "string",
+                "description": "Optional round-specific answer caption override."
+              },
+              "chunks": {
+                "type": "array",
+                "description": "Pieces available in the bank and used to fill the slots. Chunks whose text equals a solution entry are correct in that slot; all others act as distractors.",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "text"
+                  ],
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "Exact text of the chunk (plain text; may contain math-ish symbols like ΔG° or ½mv²)."
+                    },
+                    "ariaLabel": {
+                      "type": "string",
+                      "description": "Optional screen-reader-friendly reading of the chunk."
+                    }
+                  }
+                }
+              },
+              "solution": {
+                "type": "array",
+                "description": "The correct ordered sequence of chunk texts; its length sets the number of slots.",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "feedback": {
+                "type": "object",
+                "properties": {
+                  "correct": {
+                    "type": "string",
+                    "description": "Message shown when the learner's arrangement matches the solution exactly."
+                  },
+                  "partial": {
+                    "type": "string",
+                    "description": "Message shown when some but not all positions are right."
+                  },
+                  "incorrect": {
+                    "type": "string",
+                    "description": "Message shown when nothing is in its right position."
+                  },
+                  "explanation": {
+                    "type": "string",
+                    "description": "Short rationale revealed with the feedback."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "feedback": {
+          "type": "object",
+          "description": "Optional block-level default feedback strings used when a round omits them.",
+          "properties": {
+            "correct": {
+              "type": "string"
+            },
+            "partial": {
+              "type": "string"
+            },
+            "incorrect": {
+              "type": "string"
+            },
+            "explanation": {
+              "type": "string"
+            }
+          }
+        },
+        "completeMessage": {
+          "type": "string",
+          "description": "Optional message shown once every round has been reconstructed correctly."
+        }
+      },
+      "required": [
+        "title",
+        "prompt",
+        "items"
+      ]
+    }
+  },
+  "Ret_SpeedCategorizer": {
+    "id": 2,
+    "name": "Speed Categorizer",
+    "category": "Retention",
+    "interactive": true,
+    "description": "Rapid binary swipes or 3-way bucket sorting under a timer.",
+    "bestFor": "High-impulse learners; builds automaticity & speed",
+    "file": "./blocks/Ret_SpeedCategorizer.js",
+    "schema": {
+      "type": "object",
+      "$id": "Ret_SpeedCategorizer",
+      "title": "Speed Categorizer",
+      "description": "Rapid bucket-sorting drill under a timer. Cards arrive one at a time and the learner taps (or swipes) them into buckets as fast as possible.",
+      "required": [
+        "title",
+        "prompt",
+        "seconds",
+        "buckets",
+        "cards"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Drill title shown in the header."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Short instruction line telling the learner what to do."
+        },
+        "seconds": {
+          "type": "integer",
+          "minimum": 5,
+          "description": "Total time for the drill in seconds."
+        },
+        "showExplanations": {
+          "type": "boolean",
+          "description": "When true, the card's explanation flashes after it is sorted. Defaults to true."
+        },
+        "buckets": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "description": "2 or 3 destination buckets, in display order.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable identifier referenced by cards."
+              },
+              "label": {
+                "type": "string",
+                "description": "Bucket label shown on its button."
+              },
+              "shortLabel": {
+                "type": "string",
+                "description": "Optional compact label used on wide-layout quick keys."
+              },
+              "hint": {
+                "type": "string",
+                "description": "Optional one-line reminder shown under the bucket label."
+              },
+              "color": {
+                "type": "string",
+                "description": "Optional design-system status accent: 'success' | 'error' | 'caution' | 'accent'."
+              }
+            }
+          }
+        },
+        "cards": {
+          "type": "array",
+          "minItems": 3,
+          "description": "The deck. Cards are served in the given order.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "correctBucket"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable card identifier."
+              },
+              "text": {
+                "type": "string",
+                "description": "The card face: the item the learner must categorize."
+              },
+              "detail": {
+                "type": "string",
+                "description": "Optional secondary line under the card text."
+              },
+              "correctBucket": {
+                "type": "string",
+                "description": "id of the bucket this card belongs to."
+              },
+              "explanation": {
+                "type": "string",
+                "description": "Optional line shown briefly after the card is sorted."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "Ret_MisconceptionTrap": {
+    "id": 3,
+    "name": "Misconception Trap",
+    "category": "Retention",
+    "interactive": true,
+    "description": "A choice among plausible, highly tempting flawed options - only one survives scrutiny.",
+    "bestFor": "High-confidence learners who skim or pattern-match",
+    "file": "./blocks/Ret_MisconceptionTrap.js",
+    "schema": {
+      "$id": "Ret_MisconceptionTrap",
+      "title": "Misconception Trap",
+      "description": "A single-choice challenge built from tempting, plausible flawed options where exactly one answer survives scrutiny. The learner taps one option; the trap they chose is marked as a misconception and the surviving answer is revealed with its reasoning.",
+      "type": "object",
+      "required": [
+        "prompt",
+        "options",
+        "correctId"
+      ],
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "The question or claim the learner must judge."
+        },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable identifier for this option."
+              },
+              "text": {
+                "type": "string",
+                "description": "Wording of the option, as the learner sees it."
+              },
+              "whyNot": {
+                "type": "string",
+                "description": "Why this option is tempting but flawed (or, for the correct option, why it survives scrutiny). Shown after the choice is locked in."
+              }
+            }
+          }
+        },
+        "correctId": {
+          "type": "string",
+          "description": "The id of the single option that survives scrutiny."
+        },
+        "successMessage": {
+          "type": "string",
+          "description": "Short verdict line shown when the learner picks the surviving option (e.g. 'Survives scrutiny')."
+        },
+        "notQuiteMessage": {
+          "type": "string",
+          "description": "Short verdict line shown when the learner picks a trap (e.g. 'That's the trap')."
+        },
+        "correctLabel": {
+          "type": "string",
+          "description": "Prefix used when the surviving answer is revealed, e.g. 'Survives:'."
+        }
+      }
+    }
+  },
+  "Ret_ForensicAudit": {
+    "id": 4,
+    "name": "Forensic Audit",
+    "category": "Retention",
+    "interactive": true,
+    "description": "Clickable code lines, essay paragraphs, or balance sheet rows where the learner hunts down the error.",
+    "bestFor": "Analytical/deductive learners; error detection",
+    "file": "./blocks/Ret_ForensicAudit.js",
+    "schema": {
+      "type": "object",
+      "title": "Ret_ForensicAudit",
+      "$id": "Ret_ForensicAudit",
+      "description": "Clickable code lines, essay paragraphs, or balance sheet rows where the learner hunts down the error.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Lesson/block identifier."
+        },
+        "artifactType": {
+          "type": "string",
+          "enum": [
+            "code",
+            "essay",
+            "balance_sheet"
+          ],
+          "description": "What kind of artifact the learner is auditing; drives default line labels and styling."
+        },
+        "title": {
+          "type": "string",
+          "description": "Heading shown above the artifact."
+        },
+        "brief": {
+          "type": "string",
+          "description": "Short instruction to the learner: what to hunt for."
+        },
+        "artifactLabel": {
+          "type": "string",
+          "description": "Optional caption for the artifact card (e.g. 'client_loop.py — extract')."
+        },
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The artifact, one clickable line/row at a time, in order.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "isError"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique line id."
+              },
+              "label": {
+                "type": "string",
+                "description": "Optional line number / row label / paragraph marker."
+              },
+              "text": {
+                "type": "string",
+                "description": "The content of the line/row."
+              },
+              "secondary": {
+                "type": "string",
+                "description": "Optional right-hand column value (amount, tag, comment)."
+              },
+              "isError": {
+                "type": "boolean",
+                "description": "True if this is the line the learner must find."
+              },
+              "explanation": {
+                "type": "string",
+                "description": "Feedback shown when this line is selected (why it is wrong, or why it is clean)."
+              }
+            }
+          }
+        },
+        "maxMisses": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optional number of incorrect clicks allowed before the correct line is revealed. Default: unlimited."
+        },
+        "revealLabel": {
+          "type": "string",
+          "description": "Optional label for the reveal button that appears after maxMisses is reached."
+        },
+        "completionMessage": {
+          "type": "string",
+          "description": "Optional message shown once the error line is found."
+        }
+      },
+      "required": [
+        "lines"
+      ]
+    }
+  },
+  "Ret_InterleavedMatrix": {
+    "id": 5,
+    "name": "Interleaved Matrix",
+    "category": "Retention",
+    "interactive": true,
+    "description": "Cross-topic comparative grids mixing past units, filled in cell by cell.",
+    "bestFor": "Preventing context-dependent memory calcification",
+    "file": "./blocks/Ret_InterleavedMatrix.js",
+    "schema": {
+      "type": "object",
+      "$id": "Ret_InterleavedMatrix",
+      "title": "Interleaved Matrix",
+      "description": "A cross-topic comparative grid the learner fills in cell by cell from memory, interleaving material from several past units.",
+      "required": [
+        "matrixTitle",
+        "rows",
+        "columns"
+      ],
+      "properties": {
+        "matrixTitle": {
+          "type": "string",
+          "description": "Heading shown above the grid."
+        },
+        "matrixSubtitle": {
+          "type": "string",
+          "description": "Optional short line under the heading, e.g. the units being interleaved."
+        },
+        "rows": {
+          "type": "array",
+          "description": "The grid's row headers, one per comparative dimension or concept.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable identifier for this row."
+              },
+              "label": {
+                "type": "string",
+                "description": "Row header text shown in the leftmost column."
+              },
+              "sourceUnit": {
+                "type": "string",
+                "description": "Optional unit tag shown small under the row label."
+              }
+            }
+          }
+        },
+        "columns": {
+          "type": "array",
+          "description": "The grid's column headers, one per topic/unit being compared.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable identifier for this column."
+              },
+              "label": {
+                "type": "string",
+                "description": "Column header text shown at the top of the column."
+              },
+              "sourceUnit": {
+                "type": "string",
+                "description": "Optional unit tag shown small under the column label."
+              }
+            }
+          }
+        },
+        "cells": {
+          "type": "array",
+          "description": "Answer key: one entry per row/column intersection that the learner must fill.",
+          "items": {
+            "type": "object",
+            "required": [
+              "rowId",
+              "colId",
+              "answer"
+            ],
+            "properties": {
+              "rowId": {
+                "type": "string",
+                "description": "The row this cell belongs to."
+              },
+              "colId": {
+                "type": "string",
+                "description": "The column this cell belongs to."
+              },
+              "answer": {
+                "type": "string",
+                "description": "The canonical answer the learner is retrieving."
+              },
+              "acceptedAnswers": {
+                "type": "array",
+                "description": "Alternative phrasings accepted as correct.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "placeholder": {
+                "type": "string",
+                "description": "Optional hint shown as the input placeholder for this cell."
+              },
+              "feedback": {
+                "type": "string",
+                "description": "Optional short feedback shown after the cell is correctly filled."
+              }
+            }
+          }
+        },
+        "completionMessage": {
+          "type": "string",
+          "description": "Optional message shown once every cell is filled correctly."
+        }
+      }
+    }
+  },
+  "Ret_FarTransferWorkbench": {
+    "id": 6,
+    "name": "Far Transfer Workbench",
+    "category": "Retention",
+    "interactive": true,
+    "description": "An unfamiliar real-world scenario (medical, aerospace, legal, business) that the learner solves by applying the rule.",
+    "bestFor": "High-mastery learners; concrete/pragmatic application",
+    "file": "./blocks/Ret_FarTransferWorkbench.js",
+    "schema": {
+      "type": "object",
+      "title": "Ret_FarTransferWorkbench",
+      "$id": "Ret_FarTransferWorkbench",
+      "description": "An unfamiliar real-world scenario solved by applying a rule: the learner reads the scenario brief and composes the decision/answer plus the reasoning step that applies the rule, then submits for targeted feedback.",
+      "properties": {
+        "eyebrow": {
+          "type": "string",
+          "description": "Short domain label shown above the scenario title (e.g. 'AEROSPACE — FLIGHT OPERATIONS')."
+        },
+        "scenarioTitle": {
+          "type": "string",
+          "description": "Headline of the unfamiliar real-world situation."
+        },
+        "scenarioBody": {
+          "type": "string",
+          "description": "Narrative of the unfamiliar scenario the learner must solve."
+        },
+        "contextItems": {
+          "type": "array",
+          "description": "Optional hard facts of the situation (numbers, constraints, dates). Rendered as a tight facts strip.",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Fact name, e.g. 'Fuel remaining'."
+              },
+              "value": {
+                "type": "string",
+                "description": "Fact value, e.g. '3,100 lb'."
+              }
+            }
+          }
+        },
+        "rule": {
+          "type": "object",
+          "description": "The rule/ principle the learner must transfer to this unfamiliar situation.",
+          "required": [
+            "name",
+            "statement"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Short rule name, e.g. 'Conservation of Mechanical Energy'."
+            },
+            "statement": {
+              "type": "string",
+              "description": "The rule itself as learned in the original (familiar) context."
+            }
+          }
+        },
+        "decisionPrompt": {
+          "type": "string",
+          "description": "The one question the learner must answer from the scenario."
+        },
+        "decisionPlaceholder": {
+          "type": "string",
+          "description": "Optional placeholder for the decision textarea."
+        },
+        "rationalePrompt": {
+          "type": "string",
+          "description": "Prompt for the brief reasoning step that applies the rule (e.g. 'Cite the rule step that justifies it')."
+        },
+        "rationalePlaceholder": {
+          "type": "string",
+          "description": "Optional placeholder for the reasoning textarea."
+        },
+        "referenceNote": {
+          "type": "string",
+          "description": "Optional short note on the deck/policy/exam sheet the learner may lean on."
+        },
+        "targetAnswer": {
+          "type": "object",
+          "description": "The correct transfer solution used for scoring and feedback.",
+          "required": [
+            "decision",
+            "rationale"
+          ],
+          "properties": {
+            "decision": {
+              "type": "string",
+              "description": "Model decision/answer."
+            },
+            "rationale": {
+              "type": "string",
+              "description": "Model reasoning that shows the rule applied."
+            }
+          }
+        },
+        "decisionKeywords": {
+          "type": "array",
+          "description": "Phrases expected in a correct decision; used to score the decision field.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rationaleKeywords": {
+          "type": "array",
+          "description": "Phrases showing the rule genuinely applied in this new situation; used to score the reasoning field.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "misconception": {
+          "type": "object",
+          "description": "Targeted feedback shown when the reasoning does not carry the rule.",
+          "required": [
+            "title",
+            "detail"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Short misconception label."
+            },
+            "detail": {
+              "type": "string",
+              "description": "What is wrong and how to fix the reasoning."
+            }
+          }
+        },
+        "rubric": {
+          "type": "array",
+          "description": "Optional scoring dimensions shown as the submission checklist.",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "max"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Dimension name, e.g. 'Right call'."
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum points for the dimension."
+              }
+            }
+          }
+        },
+        "submitLabel": {
+          "type": "string",
+          "description": "Optional label for the submit button (default 'Lock in decision')."
+        },
+        "retryLabel": {
+          "type": "string",
+          "description": "Optional label for the revise button after feedback (default 'Revise the memo')."
+        },
+        "nextLabel": {
+          "type": "string",
+          "description": "Optional label for the done-confirmation button (default 'Case closed')."
+        }
+      },
+      "required": [
+        "scenarioTitle",
+        "scenarioBody",
+        "decisionPrompt",
+        "targetAnswer",
+        "decisionKeywords",
+        "rationaleKeywords",
+        "misconception"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "Ret_ReverseSyllogism": {
+    "id": 7,
+    "name": "Reverse Syllogism",
+    "category": "Retention",
+    "interactive": true,
+    "description": "Given a conclusion or an error, select the missing false premise.",
+    "bestFor": "Inductive learners; logic reconstruction",
+    "file": "./blocks/Ret_ReverseSyllogism.js",
+    "schema": {
+      "type": "object",
+      "title": "Ret_ReverseSyllogism",
+      "$id": "Ret_ReverseSyllogism",
+      "description": "Reverse syllogism drill: given a conclusion or an error, the learner selects the missing false premise from a set of candidates.",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Block heading shown at the top."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Optional short supporting line under the title."
+        },
+        "conclusionLabel": {
+          "type": "string",
+          "description": "Label for the conclusion/error block, e.g. 'The Error on the Page'."
+        },
+        "conclusion": {
+          "type": "string",
+          "description": "The conclusion or error statement the learner must explain by finding the hidden false premise."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Instruction line telling the learner what to select."
+        },
+        "candidates": {
+          "type": "array",
+          "minItems": 2,
+          "description": "Candidate premises; exactly one should be flagged correct.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "correct"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Stable identifier for the candidate."
+              },
+              "text": {
+                "type": "string",
+                "description": "The premise statement shown to the learner."
+              },
+              "correct": {
+                "type": "boolean",
+                "description": "True for the missing false premise that actually produces the conclusion."
+              },
+              "feedback": {
+                "type": "string",
+                "description": "Shown after a selection: why this premise does or does not yield the conclusion."
+              }
+            }
+          }
+        },
+        "revealHeading": {
+          "type": "string",
+          "description": "Heading for the feedback panel after an answer, e.g. 'The Missing Premise'."
+        },
+        "revealExplain": {
+          "type": "string",
+          "description": "Full worked reconstruction of the syllogism shown after an answer."
+        },
+        "streakLabel": {
+          "type": "string",
+          "description": "Label for the streak counter, e.g. 'Streak'."
+        },
+        "resetLabel": {
+          "type": "string",
+          "description": "Accessible label for the try-again button, e.g. 'Try another conclusion'."
+        }
+      },
+      "required": [
+        "conclusion",
+        "candidates"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "Ret_DialCalibrator": {
+    "id": 8,
+    "name": "Dial Calibrator",
+    "category": "Retention",
+    "interactive": true,
+    "description": "A dial the learner tunes to bring variables into safe tolerance zones.",
+    "bestFor": "Kinesthetic/visual learners; parametric intuition",
+    "file": "./blocks/Ret_DialCalibrator.js",
+    "schema": {
+      "type": "object",
+      "title": "Ret_DialCalibrator payload",
+      "description": "Content payload for the Ret_DialCalibrator retention block: a dial the learner tunes to bring a measured variable into a safe tolerance zone.",
+      "$id": "Ret_DialCalibrator",
+      "required": [
+        "title",
+        "variableLabel",
+        "unit",
+        "minValue",
+        "maxValue",
+        "step",
+        "targetValue",
+        "tolerance",
+        "safeZoneLabel",
+        "startValue",
+        "taskPrompt"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Heading shown at the top of the block, e.g. a lab or skill name."
+        },
+        "taskPrompt": {
+          "type": "string",
+          "description": "One-line instruction telling the learner what to tune and why (no question phrasing)."
+        },
+        "variableLabel": {
+          "type": "string",
+          "description": "Name of the physical quantity being tuned, e.g. 'Applied Force'."
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit suffix rendered after the numeric readout, e.g. 'N', 'rad/s', 'mL'."
+        },
+        "minValue": {
+          "type": "number",
+          "description": "Lower bound of the dial's range."
+        },
+        "maxValue": {
+          "type": "number",
+          "description": "Upper bound of the dial's range."
+        },
+        "step": {
+          "type": "number",
+          "description": "Smallest increment the dial may land on; also drives arrow-key and long-press increments."
+        },
+        "targetValue": {
+          "type": "number",
+          "description": "Centre of the safe tolerance zone."
+        },
+        "tolerance": {
+          "type": "number",
+          "description": "Plus/minus half-width of the safe zone; |value - targetValue| <= tolerance counts as in-tolerance."
+        },
+        "safeZoneLabel": {
+          "type": "string",
+          "description": "Short label drawn inside the tolerance arc, e.g. 'SAFE OPERATING RANGE'."
+        },
+        "startValue": {
+          "type": "number",
+          "description": "Initial dial value when the block first renders."
+        },
+        "onTargetMessage": {
+          "type": "string",
+          "description": "Optional confirmation message shown once the dial is inside tolerance."
+        },
+        "outOfRangeMessage": {
+          "type": "string",
+          "description": "Optional hint shown while the dial is outside tolerance."
+        },
+        "variableLabelShort": {
+          "type": "string",
+          "description": "Optional abbreviated label for tight mobile layouts; falls back to variableLabel."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,2796 @@
+{
+ "row_id": 32,
+ "engine_id": "tug-of-war",
+ "track_id": "english",
+ "grade_id": "proficient",
+ "level": 44,
+ "generated_at": "2026-10-24T22:18:19.761Z",
+ "writer": "minimax/minimax-m3.1-flash, nvidia/nemotron-3-ultra-550b-a55b:free",
+ "stats": {
+  "written": 57,
+  "code_rejected": 2,
+  "sent_to_judges": 55,
+  "kept": 50,
+  "keep_rate_of_written": 0.877,
+  "judges": {
+   "both_answered": 55,
+   "picked_same_option": 54,
+   "a_picked_key": 55,
+   "b_picked_key": 54,
+   "models_a": [
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "z-ai/glm-5.3",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "qwen/qwen3.8-max:free",
+    "openai/gpt-oss-20b"
+   ],
+   "models_b": [
+    "qwen/qwen3.8-max:free",
+    "openai/gpt-oss-20b",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "minimax/minimax-m3.1-flash"
+   ]
+  },
+  "complete": true,
+  "set_problems": []
+ },
+ "payload": {
+  "schemaVersion": 1,
+  "engineId": "tug-of-war",
+  "meta": {
+   "subject": "English",
+   "grade": "Proficient — 9th to 10th Grade",
+   "level": 44,
+   "topic": "Activity 4 of 9 (quiz/game): Combine Three Sentences - Shifts in Voice and Mood",
+   "title": "Combining Three Sentences: Keeping Voice and Mood Steady",
+   "ageRange": "Ages 12-16"
+  },
+  "settings": {
+   "questionCount": 50,
+   "choicesPerTurn": 4,
+   "difficulty": {
+    "start": 4,
+    "end": 7,
+    "curve": "flat"
+   },
+   "timeLimitSec": null
+  },
+  "questions": [
+   {
+    "id": "q46",
+    "prompt": "Which option forms one conditional sentence while preserving may in the condition and can in both outcome clauses? The festival may move indoors. More visitors can attend. Local vendors can stay open later.",
+    "choices": [
+     "If the festival may move indoors, more visitors will attend, and local vendors can stay open later.",
+     "If the festival may move indoors, more visitors can attend, and local vendors can stay open later.",
+     "If the festival moves indoors, more visitors can attend, and local vendors will stay open later.",
+     "If the festival may move indoors, more visitors can attend, and local vendors may stay open later."
+    ],
+    "answerIndex": 1,
+    "explanation": "The conditional sentence retains may for the possible condition and can for both possible outcomes without changing their stated certainty.",
+    "difficulty": 5,
+    "skill": "Combining sentences with conditional mood",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q6",
+    "prompt": "Combine the three sentences into one sentence, retaining the subjunctive mood required by requested that and preserving all three facts: The supervisor requested that the volunteers confirm each shipment. The volunteers complied. The warehouse released the trucks.",
+    "choices": [
+     "The supervisor requested that the volunteers confirmed each shipment; the volunteers complied, and then the warehouse released the trucks.",
+     "The supervisor requested that the volunteers confirm each shipment; the volunteers complied, and then the warehouse released the trucks.",
+     "The supervisor requested that the volunteers would confirm each shipment; the volunteers complied, and then the warehouse released the trucks.",
+     "The supervisor requested that the volunteers are confirming each shipment; the volunteers complied, and then the warehouse released the trucks."
+    ],
+    "answerIndex": 1,
+    "explanation": "The base verb confirm correctly expresses the subjunctive mood required by requested that.",
+    "difficulty": 6,
+    "skill": "Combining sentences with a subjunctive shift",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q1",
+    "prompt": "Combine the three sentences into one sentence, changing only the second sentence to passive voice and preserving the original facts: The students cleaned the room. The teacher inspected it. The students earned praise.",
+    "choices": [
+     "After the students cleaned the room, it was inspected by the teacher, and then the students earned praise.",
+     "After the students cleaned the room, the teacher inspected it, and then the students earned praise.",
+     "Before the teacher inspected the room, the students cleaned it, and then the students earned praise by it.",
+     "After the students cleaned the room, it was inspected by the teacher, and then praise was earned by the students."
+    ],
+    "answerIndex": 0,
+    "explanation": "This version makes only the teacher's inspection passive while keeping both actions by the students active and preserving the stated sequence.",
+    "difficulty": 4,
+    "skill": "Combining Three Sentences with a Voice Shift",
+    "topic": "Combining Three Sentences: Shifts in Voice and Mood"
+   },
+   {
+    "id": "q33",
+    "prompt": "Join the three sentences while retaining the subjunctive mood required by asked and keeping the other two sentences in active voice: The coach asked that the player call the trainer. The player called the trainer. The trainer adjusted the plan.",
+    "choices": [
+     "The coach asked that the player call the trainer; the player called the trainer, and the trainer adjusted the plan.",
+     "The coach asked that the player called the trainer; the player called the trainer, and the trainer adjusted the plan.",
+     "The coach asked that the player call the trainer; the trainer adjusted the plan, and the player called the trainer.",
+     "The coach asked for the player to call the trainer; the player called the trainer, and the trainer adjusted the plan."
+    ],
+    "answerIndex": 0,
+    "explanation": "Because asked introduces a that-clause expressing a request, call takes the subjunctive base form while the other two clauses remain active.",
+    "difficulty": 5,
+    "skill": "Preserving subjunctive mood in a that-clause",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q42",
+    "prompt": "Which one-sentence explanation best accounts for the present-tense verb inspect in this combination: The principal required that the driver inspect the bus; the driver inspected it, and the mechanic repaired the brake.",
+    "choices": [
+     "Because required is in the past tense, the verb in the that-clause must agree with the past-tense subject driver.",
+     "Because required introduces a that-clause expressing a requirement, so inspect takes the subjunctive base form rather than the past-tense inspected.",
+     "Because the main clause uses active voice, the that-clause must use indicative mood and the past-tense inspected.",
+     "Because inspect describes an action that has already happened, it should be written inspected after required."
+    ],
+    "answerIndex": 1,
+    "explanation": "Required introduces a that-clause expressing a requirement, so inspect appears in the subjunctive base form rather than the past-tense inspected.",
+    "difficulty": 6,
+    "skill": "Explaining subjunctive mood",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q9",
+    "prompt": "Which one-sentence explanation best describes the mood and structure of this combination: The meteorologist warned that the storm might weaken overnight; the crew secured the instruments, and officials delayed the launch.",
+    "choices": [
+     "The modal might preserves the warning's uncertainty, while the two active clauses state the crew's response and the final decision.",
+     "The modal might states that the storm will certainly weaken, while the active clauses describe the response and decision.",
+     "The modal might makes the warning hypothetical, while the active clauses present two confirmed consequences.",
+     "The semicolon creates a voice shift, while the active clauses establish the warning as a command."
+    ],
+    "answerIndex": 0,
+    "explanation": "The modal might preserves the warning's uncertainty, while the two active clauses state the crew's response and the final decision.",
+    "difficulty": 7,
+    "skill": "Explaining a mood shift",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q13",
+    "prompt": "Which one-sentence explanation best describes the voice pattern in this combination: After the proposal was reviewed, the chair approved it, and the secretary recorded the decision.",
+    "choices": [
+     "The proposal is the subject of the opening passive clause, while the chair and secretary are subjects of the two active clauses.",
+     "The chair is the subject of the opening passive clause, although the proposal remains only an object afterward.",
+     "The proposal is an object in the opening active clause, while the chair and secretary are passive subjects afterward.",
+     "The secretary is the subject of the opening passive clause, while the chair and proposal are subjects of the active clauses."
+    ],
+    "answerIndex": 0,
+    "explanation": "In the passive opening clause, the proposal is the subject, while the active later clauses make the chair and secretary the subjects.",
+    "difficulty": 5,
+    "skill": "Explaining Voice Shifts",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q21",
+    "prompt": "Combine the three sentences into one, retaining the active subjunctive form required by asked and keeping the other two sentences in active voice: The ranger asked that the visitor identify the plant. The visitor showed the app. The group continued along the trail.",
+    "choices": [
+     "The ranger asked that the visitor identify the plant; the visitor showed the app, and the group continued along the trail.",
+     "The ranger asked that the visitor should identify the plant; the visitor showed the app, and the group continued along the trail.",
+     "The ranger asked that the visitor identified the plant; the visitor showed the app, and the group continued along the trail.",
+     "The ranger asked that the plant be identified by the visitor; the visitor showed the app, and the group continued along the trail."
+    ],
+    "answerIndex": 0,
+    "explanation": "Because asked introduces a that-clause expressing a request, the base-form verb identify is required in the active subjunctive construction.",
+    "difficulty": 6,
+    "skill": "Subjunctive mood in sentence combination",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q15",
+    "prompt": "Which option combines these three sentences by making only the middle sentence passive and preserving the event order? Mara painted the fence. A storm damaged the gate. The crew repaired the gate.",
+    "choices": [
+     "Mara painted the fence; the gate was damaged by the storm, and it was repaired by the crew.",
+     "Mara painted the fence; the storm damaged the gate, and the crew repaired the gate.",
+     "Mara painted the fence; the gate was damaged by the storm, and the crew repaired the gate.",
+     "The fence was painted by Mara; the gate was damaged by the storm, and the crew repaired the gate."
+    ],
+    "answerIndex": 2,
+    "explanation": "This version makes only the middle sentence passive and keeps the three events in their original order.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a passive middle clause",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q8",
+    "prompt": "Which one-sentence explanation best describes the voice shift in this combination: Before the parcel was scanned, the clerk checked the label, and then the parcel entered the sorting area.",
+    "choices": [
+     "The active first clause makes the parcel the focus, while the passive later clauses present the clerk's check and the parcel's movement.",
+     "The passive first clause changes the sequence of events, while the active later clauses preserve it.",
+     "The passive first clause hides the clerk's action, while the active later clauses give the parcel's movement.",
+     "The passive first clause makes the parcel the focus, while the active clauses present the clerk's check and the parcel's movement."
+    ],
+    "answerIndex": 3,
+    "explanation": "The passive first clause foregrounds the parcel, while the active clauses identify the clerk's check and the parcel's next movement.",
+    "difficulty": 5,
+    "skill": "Explaining a voice shift",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q17",
+    "prompt": "Which option preserves the required subjunctive mood and keeps the other two sentences in active voice? The manager insisted that the designer revise the poster. The designer revised it. The client approved it.",
+    "choices": [
+     "The manager insisted that the designer revise the poster; the designer revised it, and the client approved it.",
+     "The manager insisted that the designer revise the poster; the poster was revised by the designer, and the client approved it.",
+     "The manager insisted that the designer revises the poster; the designer revised it, and the client approved it.",
+     "The manager insisted that the designer revise the poster; the designer revised it, and it was approved by the client."
+    ],
+    "answerIndex": 0,
+    "explanation": "The verb revise correctly takes the subjunctive form after insisted that, while the other two sentences remain active.",
+    "difficulty": 6,
+    "skill": "Preserving subjunctive mood in combined sentences",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q18",
+    "prompt": "Which option turns these statements into one conditional sentence with an if-clause and keeps may in both outcome clauses? The museum offers free admission. More families may visit. Local shops may benefit.",
+    "choices": [
+     "If the museum offers free admission, more families will visit, and local shops may benefit.",
+     "If the museum offers free admission, more families may visit, and local shops may benefit.",
+     "If the museum offered free admission, more families might visit, and local shops would benefit.",
+     "If the museum offers free admission, more families may visit, and local shops will benefit."
+    ],
+    "answerIndex": 1,
+    "explanation": "This version uses an if-clause to establish the condition and retains the possible outcomes expressed by may.",
+    "difficulty": 5,
+    "skill": "Combining statements into a conditional sentence",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q37",
+    "prompt": "Combine the three statements in one sentence, putting the second statement in passive voice while leaving the other two in active voice: The coach emailed the players. The players studied the playbook. The coach reviewed the notes.",
+    "choices": [
+     "The coach emailed the players; the playbook was studied by the players, and the coach reviewed the notes.",
+     "The players were emailed by the coach; the players studied the playbook, and the coach reviewed the notes.",
+     "The coach emailed the players; the players studied the playbook, and the notes were reviewed by the coach.",
+     "The coach emailed the players; the playbook was studied by the players, and the coach ignored the notes."
+    ],
+    "answerIndex": 0,
+    "explanation": "Only this version changes the second statement to passive voice and keeps the other two statements active while preserving all three facts.",
+    "difficulty": 4,
+    "skill": "Passive voice in the middle clause",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q47",
+    "prompt": "Which one-sentence explanation best describes the voice shift in this combination? The report was reviewed by the team; the team presented its findings, and the director approved the proposal.",
+    "choices": [
+     "The passive opening clause removes the team from the later actions, while the final clause changes to a subjunctive mood.",
+     "The active opening clause emphasizes the team, while the passive clauses make the findings and proposal the only actors.",
+     "The passive opening clause foregrounds the report, while the active clauses identify the team and director as the actors in the later actions.",
+     "The three clauses all use passive voice, which places equal emphasis on the report, findings, and proposal."
+    ],
+    "answerIndex": 2,
+    "explanation": "The first clause is passive and makes the report prominent, whereas the active clauses name the team and director as the performers of the later actions.",
+    "difficulty": 6,
+    "skill": "Explaining shifts in voice",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q30",
+    "prompt": "Which one-sentence explanation best describes the mood of the outcome clauses in this combination? If the library extends its hours, more students can study there, and community groups can reserve rooms.",
+    "choices": [
+     "The modal can in both outcome clauses presents studying and reserving as completed events that depend on the library extending its hours.",
+     "The modal can in both outcome clauses presents studying and reserving as possibilities that depend on the library extending its hours.",
+     "The modal can in both outcome clauses presents studying and reserving as requirements that depend on the library extending its hours.",
+     "The modal can in both outcome clauses presents studying and reserving as uncertainties that depend on the library extending its hours."
+    ],
+    "answerIndex": 1,
+    "explanation": "The modal can in both outcome clauses presents studying and reserving as possibilities that depend on the library extending its hours.",
+    "difficulty": 5,
+    "skill": "Explaining modal meaning in conditional outcomes",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q24",
+    "prompt": "Which one-sentence explanation best describes the voice pattern in this combination? The recipe was printed by Nia; Nia placed it in the folder, and the class began the activity.",
+    "choices": [
+     "The passive opening clause foregrounds the recipe, while the passive clauses afterward identify Nia and the class as the actors.",
+     "The active opening clause foregrounds the recipe, while the passive clauses afterward identify Nia and the class as the actors.",
+     "The passive opening clause makes the class the focus, while the active clauses afterward present Nia and the folder as the actors.",
+     "The passive opening clause foregrounds the recipe, while the active clauses afterward identify Nia and the class as the actors."
+    ],
+    "answerIndex": 3,
+    "explanation": "The passive opening clause foregrounds the recipe, while the active clauses afterward identify Nia and the class as the actors.",
+    "difficulty": 6,
+    "skill": "Explaining voice shifts",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q26",
+    "prompt": "Rewrite the three sentences as one, with passive voice appearing only in the middle event and the events remaining in order: The pilot checked the instruments. A storm damaged the runway. The crew prepared for landing.",
+    "choices": [
+     "The instruments were checked by the pilot; a storm damaged the runway, and the crew prepared for landing.",
+     "The pilot checked the instruments; the runway was damaged by a storm, and the crew prepared for landing.",
+     "The pilot checked the instruments; the runway was damaged by a storm, and the crew was prepared for landing.",
+     "The instruments were checked by the pilot; the runway was damaged by a storm, and the crew was prepared for landing."
+    ],
+    "answerIndex": 1,
+    "explanation": "Only the middle event is passive in this sentence, while the first and third events remain active and retain their original order.",
+    "difficulty": 5,
+    "skill": "Applying passive voice to the middle event",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q32",
+    "prompt": "Combine the three sentences into one, changing only the first sentence to passive voice and preserving the sequence of events: The technician replaced the filter. The filter began rattling. The machine stopped.",
+    "choices": [
+     "The filter was replaced by the technician; it began rattling, and the machine was stopped.",
+     "The technician replaced the filter; it began rattling, and the machine stopped.",
+     "The filter was replaced by the technician; the machine stopped, and it began rattling.",
+     "The filter was replaced by the technician; it began rattling, and the machine stopped."
+    ],
+    "answerIndex": 3,
+    "explanation": "The passive opening makes the filter the focus, while the active clauses preserve the rattling and stopping events in their original order.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a passive-voice shift",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q14",
+    "prompt": "Which one-sentence explanation best identifies the conditional mood in this combination: If the satellite signal were to fail, the researchers would recalibrate the antenna, and the team would continue collecting data.",
+    "choices": [
+     "The if-clause states a confirmed past event, and would marks two results that were certain to follow it.",
+     "The if-clause establishes an unreal condition, and would marks the two hypothetical consequences that depend on it.",
+     "The if-clause uses indicative mood for a known fact, and would marks two routine future plans.",
+     "The if-clause expresses a command, and would changes the two proposed actions into requests."
+    ],
+    "answerIndex": 1,
+    "explanation": "The were-to-fail construction presents an unreal condition, and would identifies the two hypothetical consequences of that condition.",
+    "difficulty": 7,
+    "skill": "Explaining Conditional Mood Shifts",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q11",
+    "prompt": "Combine the three sentences into one, retaining the subjunctive mood and active voice of the first sentence: The coordinator required that the volunteers double-check each label. The volunteers started at nine. Every label was verified before noon.",
+    "choices": [
+     "The coordinator required that the volunteers double-checked each label; the volunteers started at nine, and every label was verified before noon.",
+     "The coordinator required the volunteers to double-check each label; the volunteers started at nine, and every label was verified before noon.",
+     "The coordinator required that the volunteers double-check each label; the volunteers started at nine, and every label was verified before noon.",
+     "The coordinator required that every label be double-checked by the volunteers; the volunteers started at nine, and every label was verified before noon."
+    ],
+    "answerIndex": 2,
+    "explanation": "Double-check remains in the base form required by the subjunctive construction, and the first clause retains active voice.",
+    "difficulty": 6,
+    "skill": "Combining Sentences with a Subjunctive Mood Shift",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q45",
+    "prompt": "Which option preserves the subjunctive mood required by It is essential that and keeps the other two sentences in active voice? It is essential that the technician test the voltage. The technician tested it. The equipment stayed safe.",
+    "choices": [
+     "It is essential that the technician test the voltage; the technician tested it, and the equipment stayed safe.",
+     "It is essential that the technician tested the voltage; the technician tested it, and the equipment stayed safe.",
+     "It is essential that the technician should test the voltage; the technician tested it, and the equipment stayed safe.",
+     "It is essential that the technician to test the voltage; the technician tested it, and the equipment stayed safe."
+    ],
+    "answerIndex": 0,
+    "explanation": "The verb test takes its base form in the essential that-clause, while tested and stayed remain active and retain the original facts.",
+    "difficulty": 5,
+    "skill": "Combining clauses with subjunctive mood",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q12",
+    "prompt": "Combine the three sentences into one, keeping the first clause passive and using can and will for the possible outcomes: If the science fair is moved indoors, more families can attend. The organizers will add three tables. The buses will leave earlier.",
+    "choices": [
+     "Because the science fair is moved indoors, more families can attend; the organizers will add three tables, and the buses will leave earlier.",
+     "If the science fair moves indoors, more families can attend; the organizers will add three tables, and the buses will leave earlier.",
+     "If the science fair is moved indoors, more families can attend; the organizers added three tables, and the buses will leave earlier.",
+     "If the science fair is moved indoors, more families can attend; the organizers will add three tables, and the buses will leave earlier."
+    ],
+    "answerIndex": 3,
+    "explanation": "The passive if-clause presents the move as a condition, while can and will express its possible consequences.",
+    "difficulty": 6,
+    "skill": "Combining Sentences with a Conditional Mood Shift",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q25",
+    "prompt": "Which option turns only the first sentence into passive voice while retaining the sequence of events? The electrician repaired the lamp. The lamp flickered again. The technician replaced the cord.",
+    "choices": [
+     "The lamp was repaired by the electrician; it flickered again, and the technician replaced the cord.",
+     "The electrician repaired the lamp; it flickered again, and the technician replaced the cord.",
+     "The lamp flickered again; the lamp was repaired by the electrician, and the technician replaced the cord.",
+     "The lamp was repaired by the electrician; it flickered again, and the cord was replaced by the technician."
+    ],
+    "answerIndex": 0,
+    "explanation": "The first clause uses passive voice to emphasize the lamp, while the active clauses retain the order of the flicker and the cord replacement.",
+    "difficulty": 5,
+    "skill": "Passive voice and event order",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q44",
+    "prompt": "Which option turns only the first of these sentences into passive voice while retaining the sequence of events? Ava signed the form. The clerk checked it. The office archived it.",
+    "choices": [
+     "Ava signed the form, the clerk checked it, and the office archived it.",
+     "Ava signed the form; it was checked by the clerk, and the office archived it.",
+     "Ava signed the form; the clerk checked it, and it was archived by the office.",
+     "The form was signed by Ava; the clerk checked it, and the office archived it."
+    ],
+    "answerIndex": 3,
+    "explanation": "The form is the subject of the first passive clause, and the remaining active clauses preserve the original sequence.",
+    "difficulty": 4,
+    "skill": "Combining clauses with passive voice",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q48",
+    "prompt": "Which one-sentence explanation best explains why accept appears in its present-tense form in this combination? The award rules stipulate that each nominee accept the nomination; the nominee accepted it, and the announcement was made.",
+    "choices": [
+     "Because a noun precedes the verb, accept uses present tense so that the two clauses have the same grammatical mood.",
+     "Because the events are listed in chronological order, accept must be present tense to match the later active verb accepted.",
+     "Because the announcement was made, the writer changes accept to present tense to create agreement with the passive clause.",
+     "Because stipulate introduces a that-clause expressing a requirement, accept takes its base form in the subjunctive mood."
+    ],
+    "answerIndex": 3,
+    "explanation": "Stipulate introduces a that-clause expressing a requirement, so the subjunctive verb takes the base form accept rather than the past form accepted.",
+    "difficulty": 6,
+    "skill": "Explaining shifts in mood",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q22",
+    "prompt": "Which option combines the statements into one conditional sentence without changing the possibility or the three outcomes: If the bakery opens early, neighbors can buy fresh bread. The school will serve breakfast. The bus queue may shrink.",
+    "choices": [
+     "Unless the bakery opens early, neighbors cannot buy fresh bread, the school will not serve breakfast, and the bus queue will not shrink.",
+     "If the bakery opens early, neighbors can buy fresh bread, the school will serve breakfast, and the bus queue may shrink.",
+     "If the bakery opens early, neighbors may buy fresh bread, the school may serve breakfast, and the bus queue might shrink.",
+     "If the bakery had opened early, neighbors could have bought fresh bread, the school would have served breakfast, and the bus queue might have shrunk."
+    ],
+    "answerIndex": 1,
+    "explanation": "The if-clause presents a real possibility, and the three following clauses retain the original can, will, and may meanings.",
+    "difficulty": 5,
+    "skill": "Conditional mood in sentence combination",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q16",
+    "prompt": "Which option turns only the first of these sentences into passive voice while retaining the sequence of events? Mr. Ali reserved two seats. The agent checked them. Dana returned them.",
+    "choices": [
+     "Mr. Ali reserved two seats; the agent checked them, and Dana returned them.",
+     "The two seats were reserved by Mr. Ali; the agent checked them, and they were returned by Dana.",
+     "Mr. Ali reserved two seats; they were checked by the agent, and Dana returned them.",
+     "The two seats were reserved by Mr. Ali; the agent checked them, and Dana returned them."
+    ],
+    "answerIndex": 3,
+    "explanation": "This version changes only the opening sentence to passive voice and keeps all three events in chronological order.",
+    "difficulty": 4,
+    "skill": "Combining sentences with a passive opening clause",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q20",
+    "prompt": "Combine the three sentences into one, changing only the middle sentence to passive voice and preserving the order of events: The librarian scanned the card. The desk clerk filed the card. The students needed the card that day.",
+    "choices": [
+     "The card was scanned by the librarian; it was filed by the desk clerk, and the students needed the card that day.",
+     "The card was scanned by the librarian; the desk clerk filed it, and the students needed the card that day.",
+     "The librarian scanned the card; the desk clerk filed the card, and the students needed the card that day.",
+     "The librarian scanned the card; it was filed by the desk clerk, and the students needed the card that day."
+    ],
+    "answerIndex": 3,
+    "explanation": "The semicolon and and join the three clauses, with only the filing event rewritten in passive voice and the original sequence retained.",
+    "difficulty": 5,
+    "skill": "Passive voice in sentence combination",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q34",
+    "prompt": "Which one-sentence explanation best describes the voice pattern in this combination: The plans were reviewed by the panel; the panel approved them, and the mayor signed the funding agreement.",
+    "choices": [
+     "The active clauses shift the focus to the agents, while the passive opening emphasizes the mayor's final action.",
+     "The passive opening makes the plans the focus, while the active clauses identify the panel's actions and preserve the sequence.",
+     "The passive opening emphasizes the panel, while the later active clauses deliberately hide the actors.",
+     "The three clauses use active voice to emphasize the people, while the passive opening appears only for variety."
+    ],
+    "answerIndex": 1,
+    "explanation": "The passive opening foregrounds the plans, while the active clauses name the panel and mayor as the people performing the later actions.",
+    "difficulty": 6,
+    "skill": "Explaining a shift between passive and active voice",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q23",
+    "prompt": "In the combination The instructor required that the student cite the source; the student cited it, and the class received the revised bibliography, why does cite appear in its base form rather than cited?",
+    "choices": [
+     "Because required is in the past tense, so the that-clause requires a past-tense verb.",
+     "Because cite names an action that occurred before the instructor gave the requirement.",
+     "Because required introduces a that-clause expressing a requirement, so the subjunctive takes the base form cite rather than the indicative cited.",
+     "Because received is passive, so every verb in the combination must also be passive."
+    ],
+    "answerIndex": 2,
+    "explanation": "Because required introduces a that-clause expressing a requirement, the subjunctive takes the base form cite rather than the indicative cited.",
+    "difficulty": 7,
+    "skill": "Explaining subjunctive verb forms",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q28",
+    "prompt": "Form one conditional sentence from the three statements, keeping can in both outcomes: The museum adds evening hours. More visitors can attend. Local groups can rent the gallery.",
+    "choices": [
+     "If the museum adds evening hours, more visitors may attend, and local groups may rent the gallery.",
+     "If the museum added evening hours, more visitors can attend, and local groups can rent the gallery.",
+     "If the museum adds evening hours, more visitors could attend, and local groups could rent the gallery.",
+     "If the museum adds evening hours, more visitors can attend, and local groups can rent the gallery."
+    ],
+    "answerIndex": 3,
+    "explanation": "This conditional keeps the present-tense condition and uses can to preserve the possibility of both stated outcomes.",
+    "difficulty": 5,
+    "skill": "Combining statements with conditional mood",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q35",
+    "prompt": "Why does verify appear in its base form in this combination: The contract stipulates that each supplier verify the origin code; each supplier verified it, and the forms were approved.",
+    "choices": [
+     "Because the that-clause describes what the suppliers did in the past, so verify must be in past tense.",
+     "Because stipulates reports a completed fact about the suppliers, so verify must agree with the subject each supplier.",
+     "Because stipulates introduces a that-clause expressing a requirement, so verify takes the base form.",
+     "Because the main clause ends in a passive construction, so verify must also appear in the base form."
+    ],
+    "answerIndex": 2,
+    "explanation": "The verb stipulates introduces a that-clause expressing a requirement, which calls for the subjunctive base form verify.",
+    "difficulty": 6,
+    "skill": "Explaining subjunctive verb form",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q40",
+    "prompt": "Which one-sentence explanation best identifies the voice pattern in this combination: The charter was revised by Nora; Nora presented it to the council, and the members voted on it.",
+    "choices": [
+     "The final clause is passive because voting is expressed with a by phrase identifying the members as performers.",
+     "Every clause in this combination uses active voice because each one names the person performing its action.",
+     "The second clause is passive because presenting is expressed through a by phrase that identifies Nora as the performer.",
+     "The charter is the focus of the opening passive clause, while the active clauses keep Nora and the members visible as actors."
+    ],
+    "answerIndex": 3,
+    "explanation": "The first clause is passive because the charter is the subject, while Nora and the members remain the active agents in the following clauses.",
+    "difficulty": 4,
+    "skill": "Analyzing a voice shift",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q38",
+    "prompt": "Rewrite these three sentences as one, retaining the subjunctive mood and active voice of the that-clause required by insisted and keeping the other two clauses active: The curator insisted that the conservator examine the painting. The conservator examined it. The curator approved the restoration.",
+    "choices": [
+     "The curator insisted that the painting be examined by the conservator; the conservator examined it, and the curator approved the restoration.",
+     "The curator insisted that the conservator examine the painting; the conservator examined it, and the curator approved the restoration.",
+     "The curator insisted that the conservator examine the painting; the conservator examined it, and the restoration was approved by the curator.",
+     "The curator insisted that the conservator examined the painting; the conservator examined it, and the curator approved the restoration."
+    ],
+    "answerIndex": 1,
+    "explanation": "The base form examine is required in the that-clause after insisted, while examined and approved remain active in the following clauses.",
+    "difficulty": 5,
+    "skill": "Subjunctive mood in that-clauses",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q31",
+    "prompt": "Join the three sentences with punctuation that preserves all three facts, their relationship, active voice, and indicative mood throughout: The hikers rested. The sun set. The camp became quiet.",
+    "choices": [
+     "The hikers rested; the sun set, but the camp became quiet.",
+     "The hikers rested, the sun set, and the camp became quiet.",
+     "The hikers rested; the sun set, and the camp became quiet.",
+     "The hikers were rested; the sun set, and the camp became quiet."
+    ],
+    "answerIndex": 2,
+    "explanation": "Semicolons and a coordinating conjunction correctly join the three independent clauses without changing their voice, mood, or relationship.",
+    "difficulty": 6,
+    "skill": "Joining active indicative clauses with semicolons",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q39",
+    "prompt": "Turn the three statements into one conditional sentence without changing the condition or either possible outcome: The trail may reopen. Cyclists may return. The park manager may post new signs.",
+    "choices": [
+     "If the trail may reopen, cyclists will return, and the park manager may post new signs.",
+     "If the trail reopens, cyclists may return, and the park manager may post new signs.",
+     "If the trail may reopen, cyclists may return, and the park manager may post new signs.",
+     "If the trail may reopen, cyclists can return, and the park manager may post new signs."
+    ],
+    "answerIndex": 2,
+    "explanation": "This version keeps may in the if-clause and both outcome clauses, preserving all three statements as a single conditional sentence.",
+    "difficulty": 5,
+    "skill": "Conditional sentences and modal possibility",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q7",
+    "prompt": "Combine the three sentences into one conditional sentence, keeping the first sentence's possibility and the hypothetical outcomes: If the bridge reopens, the bus route will change. Commuters will reach downtown faster. The transit agency will post an update.",
+    "choices": [
+     "Because the bridge reopens, the bus route will change, commuters will reach downtown faster, and the transit agency will post an update.",
+     "If the bridge had reopened, the bus route would have changed, commuters would have reached downtown faster, and the transit agency would have posted an update.",
+     "If the bridge reopens, the bus route will change, commuters will reach downtown faster, and the transit agency will post an update.",
+     "Unless the bridge reopens, the bus route will not change, commuters will not reach downtown faster, and the transit agency will not post an update."
+    ],
+    "answerIndex": 2,
+    "explanation": "This option preserves the reopening as a possibility and places all three outcomes within the same conditional sentence.",
+    "difficulty": 6,
+    "skill": "Combining sentences in a conditional",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q29",
+    "prompt": "Which one-sentence explanation best describes the function of the by phrase in this combination? The ticket was purchased by Mia; Mia sent it by email, and Dana added it to the calendar.",
+    "choices": [
+     "The by phrase preserves Mia as the purchaser even though the ticket is the subject of the opening clause.",
+     "The by phrase preserves Dana as the purchaser even though the ticket is the subject of the opening clause.",
+     "The by phrase preserves Mia as the recipient even though the ticket is the subject of the opening clause.",
+     "The by phrase preserves both Mia and Dana as purchasers even though the ticket is the subject of the opening clause."
+    ],
+    "answerIndex": 0,
+    "explanation": "The by phrase identifies Mia as the purchaser even though the ticket occupies the subject position of the opening clause.",
+    "difficulty": 4,
+    "skill": "Identifying the agent in a passive clause",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q36",
+    "prompt": "Combine the three sentences into one, changing only the middle sentence to passive voice and preserving the original order of events: The scout mapped the trail. Dense fog covered the ridge. The hikers turned back.",
+    "choices": [
+     "The scout mapped the trail; the hikers turned back, and the ridge was covered by dense fog.",
+     "The scout mapped the trail; dense fog covered the ridge, and the hikers turned back.",
+     "The scout mapped the trail; the ridge was covered by dense fog, and the trail was mapped again.",
+     "The scout mapped the trail; the ridge was covered by dense fog, and the hikers turned back."
+    ],
+    "answerIndex": 3,
+    "explanation": "The middle event is passive because the ridge receives the action of being covered, while the active opening and closing clauses retain the original sequence.",
+    "difficulty": 5,
+    "skill": "Combining sentences with a middle-clause passive shift",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q4",
+    "prompt": "Which one-sentence explanation best describes the voice shift in this combination: The guard, who saved the team, was praised by the captain, and the crowd cheered.",
+    "choices": [
+     "The relative clause changes the sequence by placing the cheering before the rescue.",
+     "The relative clause removes the captain from the sentence because his role was unimportant.",
+     "The passive main clause changes the agent of the praise from the captain to the guard.",
+     "The relative clause keeps the guard central while the passive main clause emphasizes the praise."
+    ],
+    "answerIndex": 3,
+    "explanation": "By foregrounding the guard in the relative clause and making praise passive, the sentence highlights the guard while still identifying the captain as the one giving praise.",
+    "difficulty": 6,
+    "skill": "Explaining the Effect of a Voice Shift",
+    "topic": "Combining Three Sentences: Shifts in Voice and Mood"
+   },
+   {
+    "id": "q2",
+    "prompt": "Combine the three sentences into one, changing only the first sentence to passive voice and preserving the original sequence: The coach gave Sam a warning. Sam accepted it. The team resumed practice.",
+    "choices": [
+     "Sam received a warning from the coach; Sam accepted it, and then the team resumed practice.",
+     "Sam was given a warning by the coach; Sam accepted it, and then the team resumed practice.",
+     "A warning was given to Sam by the coach; it was accepted by Sam, and then the team resumed practice.",
+     "Sam was given a warning by the coach after Sam accepted it; then the team resumed practice."
+    ],
+    "answerIndex": 1,
+    "explanation": "Only this version changes the coach's giving of the warning to passive voice while keeping Sam's acceptance and the team's return active.",
+    "difficulty": 5,
+    "skill": "Combining Three Sentences with a Voice Shift",
+    "topic": "Combining Three Sentences: Shifts in Voice and Mood"
+   },
+   {
+    "id": "q43",
+    "prompt": "Which option combines the three sentences into one, changing only the middle sentence to passive voice and preserving the order of events? The drummer rehearsed the rhythm. The neighbors complained about the noise. The band changed the tempo.",
+    "choices": [
+     "The drummer rehearsed the rhythm; the neighbors complained about the noise, and the tempo was changed by the band.",
+     "The rhythm was rehearsed by the drummer; the neighbors complained about the noise, and the band changed the tempo.",
+     "The drummer rehearsed the rhythm; the noise was complained about, and the band changed the tempo.",
+     "The drummer rehearsed the rhythm, the neighbors complained about the noise, and the band changed the tempo."
+    ],
+    "answerIndex": 2,
+    "explanation": "The noise is the subject of the middle passive clause, while the other two clauses remain active and the events stay in order.",
+    "difficulty": 4,
+    "skill": "Combining clauses with passive voice",
+    "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q19",
+    "prompt": "Which one-sentence explanation best describes the voice pattern in this combination? The mural was painted by Elena; Elena explained the design, and visitors admired it.",
+    "choices": [
+     "The passive opening clause hides Elena's role, while the active clauses show that she and the visitors have equal roles.",
+     "The active clauses present the mural as the only focus, while the passive opening clause makes the visitors less important.",
+     "The passive opening clause foregrounds the mural, while the active clauses foreground Elena and the visitors.",
+     "The passive opening clause creates a cause-and-effect chain, while the active clauses describe three unrelated actions."
+    ],
+    "answerIndex": 2,
+    "explanation": "The passive opening clause makes the mural prominent, and the two active clauses then emphasize Elena and the visitors as actors.",
+    "difficulty": 6,
+    "skill": "Explaining shifts between active and passive voice",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q50",
+    "prompt": "Combine the three sentences into one, retaining the subjunctive mood required by insisted that and preserving all three facts: The director insisted that the actor rehearse the scene. The actor rehearsed the scene. The audience applauded.",
+    "choices": [
+     "The director insisted that the actor rehearses the scene; the actor rehearsed it, and the audience applauded.",
+     "The director insisted that the actor rehearse the scene; the actor rehearsed it, and the audience applauded.",
+     "The director insisted that the actor rehearsed the scene; the actor rehearsed it, and the audience applauded.",
+     "The director insisted that the actor rehearse the scene; the actor rehearses it, and the audience applauds."
+    ],
+    "answerIndex": 1,
+    "explanation": "The correct combination retains the subjunctive base form rehearse after insisted that and keeps the other clauses in active voice.",
+    "difficulty": 5,
+    "skill": "Combining sentences with shifts in voice and mood",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q5",
+    "prompt": "Combine the sentences into one, preserving the stated order of events and changing only the middle sentence to passive voice: We unplugged the computer when the lights flickered. The file was saved. The computer restarted safely.",
+    "choices": [
+     "We unplugged the computer when the lights flickered; the file was saved, and then the computer restarted safely.",
+     "We unplugged the computer when the lights flickered, the file was saved, and then the computer restarted safely.",
+     "After the file had been saved, we unplugged the computer, and then the computer restarted safely.",
+     "We unplugged the computer when the lights flickered; the file was saved, and then the computer was restarted safely by us."
+    ],
+    "answerIndex": 0,
+    "explanation": "The semicolon separates the first action from the passive middle statement, while the final active clause preserves the original sequence.",
+    "difficulty": 7,
+    "skill": "Combining Three Sentences with Ordered Voice Shifts",
+    "topic": "Combining Three Sentences: Shifts in Voice and Mood"
+   },
+   {
+    "id": "q3",
+    "prompt": "Combine these sentences into one, retaining the subjunctive mood required by requested that and preserving all three facts: The director requested that the staff review the report. The staff reviewed it. The board approved the budget.",
+    "choices": [
+     "The director requested the staff to review the report; the staff reviewed it, and then the board approved the budget.",
+     "The director requested that the staff reviews the report; the staff reviewed it, and then the board approved the budget.",
+     "The director requested that the staff review the report; the staff reviewed it, and then the board approved the budget.",
+     "The director requested that the staff review the report, it was reviewed, and then the board approved the budget."
+    ],
+    "answerIndex": 2,
+    "explanation": "The verb review remains in the subjunctive form required after requested that, while the other clauses stay in the indicative mood.",
+    "difficulty": 6,
+    "skill": "Combining Three Sentences with a Mood Shift",
+    "topic": "Combining Three Sentences: Shifts in Voice and Mood"
+   },
+   {
+    "id": "q49",
+    "prompt": "Combine the three sentences into one, changing only the middle sentence to passive voice and preserving the order of events: The chef chopped the vegetables. The chef simmered the sauce. The guests arrived.",
+    "choices": [
+     "The chef chopped the vegetables; the sauce was simmered by the chef, and the guests arrived.",
+     "The chef chopped the vegetables; the chef simmered the sauce, and the guests arrived.",
+     "The vegetables were chopped by the chef; the sauce was simmered by the chef, and the guests arrived.",
+     "The chef chopped the vegetables; the sauce simmered by the chef, and the guests arrived."
+    ],
+    "answerIndex": 0,
+    "explanation": "The correct combination changes only the middle sentence to passive voice while preserving the original order of events.",
+    "difficulty": 5,
+    "skill": "Combining sentences with shifts in voice and mood",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   },
+   {
+    "id": "q10",
+    "prompt": "Combine the three sentences into one, converting only the middle event to passive voice and retaining the event order: The chef prepared dinner. The guests praised it. The chef served it immediately.",
+    "choices": [
+     "The chef prepared dinner; the guests praised it, and the chef served it immediately.",
+     "The chef prepared dinner; it was praised by the guests, and the chef served it immediately.",
+     "The chef prepared dinner; the guests praised it, and dinner was served immediately by the chef.",
+     "Dinner was prepared by the chef; the guests praised it, and the chef served it immediately."
+    ],
+    "answerIndex": 1,
+    "explanation": "Only the middle event is passive, because it was praised by the guests, while the chef remains the active subject in the other two clauses.",
+    "difficulty": 4,
+    "skill": "Combining Sentences with a Passive Voice Shift",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q27",
+    "prompt": "Join the three sentences into one that keeps the required subjunctive mood and active voice in the other clauses: The judge ordered that the witness remain in court. The witness obeyed. The bailiff recorded the testimony.",
+    "choices": [
+     "The witness was ordered to remain in court; the witness obeyed, and the bailiff recorded the testimony.",
+     "The judge ordered that the witness remains in court; the witness obeyed, and the bailiff recorded the testimony.",
+     "The judge ordered that the witness remain in court; the witness obeyed, and the bailiff recorded the testimony.",
+     "The judge ordered that the witness remain in court; the witness was obeyed, and the bailiff recorded the testimony."
+    ],
+    "answerIndex": 2,
+    "explanation": "The required subjunctive form is remain, while the clauses about the witness obeying and the bailiff recording remain in active voice.",
+    "difficulty": 6,
+    "skill": "Retaining subjunctive mood in a combination",
+    "topic": "Shifts in Voice and Mood"
+   },
+   {
+    "id": "q41",
+    "prompt": "Merge the three sentences with passive voice in the middle event and the same event sequence: The diver entered the pool. A wave moved her toward the wall. She grabbed the ladder.",
+    "choices": [
+     "The diver entered the pool; she was moved toward the wall by the wave, and she grabbed the ladder.",
+     "The pool was entered by the diver; a wave moved her toward the wall, and she grabbed the ladder.",
+     "The diver entered the pool; a wave moved her toward the wall, and the ladder was grabbed by her.",
+     "The diver entered the pool; a wave moved her toward the wall, and she grabbed the ladder."
+    ],
+    "answerIndex": 0,
+    "explanation": "The middle clause is passive because the diver is the subject of was moved, while the opening and closing clauses remain active.",
+    "difficulty": 5,
+    "skill": "Passive voice and event sequence",
+    "topic": "Combine Three Sentences - Shifts in Voice and Mood"
+   }
+  ],
+  "feedback": {
+   "correct": "Good heave! The voice and mood now run smoothly through the whole sentence.",
+   "incorrect": "That leaves a shift somewhere — check who performs each action and which mood the sentence starts in.",
+   "win": "Flag over the line! You combine sentences with no unwanted shifts in voice or mood.",
+   "lose": "The bot hauled the flag back. Rewrite for one voice and one mood next time!",
+   "draw": "Draw game.",
+   "outOfQuestions": "Out of questions."
+  }
+ },
+ "kept": [
+  {
+   "prompt": "Combine the three sentences into one sentence, changing only the second sentence to passive voice and preserving the original facts: The students cleaned the room. The teacher inspected it. The students earned praise.",
+   "choices": [
+    "After the students cleaned the room, it was inspected by the teacher, and then the students earned praise.",
+    "After the students cleaned the room, the teacher inspected it, and then the students earned praise.",
+    "Before the teacher inspected the room, the students cleaned it, and then the students earned praise by it.",
+    "After the students cleaned the room, it was inspected by the teacher, and then praise was earned by the students."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version makes only the teacher's inspection passive while keeping both actions by the students active and preserving the stated sequence.",
+   "difficulty": 4,
+   "skill": "Combining Three Sentences with a Voice Shift",
+   "topic": "Combining Three Sentences: Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, changing only the first sentence to passive voice and preserving the original sequence: The coach gave Sam a warning. Sam accepted it. The team resumed practice.",
+   "choices": [
+    "Sam was given a warning by the coach; Sam accepted it, and then the team resumed practice.",
+    "Sam received a warning from the coach; Sam accepted it, and then the team resumed practice.",
+    "A warning was given to Sam by the coach; it was accepted by Sam, and then the team resumed practice.",
+    "Sam was given a warning by the coach after Sam accepted it; then the team resumed practice."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only this version changes the coach's giving of the warning to passive voice while keeping Sam's acceptance and the team's return active.",
+   "difficulty": 5,
+   "skill": "Combining Three Sentences with a Voice Shift",
+   "topic": "Combining Three Sentences: Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine these sentences into one, retaining the subjunctive mood required by requested that and preserving all three facts: The director requested that the staff review the report. The staff reviewed it. The board approved the budget.",
+   "choices": [
+    "The director requested that the staff review the report; the staff reviewed it, and then the board approved the budget.",
+    "The director requested that the staff reviews the report; the staff reviewed it, and then the board approved the budget.",
+    "The director requested the staff to review the report; the staff reviewed it, and then the board approved the budget.",
+    "The director requested that the staff review the report, it was reviewed, and then the board approved the budget."
+   ],
+   "answerIndex": 0,
+   "explanation": "The verb review remains in the subjunctive form required after requested that, while the other clauses stay in the indicative mood.",
+   "difficulty": 6,
+   "skill": "Combining Three Sentences with a Mood Shift",
+   "topic": "Combining Three Sentences: Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice shift in this combination: The guard, who saved the team, was praised by the captain, and the crowd cheered.",
+   "choices": [
+    "The relative clause keeps the guard central while the passive main clause emphasizes the praise.",
+    "The relative clause removes the captain from the sentence because his role was unimportant.",
+    "The passive main clause changes the agent of the praise from the captain to the guard.",
+    "The relative clause changes the sequence by placing the cheering before the rescue."
+   ],
+   "answerIndex": 0,
+   "explanation": "By foregrounding the guard in the relative clause and making praise passive, the sentence highlights the guard while still identifying the captain as the one giving praise.",
+   "difficulty": 6,
+   "skill": "Explaining the Effect of a Voice Shift",
+   "topic": "Combining Three Sentences: Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the sentences into one, preserving the stated order of events and changing only the middle sentence to passive voice: We unplugged the computer when the lights flickered. The file was saved. The computer restarted safely.",
+   "choices": [
+    "We unplugged the computer when the lights flickered; the file was saved, and then the computer restarted safely.",
+    "We unplugged the computer when the lights flickered, the file was saved, and then the computer restarted safely.",
+    "After the file had been saved, we unplugged the computer, and then the computer restarted safely.",
+    "We unplugged the computer when the lights flickered; the file was saved, and then the computer was restarted safely by us."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon separates the first action from the passive middle statement, while the final active clause preserves the original sequence.",
+   "difficulty": 7,
+   "skill": "Combining Three Sentences with Ordered Voice Shifts",
+   "topic": "Combining Three Sentences: Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one sentence, retaining the subjunctive mood required by requested that and preserving all three facts: The supervisor requested that the volunteers confirm each shipment. The volunteers complied. The warehouse released the trucks.",
+   "choices": [
+    "The supervisor requested that the volunteers confirmed each shipment; the volunteers complied, and then the warehouse released the trucks.",
+    "The supervisor requested that the volunteers are confirming each shipment; the volunteers complied, and then the warehouse released the trucks.",
+    "The supervisor requested that the volunteers would confirm each shipment; the volunteers complied, and then the warehouse released the trucks.",
+    "The supervisor requested that the volunteers confirm each shipment; the volunteers complied, and then the warehouse released the trucks."
+   ],
+   "answerIndex": 3,
+   "explanation": "The base verb confirm correctly expresses the subjunctive mood required by requested that.",
+   "difficulty": 6,
+   "skill": "Combining sentences with a subjunctive shift",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one conditional sentence, keeping the first sentence's possibility and the hypothetical outcomes: If the bridge reopens, the bus route will change. Commuters will reach downtown faster. The transit agency will post an update.",
+   "choices": [
+    "If the bridge reopens, the bus route will change, commuters will reach downtown faster, and the transit agency will post an update.",
+    "If the bridge had reopened, the bus route would have changed, commuters would have reached downtown faster, and the transit agency would have posted an update.",
+    "Because the bridge reopens, the bus route will change, commuters will reach downtown faster, and the transit agency will post an update.",
+    "Unless the bridge reopens, the bus route will not change, commuters will not reach downtown faster, and the transit agency will not post an update."
+   ],
+   "answerIndex": 0,
+   "explanation": "This option preserves the reopening as a possibility and places all three outcomes within the same conditional sentence.",
+   "difficulty": 6,
+   "skill": "Combining sentences in a conditional",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice shift in this combination: Before the parcel was scanned, the clerk checked the label, and then the parcel entered the sorting area.",
+   "choices": [
+    "The active first clause makes the parcel the focus, while the passive later clauses present the clerk's check and the parcel's movement.",
+    "The passive first clause changes the sequence of events, while the active later clauses preserve it.",
+    "The passive first clause makes the parcel the focus, while the active clauses present the clerk's check and the parcel's movement.",
+    "The passive first clause hides the clerk's action, while the active later clauses give the parcel's movement."
+   ],
+   "answerIndex": 2,
+   "explanation": "The passive first clause foregrounds the parcel, while the active clauses identify the clerk's check and the parcel's next movement.",
+   "difficulty": 5,
+   "skill": "Explaining a voice shift",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the mood and structure of this combination: The meteorologist warned that the storm might weaken overnight; the crew secured the instruments, and officials delayed the launch.",
+   "choices": [
+    "The modal might states that the storm will certainly weaken, while the active clauses describe the response and decision.",
+    "The modal might preserves the warning's uncertainty, while the two active clauses state the crew's response and the final decision.",
+    "The modal might makes the warning hypothetical, while the active clauses present two confirmed consequences.",
+    "The semicolon creates a voice shift, while the active clauses establish the warning as a command."
+   ],
+   "answerIndex": 1,
+   "explanation": "The modal might preserves the warning's uncertainty, while the two active clauses state the crew's response and the final decision.",
+   "difficulty": 7,
+   "skill": "Explaining a mood shift",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "z-ai/glm-5.3 (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, converting only the middle event to passive voice and retaining the event order: The chef prepared dinner. The guests praised it. The chef served it immediately.",
+   "choices": [
+    "The chef prepared dinner; the guests praised it, and the chef served it immediately.",
+    "The chef prepared dinner; the guests praised it, and dinner was served immediately by the chef.",
+    "The chef prepared dinner; it was praised by the guests, and the chef served it immediately.",
+    "Dinner was prepared by the chef; the guests praised it, and the chef served it immediately."
+   ],
+   "answerIndex": 2,
+   "explanation": "Only the middle event is passive, because it was praised by the guests, while the chef remains the active subject in the other two clauses.",
+   "difficulty": 4,
+   "skill": "Combining Sentences with a Passive Voice Shift",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, retaining the subjunctive mood and active voice of the first sentence: The coordinator required that the volunteers double-check each label. The volunteers started at nine. Every label was verified before noon.",
+   "choices": [
+    "The coordinator required that the volunteers double-checked each label; the volunteers started at nine, and every label was verified before noon.",
+    "The coordinator required the volunteers to double-check each label; the volunteers started at nine, and every label was verified before noon.",
+    "The coordinator required that every label be double-checked by the volunteers; the volunteers started at nine, and every label was verified before noon.",
+    "The coordinator required that the volunteers double-check each label; the volunteers started at nine, and every label was verified before noon."
+   ],
+   "answerIndex": 3,
+   "explanation": "Double-check remains in the base form required by the subjunctive construction, and the first clause retains active voice.",
+   "difficulty": 6,
+   "skill": "Combining Sentences with a Subjunctive Mood Shift",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, keeping the first clause passive and using can and will for the possible outcomes: If the science fair is moved indoors, more families can attend. The organizers will add three tables. The buses will leave earlier.",
+   "choices": [
+    "Because the science fair is moved indoors, more families can attend; the organizers will add three tables, and the buses will leave earlier.",
+    "If the science fair is moved indoors, more families can attend; the organizers will add three tables, and the buses will leave earlier.",
+    "If the science fair is moved indoors, more families can attend; the organizers added three tables, and the buses will leave earlier.",
+    "If the science fair moves indoors, more families can attend; the organizers will add three tables, and the buses will leave earlier."
+   ],
+   "answerIndex": 1,
+   "explanation": "The passive if-clause presents the move as a condition, while can and will express its possible consequences.",
+   "difficulty": 6,
+   "skill": "Combining Sentences with a Conditional Mood Shift",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice pattern in this combination: After the proposal was reviewed, the chair approved it, and the secretary recorded the decision.",
+   "choices": [
+    "The proposal is an object in the opening active clause, while the chair and secretary are passive subjects afterward.",
+    "The chair is the subject of the opening passive clause, although the proposal remains only an object afterward.",
+    "The proposal is the subject of the opening passive clause, while the chair and secretary are subjects of the two active clauses.",
+    "The secretary is the subject of the opening passive clause, while the chair and proposal are subjects of the active clauses."
+   ],
+   "answerIndex": 2,
+   "explanation": "In the passive opening clause, the proposal is the subject, while the active later clauses make the chair and secretary the subjects.",
+   "difficulty": 5,
+   "skill": "Explaining Voice Shifts",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best identifies the conditional mood in this combination: If the satellite signal were to fail, the researchers would recalibrate the antenna, and the team would continue collecting data.",
+   "choices": [
+    "The if-clause establishes an unreal condition, and would marks the two hypothetical consequences that depend on it.",
+    "The if-clause states a confirmed past event, and would marks two results that were certain to follow it.",
+    "The if-clause uses indicative mood for a known fact, and would marks two routine future plans.",
+    "The if-clause expresses a command, and would changes the two proposed actions into requests."
+   ],
+   "answerIndex": 0,
+   "explanation": "The were-to-fail construction presents an unreal condition, and would identifies the two hypothetical consequences of that condition.",
+   "difficulty": 7,
+   "skill": "Explaining Conditional Mood Shifts",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option combines these three sentences by making only the middle sentence passive and preserving the event order? Mara painted the fence. A storm damaged the gate. The crew repaired the gate.",
+   "choices": [
+    "Mara painted the fence; the gate was damaged by the storm, and the crew repaired the gate.",
+    "Mara painted the fence; the storm damaged the gate, and the crew repaired the gate.",
+    "Mara painted the fence; the gate was damaged by the storm, and it was repaired by the crew.",
+    "The fence was painted by Mara; the gate was damaged by the storm, and the crew repaired the gate."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version makes only the middle sentence passive and keeps the three events in their original order.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a passive middle clause",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option turns only the first of these sentences into passive voice while retaining the sequence of events? Mr. Ali reserved two seats. The agent checked them. Dana returned them.",
+   "choices": [
+    "Mr. Ali reserved two seats; the agent checked them, and Dana returned them.",
+    "The two seats were reserved by Mr. Ali; the agent checked them, and Dana returned them.",
+    "Mr. Ali reserved two seats; they were checked by the agent, and Dana returned them.",
+    "The two seats were reserved by Mr. Ali; the agent checked them, and they were returned by Dana."
+   ],
+   "answerIndex": 1,
+   "explanation": "This version changes only the opening sentence to passive voice and keeps all three events in chronological order.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a passive opening clause",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option preserves the required subjunctive mood and keeps the other two sentences in active voice? The manager insisted that the designer revise the poster. The designer revised it. The client approved it.",
+   "choices": [
+    "The manager insisted that the designer revises the poster; the designer revised it, and the client approved it.",
+    "The manager insisted that the designer revise the poster; the poster was revised by the designer, and the client approved it.",
+    "The manager insisted that the designer revise the poster; the designer revised it, and the client approved it.",
+    "The manager insisted that the designer revise the poster; the designer revised it, and it was approved by the client."
+   ],
+   "answerIndex": 2,
+   "explanation": "The verb revise correctly takes the subjunctive form after insisted that, while the other two sentences remain active.",
+   "difficulty": 6,
+   "skill": "Preserving subjunctive mood in combined sentences",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option turns these statements into one conditional sentence with an if-clause and keeps may in both outcome clauses? The museum offers free admission. More families may visit. Local shops may benefit.",
+   "choices": [
+    "If the museum offers free admission, more families will visit, and local shops may benefit.",
+    "If the museum offers free admission, more families may visit, and local shops may benefit.",
+    "If the museum offered free admission, more families might visit, and local shops would benefit.",
+    "If the museum offers free admission, more families may visit, and local shops will benefit."
+   ],
+   "answerIndex": 1,
+   "explanation": "This version uses an if-clause to establish the condition and retains the possible outcomes expressed by may.",
+   "difficulty": 5,
+   "skill": "Combining statements into a conditional sentence",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice pattern in this combination? The mural was painted by Elena; Elena explained the design, and visitors admired it.",
+   "choices": [
+    "The passive opening clause hides Elena's role, while the active clauses show that she and the visitors have equal roles.",
+    "The active clauses present the mural as the only focus, while the passive opening clause makes the visitors less important.",
+    "The passive opening clause creates a cause-and-effect chain, while the active clauses describe three unrelated actions.",
+    "The passive opening clause foregrounds the mural, while the active clauses foreground Elena and the visitors."
+   ],
+   "answerIndex": 3,
+   "explanation": "The passive opening clause makes the mural prominent, and the two active clauses then emphasize Elena and the visitors as actors.",
+   "difficulty": 6,
+   "skill": "Explaining shifts between active and passive voice",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "qwen/qwen3.8-max:free (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, changing only the middle sentence to passive voice and preserving the order of events: The librarian scanned the card. The desk clerk filed the card. The students needed the card that day.",
+   "choices": [
+    "The librarian scanned the card; it was filed by the desk clerk, and the students needed the card that day.",
+    "The card was scanned by the librarian; the desk clerk filed it, and the students needed the card that day.",
+    "The librarian scanned the card; the desk clerk filed the card, and the students needed the card that day.",
+    "The card was scanned by the librarian; it was filed by the desk clerk, and the students needed the card that day."
+   ],
+   "answerIndex": 0,
+   "explanation": "The semicolon and and join the three clauses, with only the filing event rewritten in passive voice and the original sequence retained.",
+   "difficulty": 5,
+   "skill": "Passive voice in sentence combination",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, retaining the active subjunctive form required by asked and keeping the other two sentences in active voice: The ranger asked that the visitor identify the plant. The visitor showed the app. The group continued along the trail.",
+   "choices": [
+    "The ranger asked that the visitor identified the plant; the visitor showed the app, and the group continued along the trail.",
+    "The ranger asked that the visitor should identify the plant; the visitor showed the app, and the group continued along the trail.",
+    "The ranger asked that the visitor identify the plant; the visitor showed the app, and the group continued along the trail.",
+    "The ranger asked that the plant be identified by the visitor; the visitor showed the app, and the group continued along the trail."
+   ],
+   "answerIndex": 2,
+   "explanation": "Because asked introduces a that-clause expressing a request, the base-form verb identify is required in the active subjunctive construction.",
+   "difficulty": 6,
+   "skill": "Subjunctive mood in sentence combination",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option combines the statements into one conditional sentence without changing the possibility or the three outcomes: If the bakery opens early, neighbors can buy fresh bread. The school will serve breakfast. The bus queue may shrink.",
+   "choices": [
+    "Unless the bakery opens early, neighbors cannot buy fresh bread, the school will not serve breakfast, and the bus queue will not shrink.",
+    "If the bakery opens early, neighbors can buy fresh bread, the school will serve breakfast, and the bus queue may shrink.",
+    "If the bakery opens early, neighbors may buy fresh bread, the school may serve breakfast, and the bus queue might shrink.",
+    "If the bakery had opened early, neighbors could have bought fresh bread, the school would have served breakfast, and the bus queue might have shrunk."
+   ],
+   "answerIndex": 1,
+   "explanation": "The if-clause presents a real possibility, and the three following clauses retain the original can, will, and may meanings.",
+   "difficulty": 5,
+   "skill": "Conditional mood in sentence combination",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "In the combination The instructor required that the student cite the source; the student cited it, and the class received the revised bibliography, why does cite appear in its base form rather than cited?",
+   "choices": [
+    "Because required is in the past tense, so the that-clause requires a past-tense verb.",
+    "Because cite names an action that occurred before the instructor gave the requirement.",
+    "Because received is passive, so every verb in the combination must also be passive.",
+    "Because required introduces a that-clause expressing a requirement, so the subjunctive takes the base form cite rather than the indicative cited."
+   ],
+   "answerIndex": 3,
+   "explanation": "Because required introduces a that-clause expressing a requirement, the subjunctive takes the base form cite rather than the indicative cited.",
+   "difficulty": 7,
+   "skill": "Explaining subjunctive verb forms",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice pattern in this combination? The recipe was printed by Nia; Nia placed it in the folder, and the class began the activity.",
+   "choices": [
+    "The passive opening clause foregrounds the recipe, while the active clauses afterward identify Nia and the class as the actors.",
+    "The active opening clause foregrounds the recipe, while the passive clauses afterward identify Nia and the class as the actors.",
+    "The passive opening clause makes the class the focus, while the active clauses afterward present Nia and the folder as the actors.",
+    "The passive opening clause foregrounds the recipe, while the passive clauses afterward identify Nia and the class as the actors."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive opening clause foregrounds the recipe, while the active clauses afterward identify Nia and the class as the actors.",
+   "difficulty": 6,
+   "skill": "Explaining voice shifts",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option turns only the first sentence into passive voice while retaining the sequence of events? The electrician repaired the lamp. The lamp flickered again. The technician replaced the cord.",
+   "choices": [
+    "The electrician repaired the lamp; it flickered again, and the technician replaced the cord.",
+    "The lamp was repaired by the electrician; it flickered again, and the technician replaced the cord.",
+    "The lamp flickered again; the lamp was repaired by the electrician, and the technician replaced the cord.",
+    "The lamp was repaired by the electrician; it flickered again, and the cord was replaced by the technician."
+   ],
+   "answerIndex": 1,
+   "explanation": "The first clause uses passive voice to emphasize the lamp, while the active clauses retain the order of the flicker and the cord replacement.",
+   "difficulty": 5,
+   "skill": "Passive voice and event order",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "qwen/qwen3.8-max:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rewrite the three sentences as one, with passive voice appearing only in the middle event and the events remaining in order: The pilot checked the instruments. A storm damaged the runway. The crew prepared for landing.",
+   "choices": [
+    "The pilot checked the instruments; the runway was damaged by a storm, and the crew prepared for landing.",
+    "The instruments were checked by the pilot; a storm damaged the runway, and the crew prepared for landing.",
+    "The pilot checked the instruments; the runway was damaged by a storm, and the crew was prepared for landing.",
+    "The instruments were checked by the pilot; the runway was damaged by a storm, and the crew was prepared for landing."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only the middle event is passive in this sentence, while the first and third events remain active and retain their original order.",
+   "difficulty": 5,
+   "skill": "Applying passive voice to the middle event",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Join the three sentences into one that keeps the required subjunctive mood and active voice in the other clauses: The judge ordered that the witness remain in court. The witness obeyed. The bailiff recorded the testimony.",
+   "choices": [
+    "The judge ordered that the witness remain in court; the witness obeyed, and the bailiff recorded the testimony.",
+    "The judge ordered that the witness remains in court; the witness obeyed, and the bailiff recorded the testimony.",
+    "The witness was ordered to remain in court; the witness obeyed, and the bailiff recorded the testimony.",
+    "The judge ordered that the witness remain in court; the witness was obeyed, and the bailiff recorded the testimony."
+   ],
+   "answerIndex": 0,
+   "explanation": "The required subjunctive form is remain, while the clauses about the witness obeying and the bailiff recording remain in active voice.",
+   "difficulty": 6,
+   "skill": "Retaining subjunctive mood in a combination",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Form one conditional sentence from the three statements, keeping can in both outcomes: The museum adds evening hours. More visitors can attend. Local groups can rent the gallery.",
+   "choices": [
+    "If the museum adds evening hours, more visitors can attend, and local groups can rent the gallery.",
+    "If the museum added evening hours, more visitors can attend, and local groups can rent the gallery.",
+    "If the museum adds evening hours, more visitors could attend, and local groups could rent the gallery.",
+    "If the museum adds evening hours, more visitors may attend, and local groups may rent the gallery."
+   ],
+   "answerIndex": 0,
+   "explanation": "This conditional keeps the present-tense condition and uses can to preserve the possibility of both stated outcomes.",
+   "difficulty": 5,
+   "skill": "Combining statements with conditional mood",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the function of the by phrase in this combination? The ticket was purchased by Mia; Mia sent it by email, and Dana added it to the calendar.",
+   "choices": [
+    "The by phrase preserves Mia as the purchaser even though the ticket is the subject of the opening clause.",
+    "The by phrase preserves Dana as the purchaser even though the ticket is the subject of the opening clause.",
+    "The by phrase preserves Mia as the recipient even though the ticket is the subject of the opening clause.",
+    "The by phrase preserves both Mia and Dana as purchasers even though the ticket is the subject of the opening clause."
+   ],
+   "answerIndex": 0,
+   "explanation": "The by phrase identifies Mia as the purchaser even though the ticket occupies the subject position of the opening clause.",
+   "difficulty": 4,
+   "skill": "Identifying the agent in a passive clause",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the mood of the outcome clauses in this combination? If the library extends its hours, more students can study there, and community groups can reserve rooms.",
+   "choices": [
+    "The modal can in both outcome clauses presents studying and reserving as possibilities that depend on the library extending its hours.",
+    "The modal can in both outcome clauses presents studying and reserving as completed events that depend on the library extending its hours.",
+    "The modal can in both outcome clauses presents studying and reserving as requirements that depend on the library extending its hours.",
+    "The modal can in both outcome clauses presents studying and reserving as uncertainties that depend on the library extending its hours."
+   ],
+   "answerIndex": 0,
+   "explanation": "The modal can in both outcome clauses presents studying and reserving as possibilities that depend on the library extending its hours.",
+   "difficulty": 5,
+   "skill": "Explaining modal meaning in conditional outcomes",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Join the three sentences with punctuation that preserves all three facts, their relationship, active voice, and indicative mood throughout: The hikers rested. The sun set. The camp became quiet.",
+   "choices": [
+    "The hikers rested; the sun set, and the camp became quiet.",
+    "The hikers rested, the sun set, and the camp became quiet.",
+    "The hikers rested; the sun set, but the camp became quiet.",
+    "The hikers were rested; the sun set, and the camp became quiet."
+   ],
+   "answerIndex": 0,
+   "explanation": "Semicolons and a coordinating conjunction correctly join the three independent clauses without changing their voice, mood, or relationship.",
+   "difficulty": 6,
+   "skill": "Joining active indicative clauses with semicolons",
+   "topic": "Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, changing only the first sentence to passive voice and preserving the sequence of events: The technician replaced the filter. The filter began rattling. The machine stopped.",
+   "choices": [
+    "The filter was replaced by the technician; it began rattling, and the machine stopped.",
+    "The technician replaced the filter; it began rattling, and the machine stopped.",
+    "The filter was replaced by the technician; the machine stopped, and it began rattling.",
+    "The filter was replaced by the technician; it began rattling, and the machine was stopped."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive opening makes the filter the focus, while the active clauses preserve the rattling and stopping events in their original order.",
+   "difficulty": 4,
+   "skill": "Combining sentences with a passive-voice shift",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3.5-lightning-30b-a3b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Join the three sentences while retaining the subjunctive mood required by asked and keeping the other two sentences in active voice: The coach asked that the player call the trainer. The player called the trainer. The trainer adjusted the plan.",
+   "choices": [
+    "The coach asked that the player call the trainer; the player called the trainer, and the trainer adjusted the plan.",
+    "The coach asked that the player called the trainer; the player called the trainer, and the trainer adjusted the plan.",
+    "The coach asked that the player call the trainer; the trainer adjusted the plan, and the player called the trainer.",
+    "The coach asked for the player to call the trainer; the player called the trainer, and the trainer adjusted the plan."
+   ],
+   "answerIndex": 0,
+   "explanation": "Because asked introduces a that-clause expressing a request, call takes the subjunctive base form while the other two clauses remain active.",
+   "difficulty": 5,
+   "skill": "Preserving subjunctive mood in a that-clause",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice pattern in this combination: The plans were reviewed by the panel; the panel approved them, and the mayor signed the funding agreement.",
+   "choices": [
+    "The passive opening makes the plans the focus, while the active clauses identify the panel's actions and preserve the sequence.",
+    "The active clauses shift the focus to the agents, while the passive opening emphasizes the mayor's final action.",
+    "The passive opening emphasizes the panel, while the later active clauses deliberately hide the actors.",
+    "The three clauses use active voice to emphasize the people, while the passive opening appears only for variety."
+   ],
+   "answerIndex": 0,
+   "explanation": "The passive opening foregrounds the plans, while the active clauses name the panel and mayor as the people performing the later actions.",
+   "difficulty": 6,
+   "skill": "Explaining a shift between passive and active voice",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Why does verify appear in its base form in this combination: The contract stipulates that each supplier verify the origin code; each supplier verified it, and the forms were approved.",
+   "choices": [
+    "Because stipulates introduces a that-clause expressing a requirement, so verify takes the base form.",
+    "Because stipulates reports a completed fact about the suppliers, so verify must agree with the subject each supplier.",
+    "Because the that-clause describes what the suppliers did in the past, so verify must be in past tense.",
+    "Because the main clause ends in a passive construction, so verify must also appear in the base form."
+   ],
+   "answerIndex": 0,
+   "explanation": "The verb stipulates introduces a that-clause expressing a requirement, which calls for the subjunctive base form verify.",
+   "difficulty": 6,
+   "skill": "Explaining subjunctive verb form",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, changing only the middle sentence to passive voice and preserving the original order of events: The scout mapped the trail. Dense fog covered the ridge. The hikers turned back.",
+   "choices": [
+    "The scout mapped the trail; the ridge was covered by dense fog, and the hikers turned back.",
+    "The scout mapped the trail; dense fog covered the ridge, and the hikers turned back.",
+    "The scout mapped the trail; the ridge was covered by dense fog, and the trail was mapped again.",
+    "The scout mapped the trail; the hikers turned back, and the ridge was covered by dense fog."
+   ],
+   "answerIndex": 0,
+   "explanation": "The middle event is passive because the ridge receives the action of being covered, while the active opening and closing clauses retain the original sequence.",
+   "difficulty": 5,
+   "skill": "Combining sentences with a middle-clause passive shift",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "nvidia/nemotron-3-ultra-550b-a55b (blind)",
+    "judge_b": "openai/gpt-oss-20b (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three statements in one sentence, putting the second statement in passive voice while leaving the other two in active voice: The coach emailed the players. The players studied the playbook. The coach reviewed the notes.",
+   "choices": [
+    "The coach emailed the players; the playbook was studied by the players, and the coach reviewed the notes.",
+    "The players were emailed by the coach; the players studied the playbook, and the coach reviewed the notes.",
+    "The coach emailed the players; the players studied the playbook, and the notes were reviewed by the coach.",
+    "The coach emailed the players; the playbook was studied by the players, and the coach ignored the notes."
+   ],
+   "answerIndex": 0,
+   "explanation": "Only this version changes the second statement to passive voice and keeps the other two statements active while preserving all three facts.",
+   "difficulty": 4,
+   "skill": "Passive voice in the middle clause",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Rewrite these three sentences as one, retaining the subjunctive mood and active voice of the that-clause required by insisted and keeping the other two clauses active: The curator insisted that the conservator examine the painting. The conservator examined it. The curator approved the restoration.",
+   "choices": [
+    "The curator insisted that the conservator examine the painting; the conservator examined it, and the curator approved the restoration.",
+    "The curator insisted that the painting be examined by the conservator; the conservator examined it, and the curator approved the restoration.",
+    "The curator insisted that the conservator examine the painting; the conservator examined it, and the restoration was approved by the curator.",
+    "The curator insisted that the conservator examined the painting; the conservator examined it, and the curator approved the restoration."
+   ],
+   "answerIndex": 0,
+   "explanation": "The base form examine is required in the that-clause after insisted, while examined and approved remain active in the following clauses.",
+   "difficulty": 5,
+   "skill": "Subjunctive mood in that-clauses",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Turn the three statements into one conditional sentence without changing the condition or either possible outcome: The trail may reopen. Cyclists may return. The park manager may post new signs.",
+   "choices": [
+    "If the trail may reopen, cyclists may return, and the park manager may post new signs.",
+    "If the trail reopens, cyclists may return, and the park manager may post new signs.",
+    "If the trail may reopen, cyclists will return, and the park manager may post new signs.",
+    "If the trail may reopen, cyclists can return, and the park manager may post new signs."
+   ],
+   "answerIndex": 0,
+   "explanation": "This version keeps may in the if-clause and both outcome clauses, preserving all three statements as a single conditional sentence.",
+   "difficulty": 5,
+   "skill": "Conditional sentences and modal possibility",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best identifies the voice pattern in this combination: The charter was revised by Nora; Nora presented it to the council, and the members voted on it.",
+   "choices": [
+    "The charter is the focus of the opening passive clause, while the active clauses keep Nora and the members visible as actors.",
+    "Every clause in this combination uses active voice because each one names the person performing its action.",
+    "The second clause is passive because presenting is expressed through a by phrase that identifies Nora as the performer.",
+    "The final clause is passive because voting is expressed with a by phrase identifying the members as performers."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first clause is passive because the charter is the subject, while Nora and the members remain the active agents in the following clauses.",
+   "difficulty": 4,
+   "skill": "Analyzing a voice shift",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Merge the three sentences with passive voice in the middle event and the same event sequence: The diver entered the pool. A wave moved her toward the wall. She grabbed the ladder.",
+   "choices": [
+    "The diver entered the pool; she was moved toward the wall by the wave, and she grabbed the ladder.",
+    "The pool was entered by the diver; a wave moved her toward the wall, and she grabbed the ladder.",
+    "The diver entered the pool; a wave moved her toward the wall, and the ladder was grabbed by her.",
+    "The diver entered the pool; a wave moved her toward the wall, and she grabbed the ladder."
+   ],
+   "answerIndex": 0,
+   "explanation": "The middle clause is passive because the diver is the subject of was moved, while the opening and closing clauses remain active.",
+   "difficulty": 5,
+   "skill": "Passive voice and event sequence",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best accounts for the present-tense verb inspect in this combination: The principal required that the driver inspect the bus; the driver inspected it, and the mechanic repaired the brake.",
+   "choices": [
+    "Because required introduces a that-clause expressing a requirement, so inspect takes the subjunctive base form rather than the past-tense inspected.",
+    "Because required is in the past tense, the verb in the that-clause must agree with the past-tense subject driver.",
+    "Because the main clause uses active voice, the that-clause must use indicative mood and the past-tense inspected.",
+    "Because inspect describes an action that has already happened, it should be written inspected after required."
+   ],
+   "answerIndex": 0,
+   "explanation": "Required introduces a that-clause expressing a requirement, so inspect appears in the subjunctive base form rather than the past-tense inspected.",
+   "difficulty": 6,
+   "skill": "Explaining subjunctive mood",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option combines the three sentences into one, changing only the middle sentence to passive voice and preserving the order of events? The drummer rehearsed the rhythm. The neighbors complained about the noise. The band changed the tempo.",
+   "choices": [
+    "The drummer rehearsed the rhythm; the noise was complained about, and the band changed the tempo.",
+    "The rhythm was rehearsed by the drummer; the neighbors complained about the noise, and the band changed the tempo.",
+    "The drummer rehearsed the rhythm; the neighbors complained about the noise, and the tempo was changed by the band.",
+    "The drummer rehearsed the rhythm, the neighbors complained about the noise, and the band changed the tempo."
+   ],
+   "answerIndex": 0,
+   "explanation": "The noise is the subject of the middle passive clause, while the other two clauses remain active and the events stay in order.",
+   "difficulty": 4,
+   "skill": "Combining clauses with passive voice",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option turns only the first of these sentences into passive voice while retaining the sequence of events? Ava signed the form. The clerk checked it. The office archived it.",
+   "choices": [
+    "The form was signed by Ava; the clerk checked it, and the office archived it.",
+    "Ava signed the form; it was checked by the clerk, and the office archived it.",
+    "Ava signed the form; the clerk checked it, and it was archived by the office.",
+    "Ava signed the form, the clerk checked it, and the office archived it."
+   ],
+   "answerIndex": 0,
+   "explanation": "The form is the subject of the first passive clause, and the remaining active clauses preserve the original sequence.",
+   "difficulty": 4,
+   "skill": "Combining clauses with passive voice",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option preserves the subjunctive mood required by It is essential that and keeps the other two sentences in active voice? It is essential that the technician test the voltage. The technician tested it. The equipment stayed safe.",
+   "choices": [
+    "It is essential that the technician test the voltage; the technician tested it, and the equipment stayed safe.",
+    "It is essential that the technician tested the voltage; the technician tested it, and the equipment stayed safe.",
+    "It is essential that the technician should test the voltage; the technician tested it, and the equipment stayed safe.",
+    "It is essential that the technician to test the voltage; the technician tested it, and the equipment stayed safe."
+   ],
+   "answerIndex": 0,
+   "explanation": "The verb test takes its base form in the essential that-clause, while tested and stayed remain active and retain the original facts.",
+   "difficulty": 5,
+   "skill": "Combining clauses with subjunctive mood",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which option forms one conditional sentence while preserving may in the condition and can in both outcome clauses? The festival may move indoors. More visitors can attend. Local vendors can stay open later.",
+   "choices": [
+    "If the festival may move indoors, more visitors can attend, and local vendors can stay open later.",
+    "If the festival may move indoors, more visitors will attend, and local vendors can stay open later.",
+    "If the festival moves indoors, more visitors can attend, and local vendors will stay open later.",
+    "If the festival may move indoors, more visitors can attend, and local vendors may stay open later."
+   ],
+   "answerIndex": 0,
+   "explanation": "The conditional sentence retains may for the possible condition and can for both possible outcomes without changing their stated certainty.",
+   "difficulty": 5,
+   "skill": "Combining sentences with conditional mood",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best describes the voice shift in this combination? The report was reviewed by the team; the team presented its findings, and the director approved the proposal.",
+   "choices": [
+    "The passive opening clause foregrounds the report, while the active clauses identify the team and director as the actors in the later actions.",
+    "The active opening clause emphasizes the team, while the passive clauses make the findings and proposal the only actors.",
+    "The passive opening clause removes the team from the later actions, while the final clause changes to a subjunctive mood.",
+    "The three clauses all use passive voice, which places equal emphasis on the report, findings, and proposal."
+   ],
+   "answerIndex": 0,
+   "explanation": "The first clause is passive and makes the report prominent, whereas the active clauses name the team and director as the performers of the later actions.",
+   "difficulty": 6,
+   "skill": "Explaining shifts in voice",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Which one-sentence explanation best explains why accept appears in its present-tense form in this combination? The award rules stipulate that each nominee accept the nomination; the nominee accepted it, and the announcement was made.",
+   "choices": [
+    "Because stipulate introduces a that-clause expressing a requirement, accept takes its base form in the subjunctive mood.",
+    "Because the events are listed in chronological order, accept must be present tense to match the later active verb accepted.",
+    "Because the announcement was made, the writer changes accept to present tense to create agreement with the passive clause.",
+    "Because a noun precedes the verb, accept uses present tense so that the two clauses have the same grammatical mood."
+   ],
+   "answerIndex": 0,
+   "explanation": "Stipulate introduces a that-clause expressing a requirement, so the subjunctive verb takes the base form accept rather than the past form accepted.",
+   "difficulty": 6,
+   "skill": "Explaining shifts in mood",
+   "topic": "Activity 4 of 9: Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "minimax/minimax-m3.1-flash",
+    "writer_family": "minimax",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "nvidia/nemotron-3-ultra-550b-a55b:free (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, changing only the middle sentence to passive voice and preserving the order of events: The chef chopped the vegetables. The chef simmered the sauce. The guests arrived.",
+   "choices": [
+    "The chef chopped the vegetables; the sauce was simmered by the chef, and the guests arrived.",
+    "The chef chopped the vegetables; the chef simmered the sauce, and the guests arrived.",
+    "The vegetables were chopped by the chef; the sauce was simmered by the chef, and the guests arrived.",
+    "The chef chopped the vegetables; the sauce simmered by the chef, and the guests arrived."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct combination changes only the middle sentence to passive voice while preserving the original order of events.",
+   "difficulty": 5,
+   "skill": "Combining sentences with shifts in voice and mood",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  },
+  {
+   "prompt": "Combine the three sentences into one, retaining the subjunctive mood required by insisted that and preserving all three facts: The director insisted that the actor rehearse the scene. The actor rehearsed the scene. The audience applauded.",
+   "choices": [
+    "The director insisted that the actor rehearse the scene; the actor rehearsed it, and the audience applauded.",
+    "The director insisted that the actor rehearses the scene; the actor rehearsed it, and the audience applauded.",
+    "The director insisted that the actor rehearsed the scene; the actor rehearsed it, and the audience applauded.",
+    "The director insisted that the actor rehearse the scene; the actor rehearses it, and the audience applauds."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct combination retains the subjunctive base form rehearse after insisted that and keeps the other clauses in active voice.",
+   "difficulty": 5,
+   "skill": "Combining sentences with shifts in voice and mood",
+   "topic": "Combine Three Sentences - Shifts in Voice and Mood",
+   "verified": {
+    "code": true,
+    "writer": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "writer_family": "nemotron",
+    "judge_a": "openai/gpt-oss-20b (blind)",
+    "judge_b": "minimax/minimax-m3.1-flash (blind)",
+    "source": "no factual claim named by either judge"
+   }
+  }
+ ],
+ "rejected": [
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Combine the three sentences into one sentence, changing only the first sentence to passive voice and preserving the original sequence: The sculptor carved the clay figure. The sculptor displayed it. The visitors admired it.",
+   "choices": [
+    "The sculptor carved the clay figure, and it was displayed by the sculptor; then the visitors admired it.",
+    "The clay figure was carved by the sculptor; the sculptor displayed it, and then the visitors admired it.",
+    "The visitors admired the clay figure after it was carved by the sculptor, and the sculptor displayed it.",
+    "The clay figure was carved by the sculptor, and the visitors admired it before the sculptor displayed it."
+   ],
+   "answerIndex": 1,
+   "explanation": "This option changes only the first sentence to passive voice and keeps the display before the visitors' admiration.",
+   "reason": "explanation-key: the explanation describes option 4 (score 1.00) more than the keyed option 2 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "code",
+   "prompt": "Combine the three sentences into one, converting only the opening clause to passive voice and retaining the event order: The committee chose the winners. The judges announced the decision. The principal thanked the audience.",
+   "choices": [
+    "The committee chose the winners; the judges announced the decision, and the principal thanked the audience.",
+    "The winners were chosen by the committee; the judges announced the decision, and the principal thanked the audience.",
+    "The winners were chosen by the committee; the decision was announced by the judges, and the principal thanked the audience.",
+    "The winners were chosen by the committee; the judges announced the decision, and the audience was thanked by the principal."
+   ],
+   "answerIndex": 1,
+   "explanation": "Only the opening clause is passive, and the by-phrase identifies the committee as the agent who chose the winners.",
+   "reason": "explanation-key: the explanation describes option 1 (score 1.00) more than the keyed option 2 (score 0.00)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one conditional sentence that preserves the possibility in the first sentence and the hypothetical outcomes in the other two: The power might fail. The stadium would switch to backup lights. The event would continue.",
+   "choices": [
+    "If the power failed, the stadium would switch to backup lights, and the event would continue.",
+    "If the power fails, the stadium will switch to backup lights, and the event will continue.",
+    "If the power failed, the stadium will switch to backup lights, and the event will continue.",
+    "Because the power might fail, the stadium will switch to backup lights, and the event will continue."
+   ],
+   "answerIndex": 0,
+   "explanation": "The if clause and matching would clauses keep the failure and both outcomes hypothetical rather than presenting them as certain events.",
+   "reason": "B: not exactly one correct (No option preserves both the possibility ('might fail') and the hypothetical outcomes ('would switch', 'would continue'); option 0 uses a st)"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Combine the three sentences into one sentence, changing only the middle sentence to passive voice and preserving the original order of events: The gardener watered the herbs. Rain moistened the soil. The gardener left the greenhouse.",
+   "choices": [
+    "After rain moistened the soil, the gardener watered the herbs, and then the gardener left the greenhouse.",
+    "The gardener watered the herbs, the soil was moistened by rain, and the gardener left the greenhouse.",
+    "After the gardener watered the herbs, the soil was moistened by rain, and then the gardener left the greenhouse.",
+    "After the soil was moistened by rain, the gardener watered the herbs; the gardener then left the greenhouse."
+   ],
+   "answerIndex": 2,
+   "explanation": "This option changes only the middle sentence to passive voice and retains the original sequence of events.",
+   "reason": "B: picked 1 not 2"
+  },
+  {
+   "round": 0,
+   "stage": "source",
+   "writer": "minimax/minimax-m3.1-flash",
+   "prompt": "Which one-sentence explanation best explains why revise appears in its present-tense form in this combination? The editor suggested that the writer revise the conclusion; the writer revised it, and the editor approved it.",
+   "choices": [
+    "Because the verb suggest introduces a that-clause expressing a recommendation, the verb revise takes the subjunctive mood.",
+    "Because the editor approved the conclusion afterward, the verb revise must remain in the indicative mood.",
+    "Because the conclusion is the object of revise, the verb takes the passive voice in the that-clause.",
+    "Because the word that introduces a quotation, the verb must agree with the singular subject writer."
+   ],
+   "answerIndex": 0,
+   "explanation": "The verb suggest introduces a that-clause expressing a recommendation, so the verb revise correctly appears in the subjunctive mood.",
+   "reason": "source: \"Verbs such as suggest, insist, and recommend introduce a that-clause in the subjunctive mood to express a recommendation\": not_addressed"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Form one conditional sentence from the three statements, preserving the possibility in the first sentence and the outcomes in the other two: The park installs evening lights. More visitors can stay later. Local businesses may open longer.",
+   "choices": [
+    "If the park installs evening lights, more visitors can stay later, and local businesses may open longer.",
+    "If the park installs evening lights, more visitors might stay later, and local businesses may open longer.",
+    "If the park installs evening lights, local businesses may open longer, and more visitors can stay later.",
+    "When the park installs evening lights, more visitors can stay later, and local businesses may open longer."
+   ],
+   "answerIndex": 0,
+   "explanation": "The if-clause states the condition, while can and may preserve the two possible outcomes and their original order.",
+   "reason": "A: not exactly one correct (Two defensible options (0 and 2))"
+  },
+  {
+   "round": 0,
+   "stage": "judges",
+   "prompt": "Which one-sentence explanation best describes the voice pattern in this combination? The report was written by the analyst; the analyst submitted it, and the manager approved it.",
+   "choices": [
+    "The passive opening clause foregrounds the report, while the active clauses keep the analyst and manager as agents.",
+    "The active opening clause highlights the analyst, while the passive clauses shift focus to the report and manager.",
+    "All three clauses are passive, emphasizing the report throughout.",
+    "The combination uses only active voice, showing each person's action directly."
+   ],
+   "answerIndex": 0,
+   "explanation": "The correct explanation notes that the opening clause is passive, foregrounding the report, while the following clauses remain active.",
+   "reason": "surplus"
+  }
+ ],
+ "judged": [
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": false
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "z-ai/glm-5.3",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "qwen/qwen3.8-max:free",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 2,
+   "a": {
+    "pick": 2,
+    "one": true
+   },
+   "b": {
+    "pick": 2,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 3,
+   "a": {
+    "pick": 3,
+    "one": true
+   },
+   "b": {
+    "pick": 3,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 1,
+   "a": {
+    "pick": 1,
+    "one": true
+   },
+   "b": {
+    "pick": 1,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "qwen/qwen3.8-max:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3.5-lightning-30b-a3b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": false
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "nvidia/nemotron-3-ultra-550b-a55b",
+   "modelB": "openai/gpt-oss-20b"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "nvidia/nemotron-3-ultra-550b-a55b:free"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  },
+  {
+   "round": 0,
+   "ki": 0,
+   "a": {
+    "pick": 0,
+    "one": true
+   },
+   "b": {
+    "pick": 0,
+    "one": true
+   },
+   "modelA": "openai/gpt-oss-20b",
+   "modelB": "minimax/minimax-m3.1-flash"
+  }
+ ],
+ "applied": false
+}
