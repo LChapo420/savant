@@ -343,6 +343,8 @@
     span.textContent = cues[k].text;
     span.setAttribute('data-i', String(k));
     scriptEl.appendChild(span);
+    // A space between cues, or a run of short cues is one unbreakable "word" and widens the page.
+    if (k < cues.length - 1) scriptEl.appendChild(document.createTextNode(' '));
     segs.push(span);
   }
   if (!cues.length) {
