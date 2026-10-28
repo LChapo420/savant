@@ -82,7 +82,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    - **(d) Look at the dock at 375 px in a real browser, signed in** (a cloud run has no session), including push-to-talk
      on a phone, and Spanish speech on the Spanish lab.
 
-0d. **Tutor: voice and text modes, and it can see the screen (owner's spec, 2026-10-28; do right after 0c's first slice).**
+0d. **Tutor: voice and text modes, and it can see the screen (owner's spec, 2026-10-28). Can start now in parallel with 0c:** build the mode memory, the voice-to-text-and-back plumbing, and the page snapshot builder as standalone modules with tests. Plug them into 0c's dock if it has landed (pull first); otherwise expose them for 0c to call and add a follow-up line for the wiring.
    - **Two modes, one button:** the learner can talk (push-to-talk or tap-to-talk, with the tutor answering out
      loud) or type (with the tutor answering in text). One clearly visible toggle switches between them at any
      time. **The default is whichever mode the learner used for their last message** (remember it per learner,
