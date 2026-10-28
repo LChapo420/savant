@@ -5,7 +5,7 @@
   const ES = window.ES;
   const { h, esc, icon, ui, sfx } = ES;
   const engines = (ES.engines = ES.engines || {});
-  const quit = () => { location.href = '/spanish/lab'; };
+  const quit = () => ES.flow.exit();
 
   const RULES = {
     listen_tap: 'Listen, then tap the matching picture. Fast answers score more.',

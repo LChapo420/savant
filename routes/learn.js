@@ -35,6 +35,8 @@ const { requireAuth, requireSkip, canSkip, isAdmin } = require('../middleware/au
 const { limit } = require('../utils/rate-limit');
 // The write-ahead (WRITE_AHEAD): the next levels written and checked before they are opened.
 const writeAhead = require('../services/write-ahead');
+// Spanish levels played with the lab's activities (the main path's Duolingo-style player).
+const esPath = require('../services/spanish/path');
 
 const router = express.Router();
 
@@ -234,6 +236,8 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   }
   const grade = curriculum.getGrade(enrollment.track_id, enrollment.grade_id);
   if (!grade) return res.status(400).json({ error: 'That subject is no longer available.' });
+  // Spanish: a goal that puts the current level aside moves the learner to the next one it keeps.
+  if (enrollment.track_id === 'spanish' && (req.body.level === undefined || req.body.level === null)) Object.assign(enrollment, esPath.settleDeferred(enrollment));
 
   // Consolidation before the Final (staged round 3; ADAPT_CONSOLIDATE=on with the
   // daily review on, off by default): while the learner's record says the grade
@@ -296,6 +300,19 @@ router.post('/sessions', requireAuth, limit('session-start', 60, 60 * 60 * 1000)
   // work at this level, and its answers are recorded through their own route as
   // they are given.
   const wantedLevel = atLevel || enrollment.current_level;
+
+  // A Spanish level the Duolingo-style player can build is played there
+  // (services/spanish/path.js), through the same door as a game. `classic` is
+  // the way back to the ordinary session for that level.
+  if (enrollment.track_id === 'spanish' && !req.body.classic && esPath.supports(enrollment.grade_id, wantedLevel)) {
+    return res.json({
+      game: {
+        kind: 'spanish',
+        level: wantedLevel,
+        url: `/spanish/learn?enrollment=${enrollment.id}${atLevel ? `&level=${wantedLevel}` : ''}`,
+      },
+    });
+  }
 
   // Write the next block levels while this one is being worked: nobody awaits it.
   blockLevels.prefetchAhead({ user: req.user, enrollment, grade });
@@ -1254,6 +1271,8 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
   if (!grade) return res.status(400).json({ error: 'That subject is no longer available.' });
   // Opening the path writes ahead of where the learner stands (WRITE_AHEAD).
   writeAhead.trigger({ user: req.user, enrollment, grade, reason: 'path' });
+  // Spanish: the learner's goal may put levels aside (services/spanish/goal-fit.js).
+  const esFit = enrollment.track_id === 'spanish' ? esPath.pathFit(esPath.settleDeferred(enrollment)) : null;
 
   const current = enrollment.current_level || 1;
   // How much of the path is drawn. An account that may browse the curriculum is
@@ -1349,6 +1368,12 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
       // Whether the learner may test out of this level's unit now — a unit not
       // checked yet offers it ("Not checked yet, test out?").
       unit_can_test_out: !!(unit && unit.can_test_out),
+      // Spanish: put aside by the learner's goal (still open), and played with
+      // the Duolingo-style activities rather than the plain questions.
+      ...(esFit ? {
+        deferred: esFit.deferred[level] || null,
+        activities: esPath.supports(enrollment.grade_id, level),
+      } : {}),
     });
   }
 
@@ -1414,6 +1439,8 @@ router.get('/path/:enrollmentId', requireAuth, (req, res) => {
     })(),
     track: { id: track.id, name: track.name, color: track.color, icon: track.icon },
     grade: { id: grade.id, name: grade.name, blurb: grade.blurb },
+    // Spanish: why the path is ordered this way, in one line (GOAL-FIT.md).
+    spanish_fit: esFit ? { profile: esFit.profile, label: esFit.label, why: esFit.why, deferred_count: Object.keys(esFit.deferred).length, queue: esFit.queue } : null,
     // Which levels of this grade have a generated base lesson, so the page can link
     // to one only where there is one. Empty for an account that may not see
     // generated lessons, which is the same answer as "none exist" and needs no

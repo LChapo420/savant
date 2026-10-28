@@ -57,6 +57,8 @@ const COLLECTIONS = [
   'learner_goals',           // what a learner wants from a subject or grade: choice + their words, per (track, grade) (services/goals.js)
   'tutor_memory',            // the one persistent tutor per learner: running summary + last turns (services/tutor.js)
   'enforcers',               // retention enforcers: end of session/day and scheduled ones, tier, window, questions, results (services/enforcers.js)
+  'es_path_runs',            // main-path Spanish: one per level played with the Duolingo-style activities, its built level and first answers (services/spanish/path.js)
+  'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];
 
 function emptyStore() {

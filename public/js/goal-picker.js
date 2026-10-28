@@ -150,7 +150,8 @@
         const g = data.goals[Number(row.dataset.i)];
         const edit = row.querySelector('.goal-edit');
         edit.style.display = 'block';
-        form(edit, { goal: g, choices: data.choices, text_max: data.text_max }, {
+        const forTrack = data.choices.filter((c) => !c.tracks || c.tracks.includes(g.track_id));
+        form(edit, { goal: g, choices: forTrack, text_max: data.text_max }, {
           onSave: async (choice, text) => {
             const out = await save(g.track_id, g.grade_id, { choice, text });
             Object.assign(g, out.goal);

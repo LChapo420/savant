@@ -14,8 +14,11 @@ const { limit } = require('../utils/rate-limit');
 
 const router = express.Router();
 
-function choices() {
-  return Object.entries(goals.CHOICES).map(([id, c]) => ({ id, label: c.label, needs_text: id === 'specific' }));
+/** The choices for a subject: a choice that lists tracks is shown only on those. */
+function choices(trackId = null) {
+  return Object.entries(goals.CHOICES)
+    .filter(([, c]) => !c.tracks || (trackId && c.tracks.includes(trackId)))
+    .map(([id, c]) => ({ id, label: c.label, needs_text: id === 'specific' }));
 }
 
 function targetOf(src) {
@@ -33,7 +36,7 @@ router.get('/goals', requireAuth, (req, res) => {
     goal: goals.forGrade(req.user.id, t.trackId, t.gradeId),
     asked: goals.asked(req.user.id, t.trackId, t.gradeId),
     text_max: goals.TEXT_MAX,
-    choices: choices(),
+    choices: choices(t.trackId),
   });
 });
 
@@ -43,7 +46,10 @@ router.get('/goals/all', requireAuth, (req, res) => {
     const grade = g.grade_id ? curriculum.getGrade(g.track_id, g.grade_id) : null;
     return { ...g, track_name: track ? track.name : g.track_id, grade_name: grade ? grade.name : null };
   });
-  res.json({ goals: rows, text_max: goals.TEXT_MAX, choices: choices() });
+  // Every choice, each with the tracks it is limited to, so the profile page can
+  // offer the right ones for each subject's goal.
+  const all = Object.entries(goals.CHOICES).map(([id, c]) => ({ id, label: c.label, needs_text: id === 'specific', tracks: c.tracks || null }));
+  res.json({ goals: rows, text_max: goals.TEXT_MAX, choices: all });
 });
 
 router.put('/goals', requireAuth, limit('goals', 60, 60 * 60 * 1000), (req, res) => {

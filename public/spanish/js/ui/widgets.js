@@ -157,11 +157,15 @@
     title: "Wait, don't go! You'll lose your progress if you quit now",
     actions: [{ label: 'Keep learning', value: false, tone: 'es-btn--secondary' }, { label: 'End session', value: true, tone: 'es-btn--plain es-btn--danger-text' }],
   });
-  ui.outOfHearts = () => ui.modal({
+  ui.outOfHearts = () => (ES.flow && ES.flow.host ? ui.modal({
+    char: 'axo', title: 'You ran out of hearts!',
+    body: 'Mistakes cost hearts. They refill now so you can keep practising, and the exercises you missed come back at the end.',
+    actions: [{ label: 'Refill and keep going', value: 'refill', tone: 'es-btn--danger' }, { label: 'End for now', value: 'quit' }],
+  }) : ui.modal({
     char: 'axo', title: 'You ran out of hearts!',
     body: 'Mistakes cost hearts. In the real app you refill with gems, a practice lesson, or a subscription. This test lab refills for free.',
     actions: [{ label: 'Refill hearts (test)', value: 'refill', tone: 'es-btn--danger' }, { label: 'No thanks', value: 'quit' }],
-  });
+  }));
   ui.report = () => ui.modal({
     char: null, title: 'Report a problem',
     body: 'What went wrong with this exercise?',
@@ -242,6 +246,38 @@
   };
 
   // ── microphone ───────────────────────────────────────────────────────
+  // Speech recognition, in order: the app's transcription route (/api/es/asr:
+  // the LLM Gateway for its accounts, else MiMo) when the server has it; the
+  // browser's own Web Speech API (Spanish) when it does not, or once the route
+  // has failed; typing what you said when neither is there.
+  // ES.asr.server: true / false once a page knows (the main path's player sets
+  // it from the server), null = unknown, try the server first.
+  const BrowserSR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  ES.asr = ES.asr || { server: null };
+  ES.asr.browser = !!BrowserSR;
+  ES.asr.recognise = (opts) => browserRecognise(opts);
+
+  /** One utterance through the browser's recogniser. Resolves { transcript } or rejects. */
+  function browserRecognise({ onStart } = {}) {
+    return new Promise((resolve, reject) => {
+      const r = new BrowserSR();
+      r.lang = 'es-ES';
+      r.interimResults = false;
+      r.maxAlternatives = 3;
+      r.continuous = false;
+      let done = false;
+      const t0 = performance.now();
+      r.onresult = (e) => {
+        if (done) return; done = true;
+        const alts = e.results && e.results[0] ? [...e.results[0]] : [];
+        resolve({ transcript: alts.length ? String(alts[0].transcript || '').trim() : '', alternatives: alts.map((a) => a.transcript), durationMs: Math.round(performance.now() - t0) });
+      };
+      r.onerror = (e) => { if (done) return; done = true; reject(Object.assign(new Error(e.error || 'recognition failed'), { code: e.error === 'not-allowed' || e.error === 'service-not-allowed' ? 'denied' : e.error })); };
+      r.onend = () => { if (!done) { done = true; resolve({ transcript: '', durationMs: Math.round(performance.now() - t0) }); } };
+      try { r.start(); if (onStart) onStart(r); } catch (err) { done = true; reject(err); }
+    });
+  }
+
   // onResult({ transcript, durationMs, pauseMs, typed }) after the learner stops.
   ui.mic = function mic({ onResult, maxMs = 12000, label = 'Tap to speak', autoStopMs = 1400 } = {}) {
     const btn = h('button', { class: 'es-mic', 'data-state': 'idle' }, `<span class="es-mic__icon">${icon('mic')}</span><span class="es-mic__label">${esc(label)}</span><span class="es-mic__level" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>`);
@@ -258,7 +294,16 @@
       const out = await r.stop();
       let transcript = '';
       try { transcript = out.heard ? await ES.recorder.transcribe(out.wav) : ''; }
-      catch (err) { return typedFallback(out, 'Speech recognition is unavailable right now.'); }
+      catch (err) {
+        // The server could not transcribe: from now on use the browser's recogniser if there is one.
+        if (BrowserSR) {
+          ES.asr.server = false;
+          btn.removeAttribute('aria-busy'); btn.dataset.state = 'idle'; setLabel('Tap to speak again'); busy = false;
+          note.textContent = "Switched to your browser's speech recognition. Tap the mic and say it again.";
+          return undefined;
+        }
+        return typedFallback(out, 'Speech recognition is unavailable right now.');
+      }
       btn.removeAttribute('aria-busy');
       btn.dataset.state = 'idle'; setLabel('Tap to try again');
       busy = false;
@@ -274,9 +319,29 @@
       note.nextSibling.append(input, go);
       busy = false;
     }
+    let sr = null;
+    async function viaBrowser() {
+      busy = true;
+      btn.dataset.state = 'listening'; setLabel('Listening… tap when done');
+      sfx.play('tick');
+      try {
+        const out = await browserRecognise({ onStart: (r) => { sr = r; } });
+        sr = null;
+        btn.dataset.state = 'idle'; setLabel('Tap to try again'); busy = false;
+        if (!out.transcript) { note.textContent = "I didn't catch that. Tap and speak a little louder."; return; }
+        note.textContent = '';
+        onResult({ transcript: out.transcript, durationMs: out.durationMs, pauseMs: 0, browser: true });
+      } catch (err) {
+        sr = null;
+        typedFallback(null, err.code === 'denied' ? 'The microphone is blocked.' : "Your browser's speech recognition is not available.");
+      }
+    }
     btn.addEventListener('click', async () => {
+      if (sr) { try { sr.stop(); } catch (e) { /* already stopped */ } return undefined; }
       if (rec) return finish();
-      if (busy) return;
+      if (busy) return undefined;
+      if (ES.asr.server === false && BrowserSR) return viaBrowser();
+      if (ES.asr.server === false) { typedFallback(null, 'Speech recognition is not available in this browser.'); return undefined; }
       busy = true;
       try {
         btn.dataset.state = 'listening'; setLabel('Listening… tap when done');

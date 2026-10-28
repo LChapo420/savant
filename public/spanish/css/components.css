@@ -169,7 +169,15 @@ body.es {
 .es-choice--image .es-choice__art svg { width: 96px; height: 96px; }
 .es-choice--image .es-choice__row { display: flex; align-items: center; justify-content: space-between; }
 .es-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--es-space-3); }
-.es-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--es-space-3) var(--es-space-4); }
+/* minmax(0, 1fr), not 1fr: a long word ("restaurante") must wrap inside its
+   card rather than widen the grid past a 375 px phone. */
+.es-pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--es-space-3) var(--es-space-4); }
+.es-choice__text { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 420px) {
+  .es-pairs { gap: var(--es-space-2); }
+  .es-pairs .es-choice { padding: var(--es-space-2) var(--es-space-3); gap: var(--es-space-2); }
+  .es-pairs .es-choice__key { display: none; }
+}
 .es-stack { display: grid; gap: var(--es-space-3); }
 
 /* ── Word tile + answer line + bank (tap to move, drag optional) ───── */

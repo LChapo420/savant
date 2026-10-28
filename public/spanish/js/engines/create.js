@@ -4,7 +4,7 @@
   const ES = window.ES;
   const { h, esc, icon, ui, sfx } = ES;
   const engines = (ES.engines = ES.engines || {});
-  const quit = () => { location.href = '/spanish/lab'; };
+  const quit = () => ES.flow.exit();
   const wc = (t) => String(t || '').trim().split(/\s+/).filter(Boolean).length;
 
   function stepper(steps, at) {

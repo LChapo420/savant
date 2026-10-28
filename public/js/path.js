@@ -52,6 +52,8 @@ App.mount(async () => {
   // A generated base lesson could not be reached from here at all, because the
   // branch that links to one never ran.
   const checkpoint = App.isCheckpointLevel(delivered) ? delivered : null;
+  // The row the learner stands on (Spanish: whether it plays as Duolingo-style activities).
+  const hereNode = nodes.find((n) => n.level === enrollment.current_level) || null;
   // A checkpoint that was taken and not passed. There is no waiting period: the
   // learner picks between retaking it on fresh questions and working on the weak
   // areas first.
@@ -103,7 +105,10 @@ App.mount(async () => {
     const label = `${App.escapeHtml(parts.title)}${parts.kind ? `<span class="kind">${App.escapeHtml(parts.kind)}</span>` : ''}`;
     // The rail: the level number, with a drawn tick once it is done. The
     // current level's "You" and a checkpoint's diamond come from the CSS.
-    const badge = `${String(node.level)}${!skipped && node.state === 'done' ? window.mark('tick', 'mark-plain') : ''}`;
+    // Spanish: a level the learner's goal put aside (services/spanish/goal-fit.js).
+    // Behind them it is not done, it is saved for later, and still theirs to open.
+    const setAside = !!node.deferred && !skipped && node.state !== 'current';
+    const badge = `${String(node.level)}${!skipped && !setAside && node.state === 'done' ? window.mark('tick', 'mark-plain') : ''}`;
     // The line under the heading is what the level covers, in the words the course's
     // own author wrote. A learner reading their path is asking "what will this
     // teach me", and the skill it is filed under does not answer that where "reading
@@ -118,6 +123,8 @@ App.mount(async () => {
     // the line says which it is — "Open" on a button is a command, not a state.
     const state = skipped
       ? ''
+      : setAside
+        ? `Saved for later by your goal (${App.escapeHtml(node.deferred)})${node.state === 'done' ? '; open it any time' : ''}`
       : node.reachable
         ? 'Not done yet; you can open it'
         : '';
@@ -139,6 +146,8 @@ App.mount(async () => {
     const actions = [];
     if (skipped) {
       actions.push(`<a class="btn btn-sm" href="${openHref}">Review${which}</a>`);
+    } else if (setAside && node.state === 'done') {
+      actions.push(`<a class="btn btn-sm" href="${openHref}">Open${which}</a>`);
     } else if (node.state === 'current') {
       // Not a primary button: the one primary on this page is in the header.
       actions.push(opensBase
@@ -176,7 +185,7 @@ App.mount(async () => {
     // is the point of deciding `opensBase` once.
     const isNext = !skipped && node.level === enrollment.current_level + 1;
     return `
-      <div class="node ${skipped ? 'node-skipped' : `node-${node.state}`}${isCheckpoint ? ' node-checkpoint' : ''}${isLesson ? ' node-lesson' : ''}${node.reachable && !skipped ? ' node-open' : ''}${isNext ? ' is-next' : ''}">
+      <div class="node ${skipped ? 'node-skipped' : setAside && node.state === 'done' ? 'node-locked node-open' : `node-${node.state}`}${isCheckpoint ? ' node-checkpoint' : ''}${isLesson ? ' node-lesson' : ''}${node.reachable && !skipped ? ' node-open' : ''}${isNext ? ' is-next' : ''}">
         <span class="badge"><span class="visually-hidden">Level </span>${badge}${node.state === 'current' && !skipped ? '<span class="visually-hidden">, you are here</span>' : ''}</span>
         <span>
           <span class="title">${label}</span>
@@ -687,7 +696,7 @@ App.mount(async () => {
              <a class="btn btn-text" href="/session?enrollment=${enrollment.id}">Adaptive session instead</a>
              <span class="small">The full lesson for this level, the same for everyone on this course.</span>`
           : `<a class="btn btn-primary btn-lg" href="/session?enrollment=${enrollment.id}">Start lesson ${enrollment.current_level}</a>
-             <span class="small">${enrollment.lesson_ready ? 'Written for you and ready.' : 'Written for you when you open it.'}</span>`)
+             ${hereNode && hereNode.activities ? '' : `<span class="small">${enrollment.lesson_ready ? 'Written for you and ready.' : 'Written for you when you open it.'}</span>`}`)
         : `<a class="btn btn-primary btn-lg" href="/session?enrollment=${enrollment.id}">Start level ${enrollment.current_level}</a>
          <span class="small"><span class="num">${params.itemCount}</span> questions, about <span class="num">${Math.max(3, Math.round(params.itemCount * 0.8))}</span>&nbsp;minutes.</span>`;
 
@@ -770,7 +779,12 @@ App.mount(async () => {
             </form>` : ''}
         </div>
         <div class="hero-body">
-          ${progress.blockers.length && !checkpoint && enrollment.status !== 'graduated'
+          ${hereNode && hereNode.activities && enrollment.status !== 'graduated'
+            ? `<p class="small" style="margin:0">Duolingo-style activities with audio. ${/Unit Check|Chunk Speed Drill/.test(hereNode.level_title || '')
+              ? 'Finish it to move on.'
+              : /Conversation Lab/.test(hereNode.level_title || '') ? 'Reach at least half of the role-play\'s goals to move on.'
+              : `Get <span class="num">${/Checkpoint/.test(hereNode.level_title || '') ? 80 : 60}%</span> of first tries right to move to level ${enrollment.current_level + 1}.`} Missed words come back for review.</p>`
+            : progress.blockers.length && !checkpoint && enrollment.status !== 'graduated'
             ? `<h3 class="tiny" style="font-size:var(--t-meta);color:var(--ink-2);font-weight:600;margin:0 0 var(--s-3)">To move to level ${enrollment.current_level + 1}</h3>
                <div class="tmeters">
                  ${App.tmeter({ label: 'Average mastery', value: Math.min(1, progress.average || 0), target: req.averageMastery || 0.8 })}
@@ -834,6 +848,20 @@ App.mount(async () => {
       </table>
     </div>
     <p class="tiny muted" style="margin:12px 0 0; max-width:70ch">${App.escapeHtml(grade.blurb || '')} ${App.escapeHtml(App.layoutSentence(checkpoints))}</p>`;
+
+  // Spanish: one line on why the path is ordered this way (services/spanish/goal-fit.js).
+  if (data.spanish_fit) {
+    const fit = data.spanish_fit;
+    const line = document.createElement('p');
+    line.className = 'small es-fit-line';
+    line.style.cssText = 'margin:16px 0 0;max-width:640px';
+    line.innerHTML = `<strong>${App.escapeHtml(fit.label)}.</strong> ${App.escapeHtml(fit.why)}`
+      + `${fit.deferred_count ? ` <span class="muted">${fit.deferred_count} level${fit.deferred_count === 1 ? '' : 's'} saved for later.</span>` : ''}`
+      + `${fit.queue && fit.queue.seen ? ` <span class="muted">Review queue: ${fit.queue.due.length} due, ${fit.queue.learned} of ${fit.queue.seen} words solid.</span>` : ''}`;
+    const pathTitle = [...root.querySelectorAll('h2.section-title')].find((h) => h.textContent.trim() === 'The path');
+    if (pathTitle) pathTitle.parentNode.insertBefore(line, pathTitle);
+    else root.appendChild(line);
+  }
 
   // Your goal for this grade (services/goals.js): shown and editable here.
   if (window.GoalPicker) {

@@ -396,7 +396,7 @@ const KNOWN_COLLECTIONS = [
     'level_signals', 'learner_records', 'level_debriefs', 'placement_question_sets', 'subject_placements',
     'game_payloads', 'block_plans', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
   'chess_rush_runs', 'chess_drill_cards', 'chess_drill_runs', 'fact_pools', 'piano_song_results', 'parents', 'parental_consents',
-  'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory',
+  'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'es_path_runs', 'es_review',
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {
