@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-3. **Measurement kit, second slice.** What's left of item 3: (a) the owner fills the `OWNER:` lines in
+3. [claimed 2026-10-28T18:16Z] **Measurement kit, second slice.** What's left of item 3: (a) the owner fills the `OWNER:` lines in
    `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/` (local: needs
    the owner's decisions and the timestamp service); (b) a wait-list arm in `services/act-study.js` (assignment to
    "start now" or "start after test B", only with the student's agreement); (c) look at `/act-study` and
