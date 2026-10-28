@@ -1,0 +1,36 @@
+# /etc/systemd/system/savant-beta.service : the Savant app at beta.savantedu.com
+# (deploy/beta/README.md). Runs as its own user, restarts on a crash, logs to journald.
+# The landing site's savant-site.service is separate and untouched.
+[Unit]
+Description=Savant beta app (beta.savantedu.com)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=savantbeta
+Group=savantbeta
+# /srv/savant-beta/app is a link to the live release; a restart follows it.
+WorkingDirectory=/srv/savant-beta/app
+EnvironmentFile=/srv/savant-beta/savant-beta.env
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+# config/db.js saves the store on SIGTERM; give it time.
+KillSignal=SIGTERM
+TimeoutStopSec=20
+# Measured about 315 MB resident on a copy of the real store (BETA-LAUNCH-KIT.md 1.1).
+MemoryMax=800M
+UMask=0077
+# The app writes only its data, logs, lesson scripts (all under shared/) and backups.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/savant-beta/shared /srv/savant-beta/backups
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=savant-beta
+
+[Install]
+WantedBy=multi-user.target
