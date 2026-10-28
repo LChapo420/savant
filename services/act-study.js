@@ -2,7 +2,12 @@
  * The ACT measurement study (docs/yc/ACT-STUDY-PROTOCOL.md): who joined, which practice-test
  * order they were given, and their before and after scores.
  *
- *   act_study   one per learner   { user_id, arm, consent_at, parent_aware, seen_forms, other_prep, joined_at, left_at }
+ *   act_study   one per learner   { user_id, arm, group, wait_ok, consent_at, parent_aware, seen_forms, other_prep, joined_at, left_at }
+ *
+ * Wait-list arm: a learner who says wait_ok is assigned (alternately) to group "now" (Savant
+ * during the four weeks between the tests) or "wait" (the same two tests, Savant only after
+ * the second). Everyone else is in "now". The app cannot stop a "wait" learner using Savant,
+ * so the report shows their minutes in the window and flags any use.
  *
  * The scores themselves are the learner's act_scores rows (services/act-scores.js): the form
  * field says which official practice test ("A" or "B") a score came from. Nothing here
@@ -13,6 +18,7 @@ const scores = require('./act-scores');
 
 const FORMS = ['A', 'B'];
 const ARMS = ['AB', 'BA'];     // before then after
+const GROUPS = ['now', 'wait'];
 const MAX_PREP = 300;
 
 function formOf(row) {
@@ -21,10 +27,21 @@ function formOf(row) {
 }
 
 /** The next learner's order: whichever of AB or BA has fewer people (ties go to AB), so the halves stay even. */
-function nextArm(rows = db.all('act_study')) {
-  const ab = rows.filter((r) => r.arm === 'AB').length;
-  const ba = rows.filter((r) => r.arm === 'BA').length;
+const groupOf = (r) => (r.group === 'wait' ? 'wait' : 'now');
+
+function nextArm(rows = db.all('act_study'), group = 'now') {
+  const inGroup = rows.filter((r) => groupOf(r) === group);
+  const ab = inGroup.filter((r) => r.arm === 'AB').length;
+  const ba = inGroup.filter((r) => r.arm === 'BA').length;
   return ab <= ba ? 'AB' : 'BA';
+}
+
+/** Only learners who agreed to a possible wait are split; they alternate, ties go to "now". Everyone else is "now". */
+function nextGroup(waitOk, rows = db.all('act_study')) {
+  if (!waitOk) return 'now';
+  const agreed = rows.filter((r) => r.wait_ok);
+  const waiting = agreed.filter((r) => groupOf(r) === 'wait').length;
+  return waiting < agreed.length - waiting ? 'wait' : 'now';
 }
 
 function cleanJoin(body) {
@@ -34,7 +51,8 @@ function cleanJoin(body) {
   if (typeof b.seen_forms !== 'boolean') return { error: 'Say whether you have seen these two practice tests before.' };
   const other = b.other_prep === undefined || b.other_prep === null ? '' : String(b.other_prep).trim();
   if (other.length > MAX_PREP) return { error: `Other prep can be at most ${MAX_PREP} characters.` };
-  return { value: { seen_forms: b.seen_forms, other_prep: other } };
+  if (b.wait_ok !== undefined && typeof b.wait_ok !== 'boolean') return { error: 'Say yes or no to waiting to start Savant.' };
+  return { value: { seen_forms: b.seen_forms, other_prep: other, wait_ok: b.wait_ok === true } };
 }
 
 function getEntry(userId) {
@@ -45,7 +63,8 @@ function join(userId, value, now = Date.now()) {
   const existing = getEntry(userId);
   if (existing) return existing;
   const at = new Date(now).toISOString();
-  return db.insert('act_study', { user_id: userId, arm: nextArm(), consent_at: at, parent_aware: true, ...value, joined_at: at, left_at: null });
+  const group = nextGroup(!!value.wait_ok);
+  return db.insert('act_study', { user_id: userId, arm: nextArm(db.all('act_study'), group), group, consent_at: at, parent_aware: true, ...value, joined_at: at, left_at: null });
 }
 
 function leave(userId, now = Date.now()) {
@@ -60,7 +79,7 @@ function mine(userId) {
   const e = getEntry(userId);
   if (!e) return { joined: false };
   const have = new Set(scores.listScores(userId).map(formOf).filter(Boolean));
-  return { joined: true, arm: e.arm, before_form: e.arm[0], after_form: e.arm[1], has_before: have.has(e.arm[0]), has_after: have.has(e.arm[1]), seen_forms: !!e.seen_forms };
+  return { joined: true, group: groupOf(e), arm: e.arm, before_form: e.arm[0], after_form: e.arm[1], has_before: have.has(e.arm[0]), has_after: have.has(e.arm[1]), seen_forms: !!e.seen_forms };
 }
 
 /** Active study minutes between two dates (inclusive), from the app's own study-session clock. */
@@ -83,7 +102,7 @@ function rowFor(e) {
   else if (before) status = 'before_only';
   if (e.seen_forms) status = `excluded_seen_${status}`;
   const out = {
-    user_id: e.user_id, name: user.display_name || '', email: user.email || '', arm: e.arm, joined_on: e.joined_at.slice(0, 10),
+    user_id: e.user_id, name: user.display_name || '', email: user.email || '', arm: e.arm, group: groupOf(e), joined_on: e.joined_at.slice(0, 10),
     status, seen_forms: !!e.seen_forms, other_prep: e.other_prep || '',
     before_form: e.arm[0], before_on: before ? before.taken_on : null, after_form: e.arm[1], after_on: after ? after.taken_on : null,
     before: before, after: after,
@@ -92,6 +111,7 @@ function rowFor(e) {
   };
   for (const k of ['composite', ...scores.SECTIONS]) out.change[k] = before && after ? diff(before[k], after[k]) : null;
   Object.assign(out, doseBetween(e.user_id, before ? before.taken_on : null, after ? after.taken_on : null));
+  out.used_savant_while_waiting = out.group === 'wait' && out.minutes > 0;
   return out;
 }
 
@@ -109,6 +129,12 @@ function report() {
     const c = complete.filter((r) => r.arm === arm).map((r) => r.change.composite).filter((v) => v !== null);
     byArm[arm] = { joined: rows.filter((r) => r.arm === arm).length, complete: c.length, mean_composite_change: mean(c) };
   }
+  const byGroup = {};
+  for (const g of GROUPS) {
+    const c = complete.filter((r) => r.group === g && !r.seen_forms).map((r) => r.change.composite).filter((v) => v !== null);
+    byGroup[g] = { joined: rows.filter((r) => r.group === g).length, complete: c.length, mean_composite_change: mean(c),
+      used_savant_while_waiting: g === 'wait' ? rows.filter((r) => r.used_savant_while_waiting).length : undefined };
+  }
   const all = complete.map((r) => r.change.composite).filter((v) => v !== null);
   return {
     totals: {
@@ -117,12 +143,13 @@ function report() {
       mean_composite_change: mean(all), min_composite_change: all.length ? Math.min(...all) : null, max_composite_change: all.length ? Math.max(...all) : null,
     },
     by_arm: byArm,
+    by_group: byGroup,
     note: 'Descriptive only: with a handful of students these averages cannot show that Savant raises scores. Report every participant, including those who left or whose change is zero or negative.',
     participants: rows,
   };
 }
 
-const CSV_COLUMNS = ['user_id', 'name', 'arm', 'status', 'joined_on', 'before_form', 'before_on', 'before_composite', 'after_form', 'after_on', 'after_composite', 'change_composite', 'change_english', 'change_math', 'change_reading', 'change_science', 'gap_days', 'sessions', 'minutes', 'seen_forms', 'other_prep'];
+const CSV_COLUMNS = ['user_id', 'name', 'arm', 'group', 'status', 'joined_on', 'before_form', 'before_on', 'before_composite', 'after_form', 'after_on', 'after_composite', 'change_composite', 'change_english', 'change_math', 'change_reading', 'change_science', 'gap_days', 'sessions', 'minutes', 'used_savant_while_waiting', 'seen_forms', 'other_prep'];
 
 function csvCell(v) {
   let s = v === null || v === undefined ? '' : String(v);
@@ -140,4 +167,4 @@ function toCsv(rep = report()) {
   return `${lines.join('\n')}\n`;
 }
 
-module.exports = { FORMS, ARMS, formOf, nextArm, cleanJoin, getEntry, join, leave, mine, report, toCsv, csvCell };
+module.exports = { FORMS, ARMS, GROUPS, formOf, nextArm, nextGroup, cleanJoin, getEntry, join, leave, mine, report, toCsv, csvCell };

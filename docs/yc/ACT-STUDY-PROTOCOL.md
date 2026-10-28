@@ -28,7 +28,7 @@ keep the answer sheet or a screenshot.
   (`excluded_seen_*` status), and the count is reported.
 - **Dose** is measured by the app (study sessions and active minutes between the two test dates), not self-reported.
 - **Comparison:** against a baseline, not zero. OWNER: choose the wait-list group or the external baselines in
-  `ACT-READINESS.md` 5.2 item 6 (both UNVERIFIED figures), and say so here. The app does not run a wait-list arm yet.
+  `ACT-READINESS.md` 5.2 item 6 (both UNVERIFIED figures), and say so here. The app now runs a wait-list arm: a student who ticks "happy to wait" is alternately assigned to start Savant now or only after the second test (everyone else starts now); the report shows each group and flags wait students whose use shows up in the window, since the app cannot stop them.
 
 ## What will be reported
 

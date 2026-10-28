@@ -70,6 +70,23 @@ const score = (uid, form, taken_on, e, m, r) => act.addScore(uid, act.cleanScore
   check('joining twice keeps the same order', study.join(us[0].id, study.cleanJoin(GOOD).value).arm === 'AB' && db.all('act_study').length === 6);
   check('someone who leaves still counts toward balance', (() => { const u = user('l'); study.join(u.id, { seen_forms: false, other_prep: '' }); study.leave(u.id); return study.nextArm() === 'BA'; })());
 
+  console.log('wait-list arm');
+  check('wait_ok must be a yes or no', !!study.cleanJoin({ ...GOOD, wait_ok: 'maybe' }).error && study.cleanJoin(GOOD).value.wait_ok === false);
+  check('everyone who did not agree is in "now"', db.all('act_study').every((r) => r.group === 'now'));
+  const w = [];
+  for (let i = 0; i < 4; i++) { const u = user(`w${i}`); w.push(u); study.join(u.id, study.cleanJoin({ ...GOOD, wait_ok: true }).value); }
+  check('agreeing students alternate now, wait', w.map((u) => study.getEntry(u.id).group).join() === 'now,wait,now,wait', w.map((u) => study.getEntry(u.id).group));
+  check('"wait" learners are told their group', study.mine(w[1].id).group === 'wait' && study.mine(w[0].id).group === 'now');
+  check('order stays balanced within the wait group', (() => { const a = w.filter((u) => study.getEntry(u.id).group === 'wait').map((u) => study.getEntry(u.id).arm); return a.join() === 'AB,BA'; })());
+  score(w[1].id, 'A', '2026-10-01', 20, 20, 20); score(w[1].id, 'B', '2026-10-29', 21, 21, 21);
+  db.insert('study_sessions', { user_id: w[1].id, started_at: '2026-10-10T10:00:00Z', active_ms: 10 * 60000 });
+  const wr = study.report();
+  const wrow = wr.participants.find((r) => r.user_id === w[1].id);
+  check('wait learner using Savant in the window is flagged', wrow.used_savant_while_waiting === true && wr.by_group.wait.used_savant_while_waiting === 1, wrow);
+  check('by-group counts', wr.by_group.wait.joined === 2 && wr.by_group.wait.complete === 1 && wr.by_group.wait.mean_composite_change === 1 && wr.by_group.now.complete === 0);
+  check('group is in the csv', study.toCsv().split('\n')[0].includes(',group,'));
+  study.leave(w[0].id); study.leave(w[1].id); study.leave(w[2].id); study.leave(w[3].id);
+
   console.log('before and after');
   const [a, b, c, d, e] = us;   // a AB, b BA, c AB, d BA, e AB
   score(a.id, 'a', '2026-10-01', 20, 22, 21);   // before is form A
@@ -90,7 +107,7 @@ const score = (uid, form, taken_on, e, m, r) => act.addScore(uid, act.cleanScore
   check('score in the wrong slot is not a before', rep.participants.find((r) => r.user_id === d.id).status === 'not_started');
   check('mean over finished only', rep.totals.complete === 2 && rep.totals.mean_composite_change === 1 && rep.totals.min_composite_change === -1 && rep.totals.max_composite_change === 3, rep.totals);
   check('by-order breakdown', rep.by_arm.AB.mean_composite_change === 3 && rep.by_arm.BA.mean_composite_change === -1);
-  check('left learners are not listed but are counted', rep.totals.left === 1 && rep.totals.joined === 7 && rep.totals.active === 6);
+  check('left learners are not listed but are counted', rep.totals.left === 5 && rep.totals.joined === 11 && rep.totals.active === 6);
 
   console.log('exclusions');
   const f = user('seen'); study.join(f.id, { seen_forms: true, other_prep: '' });

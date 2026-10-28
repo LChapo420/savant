@@ -43,11 +43,10 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-3. [claimed 2026-10-28T18:16Z] **Measurement kit, second slice.** What's left of item 3: (a) the owner fills the `OWNER:` lines in
-   `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/` (local: needs
-   the owner's decisions and the timestamp service); (b) a wait-list arm in `services/act-study.js` (assignment to
-   "start now" or "start after test B", only with the student's agreement); (c) look at `/act-study` and
-   `/act-study-admin` at 375 px in a real browser.
+3. **Measurement kit, third slice** (local: needs the owner). (a) The owner fills the `OWNER:` lines in
+   `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/`; (b) the
+   owner decides whether to use the wait-list arm; (c) look at `/act-study` and `/act-study-admin` at 375 px in a
+   real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **An ACT landing page** at `/act` for students and parents: what it does today (truthfully), how it adapts,
    privacy in plain words, and one clear "Start free" button into onboarding with ACT preselected. Done when it
    loads fast on a phone and every claim on it is true of the code.
@@ -90,6 +89,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 ## Done
 
+- 2026-10-28: **Measurement kit, second slice: wait-list arm** (item 3b; commit in this push). A student who ticks "happy to wait" on `/act-study` is assigned alternately to "now" or "wait" (start Savant only after the second test); everyone else is "now". Test order stays balanced within each group. The report, admin page and CSV show each group and flag wait students whose Savant minutes appear in the window (the app cannot stop them). Protocol updated; the choice of baseline is still the owner's. Checked: `scripts/act-study-test.js` (new wait-list section: validation, alternation, balance within group, flagging, by-group counts, CSV column) and `npm test`. Not checked: pages in a real browser at 375 px (moved to the Queue, item 3).
 - 2026-10-28: **Measurement kit, first slice** (item 3; commit in this push). `/act-study` (instructions, links to ACT's own free practice tests, consent with a parent-knows box, "have you seen these forms", leave button), `services/act-study.js` + `routes/act-study.js` (`/api/act-study`): counterbalanced A-then-B / B-then-A assignment by the app, before/after pairing from the learner's `act_scores` (form letter A or B), dose from the study-session clock, exclusion of students who've seen the forms, test/demo accounts left out. `/act-study-admin` and a CSV list every participant's before and after, with counts of joined, left, finished and excluded, and a note that the averages are descriptive. `docs/yc/ACT-STUDY-PROTOCOL.md` is a DRAFT, unsealed, with no student numbers. `act_study` is in the account export and deletion. Checked: `scripts/act-study-test.js` (assignment balance, consent rules, pairing, dose window, exclusions, CSV formula defusing, admin-only routes, wiring) and `npm test` exit 0 (`scorecard-evidence-test` failed once on a timing check under load, passed alone and on the full rerun). Not checked: the pages in a real browser at 375 px. The ACT practice-test count and links are UNVERIFIED.
 - 2026-10-28: **ACT score entry and test date** (item 2; commit in this push). `/act-scores` (linked from the profile): test date, target composite, and per-test scores (practice or real ACT, date, form, English, Math, Reading, optional Science), charted as inline SVG with a target line, countdown and gap to target. `services/act-scores.js`, `routes/act.js` (`/api/act`), collections `act_profiles` and `act_scores`, included in the account export and in parent/account deletion. Composite is the average of English, Math and Reading; whether Science counts is UNVERIFIED so Science is charted but never in the composite. Checked: `scripts/act-scores-test.js` (41 checks: validation, isolation between learners, caps, export/deletion wiring) and `npm test` exit 0. Not yet checked: the page in a real browser at 375 px (cloud run has no signed-in session); the next run or the owner should look.
 
