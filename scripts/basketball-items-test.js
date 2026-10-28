@@ -46,7 +46,7 @@ const track = curriculum.TRACKS.find((t) => t.id === 'basketball');
 ok(!!track, 'the basketball track is registered');
 ok(track && track.grades.length === 15, 'it has fifteen grades');
 ok(bank.missingSkills().filter((s) => s.startsWith('bb_')).length === 0, 'every basketball skill a grade uses has a generator');
-const rows = parseCsv(fs.readFileSync(path.join(__dirname, '..', 'data', 'Basketball_Grades_Levels.csv'), 'utf8'));
+const rows = parseCsv(fs.readFileSync(path.join(process.env.SHEET_DIR || path.join(__dirname, '..', 'data'), 'Basketball_Grades_Levels.csv'), 'utf8'));
 const csvLevels = rows.slice(2).reduce((n, r) => n + r.filter((_, i) => i % 5 === 0 && /^\d+$/.test(String(r[i]).trim())).length, 0);
 const trackLevels = track ? track.grades.reduce((n, g) => n + g.levels.length, 0) : 0;
 ok(csvLevels === trackLevels, `every sheet row is a level (${csvLevels} rows, ${trackLevels} levels)`);

@@ -11,7 +11,7 @@ const assignments = require('../config/game-assignments');
 // (grade-fit, config/grade-skills.js).
 const bank = { GENERATORS: { ...require('../content/spanish-items').GENERATORS, ...require('../content/spanish-grade-items').GENERATORS } };
 
-const SRC = path.join(__dirname, '..', 'data', 'Spanish_Fluency_Path.csv');
+const SRC = process.env.SPANISH_SHEET || path.join(__dirname, '..', 'data', 'Spanish_Fluency_Path.csv');
 const failures = [];
 const expected = readSpanishSheet(SRC);
 const csv = parseCsv(require('fs').readFileSync(SRC, 'utf8'));
