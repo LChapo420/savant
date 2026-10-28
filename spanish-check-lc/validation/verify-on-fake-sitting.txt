@@ -1,0 +1,35 @@
+Spanish listening test verification
+  root: C:\coding\claudecommittdIq\folderThing\iq-max-repo-2-claude-adoring-mayer-woc9sq\spanish-check-lc
+  results: C:\Users\admin\AppData\Local\Temp\claude\C--coding-claudecommittdIq-folderThing\bf665da0-0ead-4435-b9f4-ddc0bbd108a8\scratchpad\lc-res4
+  first test results (read-only): C:\coding\claudecommittdIq\folderThing\iq-max-repo-2-claude-adoring-mayer-woc9sq\spanish-check\results
+  openssl: openssl  offline: false
+
+PASS  sealed code, protocol, pool and page/route files match SEAL.txt  -  33 files, SEAL.txt sha256 5bbf2af060de8124...
+PASS  raw Tatoeba files match the sealed hashes  -  8 files
+PASS  pool rebuilt from the raw files is byte-identical  -  rebuilt bda997f4434b6657... sealed bda997f4434b6657...
+PASS  SEAL.txt RFC 3161 timestamp (freetsa.org) is valid for this SEAL.txt  -  digest matches, signature verified, time 2026-10-28T04:29:21.000Z
+PASS  SEAL.txt OpenTimestamps file is well-formed and commits to this SEAL.txt  -  calendar commitment only (not yet Bitcoin-confirmed here; run: ots upgrade SEAL.ots && ots verify SEAL.ots)
+PASS  hash chain intact, first line bound to SEAL.txt  -  54 lines, head fb9b836944f62977...
+PASS  every engine start ran the sealed engine, scoring, draw, replay and pool  -  1 start(s)
+PASS  SEAL.txt was externally timestamped before the first sitting  -  seal 2026-10-28T04:29:21.000Z, first sitting 2026-10-28T04:29:36.537Z
+PASS  each logged drand randomness is the SHA-256 of its logged signature
+PASS  each sitting's drand round exists and its randomness matches the public record  -  1 round(s) refetched, all relays agree
+PASS  each drand round was produced just before its sitting started (not an old or chosen round)
+PASS  the pinned drand quicknet public key, period and genesis hash to the chain hash named in the protocol  -  52db9ba70e0cc0f6...
+PASS  each sitting drand BLS signature (G1, scheme bls-unchained-g1-rfc9380, message SHA-256 of the round) verifies against the pinned quicknet public key  -  1 signature(s) verified by pairing
+PASS  self-test: a tampered signature, and a genuine signature for another round, are both rejected  -  invalid signature (bad point: not in prime-order subgroup); BLS signature does not verify
+PASS  the first-test exclusion lists used for each draw are what the first test's own log implies  -  1 sitting(s); line hash and re-derived lists agree
+PASS  every served item is the item the logged randomness produces from the sealed pool and the logged exclusions  -  24 served items re-derived
+PASS  no question, wrong option or English option repeats across sittings, and none was shown by the first test before  -  24 distinct clips, 72 distinct wrong-option sentences, 96 distinct English options
+PASS  the first test has not (yet) shown any of this test's clips or English options  -  none
+PASS  sitting rules respected (one per day, 12 h gap, items one at a time in order, nothing answered twice)
+PASS  no sitting used the override
+PASS  time limit (40 s per clip, 3 s grace) applied from server timestamps; total within the cap  -  0 late answer(s), all scored 0
+PASS  no clip was played more than 3 times (as reported by the page)
+PASS  every score recomputed from the log equals the score the server recorded  -  1 finished sitting(s) recomputed with the sealed scoring.js
+PASS  anchor at seq 53: RFC 3161 token valid for log head e9fbb2a22245...  -  time 2026-10-28T04:30:53.000Z
+PASS  anchor at seq 53: OpenTimestamps file commits to the same head
+PASS  sitting 1: anchor time is after the sitting ended  -  ended 2026-10-28T04:30:53.555Z, anchored 2026-10-28T04:30:53.000Z
+
+Summary: 26 PASS, 0 FAIL, 0 WARN, 0 SKIP
+RESULT: PASS

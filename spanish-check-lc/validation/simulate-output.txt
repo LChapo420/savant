@@ -1,0 +1,67 @@
+Simulation: 100 random draws from the sealed pool (items {"easy":15148,"medium":15995,"hard":12867}, distractor-only {"easy":7977,"medium":10992,"hard":11691}); first-test exclusions applied: 25 sentences, 60 English options
+
+B. Draw equivalence (stratum-weighted means per draw vs the item pool)
+  mean log-difficulty per draw 6.166 (SD 0.113, pool 6.131); words per sentence 5.763 (SD 0.408, pool 5.557)
+
+A. Simulated learners over the draws (formula score; "true" = expected value over the whole item pool)
+  a. knows nothing (guesses everything)
+    formula score: true 0.000 | draws mean 0.001 SD 0.120 min -0.227 max 0.345 | CI half-width 0.249 | CI covers truth 93.0%
+    raw share right: mean 0.250 | "I don't know" per sitting 0.0
+    two draws of the same learner differ "significantly": 4 of 50 comparisons (8.0%, nominal 5%)
+  a2. knows nothing (always "I don't know")
+    formula score: true 0.000 | draws mean 0.000 SD 0.000 min 0.000 max 0.000 | CI half-width 0.085 | CI covers truth 100.0%
+    raw share right: mean 0.000 | "I don't know" per sitting 24.0
+    two draws of the same learner differ "significantly": 0 of 50 comparisons (0.0%, nominal 5%)
+  b. knows the 250 commonest words, guesses the rest
+    formula score: true 0.337 | draws mean 0.323 SD 0.118 min -0.052 max 0.630 | CI half-width 0.284 | CI covers truth 96.0%
+    raw share right: mean 0.492 | "I don't know" per sitting 0.0
+    two draws of the same learner differ "significantly": 3 of 50 comparisons (6.0%, nominal 5%)
+  c. knows the 1000 commonest words, guesses the rest
+    formula score: true 0.588 | draws mean 0.611 SD 0.130 min 0.253 max 0.951 | CI half-width 0.256 | CI covers truth 92.0%
+    raw share right: mean 0.708 | "I don't know" per sitting 0.0
+    two draws of the same learner differ "significantly": 5 of 50 comparisons (10.0%, nominal 5%)
+  d. knows everything (hears it all)
+    formula score: true 0.950 | draws mean 0.948 SD 0.055 min 0.724 max 1.000 | CI half-width 0.091 | CI covers truth 100.0%
+    raw share right: mean 0.961 | "I don't know" per sitting 0.0
+    two draws of the same learner differ "significantly": 1 of 50 comparisons (2.0%, nominal 5%)
+  c2. knows the 1000 commonest words, "I don't know" when lost
+    formula score: true 0.588 | draws mean 0.598 SD 0.090 min 0.293 max 0.845 | CI half-width 0.211 | CI covers truth 96.0%
+    raw share right: mean 0.598 | "I don't know" per sitting 10.0
+    two draws of the same learner differ "significantly": 2 of 50 comparisons (4.0%, nominal 5%)
+
+  Ordering a < b < c < d (mean formula score): a: 0.001   b: 0.323   c: 0.611   d: 0.948
+  strictly increasing: true
+
+C. Guessing strategies that use only the four English options (no audio). Chance right = 25%; formula score = right - wrong/3 per item, so about 0 is the target.
+  items skipped (no matching distractors) per draw: 6.3
+  longest option                                                   right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  shortest option                                                  right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  option closest to the median length                              right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  length medoid (smallest total length distance to the others)     right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  odd one out by length                                            right 23.2% (95% CI 21.5 to 24.9) -> formula score -0.024 (+-0.023), n=2400
+  most words                                                       right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  fewest words                                                     right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  word-count medoid                                                right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  longest average word                                             right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  highest share of function words                                  right 24.7% (95% CI 23.0 to 26.5) -> formula score -0.003 (+-0.023), n=2400
+  lowest share of function words                                   right 25.6% (95% CI 23.8 to 27.3) -> formula score +0.008 (+-0.023), n=2400
+  function-share medoid                                            right 24.8% (95% CI 23.1 to 26.6) -> formula score -0.002 (+-0.023), n=2400
+  shares most content words with the other options (consensus)     right 25.2% (95% CI 23.5 to 26.9) -> formula score +0.003 (+-0.023), n=2400
+  shares fewest content words with the other options               right 24.7% (95% CI 22.9 to 26.4) -> formula score -0.005 (+-0.023), n=2400
+  most natural-sounding (highest mean word frequency)              right 25.1% (95% CI 23.3 to 26.8) -> formula score +0.001 (+-0.023), n=2400
+  least natural-sounding (lowest mean word frequency)              right 22.1% (95% CI 20.4 to 23.7) -> formula score -0.039 (+-0.022), n=2400
+  starts with the most common first word of the four               right 24.9% (95% CI 23.1 to 26.6) -> formula score -0.002 (+-0.023), n=2400
+  contains an "I" / "you" / "we" subject                           right 26.0% (95% CI 24.3 to 27.8) -> formula score +0.014 (+-0.023), n=2400
+  alphabetically first                                             right 24.8% (95% CI 23.0 to 26.5) -> formula score -0.003 (+-0.023), n=2400
+  always position A                                                right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  always position B                                                right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  always position C                                                right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  always position D                                                right 25.0% (95% CI 23.3 to 26.7) -> formula score +0.000 (+-0.023), n=2400
+  largest |formula score| of any strategy: 0.039
+
+D. Structure over 2400 items
+  wrong options within +-20% of the correct option's length: 7200 of 7200 (max deviation 20.0%)
+  items whose four options all have different lengths: 2400 of 2400; items with duplicate English options: 0
+  correct-option position counts (A/B/C/D): 600 / 600 / 600 / 600
+  correct option's length rank (0 = shortest ... 3 = longest): 600 / 600 / 600 / 600
+  strata per draw: {"easy":8,"medium":8,"hard":8}

@@ -1,0 +1,52 @@
+SPANISH-LISTENING SEAL v1
+sealed_at: 2026-10-28T04:29:21.769Z
+format: <sha256>  <path relative to the spanish-check-lc folder>   (sha256sum -c compatible)
+
+# core: protocol, pool, scoring, engine, build and verification code, trust anchors
+14ad0f413a1d7e3a86f065263f6d1467671bd9897e6bbda47399c95f3254948e  PROTOCOL.md
+10e93558fd35fe2aedfd7c6aac411d5708b515738a7d971f2e249017e8253e29  VERIFY.md
+bda997f4434b6657d37bbc124fd62e55e9efd3656196773511dfffade423b744  pool.json
+6541249179a8bd3e3d540504b92abe22a04c2b58fcdc4d8827f86361786a2801  overlap-exclusions-lc.json
+4a91cd3c4268a1078c72c8e76d924a6addfec6b674eb8881cb67b95ff7b13718  scoring.js
+b1ab51ad266a09ce1f4e57402779cb9c73a962adf60f29176f014189bd20374f  engine.js
+99b3aab6130d84cd229f6db5194b9eca672137a8b7286b3832c543ffd9986a57  verify.js
+326df77630b53c1d473155f1ad443fb24df69319565615115357f3583ab7a25d  lib/draw.js
+8d80d5189349d129f6f86e15808af8f285ecd71df9002fafcb465e4634d806d9  lib/replay.js
+cff15d69741b194b9e46d995745d60beee5e5c21e08e4091b50117cad0b1d1e4  lib/firsttest.js
+9d1dcf1a5bf1ecd83af1576451522e4f0ec502735ddc013d83bcb0ddd503c091  lib/bls.js
+7f7649df9b7b20e2ba89f6833574dcbbdfa2a0d1c5fb26f0693e7d4f1f2107d0  scripts/build-pool.js
+6c31efa03980609ab19952e496445a9ed86a2fed34a7572f4a067b5055b115d9  scripts/scan-app.js
+80c3de4f5fca72e86ab51605a6dbd2e5572604a2bc6d9e6caff848014840c54b  scripts/seal.js
+e3d8ed8d3dd3970c7e2e7e50c747a9c5e154f8525ba677233ab0bd556474ca1a  scripts/timestamp-seal.js
+458563867d381f6bda88ab3370db8ac84ce3912ad0d56052a40820e861445291  scripts/simulate.js
+bd0b46a435995e24f908f5e02b314e38ef021ea996d310efacbc1da8f7f823dd  scripts/harness.js
+86c6ad0f0ec779d0e5036e938653519a81ebad3f9a897dade26fa9d47bd850ef  scripts/e2e-http.js
+7d4bd397aceec3f420e3fb197c792fb2f8f8364d0f3ea76b347dcf65cb1f26c7  scripts/test-engine.js
+2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438  tsa/cacert.pem
+8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467  tsa/tsa.crt
+
+# first-test modules and data imported read-only (the first test itself is frozen)
+babf567a603c3304953e97ceb48c64a8d99dd9c48fbbabcf5b7cc47eb2ddf084  ../spanish-check/SEAL.txt
+a4607ac92747244f1aa7d0f28ca3c57c5db8ef1860cc0d6292191c09bb74f6f2  ../spanish-check/pool.json
+a8eed3ea197a325629762f77d6e2810e3c14e6a99244d8f7f46af70b8170eda6  ../spanish-check/overlap-exclusions.json
+95dc94363b83ee1402c0e6989dd0bd3627faf170723cd194b99f432c956df207  ../spanish-check/scoring.js
+5aea8dc1d48530851844887a1628816c2557639e8c6edd272fa037b735741585  ../spanish-check/lib/common.js
+eab294024c57649bfa2ead225e58d9e92dad5895125c052b2af3c831b34aebbe  ../spanish-check/lib/candidates.js
+515608f6b5737304ce3dd2d5f7585c801d5d5ec34d0d9728fc1ed8bd1d922a45  ../spanish-check/lib/draw.js
+5d3a9601a82aaf770a009b0c5cdb237abc322856411a29be65c5c7bec520f52a  ../spanish-check/lib/replay.js
+c5c43bf8e8a47cc33593653b4a086a1d1b092d6daee159809fc0aa111d8eaaa2  ../spanish-check/lib/external.js
+
+# app glue (the routes and the page; the app only mounts them)
+d44aa62f6497b63c7c450763cea36d55c918633ccdb18515ce66a58801442caf  ../routes/spanish-check-lc.js
+55a2868f910592be3d022cb00ac1cd5ca0e26b307d8f9047b95a234b2d62c049  ../public/spanish-listening.html
+ec625559d1bde0916b2a2f5e60ff2c1c7cad4149516ba60570aff5fb1d440791  ../public/js/spanish-listening.js
+
+# frozen raw Tatoeba exports (downloads.tatoeba.org, shared with the first test); the pool is rebuilt from these
+c84900a8ac7b4b8724032964651a57d4e134d040875c350aae6951a5605b7fec  ../spanish-check/raw/spa_sentences.tsv
+6ab1a1c04faee902608ecf925827e26d03490623fb7aca4de194e39f2cd07704  ../spanish-check/raw/eng_sentences.tsv
+b778ef1eb86cd2fa41f75f2e31ae2efadb78b35b9d0e81ccf1862766bc9d5ab8  ../spanish-check/raw/spa-eng_links.tsv
+8fd72659536aece35f59b7f19ad4f3cc2c377b20e48f5f097adc591ecaa26517  ../spanish-check/raw/spa_sentences_with_audio.tsv
+29efd66854f11ad3480720ceda6e7b42563d40df4e660d9b0721c56a61753e9a  ../spanish-check/raw/spa_sentences.tsv.bz2
+f634eaaf26623c2a2e170be2dae54b18388479311ae8619d04889df4e5d021f3  ../spanish-check/raw/eng_sentences.tsv.bz2
+f9e3d7c7486ecfcf12724b80e4a0d726aeb01748996ed6098d44763417f113f2  ../spanish-check/raw/spa-eng_links.tsv.bz2
+cf0aefcd80d4267c9491bf5bc6aa181bd5b6139aa1f61e729760a7494d2973fd  ../spanish-check/raw/spa_sentences_with_audio.tsv.bz2

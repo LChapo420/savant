@@ -3,7 +3,7 @@
  * every script). Same shape and guarantees as services/anthropic-ledger.js:
  *
  *   - data/standard-compute-ledger.json is created if missing, starting at the
- *     $0.50 already spent (owner, 2026-10-27), and the TOTAL cap is $15.00 across
+ *     $0.50 already spent (owner, 2026-10-27), and the TOTAL cap is $20.00 (was $15.00 until 2026-10-28) across
  *     everything (this app, scripts, the night runner, tests).
  *   - Every call reserves its worst-case cost BEFORE it is sent; a call is refused
  *     unless seed + settled + open reservations + this reservation stays at or under
@@ -26,7 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const CAP_USD = 15.0;
+const CAP_USD = 20.0; // raised from $15 by the owner on 2026-10-28
 const SEED_USD = 0.5;
 const STALE_RESERVATION_MS = 2 * 60 * 60 * 1000;
 const FILE = () => process.env.STANDARD_COMPUTE_LEDGER_FILE || path.join(__dirname, '..', 'data', 'standard-compute-ledger.json');

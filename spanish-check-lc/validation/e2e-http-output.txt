@@ -1,0 +1,36 @@
+ok   anonymous -> 404
+ok   other account -> 404 on status
+ok   other account -> 404 on POST /start
+ok   anonymous -> 404 on POST /start
+ok   other account -> 404 on GET /next
+ok   anonymous -> 404 on GET /next
+ok   other account -> 404 on POST /answer
+ok   anonymous -> 404 on POST /answer
+ok   other account -> 404 on GET /report
+ok   anonymous -> 404 on GET /report
+ok   other account -> 404 on GET /audio/0
+ok   anonymous -> 404 on GET /audio/0
+ok   other account -> 404 on POST /abandon
+ok   anonymous -> 404 on POST /abandon
+ok   other account -> 404 on POST /visibility
+ok   anonymous -> 404 on POST /visibility
+ok   status for 6689: {"seal_ok":true,"seal_problems":[],"finished":0,"voided":0,"total":5,"next_name":"Day 0","pending_anchor":null,"statement":"n=1, independent
+ok   start (2784 ms): {"resumed":false,"sitting_id":1}
+ok   item payload carries no answer key, transcript or stratum (keys: done,sitting_id,n,total,limit_s,remaining_ms,name,audio,max_plays,options)
+ok   four options, 40 s, 3 plays
+ok   an answer with neither a choice nor "I don't know" is refused
+ok   answering the same clip twice refused
+ok   24 clips answered (24)
+ok   audio endpoint returned 200 audio/mpeg for 24 of 24 clips
+   audio: 200 audio/mpeg 10487B mp3 | 200 audio/mpeg 12005B mp3 | 200 audio/mpeg 44986B mp3 | 200 audio/mpeg 9181B mp3 | 200 audio/mpeg 15032B mp3 | 200 audio/mpeg 12215B mp3 ...
+ok   next after the last clip -> done
+ok   report has the finished sitting
+   scores: {"score":{"est":-0.0021595470726349965,"ci":[-0.22769692806937858,0.2233778339241086]},"raw":{"est":0.16154567143830947,"ci":[0,0.3370278371876738]},"counts":{"right":4,"wrong":12,"dk":8,"timeout":0,"late":0,"unanswered":0,"n":24,"dont_know":8},"timing":{"median_s_per_item":1.944,"timeouts":0,"late":0,"page_leaves":1,"items_open_when_left":0},"flags":["easy >= medium >= hard does not hold","15 of 24 items answered in under 3s","left the page 1 time(s)"]}
+ok   8 "I don't know" and 16 answered
+ok   one page-leave logged and reported
+ok   second start the same day refused (429)
+ok   audio for a closed sitting refused
+ok   log head was time-stamped after the sitting ended
+   anchors dir: 00052-e9fbb2a22245.ots, 00052-e9fbb2a22245.tsq, 00052-e9fbb2a22245.tsr
+
+all passed

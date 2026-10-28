@@ -157,6 +157,8 @@ app.use(require('./routes/game-lab'));
 app.use('/api/es', require('./routes/spanish'));
 // The daily Spanish check: one account only, sealed and timed (spanish-check/PROTOCOL.md).
 app.use('/api/spanish-check', require('./routes/spanish-check'));
+// The second sealed test, listening comprehension (spanish-check-lc/PROTOCOL.md): same single account.
+app.use('/api/spanish-check-lc', require('./routes/spanish-check-lc'));
 app.use('/spanish-media', express.static(path.join(__dirname, 'data', 'spanish-media'), {
   immutable: true, maxAge: '365d', fallthrough: false,
 }));
