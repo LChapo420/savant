@@ -43,11 +43,11 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-3. [claimed 2026-10-28T17:20Z] **The measurement kit** (item 3 and section 5): an instruction page for students and parents, links to the
-   official free practice tests, the counterbalanced A/B protocol, and an admin view listing every
-   participant's before and after scores. Pre-registration is sealed with the same tooling as
-   `spanish-check/` (SHA-256 seal, RFC 3161 stamp, OpenTimestamps). Done when the protocol can be run with
-   5 students.
+3. **Measurement kit, second slice.** What's left of item 3: (a) the owner fills the `OWNER:` lines in
+   `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/` (local: needs
+   the owner's decisions and the timestamp service); (b) a wait-list arm in `services/act-study.js` (assignment to
+   "start now" or "start after test B", only with the student's agreement); (c) look at `/act-study` and
+   `/act-study-admin` at 375 px in a real browser.
 4. **An ACT landing page** at `/act` for students and parents: what it does today (truthfully), how it adapts,
    privacy in plain words, and one clear "Start free" button into onboarding with ACT preselected. Done when it
    loads fast on a phone and every claim on it is true of the code.
@@ -90,6 +90,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 ## Done
 
+- 2026-10-28: **Measurement kit, first slice** (item 3; commit in this push). `/act-study` (instructions, links to ACT's own free practice tests, consent with a parent-knows box, "have you seen these forms", leave button), `services/act-study.js` + `routes/act-study.js` (`/api/act-study`): counterbalanced A-then-B / B-then-A assignment by the app, before/after pairing from the learner's `act_scores` (form letter A or B), dose from the study-session clock, exclusion of students who've seen the forms, test/demo accounts left out. `/act-study-admin` and a CSV list every participant's before and after, with counts of joined, left, finished and excluded, and a note that the averages are descriptive. `docs/yc/ACT-STUDY-PROTOCOL.md` is a DRAFT, unsealed, with no student numbers. `act_study` is in the account export and deletion. Checked: `scripts/act-study-test.js` (assignment balance, consent rules, pairing, dose window, exclusions, CSV formula defusing, admin-only routes, wiring) and `npm test` exit 0 (`scorecard-evidence-test` failed once on a timing check under load, passed alone and on the full rerun). Not checked: the pages in a real browser at 375 px. The ACT practice-test count and links are UNVERIFIED.
 - 2026-10-28: **ACT score entry and test date** (item 2; commit in this push). `/act-scores` (linked from the profile): test date, target composite, and per-test scores (practice or real ACT, date, form, English, Math, Reading, optional Science), charted as inline SVG with a target line, countdown and gap to target. `services/act-scores.js`, `routes/act.js` (`/api/act`), collections `act_profiles` and `act_scores`, included in the account export and in parent/account deletion. Composite is the average of English, Math and Reading; whether Science counts is UNVERIFIED so Science is charted but never in the composite. Checked: `scripts/act-scores-test.js` (41 checks: validation, isolation between learners, caps, export/deletion wiring) and `npm test` exit 0. Not yet checked: the page in a real browser at 375 px (cloud run has no signed-in session); the next run or the owner should look.
 
 - 2026-10-28: **The game-lab course-frame check now runs on a clean clone** (item 1d; commit in this push). `scripts/build-game-fixture.js` adds two synthetic shared sets (english/proficient level 14 Mario, marked a verified replacement; level 24 Moto, held) to `scripts/fixtures/test-db.json`; they pass the real `inspectPayload` and are placeholder questions, not course content. The check now runs as a standard-plan learner with tester tailoring off, so it never asks a model to write a set (the demo account is on a tailored plan and did try to). Checked: `npm test --strict` on a clean clone with no `data/`; the check prints PASS and no `ai:` lines.

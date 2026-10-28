@@ -53,6 +53,7 @@ App.mount(async () => {
     const gap = data.points_to_target === null ? '' : data.points_to_target > 0 ? `Your latest composite is ${data.latest_composite}, ${data.points_to_target} below your target.` : `Your latest composite is ${data.latest_composite}, at or above your target.`;
     root.innerHTML = `
       <h1>ACT scores</h1>
+      <p class="muted"><a href="/act-study">Taking part in the ACT study?</a></p>
       <p class="muted">Type in the scores from your official practice tests, and later your real ACT. Only you and your parent can see them. The composite shown is the average of English, Math and Reading.</p>
       <div class="card">
         <h2>Your test</h2>

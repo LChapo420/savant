@@ -60,6 +60,7 @@ const COLLECTIONS = [
   'es_path_runs',            // main-path Spanish: one per level played with the Duolingo-style activities, its built level and first answers (services/spanish/path.js)
   'act_profiles',            // ACT prep: one per learner, test date and target score (services/act-scores.js)
   'act_scores',              // ACT prep: one per recorded practice or official test, section scores by date (services/act-scores.js)
+  'act_study',               // ACT measurement study: one per participant, counterbalanced order, consent (services/act-study.js)
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];
 
