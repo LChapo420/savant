@@ -1138,6 +1138,20 @@ const REPAIR_SYSTEM = `You fix block data for one level of a tutoring app that f
  * writer "strong", Claude on the owner's key (the fact verifier's stubborn
  * cases: GLM's own repairs failed twice). Same answer shape either way.
  */
+/**
+ * One NVIDIA-only structured call through the model pool (services/pool.js): the same NVIDIA models as
+ * nvidia.structured, but each is its own slot with a hard timeout (config "pool.tasks.<task>.timeout_ms") and a slow one is
+ * hedged onto the next NVIDIA model, so a stuck call no longer sits through nvidia.js's four tries. Resolves like
+ * nvidia.structured ({ data, usage, model }) or null; never Claude, never a non-NVIDIA slot (AI_POOL=0: the old call).
+ */
+async function nvidiaPooled(args) {
+  // eslint-disable-next-line global-require
+  const nvidia = require('./providers/nvidia');
+  if (String(process.env.AI_POOL || '1') === '0') return nvidia.structured(args).catch(() => null);
+  // eslint-disable-next-line global-require
+  return require('./pool').callHedged({ kind: 'structured', ...args, outside: true }, { chain: [nvidia], extras: false, validate: (r) => !!(r && r.data) }).catch(() => null);
+}
+
 async function repairCall({ system, user, schema, schemaName, maxTokens, userId, effort = null, writer = 'glm' }) {
   if (writer === 'free' || writer === 'mimo') {
     // The free hard tier on NVIDIA build (GLM 5.3 / DeepSeek V4.1 Flash at max
@@ -1146,7 +1160,7 @@ async function repairCall({ system, user, schema, schemaName, maxTokens, userId,
     // eslint-disable-next-line global-require
     const nvidia = require('./providers/nvidia');
     const reply = nvidia.isConfigured()
-      ? await nvidia.structured({ role: 'blocks', task: 'fact_repair', system, user, schema, schemaName, maxTokens, effort, lane: 'background' }).catch(() => null)
+      ? await nvidiaPooled({ role: 'blocks', task: 'fact_repair', system, user, schema, schemaName, maxTokens, effort, lane: 'background' })
       : null;
     if (reply && reply.data) return reply;
     if (keyReady()) writer = 'strong'; else return null;
@@ -1668,7 +1682,7 @@ This time list and verify ONLY the claims in ${part} (use the rest of the level 
         let r = null;
         for (let attempt = 0; attempt < 3 && !(r && r.data); attempt++) {
           // eslint-disable-next-line no-await-in-loop
-          r = await nvidia.structured({ role: 'blocks', task: 'fact_verify', system, user: one, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 32000, lane: 'background' }).catch(() => null);
+          r = await nvidiaPooled({ role: 'blocks', task: 'fact_verify', system, user: one, schema: VERIFY_SCHEMA, schemaName: 'submit_verification', maxTokens: 32000, lane: 'background' });
         }
         if (r && r.data) replies.push(r); else failedParts++;
       }
@@ -2393,9 +2407,12 @@ function hash(text) {
  * written" for good, and every visit waited on it (math numbers_to_20 level 10,
  * 2026-10-25). The row is marked failed, so the next visit or write-ahead writes
  * it again; a late finish of the old write is ignored (its token is gone).
- * 25 minutes because one NVIDIA call may legitimately take up to four tries of
- * five minutes each when the lanes are busy (providers/nvidia.js): a shorter cut
- * would throw away writes that were about to land. The learner never waits on
+ * 25 minutes because a level write is several calls in a row (layout, fill-out,
+ * checks, repairs). Since the model pool (services/pool.js, 2026-10-27) every
+ * single call is bounded by its own hard timeout (120 s by default, 180 to 300 s
+ * for the heavy tasks, config "pool.tasks") and hedged onto a second slot, so a
+ * lone hung call can no longer burn this whole budget; it stays as the outer
+ * guard for the write as a whole. The learner never waits on
  * it: the page goes to the standard session after a minute (block-level.js).
  * A row left at "writing" by a server that stopped is not in flight at all, and
  * is simply written again on the next read.
