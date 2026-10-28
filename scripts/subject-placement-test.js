@@ -743,12 +743,15 @@ console.log('\nthe recommendation');
           // A reply short of grades is not a set: the walk would ask for a grade
           // that is not there and stop dead in the middle of the subject.
           ai.structured = async () => ({ grades: [{ grade_id: gradeIds[0], questions: [] }] });
+          // What is stored right before the short reply: the owner's saved set on their db, or whatever
+          // the earlier checks wrote on a db that had none (the synthetic fixture).
+          const before = subjectPlacement.questionSet(TRACK);
           return subjectPlacement.writeQuestionSet(TRACK, {}).then((written) => {
             check('a reply short of grades stores nothing at all', written === null, written);
             check('and the set that was already there is still there',
-              savedQuestionSet
+              before
                 ? !!subjectPlacement.questionSet(TRACK)
-                  && subjectPlacement.questionSet(TRACK).grades.length === savedQuestionSet.grades.length
+                  && subjectPlacement.questionSet(TRACK).grades.length === before.grades.length
                 : !subjectPlacement.questionSet(TRACK));
 
             ai.structured = realStructured;

@@ -43,7 +43,9 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-1b. [claimed 2026-10-28T12:36Z] **Seed a fixture db so the 7 skipped db-dependent tests run on a clean clone.** Found while doing the item above: `grading-test`, `self-test`, `scorecard*`, `model-lineup-test`, `subject-placement-test` and `game-lab-integration-test` copy the owner's `data/db.json`. Give them a committed, synthetic fixture (via `scripts/seed-demo-account.js` or a small hand-built db) so CI really runs them. Done when `npm test --strict` passes on a fresh clone for those steps.
+1c. **Seed fixtures for the 5 workbook CSV steps** (`iq-csv-test`, `spanish-csv-test`, `chess-items-test`, `piano-items-test`, `basketball-items-test`). They still SKIP on a clean clone because their `data/*.csv` inputs are the owner's. Needs small synthetic CSVs of the same shape, or a decision that these stay owner-machine-only. Done when `npm test --strict` passes on a fresh clone.
+1d. **Shared game sets for the game-lab course-frame check.** It SKIPs on the fixture db because the written sets for english/proficient levels 14 and 24 live only in the owner's db. A committed minimal payload for those two levels would let it run in CI.
+
 2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
    scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
    real ACT. Show the history as a bar or line chart on an ACT page. Store per user in the existing db layer.
@@ -95,6 +97,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 ## Done
 
+- 2026-10-28: **The 7 db-dependent test steps now run on a clean clone** (item 1b; commit in this push). `scripts/fixtures/test-db.json` is a synthetic db (the demo account from `seed-demo-account.js --offline`, password hash blanked, `@demo.savantedu.test` address only); `npm test` gives each of those steps its own temp copy through `DB_FILE` when `data/db.json` is absent. `subject-placement-test` had a real assumption that the db already held a question set; it now compares against what was stored just before. `game-lab-integration-test` skips its course-frame check loudly when the db has no shared game sets. Checked: no `data/`, `npm test` exit 0, 7 steps on the fixture, 5 CSV steps still skipped; `run-tests-test.js` guards the fixture (synthetic address, no hash). Note: `--strict` still fails on the 5 CSV skips (items 1c, 1d).
 - 2026-10-28: **`npm test` passes on a clean clone** (commit 180c7d1). `npm test` now runs `scripts/run-tests.js`; the step list moved to `scripts/test-steps.json`. A step whose gitignored `data/` input is missing is SKIPPED loudly (12 steps: `db.json` ×7, five workbook CSVs); the ACT coverage-map check skips inside its own test. Checked: deleted `data/`, ran `npm test` on this fresh checkout after `npm ci`, exit 0 with the skip list; `scripts/run-tests-test.js` guards the step list. Note: a skip is not a pass, `--strict` fails on any skip, and the full suite still needs the owner's machine.
 - 2026-10-28: the overnight review combined the Duolingo-style Spanish activities, 53 pre-written lessons,
   real-user metrics, the demo account, the beta kit, the YC research pack and the LLM Gateway budget into
