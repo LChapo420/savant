@@ -1,0 +1,512 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 3,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "A first contact for a true beginner: where Spanish is spoken, how its five vowels sound, and a handful of first words heard and said aloud, then used in tiny exchanges.",
+  "coverage": [
+    "Spanish is an official language of 20 countries, plus Puerto Rico",
+    "The United States has one of the largest Spanish-speaking populations in the world",
+    "Spanish is written much as it sounds: five vowels, one short clean sound each",
+    "The letter h is silent: hola sounds like OH-lah",
+    "First words: hola, adiós, gracias, amigo, amiga, sí, no",
+    "Amigo is a male friend, amiga a female friend",
+    "Questions and exclamations open with an upside-down mark: ¿...? and ¡...!"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_TextBlock",
+      "purpose": "Opens the course by placing Spanish on the map and in the learner's own country before any word is taught.",
+      "data": {
+        "eyebrow": "Unit 1.1",
+        "title": "Welcome to Spanish",
+        "sections": [
+          {
+            "paragraphs": [
+              "Spanish (español, also called castellano) is the first language of close to 500 million people. It is an official language in 20 countries, and in Puerto Rico.",
+              "You do not have to travel to hear it. In the United States, about 43 million people speak Spanish at home, and millions more speak it as a second language. You will hear it at work, in stores, on the radio and next door."
+            ]
+          },
+          {
+            "heading": "Where it is spoken",
+            "paragraphs": [
+              "Most Spanish-speaking countries are in the Americas: Mexico, all of Central America except Belize, much of the Caribbean, and nine countries in South America. Spain is in Europe and Equatorial Guinea is in Africa.",
+              "One big exception in South America: Brazil speaks Portuguese, not Spanish."
+            ]
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the 20 Spanish-speaking countries and Puerto Rico by region, so \"about 20 countries\" becomes real places.",
+      "data": {
+        "caption": "Where Spanish is an official language",
+        "headers": [
+          "Region",
+          "Countries"
+        ],
+        "rows": [
+          [
+            "North and Central America",
+            "México, Guatemala, Honduras, El Salvador, Nicaragua, Costa Rica, Panamá"
+          ],
+          [
+            "Caribbean",
+            "Cuba, República Dominicana, and Puerto Rico (a US territory)"
+          ],
+          [
+            "South America",
+            "Colombia, Venezuela, Ecuador, Perú, Bolivia, Chile, Argentina, Uruguay, Paraguay"
+          ],
+          [
+            "Europe",
+            "España (Spain)"
+          ],
+          [
+            "Africa",
+            "Guinea Ecuatorial (Equatorial Guinea)"
+          ]
+        ],
+        "footnote": "7 + 2 + 9 + 1 + 1 = 20 countries, plus Puerto Rico. In several of them Spanish shares official status with other languages, such as Guaraní in Paraguay."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "Teaches the five vowel sounds and the silent h, the keys to reading Spanish aloud.",
+      "data": {
+        "tag": "How it sounds",
+        "ruleName": "Five vowels, five sounds",
+        "anchor": "Spanish has five vowels, a e i o u, and each one makes one short, clean sound almost every time you see it.",
+        "prerequisites": [
+          "a sounds like the a in \"father\": casa (KAH-sah).",
+          "e sounds like the e in \"met\": mesa (MEH-sah).",
+          "i sounds like the ee in \"see\": sí (see).",
+          "o sounds like the o in \"or\", short, with no \"w\" at the end: no (noh).",
+          "u sounds like the oo in \"food\": uno (OO-noh).",
+          "The letter h is always silent: hola is OH-lah."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script of the first words: each line is heard, then repeated aloud in the pause.",
+      "data": {
+        "title": "Your first words",
+        "subtitle": "Listen, then say each line in the pause",
+        "cueNote": "Hola: OH-lah (silent h). Adiós: ah-DYOHS, stress on the end. Gracias: GRAH-syahs. Amigo: ah-MEE-goh.",
+        "duration": 21.6,
+        "cues": [
+          {
+            "text": "Hola.",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "Adiós.",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "Gracias.",
+            "start": 4.9,
+            "end": 5.7
+          },
+          {
+            "text": "Sí.",
+            "start": 7.2,
+            "end": 8
+          },
+          {
+            "text": "No.",
+            "start": 9.5,
+            "end": 10.3
+          },
+          {
+            "text": "Amigo.",
+            "start": 11.8,
+            "end": 12.6
+          },
+          {
+            "text": "Amiga.",
+            "start": 14.1,
+            "end": 14.9
+          },
+          {
+            "text": "¡Hola, amigo!",
+            "start": 16.4,
+            "end": 17.5
+          },
+          {
+            "text": "¡Gracias, amiga!",
+            "start": 19,
+            "end": 20.1
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Gives each first word its meaning and a sound guide to read from.",
+      "data": {
+        "caption": "First words",
+        "headers": [
+          "Spanish",
+          "English",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "hola",
+            "hello, hi",
+            "OH-lah"
+          ],
+          [
+            "adiós",
+            "goodbye",
+            "ah-DYOHS"
+          ],
+          [
+            "gracias",
+            "thank you, thanks",
+            "GRAH-syahs"
+          ],
+          [
+            "sí",
+            "yes",
+            "see"
+          ],
+          [
+            "no",
+            "no",
+            "noh"
+          ],
+          [
+            "amigo",
+            "friend (a man or boy)",
+            "ah-MEE-goh"
+          ],
+          [
+            "amiga",
+            "friend (a woman or girl)",
+            "ah-MEE-gah"
+          ]
+        ],
+        "footnote": "Written Spanish opens a question with ¿ and an exclamation with ¡: ¿Sí? ¡Hola!",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Confronts the most common first mistake: pronouncing the silent h of hola.",
+      "data": {
+        "question": "How does hola begin when you say it?",
+        "choices": [
+          "With an \"oh\" sound: OH-lah",
+          "With a breathy English h: HOH-lah",
+          "With a \"w\" sound: WOH-lah",
+          "With a hard j sound: JOH-lah"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Saying the silent h",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English pronounces the h in \"hello\", so it feels natural to do it here too."
+        },
+        "whyIntuitionFailed": "English speakers read the letter h the English way. In Spanish the h is a spelling letter only; it is never pronounced.",
+        "correctReasoning": "Drop the h and start on the vowel: hola is OH-lah. The same goes for hotel (oh-TEL) and hospital (ohs-pee-TAHL).",
+        "recoveryTip": "When a Spanish word starts with h, cover the h with your finger and read what is left.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies the first words in a tiny real situation: greeting someone new.",
+      "data": {
+        "prompt": "You walk into a small shop and the owner smiles at you. What do you say first?",
+        "options": [
+          {
+            "id": "a",
+            "text": "¡Gracias!"
+          },
+          {
+            "id": "b",
+            "text": "¡No!"
+          },
+          {
+            "id": "c",
+            "text": "¡Hola!"
+          },
+          {
+            "id": "d",
+            "text": "¡Adiós!"
+          }
+        ],
+        "correctOptionId": "c",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "Gracias is thank you. Nothing has happened yet to thank them for.",
+            "b": "No answers a question. Start with a greeting.",
+            "c": "Yes: hola is the everyday hello, right for a first greeting.",
+            "d": "Adiós is goodbye. Save it for when you leave."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves every first word by matching it to its meaning.",
+      "data": {
+        "title": "Match each word to its meaning",
+        "instruction": "Connect each Spanish word to its English meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "hola"
+          },
+          {
+            "id": "t2",
+            "label": "adiós"
+          },
+          {
+            "id": "t3",
+            "label": "gracias"
+          },
+          {
+            "id": "t4",
+            "label": "amigo"
+          },
+          {
+            "id": "t5",
+            "label": "amiga"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "goodbye"
+          },
+          {
+            "id": "d4",
+            "label": "friend (a man)"
+          },
+          {
+            "id": "d1",
+            "label": "hello"
+          },
+          {
+            "id": "d3",
+            "label": "thank you"
+          },
+          {
+            "id": "d5",
+            "label": "friend (a woman)"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 7
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes the lesson with the two ideas to keep: where Spanish lives, and how it sounds.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Welcome to Spanish",
+        "takeaway": "Spanish is spoken in 20 countries and all around you, and it is read the way it is written: five clean vowels and a silent h.",
+        "terms": [
+          "hola",
+          "adiós",
+          "gracias",
+          "sí",
+          "no",
+          "amigo",
+          "amiga"
+        ],
+        "footerNote": "Next: words you already know because they look like English.",
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 8
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which of these South American countries does NOT have Spanish as its main language?",
+      "answer": "Brazil",
+      "rationale": "Brazil speaks Portuguese; Colombia, Chile and Ecuador are all Spanish-speaking countries.",
+      "source": "prewritten",
+      "hint": "The largest country in South America speaks a different language.",
+      "choices": [
+        "Brazil",
+        "Colombia",
+        "Chile",
+        "Ecuador"
+      ],
+      "id": "c1",
+      "after": 1,
+      "focus": "where Spanish is spoken"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "A coworker holds the door open for you. Which word do you say to them?",
+      "answer": "gracias",
+      "rationale": "Gracias means thank you, the right reply to a kindness; hola greets, adiós says goodbye, and amiga means a female friend.",
+      "source": "prewritten",
+      "hint": "You want to thank them.",
+      "choices": [
+        "adiós",
+        "amiga",
+        "gracias",
+        "hola"
+      ],
+      "id": "c2",
+      "after": 6,
+      "focus": "using gracias"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the Spanish word for \"hello\".",
+      "answer": "hola",
+      "rationale": "Hola is the everyday Spanish hello. It is spelled with an h that is never pronounced.",
+      "source": "prewritten",
+      "hint": "It starts with a silent letter: OH-lah.",
+      "id": "c3",
+      "after": 7,
+      "focus": "recalling hola"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "The Spanish vowel i (as in sí) sounds like the vowel in which English word?",
+      "answer": "see",
+      "rationale": "Spanish i is always the \"ee\" sound of see; it is never the short i of sit or the \"eye\" sound of sigh.",
+      "source": "prewritten",
+      "hint": "Spanish vowels keep one sound. Think of sí.",
+      "choices": [
+        "sit",
+        "sigh",
+        "say",
+        "see"
+      ],
+      "id": "c4",
+      "after": 2,
+      "focus": "the vowel i"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [
+      {
+        "url": "https://cvc.cervantes.es/lengua/espanol_lengua_viva/",
+        "title": "Instituto Cervantes, El español: una lengua viva (annual report)"
+      },
+      {
+        "url": "https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/",
+        "title": "US Census Bureau, American Community Survey, table S1601 (language spoken at home)"
+      }
+    ],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 3,
+    "mc_agreed": 3,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/3",
+    "version": 1,
+    "sha256": "fe19f796aec6421e62a38fda551417f19a239d7d84826eaf92d3650886b2dbcd",
+    "title": "Welcome to Spanish: Where It Is Spoken and How It Sounds",
+    "file": "content/spanish-prewritten/entry/level-003.json"
+  }
+}

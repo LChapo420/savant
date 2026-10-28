@@ -1,0 +1,377 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 120,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Review no before the verb, then teach how to agree and disagree briefly (también, tampoco, yo sí, yo no), and the double negatives nada, nadie and nunca.",
+  "coverage": [
+    "No goes before the verb: No soy de aquí",
+    "Agree with a positive: Yo también (Me too)",
+    "Agree with a negative: Yo tampoco (Me neither)",
+    "Disagree: Yo no (to a positive) / Yo sí (to a negative)",
+    "Double negatives are correct: No tengo nada. No hay nadie. No como carne nunca.",
+    "Nunca can go first with no no: Nunca como carne",
+    "With me gusta, agree with A mí también / A mí tampoco"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Lays out the four short replies.",
+      "data": {
+        "title": "Agreeing and disagreeing",
+        "rows": [
+          {
+            "key": "Soy de Texas.",
+            "value": "Yo también.",
+            "detail": "Me too.",
+            "tone": "success"
+          },
+          {
+            "key": "No hablo francés.",
+            "value": "Yo tampoco.",
+            "detail": "Me neither.",
+            "tone": "success"
+          },
+          {
+            "key": "Tengo coche.",
+            "value": "Yo no.",
+            "detail": "I don't.",
+            "tone": "caution"
+          },
+          {
+            "key": "No tengo hijos.",
+            "value": "Yo sí.",
+            "detail": "I do.",
+            "tone": "caution"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: two people comparing themselves.",
+      "data": {
+        "title": "Me too, me neither",
+        "cueNote": "Yo sí and yo no are said with stress on the second word: yo SÍ, yo NO.",
+        "duration": 20.8,
+        "cues": [
+          {
+            "text": "Soy de Texas.",
+            "start": 0.3,
+            "end": 1.2
+          },
+          {
+            "text": "¡Yo también!",
+            "start": 2.7,
+            "end": 3.5
+          },
+          {
+            "text": "No hablo francés.",
+            "start": 5,
+            "end": 6.1
+          },
+          {
+            "text": "Yo tampoco.",
+            "start": 7.6,
+            "end": 8.5
+          },
+          {
+            "text": "Tengo dos gatos.",
+            "start": 10,
+            "end": 11.1
+          },
+          {
+            "text": "Yo no. No tengo mascotas.",
+            "start": 12.6,
+            "end": 14.4
+          },
+          {
+            "text": "No como carne.",
+            "start": 15.9,
+            "end": 17
+          },
+          {
+            "text": "Yo sí.",
+            "start": 18.5,
+            "end": 19.3
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the double negative rule.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Two negatives are normal",
+        "anchor": "When nada, nadie or nunca come after the verb, Spanish also puts no before the verb: the two negatives do not cancel out.",
+        "prerequisites": [
+          "No tengo nada. (I don't have anything.)",
+          "No hay nadie. (There is nobody.)",
+          "No como carne nunca. = Nunca como carne. (I never eat meat.)",
+          "If nunca comes first, no is not needed."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts también and tampoco.",
+      "data": {
+        "title": "También or tampoco?",
+        "leftColumn": {
+          "heading": "también: agree with a positive",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Example",
+              "text": "—Tengo hambre. —Yo también."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "tampoco: agree with a negative",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "—No tengo hambre. —Yo tampoco."
+            }
+          ]
+        },
+        "footnote": "With me gusta: —Me gusta el café. —A mí también. —No me gusta. —A mí tampoco."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the reply.",
+      "data": {
+        "title": "Reply",
+        "instructions": "Choose the reply that means what is in brackets.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "—Soy estudiante. —Yo "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "sí",
+              "también",
+              "tampoco"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". (me too) —No tengo tiempo. —Yo "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "no",
+              "tampoco",
+              "también"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". (me neither) —No hablo alemán. —Yo "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "sí",
+              "no",
+              "también"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". (I do)"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets \"Yo también\" after a negative statement.",
+      "data": {
+        "question": "Your friend says \"No me gusta el frío.\" You don't like it either. What do you say?",
+        "choices": [
+          "Yo sí.",
+          "A mí tampoco.",
+          "A mí también.",
+          "Yo también."
+        ],
+        "correctIndex": 1,
+        "commonErrorLabel": "También after a negative",
+        "trapChoiceIndexes": [
+          2,
+          3
+        ],
+        "trapReasons": {
+          "2": "English \"me too\" is often used for both."
+        },
+        "whyIntuitionFailed": "In casual English \"me too\" can answer a negative, so learners say también.",
+        "correctReasoning": "Agreeing with a negative needs tampoco, and with gustar it is a mí: A mí tampoco.",
+        "recoveryTip": "Negative in, tampoco out.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the replies and the double negative.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Negatives, también and tampoco",
+        "takeaway": "Yo también agrees with a positive, yo tampoco with a negative; yo sí and yo no disagree; and No tengo nada is correct Spanish.",
+        "terms": [
+          "también",
+          "tampoco",
+          "yo sí",
+          "yo no",
+          "nada",
+          "nadie",
+          "nunca"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Someone says \"No tengo coche.\" You don't have one either. What do you say?",
+      "answer": "Yo tampoco.",
+      "rationale": "Agreeing with a negative statement is yo tampoco (me neither).",
+      "source": "prewritten",
+      "hint": "Me neither.",
+      "choices": [
+        "Yo tampoco.",
+        "Yo también.",
+        "Yo sí.",
+        "Yo no tampoco no."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "tampoco"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence means \"There is nobody here\"?",
+      "answer": "No hay nadie aquí.",
+      "rationale": "With nadie after the verb, Spanish also puts no before it: No hay nadie aquí.",
+      "source": "prewritten",
+      "hint": "Two negatives.",
+      "choices": [
+        "No hay alguien aquí.",
+        "Nadie no hay aquí.",
+        "No hay nadie aquí.",
+        "Hay nadie aquí."
+      ],
+      "id": "c2",
+      "after": 2,
+      "focus": "double negative"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Someone says \"Soy de California.\" You are too. Type your two-word reply.",
+      "answer": "Yo también",
+      "rationale": "Agreeing with a positive statement is yo también (me too).",
+      "source": "prewritten",
+      "accepts": [
+        "yo también.",
+        "también"
+      ],
+      "hint": "Me too.",
+      "id": "c3",
+      "after": 4,
+      "focus": "también"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/120",
+    "version": 1,
+    "sha256": "336672282444984e5c222c8b513d7909110f9a6a73fd887b6645151e43e0d6bc",
+    "title": "Negatives, También, and Tampoco",
+    "file": "content/spanish-prewritten/advanced/level-120.json"
+  }
+}

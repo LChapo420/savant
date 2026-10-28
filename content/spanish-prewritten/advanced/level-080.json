@@ -1,0 +1,373 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 80,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the adjectives that have only one singular form (ending in -e or most consonants), how they form plurals, and the exceptions that do add -a (nationalities and -or adjectives).",
+  "coverage": [
+    "Adjectives in -e have one singular form: inteligente, grande, interesante",
+    "Most adjectives ending in a consonant have one singular form: fácil, difícil, joven, azul, gris, feliz",
+    "Plural: -e adds -s (inteligentes); a consonant adds -es (fáciles, azules, jóvenes)",
+    "z becomes c: feliz → felices",
+    "Exceptions with a feminine form: nationalities (español, española) and -or adjectives (trabajador, trabajadora)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the one-form rule.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "One form for both genders",
+        "anchor": "Adjectives ending in -e or in most consonants have one form for masculine and feminine; they change only for plural.",
+        "prerequisites": [
+          "un hombre inteligente, una mujer inteligente.",
+          "un examen fácil, una pregunta fácil.",
+          "Plural: inteligentes, fáciles.",
+          "Exception: nationalities ending in a consonant, and -or adjectives like trabajador, add -a: española, trabajadora (but mayor, menor, mejor and peor never change)."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Shows the singular and plural forms of one-form adjectives.",
+      "data": {
+        "caption": "One-form adjectives",
+        "headers": [
+          "Adjective",
+          "Meaning",
+          "Plural"
+        ],
+        "rows": [
+          [
+            "inteligente",
+            "intelligent",
+            "inteligentes"
+          ],
+          [
+            "grande",
+            "big",
+            "grandes"
+          ],
+          [
+            "interesante",
+            "interesting",
+            "interesantes"
+          ],
+          [
+            "fácil",
+            "easy",
+            "fáciles"
+          ],
+          [
+            "difícil",
+            "difficult",
+            "difíciles"
+          ],
+          [
+            "joven",
+            "young",
+            "jóvenes"
+          ],
+          [
+            "azul",
+            "blue",
+            "azules"
+          ],
+          [
+            "gris",
+            "gray",
+            "grises"
+          ],
+          [
+            "feliz",
+            "happy",
+            "felices"
+          ]
+        ],
+        "highlightColumn": 2
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: one-form adjectives with masculine and feminine nouns.",
+      "data": {
+        "title": "Same word, both genders",
+        "cueNote": "Joven, jóvenes: the accent appears in the plural to keep the stress on jo.",
+        "duration": 19.1,
+        "cues": [
+          {
+            "text": "un libro interesante, una película interesante",
+            "start": 0.3,
+            "end": 4.5
+          },
+          {
+            "text": "un examen fácil, una pregunta fácil",
+            "start": 6,
+            "end": 8.9
+          },
+          {
+            "text": "un carro azul, una casa azul",
+            "start": 10.4,
+            "end": 12.8
+          },
+          {
+            "text": "Son jóvenes.",
+            "start": 14.3,
+            "end": 15.2
+          },
+          {
+            "text": "Son felices.",
+            "start": 16.7,
+            "end": 17.6
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Flags the exceptions that do have a feminine form.",
+      "data": {
+        "conceptLabel": "One-form adjectives",
+        "flagTitle": "These do add -a",
+        "cautions": [
+          {
+            "kind": "exception",
+            "title": "Nationalities",
+            "detail": "Nationalities ending in a consonant add -a for the feminine.",
+            "wrongExample": "Ella es español.",
+            "rightExample": "Ella es española. (inglés, inglesa; alemán, alemana)"
+          },
+          {
+            "kind": "exception",
+            "title": "Adjectives in -or",
+            "detail": "Trabajador (hardworking), hablador (talkative) add -a.",
+            "wrongExample": "Mi madre es trabajador.",
+            "rightExample": "Mi madre es trabajadora."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices telling one-form adjectives from those that change.",
+      "data": {
+        "title": "Does it have a feminine form?",
+        "instruction": "Sort each adjective.",
+        "categories": [
+          {
+            "id": "one",
+            "label": "One form (no -a)"
+          },
+          {
+            "id": "two",
+            "label": "Has an -a form"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "inteligente",
+            "correctCategoryId": "one"
+          },
+          {
+            "id": "i2",
+            "text": "fácil",
+            "correctCategoryId": "one"
+          },
+          {
+            "id": "i3",
+            "text": "azul",
+            "correctCategoryId": "one"
+          },
+          {
+            "id": "i4",
+            "text": "español",
+            "correctCategoryId": "two"
+          },
+          {
+            "id": "i5",
+            "text": "trabajador",
+            "correctCategoryId": "two"
+          },
+          {
+            "id": "i6",
+            "text": "joven",
+            "correctCategoryId": "one"
+          },
+          {
+            "id": "i7",
+            "text": "alto",
+            "correctCategoryId": "two"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets inventing a feminine -a for a one-form adjective.",
+      "data": {
+        "question": "Which is correct for \"an easy question\" (una pregunta)?",
+        "choices": [
+          "una pregunta fácila",
+          "una pregunta fáciles",
+          "una fácila pregunta",
+          "una pregunta fácil"
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Adding -a to every adjective",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "Feminine nouns often take -a adjectives, so -a seems needed."
+        },
+        "whyIntuitionFailed": "After learning alto / alta, learners add -a everywhere.",
+        "correctReasoning": "Fácil ends in a consonant and has one singular form: una pregunta fácil. Plural: preguntas fáciles.",
+        "recoveryTip": "Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the rule and its exceptions.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Adjectives in -e or a consonant",
+        "takeaway": "Inteligente, fácil, joven and azul have one singular form and add -s or -es for the plural; nationalities and -or adjectives still add -a.",
+        "terms": [
+          "inteligente",
+          "fácil",
+          "jóvenes",
+          "azules",
+          "felices",
+          "trabajadora"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is the plural of \"difícil\"?",
+      "answer": "difíciles",
+      "rationale": "A consonant ending adds -es, and the stress stays on fí, so the accent stays: difíciles.",
+      "source": "prewritten",
+      "hint": "Consonant + es.",
+      "choices": [
+        "difíciles",
+        "difícils",
+        "difícilas",
+        "dificiles"
+      ],
+      "id": "c1",
+      "after": 1,
+      "focus": "plural of a consonant adjective"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Your aunt works very hard. Which is correct?",
+      "answer": "Mi tía es trabajadora.",
+      "rationale": "Adjectives ending in -or add -a for the feminine: trabajadora.",
+      "source": "prewritten",
+      "hint": "-or adjectives are an exception.",
+      "choices": [
+        "Mi tía es trabajadora.",
+        "Mi tía es trabajador.",
+        "Mi tía es trabajadores.",
+        "Mi tía es trabajadoro."
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "-or adjectives"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the plural of \"feliz\" (happy).",
+      "answer": "felices",
+      "rationale": "A consonant ending adds -es, and z becomes c: felices.",
+      "source": "prewritten",
+      "hint": "z changes before -es.",
+      "id": "c3",
+      "after": 1,
+      "focus": "z to c in plurals"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/80",
+    "version": 1,
+    "sha256": "6308fe142e2e7b17a671a4f3bd6882ae1dd000ab6a63fe1e8ee19b52e04c4f4c",
+    "title": "Adjectives Ending in -e or a Consonant",
+    "file": "content/spanish-prewritten/advanced/level-080.json"
+  }
+}

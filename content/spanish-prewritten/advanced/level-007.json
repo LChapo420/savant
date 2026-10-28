@@ -1,0 +1,393 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 7,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Complete the present of ser with somos and son, settle ustedes as the Latin American plural \"you\" (which takes son), and show the masculine plural for mixed groups.",
+  "coverage": [
+    "nosotros / nosotras somos; ustedes son; ellos / ellas son",
+    "The full present of ser: soy, eres, es, somos, son, son",
+    "Ustedes takes son, the same form as ellos and ellas",
+    "A mixed group takes the masculine plural: Ana y Pedro son amigos",
+    "Plural descriptions agree: Somos amigos. Ellas son de Chile.",
+    "Recognition only: vosotros sois (Spain)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the complete present of ser.",
+      "data": {
+        "caption": "Ser: all forms",
+        "headers": [
+          "Subject",
+          "Form",
+          "Example"
+        ],
+        "rows": [
+          [
+            "yo",
+            "soy",
+            "Soy de Texas."
+          ],
+          [
+            "tú",
+            "eres",
+            "Eres muy amable."
+          ],
+          [
+            "él / ella / usted",
+            "es",
+            "Es de Perú."
+          ],
+          [
+            "nosotros / nosotras",
+            "somos",
+            "Somos amigos."
+          ],
+          [
+            "ustedes",
+            "son",
+            "¿Ustedes son hermanos?"
+          ],
+          [
+            "ellos / ellas",
+            "son",
+            "Ellas son de Chile."
+          ]
+        ],
+        "footnote": "In Spain, vosotros sois is the informal plural \"you are\". In Latin America ustedes son is used for everyone.",
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: introductions with plural subjects.",
+      "data": {
+        "title": "Plural introductions",
+        "cueNote": "Mis hermanas: my sisters. Somos: SOH-mohs.",
+        "duration": 17.8,
+        "cues": [
+          {
+            "text": "Somos Ana y Pedro.",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "Somos amigos.",
+            "start": 3.1,
+            "end": 4.2
+          },
+          {
+            "text": "¿Ustedes son de aquí?",
+            "start": 5.7,
+            "end": 7.2
+          },
+          {
+            "text": "No, somos de Chile.",
+            "start": 8.7,
+            "end": 10
+          },
+          {
+            "text": "Ellas son mis hermanas.",
+            "start": 11.5,
+            "end": 13
+          },
+          {
+            "text": "Ellos son de Puerto Rico.",
+            "start": 14.5,
+            "end": 16.3
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the two plural rules learners need here.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Plural you, plural groups",
+        "anchor": "Ustedes takes son, and any group with at least one male member is described in the masculine plural.",
+        "prerequisites": [
+          "Ustedes son, ellos son, ellas son: one form for all three.",
+          "Ana y Pedro son amigos (not amigas).",
+          "Ana y Lucía son amigas: all women, so feminine.",
+          "Nosotras somos for an all-female \"we\"."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices somos and son with the right subjects.",
+      "data": {
+        "title": "Somos or son?",
+        "instructions": "Choose the form of ser.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Mi esposa y yo "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "son",
+              "es",
+              "somos"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " de Ohio. ¿Ustedes "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "eres",
+              "son",
+              "somos"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " de aquí? Ellos "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "somos",
+              "es",
+              "son"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " mis amigos."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "\"My wife and I\" is \"we\": somos."
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices the agreement of plural nouns with mixed and all-female groups.",
+      "data": {
+        "title": "Amigos or amigas?",
+        "instruction": "Sort each group by the word it takes.",
+        "categories": [
+          {
+            "id": "os",
+            "label": "Son amigos"
+          },
+          {
+            "id": "as",
+            "label": "Son amigas"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "Ana y Pedro",
+            "correctCategoryId": "os"
+          },
+          {
+            "id": "i2",
+            "text": "Ana y Lucía",
+            "correctCategoryId": "as"
+          },
+          {
+            "id": "i3",
+            "text": "Pedro y Luis",
+            "correctCategoryId": "os"
+          },
+          {
+            "id": "i4",
+            "text": "María, Sofía y Juan",
+            "correctCategoryId": "os"
+          },
+          {
+            "id": "i5",
+            "text": "Carmen y Rosa",
+            "correctCategoryId": "as"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets giving ustedes the nosotros form.",
+      "data": {
+        "question": "How do you ask two coworkers \"Are you (all) from Mexico?\"",
+        "choices": [
+          "¿Ustedes somos de México?",
+          "¿Ustedes eres de México?",
+          "¿Ustedes es de México?",
+          "¿Ustedes son de México?"
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "The wrong form with ustedes",
+        "trapChoiceIndexes": [
+          0,
+          1
+        ],
+        "trapReasons": {
+          "1": "Eres is the \"you\" form, and ustedes means \"you\"."
+        },
+        "whyIntuitionFailed": "Ustedes means \"you\", so learners reach for a \"you\" form or a plural \"we\" form.",
+        "correctReasoning": "Ustedes uses the same form as ellos and ellas: son.",
+        "recoveryTip": "Ustedes, ellos, ellas: son.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the full present of ser.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Ser: plural forms",
+        "takeaway": "Soy, eres, es, somos, son: ustedes takes son, and a mixed group is masculine plural (son amigos).",
+        "terms": [
+          "somos",
+          "son",
+          "ustedes",
+          "nosotras"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which sentence is correct for \"Ana and Pedro are friends\"?",
+      "answer": "Ana y Pedro son amigos.",
+      "rationale": "They is son, and a group with a man in it takes the masculine plural amigos.",
+      "source": "prewritten",
+      "hint": "Mixed group, masculine plural.",
+      "choices": [
+        "Ana y Pedro son amigos.",
+        "Ana y Pedro son amigas.",
+        "Ana y Pedro somos amigos.",
+        "Ana y Pedro es amigos."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "mixed-group agreement"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Complete with one word: \"Nosotros ___ de Texas.\" (We are from Texas.)",
+      "answer": "somos",
+      "rationale": "The nosotros form of ser is somos.",
+      "source": "prewritten",
+      "hint": "It starts with so-.",
+      "id": "c2",
+      "after": 3,
+      "focus": "somos"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Lucía and Carmen are both doctors. Which sentence fits?",
+      "answer": "Ellas son médicas.",
+      "rationale": "An all-female group is ellas, takes son, and the noun agrees in the feminine plural: médicas.",
+      "source": "prewritten",
+      "hint": "Two women: feminine plural throughout.",
+      "choices": [
+        "Ellas somos médicas.",
+        "Ellas son médicas.",
+        "Ellos son médicos.",
+        "Ellas son médicos."
+      ],
+      "id": "c3",
+      "after": 4,
+      "focus": "feminine plural agreement"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/7",
+    "version": 1,
+    "sha256": "fc9041a9d0c35ecc55aab41d2fe7cc290dd2ad1bd7a9dc85d5d3bcf8bd32690d",
+    "title": "Ser Plural Forms and Ustedes",
+    "file": "content/spanish-prewritten/advanced/level-007.json"
+  }
+}

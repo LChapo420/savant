@@ -1,0 +1,411 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 131,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Prepare the learner to read and fill a Spanish-language form: the field names, both surnames in their slots, and day-first dates.",
+  "coverage": [
+    "Field names: nombre(s), apellidos, fecha de nacimiento, lugar de nacimiento, nacionalidad, dirección, teléfono, correo electrónico, estado civil, firma",
+    "Surname fields: primer apellido / segundo apellido, or apellido paterno / apellido materno (common in Mexico)",
+    "Both surnames go on official documents",
+    "Dates are written day first: 04/07/1990 is July 4, 1990",
+    "Address parts: calle, número, colonia (Mexico), ciudad, código postal",
+    "¿Cuál es su fecha de nacimiento? / ¿Cuál es su dirección?"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the form fields with meanings.",
+      "data": {
+        "caption": "Reading a form",
+        "headers": [
+          "Field",
+          "Meaning"
+        ],
+        "rows": [
+          [
+            "Nombre(s)",
+            "First name(s)"
+          ],
+          [
+            "Primer apellido / Apellido paterno",
+            "First surname (traditionally the father's)"
+          ],
+          [
+            "Segundo apellido / Apellido materno",
+            "Second surname (traditionally the mother's)"
+          ],
+          [
+            "Fecha de nacimiento",
+            "Date of birth"
+          ],
+          [
+            "Lugar de nacimiento",
+            "Place of birth"
+          ],
+          [
+            "Nacionalidad",
+            "Nationality"
+          ],
+          [
+            "Dirección",
+            "Address"
+          ],
+          [
+            "Código postal",
+            "ZIP code"
+          ],
+          [
+            "Teléfono",
+            "Phone"
+          ],
+          [
+            "Correo electrónico",
+            "Email"
+          ],
+          [
+            "Estado civil",
+            "Marital status"
+          ],
+          [
+            "Firma",
+            "Signature"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the date rule that trips up US learners.",
+      "data": {
+        "tag": "Dates",
+        "ruleName": "Day first",
+        "anchor": "In Spanish-speaking countries a date is written day / month / year.",
+        "prerequisites": [
+          "04/07/1990 is 4 July 1990 (July 4), not April 7.",
+          "12/05/2026 is 12 May 2026.",
+          "Read aloud: el cuatro de julio de mil novecientos noventa."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Works one filled-in form so the learner sees every field in use.",
+      "data": {
+        "caption": "A completed form",
+        "headers": [
+          "Field",
+          "Entry"
+        ],
+        "rows": [
+          [
+            "Nombre(s)",
+            "Ana Lucía"
+          ],
+          [
+            "Apellido paterno",
+            "Pérez"
+          ],
+          [
+            "Apellido materno",
+            "García"
+          ],
+          [
+            "Fecha de nacimiento",
+            "15/09/1988"
+          ],
+          [
+            "Nacionalidad",
+            "mexicana"
+          ],
+          [
+            "Dirección",
+            "Calle Morelos 24, Colonia Centro, Puebla"
+          ],
+          [
+            "Código postal",
+            "72000"
+          ],
+          [
+            "Estado civil",
+            "casada"
+          ]
+        ],
+        "footnote": "Ana Lucía Pérez García was born on September 15, 1988. On official documents she uses both surnames."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: an office worker asking for the form details.",
+      "data": {
+        "title": "At the front desk",
+        "cueNote": "Su here means \"your\" (usted). Nombre completo: full name.",
+        "duration": 23.3,
+        "cues": [
+          {
+            "text": "¿Cuál es su nombre completo?",
+            "start": 0.3,
+            "end": 2.1
+          },
+          {
+            "text": "Ana Lucía Pérez García.",
+            "start": 3.6,
+            "end": 5.4
+          },
+          {
+            "text": "¿Cuál es su fecha de nacimiento?",
+            "start": 6.9,
+            "end": 9.1
+          },
+          {
+            "text": "El quince de septiembre de mil novecientos ochenta y ocho.",
+            "start": 10.6,
+            "end": 14.6
+          },
+          {
+            "text": "¿Y su dirección?",
+            "start": 16.1,
+            "end": 17
+          },
+          {
+            "text": "Calle Morelos, número veinticuatro, en Puebla.",
+            "start": 18.5,
+            "end": 21.8
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices putting the right information in each field.",
+      "data": {
+        "title": "Fill it in",
+        "instructions": "Your name is Daniel Ortiz Romero (Ortiz from your father, Romero from your mother), born on 5 March 1995. Choose what goes in each field.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Apellido paterno: "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Daniel",
+              "Ortiz",
+              "Romero"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Apellido materno: "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "Daniel",
+              "Romero",
+              "Ortiz"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Fecha de nacimiento: "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "05/03/1995",
+              "03/05/1995",
+              "1995/05/03"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "Day first: 05 (day), 03 (month), 1995."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets writing the date month first.",
+      "data": {
+        "question": "You were born on June 8, 1992. What do you write on a Mexican form?",
+        "choices": [
+          "1992/08/06",
+          "8/1992/6",
+          "08/06/1992",
+          "06/08/1992"
+        ],
+        "correctIndex": 2,
+        "commonErrorLabel": "Month first",
+        "trapChoiceIndexes": [
+          3
+        ],
+        "trapReasons": {
+          "3": "That is how the date is written in the US."
+        },
+        "whyIntuitionFailed": "US forms put the month first, and the habit carries over.",
+        "correctReasoning": "Spanish-speaking countries write the day first: 08/06/1992 is 8 June 1992.",
+        "recoveryTip": "Day / month / year.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the fields and the date rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Hispanic naming and official forms",
+        "takeaway": "Put each surname in its own field (paterno, materno), write dates day first, and recognize nombre, dirección, fecha de nacimiento and firma.",
+        "terms": [
+          "nombre",
+          "apellido paterno",
+          "apellido materno",
+          "fecha de nacimiento",
+          "dirección",
+          "firma"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "A form shows \"Fecha de nacimiento: 10/11/1985\". When was the person born?",
+      "answer": "November 10, 1985",
+      "rationale": "Dates are day first: 10 is the day and 11 the month, so it is November 10, 1985.",
+      "source": "prewritten",
+      "hint": "Day / month / year.",
+      "choices": [
+        "October 11, 1985",
+        "November 1, 1985",
+        "October 1, 1985",
+        "November 10, 1985"
+      ],
+      "id": "c1",
+      "after": 1,
+      "focus": "reading day-first dates"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Your name is Laura Gómez Ruiz. What goes in \"Apellido materno\"?",
+      "answer": "Ruiz",
+      "rationale": "The apellido materno is the second surname, traditionally from the mother: Ruiz.",
+      "source": "prewritten",
+      "hint": "Materno: from the mother, the second surname.",
+      "choices": [
+        "Gómez Ruiz",
+        "Ruiz",
+        "Gómez",
+        "Laura"
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "surname fields"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Type the Spanish words on a form that mean \"date of birth\".",
+      "answer": "fecha de nacimiento",
+      "rationale": "Date of birth is fecha de nacimiento.",
+      "source": "prewritten",
+      "accepts": [
+        "la fecha de nacimiento"
+      ],
+      "hint": "fecha de ...",
+      "id": "c3",
+      "after": 0,
+      "focus": "form vocabulary"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/131",
+    "version": 1,
+    "sha256": "dee12cfbd152d590741b555e2383b769c9f02fdcbb8d17a7f2176784943061db",
+    "title": "Hispanic Naming and Official Forms",
+    "file": "content/spanish-prewritten/advanced/level-131.json"
+  }
+}

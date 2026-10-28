@@ -1,0 +1,423 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 86,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Give the learner the future from day one with voy a and vamos a plus a base verb, separate it from a + place, and practice planning a day.",
+  "coverage": [
+    "Voy a + base verb = I am going to ...: voy a comer, voy a trabajar",
+    "Vamos a + base verb = we are going to ..., or let's ...: vamos a comer",
+    "¿Vas a ...? = are you going to ...? (to a friend)",
+    "A + place = to a place: voy a la tienda, vamos al parque",
+    "a + el = al: voy al trabajo",
+    "The a is never left out: voy a comer, never voy comer",
+    "No goes before voy: No voy a trabajar mañana"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the plan formula as one rule.",
+      "data": {
+        "tag": "Unit 2.7",
+        "ruleName": "Voy a + verb",
+        "anchor": "To talk about plans, say voy a (I am going to) or vamos a (we are going to) plus a verb in its base form.",
+        "prerequisites": [
+          "Voy a comer. I am going to eat.",
+          "Vamos a trabajar. We are going to work.",
+          "¿Vas a venir? Are you going to come?",
+          "Vamos a comer can also mean \"Let's eat!\""
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lays out the three forms with example plans.",
+      "data": {
+        "caption": "Plans with ir a",
+        "headers": [
+          "Who",
+          "Chunk",
+          "Example",
+          "English"
+        ],
+        "rows": [
+          [
+            "I",
+            "voy a",
+            "Voy a estudiar.",
+            "I am going to study."
+          ],
+          [
+            "you (friend)",
+            "vas a",
+            "¿Vas a comer?",
+            "Are you going to eat?"
+          ],
+          [
+            "we",
+            "vamos a",
+            "Vamos a caminar.",
+            "We are going to walk. / Let's walk."
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: a short conversation planning the evening.",
+      "data": {
+        "title": "Plans for tonight",
+        "cueNote": "¿Qué vas a hacer? means \"What are you going to do?\" Hasta las cinco: until five. Después: afterwards.",
+        "duration": 16,
+        "cues": [
+          {
+            "text": "¿Qué vas a hacer hoy?",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "Voy a trabajar hasta las cinco.",
+            "start": 3.1,
+            "end": 5.3
+          },
+          {
+            "text": "Y después, ¿vamos a la tienda?",
+            "start": 6.8,
+            "end": 8.6
+          },
+          {
+            "text": "Sí, y vamos a comer tacos.",
+            "start": 10.1,
+            "end": 11.9
+          },
+          {
+            "text": "¡Perfecto! Vamos.",
+            "start": 13.4,
+            "end": 14.5
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Separates the two jobs of a after voy: before a verb and before a place.",
+      "data": {
+        "title": "Two jobs of a",
+        "leftColumn": {
+          "heading": "a + verb (a plan)",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Voy a comer.",
+              "example": "I am going to eat."
+            },
+            {
+              "label": "Example",
+              "text": "Vamos a bailar.",
+              "example": "We are going to dance."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "a + place (where)",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Voy a la tienda.",
+              "example": "I am going to the store."
+            },
+            {
+              "label": "Example",
+              "text": "Vamos al parque.",
+              "example": "We are going to the park (a + el = al)."
+            }
+          ]
+        },
+        "footnote": "Both together: Voy a ir al banco. I am going to go to the bank."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_SentenceScramble",
+      "purpose": "Builds a plan sentence word by word.",
+      "data": {
+        "prompt": "Tap the words in order: \"Tomorrow I am going to work.\"",
+        "tokens": [
+          {
+            "id": "w1",
+            "text": "Mañana"
+          },
+          {
+            "id": "w2",
+            "text": "voy"
+          },
+          {
+            "id": "w3",
+            "text": "a"
+          },
+          {
+            "id": "w4",
+            "text": "trabajar."
+          }
+        ],
+        "chips": [
+          {
+            "id": "w3",
+            "text": "a",
+            "correctIndex": 2
+          },
+          {
+            "id": "w4",
+            "text": "trabajar.",
+            "correctIndex": 3
+          },
+          {
+            "id": "w2",
+            "text": "voy",
+            "correctIndex": 1
+          },
+          {
+            "id": "w1",
+            "text": "Mañana",
+            "correctIndex": 0
+          }
+        ],
+        "feedbackCorrect": "Right: Mañana voy a trabajar.",
+        "feedbackReset": "That chip comes later. Start again from the first word.",
+        "clearOnMistake": true,
+        "hintAfterAttempts": 2,
+        "hintText": "Start with the time word."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices voy a, vamos a and al in a weekend plan.",
+      "data": {
+        "title": "The weekend",
+        "instructions": "Choose the word that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "El sábado "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "vamos",
+              "vas",
+              "voy"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " a limpiar la casa. (I) El domingo "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "vas",
+              "vamos",
+              "voy"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " a comer con la familia. (we) Después, vamos "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "a el",
+              "a",
+              "al"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " parque."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "a + el = al: al parque."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets dropping the a between voy and the verb.",
+      "data": {
+        "question": "How do you say \"I am going to eat\"?",
+        "choices": [
+          "Voy a comer.",
+          "Voy comer.",
+          "Voy al comer.",
+          "Yo voy comer a."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Leaving out a",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "In fast English \"going to\" blurs into \"gonna\", so the \"to\" feels optional."
+        },
+        "whyIntuitionFailed": "The little word a is easy to drop, especially when speaking fast.",
+        "correctReasoning": "The formula always has a: voy + a + base verb. Voy a comer.",
+        "recoveryTip": "Voy a, vamos a: the a is part of the chunk.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the formula for plans.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Voy a and vamos a",
+        "takeaway": "Voy a, vas a or vamos a plus a base verb talks about any plan; a plus a place says where you are going.",
+        "terms": [
+          "voy a",
+          "vas a",
+          "vamos a",
+          "al"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence means \"We are going to work tomorrow\"?",
+      "answer": "Mañana vamos a trabajar.",
+      "rationale": "We is vamos, and the formula needs a before the base verb: vamos a trabajar.",
+      "source": "prewritten",
+      "hint": "We + a + verb.",
+      "choices": [
+        "Mañana vamos trabajar.",
+        "Mañana vamos al trabajar.",
+        "Mañana vamos a trabajar.",
+        "Mañana voy a trabajar."
+      ],
+      "id": "c1",
+      "after": 5,
+      "focus": "vamos a + verb"
+    },
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "A friend asks \"¿Vas a venir a la fiesta?\" What is the question?",
+      "answer": "Are you going to come to the party?",
+      "rationale": "Vas a venir is are you going to come, about the future; it does not ask where you are now or about the past.",
+      "source": "prewritten",
+      "hint": "Vas a + verb is a plan.",
+      "choices": [
+        "Did you come to the party?",
+        "Do you want a party?",
+        "Are you going to come to the party?",
+        "Are you at the party?"
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "understanding ¿vas a...?"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Complete with one word: \"Voy ___ estudiar.\" (I am going to study.)",
+      "answer": "a",
+      "rationale": "The plan formula is voy + a + base verb: Voy a estudiar.",
+      "source": "prewritten",
+      "hint": "One letter.",
+      "id": "c3",
+      "after": 6,
+      "focus": "the a in voy a"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/86",
+    "version": 1,
+    "sha256": "ef0079d21a27439b3c999e4f6071740db60e11f40a0fe7ca36f6406c6d5193d2",
+    "title": "Voy a and Vamos a as Chunks: Plans from Day One",
+    "file": "content/spanish-prewritten/intermediate/level-086.json"
+  }
+}

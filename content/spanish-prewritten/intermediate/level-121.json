@@ -1,0 +1,481 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 121,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Turn cognate spotting into cognate making: three conversion rules (-tion to -ción, -ity to -idad, -ly to -mente) with the gender and accent facts that come with them and the false friends that break the rule.",
+  "coverage": [
+    "-tion → -ción: nation → nación, information → información, conversation → conversación",
+    "-sion → -sión: decision → decisión, television → televisión",
+    "-ción words are feminine and lose the accent in the plural: la nación, las naciones",
+    "-ity → -idad: university → universidad, activity → actividad, possibility → posibilidad",
+    "-idad words are feminine: la universidad",
+    "-ly → -mente, added to the feminine adjective: finally → finalmente, rapidly → rápidamente",
+    "An adjective's accent stays: rápido → rápidamente, fácil → fácilmente",
+    "Watch out: actualmente = currently (not actually); eventualmente = possibly, occasionally (not eventually)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Gives the three conversion rules with examples in one reference.",
+      "data": {
+        "title": "Three conversion rules",
+        "subtitle": "English ending → Spanish ending",
+        "rows": [
+          {
+            "key": "-tion → -ción",
+            "value": "nation → nación, situation → situación, education → educación",
+            "detail": "Always feminine: la nación."
+          },
+          {
+            "key": "-sion → -sión",
+            "value": "decision → decisión, television → televisión",
+            "detail": "Also feminine: la decisión."
+          },
+          {
+            "key": "-ity → -idad",
+            "value": "university → universidad, activity → actividad, reality → realidad",
+            "detail": "Always feminine: la universidad."
+          },
+          {
+            "key": "-ly → -mente",
+            "value": "finally → finalmente, totally → totalmente, normally → normalmente",
+            "detail": "Added to the feminine form: rápida + mente."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: words from each rule, heard with Spanish stress.",
+      "data": {
+        "title": "Hear the patterns",
+        "cueNote": "The stress lands on -ción and -dad: na-CIÓN, u-ni-ver-si-DAD. A -mente word keeps the stress of its adjective and adds one on MEN: RÁ-pi-da-MEN-te.",
+        "duration": 23.2,
+        "cues": [
+          {
+            "text": "la nación",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "la información",
+            "start": 2.6,
+            "end": 3.7
+          },
+          {
+            "text": "la conversación",
+            "start": 5.2,
+            "end": 6.3
+          },
+          {
+            "text": "la decisión",
+            "start": 7.8,
+            "end": 8.7
+          },
+          {
+            "text": "la universidad",
+            "start": 10.2,
+            "end": 11.5
+          },
+          {
+            "text": "la posibilidad",
+            "start": 13,
+            "end": 14.3
+          },
+          {
+            "text": "finalmente",
+            "start": 15.8,
+            "end": 16.7
+          },
+          {
+            "text": "rápidamente",
+            "start": 18.2,
+            "end": 19.3
+          },
+          {
+            "text": "normalmente",
+            "start": 20.8,
+            "end": 21.7
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the accent and gender facts that come with -ción and -mente.",
+      "data": {
+        "tag": "Details that matter",
+        "ruleName": "Gender and accents",
+        "anchor": "Nouns ending in -ción, -sión and -dad are feminine, and a -ción noun drops its accent in the plural.",
+        "prerequisites": [
+          "la nación → las naciones; la canción → las canciones.",
+          "la ciudad, la universidad, la realidad: all feminine.",
+          "-mente keeps any accent of its adjective: rápido → rápidamente, fácil → fácilmente.",
+          "-mente is added to the feminine form: lenta → lentamente."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Practices converting English words by the rules.",
+      "data": {
+        "title": "Convert them",
+        "instruction": "Connect each English word to its Spanish form.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "education"
+          },
+          {
+            "id": "t2",
+            "label": "opportunity"
+          },
+          {
+            "id": "t3",
+            "label": "generally"
+          },
+          {
+            "id": "t4",
+            "label": "decision"
+          },
+          {
+            "id": "t5",
+            "label": "identity"
+          },
+          {
+            "id": "t6",
+            "label": "totally"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "oportunidad"
+          },
+          {
+            "id": "d4",
+            "label": "decisión"
+          },
+          {
+            "id": "d6",
+            "label": "totalmente"
+          },
+          {
+            "id": "d1",
+            "label": "educación"
+          },
+          {
+            "id": "d3",
+            "label": "generalmente"
+          },
+          {
+            "id": "d5",
+            "label": "identidad"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Flags the -mente false friends that break the pattern.",
+      "data": {
+        "conceptLabel": "-ly to -mente",
+        "flagTitle": "Two -mente words that lie",
+        "flagIntro": "The rule makes real words, but two of them do not mean what the English suggests.",
+        "cautions": [
+          {
+            "kind": "exception",
+            "title": "actualmente = currently",
+            "detail": "Actualmente means at present, nowadays. For \"actually\", say en realidad.",
+            "wrongExample": "Actualmente, no me gusta. (meaning \"actually\")",
+            "rightExample": "En realidad, no me gusta."
+          },
+          {
+            "kind": "exception",
+            "title": "eventualmente = possibly, occasionally",
+            "detail": "For \"eventually\" (in the end), say al final or con el tiempo.",
+            "rightExample": "Al final, vamos a ganar."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices producing the right ending in sentences.",
+      "data": {
+        "title": "Finish the word",
+        "instructions": "Choose the correct Spanish form.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Voy a la "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "universión",
+              "universimente",
+              "universidad"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ". Necesito más "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "información",
+              "informidad",
+              "informamente"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "Finalción",
+              "Finalidad",
+              "Finalmente"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ", vamos a la playa."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "finally → finalmente (in the end)."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets assuming every -tion word converts the same way.",
+      "data": {
+        "question": "Which Spanish word is the everyday word for \"a question\" (something you ask)?",
+        "choices": [
+          "una preguntación",
+          "una pregunta",
+          "una cuestión",
+          "una questión"
+        ],
+        "correctIndex": 1,
+        "commonErrorLabel": "Over-applying -ción",
+        "trapChoiceIndexes": [
+          2
+        ],
+        "trapReasons": {
+          "2": "Cuestión follows the -tion rule, so it looks like the obvious answer."
+        },
+        "whyIntuitionFailed": "The rule works so often that learners apply it everywhere.",
+        "correctReasoning": "Cuestión exists but means an issue or a matter. A question you ask is una pregunta, as in Tengo una pregunta.",
+        "recoveryTip": "Rules make good guesses; common words still need checking.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the three rules and the two exceptions.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Cognate conversion rules",
+        "takeaway": "-tion becomes -ción, -ity becomes -idad, -ly becomes -mente: and actualmente means currently, not actually.",
+        "terms": [
+          "-ción",
+          "-idad",
+          "-mente",
+          "actualmente",
+          "pregunta"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Use the rule to write the Spanish word for \"conversation\".",
+      "answer": "conversación",
+      "rationale": "-tion becomes -ción: conversation → conversación.",
+      "source": "prewritten",
+      "accepts": [
+        "la conversación"
+      ],
+      "hint": "Swap -tion for -ción.",
+      "id": "c1",
+      "after": 3,
+      "focus": "producing a -ción word"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Use the rule to write the Spanish word for \"possibility\".",
+      "answer": "posibilidad",
+      "rationale": "-ity becomes -idad, and the double s becomes one: possibility → posibilidad.",
+      "source": "prewritten",
+      "accepts": [
+        "la posibilidad"
+      ],
+      "hint": "Swap -ity for -idad, and Spanish rarely doubles an s.",
+      "id": "c2",
+      "after": 3,
+      "focus": "producing an -idad word"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Your Mexican friend says \"Actualmente vivo en Chicago.\" What does she mean?",
+      "answer": "These days I live in Chicago.",
+      "rationale": "Actualmente is a false friend that means these days, at present.",
+      "source": "prewritten",
+      "hint": "Actualmente is a false friend.",
+      "choices": [
+        "I used to live in Chicago.",
+        "These days I live in Chicago.",
+        "Actually, I live in Chicago.",
+        "I finally live in Chicago."
+      ],
+      "id": "c3",
+      "after": 4,
+      "focus": "actualmente"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which is the plural of \"la canción\" (the song)?",
+      "answer": "las canciones",
+      "rationale": "A -ción noun is feminine (las) and drops its written accent in the plural: canciones.",
+      "source": "prewritten",
+      "hint": "Feminine, and the accent goes away.",
+      "choices": [
+        "las canciónes",
+        "las cancións",
+        "los canciones",
+        "las canciones"
+      ],
+      "id": "c4",
+      "after": 2,
+      "focus": "-ción plural and gender"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/121",
+    "version": 1,
+    "sha256": "56d46327c2f22a750df9f474fa26011543ef033d886f2e9d43439be167a31684",
+    "title": "Cognate Conversion Rules: -tion to -ción, -ity to -idad, -ly to -mente",
+    "file": "content/spanish-prewritten/intermediate/level-121.json"
+  }
+}

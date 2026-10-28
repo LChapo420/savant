@@ -1,0 +1,445 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 134,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the second set of false friends (actual, asistir, sensible, realizar, plus colegio, pariente and recordar) and the habit of reading meaning from context rather than from English.",
+  "coverage": [
+    "actual = current, present-day (actually = en realidad)",
+    "asistir a = to attend (to assist = ayudar)",
+    "sensible = sensitive (sensible = sensato)",
+    "realizar = to carry out, to make happen (to realize = darse cuenta)",
+    "colegio = school, often a private school (college = universidad)",
+    "pariente = relative (parent = padre, madre)",
+    "recordar = to remember (to record = grabar)",
+    "Use the context to check a look-alike"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the false friends, their real meanings and the words for the English sense.",
+      "data": {
+        "caption": "False friends, set one",
+        "headers": [
+          "Spanish",
+          "Really means",
+          "Not this",
+          "For that, say"
+        ],
+        "rows": [
+          [
+            "actual",
+            "current, present-day",
+            "actual",
+            "real, verdadero"
+          ],
+          [
+            "asistir a",
+            "to attend",
+            "to assist",
+            "ayudar"
+          ],
+          [
+            "sensible",
+            "sensitive",
+            "sensible",
+            "sensato"
+          ],
+          [
+            "realizar",
+            "to carry out, to make happen",
+            "to realize (notice)",
+            "darse cuenta"
+          ],
+          [
+            "el colegio",
+            "school (often private)",
+            "college",
+            "la universidad"
+          ],
+          [
+            "el pariente",
+            "relative",
+            "parent",
+            "el padre, la madre"
+          ],
+          [
+            "recordar",
+            "to remember",
+            "to record",
+            "grabar"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: each false friend used correctly in a sentence.",
+      "data": {
+        "title": "In context",
+        "cueNote": "Asisto a: I attend. No recuerdo: I don't remember.",
+        "duration": 20.7,
+        "cues": [
+          {
+            "text": "El presidente actual es joven.",
+            "start": 0.3,
+            "end": 2.5
+          },
+          {
+            "text": "Asisto a la reunión.",
+            "start": 4,
+            "end": 5.5
+          },
+          {
+            "text": "Mi hijo es muy sensible.",
+            "start": 7,
+            "end": 8.8
+          },
+          {
+            "text": "Vamos a realizar un proyecto.",
+            "start": 10.3,
+            "end": 12.5
+          },
+          {
+            "text": "Mis parientes viven en México.",
+            "start": 14,
+            "end": 16.2
+          },
+          {
+            "text": "No recuerdo su nombre.",
+            "start": 17.7,
+            "end": 19.2
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the strategy for unknown look-alikes.",
+      "data": {
+        "tag": "Strategy",
+        "ruleName": "Context beats English",
+        "anchor": "When a look-alike word makes a sentence odd, trust the context, not the English word it resembles.",
+        "prerequisites": [
+          "\"Asisto a la reunión\" with \"assist\" makes little sense; \"attend\" fits.",
+          "\"El presidente actual\" is the current president, not the \"real\" one.",
+          "Most look-alikes are true cognates: check only when the meaning feels wrong."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves the real meaning of each false friend.",
+      "data": {
+        "title": "Real meanings",
+        "instruction": "Connect each Spanish word to its real meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "actual"
+          },
+          {
+            "id": "t2",
+            "label": "asistir"
+          },
+          {
+            "id": "t3",
+            "label": "sensible"
+          },
+          {
+            "id": "t4",
+            "label": "pariente"
+          },
+          {
+            "id": "t5",
+            "label": "recordar"
+          },
+          {
+            "id": "t6",
+            "label": "colegio"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "to attend"
+          },
+          {
+            "id": "d4",
+            "label": "relative"
+          },
+          {
+            "id": "d6",
+            "label": "school"
+          },
+          {
+            "id": "d1",
+            "label": "current"
+          },
+          {
+            "id": "d3",
+            "label": "sensitive"
+          },
+          {
+            "id": "d5",
+            "label": "to remember"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the right word for an English meaning.",
+      "data": {
+        "title": "Say what you mean",
+        "instructions": "Choose the word that says what the English means.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "I didn't realize: No me di "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "realicé",
+              "actual",
+              "cuenta"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ". I want to record the class: Quiero "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "grabar",
+              "recordar",
+              "realizar"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " la clase. My parents live here: Mis "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "parientes",
+              "colegios",
+              "padres"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " viven aquí."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets reading asistir as \"assist\".",
+      "data": {
+        "question": "Your boss writes \"Mañana asisto a la conferencia.\" What will she do?",
+        "choices": [
+          "Help organize the conference.",
+          "Assist the speaker.",
+          "Cancel the conference.",
+          "Attend the conference."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Asistir as assist",
+        "trapChoiceIndexes": [
+          0,
+          1
+        ],
+        "trapReasons": {
+          "1": "Asistir looks like \"assist\"."
+        },
+        "whyIntuitionFailed": "Asistir and \"assist\" look nearly the same.",
+        "correctReasoning": "Asistir a usually means to attend. To help or assist is ayudar.",
+        "recoveryTip": "Asistir a = to be there.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the set and the strategy.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "False friends, set one",
+        "takeaway": "Actual is current, asistir is attend, sensible is sensitive, realizar is carry out, pariente is relative: when a look-alike sounds odd, let context decide.",
+        "terms": [
+          "actual",
+          "asistir",
+          "sensible",
+          "realizar",
+          "pariente",
+          "recordar"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "What does \"mi trabajo actual\" mean?",
+      "answer": "my current job",
+      "rationale": "Actual means current or present-day; it does not mean actual or real.",
+      "source": "prewritten",
+      "hint": "A false friend.",
+      "choices": [
+        "my current job",
+        "my actual job",
+        "my real job",
+        "my active job"
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "actual"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which sentence says \"My daughter is very sensitive\"?",
+      "answer": "Mi hija es muy sensible.",
+      "rationale": "Sensible means sensitive; sensata would mean sensible (reasonable).",
+      "source": "prewritten",
+      "hint": "The look-alike means sensitive.",
+      "choices": [
+        "Mi hija es muy sensata.",
+        "Mi hija es muy realista.",
+        "Mi hija es muy seria.",
+        "Mi hija es muy sensible."
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "sensible"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Type the Spanish verb (infinitive) that means \"to remember\".",
+      "answer": "recordar",
+      "rationale": "To remember is recordar; to record is grabar.",
+      "source": "prewritten",
+      "hint": "It looks like \"record\".",
+      "id": "c3",
+      "after": 4,
+      "focus": "recordar"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/134",
+    "version": 1,
+    "sha256": "82922adcaf31e1758e9176f8f8da232eb796f069e558f0b0835c6fb4649061f4",
+    "title": "False Friends Set One",
+    "file": "content/spanish-prewritten/advanced/level-134.json"
+  }
+}

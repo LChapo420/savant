@@ -1,0 +1,379 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 15,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach grammatical gender as a property of every noun, the -o / -a rule that covers most nouns, and the habit of learning each noun with its article.",
+  "coverage": [
+    "Every Spanish noun is masculine or feminine, including things",
+    "Most nouns ending in -o are masculine: el libro, el amigo",
+    "Most nouns ending in -a are feminine: la casa, la amiga",
+    "el goes with masculine nouns, la with feminine nouns",
+    "For people, -o / -a often marks a man or a woman: el niño, la niña",
+    "Gender of things is grammar, not meaning: la mesa is not \"female\"",
+    "Learn every noun with its article: el libro, la casa"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States gender and the -o / -a rule.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Noun gender",
+        "anchor": "Every Spanish noun is masculine or feminine; most nouns ending in -o are masculine (el) and most ending in -a are feminine (la).",
+        "prerequisites": [
+          "el libro, el carro, el amigo: masculine.",
+          "la casa, la mesa, la amiga: feminine.",
+          "Gender is a grammar label, not a meaning: a table is not female.",
+          "Nouns ending in other letters must be learned one by one: el café, la noche."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Shows -o / -a pairs for people and single-gender nouns for things.",
+      "data": {
+        "caption": "Gender in action",
+        "headers": [
+          "Masculine (el)",
+          "Feminine (la)",
+          "Note"
+        ],
+        "rows": [
+          [
+            "el amigo",
+            "la amiga",
+            "a male friend / a female friend"
+          ],
+          [
+            "el niño",
+            "la niña",
+            "a boy / a girl"
+          ],
+          [
+            "el hermano",
+            "la hermana",
+            "brother / sister"
+          ],
+          [
+            "el libro",
+            "la casa",
+            "things: one gender each"
+          ],
+          [
+            "el vaso",
+            "la taza",
+            "glass / cup"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: each noun said with its article, to learn them as one unit.",
+      "data": {
+        "title": "Say the article every time",
+        "cueNote": "Say the article and the noun together, as if they were one word, so the article sticks.",
+        "duration": 23.5,
+        "cues": [
+          {
+            "text": "el libro",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "la casa",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "el amigo",
+            "start": 4.9,
+            "end": 5.8
+          },
+          {
+            "text": "la amiga",
+            "start": 7.3,
+            "end": 8.2
+          },
+          {
+            "text": "el niño",
+            "start": 9.7,
+            "end": 10.5
+          },
+          {
+            "text": "la niña",
+            "start": 12,
+            "end": 12.8
+          },
+          {
+            "text": "el vaso",
+            "start": 14.3,
+            "end": 15.1
+          },
+          {
+            "text": "la taza",
+            "start": 16.6,
+            "end": 17.4
+          },
+          {
+            "text": "la mesa",
+            "start": 18.9,
+            "end": 19.7
+          },
+          {
+            "text": "el carro",
+            "start": 21.2,
+            "end": 22
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices assigning el or la by the ending.",
+      "data": {
+        "title": "El or la?",
+        "instruction": "Sort each noun by its article.",
+        "categories": [
+          {
+            "id": "el",
+            "label": "el (masculine)"
+          },
+          {
+            "id": "la",
+            "label": "la (feminine)"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "libro",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i2",
+            "text": "casa",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i3",
+            "text": "vaso",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i4",
+            "text": "ventana",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i5",
+            "text": "cuaderno",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i6",
+            "text": "silla",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i7",
+            "text": "abuelo",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i8",
+            "text": "puerta",
+            "correctCategoryId": "la"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Warns against reading gender as meaning.",
+      "data": {
+        "conceptLabel": "Noun gender",
+        "flagTitle": "It is grammar, not meaning",
+        "cautions": [
+          {
+            "kind": "pitfall",
+            "title": "Things have gender too",
+            "detail": "A table is la mesa and a book is el libro. Nothing about the object is male or female; the word simply belongs to one group.",
+            "rightExample": "la mesa, el libro"
+          },
+          {
+            "kind": "pitfall",
+            "title": "Not every ending tells you",
+            "detail": "Words ending in -e or a consonant can be either: el café, la noche, el papel, la ciudad. Learn them with el or la."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets guessing gender from meaning rather than form.",
+      "data": {
+        "question": "Which article goes with \"casa\" (house)?",
+        "choices": [
+          "it depends on who lives there",
+          "la",
+          "el",
+          "los"
+        ],
+        "correctIndex": 1,
+        "commonErrorLabel": "Gender from meaning",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "English links he and she to people, so it seems gender should depend on a person."
+        },
+        "whyIntuitionFailed": "English only marks gender for people and some animals, so learners look for a reason in the meaning.",
+        "correctReasoning": "Casa ends in -a and is feminine: la casa, always, whoever lives there.",
+        "recoveryTip": "Learn the article with the word: la casa.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the rule and the study habit.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Noun gender",
+        "takeaway": "Most -o nouns are masculine (el libro) and most -a nouns feminine (la casa): learn every noun with its article.",
+        "terms": [
+          "el libro",
+          "la casa",
+          "el amigo",
+          "la amiga"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which is correct for \"the notebook\" (cuaderno)?",
+      "answer": "el cuaderno",
+      "rationale": "Cuaderno ends in -o and is masculine, so it takes el.",
+      "source": "prewritten",
+      "hint": "Look at the last letter.",
+      "choices": [
+        "la cuaderno",
+        "los cuaderno",
+        "las cuaderno",
+        "el cuaderno"
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "el with -o nouns"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which pair names a female friend correctly?",
+      "answer": "la amiga",
+      "rationale": "A female friend is amiga, feminine, with la.",
+      "source": "prewritten",
+      "hint": "Both the noun ending and the article change.",
+      "choices": [
+        "la amiga",
+        "el amiga",
+        "la amigo",
+        "el amigo"
+      ],
+      "id": "c2",
+      "after": 1,
+      "focus": "gender for people"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the article (one word) that goes with \"ventana\" (window).",
+      "answer": "la",
+      "rationale": "Ventana ends in -a and is feminine: la ventana.",
+      "source": "prewritten",
+      "hint": "Feminine.",
+      "id": "c3",
+      "after": 3,
+      "focus": "la with -a nouns"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/15",
+    "version": 1,
+    "sha256": "a6a82acf7fc0f4e2de5fd608711b0b431dd3359ce02a5fcef6b7255bfbb9f3a3",
+    "title": "Noun Gender with -o and -a",
+    "file": "content/spanish-prewritten/advanced/level-015.json"
+  }
+}

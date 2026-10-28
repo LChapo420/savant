@@ -1,0 +1,371 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 4,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach soy, eres and es as the three singular forms of ser, used for who someone is, where they are from and what things are, then practice matching each form to its subject, including usted.",
+  "coverage": [
+    "ser = to be (identity, origin, profession, what something is)",
+    "yo soy, tú eres, él / ella / usted es",
+    "Who: Soy Ana. Origin: Soy de Texas. Profession: Soy estudiante (no un/una)",
+    "Things: Es un libro. ¿Qué es? Es una mesa.",
+    "Usted takes es, not eres: ¿Usted es de aquí?",
+    "Questions and negatives: ¿Eres de aquí? No, no soy de aquí."
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the three singular forms of ser with examples.",
+      "data": {
+        "caption": "Ser: singular forms",
+        "headers": [
+          "Subject",
+          "Form",
+          "Example",
+          "English"
+        ],
+        "rows": [
+          [
+            "yo",
+            "soy",
+            "Soy estudiante.",
+            "I am a student."
+          ],
+          [
+            "tú",
+            "eres",
+            "¿Eres de aquí?",
+            "Are you from here?"
+          ],
+          [
+            "él / ella / usted",
+            "es",
+            "Ella es mi jefa. Usted es muy amable.",
+            "She is my boss. You are very kind."
+          ]
+        ],
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States what ser is used for at this level.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Ser: who and what",
+        "anchor": "Ser says what someone or something is: their name, where they are from, their job, or what a thing is.",
+        "prerequisites": [
+          "Name: Soy Ana.",
+          "Origin, with de: Soy de Texas. Es de México.",
+          "Job, with no un/una: Soy estudiante. Es ingeniera.",
+          "A thing: Es un libro."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: a first meeting using soy, eres and es.",
+      "data": {
+        "title": "Meeting a neighbor",
+        "cueNote": "De aquí: from here. Mi esposo: my husband.",
+        "duration": 17.9,
+        "cues": [
+          {
+            "text": "Hola, soy Daniel.",
+            "start": 0.3,
+            "end": 1.4
+          },
+          {
+            "text": "Mucho gusto. Soy Carmen. ¿Eres de aquí?",
+            "start": 2.9,
+            "end": 5.5
+          },
+          {
+            "text": "No, no soy de aquí. Soy de Ohio. ¿Y tú?",
+            "start": 7,
+            "end": 9.4
+          },
+          {
+            "text": "Soy de Guatemala. Él es mi esposo, Luis.",
+            "start": 10.9,
+            "end": 13.8
+          },
+          {
+            "text": "Mucho gusto, Luis.",
+            "start": 15.3,
+            "end": 16.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays one sentence to show subject, form of ser and origin.",
+      "data": {
+        "prompt": "Tap each part.",
+        "source": "{{Ella}} {{es}} {{de Colombia}}.",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "subject",
+            "mark": "Ella",
+            "note": "She. Kept here because we have not said who yet."
+          },
+          {
+            "id": "x2",
+            "label": "ser",
+            "mark": "es",
+            "note": "is: the form for él, ella and usted."
+          },
+          {
+            "id": "x3",
+            "label": "origin",
+            "mark": "de Colombia",
+            "note": "from Colombia: ser + de + place."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing soy, eres or es by subject.",
+      "data": {
+        "title": "Soy, eres or es?",
+        "instructions": "Choose the form of ser that matches the subject.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Yo "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "eres",
+              "es",
+              "soy"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " de Florida. ¿Tú "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "soy",
+              "eres",
+              "es"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " de Cuba? Ella "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "soy",
+              "es",
+              "eres"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " profesora. ¿Usted "
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "es",
+              "eres",
+              "soy"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " el señor Torres?"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b4": "Usted takes es, like él and ella."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets giving usted the tú form, because both mean \"you\".",
+      "data": {
+        "question": "How do you ask a client \"Are you from Mexico?\"",
+        "choices": [
+          "¿Usted es de México?",
+          "¿Usted eres de México?",
+          "¿Usted soy de México?",
+          "¿Usted está de México?"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Usted with eres",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "Usted means \"you\", and eres is the \"you\" form, so they seem to belong together."
+        },
+        "whyIntuitionFailed": "Both tú and usted translate as \"you\", so learners give them the same verb.",
+        "correctReasoning": "Usted takes the same form as él and ella: es. ¿Usted es de México?",
+        "recoveryTip": "Usted goes with es.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the three forms and their subjects.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Ser: soy, eres, es",
+        "takeaway": "Soy for I, eres for tú, es for él, ella and usted: use them for names, origin (ser de), jobs and what things are.",
+        "terms": [
+          "soy",
+          "eres",
+          "es",
+          "ser de"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which sentence means \"You (tú) are a student\"?",
+      "answer": "Eres estudiante.",
+      "rationale": "Eres is the tú form of ser; es is for él, ella and usted, and soy is for yo.",
+      "source": "prewritten",
+      "hint": "The tú form ends in -s.",
+      "choices": [
+        "Es estudiante.",
+        "Soy estudiante.",
+        "Eres un estudiante de.",
+        "Eres estudiante."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "eres with tú"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Complete with one word: \"Yo ___ de Chicago.\" (I am from Chicago.)",
+      "answer": "soy",
+      "rationale": "The yo form of ser is soy: Soy de Chicago.",
+      "source": "prewritten",
+      "hint": "The yo form of ser.",
+      "id": "c2",
+      "after": 4,
+      "focus": "soy"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Your new manager is Ms. Gómez. Which question is correct?",
+      "answer": "¿Usted es la señora Gómez?",
+      "rationale": "Usted takes the form es, the same as él and ella.",
+      "source": "prewritten",
+      "hint": "Usted behaves like ella.",
+      "choices": [
+        "¿Tú es la señora Gómez?",
+        "¿Usted soy la señora Gómez?",
+        "¿Usted es la señora Gómez?",
+        "¿Usted eres la señora Gómez?"
+      ],
+      "id": "c3",
+      "after": 5,
+      "focus": "es with usted"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/4",
+    "version": 1,
+    "sha256": "3fe4e73ebcb21b5fe31fead42f5b00b62a11c9666ee4b7a43853ca1160427f12",
+    "title": "Ser Present Singular: Soy, Eres, Es",
+    "file": "content/spanish-prewritten/advanced/level-004.json"
+  }
+}

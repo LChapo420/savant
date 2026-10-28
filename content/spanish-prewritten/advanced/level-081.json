@@ -1,0 +1,413 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 81,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach how to say where people are from (ser de + country, ser + nationality), the three patterns of nationality words, and that nationalities are lowercase while countries are capitalized.",
+  "coverage": [
+    "¿De dónde eres? Soy de Estados Unidos. Soy estadounidense.",
+    "Nationalities are lowercase: mexicano, colombiana. Countries are capitalized: México, Colombia",
+    "Pattern 1, -o / -a: mexicano, mexicana; colombiano, colombiana",
+    "Pattern 2, one form in -e: estadounidense, canadiense, costarricense, nicaragüense",
+    "Pattern 3, consonant + a: español, española; inglés, inglesa; alemán, alemana",
+    "Estadounidense is the clearest word for someone from the US; americano can mean anyone from the Americas"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists countries and nationalities in the three patterns.",
+      "data": {
+        "caption": "Countries and nationalities",
+        "headers": [
+          "Country",
+          "Man",
+          "Woman"
+        ],
+        "rows": [
+          [
+            "México",
+            "mexicano",
+            "mexicana"
+          ],
+          [
+            "Colombia",
+            "colombiano",
+            "colombiana"
+          ],
+          [
+            "Argentina",
+            "argentino",
+            "argentina"
+          ],
+          [
+            "Puerto Rico",
+            "puertorriqueño",
+            "puertorriqueña"
+          ],
+          [
+            "Estados Unidos",
+            "estadounidense",
+            "estadounidense"
+          ],
+          [
+            "Canadá",
+            "canadiense",
+            "canadiense"
+          ],
+          [
+            "Costa Rica",
+            "costarricense",
+            "costarricense"
+          ],
+          [
+            "España",
+            "español",
+            "española"
+          ],
+          [
+            "Inglaterra",
+            "inglés",
+            "inglesa"
+          ],
+          [
+            "Alemania",
+            "alemán",
+            "alemana"
+          ],
+          [
+            "Francia",
+            "francés",
+            "francesa"
+          ]
+        ],
+        "footnote": "Notice the capital letter on the country and the small letter on the nationality."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "States the three patterns.",
+      "data": {
+        "title": "Three patterns",
+        "rows": [
+          {
+            "key": "-o / -a",
+            "value": "mexicano, mexicana; peruano, peruana; cubano, cubana"
+          },
+          {
+            "key": "one form in -e",
+            "value": "estadounidense, canadiense, costarricense, nicaragüense"
+          },
+          {
+            "key": "consonant + a",
+            "value": "español, española; inglés, inglesa (accent drops); alemán, alemana"
+          },
+          {
+            "key": "plural",
+            "value": "mexicanos, estadounidenses, españoles"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: people saying where they are from.",
+      "data": {
+        "title": "¿De dónde eres?",
+        "cueNote": "Estadounidense: ehs-tah-doh-oo-nee-DEHN-seh. A long word: practice it slowly.",
+        "duration": 18.4,
+        "cues": [
+          {
+            "text": "¿De dónde eres?",
+            "start": 0.3,
+            "end": 1.4
+          },
+          {
+            "text": "Soy de Estados Unidos. Soy estadounidense.",
+            "start": 2.9,
+            "end": 6.2
+          },
+          {
+            "text": "Ella es mexicana, de Monterrey.",
+            "start": 7.7,
+            "end": 10.1
+          },
+          {
+            "text": "Mis amigos son colombianos.",
+            "start": 11.6,
+            "end": 13.6
+          },
+          {
+            "text": "Él es español, de Madrid.",
+            "start": 15.1,
+            "end": 16.9
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts ser de + country with ser + nationality.",
+      "data": {
+        "title": "Two ways to say it",
+        "leftColumn": {
+          "heading": "ser de + country",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Soy de México.",
+              "example": "I am from Mexico."
+            },
+            {
+              "label": "Capital letter",
+              "text": "México, Colombia, Estados Unidos"
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "ser + nationality",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Soy mexicano.",
+              "example": "I am Mexican."
+            },
+            {
+              "label": "Small letter",
+              "text": "mexicano, colombiana, estadounidense"
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the nationality that agrees.",
+      "data": {
+        "title": "Nationalities",
+        "instructions": "Choose the form that agrees.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Mi esposa es de Colombia. Es "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "colombiano",
+              "Colombiana",
+              "colombiana"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ". Mi jefe es de Canadá. Es "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "canadiensa",
+              "canadiense",
+              "canadienso"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Las chicas son de España. Son "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "españolas de",
+              "españolas",
+              "españoles"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "Feminine, and lowercase."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets capitalizing nationality words as in English.",
+      "data": {
+        "question": "Which is written correctly?",
+        "choices": [
+          "Ella es mexicana.",
+          "Ella es Mexicana.",
+          "Ella es de méxico.",
+          "Ella es Mexicano."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Capitalizing the nationality",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English always capitalizes \"Mexican\"."
+        },
+        "whyIntuitionFailed": "English capitalizes nationalities and languages, so learners do it in Spanish too.",
+        "correctReasoning": "Ella es mexicana is right: Spanish writes nationalities in lowercase, and only the country takes a capital (México).",
+        "recoveryTip": "Country: capital. Nationality: small letter.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with origin, patterns and capitalization.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Countries and nationalities",
+        "takeaway": "Say Soy de + country or Soy + nationality; nationalities are lowercase and follow -o/-a, one-form -e, or consonant + a.",
+        "terms": [
+          "estadounidense",
+          "mexicano",
+          "mexicana",
+          "española",
+          "canadiense"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence is correct for a woman from Spain?",
+      "answer": "Es española.",
+      "rationale": "Español adds -a for a woman (española), and nationalities are lowercase.",
+      "source": "prewritten",
+      "hint": "Consonant + a, small letter.",
+      "choices": [
+        "Es Española.",
+        "Es españoles.",
+        "Es española.",
+        "Es español."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "consonant + a nationalities"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you answer \"¿De dónde eres?\" if you are from the United States?",
+      "answer": "Soy de Estados Unidos.",
+      "rationale": "Origin uses ser de + country: Soy de Estados Unidos. Estadounidense has one form, never estadounidensa.",
+      "source": "prewritten",
+      "hint": "Origin uses ser.",
+      "choices": [
+        "Tengo de Estados Unidos.",
+        "Soy de Estados Unidos.",
+        "Estoy de Estados Unidos.",
+        "Soy estadounidensa."
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "ser de for origin"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the nationality word (one word) for a man from Mexico.",
+      "answer": "mexicano",
+      "rationale": "A man from Mexico is mexicano, written in lowercase.",
+      "source": "prewritten",
+      "hint": "Pattern -o / -a.",
+      "id": "c3",
+      "after": 4,
+      "focus": "producing a nationality"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/81",
+    "version": 1,
+    "sha256": "9fedee22c93306a039f6134a2ccfdb93a2b2a8938ee18791310ca78d2e34d1d2",
+    "title": "Countries and Nationalities",
+    "file": "content/spanish-prewritten/advanced/level-081.json"
+  }
+}

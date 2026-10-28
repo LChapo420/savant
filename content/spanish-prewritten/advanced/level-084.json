@@ -1,0 +1,473 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 84,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the names of languages (lowercase, masculine, no article after hablar) and the demonyms for well-known cities and regions, including the ones a learner hears in conversation (porteño, chilango, boricua).",
+  "coverage": [
+    "Languages are lowercase and masculine: el español, el inglés, el francés, el portugués",
+    "After hablar the article is usually dropped: Hablo inglés y español",
+    "Español and castellano both name Spanish",
+    "City and region demonyms: madrileño (Madrid), bogotano (Bogotá), limeño (Lima), porteño (Buenos Aires)",
+    "Informal ones heard often: chilango (Mexico City), boricua (Puerto Rican)",
+    "Porteño usually means from Buenos Aires; in Chile it can mean from Valparaíso",
+    "Ella es porteña: demonyms agree like nationalities"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists common languages.",
+      "data": {
+        "caption": "Languages",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "el español / el castellano",
+            "Spanish"
+          ],
+          [
+            "el inglés",
+            "English"
+          ],
+          [
+            "el francés",
+            "French"
+          ],
+          [
+            "el portugués",
+            "Portuguese"
+          ],
+          [
+            "el alemán",
+            "German"
+          ],
+          [
+            "el chino",
+            "Chinese"
+          ],
+          [
+            "el japonés",
+            "Japanese"
+          ],
+          [
+            "el árabe",
+            "Arabic"
+          ]
+        ],
+        "footnote": "Hablo inglés y español. ¿Hablas francés? After hablar the article is usually dropped."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists demonyms for well-known cities and regions.",
+      "data": {
+        "caption": "People from cities and regions",
+        "headers": [
+          "Place",
+          "Person (man / woman)",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Madrid",
+            "madrileño / madrileña",
+            ""
+          ],
+          [
+            "Buenos Aires",
+            "porteño / porteña",
+            "from puerto, port; in Chile it can mean from Valparaíso"
+          ],
+          [
+            "Ciudad de México",
+            "chilango / chilanga",
+            "informal; capitalino / capitalina is neutral"
+          ],
+          [
+            "Puerto Rico",
+            "boricua (both)",
+            "informal and proud, from Borikén, the Taíno name of the island"
+          ],
+          [
+            "Bogotá",
+            "bogotano / bogotana",
+            ""
+          ],
+          [
+            "Lima",
+            "limeño / limeña",
+            ""
+          ],
+          [
+            "Guadalajara",
+            "tapatío / tapatía",
+            ""
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: people naming their languages and hometowns.",
+      "data": {
+        "title": "Languages and hometowns",
+        "cueNote": "Un poco de francés: a little French.",
+        "duration": 19.4,
+        "cues": [
+          {
+            "text": "Hablo inglés y español.",
+            "start": 0.3,
+            "end": 1.8
+          },
+          {
+            "text": "¿Hablas portugués?",
+            "start": 3.3,
+            "end": 4.4
+          },
+          {
+            "text": "No, pero hablo un poco de francés.",
+            "start": 5.9,
+            "end": 8.3
+          },
+          {
+            "text": "Ella es porteña, de Buenos Aires.",
+            "start": 9.8,
+            "end": 12.2
+          },
+          {
+            "text": "Soy boricua.",
+            "start": 13.7,
+            "end": 14.6
+          },
+          {
+            "text": "Mi amigo es chilango.",
+            "start": 16.1,
+            "end": 17.9
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets capitalizing language names and adding the article after hablar.",
+      "data": {
+        "question": "Which sentence is written in natural, correct Spanish?",
+        "choices": [
+          "Hablo inglés y español.",
+          "Hablo Inglés y Español.",
+          "Hablo el Inglés.",
+          "Yo hablo los inglés."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "English capitalization",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English capitalizes languages."
+        },
+        "whyIntuitionFailed": "English capitalizes language names, so learners copy it.",
+        "correctReasoning": "Spanish writes languages in lowercase, and after hablar the article is usually left out.",
+        "recoveryTip": "Hablo español: small letter, no article.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves demonyms by their place.",
+      "data": {
+        "title": "Who is from where?",
+        "instruction": "Connect each person to their place.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "madrileña"
+          },
+          {
+            "id": "t2",
+            "label": "porteño"
+          },
+          {
+            "id": "t3",
+            "label": "limeña"
+          },
+          {
+            "id": "t4",
+            "label": "bogotano"
+          },
+          {
+            "id": "t5",
+            "label": "boricua"
+          },
+          {
+            "id": "t6",
+            "label": "chilango"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "Buenos Aires"
+          },
+          {
+            "id": "d4",
+            "label": "Bogotá"
+          },
+          {
+            "id": "d6",
+            "label": "Mexico City"
+          },
+          {
+            "id": "d1",
+            "label": "Madrid"
+          },
+          {
+            "id": "d3",
+            "label": "Lima"
+          },
+          {
+            "id": "d5",
+            "label": "Puerto Rico"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices languages and demonyms in sentences.",
+      "data": {
+        "title": "Complete the profile",
+        "instructions": "Choose the word that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Me llamo Sofía. Soy "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Porteña",
+              "porteña",
+              "porteño"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ", de Buenos Aires. Hablo "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "españoles",
+              "español",
+              "el Español"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " e "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "inglesa",
+              "inglés",
+              "Inglés"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "Y becomes e before a word starting with an i sound: español e inglés."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the language rule and the demonyms.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Languages and demonyms",
+        "takeaway": "Languages are lowercase (hablo inglés y español); cities have their own people words: madrileño, porteño, limeño, and informally chilango and boricua.",
+        "terms": [
+          "español",
+          "inglés",
+          "porteño",
+          "madrileño",
+          "boricua",
+          "chilango"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "A woman from Lima is...",
+      "answer": "limeña",
+      "rationale": "A person from Lima is limeño or, for a woman, limeña, written in lowercase.",
+      "source": "prewritten",
+      "hint": "Like madrileña.",
+      "choices": [
+        "limeño",
+        "Limeña",
+        "limeña",
+        "limana"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "city demonyms"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Someone says \"Soy boricua.\" Where is their family from?",
+      "answer": "Puerto Rico",
+      "rationale": "Boricua is an informal, proud word for Puerto Rican, from Borikén, the Taíno name of the island.",
+      "source": "prewritten",
+      "hint": "It comes from a Taíno place name.",
+      "choices": [
+        "Puerto Rico",
+        "Bolivia",
+        "Buenos Aires",
+        "Bogotá"
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "boricua"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the Spanish word for the language \"Portuguese\".",
+      "answer": "portugués",
+      "rationale": "Portuguese is portugués, written in lowercase.",
+      "source": "prewritten",
+      "accepts": [
+        "el portugués"
+      ],
+      "hint": "It ends like inglés.",
+      "id": "c3",
+      "after": 0,
+      "focus": "language names"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/84",
+    "version": 1,
+    "sha256": "bb429fbb265e8eb47d31fbb4d43a1673d3e05fdb0f5165821dc40cbcb47f1839",
+    "title": "Languages and Demonyms: Español, Inglés, Madrileño, Porteño, Boricua",
+    "file": "content/spanish-prewritten/advanced/level-084.json"
+  }
+}

@@ -1,0 +1,466 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 163,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Bring the grade together by introducing well-known Hispanic figures with ser, a nationality and a profession that agree, so the learner practices identity sentences on real people.",
+  "coverage": [
+    "Pattern: name + es + nationality; es + profession (no article)",
+    "Shakira es colombiana; es cantante. Lionel Messi es argentino; es futbolista.",
+    "Bad Bunny es puertorriqueño; es cantante.",
+    "Sonia Sotomayor es estadounidense; es jueza de la Corte Suprema; su familia es de Puerto Rico.",
+    "Ellen Ochoa es estadounidense, de origen mexicano; es ingeniera; she was the first Hispanic woman in space (1993)",
+    "Pedro Pascal es chileno y estadounidense; es actor.",
+    "Nationalities and professions agree with the person"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_TextBlock",
+      "purpose": "Frames the lesson: introducing people with the grammar of the whole grade.",
+      "data": {
+        "eyebrow": "Unit 3.13",
+        "title": "Famous Hispanic figures",
+        "sections": [
+          {
+            "paragraphs": [
+              "You can now say who someone is, where they are from and what they do, with every word agreeing. In this lesson you use those sentences on well-known people from music, sport, law, science and film.",
+              "The pattern is always the same: Name + es + nationality. Es + profession, with no un or una."
+            ]
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Introduces each figure with nationality and profession.",
+      "data": {
+        "caption": "¿Quién es?",
+        "headers": [
+          "Person",
+          "Nacionalidad",
+          "Profesión"
+        ],
+        "rows": [
+          [
+            "Shakira",
+            "colombiana (de Barranquilla)",
+            "cantante"
+          ],
+          [
+            "Lionel Messi",
+            "argentino (de Rosario)",
+            "futbolista"
+          ],
+          [
+            "Bad Bunny",
+            "puertorriqueño",
+            "cantante"
+          ],
+          [
+            "Sonia Sotomayor",
+            "estadounidense; su familia es de Puerto Rico",
+            "jueza de la Corte Suprema de Estados Unidos"
+          ],
+          [
+            "Ellen Ochoa",
+            "estadounidense, de origen mexicano",
+            "ingeniera; the first Hispanic woman in space (1993)"
+          ],
+          [
+            "Pedro Pascal",
+            "chileno y estadounidense",
+            "actor"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: one identity sentence per figure.",
+      "data": {
+        "title": "Introducing them",
+        "cueNote": "Jueza: judge (a woman). Cantante has one form for a man or a woman.",
+        "duration": 26,
+        "cues": [
+          {
+            "text": "Shakira es colombiana. Es cantante.",
+            "start": 0.3,
+            "end": 2.9
+          },
+          {
+            "text": "Lionel Messi es argentino. Es futbolista.",
+            "start": 4.4,
+            "end": 7.5
+          },
+          {
+            "text": "Bad Bunny es puertorriqueño.",
+            "start": 9,
+            "end": 10.8
+          },
+          {
+            "text": "Sonia Sotomayor es jueza de la Corte Suprema.",
+            "start": 12.3,
+            "end": 15.8
+          },
+          {
+            "text": "Ellen Ochoa es ingeniera.",
+            "start": 17.3,
+            "end": 19.3
+          },
+          {
+            "text": "Pedro Pascal es actor. Es chileno y estadounidense.",
+            "start": 20.8,
+            "end": 24.5
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays an identity sentence to show the agreement.",
+      "data": {
+        "prompt": "Tap each part.",
+        "source": "{{Shakira}} {{es}} {{colombiana}}. Es {{cantante}}.",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "subject",
+            "mark": "Shakira",
+            "note": "a woman, so feminine forms follow."
+          },
+          {
+            "id": "x2",
+            "label": "ser",
+            "mark": "es",
+            "note": "identity, origin and profession all use ser."
+          },
+          {
+            "id": "x3",
+            "label": "nationality",
+            "mark": "colombiana",
+            "note": "feminine, lowercase."
+          },
+          {
+            "id": "x4",
+            "label": "profession",
+            "mark": "cantante",
+            "note": "one form for both genders, with no un or una."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices agreement in identity sentences.",
+      "data": {
+        "title": "Who are they?",
+        "instructions": "Choose the form that agrees.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Messi es "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "argentina",
+              "Argentino",
+              "argentino"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ". Sonia Sotomayor es "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "juezas",
+              "jueza",
+              "un juez"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Ellen Ochoa es "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "ingeniero",
+              "una ingeniero",
+              "ingeniera"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets estar and the article in identity sentences.",
+      "data": {
+        "question": "How do you say \"Shakira is a Colombian singer\"?",
+        "choices": [
+          "Shakira es una colombiana cantante.",
+          "Shakira es un cantante colombiano.",
+          "Shakira es una cantante colombiana.",
+          "Shakira está una cantante colombiana."
+        ],
+        "correctIndex": 2,
+        "commonErrorLabel": "Estar or English word order",
+        "trapChoiceIndexes": [
+          3,
+          0
+        ],
+        "trapReasons": {
+          "0": "English puts the nationality first: Colombian singer.",
+          "3": "Estar also means \"to be\"."
+        },
+        "whyIntuitionFailed": "Two English habits combine: any \"to be\", and adjective before noun.",
+        "correctReasoning": "Identity uses ser; with an adjective added the article returns (una cantante); the nationality goes after the noun and agrees: una cantante colombiana.",
+        "recoveryTip": "Ser for identity; noun, then nationality.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves each figure's profession.",
+      "data": {
+        "title": "What do they do?",
+        "instruction": "Connect each person to their profession.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "Lionel Messi"
+          },
+          {
+            "id": "t2",
+            "label": "Sonia Sotomayor"
+          },
+          {
+            "id": "t3",
+            "label": "Ellen Ochoa"
+          },
+          {
+            "id": "t4",
+            "label": "Pedro Pascal"
+          },
+          {
+            "id": "t5",
+            "label": "Shakira"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "jueza"
+          },
+          {
+            "id": "d4",
+            "label": "actor"
+          },
+          {
+            "id": "d1",
+            "label": "futbolista"
+          },
+          {
+            "id": "d3",
+            "label": "ingeniera"
+          },
+          {
+            "id": "d5",
+            "label": "cantante"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes the grade with the identity pattern.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Famous Hispanic figures",
+        "takeaway": "Name + es + nationality, es + profession: Shakira es colombiana, es cantante. Every word agrees with the person.",
+        "terms": [
+          "es colombiana",
+          "es argentino",
+          "es cantante",
+          "es jueza",
+          "es ingeniera"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which sentence is correct?",
+      "answer": "Shakira es colombiana.",
+      "rationale": "Nationality uses ser, agrees with a woman (colombiana) and is written in lowercase.",
+      "source": "prewritten",
+      "hint": "Ser, feminine, small letter.",
+      "choices": [
+        "Shakira es Colombiana.",
+        "Shakira es colombiana.",
+        "Shakira es colombiano.",
+        "Shakira está colombiana."
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "ser + nationality"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which word completes \"Ellen Ochoa es ___.\" (She is an engineer.)?",
+      "answer": "ingeniera",
+      "rationale": "A woman engineer is ingeniera, and a bare profession after ser takes no article.",
+      "source": "prewritten",
+      "hint": "Feminine, no article.",
+      "choices": [
+        "una ingeniero",
+        "ingenieras",
+        "ingeniera",
+        "ingeniero"
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "profession agreement"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Complete with one word: \"Lionel Messi ___ argentino.\"",
+      "answer": "es",
+      "rationale": "Nationality uses ser, and the form for él is es.",
+      "source": "prewritten",
+      "hint": "A form of ser.",
+      "id": "c3",
+      "after": 3,
+      "focus": "es"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [
+      {
+        "url": "https://www.nasa.gov/people/ellen-ochoa/",
+        "title": "NASA: Ellen Ochoa biography"
+      },
+      {
+        "url": "https://www.supremecourt.gov/about/biographies.aspx",
+        "title": "Supreme Court of the United States: Justice biographies"
+      }
+    ],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/163",
+    "version": 1,
+    "sha256": "8cbac5df74387201f89e11d96d1810e5c13681ffb1916f1163afda9949153e37",
+    "title": "Famous Hispanic Figures",
+    "file": "content/spanish-prewritten/advanced/level-163.json"
+  }
+}

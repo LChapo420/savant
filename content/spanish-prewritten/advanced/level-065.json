@@ -1,0 +1,381 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 65,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Introduce tener in the present through its most useful job for a beginner, saying age, and confront the English habit of using \"to be\" for age.",
+  "coverage": [
+    "tener (to have): tengo, tienes, tiene, tenemos, tienen",
+    "Age uses tener + number + años: Tengo treinta años",
+    "Asking: ¿Cuántos años tienes? (friend) / ¿Cuántos años tiene usted? (formal)",
+    "Never ser for age: Soy treinta is wrong",
+    "Before años, uno shortens: Tengo veintiún años; one year old is un año",
+    "Answer for others: Mi hija tiene ocho años. Mis padres tienen sesenta años."
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents tener in the present with an age example for each form.",
+      "data": {
+        "caption": "Tener (to have): present",
+        "headers": [
+          "Subject",
+          "Form",
+          "Age example"
+        ],
+        "rows": [
+          [
+            "yo",
+            "tengo",
+            "Tengo treinta años."
+          ],
+          [
+            "tú",
+            "tienes",
+            "¿Cuántos años tienes?"
+          ],
+          [
+            "él / ella / usted",
+            "tiene",
+            "Mi hija tiene ocho años."
+          ],
+          [
+            "nosotros / nosotras",
+            "tenemos",
+            "Tenemos la misma edad. (We are the same age.)"
+          ],
+          [
+            "ustedes / ellos / ellas",
+            "tienen",
+            "Mis padres tienen sesenta años."
+          ]
+        ],
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the age rule in one sentence.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Age is something you have",
+        "anchor": "Spanish says age with tener: you \"have\" years, so \"I am thirty\" is Tengo treinta años.",
+        "prerequisites": [
+          "Tengo treinta años. Literally: I have thirty years.",
+          "¿Cuántos años tienes? How old are you?",
+          "Keep años in the answer: Tengo treinta años (or just Treinta in a quick reply).",
+          "Tener is irregular: tengo, tienes, tiene, tenemos, tienen."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: asking and giving ages.",
+      "data": {
+        "title": "How old?",
+        "cueNote": "Setenta y un años: uno shortens to un before años.",
+        "duration": 19.1,
+        "cues": [
+          {
+            "text": "¿Cuántos años tienes?",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "Tengo treinta y dos años.",
+            "start": 3.1,
+            "end": 4.6
+          },
+          {
+            "text": "¿Y tu hijo?",
+            "start": 6.1,
+            "end": 6.9
+          },
+          {
+            "text": "Mi hijo tiene cinco años.",
+            "start": 8.4,
+            "end": 10.4
+          },
+          {
+            "text": "¿Cuántos años tiene usted, señora?",
+            "start": 11.9,
+            "end": 14.3
+          },
+          {
+            "text": "Tengo setenta y un años.",
+            "start": 15.8,
+            "end": 17.6
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays an age sentence to show tener and años.",
+      "data": {
+        "prompt": "Tap each part.",
+        "source": "{{Tengo}} {{veintiún}} {{años}}.",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "tener",
+            "mark": "Tengo",
+            "note": "I have: age uses tener, not ser."
+          },
+          {
+            "id": "x2",
+            "label": "number",
+            "mark": "veintiún",
+            "note": "twenty-one: veintiuno shortens to veintiún before a masculine noun."
+          },
+          {
+            "id": "x3",
+            "label": "years",
+            "mark": "años",
+            "note": "years: always there in a full answer."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices the forms of tener in age sentences.",
+      "data": {
+        "title": "Ages in the family",
+        "instructions": "Choose the form of tener.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Yo "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "tiene",
+              "soy",
+              "tengo"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " cuarenta años. Mi esposa "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "tiene",
+              "tengo",
+              "es"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " treinta y ocho. Mis hijos "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "son",
+              "tienen",
+              "tiene"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " diez y doce años. ¿Cuántos años "
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "tiene",
+              "eres",
+              "tienes"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " tú?"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets using ser for age.",
+      "data": {
+        "question": "How do you say \"I am 25 years old\"?",
+        "choices": [
+          "Soy veinticinco años.",
+          "Estoy veinticinco años.",
+          "Soy veinticinco.",
+          "Tengo veinticinco años."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Age with ser",
+        "trapChoiceIndexes": [
+          0,
+          2
+        ],
+        "trapReasons": {
+          "0": "English says \"I am\", and soy means \"I am\"."
+        },
+        "whyIntuitionFailed": "English uses \"to be\" for age, so learners reach for soy.",
+        "correctReasoning": "Spanish treats age as something you have: Tengo veinticinco años.",
+        "recoveryTip": "Age: tengo ... años.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the age formula.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Age with tener",
+        "takeaway": "Ask ¿Cuántos años tienes? and answer Tengo ... años: age is something you have, never something you are.",
+        "terms": [
+          "tengo",
+          "tienes",
+          "tiene",
+          "tenemos",
+          "tienen",
+          "años"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"My mother is 60\"?",
+      "answer": "Mi madre tiene sesenta años.",
+      "rationale": "Age uses tener, and the form for ella (mi madre) is tiene.",
+      "source": "prewritten",
+      "hint": "Age is something you have.",
+      "choices": [
+        "Mi madre tengo sesenta años.",
+        "Mi madre tiene sesenta años.",
+        "Mi madre es sesenta años.",
+        "Mi madre está sesenta años."
+      ],
+      "id": "c1",
+      "after": 5,
+      "focus": "tener for age"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the question \"How old are you?\" to a friend (tú).",
+      "answer": "¿Cuántos años tienes?",
+      "rationale": "The fixed question is ¿Cuántos años tienes? (literally, how many years do you have?).",
+      "source": "prewritten",
+      "accepts": [
+        "cuantos años tienes",
+        "cuántos años tienes tú",
+        "Cuántos años tienes?"
+      ],
+      "hint": "Cuántos + años + tener.",
+      "id": "c2",
+      "after": 2,
+      "focus": "asking age"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Complete with one word: \"Nosotros ___ treinta años.\" (We are thirty years old.)",
+      "answer": "tenemos",
+      "rationale": "The nosotros form of tener is tenemos.",
+      "source": "prewritten",
+      "hint": "The we form of tener.",
+      "id": "c3",
+      "after": 4,
+      "focus": "tenemos"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 1,
+    "mc_agreed": 1,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/65",
+    "version": 1,
+    "sha256": "d0b0d9aec64185ecbf7a453b13a0d93c35b34ab126280c5a164ad2c8dfbdbd32",
+    "title": "Age with Tener: Tengo Años",
+    "file": "content/spanish-prewritten/advanced/level-065.json"
+  }
+}
