@@ -53,6 +53,29 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    `/creators` page with the beta link format and the honest one-paragraph description of Savant, both easy to
    copy. Tests in `site/test.js`. Done when two test codes produce separate counts in the admin.
 
+0a. **Head-to-head study kit: Savant vs Duolingo for Spanish (owner's request, 2026-10-28; for YC and investors).**
+   The claim to test, honestly: *per hour of study, Savant teaches everyday Spanish more than Duolingo.* Build the
+   kit so the owner can run it with beta testers as soon as they arrive (results before the YC interviews):
+   - **Protocol** `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`: beginners with no recent Spanish; random assignment to
+     Savant or Duolingo with the public drand beacon (as `spanish-check/` does); the same fixed daily time (for
+     example 20 minutes for 14 days) in both arms; the primary outcome is the gain on the sealed external tests
+     (listening comprehension and the daily test, built from Tatoeba, so neither app taught the exact items),
+     chance-corrected; efficiency = gain per hour studied; report every participant including dropouts, with
+     confidence intervals; state the minimum sample needed and what a small sample can and cannot show. Leave
+     `OWNER:` lines for decisions. It is pre-registered: sealed and time-stamped like the Spanish tests before
+     anyone starts.
+   - **A multi-participant version of the sealed tests.** The founder's tests are sealed and only for account 6689:
+     **never edit `spanish-check/`, `spanish-check-lc/` or their routes and pages.** Create a separate module
+     (for example `spanish-study/`) that reuses their engine code by copying, with its own fresh seal, per-participant
+     draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening).
+   - **Time on task:** Savant's minutes come from the app's logs. Duolingo minutes are self-reported daily with a
+     screenshot of Duolingo's own stats; record both, and flag missing days.
+   - **Participant pages** (sign-up with consent; parental consent under 18 per `docs/yc/PRIVACY.md`; daily
+     check-in) and **an admin results page** with a per-arm bar chart of gain per hour, the CI, and a CSV export.
+   - Tests on the fixture db. Done when the whole study can be run end to end on fixture data.
+   - [local only, later] Find Duolingo's own published efficacy studies and cite them in the protocol as context,
+     marked UNVERIFIED until a person checks them.
+
 0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
    it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
@@ -77,6 +100,24 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    - **(d) Later:** photos of notes or textbook pages (vision model or OCR), and URLs.
    Privacy: tell the learner in plain words where their file goes and how to delete it; follow
    `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
+
+0c. **The tutor talks, and it is in every feature with full context (owner's request, 2026-10-28).**
+   - **Everywhere:** a self-contained tutor dock (`public/js/tutor-dock.js` and a small CSS file using the CSS
+     variables; the redesign will place it in the new app shell) on every page of the app, reusing the existing
+     tutor and its memory. Find the current tutor code first.
+   - **Context:** a server-side context builder gives the tutor a token-budgeted summary of the page and item the
+     learner is on, their goals and test dates, today's plan and what comes next, mastery by skill, recent
+     mistakes and the diagnosed misconceptions, the review schedule, learning style and interests, uploaded-material
+     courses, ACT scores, and the tutor's memory. Tests check what goes in and the budget.
+   - **Voice:** push-to-talk. Text-to-speech uses the browser's built-in voice by default (free); a better voice
+     through LLM Gateway is allowed only through its ledger ($5 total, speech only) with a per-user daily cap.
+     Speech-to-text uses LLM Gateway STT through the same ledger, or the browser's recognizer where available.
+     In Spanish lessons it can speak Spanish. Text always stays available.
+   - **Integrity:** during placement, mastery quizzes, timed tasks and any study test, the tutor gives no
+     answers (hints about method only, or off, and say so). It **never** appears on `/spanish-check` or
+     `/spanish-listening` (sealed; check by path in the dock, never edit those files).
+   - Learner data goes only to learner-class providers through `services/pool.js`, never OpenRouter. Tests with
+     a mocked provider.
 
 3. **Measurement kit, third slice** (local: needs the owner). (a) The owner fills the `OWNER:` lines in
    `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/`; (b) the
