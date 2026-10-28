@@ -53,6 +53,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const creators = require('./creators');
 
 const ROOT = __dirname;
 const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(ROOT, 'data'));
@@ -231,6 +232,7 @@ function validate(form, body) {
         age_confirmed: true, age_text: CONSENT_TEXT.age_ok,
         consent: true, consent_text: CONSENT_TEXT.beta,
         status: 'applied',
+        ref: creators.pickCode(body) || null,
       },
     };
   }
@@ -483,6 +485,17 @@ function createApp(opts = {}) {
     '/thanks': 'thanks.html', '/thanks.html': 'thanks.html',
     '/config.js': 'config.js', '/favicon.svg': 'favicon.svg',
   };
+  // /beta?ref=<creator code>: the home page with the code already in the beta form
+  // (also without JavaScript). The code is cleaned to a-z 0-9 . _ - so it is safe in HTML.
+  const homeHtml = () => fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  app.get('/beta', (req, res) => {
+    const code = creators.pickCode(req.query);
+    res.set('Cache-Control', 'no-store').type('html').send(homeHtml().replace('name="ref" value=""', `name="ref" value="${code}"`));
+  });
+  app.get('/creators', (req, res) => {
+    res.set({ 'Cache-Control': 'public, max-age=300', 'X-Robots-Tag': 'noindex' });
+    res.sendFile(path.join(ROOT, 'creators.html'));
+  });
   for (const [route, file] of Object.entries(PAGES)) {
     app.get(route, (req, res) => {
       res.set('Cache-Control', 'public, max-age=300');

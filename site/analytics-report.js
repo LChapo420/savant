@@ -414,6 +414,7 @@ function createReport({ analytics, forms, readAll }) {
         sessions, pagesPerSession: sessions ? Math.round((sessionPages / sessions) * 10) / 10 : 0, returning, new: visitors.length - returning, internal: T.internal,
       },
       bySource: top(bySource, 20),
+      sourceCounts: bySource,
       byType: top(byType, 5),
       byOS: top(T.byOS, 10),
       byBrowser: top(T.byBrowser, 10),
