@@ -1,3 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 *.bat text eol=crlf
+
+# Sealed files: keep exact bytes so their SHA-256 matches SEAL.txt
+spanish-check/** -text
+routes/spanish-check.js -text
+public/spanish-check.html -text
+public/js/spanish-check.js -text
