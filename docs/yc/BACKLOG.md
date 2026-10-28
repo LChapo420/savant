@@ -70,7 +70,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    Privacy: tell the learner in plain words where their file goes and how to delete it; follow
    `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
 
-0b2. **Harden material parsing.** Run PDF and DOCX extraction in a child process with a time and memory limit, so a hostile or pathological file cannot hang or crash the server (reason: slice (a) parses in-process). Test with a PDF that makes pdf.js loop.
+0b2. **Harden material parsing.** [claimed 2026-10-28 23:17Z] Run PDF and DOCX extraction in a child process with a time and memory limit, so a hostile or pathological file cannot hang or crash the server (reason: slice (a) parses in-process). Test with a PDF that makes pdf.js loop.
 
 0c. **The tutor talks, remaining slices** (first slice is under Done).
    - **(b) Better voice through the ledger.** Text-to-speech and speech-to-text through LLM Gateway, only via its
