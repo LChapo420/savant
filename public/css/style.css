@@ -724,6 +724,9 @@ svg.mark-circle, svg.mark-underline { stroke-width: 2; }
 .symbol-sm { --size: 32px; }
 
 .track-card { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--page); overflow: hidden; }
+.track-card.wanted { border-color: var(--accent, currentColor); box-shadow: 0 0 0 2px var(--accent, currentColor); }
+.act-page h2 { margin-top: 1.75rem; }
+.act-page li { margin-bottom: .5rem; }
 .track-head { display: flex; align-items: center; gap: 14px; padding: var(--s-5); }
 .track-head > div > div:first-child { font-size: 1.125rem; font-weight: 700 !important; }
 /* The old tinted icon tile becomes the subject symbol where markup allows;

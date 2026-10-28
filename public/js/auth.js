@@ -21,6 +21,10 @@ App.mount(async () => {
   }
   function clearError() { errorBox.classList.add('hidden'); }
 
+  /** The subject a landing page asked to start with (/act), as an onboarding address. A plain id only. */
+  const wanted = /^[a-z0-9_-]{1,40}$/.test(App.query('track') || '') ? App.query('track') : '';
+  const onboarding = wanted ? `/onboarding?track=${wanted}` : '/onboarding';
+
   /** Where a new or returning account lands. */
   async function land(user, fresh) {
     const next = App.query('next');
@@ -33,7 +37,7 @@ App.mount(async () => {
       return;
     }
     if (user && user.age_needed) {
-      window.location.href = '/onboarding';
+      window.location.href = onboarding;
       return;
     }
     if (fresh) {
@@ -42,13 +46,13 @@ App.mount(async () => {
       // lessons are written from, so a child account whose parent has not allowed
       // outside AI skips it.
       window.location.href = user && user.consent && !user.consent.ai_free_text
-        ? '/style-quiz?next=/onboarding'
-        : '/style-quiz?next=/survey%3Fnext=/onboarding';
+        ? `/style-quiz?next=${encodeURIComponent(onboarding)}`
+        : `/style-quiz?next=${encodeURIComponent(`/survey?next=${encodeURIComponent(onboarding)}`)}`;
       return;
     }
     try {
       const { enrollments } = await App.api.get('/api/enrollments');
-      window.location.href = enrollments.length ? '/dashboard' : '/onboarding';
+      window.location.href = enrollments.length ? '/dashboard' : onboarding;
     } catch {
       window.location.href = '/dashboard';
     }
