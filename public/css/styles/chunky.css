@@ -1,0 +1,193 @@
+/* Style: chunky  (mockup design-options/06-chunky-habit, "Practice that feels like a game")
+ *
+ * Light. The default for light mode. Tactile, pressed-key UI: every button and
+ * card has a solid bottom edge, selections are bold and unmistakable, cobalt is
+ * the brand and warm yellow is the reward colour.
+ *
+ * This file is ONLY tokens (plus this style's @font-face). Components live in
+ * css/style.css and read these tokens; see css/styles/README.md for what each
+ * one means. Specificity :root[data-style] beats the neutral defaults in
+ * style.css whatever the load order.
+ */
+
+/* Nunito, Latin subset, variable weight 500-900. Self-hosted: the content
+   security policy allows fonts from this origin only, and the app promises no
+   third-party requests. Downloaded only when this style is the active one. */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(/fonts/nunito-500-900.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root[data-style="chunky"] {
+  color-scheme: light;
+
+  /* surfaces */
+  --page: #F7F6F2;
+  --well: #EEF0F6;
+  --well-2: #E3E7F1;
+  --card-bg: #FFFFFF;
+  --card-line: #E2E5EE;
+  --field-bg: #FFFFFF;
+  --nav-bg: #FFFFFF;
+  --line: #E2E5EE;
+  --line-strong: #CDD2E0;
+  --control: #8890A6;            /* input and checkbox outlines: 3.2:1 on white */
+
+  /* ink (on --page: 15.0, 6.2, 4.9) */
+  --ink: #172036;
+  --ink-2: #566077;
+  --ink-3: #636C82;
+
+  /* brand: cobalt, with its pressed edge, tint and mid tone */
+  --action: #1F4FD8;
+  --action-hover: #2A5AE6;
+  --action-edge: #153A9E;
+  --on-action: #FFFFFF;
+  --action-tint: #E6EDFD;
+  --action-mid: #BFCFF7;
+  --action-ink: #153A9E;         /* text on --action-tint */
+
+  /* reward: yellow (streak, review prompt, "up next", the tallest bar) */
+  --reward: #FFC62E;
+  --reward-edge: #D79A00;
+  --reward-tint: #FFF3CF;
+  --reward-line: #F3D676;
+  --on-reward: #3A2A00;
+  --reward-ink: #6B4A00;         /* text on --reward-tint */
+  --flame: #FF8A1F;
+  --flame-core: #FFD23F;
+
+  /* right and wrong (the app's marks) */
+  --correct: #17743F;
+  --correct-wash: #E3F6EA;
+  --correct-edge: #0F5A2E;
+  --incorrect: #C0302A;
+  --incorrect-wash: #FDE8E6;
+  --incorrect-edge: #962019;
+  --warn: #8A5A00;
+
+  /* disabled primary button */
+  --off-bg: #E4E7EF;
+  --off-ink: #6C7488;
+  --off-edge: #CBD0DC;
+
+  --focus: #1F4FD8;
+  --focus-ring: #BFCFF7;
+  --chip-bg: #E6EDFD;
+  --chip-ink: #153A9E;
+  --chip-line: transparent;
+  --shadow-lg: 0 2px 0 rgba(23, 32, 54, 0.06), 0 12px 28px -8px rgba(23, 32, 54, 0.22);
+
+  /* type */
+  --font: 'Nunito', ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: var(--font);
+  --num: var(--font);
+  --read-font: var(--font);
+  --w-body: 600;
+  --w-strong: 800;
+  --w-head: 900;
+  --w-btn: 800;
+  --w-label: 800;
+  --tracking-head: -0.02em;
+  --num-feature: 'tnum';
+  --t-meta: 0.8125rem;
+  --t-ui-s: 0.9375rem;
+  --t-ui: 1rem;
+  --t-read: 1.1875rem;
+  --t-stem: 1.625rem;
+  --t-h3: 1.1875rem;
+  --t-h2: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --t-h1: clamp(1.75rem, 1.4rem + 1.3vw, 2.25rem);
+  --t-disp: clamp(2.5rem, 1.6rem + 3.6vw, 3.5rem);
+  --eyebrow-size: 0.8125rem;
+  --eyebrow-weight: 800;
+  --eyebrow-case: none;
+  --eyebrow-tracking: 0;
+  --eyebrow-font: var(--font);
+  --icon-sw: 2.4;
+
+  /* shape */
+  --r-xs: 8px; --r-sm: 12px; --r-md: 14px; --r-lg: 20px; --r-pill: 999px;
+  --r-card: 20px;
+  --r-btn: 16px;
+  --r-input: 14px;
+  --r-choice: 20px;
+  --r-chip: 9px;
+  --r-bar: 9px;
+  --r-icon: 12px;                /* icon tiles, answer-letter boxes */
+
+  /* borders: a card is 2px with a 4px bottom edge */
+  --bw-card: 2px;
+  --bw-card-edge: 4px;
+  --bw-control: 2px;
+  --bw-nav: 2px;
+  --btn1-bw: 0px;                /* primary: no side border ... */
+  --btn1-edge-w: 4px;            /* ... a solid bottom edge */
+  --btn2-bw: 2px;                /* secondary: 2px outline ... */
+  --btn2-edge-w: 4px;            /* ... with the same bottom edge */
+  --btn2-bg: #FFFFFF;
+  --btn2-line: #CDD2E0;
+  --btn2-ink: #172036;
+  --press: 2px;                  /* how far a pressed button sinks */
+
+  /* sizes */
+  --btn-h: 48px;
+  --btn-h-lg: 56px;
+  --btn-h-sm: 42px;
+  --btn-px: 22px;
+  --btn-size: 1rem;
+  --btn-size-lg: 1.0625rem;
+  --input-h: 52px;
+  --choice-h: 64px;
+  --key-size: 38px;
+
+  /* selected option / answer card */
+  --sel-bg: #E6EDFD;
+  --sel-line: #1F4FD8;
+  --sel-edge: #153A9E;
+  --sel-ink: #153A9E;
+  --sel-key-bg: #1F4FD8;
+  --sel-key-ink: #FFFFFF;
+  --hl-line: #BFCFF7;            /* a highlighted (not selected) card: the "up next" card */
+
+  /* progress bars */
+  --bar-h: 14px;
+  --bar-h-sm: 10px;
+  --bar-bg: #E3E7F1;
+  --bar-fill: #1F4FD8;
+  --bar-fill-2: #FFC62E;
+  --bar-shine: rgba(255, 255, 255, 0.4);
+
+  /* shell */
+  --side-w: 264px;
+  --tab-h: 74px;
+  --tab-pad: 8px;
+  --tab-item-h: 58px;
+  --tab-item-r: 16px;
+  --tab-item-bw: 2px;
+  --tab-on-bg: #E6EDFD;
+  --tab-on-ink: #1F4FD8;
+  --tab-on-line: #BFCFF7;
+  --tab-on-edge: 4px;
+  --brand-color: #1F4FD8;
+  --brand-size: 1.4375rem;
+  --brand-weight: 900;
+
+  --choice-line: #CDD2E0;
+  --key-bw: 2px;
+  --field-focus: #1F4FD8;
+  --focus-ring-w: 3px;
+  --chip2-bg: #FFC62E; --chip2-ink: #3A2A00; --chip2-line: transparent;
+  --chip2-case: uppercase; --chip2-tracking: 0.08em; --chip2-weight: 900;
+  /* brand mark: a cobalt tile with white bars and a yellow tall bar */
+  --bm-tile: #1F4FD8; --bm-bars: #FFFFFF; --bm-hi: #FFC62E;
+  --bm-ring-display: none; --bm-bars-display: inline;
+  /* home "this week" panel */
+  --hero-bg: #1F4FD8; --hero-ink: #FFFFFF; --hero-line: #1F4FD8; --hero-edge: #153A9E;
+  --ring-track: rgba(255, 255, 255, 0.22); --ring-fill: #FFC62E; --hero-pill-bg: rgba(255, 255, 255, 0.16); --hero-diamond: #FFC62E;
+}
+:root[data-style="chunky"] body { font-weight: var(--w-body); }

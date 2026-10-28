@@ -18,6 +18,10 @@
     crown: '<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 10H5L3 8Z"/><path d="M5 21h14"/>',
     music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
     ball: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/><path d="M5.6 5.6c3.5 3.5 3.5 9.3 0 12.8"/><path d="M18.4 5.6c-3.5 3.5-3.5 9.3 0 12.8"/>',
+    // Two-colour flame for the streak; its fills are tokens (--flame, --flame-core).
+    flame: '<path style="fill:var(--flame);stroke:none" d="M12.4 1.6c.6 3.6 5.9 6.2 5.9 12.1A6.3 6.3 0 0 1 12 20.2a6.3 6.3 0 0 1-6.3-6.5c0-2.4 1.2-4 2.6-5.2.2 1.7.9 2.7 1.9 3.1C9.9 8.2 10.6 4.4 12.4 1.6z"/><path style="fill:var(--flame-core);stroke:none" d="M12.2 11.3c.4 1.7 3 2.8 3 5.4a3.2 3.2 0 0 1-3.2 3.2 3.2 3.2 0 0 1-3.2-3.3c0-1.3.7-2.2 1.5-2.8.2.9.6 1.3 1.1 1.5-.2-1.4.1-3.2.8-4z"/>',
+    // A card behind a card: the Review tab.
+    cards: '<rect x="3.5" y="7" width="13" height="13" rx="3"/><path d="M7.5 4h10a3 3 0 0 1 3 3v10"/>',
     check: '<path d="M4.5 12.5 9.5 17.5 19.5 6.5"/>',
     'check-circle': '<circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.2 9.6"/>',
     x: '<path d="M6 6l12 12M18 6 6 18"/>',

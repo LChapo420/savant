@@ -111,6 +111,8 @@ function publicUser(user, profile) {
     break_nudge_off: user.break_nudge_off === true,
     client_tz: user.client_tz || null,
     next_study: user.next_study || null,
+    // The visual style the learner picked in Profile ("auto" until they do); see public/js/style-boot.js.
+    style_pref: user.style_pref || 'auto',
     under_13: !!(user.age_check && user.age_check.under_13),
     ux: uxFlags.flagsFor(user),
     onboarded: !!user.onboarded,

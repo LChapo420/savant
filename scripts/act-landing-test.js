@@ -18,7 +18,7 @@ check('title, description and viewport', /<title>[^<]+<\/title>/.test(html) && /
 check('two Start free buttons into register with ACT', (html.match(/href="\/register\?track=act">Start free/g) || []).length === 2);
 check('no third-party scripts or styles', !/(src|href)="https?:\/\/[^"]*\.(js|css)"/.test(html) && !/<script[^>]*src="https?:/.test(html));
 check('page size under 12 KB', Buffer.byteLength(html) < 12 * 1024);
-check('loads only the shared scripts and its own', [...html.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]).join() === '/js/icons.js,/js/app.js,/js/act-landing.js');
+check('loads only the shared scripts and its own', [...html.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]).join() === '/js/style-boot.js,/js/icons.js,/js/app.js,/js/act-landing.js');
 check('no invented numbers: no score gains, user counts or testimonials', !/(\+\s?\d+\s*points?|\d+\s*(students|users) (have|raised|improved)|testimonial|"[^"]*said)/i.test(text));
 check('says there are no results yet', /no results yet/i.test(text));
 check('does not promise a score prediction or timing as a feature', !/(predict(s|ed)? your|timed sections?|scaled estimate)/i.test(text.replace(/does not[^.]*\./gi, '').replace(/not yet[^.]*\./gi, '')));
