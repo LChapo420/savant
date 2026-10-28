@@ -221,6 +221,12 @@ App.mount(async () => {
       <a class="btn btn-sm" href="/act-scores">Open ACT scores</a>
     </div>
 
+    <h2 class="section-title">${window.icon('edit')}My material</h2>
+    <div class="card">
+      <p class="small muted">Upload or paste your own notes or a chapter. Savant keeps the text private to you.</p>
+      <a class="btn btn-sm" href="/my-material">Open my material</a>
+    </div>
+
     <h2 class="section-title">${window.icon('edit')}Your goals</h2>
     <div class="card" id="goals-card">
       <p class="small muted">What you want from each subject or grade. It shapes how long a placement is and how lessons and practice are set up to start with; how you do as you go keeps adjusting it.</p>
