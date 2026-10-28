@@ -64,7 +64,7 @@
     let readScrollBacks = () => null;
 
     root.innerHTML = `
-      <div class="row-between" style="margin-bottom:14px; align-items:flex-start">
+      <div class="row-between" style="margin-bottom:14px; align-items:flex-start; flex-wrap:wrap">
         <div>
           <h1 style="margin:0 0 2px">${App.escapeHtml(m.topic || (retention ? 'Retention check' : 'Lesson'))}</h1>
           <div class="tiny muted">Level ${level} &middot; ${retention ? 'Retention check' : 'Lesson'}</div>
