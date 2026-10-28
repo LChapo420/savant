@@ -584,13 +584,13 @@
    * ruler ticks of rising height on a baseline, in ink. */
   const BRAND = { name: 'Savant' };
   function brandMark() {
-    // Two drawings in one svg; css/style.css shows one per style (tokens --bm-*):
-    // a tile with three bars (chunky, and the neutral baseline) or a ring and dot (night).
+    // The Savant logo, the same in every style: the profile picture's three white
+    // bars on a baseline, on its blue tile (site/brand/savant-logo-blue.svg, scaled to 32).
     return '<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false">'
-      + '<rect class="bm-tile" x="1" y="1" width="30" height="30" rx="9"/>'
-      + '<g class="bm-bars"><rect x="6.5" y="17" width="5" height="9" rx="2"/><rect x="13.5" y="12" width="5" height="14" rx="2"/>'
-      + '<rect class="bm-hi" x="20.5" y="6" width="5" height="20" rx="2"/></g>'
-      + '<g class="bm-ring"><path d="M26.2 10.4A11.5 11.5 0 1 0 27.5 17.5"/><circle cx="16" cy="16" r="3.6"/></g>'
+      + '<rect class="sv-tile" width="32" height="32" rx="7"/>'
+      + '<g class="sv-bars"><rect x="8.69" y="22.91" width="14.63" height="1.22"/>'
+      + '<rect x="9.5" y="17.63" width="1.95" height="5.69"/><rect x="15.03" y="13.56" width="1.95" height="9.75"/>'
+      + '<rect x="20.55" y="8.69" width="1.95" height="14.63"/></g>'
       + '</svg></span>';
   }
 
