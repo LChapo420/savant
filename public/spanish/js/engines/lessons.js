@@ -71,7 +71,7 @@
   // ── lesson (and practice / review game) ─────────────────────────────
   engines.lesson = async (level, root) => {
     ES.warmItems(level.items);
-    const frame = ui.frame(root, { hearts: level.practice ? null : 5, onQuit: quit });
+    const frame = ui.frame(root, { onQuit: quit });
     if (level.intro) await ui.interstitial(frame, { char: level.intro.speaker, text: level.intro.es, voice: level.intro.speaker, label: "Let's go" });
     const r = await ES.session.run(frame, { levelId: level.id, items: level.items, practice: !!level.practice });
     if (r.quit) return quit();
@@ -87,9 +87,9 @@
     await ES.flow.intro(root, {
       title: level.title, kicker: 'Unit Check · never blocks progress',
       body: 'A quick check built for you from your spaced-review queue: items that are due today and items from your weak spots.',
-      bullets: [`${level.items.filter((i) => i.why === 'due').length} due reviews`, `${level.items.filter((i) => i.why === 'weak').length} weak-spot items (${esc(level.learner.weak.join(', '))})`, `${level.items.length} items in total, no hearts lost`],
+      bullets: [`${level.items.filter((i) => i.why === 'due').length} due reviews`, `${level.items.filter((i) => i.why === 'weak').length} weak-spot items (${esc(level.learner.weak.join(', '))})`, `${level.items.length} items in total`],
     });
-    const frame = ui.frame(root, { hearts: null, onQuit: quit });
+    const frame = ui.frame(root, { onQuit: quit });
     const r = await ES.session.run(frame, { levelId: level.id, items: level.items, practice: true, retryMistakes: false, encourage: false });
     if (r.quit) return quit();
     const tags = {};
@@ -202,7 +202,7 @@
         left: missed.length ? retake : null,
         onClick: async () => {
           if (!missed.length) return location.reload();
-          const frame = ui.frame(root, { hearts: null, onQuit: quit });
+          const frame = ui.frame(root, { onQuit: quit });
           await ui.interstitial(frame, { char: 'mara', text: 'Vamos a repasar lo que falló. Después, otra vez el examen.', voice: 'mara', label: 'Start repair' });
           await ES.session.run(frame, { levelId: level.id, items: missed, practice: true });
           ES.flow.back(root, { level, title: 'Repair done', html: '<p>Your retake is free. Press <b>Play again</b> to take a freshly assembled test.</p>' });

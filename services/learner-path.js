@@ -551,8 +551,10 @@ function stepsOverBetween(enrollment, plan, units, grade, level) {
  */
 const LEARN_FIRST = ['learn'];
 const THEN = ['unchecked', 'unseen'];
-function unitsToWork(plan, units, statuses, except = -1) {
-  return units.map((_, i) => i).filter((i) => i !== except && statuses.includes(statusOf(plan, units[i])));
+function unitsToWork(plan, units, statuses, except = -1, enrollment = null) {
+  const list = units.map((_, i) => i).filter((i) => i !== except && statuses.includes(statusOf(plan, units[i])));
+  // The units the learner's goal names go first (services/goal-order.js); same order without a goal.
+  return enrollment ? require('./goal-order').order(enrollment, units, list) : list;
 }
 
 /**
@@ -643,7 +645,7 @@ function unitNextLevelAfter(enrollment, grade, level) {
     next += 1;
   }
 
-  const pick = unitsToWork(plan, units, LEARN_FIRST, here)[0] ?? unitsToWork(plan, units, THEN, here)[0];
+  const pick = unitsToWork(plan, units, LEARN_FIRST, here, enrollment)[0] ?? unitsToWork(plan, units, THEN, here, enrollment)[0];
   if (pick !== undefined) return clamp(units[pick].start);
 
   next = Math.max(next, lastEnd + 1);
@@ -671,9 +673,9 @@ function firstLevel(enrollment, grade) {
   if (!plan || !units) return current;
   const inside = (i) => current >= units[i].start && current <= units[i].end;
   const startOf = (i) => unitPlacement.startLevelOf(enrollment.track_id, enrollment.grade_id, units[i]);
-  const learn = unitsToWork(plan, units, LEARN_FIRST);
+  const learn = unitsToWork(plan, units, LEARN_FIRST, -1, enrollment);
   if (learn.length) return inside(learn[0]) ? current : startOf(learn[0]);
-  const rest = unitsToWork(plan, units, THEN);
+  const rest = unitsToWork(plan, units, THEN, -1, enrollment);
   if (rest.length) return rest.some(inside) ? current : startOf(rest[0]);
   return nextLevelAfter(enrollment, grade, current - 1);
 }

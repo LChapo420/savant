@@ -1,5 +1,5 @@
 /* The remaining challenges.
- *   match_pairs     "Tap the matching pairs" — instant feedback, a wrong pair costs a heart
+ *   match_pairs     "Tap the matching pairs" — instant feedback, a wrong pair shows the miss
  *   speak           "Speak this sentence" — mic, recognised and scored, 2 tries
  *   record_compare  record yourself, then play yours against the model
  *   fix_sentence    "Find and fix the mistake" — tap the wrong word, then pick the fix

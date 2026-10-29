@@ -169,6 +169,18 @@ App.mount(async () => {
     }
   }
 
+  // A landing page (/act) sends a learner here with only the subject: bring that
+  // subject's card into view and put the cursor on its "Find my grade" button.
+  if (wantedTrack && !wantedGrade) {
+    const card = [...host.querySelectorAll('.track-card')].find((c) => c.querySelector(`a[href^="/subject-placement?track=${CSS.escape(wantedTrack)}"]`));
+    if (card) {
+      card.classList.add('wanted');
+      card.scrollIntoView({ block: 'start' });
+      const go = card.querySelector('.not-sure a');
+      if (go) go.focus({ preventScroll: true });
+    }
+  }
+
   refresh();
 });
 

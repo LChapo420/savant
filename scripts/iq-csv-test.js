@@ -6,7 +6,7 @@ const curriculum = require('../config/curriculum');
 const LAYOUT = require('../config/level-layout');
 
 const ROOT = path.join(__dirname, '..');
-const src = path.join(ROOT, 'data', 'IQ_Levels_Topics.csv');
+const src = path.join(process.env.SHEET_DIR || path.join(ROOT, 'data'), 'IQ_Levels_Topics.csv');
 const source = readSheet(src, () => 'logic_deduction').grades;
 const failures = [];
 

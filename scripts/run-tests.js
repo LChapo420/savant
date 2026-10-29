@@ -20,13 +20,20 @@ const DB = 'data/db.json';
 // --offline into an empty db, password hash blanked). Each step gets its own temp copy via DB_FILE.
 const FIXTURE_DB = path.join(__dirname, 'fixtures', 'test-db.json');
 const useFixture = !fs.existsSync(path.join(ROOT, DB)) && fs.existsSync(FIXTURE_DB);
+// The five workbook CSVs: without the owner's, the Spanish test reads the committed copy of its sheet and
+// the other four read sheets rebuilt from the committed content (scripts/build-test-sheets.js) in a temp
+// dir, passed as SHEET_DIR. The rebuilt ones check the content against itself, not against the creator's.
+const SPANISH_COMMITTED = path.join(ROOT, 'docs', 'spanish-replica', 'Spanish_Fluency_Path.csv');
+const SHEET_FILES = {
+  'iq-csv-test': 'IQ_Levels_Topics.csv',
+  'chess-items-test': 'Chess_Grades_Levels.csv',
+  'piano-items-test': 'Piano_Grades_Levels.csv',
+  'basketball-items-test': 'Basketball_Grades_Levels.csv',
+};
+let sheetDir = null;
+const sheetsMissing = Object.values(SHEET_FILES).some((f) => !fs.existsSync(path.join(ROOT, 'data', f)));
 const NEEDS = {
   'grading-test': [DB],
-  'iq-csv-test': ['data/IQ_Levels_Topics.csv'],
-  'spanish-csv-test': ['data/Spanish_Fluency_Path.csv'],
-  'chess-items-test': ['data/Chess_Grades_Levels.csv'],
-  'piano-items-test': ['data/Piano_Grades_Levels.csv'],
-  'basketball-items-test': ['data/Basketball_Grades_Levels.csv'],
   'self-test': [DB],
   'scorecard-test': [DB],
   'scorecard-contract-test': [DB],
@@ -39,7 +46,13 @@ const strict = process.argv.includes('--strict');
 // Decided once, up front: earlier steps may create an empty data/db.json, which is not the owner's.
 const present = new Set(Object.values(NEEDS).flat().filter((f) => fs.existsSync(path.join(ROOT, f))));
 if (useFixture) present.add(DB);
+if (sheetsMissing) {
+  sheetDir = require('./build-test-sheets').writeSheets(fs.mkdtempSync(path.join(os.tmpdir(), 'savant-sheets-')));
+}
+// The Spanish test reads its sheet from SPANISH_SHEET when set.
+if (!fs.existsSync(path.join(ROOT, 'data', 'Spanish_Fluency_Path.csv'))) process.env.SPANISH_SHEET = SPANISH_COMMITTED;
 const fixtureSteps = [];
+const sheetSteps = [];
 const skipped = [];
 for (const cmd of STEPS) {
   const name = (cmd.match(/scripts\/([\w-]+)\.js/) || [])[1];
@@ -51,6 +64,11 @@ for (const cmd of STEPS) {
   }
   console.log(`\n$ ${cmd}`);
   const env = { ...process.env };
+  const fromSheet = sheetDir && (SHEET_FILES[name] && !fs.existsSync(path.join(ROOT, 'data', SHEET_FILES[name])));
+  if (fromSheet) { env.SHEET_DIR = sheetDir; sheetSteps.push(name); console.log('     (on a sheet rebuilt from the committed content, not the creator\'s)'); }
+  if (name === 'spanish-csv-test' && process.env.SPANISH_SHEET) {
+    sheetSteps.push(name); console.log('     (on the committed copy of the sheet, docs/spanish-replica)');
+  }
   let tmp = null;
   if (useFixture && (NEEDS[name] || []).includes(DB)) {
     tmp = path.join(os.tmpdir(), `fixture-${name}-${process.pid}.json`);
@@ -70,5 +88,6 @@ if (skipped.length) {
   console.log(`\n${skipped.length} step(s) SKIPPED for missing data/ files:\n  - ${skipped.join('\n  - ')}`);
   if (strict) { console.error('--strict: skips count as failures'); process.exit(1); }
 }
+if (sheetSteps.length) console.log(`\n${sheetSteps.length} workbook step(s) ran on stand-in sheets: ${sheetSteps.join(', ')}`);
 if (fixtureSteps.length) console.log(`\n${fixtureSteps.length} db step(s) ran on the synthetic fixture db: ${fixtureSteps.join(', ')}`);
 console.log(skipped.length ? '\nPassed, with skips.' : '\nAll steps passed.');

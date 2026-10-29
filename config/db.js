@@ -55,9 +55,19 @@ const COLLECTIONS = [
   'skill_records',           // chess, piano, basketball: one per learner per exit-battery metric, every sitting (cold/warm, day, source, confirmed) and practice set (services/skill-record.js)
   'study_sessions',          // a learner's "Start session" to "End session" span: local day, active time, pauses (services/study-sessions.js)
   'learner_goals',           // what a learner wants from a subject or grade: choice + their words, per (track, grade) (services/goals.js)
+  'tutor_modes',             // the tutor dock's voice/text choice per learner: the mode of their last message (services/tutor-mode.js)
   'tutor_memory',            // the one persistent tutor per learner: running summary + last turns (services/tutor.js)
   'enforcers',               // retention enforcers: end of session/day and scheduled ones, tier, window, questions, results (services/enforcers.js)
   'es_path_runs',            // main-path Spanish: one per level played with the Duolingo-style activities, its built level and first answers (services/spanish/path.js)
+  'act_profiles',            // ACT prep: one per learner, test date and target score (services/act-scores.js)
+  'act_scores',              // ACT prep: one per recorded practice or official test, section scores by date (services/act-scores.js)
+  'act_study',               // ACT measurement study: one per participant, counterbalanced order, consent (services/act-study.js)
+  'spanish_study',           // Savant vs Duolingo beginner-Spanish study: one per participant, arm drawn from drand (services/spanish-study.js)
+  'spanish_study_checkins',  // Duolingo-arm daily self-reported minutes
+  'spanish_study_tests',     // pre/post scores on the sealed external tests
+  'material_courses',        // courses built from a learner's material (services/course-builder.js), private to them
+  'material_progress',       // study progress on a built course: skill status, spaced-review due times, open quiz (services/material-study.js)
+  'materials',               // learn from your own material: the extracted text of a learner's upload or paste, private to them (services/materials.js)
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];
 

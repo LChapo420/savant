@@ -466,8 +466,9 @@ App.mount(async () => {
       engineId,
       level,
       enrollment: enrollmentId,
+      // The server decides what is next: the level the learner stands on, never level + 1.
       nextLevelUrl: enrollmentId
-        ? `/session?enrollment=${enrollmentId}&level=${level + 1}`
+        ? `/session?enrollment=${enrollmentId}`
         : null,
       // One id per page load, so this play's answers can be read together.
       play: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`,
@@ -818,8 +819,8 @@ App.mount(async () => {
           ${game.settled && game.advanced
         ? `<a class="btn btn-primary" href="/session?enrollment=${enrollmentId}">
              ${window.icon('arrow-right')}Continue to level ${game.level}</a>`
-        : game.settled
-          ? `<a class="btn" href="/session?enrollment=${enrollmentId}&level=${level + 1}">
+        : game.settled && game.standing !== level
+          ? `<a class="btn" href="/session?enrollment=${enrollmentId}">
              ${window.icon('arrow-right')}Next level</a>`
           : ''}
           <a class="btn" href="/path?enrollment=${enrollmentId}">
@@ -876,6 +877,7 @@ App.mount(async () => {
         });
         game.advanced = !!done.advanced;
         game.level = done.level;
+        game.standing = done.level;
         const blockers = (done.progress && done.progress.blockers) || [];
         game.outcome = done.advanced
           ? `Level ${level} is cleared — you are on level ${done.level}.`

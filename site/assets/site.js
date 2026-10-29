@@ -113,6 +113,37 @@
     }
   });
 
+  /* ── creator link: /beta?ref=<code> (or ?utm_source=) fills the beta form's hidden field ── */
+  (function () {
+    var field = document.querySelector('#beta-form input[name="ref"]');
+    if (!field) return;
+    var clean = function (v) { return String(v || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9._-]/g, '').slice(0, 40); };
+    var code = clean(field.value);
+    try {
+      var sp = new URLSearchParams(location.search);
+      code = code || clean(sp.get('ref')) || clean(sp.get('utm_source'));
+      // Kept for this tab, so a reload or a hop to another page and back keeps the link.
+      if (code) sessionStorage.setItem('savant-ref', code); else code = clean(sessionStorage.getItem('savant-ref'));
+    } catch (e) { /* storage blocked: the URL still works */ }
+    field.value = code;
+  })();
+
+  /* ── creators page: full link text and copy buttons ── */
+  document.querySelectorAll('[data-origin-text]').forEach(function (el) {
+    el.textContent = location.origin + el.getAttribute('data-origin-text');
+  });
+  document.querySelectorAll('[data-copy-from]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var src = document.getElementById(btn.getAttribute('data-copy-from'));
+      if (!src || !navigator.clipboard) return;
+      navigator.clipboard.writeText(src.textContent.trim()).then(function () {
+        var was = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = was; }, 1500);
+      }, function () { /* copy blocked: the text is selectable */ });
+    });
+  });
+
   /* ── grade strips: one bar per grade ───────────────────────────────── */
   // Each bar's height is how many levels that grade has in the base curriculum
   // (assets/grade-levels.js, generated from the app's config/curriculum.js). Each
@@ -543,7 +574,7 @@
     var q = { src: '', s: '', m: '', c: '' };
     try {
       var sp = new URLSearchParams(location.search);
-      q = { src: sp.get('src') || '', s: sp.get('utm_source') || '', m: sp.get('utm_medium') || '', c: sp.get('utm_campaign') || '' };
+      q = { src: sp.get('src') || sp.get('ref') || '', s: sp.get('utm_source') || '', m: sp.get('utm_medium') || '', c: sp.get('utm_campaign') || '' };
     } catch (e) { /* no tags */ }
     var body = { p: location.pathname, r: document.referrer || '', u: { s: q.s, m: q.m, c: q.c }, src: q.src, c: visitChoice(), gpc: gpc, wd: navigator.webdriver === true };
     if (document.body.hasAttribute('data-not-found')) body.nf = 1;

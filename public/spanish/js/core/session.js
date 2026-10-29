@@ -3,11 +3,11 @@
  *   - one challenge at a time; CHECK grades it on the server; a green or red
  *     sheet explains it; CONTINUE moves on (Enter does both)
  *   - the progress bar only grows on correct answers
- *   - a wrong answer costs a heart (unless practice / exam) and the challenge
+ *   - a wrong answer keeps its feedback and the challenge
  *     comes back at the end under "Let's review the exercises you missed!"
  *   - 5 and 10 in a row turn the bar gold and bring the mascot out
  *   - SKIP counts as wrong; "Can't speak/listen now" switches those off for an hour
- *   - exam mode: no hearts, no feedback, no repeats — answers are just recorded
+ *   - exam mode: no feedback, no repeats — answers are just recorded
  *
  * ES.session.run(frame, opts) -> Promise<{ results, xp, accuracy, timeMs, quit }>
  */
@@ -32,10 +32,9 @@
 
   async function run(frame, opts) {
     const {
-      levelId, items = [], hearts: startHearts = 5, practice = false, exam = false,
+      levelId, items = [], practice = false, exam = false,
       next = null, retryMistakes = true, encourage = true, total: totalOverride, tagFor = null,
     } = opts;
-    let hearts = practice || exam ? null : startHearts;
     const filter = (it) => !(SPEAK.has(it.kind) && ES.speakingOff()) && !(LISTEN.has(it.kind) && ES.listeningOff());
     let queue = items.filter(filter);
     const total = totalOverride || queue.filter((i) => i.kind !== 'sound_tip').length || 1;
@@ -56,7 +55,7 @@
           levelId,
           ready: (on) => frame.footer.ready(on),
           selfResult: (res) => finish(res),
-          mistake: () => { if (!exam) loseHeart(); },
+          mistake: () => {},
         };
         const builder = ES.ex[item.kind];
         if (!builder) { resolve({ correct: true, skipped: true }); return; }
@@ -68,8 +67,6 @@
           if (finished) return; finished = true;
           ui.onKeys(null);
           if (ex.showResult) ex.showResult(res);
-          // The heart goes the moment the answer is marked wrong, as in the app.
-          if (!res.correct && !exam) loseHeart();
           if (exam) {
             sfx.play('tap');
             frame.footer.continueOnly({ label: 'Continue', onClick: () => resolve(res), tone: 'es-btn--secondary' });
@@ -111,13 +108,6 @@
       });
     }
 
-    async function loseHeart() {
-      if (hearts === null) return;
-      hearts = Math.max(0, hearts - 1);
-      frame.hearts(hearts);
-      sfx.play('heartLost');
-    }
-
     while (true) {
       let item;
       if (next) item = next(last);
@@ -154,19 +144,13 @@
         if (retryMistakes && tries < 3) review.push(item);
         else done++;
       }
-      // Hearts can also run out inside a challenge (a wrong pair in match pairs).
-      if (hearts === 0) {
-        const choice = await ui.outOfHearts();
-        if (choice === 'quit') return { results, quit: true, timeMs: Date.now() - t0 };
-        hearts = startHearts; frame.hearts(hearts);
-      }
     }
     frame.footer.hide();
     const graded = results.filter((r) => !(r.skipped === 'speak' || r.skipped === 'listen'));
     const right = graded.filter((r) => r.correct).length;
     const accuracy = graded.length ? Math.round((right / graded.length) * 100) : 100;
     const xp = exam ? 0 : (practice ? 5 : 10) + (accuracy === 100 ? 5 : 0) + Math.floor(comboMax / 5);
-    return { results, xp, accuracy, timeMs: Date.now() - t0, comboMax, quit: false, hearts };
+    return { results, xp, accuracy, timeMs: Date.now() - t0, comboMax, quit: false };
   }
 
   ES.session = { run, check };

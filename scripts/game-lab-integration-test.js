@@ -78,7 +78,8 @@ async function routesTest() {
 
 async function courseFrameTest() {
   const app = express();
-  const user = db.findOne('users', () => true);
+  // A learner with no profile, so on the standard plan: served the shared set, never one written for them.
+  const user = { ...db.findOne('users', () => true), id: -1 };
   app.use((req, res, next) => { req.user = user; next(); });
   app.use('/api', require('../routes/base-lessons'));
   app.use((_, res) => res.status(404).end());
@@ -87,6 +88,9 @@ async function courseFrameTest() {
   });
   const base = `http://127.0.0.1:${server.address().port}`;
   const holdsWere = process.env.GAME_HOLDS;
+  const tailoringWas = process.env.TESTER_TAILORING;
+  // Serve the shared sets as a standard learner gets them; a tailored learner would ask a model to write their own.
+  process.env.TESTER_TAILORING = 'off';
   try {
     // These levels' shared sets are held from serving since 2026-10-24 (content/game-holds.json,
     // LIVE-CHANGES-2026-10-24.md): held, the level is not served as a game at all.
@@ -127,6 +131,7 @@ async function courseFrameTest() {
     }
   } finally {
     if (holdsWere === undefined) delete process.env.GAME_HOLDS; else process.env.GAME_HOLDS = holdsWere;
+    if (tailoringWas === undefined) delete process.env.TESTER_TAILORING; else process.env.TESTER_TAILORING = tailoringWas;
     await new Promise((resolve) => server.close(resolve));
   }
   console.log('PASS course game frames: Mario/Moto payloads, CSP, auth route and course-only Moto finish hook');

@@ -885,4 +885,12 @@
     BRAND, brandMark, symbol, subjectId, gradeParts, gradeLabel, cleanTitle, levelParts,
     scale, checkpointTicks, tmeter, unitStrip, retakePlacement, bindRetake, noDash,
   };
+
+  // The tutor dock goes on every page except the sealed Spanish tests (js/tutor-dock.js checks again).
+  if (!/^\/spanish-(check|listening)/i.test(location.pathname)) {
+    const dockScript = document.createElement('script');
+    dockScript.src = '/js/tutor-dock.js';
+    dockScript.defer = true;
+    document.head.appendChild(dockScript);
+  }
 })();

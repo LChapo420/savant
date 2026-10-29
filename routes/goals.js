@@ -8,7 +8,11 @@
  */
 const express = require('express');
 const curriculum = require('../config/curriculum');
+const db = require('../config/db');
 const goals = require('../services/goals');
+const goalOrder = require('../services/goal-order');
+const spanishFit = require('../services/spanish/goal-fit');
+const unitPlacement = require('../services/unit-placement');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
@@ -29,10 +33,33 @@ function targetOf(src) {
   return { trackId, gradeId };
 }
 
+/**
+ * What the goal does on this path, in the learner's words: Spanish names its
+ * profile (services/spanish/goal-fit.js), other subjects say which units the
+ * goal text puts first (services/goal-order.js). null when nothing is set.
+ */
+function fitOf(userId, t) {
+  const goal = goals.forGrade(userId, t.trackId, t.gradeId);
+  if (!goal) return null;
+  if (t.trackId === 'spanish') {
+    const p = spanishFit.profileFor(userId, t.gradeId || 'entry');
+    return { label: p.label, why: p.why };
+  }
+  if (!t.gradeId) return null;
+  const enrollment = db.findOne('enrollments', (e) => e.user_id === userId && e.track_id === t.trackId && e.grade_id === t.gradeId);
+  const units = enrollment ? unitPlacement.unitsFor(t.trackId, t.gradeId) : null;
+  const first = goalOrder.named(enrollment, units);
+  if (!goals.applies(userId)) return null;
+  return first.length
+    ? { label: 'Your units first', why: `Units that match your words come first: ${first.map((u) => u.title).join(', ')}. Every other unit stays on the path and open.` }
+    : { label: 'Course order', why: 'Name a skill in your own words (for example "fractions") and the units that teach it come first. Nothing is ever hidden.' };
+}
+
 router.get('/goals', requireAuth, (req, res) => {
   const t = targetOf(req.query);
   if (!t) return res.status(404).json({ error: 'No such subject.' });
   res.json({
+    fit: fitOf(req.user.id, t),
     goal: goals.forGrade(req.user.id, t.trackId, t.gradeId),
     asked: goals.asked(req.user.id, t.trackId, t.gradeId),
     text_max: goals.TEXT_MAX,
@@ -61,6 +88,7 @@ router.put('/goals', requireAuth, limit('goals', 60, 60 * 60 * 1000), (req, res)
     choice: req.body.choice || null,
     text: req.body.text,
     skipped: req.body.skipped === true,
+    targetDate: req.body.target_date,
   });
   if (out.error) return res.status(400).json({ error: out.error });
   res.json(out);

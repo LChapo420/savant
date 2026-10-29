@@ -396,7 +396,8 @@ const KNOWN_COLLECTIONS = [
     'level_signals', 'learner_records', 'level_debriefs', 'placement_question_sets', 'subject_placements',
     'game_payloads', 'block_plans', 'assist_chats', 'level_logs', 'chess_ratings', 'chess_puzzle_attempts',
   'chess_rush_runs', 'chess_drill_cards', 'chess_drill_runs', 'fact_pools', 'piano_song_results', 'parents', 'parental_consents',
-  'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'es_path_runs', 'es_review',
+  'skill_records', 'study_sessions', 'enforcers', 'learner_goals', 'tutor_memory', 'tutor_modes', 'es_path_runs', 'es_review',
+  'act_profiles', 'act_scores', 'act_study', 'spanish_study', 'spanish_study_checkins', 'spanish_study_tests', 'materials', 'material_courses', 'material_progress',
 ];
 function collectionNames() {
   return KNOWN_COLLECTIONS.filter((name) => {
@@ -498,7 +499,7 @@ const TEXT_FIELDS = [
  * account, whatever the opt-ins say: the research doc (section 2, the upload
  * row) prefers uploads disabled for children until a lawyer approves them.
  */
-const CHILD_MEDIA_UPLOAD = /^\/es\/(asr|upload)$/;
+const CHILD_MEDIA_UPLOAD = /^\/(es\/(asr|upload)|materials(\/paste)?)$/;
 /** What a locked account can still reach. */
 const LOCKED_ALLOW = /^\/(auth\/|consent\/|health$)/;
 
@@ -535,7 +536,7 @@ function gate(req, res, next) {
     });
   }
   const child = ['pending', 'active', 'revoked'].includes(a.state);
-  if (child && req.method !== 'GET' && CHILD_MEDIA_UPLOAD.test(reqPath)) {
+  if (child && req.method === 'POST' && CHILD_MEDIA_UPLOAD.test(reqPath)) {
     return res.status(403).json({
       error: 'Recordings and files are not uploaded from child accounts. Type your answer instead.',
       code: 'child_upload_off',

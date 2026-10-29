@@ -47,7 +47,6 @@
     complete: [523, 659, 784, 1047, 1319].map((f, i) => ({ f, at: i * 0.09, len: 0.28, type: 'triangle', gain: 0.8 })),
     streak:   [{ f: 392, len: 0.35, type: 'sawtooth', gain: 0.15, slideTo: 1568 }, { f: 1568, at: 0.3, len: 0.3, type: 'triangle', gain: 0.6 }],
     chest:    [{ f: 1319, len: 0.1, type: 'triangle' }, { f: 1568, at: 0.08, len: 0.1, type: 'triangle' }, { f: 2093, at: 0.16, len: 0.3, type: 'triangle' }],
-    heartLost:[{ f: 330, len: 0.25, type: 'sine', gain: 0.6, slideTo: 196 }],
     tick:     [{ f: 1760, len: 0.03, type: 'square', gain: 0.15 }],
   };
 

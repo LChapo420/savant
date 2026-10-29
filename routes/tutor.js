@@ -11,6 +11,8 @@
  */
 const express = require('express');
 const tutor = require('../services/tutor');
+const dock = require('../services/tutor-context');
+const tutorMode = require('../services/tutor-mode');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
@@ -23,6 +25,30 @@ router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
   } catch (err) {
     console.warn(`tutor: ${err.message}`);
     res.json({ reply: tutor.offlineReply(req.user.id), source: 'fallback' });
+  }
+});
+
+// The dock on every page. The mode (full / method-only / off) comes from the page path, decided here.
+router.get('/tutor/dock', requireAuth, (req, res) => {
+  const mode = dock.modeFor(req.query.path);
+  res.json({ mode, input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en' });
+});
+
+// The learner flips the toggle: remembered right away, so the next page opens in the same mode.
+router.put('/tutor/dock/mode', requireAuth, (req, res) => {
+  const m = tutorMode.valid(req.body && req.body.mode);
+  if (!m) return res.status(400).json({ error: 'Mode must be voice or text.' });
+  res.json({ input_mode: tutorMode.set(req.user.id, m) });
+});
+
+router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
+  const body = req.body || {};
+  if (dock.modeFor(body.page && body.page.path) === 'off') return res.status(403).json({ error: 'The tutor is off on this page.' });
+  try {
+    res.json(await dock.reply({ user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode, image: body.image }));
+  } catch (err) {
+    console.warn(`tutor dock: ${err.message}`);
+    res.json({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode: dock.modeFor(body.page && body.page.path) });
   }
 });
 
