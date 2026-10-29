@@ -745,7 +745,10 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
     : placement.scores || [];
   const asked = [...(placement.asked_blocks || []), { grade: block.grade, part: block.part }];
   const post = adaptive.posterior(placement.grade_ids.length, answered);
-  const late = placement.deadline_at && Date.now() >= Date.parse(placement.deadline_at);
+  // The clock only ends a walk that has its minimum answers. A learner who stepped away mid-quiz was stopped
+  // after 4 answers and placed three grades up on them (owner, 2026-10-29).
+  const late = placement.deadline_at && Date.now() >= Date.parse(placement.deadline_at)
+    && answered.length >= adaptive.limits(placement.mode, placement.grade_ids.length).min;
   const next = adaptive.done(placement.mode, answered, post) || late || partial
     ? null
     : adaptive.nextBlock(blocksOf(trackId), asked, adaptive.nextTarget(answered, post));

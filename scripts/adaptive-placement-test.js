@@ -89,8 +89,13 @@ console.log('\nthe walk in the app (English)');
   // The clock is held on the server.
   p = subjectPlacement.start(user.id, 'english', { restart: true, mode: 'balanced' });
   db.update('subject_placements', p.id, { deadline_at: new Date(Date.now() - 1000).toISOString() });
+  const early = subjectPlacement.submitBlock(user.id, 'english', [{ index: 0, answer: 'x' }]);
+  check('the clock does not end a walk short of its minimum answers', !early.stopped, early.placement && early.placement.stop_reason);
+  p = subjectPlacement.placementFor(user.id, 'english');
+  const min = adaptive.limits('balanced', p.grade_ids.length).min;
+  db.update('subject_placements', p.id, { answered: Array.from({ length: min }, (_, i) => ({ pos: 3 + (i % 3) * 0.3, guess: 0.25, correct: i % 2 === 0 })) });
   const late = subjectPlacement.submitBlock(user.id, 'english', [{ index: 0, answer: 'x' }]);
-  check('a block handed in after the clock ends the walk', late.stopped && subjectPlacement.placementFor(user.id, 'english').stop_reason === 'the clock ran out');
+  check('a block handed in after the clock, with the minimum answered, ends the walk', late.stopped && subjectPlacement.placementFor(user.id, 'english').stop_reason === 'the clock ran out');
 
   // Quitting scores only what was answered.
   p = subjectPlacement.start(user.id, 'english', { restart: true, mode: 'accurate' });
