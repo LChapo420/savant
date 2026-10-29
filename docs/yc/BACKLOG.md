@@ -113,7 +113,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 11. **Interview prep, deepened.** For each of the 40 questions in `docs/yc/INTERVIEW.md`, a short answer built
     only from facts in the repo and `docs/yc/`, plus the one number or demo moment that backs it. Mark what
     the founder must fill in from his own experience.
-12. **Demo script.** A 60-second and a 3-minute walkthrough of the app for the application video and the
+12. [claimed 2026-10-29T12:25Z] **Demo script.** A 60-second and a 3-minute walkthrough of the app for the application video and the
     interview, using the demo account (`scripts/seed-demo-account.js`), with the exact clicks.
 13. [first slice DONE (gap 4, adult deletion), see Done; rest still open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
     goes to which provider), one gap per run.
