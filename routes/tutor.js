@@ -33,7 +33,7 @@ router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
 // The dock on every page. The mode (full / method-only / off) comes from the page path, decided here.
 router.get('/tutor/dock', requireAuth, (req, res) => {
   const mode = dock.modeFor(req.query.path);
-  res.json({ mode, input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en' });
+  res.json({ mode, input_mode: tutorMode.get(req.user.id), speech_lang: /^\/spanish/.test(dock.cleanPath(req.query.path)) ? 'es' : 'en', stt: voice.gatewayFor(req.user.id) });
 });
 
 // The learner flips the toggle: remembered right away, so the next page opens in the same mode.
@@ -62,6 +62,19 @@ router.post('/tutor/speak', requireAuth, limit('tutor-speak', 60, 60 * 60 * 1000
     res.set('Content-Type', 'audio/mpeg').set('Cache-Control', 'private, no-store').send(mp3);
   } catch (err) {
     res.status(err.status === 400 ? 400 : 503).json({ error: 'Browser voice.' });
+  }
+});
+
+// Better listening for push-to-talk: the recording is the raw request body (at most 1 MB, about a minute), transcribed and dropped.
+// Any failure is a 503 with no text: the dock then uses the browser recognizer (the free default).
+const audioBody = express.raw({ type: () => true, limit: 1024 * 1024 });
+router.post('/tutor/transcribe', requireAuth, limit('tutor-transcribe', 60, 60 * 60 * 1000), audioBody, async (req, res) => {
+  try {
+    const text = await voice.tutorTranscribe(Buffer.isBuffer(req.body) ? req.body : null, { userId: req.user.id, lang: req.query.lang === 'es' ? 'es' : 'en' });
+    if (!text) return res.status(503).json({ error: 'Browser listening.' });
+    res.set('Cache-Control', 'private, no-store').json({ text: text.slice(0, 1000) });
+  } catch (err) {
+    res.status(err.status === 400 ? 400 : 503).json({ error: 'Browser listening.' });
   }
 });
 

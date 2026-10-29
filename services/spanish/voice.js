@@ -234,13 +234,13 @@ const MIME = { wav: 'audio/wav', mp3: 'audio/mpeg', ogg: 'audio/ogg', m4a: 'audi
  * @param {Buffer} buf
  * @param {string} [kind] wav | mp3 | ogg | m4a | flac
  */
-async function asrGateway(buf, kind) {
+async function asrGateway(buf, kind, lang = 'es') {
   if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway speech cooling down'), { status: 429 });
   const model = GATEWAY_STT_MODEL();
   const form = new FormData();
   form.append('file', new Blob([buf], { type: MIME[kind] || MIME.wav }), `speech.${kind}`);
   form.append('model', model);
-  form.append('language', 'es');
+  form.append('language', lang);
   try {
     return await billed({ kind: 'stt', model, bytes: buf.length }, async () => {
       const res = await gatewayFetch('/audio/transcriptions', { method: 'POST', body: form }, 45000);
@@ -300,4 +300,41 @@ async function tutorSpeak(text, { userId, lang = 'en' } = {}) {
   }
 }
 
-module.exports = { tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
+
+// Push-to-talk for the dock: the same gateway, ledger and opt-in list, and a per-learner daily cap on audio bytes.
+// Nothing is stored: the recording is transcribed and dropped. Any refusal sends the dock back to the browser recognizer.
+const TUTOR_STT_DAILY_BYTES = () => Number(process.env.TUTOR_GATEWAY_DAILY_STT_BYTES || 2 * 1024 * 1024);
+const tutorHeard = new Map(); // `${day}:${userId}` -> bytes
+/** Audio container from the first bytes (never the browser's say-so): wav, mp3, ogg, webm, m4a, flac, or null. */
+function audioKind(buf) {
+  if (!buf || buf.length < 12) return null;
+  const h = buf.slice(0, 12);
+  if (h.toString('latin1', 0, 4) === 'RIFF' && h.toString('latin1', 8, 12) === 'WAVE') return 'wav';
+  if (h.toString('latin1', 0, 4) === 'OggS') return 'ogg';
+  if (h.toString('latin1', 0, 4) === 'fLaC') return 'flac';
+  if (h[0] === 0x1a && h[1] === 0x45 && h[2] === 0xdf && h[3] === 0xa3) return 'webm';
+  if (h.toString('latin1', 4, 8) === 'ftyp') return 'm4a';
+  if (h.toString('latin1', 0, 3) === 'ID3' || (h[0] === 0xff && (h[1] & 0xe0) === 0xe0)) return 'mp3';
+  return null;
+}
+/** Transcribe a push-to-talk clip. Throws with status 400 (not audio), 503 (not on the list / cooling down), 429 (daily bytes), 402 (the $5 ledger). */
+async function tutorTranscribe(buf, { userId, lang = 'en' } = {}) {
+  const kind = audioKind(buf);
+  if (!kind) throw Object.assign(new Error('not an audio recording'), { status: 400 });
+  if (!gatewayFor(userId)) throw Object.assign(new Error('gateway listening is not on for this account'), { status: 503 });
+  if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway listening cooling down'), { status: 503 });
+  const key = `${new Date().toISOString().slice(0, 10)}:${userId}`;
+  for (const k of tutorHeard.keys()) if (!k.startsWith(key.slice(0, 11))) tutorHeard.delete(k);
+  const used = tutorHeard.get(key) || 0;
+  if (used + buf.length > TUTOR_STT_DAILY_BYTES()) throw Object.assign(new Error('daily tutor listening used'), { status: 429 });
+  tutorHeard.set(key, used + buf.length);
+  try {
+    return await asrGateway(buf, kind, lang === 'es' ? 'es' : 'en');
+  } catch (err) {
+    tutorHeard.set(key, used);
+    if (err.code === 'LEDGER_STOP') err.status = 402;
+    throw err;
+  }
+}
+
+module.exports = { tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };

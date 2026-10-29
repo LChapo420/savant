@@ -5,8 +5,9 @@
  * The server decides what the tutor may do on this page (GET /api/tutor/dock?path=): full help,
  * hints about method only (placement, mastery and stage checks, retrieval sittings), or off. It is
  * never created on the sealed Spanish tests, checked here by path as well; those files are not edited.
- * Voice is the browser's own: speech out with speechSynthesis, push-to-talk with the browser's
- * recognizer where it has one. Nothing is sent to a paid speech service from here. Text always works.
+ * Voice is the browser's own by default: speech out with speechSynthesis, push-to-talk with the browser's
+ * recognizer where it has one. An account on the gateway list is offered better speech through the server's
+ * ledgered routes (/api/tutor/speak and /api/tutor/transcribe); a refusal falls back to the browser. Text always works.
  */
 (function () {
   const path = location.pathname.toLowerCase();
@@ -67,7 +68,9 @@
       status = await r.json();
     } catch { return; }
     if (status.mode === 'off') return;
-    const canTalk = !!Recog && canSpeak;
+    // Better listening only for accounts the server put on the gateway list; everyone else keeps the browser recognizer.
+    const canRecord = !!status.stt && !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && 'MediaRecorder' in window;
+    const canTalk = (!!Recog || canRecord) && canSpeak;
     // The default mode is the one used for the last message: the server's memory, the local copy for an instant paint.
     let inputMode = canTalk ? (storedMode() || (status.input_mode === 'voice' ? 'voice' : 'text')) : 'text';
     const lang = status.speech_lang === 'es' ? 'es-ES' : (document.documentElement.lang || 'en-US');
@@ -87,7 +90,7 @@
       <div class="tdock-log" aria-live="polite"></div>
       <form class="tdock-form">
         <input type="text" maxlength="600" placeholder="Ask anything" aria-label="Your message">
-        ${Recog ? '<button type="button" class="mic" aria-pressed="false" title="Hold to talk" aria-label="Push to talk">Hold to talk</button>' : ''}
+        ${Recog || canRecord ? '<button type="button" class="mic" aria-pressed="false" title="Hold to talk" aria-label="Push to talk">Hold to talk</button>' : ''}
         <button class="go" type="submit">Send</button>
       </form>`;
     document.body.append(panel, btn);
@@ -176,16 +179,48 @@
 
     if (mic) {
       let rec = null;
-      const stop = () => { if (rec) { try { rec.stop(); } catch { /* already stopped */ } } };
+      let recorder = null;
+      let sttOff = !canRecord; // set when the better listening answers no once; the browser recognizer takes over
+      const pressed = (on) => mic.setAttribute('aria-pressed', String(on));
+      const stop = () => {
+        if (recorder) { try { recorder.stop(); } catch { /* already stopped */ } }
+        if (rec) { try { rec.stop(); } catch { /* already stopped */ } }
+      };
+      // Push-to-talk through /api/tutor/transcribe: the clip is sent once and dropped by the server.
+      const record = async () => {
+        let stream;
+        try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { sttOff = true; pressed(false); return; }
+        const chunks = [];
+        const r = new MediaRecorder(stream);
+        recorder = r;
+        r.ondataavailable = (ev) => { if (ev.data && ev.data.size) chunks.push(ev.data); };
+        r.onstop = async () => {
+          recorder = null;
+          pressed(false);
+          stream.getTracks().forEach((t) => t.stop());
+          const blob = new Blob(chunks, { type: r.mimeType || 'audio/webm' });
+          if (blob.size < 1500 || blob.size > 1024 * 1024) return; // a tap, or too long to send
+          try {
+            const res = await fetch(`/api/tutor/transcribe?lang=${lang.slice(0, 2)}`, { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/octet-stream' }, body: blob });
+            if (!res.ok) { sttOff = true; throw new Error('browser listening'); }
+            const out = await res.json();
+            if (out.text) ask(out.text.trim(), 'voice');
+          } catch { line('bot', Recog ? 'I could not hear that. Try once more.' : 'I could not hear that. Type it instead.'); }
+        };
+        pressed(true);
+        r.start();
+      };
       const begin = () => {
-        if (rec) return;
+        if (rec || recorder) return;
+        if (!sttOff) { record(); return; }
+        if (!Recog) return;
         rec = new Recog();
         rec.lang = lang;
         rec.interimResults = false;
         rec.onresult = (ev) => { const t = ev.results[0][0].transcript; if (t) ask(t.trim(), 'voice'); };
-        rec.onend = () => { rec = null; mic.setAttribute('aria-pressed', 'false'); };
-        rec.onerror = () => { rec = null; mic.setAttribute('aria-pressed', 'false'); };
-        mic.setAttribute('aria-pressed', 'true');
+        rec.onend = () => { rec = null; pressed(false); };
+        rec.onerror = () => { rec = null; pressed(false); };
+        pressed(true);
         try { rec.start(); } catch { rec = null; }
       };
       mic.addEventListener('pointerdown', begin);
