@@ -17,7 +17,8 @@
   const params = new URLSearchParams(location.search);
   const enrollmentId = params.get('enrollment');
   const wantLevel = params.get('level');
-  const pathUrl = `/path?enrollment=${encodeURIComponent(enrollmentId || '')}`;
+  // A catch-up block's level leads back to the catch-up, not to the grade's path.
+  const pathUrl = params.get('catchup') ? '/spanish/catch-up' : `/path?enrollment=${encodeURIComponent(enrollmentId || '')}`;
 
   const page = (html) => {
     root.innerHTML = '';
@@ -56,14 +57,17 @@
 
   // ── the start card ───────────────────────────────────────────────────
   await new Promise((resolve) => {
-    const kick = [`<span class="es-chip">Level ${row.level} of ${data.grade.path_length}</span>`, `<span class="es-chip es-chip--good">${esc(data.slot_label)}</span>`];
+    const cu = data.catch_up;
+    const kick = cu
+      ? [`<span class="es-chip es-chip--good" data-catchup>Catch-up ${cu.k} of ${cu.n}</span>`, `<span class="es-chip">Step ${cu.step} of ${cu.steps}</span>`, `<span class="es-chip">${esc(data.slot_label)}</span>`]
+      : [`<span class="es-chip">Level ${row.level} of ${data.grade.path_length}</span>`, `<span class="es-chip es-chip--good">${esc(data.slot_label)}</span>`];
     if (row.minutes) kick.push(`<span class="es-chip">${icon('clock')} ${row.minutes} min</span>`);
     const wrap = page(`
       <div class="es-learn__top"><a class="es-learn__back" href="${esc(pathUrl)}">${icon('x')} Path</a><span class="es-muted es-small">${esc(data.grade.name)}</span></div>
       <div class="es-learn__char">${ES.character('axo')}</div>
       <div class="es-learn__kicker">${kick.join('')}</div>
       <h1 class="es-h2 es-learn__title">${esc(row.title)}</h1>
-      <p class="es-muted es-learn__unit">${esc(row.unit)}${data.preview ? ' · practice (your place on the path does not move)' : ''}</p>
+      <p class="es-muted es-learn__unit">${cu ? `${esc(cu.grade)} · ${esc(cu.unit)}: ${esc(cu.skill)}` : `${esc(row.unit)}${data.preview ? ' · practice (your place on the path does not move)' : ''}`}</p>
       ${data.fit ? `<div class="es-learn__why" data-profile="${esc(data.fit.profile)}">${icon('target')}<p><b>${esc(data.fit.label)}.</b> ${esc(data.fit.why)}</p></div>` : ''}
       <div class="es-learn__actions"><button class="es-btn es-btn--primary" id="start">Start</button></div>
       <p class="es-small es-learn__small"><a href="${esc(data.classic)}">Use the plain question version of this level</a></p>`);
@@ -92,11 +96,15 @@
     }
     if (out.passed && !out.preview && out.streak) await ES.ui.streak(root, { days: out.streak });
     const nextUrl = `/session?enrollment=${encodeURIComponent(enrollmentId)}`;
-    const head = out.preview ? 'Practice saved'
+    const cuOut = out.catch_up || null;
+    const head = cuOut ? (out.passed ? (cuOut.block_done ? `Catch-up ${cuOut.k} of ${cuOut.n} done!` : 'Step done!') : 'Almost: try this step again')
+      : out.preview ? 'Practice saved'
       : out.passed ? (out.advanced ? `Level ${out.level} done!` : 'Level done!')
         : 'Almost — try this level again';
-    const sub = out.passed
-      ? (out.next && out.advanced ? `Next up: level ${out.next.level} · ${esc(out.next.label)} — <b>${esc(out.next.title)}</b>` : '')
+    const sub = cuOut && out.passed
+      ? (cuOut.block_done ? `<b>${esc(cuOut.skill)}</b> is caught up. Its words now come back for review on a schedule.${cuOut.recheck ? ' Next: the short final check.' : ''}` : `Catch-up ${cuOut.k} of ${cuOut.n}: <b>${esc(cuOut.skill)}</b>.`)
+      : out.passed
+      ? (out.next && out.advanced ?`Next up: level ${out.next.level} · ${esc(out.next.label)} — <b>${esc(out.next.title)}</b>` : '')
       : `This level needs ${Math.round(out.pass_mark * 100)}% first-try; you got ${out.accuracy}%. A fresh round puts the ones you missed first.`;
     const stats = [
       out.accuracy !== null ? `<div class="es-learn__stat"><b>${out.accuracy}%</b><span>first try</span></div>` : '',
@@ -115,6 +123,7 @@
     const acts = wrap.querySelector('.es-learn__actions');
     const primary = h('a', { class: 'es-btn es-btn--primary' });
     if (!out.passed) { primary.textContent = 'Try again'; primary.href = location.pathname + location.search; }
+    else if (cuOut && cuOut.next) { primary.textContent = cuOut.next.label; primary.href = cuOut.next.url; primary.dataset.catchup = 'next'; }
     else if (out.preview) { primary.textContent = 'Back to your path'; primary.href = pathUrl; }
     else { primary.textContent = out.next ? 'Continue' : 'Back to your path'; primary.href = out.next ? nextUrl : pathUrl; }
     acts.append(primary);

@@ -588,6 +588,24 @@ App.mount(async () => {
   async function catchBanner() {
     const esc = App.escapeHtml;
     const nameOf = (s) => App.gradeLabel(s.grade_name || s.grade_id);
+    // Spanish: the skill catch-up (services/spanish/catch-up.js) has its own page.
+    if (track.id === 'spanish') {
+      const s = await App.api.get('/api/es/catch-up/summary').catch(() => null);
+      const r = s && s.available && s.route;
+      if (r) {
+        const onMain = r.grade_id === grade.id;
+        if (r.phase === 'done') return onMain ? `<section class="catch-banner" aria-label="Catch-up"><div class="catch-text">${window.mark('tick', 'mark-plain')}<p><b>Caught up on ${r.steps.length} skill${r.steps.length === 1 ? '' : 's'}.</b></p></div></section>` : '';
+        const lead = r.phase === 'check' ? 'Finish your Spanish skill check.'
+          : r.phase === 'recheck' ? 'Catch-up: take the final check.'
+            : `Catch-up ${r.k} of ${r.n}: ${r.steps[r.k - 1] ? r.steps[r.k - 1].grade_name : ''}.`;
+        const sub = r.phase === 'route' ? `About ${r.total_minutes} minutes left, then a short final check${onMain ? '' : ` and ${App.gradeLabel(r.grade_name)}`}.` : '';
+        return `
+          <section class="catch-banner" aria-label="Catch-up">
+            <div class="catch-text"><p><b>${esc(App.noDash(lead))}</b>${sub ? `<span class="catch-sub">${esc(sub)}</span>` : ''}</p></div>
+            <a class="btn" href="${esc(r.url)}">Continue catch-up</a>
+          </section>`;
+      }
+    }
     // The grade this one leads to.
     if (catchRoute && catchRoute.grade_id === grade.id && (catchRoute.status === 'accepted' || catchRoute.status === 'done')) {
       const route = catchRoute;

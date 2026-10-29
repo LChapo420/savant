@@ -26,7 +26,7 @@ const esPath = require('../../services/spanish/path');
 // The main Spanish path (services/spanish/path.js) plays its levels through the
 // same checking and voice routes as the lab, so those stay open for it when the
 // lab itself is switched off: the path API, voice, and any call about a run.
-const PATH_ROUTES = /^\/(path\/|status$|tts$|asr$)/;
+const PATH_ROUTES = /^\/(path\/|catch-up(\/|$)|status$|tts$|asr$)/;
 const forPath = (req) => PATH_ROUTES.test(String(req.path || '')) || esPath.isRunId(String((req.body && req.body.levelId) || ''));
 router.use((req, res, next) => (labOn() || forPath(req) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 
@@ -54,6 +54,8 @@ router.get('/status', (req, res) => {
 });
 
 router.use('/path', require('./path'));
+// The skill catch-up for the grades below the placement (services/spanish/catch-up.js).
+router.use('/catch-up', require('./catch-up'));
 
 /** Keep the first answer to an item of a main-path run (signed in, own run only). */
 function notePath(req, levelId, itemId, correct, extra) {

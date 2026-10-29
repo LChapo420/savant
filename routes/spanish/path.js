@@ -13,6 +13,7 @@ const db = require('../../config/db');
 const curriculum = require('../../config/curriculum');
 const learnerPath = require('../../services/learner-path');
 const esPath = require('../../services/spanish/path');
+const catchUp = require('../../services/spanish/catch-up');
 const voice = require('../../services/spanish/voice');
 const { requireAuth, canSkip } = require('../../middleware/auth');
 const { limit } = require('../../utils/rate-limit');
@@ -41,7 +42,9 @@ router.get('/level', limit('es-path-level', 120, 60 * 60 * 1000), (req, res) => 
   // The same rule as the ordinary session (routes/learn.js mayOpenLevel): behind
   // is the learner's own, a proved unit is open, ahead needs the skip permission.
   const known = (learnerPath.unitAt(enrollment, level, grade) || {}).status === 'known';
-  if (!(level <= enrollment.current_level || canSkip(req.user) || known)) return res.status(403).json({ error: 'That level is not open yet.' });
+  // A level of a catch-up block is open: the block is the learner's route (services/spanish/catch-up.js).
+  const inCatchUp = catchUp.allowsLevel(req.user.id, enrollment, level);
+  if (!(level <= enrollment.current_level || canSkip(req.user) || known || inCatchUp)) return res.status(403).json({ error: 'That level is not open yet.' });
   if (!esPath.supports(enrollment.grade_id, level)) return res.json({ fallback: classicUrl(enrollment, level) });
   const built = esPath.startRun({ user: req.user, enrollment, level });
   if (!built) return res.json({ fallback: classicUrl(enrollment, level) });
@@ -56,6 +59,7 @@ router.get('/level', limit('es-path-level', 120, 60 * 60 * 1000), (req, res) => 
     grade: { id: grade.id, name: grade.name, path_length: grade.pathLength },
     enrollment: { id: enrollment.id, current_level: enrollment.current_level },
     preview: level !== enrollment.current_level,
+    catch_up: inCatchUp ? catchUp.labelFor(req.user.id, enrollment, level) : null,
     fit: fit ? { profile: fit.profile, label: fit.label, why: fit.why, deferred: !!fit.deferred[level] } : null,
     voice: { server: voice.ttsEnabled() || voice.gatewayFor(req.user.id), asr: voice.asrEnabled() || voice.gatewayFor(req.user.id) },
     classic: classicUrl(enrollment, level),

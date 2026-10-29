@@ -970,12 +970,31 @@ function routeOf(trackId, mainGradeId, entries, mainEnrollmentId = null) {
 }
 
 /**
+ * Spanish has its own catch-up, skill by skill (services/spanish/catch-up.js).
+ * Once a learner has one (a new check, or an old route migrated the first time
+ * they open it), it is the route: one step per short block, with `url` to its
+ * page. Null for every other subject, and for Spanish before there is one.
+ */
+function spanishSkillRoute(userId, trackId) {
+  if (trackId !== 'spanish') return null;
+  try {
+    // eslint-disable-next-line global-require
+    return require('./spanish/catch-up').routeShape(userId);
+  } catch (err) {
+    console.warn(`gap-scan: Spanish skill catch-up unavailable: ${err.message}`);
+    return null;
+  }
+}
+
+/**
  * The catch-up route for an enrollment: its own catch_up entries, once the
  * finished scan's offers are on it (attachOffers) and finished catch-ups are
  * marked done (syncCatchUp).
  */
 function routeForEnrollment(userId, enrollment) {
   if (!enrollment) return null;
+  const v3 = spanishSkillRoute(userId, enrollment.track_id);
+  if (v3 && v3.grade_id === enrollment.grade_id) return v3;
   attachOffers(userId, enrollment);
   const plan = syncCatchUp(db.byId('enrollments', enrollment.id));
   return routeOf(enrollment.track_id, enrollment.grade_id, plan && plan.catch_up, enrollment.id);
@@ -987,6 +1006,8 @@ function routeForEnrollment(userId, enrollment) {
  * gaps with the decisions they have made. Null without a finished scan.
  */
 function routeFor(userId, trackId) {
+  const v3 = spanishSkillRoute(userId, trackId);
+  if (v3) return v3;
   const row = subjectPlacement.placementFor(userId, trackId);
   const scan = currentScan(row);
   if (!scan || !scan.finished_at) return null;
@@ -1394,7 +1415,7 @@ function stateFor(userId, trackId, now = Date.now()) {
   const row = subjectPlacement.placementFor(userId, trackId);
   // A scan from before the subject placement was retaken is not this walk's.
   const scan = currentScan(row);
-  if (!scan) return { scan: null, extended: null, enrollment_id: null, offers: [], catch_up_quiz: catchUpQuiz(trackId, row), route: null };
+  if (!scan) return { scan: null, extended: null, enrollment_id: null, offers: [], catch_up_quiz: catchUpQuiz(trackId, row), route: spanishSkillRoute(userId, trackId) };
   const enrollment = mainEnrollment(userId, trackId, scan.grade_id);
   if (enrollment) attachOffers(userId, enrollment);
   const plan = enrollment ? syncCatchUp(db.byId('enrollments', enrollment.id)) : null;
