@@ -94,8 +94,9 @@ function answerFrom(course, quiz, wrongN = 0) {
   const q0 = course.skills[0].questions[0];
   const pr = ms.practice(u.id, m.id, 'cells', q0.id, q0.answer_index);
   check('practice is explained at once, with the quote', pr.correct === true && pr.explanation && pr.quote);
-  const wrongPr = ms.practice(u.id, m.id, 'cells', q0.id, 0);
-  check('a wrong practice answer is not correct and names the misconception behind it', wrongPr.correct === false && wrongPr.misconception === 'mixes up one and two', wrongPr);
+  const wrongIdx = (q0.answer_index + 1) % q0.choices.length;
+  const wrongPr = ms.practice(u.id, m.id, 'cells', q0.id, wrongIdx);
+  check('a wrong practice answer is not correct and names the misconception behind it', wrongPr.correct === false && wrongPr.misconception && wrongPr.misconception === q0.misconceptions[wrongIdx], wrongPr);
   check('practice does not change mastery', ms.state(u.id, m.id).skills[0].status === 'learning');
 
   console.log('short answer grading');
@@ -111,10 +112,11 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('quiz has no key and a pass mark of 75%', quiz.pass_mark === 0.75 && quiz.questions.length === 4 && !/\"(answer|answer_index|explanation|quote)\"/.test(JSON.stringify(quiz.questions)));
   let out = ms.submit(u.id, m.id, quiz.quiz_id, answerFrom(course, quiz, 2));
   check('2 of 4 does not master', out.report[0].passed === false && ms.state(u.id, m.id).skills[0].status === 'learning', out.report);
-  check('remediation shows the answer, reason, misconception and passage for each miss', out.remediation.length === 2 && out.remediation.every((x) => x.correct_answer && x.explanation && x.from_your_material && x.misconception === 'counts the wrong part'), out.remediation);
+  check('remediation shows the answer, reason, misconception and passage for each miss', out.remediation.length === 2 && out.remediation.every((x) => x.correct_answer && x.explanation && x.from_your_material && ['mixes up one and two', 'counts the wrong part'].includes(x.misconception)), out.remediation);
   check('a failed check keeps tier 1 (the floor) and marks the skill for remediation', out.report[0].tier === 1 && ms.state(u.id, m.id).skills[0].remediate === true, out.report);
   const fixLesson = ms.lesson(u.id, m.id, 'cells');
-  check('the remediation lesson names the misunderstanding and gives 3 practice questions', fixLesson.skill.remediation && fixLesson.skill.remediation.misconceptions.includes('counts the wrong part') && fixLesson.skill.practice.length === 3, fixLesson.skill.remediation);
+  check('the remediation lesson names the misunderstanding and gives 3 practice questions', fixLesson.skill.remediation && fixLesson.skill.remediation.misconceptions.length > 0 && fixLesson.skill.practice.length === 3, fixLesson.skill.remediation);
+  check('after the remediation lesson the next step is the check again (no lesson loop)', ms.nextStep(cb.get(u.id, m.id), db.findOne('material_progress', (p) => p.user_id === u.id), Date.now()).kind !== 'lesson' || ms.state(u.id, m.id).skills[0].remediate === false);
   check('a quiz is one shot', ms.submit(u.id, m.id, quiz.quiz_id, {}).code === 'no_quiz');
   check('the photosynthesis skill is still locked', ms.state(u.id, m.id).skills[1].open === false);
 

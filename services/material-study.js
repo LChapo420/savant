@@ -290,6 +290,7 @@ function lesson(userId, materialId, skillId, opts = {}) {
   // Practice at the skill's tier and below, the ones missed before first.
   const practiceQs = path.pickForTier(skill, Math.max(1, st.tier - 1), n, st.wrong, [], rnd);
   st.read = true;
+  st.remediate = false; // the remediation is this lesson; the check comes next
   st.practice_ids = practiceQs.map((q) => q.id);
   r.steps.lessons++;
   save(r);

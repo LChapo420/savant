@@ -39,7 +39,8 @@ const VERSION = 2;
 const PASSAGE_MIN = 1200;            // characters: a passage is cut at the paragraph break after this
 const PASSAGE_MAX = 2400;
 const MAX_PASSAGES = 120;            // about 290k characters; more is cut and flagged
-const OUTLINE_CHARS = 40000;         // characters of passage openings shown to the outline pass, shared out
+const OUTLINE_CHARS = 60000;         // characters of passage openings shown to the outline pass, shared out
+const OUTLINE_WINDOW = 14000;        // characters of those openings per outline call
 const GLANCE_MIN = 200;
 const GLANCE_MAX = 1200;
 const MAX_SKILLS = 30;
@@ -49,6 +50,8 @@ const MAX_QUESTIONS = 9;
 const MIN_QUOTE = 20;
 const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 360000);
 const STALE_BUILD_MS = 30 * 60 * 1000;
+const BUILD_CONCURRENCY = Number(process.env.MATERIAL_BUILD_CONCURRENCY || 4);
+const CHARS_PER_SKILL = 350;         // at most one skill per this much text: a short note is a short course
 
 const inflight = new Set();
 
@@ -235,16 +238,50 @@ function layout(skills) {
 }
 
 /** A question that is well formed AND whose quote is word for word in its passage. Returns the clean item or {drop}. */
-function cleanQuestion(q, passageById, allowed) {
+/**
+ * For a topic the material only names: the line of the allowed passages that names it best (most of the skill title's
+ * words), or null. Syllabus lines are often table cells a model does not copy exactly, so the quote is found here.
+ */
+function namingLine(title, passageById, allowed) {
+  const words = norm(title).split(/[^a-z0-9]+/).filter((w) => w.length > 3);
+  let best = null;
+  for (const pid of allowed) {
+    const p = passageById.get(pid);
+    if (!p) continue;
+    for (const line of p.text.split(/\n|\s\|\s/)) {
+      const l = clean(line, 400);
+      if (l.length < MIN_QUOTE) continue;
+      const hit = words.filter((w) => norm(l).includes(w)).length;
+      if (hit && (!best || hit > best.hit)) best = { hit, pid, quote: l };
+    }
+  }
+  return best && best.hit >= Math.min(2, words.length) ? best : null;
+}
+
+/** Shuffle the choices (and their misconceptions) by a hash of the prompt: models put the right answer first. */
+function shuffleChoices(prompt, choices, answerIndex, mis) {
+  const h = crypto.createHash('sha1').update(prompt).digest();
+  const order = choices.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) { const j = h[i % h.length] % (i + 1); [order[i], order[j]] = [order[j], order[i]]; }
+  return { choices: order.map((i) => choices[i]), answer_index: order.indexOf(answerIndex), misconceptions: mis.length ? order.map((i) => mis[i]) : [] };
+}
+
+function cleanQuestion(q, passageById, allowed, opts = {}) {
   if (!q || typeof q !== 'object') return { drop: 'invalid' };
   const prompt = clean(q.prompt, 400);
   const explanation = clean(q.explanation, 500);
-  const pid = String(q.passage_id || '');
-  const quote = clean(q.quote, 400);
+  let pid = String(q.passage_id || '');
+  let quote = clean(q.quote, 400);
   if (!prompt || !explanation) return { drop: 'invalid' };
-  const passage = passageById.get(pid);
-  if (!passage || !allowed.has(pid)) return { drop: 'ungrounded' };
-  if (quote.length < MIN_QUOTE || !norm(passage.text).includes(norm(quote))) return { drop: 'ungrounded' };
+  let passage = passageById.get(pid);
+  const quoted = passage && allowed.has(pid) && quote.length >= MIN_QUOTE && norm(passage.text).includes(norm(quote));
+  if (!quoted) {
+    // A general-knowledge item is tied to the line that names its topic; any other item must quote its passage exactly.
+    const named = opts.generalTitle ? namingLine(opts.generalTitle, passageById, allowed) : null;
+    if (!named) return { drop: 'ungrounded' };
+    ({ pid, quote } = named);
+    passage = passageById.get(pid);
+  }
   const tier = [1, 2, 3].includes(Number(q.tier)) ? Number(q.tier) : 2;
   const base = { prompt, explanation, passage_id: pid, quote, tier };
   if (q.type === 'multiple_choice') {
@@ -255,7 +292,7 @@ function cleanQuestion(q, passageById, allowed) {
     let mis = Array.isArray(q.misconceptions) ? q.misconceptions.map((m) => clean(m, 200)) : [];
     if (mis.length !== choices.length) mis = [];
     else mis[q.answer_index] = '';
-    return { item: { ...base, type: 'multiple_choice', choices, answer_index: q.answer_index, misconceptions: mis } };
+    return { item: { ...base, type: 'multiple_choice', ...shuffleChoices(prompt, choices, q.answer_index, mis) } };
   }
   if (q.type === 'short_answer') {
     const answer = clean(q.answer, 200);
@@ -263,6 +300,24 @@ function cleanQuestion(q, passageById, allowed) {
     return { item: { ...base, type: 'short_answer', answer } };
   }
   return { drop: 'invalid' };
+}
+
+/**
+ * The outline is planned window by window: passages (their first GLANCE_MAX characters) in order, about OUTLINE_WINDOW
+ * characters a window, so a long text never needs one huge call. Each window is told the skills planned so far so it
+ * can name them as prerequisites.
+ */
+function outlineWindows(passages) {
+  const glanceAt = Math.max(GLANCE_MIN, Math.min(GLANCE_MAX, Math.floor(OUTLINE_CHARS / Math.max(1, passages.length))));
+  const wins = [];
+  let cur = null;
+  for (const p of passages) {
+    const line = `[${p.id}] ${clean(p.text, glanceAt)}`;
+    if (!cur || cur.text.length + line.length > OUTLINE_WINDOW) { cur = { n: wins.length + 1, text: '', chars: 0 }; wins.push(cur); }
+    cur.text += (cur.text ? '\n' : '') + line;
+    cur.chars += p.text.length;
+  }
+  return wins;
 }
 
 // ── the build ───────────────────────────────────────────────────────────────────
@@ -314,7 +369,7 @@ async function buildSkill(skill, passageById, ctx) {
 
   let items = [];
   for (const q of (data.questions || []).slice(0, MAX_QUESTIONS + 4)) {
-    const out = cleanQuestion(q, passageById, allowed);
+    const out = cleanQuestion(q, passageById, allowed, { generalTitle: general ? skill.title : null });
     if (out.drop) ctx.dropped[out.drop]++;
     else if (!items.some((i) => norm(i.prompt) === norm(out.item.prompt))) items.push(out.item);
   }
@@ -381,34 +436,60 @@ async function build(userId, materialId, opts = {}) {
 
     let outline = base.outline;
     if (!outline) {
-      const glanceAt = Math.max(GLANCE_MIN, Math.min(GLANCE_MAX, Math.floor(OUTLINE_CHARS / Math.max(1, passages.length))));
-      const glance = passages.map((p) => `[${p.id}] ${clean(p.text, glanceAt)}`).join('\n');
-      const out = await ask(llm, ctx.budget, userId, {
-        role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 6000, dataClass: 'learner',
-        system: `You plan a course from a student's study material. ${UNTRUSTED} Split it into skills a student can learn one at a time (as many as the material really covers, at most ${MAX_SKILLS}), grouped into units, both in the material's own order. `
-          + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
-          + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
-        user: `Title: ${mat.title}\nPassages (the opening of each):\n${glance}`,
-      });
-      const data = out.res && out.res.data;
-      outline = data ? orderSkills(cleanOutline(data, passages)) : [];
+      const most = Math.max(1, Math.min(MAX_SKILLS, Math.ceil(mat.text.length / CHARS_PER_SKILL)));
+      const raw = [];
+      let stoppedOutline = false;
+      let gaps = 0;
+      const windows = outlineWindows(passages);
+      for (const win of windows) {
+        const share = Math.max(1, Math.round((most * win.chars) / Math.max(1, mat.text.length)));
+        const earlier = raw.length ? `Skills already planned from earlier parts (use their ids as prerequisites when they really are; do not repeat them):\n${raw.map((k) => `${k.id}: ${k.title}`).join('\n')}\n\n` : '';
+        let out = null;
+        for (let attempt = 0; attempt < 2 && !(out && out.res && out.res.data); attempt++) {
+          // eslint-disable-next-line no-await-in-loop
+          out = await ask(llm, ctx.budget, userId, {
+            role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
+            system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. `
+              + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
+              + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
+            user: `Title: ${mat.title}\n${earlier}Passages${windows.length > 1 ? ` (part ${win.n} of ${windows.length})` : ''}:\n${win.text}`,
+          });
+          if (out.stopped) break;
+        }
+        if (out.stopped) { stoppedOutline = true; break; }
+        const data = out.res && out.res.data;
+        if (out.res && out.res.model) ctx.models.add(out.res.model);
+        if (!data || !Array.isArray(data.skills)) { gaps++; continue; }
+        const taken = new Set(raw.map((k) => slug(k.id) || slug(k.title)));
+        for (const k of data.skills.slice(0, share)) {
+          let id = slug(k && k.id) || slug(k && k.title);
+          while (id && taken.has(id)) id = `${id.slice(0, 36)}_${raw.length + 1}`;
+          if (id) { taken.add(id); raw.push({ ...k, id }); }
+        }
+      }
+      outline = orderSkills(cleanOutline({ skills: raw }, passages).slice(0, most));
       layout(outline);
-      if (out.res && out.res.model) ctx.models.add(out.res.model);
       if (!outline.length) {
-        persist({ status: 'failed', error: out.stopped ? 'token budget' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
+        persist({ status: 'failed', error: stoppedOutline ? 'token budget' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
         return { error: 'The material could not be turned into a course. Try a clearer or longer text.', code: 'outline_failed' };
       }
+      if (gaps) ctx.dropped.outline_parts = gaps;
       persist({ outline });
     }
 
     const built = new Map((base.skills || []).map((s) => [s.id, s]));
     let stopped = false;
-    for (const skill of outline) {
-      if (built.has(skill.id)) continue;
-      const r = await buildSkill(skill, passageById, ctx);
-      if (r.stopped) { stopped = true; break; }
-      if (r.value) { built.set(skill.id, r.value); persist({ skills: outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id)), dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used }); }
-    }
+    // Skills are independent once the outline exists: build a few at a time (each still checks the budget first).
+    const todo = outline.filter((s) => !built.has(s.id));
+    const worker = async () => {
+      while (todo.length && !stopped) {
+        const skill = todo.shift();
+        const r = await buildSkill(skill, passageById, ctx);
+        if (r.stopped) { stopped = true; return; }
+        if (r.value) { built.set(skill.id, r.value); persist({ skills: outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id)), dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used }); }
+      }
+    };
+    await Promise.all(Array.from({ length: Math.max(1, opts.concurrency || BUILD_CONCURRENCY) }, worker));
     const skills = outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id));
     // A skill dropped by the checks takes its edges with it: its dependents keep its own prerequisites instead.
     const kept = new Set(skills.map((s) => s.id));
@@ -460,5 +541,5 @@ function removeForMaterial(userId, materialId) {
 
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
-  chunk, cleanOutline, orderSkills, layout, cleanQuestion, build, summary, get, removeForMaterial,
+  chunk, cleanOutline, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, cleanQuestion, build, summary, get, removeForMaterial,
 };
