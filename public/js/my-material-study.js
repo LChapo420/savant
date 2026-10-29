@@ -153,9 +153,10 @@ App.mount(async () => {
   }
 
   function result(r) {
-    const verdict = (k) => {
-      if (r.mode === 'review') return k.passed ? ` · back in ${k.next_in_days} days` : (k.shaky ? ' · back tomorrow' : ' · to go over again');
-      return k.passed ? ` · mastered, next review in ${k.next_in_days} days` : ' · not yet: go over it again';
+    const days = (n) => `${n} day${n === 1 ? '' : 's'}`;
+  const verdict = (k) => {
+      if (r.mode === 'review') return k.passed ? ` · back in ${days(k.next_in_days)}` : (k.shaky ? ' · back tomorrow' : ' · to go over again');
+      return k.passed ? ` · mastered, next review in ${days(k.next_in_days)}` : ' · not yet: go over it again';
     };
     const lines = r.report.map((k) => `<li><strong>${esc(k.title)}</strong>: ${k.right} of ${k.total}${verdict(k)}</li>`).join('');
     const rem = (r.remediation || []).map((x) => `<div class="card" style="margin-top:12px"><p><strong>${esc(x.prompt)}</strong></p><p class="small">${x.your_answer ? `You said: ${esc(x.your_answer)}. ` : ''}The answer: ${esc(x.correct_answer)}.</p>${x.misconception ? `<p class="small">The mix-up behind your answer: ${esc(x.misconception)}.</p>` : ''}<p class="small">${esc(x.explanation)}</p><p class="small"><em>${x.source === 'general' ? 'Where your file names it' : 'From your material'}: &ldquo;${esc(x.from_your_material)}&rdquo;</em></p></div>`).join('');

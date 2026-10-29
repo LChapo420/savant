@@ -80,12 +80,12 @@ App.mount(async () => {
       const n = document.getElementById(`course-note-${id}`);
       if (!btn || !n) return;
       if (!c) { btn.textContent = 'Make a course'; return; }
-      if (c.status === 'building') { btn.disabled = true; btn.textContent = 'Building…'; n.textContent = 'Building your course. This can take a few minutes; you can leave this page.'; return; }
+      if (c.status === 'building') { btn.disabled = true; btn.textContent = 'Building…'; n.textContent = c.planned ? `Building your course: ${c.skills.length} of ${c.planned} skills ready. You can leave this page.` : 'Planning your course from the text. This can take a few minutes; you can leave this page.'; return; }
       btn.disabled = false;
       if (c.status === 'ready' || c.status === 'partial') {
         btn.textContent = 'Study';
         btn.dataset.study = '1';
-        n.textContent = `${c.skills.length} skills${c.status === 'partial' ? ' so far (the rest can be built later; press Make a course again)' : ''}.`;
+        n.textContent = `${c.skills.length} skills in ${(c.units || []).length || 1} unit${(c.units || []).length > 1 ? 's' : ''}${c.status === 'partial' ? ' so far (the rest can be built later; press Make a course again)' : ''}.`;
       } else { btn.textContent = 'Try again'; n.textContent = 'The course could not be built from this text. Try a clearer or longer one.'; }
     };
     const poll = async (id, tries) => {

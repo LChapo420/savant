@@ -59,6 +59,8 @@ const estTokens = (...parts) => Math.ceil(parts.reduce((n, p) => n + String(p ||
 const hash = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const clean = (s, n) => String(s == null ? '' : s).replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
 const norm = (s) => String(s || '').toLowerCase().replace(/[“”„"‘’']/g, '').replace(/\s+/g, ' ').trim();
+// Letters and digits only: a quote from a PDF keeps its words even when the extraction mangled symbols and spacing.
+const alnum = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '');
 const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40);
 
 // ── passages ────────────────────────────────────────────────────────────────────
@@ -274,7 +276,7 @@ function cleanQuestion(q, passageById, allowed, opts = {}) {
   let quote = clean(q.quote, 400);
   if (!prompt || !explanation) return { drop: 'invalid' };
   let passage = passageById.get(pid);
-  const quoted = passage && allowed.has(pid) && quote.length >= MIN_QUOTE && norm(passage.text).includes(norm(quote));
+  const quoted = passage && allowed.has(pid) && quote.length >= MIN_QUOTE && alnum(passage.text).includes(alnum(quote)) && alnum(quote).length >= MIN_QUOTE * 0.75;
   if (!quoted) {
     // A general-knowledge item is tied to the line that names its topic; any other item must quote its passage exactly.
     const named = opts.generalTitle ? namingLine(opts.generalTitle, passageById, allowed) : null;
@@ -348,7 +350,7 @@ async function buildSkill(skill, passageById, ctx) {
   const QUESTION_RULES = `Write ${MIN_QUESTIONS + 3} to ${MAX_QUESTIONS} questions, mostly multiple choice (3 to 5 choices, answer_index is the correct one), some short answer (a short exact answer: a word, a number or a short phrase). `
     + 'Give each a tier: 1 recalls a fact or definition, 2 uses it on a case, 3 combines it with another idea or applies it somewhere new; write at least two of each tier. '
     + 'For multiple choice give misconceptions: one entry per choice, in the same order, saying in a few words the misunderstanding that would lead a student to pick that wrong choice (an empty string for the correct choice). Make every wrong choice a mistake a real student makes.';
-  const gen = await ask(ctx.llm, ctx.budget, ctx.userId, {
+  const genArgs = {
     role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 4000, dataClass: 'learner',
     system: general
       ? `You write one short lesson and practice questions for a student on a topic their study material NAMES but does not explain (for example a syllabus line). ${UNTRUSTED} `
@@ -358,10 +360,13 @@ async function buildSkill(skill, passageById, ctx) {
         + `Write 2 to 5 short lesson paragraphs in plain words. ${QUESTION_RULES} `
         + 'Every question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer is right. A question you cannot back with such a quote must be left out.',
     user: `Skill: ${skill.title}\n${skill.summary ? `About: ${skill.summary}\n` : ''}\nPassages:\n${text}`,
-  });
+  };
+  // One retry: a free model that is busy or times out often answers the second time.
+  let gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
+  if (!res_stopped(gen) && !(gen.res && gen.res.data && gen.res.data.lesson)) gen = await ask(ctx.llm, ctx.budget, ctx.userId, genArgs);
   if (res_stopped(gen)) return { stopped: true };
   const data = gen.res && gen.res.data;
-  if (!data || !data.lesson) return { failed: true };
+  if (!data || !data.lesson) { ctx.unanswered++; return { failed: true }; }
   if (gen.res.model) ctx.models.add(gen.res.model);
   const paragraphs = ((data.lesson && data.lesson.paragraphs) || []).map((p) => clean(p, 700)).filter(Boolean).slice(0, 6);
   if (!paragraphs.length) return { failed: true };
@@ -425,7 +430,7 @@ async function build(userId, materialId, opts = {}) {
     const all = chunk(mat.text);
     const passages = all.slice(0, MAX_PASSAGES);
     const passageById = new Map(passages.map((p) => [p.id, p]));
-    const ctx = { llm, userId, budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
+    const ctx = { unanswered: 0, llm, userId, budget: new Budget(opts.tokenBudget || TOKEN_BUDGET), dropped: { ungrounded: 0, invalid: 0, unsupported: 0, skills: 0, ...(resume ? resume.dropped : {}) }, models: new Set(resume ? resume.models : []) };
     const base = {
       user_id: userId, material_id: mat.id, title: mat.title, version: VERSION, text_hash: textHash, status: 'building', started_at: new Date().toISOString(),
       passages: passages.map(({ id, start, end }) => ({ id, start, end })), truncated: all.length > passages.length,
@@ -502,7 +507,8 @@ async function build(userId, materialId, opts = {}) {
     });
     for (const s of skills) { s.prerequisites = [...new Set(lift(s.prerequisites))]; delete s.depth; }
     const units = layout(skills);
-    const status = !skills.length ? 'failed' : (stopped ? 'partial' : 'ready');
+    // Skills that got no model answer at all (busy or timed out) leave the course partial, so asking again builds them.
+    const status = !skills.length ? 'failed' : (stopped || ctx.unanswered ? 'partial' : 'ready');
     const done = persist({
       skills, units, status, dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used, models: [...ctx.models],
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
@@ -525,6 +531,7 @@ function summary(c) {
   return {
     id: c.id, material_id: c.material_id, title: c.title, status: stale ? 'failed' : c.status, truncated: !!c.truncated,
     units: c.units || [],
+    planned: (c.outline || []).length,
     skills: (c.skills || []).map((s) => ({
       id: s.id, title: s.title, summary: s.summary, unit_id: s.unit_id || null, level: s.level || null, source: s.source || 'material',
       prerequisites: s.prerequisites, questions: s.questions.length,
