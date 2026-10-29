@@ -137,13 +137,50 @@ function mockLlm(mode = 'good') {
   console.log('budget and resume');
   const m8 = materials.addPaste(u.id, 'Eighth', `${TEXT} eight`).value;
   const l8 = mockLlm();
-  out = await cb.build(u.id, m8.id, { llm: l8, tokenBudget: 9000 });
+  out = await cb.build(u.id, m8.id, { llm: l8, tokenBudget: 15000 });
   check('a small budget stops the build and keeps what it has', out.partial === true && out.course.status === 'partial' && out.course.skills.length === 1, out.course && [out.course.status, out.course.skills.length]);
   const before = l8.calls.length;
   out = await cb.build(u.id, m8.id, { llm: l8 });
   check('asking again resumes: only the missing skill is built', out.course.status === 'ready' && out.course.skills.length === 2 && l8.calls.length - before === 2, [l8.calls.length - before]);
   const rows = db.find('material_courses', (r) => r.material_id === m8.id);
   check('one row per material', rows.length === 1);
+
+  console.log('version 2: units, levels, tiers, misconceptions, outline-only topics');
+  const v2 = async (args) => {
+    if (args.task === 'material_outline') {
+      return { model: 'mock', data: { skills: [
+        { id: 'cells', title: 'Inside the cell', unit: 'Cells', prerequisites: [], passage_ids: ['p1'] },
+        { id: 'nucleus', title: 'The nucleus', unit: 'Cells', prerequisites: ['cells'], passage_ids: ['p3'], taught: false },
+        { id: 'photo', title: 'Photosynthesis', unit: 'Plants', prerequisites: ['nucleus'], passage_ids: ['p2'] },
+        { id: 'dropme', title: 'Dropped', unit: 'Plants', prerequisites: ['photo'], passage_ids: ['p2'] },
+        { id: 'last', title: 'Last', unit: 'Plants', prerequisites: ['dropme'], passage_ids: ['p2'] },
+      ] } };
+    }
+    if (args.task === 'material_lesson') {
+      const pid = /\[(p\d+)\]/.exec(args.user)[1];
+      const quote = { p1: S1, p2: S2, p3: S3 }[pid];
+      if (/Skill: Dropped/.test(args.user)) return { model: 'mock', data: { lesson: { paragraphs: ['x'] }, questions: [] } };
+      const q = (n, over = {}) => ({ type: 'multiple_choice', prompt: `Q${n} ${pid}?`, choices: ['one', 'two', 'three'], answer_index: 1, tier: (n % 3) + 1, misconceptions: ['m0', 'should be blanked', 'm2'], explanation: 'Why.', passage_id: pid, quote, ...over });
+      return { model: 'mock', data: { lesson: { paragraphs: ['L.'] }, questions: [q(1), q(2), q(3), q(4, { tier: 7, misconceptions: ['only one'] })], general: /NAMES but does not explain/.test(args.system) } };
+    }
+    const n = (args.user.match(/^\d+\./gm) || []).length;
+    return { model: 'mock', data: { verdicts: Array.from({ length: n }, (_, i) => ({ n: i + 1, supported: true })), general: /by standard knowledge/.test(args.system) } };
+  };
+  const seen = [];
+  const mv = materials.addPaste(u.id, 'Version two', `${TEXT} v2`).value;
+  out = await cb.build(u.id, mv.id, { llm: async (a) => { seen.push(a); return v2(a); } });
+  const cv = out.course;
+  check('units in path order, skills numbered as levels in dependency order', cv.units.map((x) => x.title).join() === 'Cells,Plants' && cv.skills.map((x) => `${x.level}:${x.id}`).join() === '1:cells,2:nucleus,3:photo,4:last', [cv.units, cv.skills.map((x) => [x.level, x.id])]);
+  check('a dropped skill passes its prerequisites on to its dependents', cv.skills.find((x) => x.id === 'last').prerequisites.join() === 'photo', cv.skills.find((x) => x.id === 'last').prerequisites);
+  const qs = cv.skills[0].questions;
+  check('every question has a tier (1-3; a bad one becomes 2)', qs.every((q) => [1, 2, 3].includes(q.tier)) && qs[3].tier === 2, qs.map((q) => q.tier));
+  check('misconceptions line up with the choices, blank on the right one; a list that does not line up is dropped', qs[0].misconceptions.join('|') === 'm0||m2' && qs[3].misconceptions.length === 0, qs.map((q) => q.misconceptions));
+  const nucleus = cv.skills.find((x) => x.id === 'nucleus');
+  check('a topic the material only names is built from general knowledge and labelled so', nucleus.source === 'general' && nucleus.questions.every((q) => q.source === 'general') && cv.skills[0].source === 'material');
+  check('its prompts say so: teach the topic as named, check by standard knowledge', seen.some((a) => a.task === 'material_lesson' && /NAMES but does not explain/.test(a.system) && /The nucleus/.test(a.user)) && seen.some((a) => a.task === 'material_verify' && /by standard knowledge/.test(a.system)));
+  check('the outline is asked for units, taught and no logistics', /grouped into units/.test(seen[0].system) && /taught: false/.test(seen[0].system) && /logistics/.test(seen[0].system));
+  const sumv = cb.summary(cb.get(u.id, mv.id));
+  check('the summary carries units, levels and source, never answers', sumv.units.length === 2 && sumv.skills[1].source === 'general' && sumv.skills[0].level === 1 && !/answer_index|misconceptions|quote/.test(JSON.stringify(sumv)));
 
   console.log('safety');
   check('someone else\'s material is refused', (await cb.build(other.id, m.id, { llm: mockLlm() })).code === 'not_found');

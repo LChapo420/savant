@@ -1,10 +1,21 @@
 /**
  * "Learn from your own material", slice (b): the course builder.
  *
- *   material text  ->  passages  ->  outline (skills + prerequisites)  ->  per skill: lesson + questions
+ *   material text  ->  passages  ->  outline (units, skills + prerequisites)  ->  per skill: lesson + questions
  *                  ->  grounding check (the quote is in the passage)  ->  support check (a second model pass)
  *
- *   material_courses   one per material   { user_id, material_id, title, status, skills[], passages[], ... }
+ *   material_courses   one per material   { user_id, material_id, title, status, units[], skills[], passages[], ... }
+ *
+ * Version 2 (the per-learner path, services/material-path.js): the outline groups skills into units in the
+ * material's own order; the skills are the course's levels, numbered in dependency order (prerequisites first,
+ * otherwise the source order). Every question has a tier (1 recall, 2 use, 3 combine or transfer) and, for multiple
+ * choice, the misunderstanding behind each wrong choice, so a miss can be remediated at its cause.
+ *
+ * Outline-only material (a syllabus or a list of topics that names a topic without teaching it): the outline marks
+ * such a skill taught: false. Its lesson and questions come from general knowledge of the topic AS NAMED, are
+ * labelled source "general" everywhere the learner sees them, and still quote the material's line that names the
+ * topic (so nothing outside the material's own topics is added). The support check then asks whether the marked
+ * answer is correct, not whether the passage says it.
  *
  * Every question carries `passage_id` and a `quote` that must appear word for word in that passage; one that does
  * not is dropped without asking a model. A second pass then shows a model only the passage and the items and keeps
@@ -24,17 +35,19 @@ const crypto = require('crypto');
 const db = require('../config/db');
 const materials = require('./materials');
 
-const VERSION = 1;
+const VERSION = 2;
 const PASSAGE_MIN = 1200;            // characters: a passage is cut at the paragraph break after this
 const PASSAGE_MAX = 2400;
 const MAX_PASSAGES = 120;            // about 290k characters; more is cut and flagged
-const OUTLINE_GLANCE = 240;          // characters of each passage shown to the outline pass
-const MAX_SKILLS = 12;
+const OUTLINE_CHARS = 40000;         // characters of passage openings shown to the outline pass, shared out
+const GLANCE_MIN = 200;
+const GLANCE_MAX = 1200;
+const MAX_SKILLS = 30;
 const SKILL_TEXT_MAX = 7000;         // characters of passage text shown for one skill
 const MIN_QUESTIONS = 3;
-const MAX_QUESTIONS = 8;
+const MAX_QUESTIONS = 9;
 const MIN_QUOTE = 20;
-const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 160000);
+const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 360000);
 const STALE_BUILD_MS = 30 * 60 * 1000;
 
 const inflight = new Set();
@@ -101,11 +114,12 @@ const OUTLINE_SCHEMA = {
       items: {
         type: 'object',
         properties: {
-          id: { type: 'string' }, title: { type: 'string' }, summary: { type: 'string' },
+          id: { type: 'string' }, title: { type: 'string' }, summary: { type: 'string' }, unit: { type: 'string' },
           prerequisites: { type: 'array', items: { type: 'string' } },
           passage_ids: { type: 'array', items: { type: 'string' } },
+          taught: { type: 'boolean' },
         },
-        required: ['id', 'title', 'passage_ids'],
+        required: ['id', 'title', 'unit', 'passage_ids'],
       },
     },
   },
@@ -129,12 +143,14 @@ const SKILL_SCHEMA = {
           prompt: { type: 'string' },
           choices: { type: 'array', items: { type: 'string' } },
           answer_index: { type: 'integer' },
+          misconceptions: { type: 'array', items: { type: 'string' } },
           answer: { type: 'string' },
+          tier: { type: 'integer', enum: [1, 2, 3] },
           explanation: { type: 'string' },
           passage_id: { type: 'string' },
           quote: { type: 'string' },
         },
-        required: ['type', 'prompt', 'explanation', 'passage_id', 'quote'],
+        required: ['type', 'prompt', 'explanation', 'passage_id', 'quote', 'tier'],
       },
     },
   },
@@ -164,7 +180,10 @@ function cleanOutline(raw, passages) {
     const pids = [...new Set(((s && s.passage_ids) || []).map(String).filter((p) => ids.has(p)))].slice(0, 6);
     if (!pids.length) continue;
     seen.add(id);
-    skills.push({ id, title, summary: clean(s.summary, 240), prerequisites: ((s && s.prerequisites) || []).map(slug), passage_ids: pids });
+    skills.push({
+      id, title, summary: clean(s.summary, 240), unit: clean(s.unit, 80) || 'Unit 1', taught: s.taught !== false,
+      prerequisites: ((s && s.prerequisites) || []).map(slug), passage_ids: pids,
+    });
     if (skills.length >= MAX_SKILLS) break;
   }
   for (const s of skills) s.prerequisites = [...new Set(s.prerequisites.filter((p) => p !== s.id && seen.has(p)))];
@@ -188,6 +207,33 @@ function orderSkills(skills) {
   return out;
 }
 
+/**
+ * The units, in the order their first skill comes on the path, and each skill's level (its place on the path,
+ * from 1) and depth (the longest chain of prerequisites under it). Mutates the skills; returns the units.
+ */
+function layout(skills) {
+  const byId = new Map(skills.map((s) => [s.id, s]));
+  const depth = (s, seen = new Set()) => {
+    if (s.depth != null) return s.depth;
+    if (seen.has(s.id)) return 0;
+    seen.add(s.id);
+    s.depth = s.prerequisites.reduce((d, p) => Math.max(d, byId.has(p) ? depth(byId.get(p), seen) + 1 : 0), 0);
+    return s.depth;
+  };
+  const units = [];
+  const unitByTitle = new Map();
+  skills.forEach((s, i) => {
+    s.level = i + 1;
+    depth(s);
+    const key = norm(s.unit || 'Unit 1');
+    if (!unitByTitle.has(key)) { const u = { id: `u${units.length + 1}`, title: s.unit || 'Unit 1', skills: [] }; unitByTitle.set(key, u); units.push(u); }
+    const u = unitByTitle.get(key);
+    u.skills.push(s.id);
+    s.unit_id = u.id;
+  });
+  return units;
+}
+
 /** A question that is well formed AND whose quote is word for word in its passage. Returns the clean item or {drop}. */
 function cleanQuestion(q, passageById, allowed) {
   if (!q || typeof q !== 'object') return { drop: 'invalid' };
@@ -199,12 +245,17 @@ function cleanQuestion(q, passageById, allowed) {
   const passage = passageById.get(pid);
   if (!passage || !allowed.has(pid)) return { drop: 'ungrounded' };
   if (quote.length < MIN_QUOTE || !norm(passage.text).includes(norm(quote))) return { drop: 'ungrounded' };
-  const base = { prompt, explanation, passage_id: pid, quote };
+  const tier = [1, 2, 3].includes(Number(q.tier)) ? Number(q.tier) : 2;
+  const base = { prompt, explanation, passage_id: pid, quote, tier };
   if (q.type === 'multiple_choice') {
     const choices = (Array.isArray(q.choices) ? q.choices : []).map((c) => clean(c, 200));
     if (choices.length < 3 || choices.length > 5 || choices.some((c) => !c) || new Set(choices.map(norm)).size !== choices.length) return { drop: 'invalid' };
     if (!Number.isInteger(q.answer_index) || q.answer_index < 0 || q.answer_index >= choices.length) return { drop: 'invalid' };
-    return { item: { ...base, type: 'multiple_choice', choices, answer_index: q.answer_index } };
+    // The misunderstanding behind each wrong choice (empty for the right one); kept only when it lines up.
+    let mis = Array.isArray(q.misconceptions) ? q.misconceptions.map((m) => clean(m, 200)) : [];
+    if (mis.length !== choices.length) mis = [];
+    else mis[q.answer_index] = '';
+    return { item: { ...base, type: 'multiple_choice', choices, answer_index: q.answer_index, misconceptions: mis } };
   }
   if (q.type === 'short_answer') {
     const answer = clean(q.answer, 200);
@@ -238,11 +289,19 @@ async function ask(llm, budget, userId, args) {
 async function buildSkill(skill, passageById, ctx) {
   const text = skill.passage_ids.map((id) => `[${id}]\n${passageById.get(id).text}`).join('\n\n').slice(0, SKILL_TEXT_MAX);
   const allowed = new Set(skill.passage_ids);
+  const general = skill.taught === false;
+  const QUESTION_RULES = `Write ${MIN_QUESTIONS + 3} to ${MAX_QUESTIONS} questions, mostly multiple choice (3 to 5 choices, answer_index is the correct one), some short answer (a short exact answer: a word, a number or a short phrase). `
+    + 'Give each a tier: 1 recalls a fact or definition, 2 uses it on a case, 3 combines it with another idea or applies it somewhere new; write at least two of each tier. '
+    + 'For multiple choice give misconceptions: one entry per choice, in the same order, saying in a few words the misunderstanding that would lead a student to pick that wrong choice (an empty string for the correct choice). Make every wrong choice a mistake a real student makes.';
   const gen = await ask(ctx.llm, ctx.budget, ctx.userId, {
-    role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 3000, dataClass: 'learner',
-    system: `You write one short lesson and practice questions for a student, from their own study material. ${UNTRUSTED} `
-      + `Write 2 to 5 short lesson paragraphs in plain words, then ${MIN_QUESTIONS + 1} to ${MAX_QUESTIONS} questions that check understanding, mostly multiple choice (3 to 5 choices, answer_index is the correct one), some short answer. `
-      + 'Every question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer is right. A question you cannot back with such a quote must be left out.',
+    role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 4000, dataClass: 'learner',
+    system: general
+      ? `You write one short lesson and practice questions for a student on a topic their study material NAMES but does not explain (for example a syllabus line). ${UNTRUSTED} `
+        + 'Teach exactly the topic as the material names it, at the level the material implies, from standard, uncontroversial knowledge; do not drift into other topics. Write 2 to 5 short lesson paragraphs in plain words. '
+        + `${QUESTION_RULES} Every question needs passage_id (one of the passage ids shown) and quote: the exact words, at least 20 characters, copied from that passage, that name this topic.`
+      : `You write one short lesson and practice questions for a student, from their own study material. ${UNTRUSTED} `
+        + `Write 2 to 5 short lesson paragraphs in plain words. ${QUESTION_RULES} `
+        + 'Every question needs passage_id (one of the passage ids shown) and quote: an exact run of at least 20 characters copied word for word from that passage that shows the answer is right. A question you cannot back with such a quote must be left out.',
     user: `Skill: ${skill.title}\n${skill.summary ? `About: ${skill.summary}\n` : ''}\nPassages:\n${text}`,
   });
   if (res_stopped(gen)) return { stopped: true };
@@ -264,7 +323,9 @@ async function buildSkill(skill, passageById, ctx) {
 
   const ver = await ask(ctx.llm, ctx.budget, ctx.userId, {
     role: 'fast', task: 'material_verify', schema: VERIFY_SCHEMA, schemaName: 'material_verify', maxTokens: 800, dataClass: 'learner',
-    system: `You check quiz items against a passage. ${UNTRUSTED} For each numbered item say supported: true only if the passage itself clearly shows the marked answer is correct and the other choices are not. If the passage does not say it, or you are unsure, say false.`,
+    system: general
+      ? `You check quiz items on the topic "${skill.title}", which the passage names. ${UNTRUSTED} For each numbered item say supported: true only if the item is on that topic, the marked answer is correct by standard knowledge, and every other choice is wrong. If you are unsure, say false.`
+      : `You check quiz items against a passage. ${UNTRUSTED} For each numbered item say supported: true only if the passage itself clearly shows the marked answer is correct and the other choices are not. If the passage does not say it, or you are unsure, say false.`,
     user: `Passages:\n${text}\n\nItems:\n${items.map((q, i) => describeItem(q, i + 1)).join('\n')}`,
   });
   if (res_stopped(ver)) return { stopped: true };
@@ -274,8 +335,13 @@ async function buildSkill(skill, passageById, ctx) {
   const kept = items.filter((_, i) => ok.has(i + 1));
   ctx.dropped.unsupported += items.length - kept.length;
   if (kept.length < MIN_QUESTIONS) { ctx.dropped.skills++; return { skipped: true }; }
-  kept.forEach((q, i) => { q.id = `${skill.id}_q${i + 1}`; });
-  return { value: { id: skill.id, title: skill.title, summary: skill.summary, prerequisites: skill.prerequisites, passage_ids: skill.passage_ids, lesson: { paragraphs, key_points: keyPoints }, questions: kept } };
+  kept.forEach((q, i) => { q.id = `${skill.id}_q${i + 1}`; if (general) q.source = 'general'; });
+  return {
+    value: {
+      id: skill.id, title: skill.title, summary: skill.summary, unit: skill.unit, prerequisites: skill.prerequisites, passage_ids: skill.passage_ids,
+      source: general ? 'general' : 'material', lesson: { paragraphs, key_points: keyPoints }, questions: kept,
+    },
+  };
 }
 function res_stopped(r) { return !!(r && r.stopped); }
 
@@ -315,14 +381,18 @@ async function build(userId, materialId, opts = {}) {
 
     let outline = base.outline;
     if (!outline) {
-      const glance = passages.map((p) => `[${p.id}] ${clean(p.text, OUTLINE_GLANCE)}`).join('\n');
+      const glanceAt = Math.max(GLANCE_MIN, Math.min(GLANCE_MAX, Math.floor(OUTLINE_CHARS / Math.max(1, passages.length))));
+      const glance = passages.map((p) => `[${p.id}] ${clean(p.text, glanceAt)}`).join('\n');
       const out = await ask(llm, ctx.budget, userId, {
-        role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 2500, dataClass: 'learner',
-        system: `You plan a course from a student's study material. ${UNTRUSTED} Split it into at most ${MAX_SKILLS} skills a student can learn one at a time. For each: a short id, a title, a one-sentence summary, the ids of skills that must be learned first (prerequisites), and the passage ids that teach it (1 to 6).`,
-        user: `Title: ${mat.title}\nPassages (first words of each):\n${glance}`,
+        role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 6000, dataClass: 'learner',
+        system: `You plan a course from a student's study material. ${UNTRUSTED} Split it into skills a student can learn one at a time (as many as the material really covers, at most ${MAX_SKILLS}), grouped into units, both in the material's own order. `
+          + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
+          + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
+        user: `Title: ${mat.title}\nPassages (the opening of each):\n${glance}`,
       });
       const data = out.res && out.res.data;
       outline = data ? orderSkills(cleanOutline(data, passages)) : [];
+      layout(outline);
       if (out.res && out.res.model) ctx.models.add(out.res.model);
       if (!outline.length) {
         persist({ status: 'failed', error: out.stopped ? 'token budget' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
@@ -340,9 +410,20 @@ async function build(userId, materialId, opts = {}) {
       if (r.value) { built.set(skill.id, r.value); persist({ skills: outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id)), dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used }); }
     }
     const skills = outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id));
+    // A skill dropped by the checks takes its edges with it: its dependents keep its own prerequisites instead.
+    const kept = new Set(skills.map((s) => s.id));
+    const outlineById = new Map(outline.map((s) => [s.id, s]));
+    const lift = (ids, seen = new Set()) => ids.flatMap((p) => {
+      if (kept.has(p)) return [p];
+      if (seen.has(p) || !outlineById.has(p)) return [];
+      seen.add(p);
+      return lift(outlineById.get(p).prerequisites, seen);
+    });
+    for (const s of skills) { s.prerequisites = [...new Set(lift(s.prerequisites))]; delete s.depth; }
+    const units = layout(skills);
     const status = !skills.length ? 'failed' : (stopped ? 'partial' : 'ready');
     const done = persist({
-      skills, status, dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used, models: [...ctx.models],
+      skills, units, status, dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used, models: [...ctx.models],
       error: status === 'failed' ? (stopped ? 'token budget' : 'nothing passed the checks') : null, finished_at: new Date().toISOString(),
     });
     db.flush();
@@ -362,7 +443,11 @@ function summary(c) {
   const stale = c.status === 'building' && Date.now() - Date.parse(c.started_at) > STALE_BUILD_MS && !inflight.has(`${c.user_id}:${c.material_id}`);
   return {
     id: c.id, material_id: c.material_id, title: c.title, status: stale ? 'failed' : c.status, truncated: !!c.truncated,
-    skills: (c.skills || []).map((s) => ({ id: s.id, title: s.title, summary: s.summary, prerequisites: s.prerequisites, questions: s.questions.length })),
+    units: c.units || [],
+    skills: (c.skills || []).map((s) => ({
+      id: s.id, title: s.title, summary: s.summary, unit_id: s.unit_id || null, level: s.level || null, source: s.source || 'material',
+      prerequisites: s.prerequisites, questions: s.questions.length,
+    })),
     dropped: c.dropped, built_at: c.finished_at || null,
   };
 }
@@ -375,5 +460,5 @@ function removeForMaterial(userId, materialId) {
 
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
-  chunk, cleanOutline, orderSkills, cleanQuestion, build, summary, get, removeForMaterial,
+  chunk, cleanOutline, orderSkills, layout, cleanQuestion, build, summary, get, removeForMaterial,
 };

@@ -11,7 +11,9 @@
  *   GET    /api/materials/:id/study               the map: skills, status, what is due
  *   GET    /api/materials/:id/study/lesson/:skill  lesson and practice questions (no answers)
  *   POST   /api/materials/:id/study/practice       { skill, question, answer } checked at once, not counted
- *   POST   /api/materials/:id/study/quiz           { mode: placement|mastery|review, skill? } one-shot quiz, no answers
+ *   GET    /api/materials/:id/study/placement      the next starting-check question (no answer), or the result
+ *   POST   /api/materials/:id/study/placement      { question, answer } then the next question or the result
+ *   POST   /api/materials/:id/study/quiz           { mode: mastery|review, skill? } one-shot quiz, no answers
  *   POST   /api/materials/:id/study/submit         { quiz_id, answers } graded on the server
  *
  * Child accounts cannot upload or paste (routes/consent.js CHILD_MEDIA_UPLOAD); they can still delete.
@@ -77,7 +79,7 @@ router.get('/:id/course', requireAuth, (req, res) => {
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
 });
 
-const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409 };
+const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409, use_placement: 409 };
 function studyReply(res, out, key) {
   if (out.error) return res.status(STUDY_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
   return res.json(key ? { [key]: out[key] } : out);
@@ -87,6 +89,11 @@ const studyBody = express.json({ limit: '64kb' });
 
 router.get('/:id/study', requireAuth, ownMaterial, (req, res) => studyReply(res, study.state(req.user.id, req.params.id)));
 router.get('/:id/study/lesson/:skill', requireAuth, ownMaterial, (req, res) => studyReply(res, study.lesson(req.user.id, req.params.id, req.params.skill)));
+router.get('/:id/study/placement', requireAuth, ownMaterial, (req, res) => studyReply(res, study.placementNext(req.user.id, req.params.id)));
+router.post('/:id/study/placement', requireAuth, ownMaterial, limit('materials-placement', 300, 60 * 60 * 1000), studyBody, (req, res) => {
+  const b = req.body || {};
+  studyReply(res, study.placementAnswer(req.user.id, req.params.id, String(b.question || ''), b.answer));
+});
 router.post('/:id/study/practice', requireAuth, ownMaterial, limit('materials-practice', 300, 60 * 60 * 1000), studyBody, (req, res) => {
   const b = req.body || {};
   studyReply(res, study.practice(req.user.id, req.params.id, String(b.skill || ''), String(b.question || ''), b.answer));
