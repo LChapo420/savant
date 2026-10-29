@@ -483,6 +483,18 @@ App.mount(async () => {
   // The persistent tutor (services/tutor.js): the same one that helps inside a question.
   if (window.TutorChat) window.TutorChat.mount(root.querySelector('#tutor-host'), { where: 'home' });
 
+  // Reviews due in the learner's own courses (services/material-study.js). Quiet if none or on any error.
+  fetch('/api/materials/review-due', { credentials: 'same-origin' }).then((r) => (r.ok ? r.json() : null)).then((d) => {
+    const aside = root.querySelector('.dash-aside');
+    if (!aside || !d || !d.total) return;
+    const sec = document.createElement('section');
+    sec.setAttribute('data-material-due', '');
+    sec.innerHTML = `<h2>Your own material</h2>
+      <p><span class="num">${d.total}</span> skill${d.total === 1 ? ' is' : 's are'} due for review.</p>
+      <ul class="due-list">${d.materials.map((m) => `<li><a href="/my-material-study?id=${encodeURIComponent(m.material_id)}">${esc(m.title)}</a><span class="num">${m.due_count}</span></li>`).join('')}</ul>`;
+    aside.insertBefore(sec, aside.firstChild);
+  }).catch(() => {});
+
   const plannerHost = root.querySelector('[data-planner-body]');
   if (plannerHost) {
     const redraw = () => { plannerHost.innerHTML = plannerBody(); };

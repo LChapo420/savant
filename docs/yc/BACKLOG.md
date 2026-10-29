@@ -57,13 +57,11 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      real on delete). Rate limits. Tests.
    - **(b) DONE, see Done.** (was: Course builder.)
    - **(c) DONE as a first slice, see Done.** Remaining, now item 0b(c2) below.
-   - **(c2) [claimed 2026-10-29T00:00Z] Join the built-in machinery.** The course is studied on its own page (`/my-material-study`) with its own
-     per-skill ladder; it does not yet appear on the learner's home and path, and review is not yet part of "today"
-     or the retention enforcers (`services/retention-schedule.js`, `services/enforcers.js`). Surface the due-review
-     count on home, feed material skills into `services/review-session.js` / the day plan, and decide with the owner
-     whether the ladder (1, 3, 7, 14, 30, 60 days) should become the enforcer calendar. Also: grade short answers
-     with `services/typed-grading.js` (now a deterministic compare), and run one real course end to end on the
-     owner's machine with a live provider to read the lessons and questions.
+   - **(c2) Join the built-in machinery (first slice DONE: due count on home, see Done).** Remaining: feed material
+     skills into `services/review-session.js` / the day plan and the retention enforcers (`services/retention-schedule.js`,
+     `services/enforcers.js`); decide with the owner whether the ladder (1, 3, 7, 14, 30, 60 days) should become the
+     enforcer calendar; grade short answers with `services/typed-grading.js` (now a deterministic compare); run one
+     real course end to end on the owner's machine with a live provider to read the lessons and questions.
    - **(d) Later:** photos of notes or textbook pages (vision model or OCR), and URLs.
    Privacy: tell the learner in plain words where their file goes and how to delete it; follow
    `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
@@ -151,6 +149,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-29: **Own material joins the home page, slice (c2-1)** (item 0b(c2); commit in this push). `dueSummary()` in `services/material-study.js` and `GET /api/materials/review-due` (owner-only, titles and counts, no questions or answers) feed a quiet "Your own material" card at the top of the dashboard's side column, linking each course to its study page; nothing shows when nothing is due or on error. Checked: `scripts/material-study-test.js` gained 3 checks (none due today, two tomorrow with a moved clock, private to the learner, route wiring) and `npm test`. Not checked: the card in a real browser at 375 px signed in. Not done: day plan, review session and enforcer integration (left in the Queue).
 
 - 2026-10-29: **Learn from your own material, slice (c): study the course** (item 0b(c); commit in this push). `services/material-study.js` + routes under `/api/materials/:id/study` + `/my-material-study` (`public/my-material-study.html`, `public/js/my-material-study.js`, shared CSS only). `/my-material` now has a **Make a course** button per material (starts the build, polls the status, becomes **Study**). Flow: a skill opens only when its prerequisites are mastered; optional one-question-per-skill placement (right = known, reviewed tomorrow); lesson plus practice questions checked one at a time with the explanation and the quote from the learner's own text (practice never counts); mastery check of up to 5 questions, no feedback until the end, 75% masters the skill; a miss shows remediation (the right answer, why, and the passage that says it) and the missed questions come first next time; spaced review on a per-skill ladder of 1, 3, 7, 14, 30, 60 days (pass = up one step, miss = back to 1 day) that interleaves all due skills. Quizzes are one-shot and graded on the server from its own key; the client never receives answers, explanations or quotes before submitting. Store: new collection `material_progress` (in the account export and both deletion lists; deleting the material deletes it). The study page is method-hints-only for the tutor dock (`METHOD_ONLY`). No model is called in this slice, nothing new spends money. Checked: `scripts/material-study-test.js` (about 45 checks, mocked provider: paste, build, locking, key never leaked, short-answer grading, fail then remediate then pass at exactly 75%, placement, review pass and miss with a moved clock, interleaving, one-shot quizzes, junk input, delete cascade, wiring) added to `npm test`; server boots, both pages and the script serve 200, the API refuses signed-out. Not checked: the pages in a real browser at 375 px signed in; any real model's course; short answers are a deterministic compare (see Queue 0b(c2)).
 

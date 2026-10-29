@@ -41,6 +41,9 @@ router.get('/', requireAuth, (req, res) => {
   });
 });
 
+// Home page: how many of the learner's own-material skills are due for review (before '/:id').
+router.get('/review-due', requireAuth, (req, res) => res.json(study.dueSummary(req.user.id)));
+
 router.post('/paste', requireAuth, limit('materials-paste', 20, 60 * 60 * 1000), pasteBody, (req, res) => {
   const b = req.body || {};
   const out = materials.addPaste(req.user.id, b.title, b.text);

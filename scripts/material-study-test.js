@@ -123,6 +123,9 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('nothing is due today', ms.startQuiz(u.id, m.id, 'review').code === 'nothing_due');
   const day1 = Date.now() + DAY + 1000;
   check('both skills are due after a day', ms.state(u.id, m.id, day1).due_count === 2);
+  const ds0 = ms.dueSummary(u.id); const ds1 = ms.dueSummary(u.id, day1);
+  check('home summary: none due today, two due tomorrow, titles and counts only', ds0.total === 0 && ds1.total === 2 && ds1.materials.length === 1 && ds1.materials[0].material_id === m.id && Object.keys(ds1.materials[0]).sort().join() === 'due_count,material_id,title', ds1);
+  check('home summary is private to the learner', ms.dueSummary(other.id, day1).total === 0);
   let rv = ms.startQuiz(u.id, m.id, 'review', null, { now: day1 });
   check('review interleaves the due skills', new Set(rv.questions.map((x) => x.skill)).size === 2 && rv.questions.length <= 8, rv.questions.map((x) => x.skill));
   out = ms.submit(u.id, m.id, rv.quiz_id, answerFrom(course, rv, 0), { now: day1 });
@@ -149,6 +152,7 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('progress is in export and deletion lists and the db', /material_progress/.test(read('routes/profile.js')) && /material_progress/.test(read('routes/consent.js')) && /material_progress/.test(read('config/db.js')));
   check('the study page keeps the tutor to method hints', /my-material-study/.test(read('services/tutor-context.js')));
   check('the page and script exist; the list page has the course button', fs.existsSync(path.join(__dirname, '..', 'public/my-material-study.html')) && /Make a course/.test(read('public/js/my-material.js')) && /my-material-study/.test(read('public/js/my-material.js')));
+  check('home wiring: route before /:id, dashboard card', routes.indexOf("'/review-due'") > 0 && routes.indexOf("'/review-due'") < routes.indexOf("router.get('/:id'") && /review-due/.test(read('public/js/dashboard.js')));
   check('the study script has no answer key logic', !/answer_index/.test(read('public/js/my-material-study.js')));
 
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none */ }

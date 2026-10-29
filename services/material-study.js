@@ -252,4 +252,20 @@ function removeForMaterial(userId, materialId) {
   return db.remove('material_progress', (p) => p.user_id === userId && p.material_id === Number(materialId));
 }
 
-module.exports = { PASS, QUIZ_SIZE, INTERVALS_DAYS, gradeShort, state, lesson, practice, startQuiz, submit, removeForMaterial };
+/**
+ * What is due for review across all of a learner's courses (for the home page).
+ * Titles and counts only: no questions, answers or quotes.
+ */
+function dueSummary(userId, now = Date.now()) {
+  const items = [];
+  for (const r of db.find('material_progress', (p) => p.user_id === userId)) {
+    const course = loadCourse(userId, r.material_id);
+    if (!course) continue;
+    const due = course.skills.filter((s) => isDue(r.skills[s.id] || {}, now)).length;
+    if (due) items.push({ material_id: r.material_id, title: course.title, due_count: due });
+  }
+  items.sort((a, b) => b.due_count - a.due_count);
+  return { total: items.reduce((n, i) => n + i.due_count, 0), materials: items };
+}
+
+module.exports = { dueSummary, PASS, QUIZ_SIZE, INTERVALS_DAYS, gradeShort, state, lesson, practice, startQuiz, submit, removeForMaterial };
