@@ -371,10 +371,13 @@ function walkAdaptive(mode) {
         answered.push({ pos: adaptive.positionOf(q, block.grade), guess: q.choices ? 1 / q.choices.length : 0.02, correct });
       }
       post = adaptive.posterior(n, answered);
-      target = adaptive.median(post);
+      target = adaptive.nextTarget(answered, post);
     }
     const rec = adaptive.recommend(n, post);
-    return { recommended: rec.index, asked: answered.length, scores: [] };
+    // How kind the walk was: questions written more than a grade past where the tester really is.
+    const tooHard = answered.filter((a) => a.pos > at + 1).length;
+    const firstFive = answered.slice(0, 5).filter((a) => a.pos > at + 1).length;
+    return { recommended: rec.index, asked: answered.length, tooHard, firstFive, scores: [] };
   };
 }
 
@@ -393,7 +396,7 @@ function run(trackId, { mode = 'full', seeds = 2, fractions = [0.15, 0.5, 0.85, 
       for (let s = 1; s <= seeds; s++) {
         const random = rng(0xab1e + g * 7919 + Math.round(f * 1000) * 31 + s * 104729);
         const out = walk(trackId, verdicts, g + f, random);
-        rows.push({ grade: g, f, seed: s, recommended: out.recommended, off: out.recommended - g, asked: out.asked, shape: verbose ? out.scores.map((x) => x.correct).join('') : '' });
+        rows.push({ grade: g, f, seed: s, recommended: out.recommended, off: out.recommended - g, asked: out.asked, tooHard: out.tooHard || 0, firstFive: out.firstFive || 0, shape: verbose ? out.scores.map((x) => x.correct).join('') : '' });
       }
     }
   }
@@ -401,7 +404,9 @@ function run(trackId, { mode = 'full', seeds = 2, fractions = [0.15, 0.5, 0.85, 
   const askedMax = Math.max(...rows.map((r) => r.asked));
   const askedAvg = Math.round(rows.reduce((n, r) => n + r.asked, 0) / rows.length);
   console.log(`${trackId} / ${mode}: ${rows.length} testers, ${rows.length - misses.length} within one grade, `
-    + `${rows.filter((r) => r.off === 0).length} exact; questions asked avg ${askedAvg}, max ${askedMax}`);
+    + `${rows.filter((r) => r.off === 0).length} exact; questions asked avg ${askedAvg}, max ${askedMax}; `
+    + `too hard (over a grade past the tester) avg ${(rows.reduce((n, r) => n + r.tooHard, 0) / rows.length).toFixed(1)}, `
+    + `in the first five ${(rows.reduce((n, r) => n + r.firstFive, 0) / rows.length).toFixed(2)}`);
   for (let g = 0; g < gradeIds.length; g++) {
     const mine = rows.filter((r) => r.grade === g);
     const offs = mine.map((r) => (r.off > 0 ? `+${r.off}` : String(r.off))).join(' ');

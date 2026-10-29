@@ -748,7 +748,7 @@ function submitBlock(userId, trackId, answers, { partial = false } = {}) {
   const late = placement.deadline_at && Date.now() >= Date.parse(placement.deadline_at);
   const next = adaptive.done(placement.mode, answered, post) || late || partial
     ? null
-    : adaptive.nextBlock(blocksOf(trackId), asked, adaptive.median(post));
+    : adaptive.nextBlock(blocksOf(trackId), asked, adaptive.nextTarget(answered, post));
 
   const updated = db.update(PLACEMENTS, placement.id, {
     scores,
