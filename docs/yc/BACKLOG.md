@@ -71,7 +71,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 0c. **The tutor talks, remaining slices** (first slice is under Done).
    **Owner, 2026-10-29: "there isn't an AI to help me anywhere on the site" — the tutor must be visible and working on every page of the live app (home, every subject path, every lesson/game/quiz, Spanish path, profile, my-material), and its context must include the learner's learning style and interests from onboarding/profile, their goal, current subject/grade/level, recent mistakes and what is on screen. Text replies must work with the app's existing providers (no new paid provider); speech uses the browser voice when the gateway is off. Check it at 375 px and in a real browser (Playwright is fine).**
-   - **(b) Better voice through the ledger.** Text-to-speech and speech-to-text through LLM Gateway, only via its
+   - **(b) Better voice through the ledger.** [claimed 2026-10-29T06:20Z] Text-to-speech and speech-to-text through LLM Gateway, only via its
      ledger ($5 total, speech only) with a per-user daily cap; the browser voice and recognizer stay the free default.
    - **(c) Context gaps** (first slice DONE, see Done: picked/typed/feedback/address options reach the tutor). Second slice DONE (the main session page reports its question; see Done). Third slice DONE (every page that draws a question with `Player.render` now reports it to the dock: placement, subject placement, review, enforcer, skip, path; see Done). Remaining: pages that do not use `Player` (base-lesson, games, Spanish path boards) should define `window.tutorPageInfo()`, and a "no answers" mode for timed tasks and finals once those
      pages exist (add their paths to `METHOD_ONLY`).
