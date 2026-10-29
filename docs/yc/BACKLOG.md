@@ -44,6 +44,8 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
+   **Order update (2026-10-29 ~10:00Z, owner's local agent): the tutor is live on every page with six context slices, voice and listening; the rest of 0c and 0d-b is polish or needs the owner. Next take, in this order: item 5 (activation funnel numbers), 10 (invite a friend), 13 (privacy gaps), 12 (demo script), 11 (interview prep), then 0b(c2), 0a, 0c leftovers, 0d-b. Claim the item itself by its number as usual.**
+
    **Overnight order (owner, 2026-10-29 03:30Z, going to sleep: "I need every single thing fully built"). Take these first, in order. 0-fix1 and 0-fix2 are small; do them first. Then the tutor (0c, 0d) is the top feature: the owner said there is no AI to help anywhere on the site.**
 0-fix1. **DONE, see Done.** (Spanish path: finishing a level opens the next one.)
 0-fix2. **DONE, see Done.** (Hearts removed from the Spanish path.)
