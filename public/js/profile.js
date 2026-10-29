@@ -301,6 +301,8 @@ App.mount(async () => {
       ${progress.enrollments.length ? '' : '<p class="small muted">No subjects yet. <a href="/onboarding">Pick one.</a></p>'}
     </div>
 
+    <div id="invite-host"></div>
+
     <h2 class="section-title">${window.icon('user')}Your data</h2>
     <div class="card">
       <p class="small muted">Everything the app holds on you, as one JSON file: your profile, every session, every answer, and every event.</p>
@@ -357,6 +359,27 @@ App.mount(async () => {
       }
     });
   }
+
+  // Invite a friend: a plain link, no reward. Counts only; who joined is never shown.
+  try {
+    const ref = await App.api.get('/api/referral');
+    if (ref.enabled) {
+      const link = `${window.location.origin}${ref.path}`;
+      document.getElementById('invite-host').innerHTML = `
+        <h2 class="section-title">${window.icon('user')}Invite a friend</h2>
+        <div class="card">
+          <p class="small muted">Share this link. There is no prize; it just helps a friend start. You only see how many joined, never who.</p>
+          <label class="field"><span class="visually-hidden">Your invite link</span>
+            <input type="text" id="invite-link" readonly value="${App.escapeHtml(link)}"></label>
+          <button class="btn btn-sm btn-primary" id="invite-copy" type="button">Copy link</button>
+          <p class="tiny muted" style="margin-top:8px">${ref.joined} joined, ${ref.started} started learning.</p>
+        </div>`;
+      document.getElementById('invite-copy').addEventListener('click', async (event) => {
+        const input = document.getElementById('invite-link');
+        try { await navigator.clipboard.writeText(input.value); event.target.textContent = 'Copied'; } catch { input.select(); }
+      });
+    }
+  } catch { /* the card is optional */ }
 
   if (window.GoalPicker) window.GoalPicker.list(document.getElementById('goals-card'));
 

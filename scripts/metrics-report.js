@@ -56,6 +56,8 @@ if (process.argv.includes('--json')) {
   console.log(`  real users who did anything: ${h.ever_active}; active on 2+ distinct days: ${h.active_2plus_days}`);
   console.log('  activation funnel (real users):');
   for (const f of m.funnel.steps) console.log(`    ${f.label}: ${f.users} of ${f.of}${f.rate === null ? '' : ` (${(f.rate * 100).toFixed(1)}%)`}`);
+  const rf = m.funnel.referrals;
+  console.log(`    invited by a friend's link: ${rf.signed_up} sign-ups (${rf.started_learning} started learning) from ${rf.inviters} inviters`);
   const mpd = m.funnel.minutes_per_active_day;
   console.log(`    minutes per active day: ${mpd.measured_study ?? '-'} measured, ${mpd.sitting_upper ?? '-'} sitting (upper), over ${m.funnel.active_days_total} active days`);
   console.log(`  day-1 return: ${pct(h.day1_return)}`);

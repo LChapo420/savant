@@ -138,6 +138,7 @@ App.mount(async () => {
         email: document.getElementById('email').value.trim(),
         password: document.getElementById('password').value,
         display_name: document.getElementById('display_name').value.trim(),
+        ref: /^[a-z0-9]{8}$/.test(App.query('ref') || '') ? App.query('ref') : undefined, // a friend's share link
       });
     } catch (err) {
       // The server holds the age answer; if it says this is a child account,

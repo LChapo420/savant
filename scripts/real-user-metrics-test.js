@@ -244,7 +244,7 @@ check('monthly CSV names estimate and upper-bound columns', /ai_cost_per_active_
 const csvExcluded = metrics.toCsv(m, 'excluded');
 check('excluded CSV: one row per excluded account', csvExcluded.trim().split('\n').length === excluded.length + 1);
 check('a cell starting with = is defused in the CSV', csvExcluded.includes(`'=cmd|calc`) && !/(^|,)=cmd/m.test(csvExcluded));
-check('funnel CSV: a header, six steps and two minutes rows', metrics.toCsv(m, 'funnel').trim().split('\n').length === 9 && metrics.toCsv(m, 'funnel').startsWith('step,label,users,out_of,rate,share_of_all_signups'));
+check('funnel CSV: a header, six steps, two invite rows and two minutes rows', metrics.toCsv(m, 'funnel').trim().split('\n').length === 11 && metrics.toCsv(m, 'funnel').startsWith('step,label,users,out_of,rate,share_of_all_signups'));
 let threw = false;
 try { metrics.toCsv(m, 'nope'); } catch { threw = true; }
 check('an unknown table is refused', threw);

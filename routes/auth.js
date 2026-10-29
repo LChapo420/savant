@@ -19,6 +19,7 @@ const learner = require('../services/learner');
 const { limit } = require('../utils/rate-limit');
 const { publicUser } = require('../middleware/auth');
 const consent = require('./consent');
+const referrals = require('../services/referrals');
 
 const router = express.Router();
 
@@ -94,6 +95,7 @@ router.post('/register', limit('register', 10, 60 * 60 * 1000), async (req, res)
     age_check: screen ? { ...screen, asked_on: 'sign_up' } : null,
     account_type: 'standard',
   });
+  referrals.attach(user, req.body.ref); // a friend's share link; an unknown code is ignored
 
   await startSession(req, user);
   // A brand-new account has no profile row yet, so `getProfile` hands back the

@@ -296,7 +296,16 @@ function compute(store, opts = {}) {
   const activeDayCounts = realIdList.map((id) => daysFor(id).size).filter((n) => n >= 1);
   const everStudy = periodStats(realIdList, () => true, null);
   const totalActiveDays = activeDayCounts.reduce((t, n) => t + n, 0);
+  // Invite a friend (services/referrals.js): real users who signed up from a share link.
+  const invitees = groups.real.filter((u) => u.referred_by !== undefined && u.referred_by !== null);
+  const referrals = {
+    signed_up: invitees.length,
+    started_learning: invitees.filter((u) => startedLearning.has(u.id)).length,
+    inviters: new Set(invitees.map((u) => u.referred_by)).size,
+    share_of_signups: round(ratio(invitees.length, signedUp), 4),
+  };
   const funnel = {
+    referrals,
     steps: [
       step('signed_up', 'Signed up', signedUp),
       step('onboarded', 'Finished onboarding', groups.real.filter((u) => u.onboarded === true).length),
@@ -458,6 +467,8 @@ const TABLES = {
   funnel: (m) => [
     ['step', 'label', 'users', 'out_of', 'rate', 'share_of_all_signups'],
     ...m.funnel.steps.map((x) => [x.key, x.label, x.users, x.of, x.rate, x.of_signed_up]),
+    ['invited_signed_up', 'Real sign-ups that came from an invite link', m.funnel.referrals.signed_up, m.funnel.steps[0].of, m.funnel.referrals.share_of_signups, m.funnel.referrals.share_of_signups],
+    ['invited_started_learning', 'Of those, answered a first question outside placement', m.funnel.referrals.started_learning, m.funnel.referrals.signed_up, round(ratio(m.funnel.referrals.started_learning, m.funnel.referrals.signed_up), 4), ''],
     ['minutes_per_active_day_measured', 'Measured study minutes per active day', m.funnel.minutes_per_active_day.measured_study, '', '', ''],
     ['minutes_per_active_day_sitting_upper', 'Sitting minutes per active day (upper)', m.funnel.minutes_per_active_day.sitting_upper, '', '', ''],
   ],

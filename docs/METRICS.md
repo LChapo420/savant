@@ -65,6 +65,7 @@ on Tuesday (UTC). The page says so.
 | Funnel: first lesson | Real users who answered at least one question in a sitting that is not a placement (a placement is a test, not a lesson). |
 | Funnel: came back | Real users active on any day after their sign-up day. |
 | Funnel: next day / week 1 | Same as day-1 return and back-within-days-1-7, over the cohorts old enough to have had the chance, so the denominator is smaller than the sign-up count and is printed beside it. |
+| Funnel: invited friends | Real users whose account carries `referred_by` (they signed up from another learner's `/register?ref=CODE` link), how many of them answered a first question outside placement, and how many different inviters brought them. Child accounts are never recorded as invited. No reward is given for inviting. |
 | Minutes per active day | All-time measured study minutes (and, separately, the capped sitting minutes) divided by all-time active days of real users. The first undercounts, the second overcounts. |
 | Active learners (a period) | Real users active on at least one day in the period (the last 30 days, or a calendar month). |
 | Sittings per active learner | Sittings (`sessions` rows, placements included) started in the period by active real users, divided by the active learners. |

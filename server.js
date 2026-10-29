@@ -136,6 +136,7 @@ app.use('/api', require('./routes/essays'));
 app.use('/api', require('./routes/remediation'));
 app.use('/api', require('./routes/profile'));
 app.use('/api', require('./routes/goals')); // the goal picker: what a learner wants from a subject or grade (services/goals.js)
+app.use('/api', require('./routes/referral')); // invite a friend: share code and counts (services/referrals.js)
 app.use('/api', require('./routes/tutor')); // the persistent tutor (services/tutor.js)
 app.use('/api', require('./routes/prefs')); // engagement settings: hide streak/XP, break line, time zone, next-study plan (config/ux.js)
 // A held graduation (COVERAGE_GATE=enforce): what it waits on, and graduating once it is met.
