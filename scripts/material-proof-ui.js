@@ -48,11 +48,13 @@ async function stopServer() {
   server = null;
 }
 const readDb = () => JSON.parse(fs.readFileSync(DB, 'utf8'));
-const keyOf = (userId, qid) => {
-  const d = readDb();
-  for (const c of d.material_courses || []) if (c.user_id === userId) for (const s of c.skills) for (const q of s.questions) if (q.id === qid) return { q, s, c };
-  return null;
-};
+// The answer key, read from the copy db ONCE after the build (reading the file while the server renames it can fail
+// on Windows with EPERM and take the server down): the key does not change after the build.
+const keyCache = new Map();
+function loadKeys(userId) {
+  for (const c of readDb().material_courses || []) if (c.user_id === userId) for (const s of c.skills) for (const q of s.questions) keyCache.set(q.id, { q, s, c });
+}
+const keyOf = (userId, qid) => keyCache.get(qid) || null;
 
 const results = [];
 const step = (name, ok, detail) => { results.push({ name, ok: !!ok, detail }); console.log(`${ok ? '  ok  ' : '  FAIL'} ${name}${detail ? ` (${detail})` : ''}`); };
@@ -102,6 +104,8 @@ async function run(browser, label, viewport, input) {
   step(`${label}: build`, course && ['ready', 'partial'].includes(course.status), course ? `${course.status}, ${course.skills.length} skills in ${course.units.length} units, ${Math.round((Date.now() - t0) / 1000)} s` : 'no course');
   if (!course || !['ready', 'partial'].includes(course.status)) { await ctx.close(); return; }
 
+  await delay(3000); // let the server finish writing before the one read of the key
+  loadKeys(userId);
   // Place: answer the first half of the levels right, "I don't know" for the rest.
   await page.goto(`${BASE}/my-material-study?id=${mid}`);
   await page.waitForSelector('#next-card');
