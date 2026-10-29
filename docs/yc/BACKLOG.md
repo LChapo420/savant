@@ -87,6 +87,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
      draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening). Pre-test day 0,
      post-test last day; write results with `recordTest` in `services/spanish-study.js`. Until this exists the study cannot run end to end.
+   - **[claimed 2026-10-29T20:00Z] admin results page slice of (c).**
    - **(c) Participant pages: DONE as a first slice, see Done.** Remaining: the admin results page (per-arm bar chart of gain per hour, the CI, CSV link; use CSS variables) and a look at all three pages at 375 px signed in. Original text:
    - **(c) Participant and admin pages** (the test-taking page for `/api/spanish-study-test/*` is part of this: copy the look and flow of `public/spanish-check.html` into a new `public/spanish-study-test.html`, do not edit the sealed ones): sign-up with consent (teen parental box), daily check-in with the screenshot tick,
      and an admin results page with a per-arm bar chart of gain per hour, the CI and a CSV link (use CSS variables; redesign in progress).
