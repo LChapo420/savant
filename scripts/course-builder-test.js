@@ -153,7 +153,7 @@ function mockLlm(mode = 'good') {
     if (args.task === 'material_outline') {
       return { model: 'mock', data: { skills: [
         { id: 'cells', title: 'Inside the cell', unit: 'Cells', prerequisites: [], passage_ids: ['p1'] },
-        { id: 'nucleus', title: 'The nucleus', unit: 'Cells', prerequisites: ['cells'], passage_ids: ['p3'], taught: false },
+        { id: 'nucleus', title: 'The nucleus', unit: 'Cells', prerequisites: ['cells'], passage_ids: ['p1'], taught: false },
         { id: 'photo', title: 'Photosynthesis', unit: 'Plants', prerequisites: ['nucleus'], passage_ids: ['p2'] },
         { id: 'dropme', title: 'Dropped', unit: 'Plants', prerequisites: ['photo'], passage_ids: ['p2'] },
         { id: 'last', title: 'Last', unit: 'Plants', prerequisites: ['dropme'], passage_ids: ['p2'] },
@@ -224,6 +224,18 @@ function mockLlm(mode = 'good') {
   const mf = materials.addPaste(u.id, 'Flaky', `${para(S1)} flaky`).value;
   out = await cb.build(u.id, mf.id, { llm: flaky });
   check('a skill whose items fail the checks, or whose model is busy, is tried again before it is dropped', out.course && out.course.skills.length === 1 && lessonCalls === 3 && out.course.dropped.retried === 1 && out.course.dropped.skills === 0, [lessonCalls, out.course && out.course.dropped]);
+
+  console.log('the material\'s own order');
+  const so = cb.orderSkills(cb.sourceOrder([
+    { id: 'derivative', prerequisites: [], passage_ids: ['p1', 'p9'] },
+    { id: 'limits', prerequisites: ['rules', 'derivative'], passage_ids: ['p1', 'p2'] },
+    { id: 'rules', prerequisites: ['limits'], passage_ids: ['p3'] },
+  ]));
+  check('skills keep the outline\'s (the material\'s) order; a prerequisite that only comes later is dropped, an earlier one kept',
+    so.map((k) => k.id).join() === 'derivative,limits,rules' && so[1].prerequisites.join() === 'derivative' && so[2].prerequisites.join() === 'limits', so.map((k) => [k.id, k.prerequisites]));
+  const lay = [{ id: 'a', unit: 'One', prerequisites: [] }, { id: 'b', unit: 'Two', prerequisites: [] }, { id: 'c', unit: 'One', prerequisites: [] }];
+  const units = cb.layout(lay);
+  check('units are runs of consecutive skills, so they read in path order', units.map((x) => `${x.title}:${x.skills.join('+')}`).join() === 'One:a,Two:b,One:c', units);
 
   console.log('near-verbatim quotes (formulas from a PDF)');
   const pdfText = "Notice that f \uFFFD(x0) is negative \u2014 as is the slope of the tangent line on the graph above. Hence the derivative of 1/x is -1/x0^2 at x0.";

@@ -72,10 +72,9 @@ function sourceView(text, course) {
 
 async function judgeMap(course, text) {
   const { view, note } = sourceView(text, course);
-  const map = course.units.map((u) => `Unit: ${u.title}\n${u.skills.map((sid) => {
-    const s = course.skills.find((k) => k.id === sid);
-    return `  ${s.level}. [${s.id}] ${s.title}${s.source === 'general' ? ' (the source only names it)' : ''}: ${s.summary || ''} | prerequisites: ${s.prerequisites.join(', ') || 'none'}`;
-  }).join('\n')}`).join('\n');
+  // In path order (level by level), each with its unit: grouping by unit would hide the order being judged.
+  const unitOf = new Map(course.units.flatMap((u) => u.skills.map((sid) => [sid, u.title])));
+  const map = course.skills.map((s) => `${s.level}. [${s.id}] ${s.title}${s.source === 'general' ? ' (the source only names it)' : ''} (unit: ${unitOf.get(s.id) || ''}): ${s.summary || ''} | prerequisites: ${s.prerequisites.join(', ') || 'none'}`).join('\n');
   const args = {
     schema: JUDGE_SCHEMA, schemaName: 'skill_map_review', maxTokens: 3000,
     system: 'You review a course outline that a program built from a source text. Judge it ONLY against the source shown. '

@@ -205,6 +205,19 @@ function cleanOutline(raw, passages) {
 }
 
 /** Prerequisites first; a cycle is broken by dropping the edge that closes it. Stable for the source order. */
+/**
+ * The material's own order: the outline is planned in that order (window by window, each in source order), so it is
+ * kept as it is, and a prerequisite that only comes LATER in it is dropped as a wrong edge: a real prerequisite is
+ * taught first, and a forward edge would pull a later topic ahead of where the material teaches it. (Ordering by a
+ * skill's first passage was tried and rejected: a syllabus skill that also cites the course-goals passage jumped to
+ * the front.) Mutates the prerequisites; returns the skills in the same order.
+ */
+function sourceOrder(skills) {
+  const pos = new Map(skills.map((s, i) => [s.id, i]));
+  for (const s of skills) s.prerequisites = s.prerequisites.filter((q) => pos.has(q) && pos.get(q) < pos.get(s.id));
+  return skills;
+}
+
 function orderSkills(skills) {
   const byId = new Map(skills.map((s) => [s.id, s]));
   const out = [];
@@ -235,13 +248,14 @@ function layout(skills) {
     return s.depth;
   };
   const units = [];
-  const unitByTitle = new Map();
   skills.forEach((s, i) => {
     s.level = i + 1;
     depth(s);
+    // A unit is a run of consecutive skills with the same unit title, so the units read in path order.
     const key = norm(s.unit || 'Unit 1');
-    if (!unitByTitle.has(key)) { const u = { id: `u${units.length + 1}`, title: s.unit || 'Unit 1', skills: [] }; unitByTitle.set(key, u); units.push(u); }
-    const u = unitByTitle.get(key);
+    const last = units[units.length - 1];
+    if (!last || norm(last.title) !== key) units.push({ id: `u${units.length + 1}`, title: s.unit || 'Unit 1', skills: [] });
+    const u = units[units.length - 1];
     u.skills.push(s.id);
     s.unit_id = u.id;
   });
@@ -517,7 +531,7 @@ async function build(userId, materialId, opts = {}) {
           if (id) { taken.add(id); raw.push({ ...k, id }); }
         }
       }
-      outline = orderSkills(cleanOutline({ skills: raw }, passages).slice(0, most));
+      outline = orderSkills(sourceOrder(cleanOutline({ skills: raw }, passages).slice(0, most)));
       layout(outline);
       if (!outline.length) {
         persist({ status: 'failed', error: stoppedOutline ? 'token budget' : 'outline', tokens_used: ctx.budget.used, finished_at: new Date().toISOString() });
@@ -596,5 +610,5 @@ function removeForMaterial(userId, materialId) {
 
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
-  chunk, cleanOutline, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, summary, get, removeForMaterial,
+  chunk, cleanOutline, sourceOrder, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, summary, get, removeForMaterial,
 };
