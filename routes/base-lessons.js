@@ -925,6 +925,18 @@ router.post('/lessons/:track/:grade/:level/game-finish', requireAuth, (req, res)
     moved = plan.kind === 'lesson'
       ? mastery.completeLesson(req.user.id, enrollment, grade)
       : mastery.tryLevelUp(req.user.id, enrollment, grade);
+    // Spanish levels are settled by the path's own pass mark (services/spanish/path.js),
+    // not the practice gate: a game level the Duolingo-style player cannot build used to
+    // leave the learner standing on it, with the next level shut. Finishing it with
+    // 60% of the answers right (or no graded answers) moves them on.
+    const correct = Math.max(0, Number(req.body && req.body.correct) || 0);
+    const wrong = Math.max(0, Number(req.body && req.body.wrong) || 0);
+    const accuracy = correct + wrong > 0 ? correct / (correct + wrong) : null;
+    if (!moved.advanced && track === 'spanish' && enrollment.status === 'active'
+      && (accuracy === null || accuracy >= 0.6)) {
+      const to = mastery.advance(enrollment, grade);
+      moved = { advanced: to !== level, level: to, progress: moved.progress };
+    }
   }
   // The after-level read of the game: this play's answers, and anything they said.
   const play = String((req.body && req.body.play) || '').slice(0, 40);
