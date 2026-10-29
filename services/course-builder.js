@@ -489,7 +489,9 @@ async function build(userId, materialId, opts = {}) {
     const worker = async () => {
       while (todo.length && !stopped) {
         const skill = todo.shift();
-        const r = await buildSkill(skill, passageById, ctx);
+        let r = await buildSkill(skill, passageById, ctx);
+        // Too few items survived the checks: one fresh attempt before the skill is dropped (a new draw often passes).
+        if (r.skipped) { ctx.dropped.skills--; ctx.dropped.retried = (ctx.dropped.retried || 0) + 1; r = await buildSkill(skill, passageById, ctx); }
         if (r.stopped) { stopped = true; return; }
         if (r.value) { built.set(skill.id, r.value); persist({ skills: outline.filter((s) => built.has(s.id)).map((s) => built.get(s.id)), dropped: ctx.dropped, tokens_used: (base.tokens_used || 0) + ctx.budget.used }); }
       }

@@ -208,6 +208,20 @@ function mockLlm(mode = 'good') {
   check('later windows see the skills planned so far; a repeated id is renamed, not lost, and can name an earlier skill as a prerequisite',
     later.length === wins.length && /Skills already planned/.test(later[1].user) && outl.length === wins.length && new Set(outl.map((k) => k.id)).size === outl.length && outl[1].prerequisites.includes('same'), outl.map((k) => [k.id, k.prerequisites]));
 
+  let lessonCalls = 0;
+  const flaky = async (a) => {
+    if (a.task === 'material_lesson') {
+      lessonCalls++;
+      if (lessonCalls === 1) return { model: 'mock', data: { lesson: { paragraphs: ['x'] }, questions: [{ type: 'short_answer', prompt: 'q?', answer: 'a', explanation: 'e', passage_id: 'p1', quote: 'not in the passage at all, nowhere' }] } };
+      if (lessonCalls === 2) return null; // busy model: retried once
+    }
+    if (a.task === 'material_outline') return { model: 'mock', data: { skills: [{ id: 'cells', title: 'Inside the cell', unit: 'Cells', prerequisites: [], passage_ids: ['p1'] }] } };
+    return v2(a);
+  };
+  const mf = materials.addPaste(u.id, 'Flaky', `${para(S1)} flaky`).value;
+  out = await cb.build(u.id, mf.id, { llm: flaky });
+  check('a skill whose items fail the checks, or whose model is busy, is tried again before it is dropped', out.course && out.course.skills.length === 1 && lessonCalls === 3 && out.course.dropped.retried === 1 && out.course.dropped.skills === 0, [lessonCalls, out.course && out.course.dropped]);
+
   console.log('safety');
   check('someone else\'s material is refused', (await cb.build(other.id, m.id, { llm: mockLlm() })).code === 'not_found');
   const slow = mockLlm();

@@ -10,7 +10,8 @@
  *   skill-map judge   xKiro Qwen3.8 Max (free): the skill map against the source (topics in the source? order? prerequisites?
  *                     anything important missing? anything invented?).
  *   item checker A    NVIDIA DeepSeek V4.1 Flash (free).
- *   item checker B    NVIDIA GLM 5.3 (free). (xKiro's shared daily allowance is kept for the judge.)
+ *   item checker B    NVIDIA Mistral Large 4 (free). (GLM 5.3 was retired by NVIDIA on 2026-10-28; xKiro's shared
+ *                     daily allowance is kept for the judge.)
  * Each checker sees, per sampled skill, the passages, the lesson and the questions (marked answer, explanation, quote) and
  * says per item whether it is correct and backed by the passage (for a general-knowledge skill: correct and on the named
  * topic), and whether the lesson says anything the passage does not. Planted errors: a share of the items is copied with
@@ -27,7 +28,7 @@ const { rng } = require('../services/material-path');
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const JUDGE = 'qwen/qwen3.8-max:free';
 const CHECK_A = 'deepseek-ai/deepseek-v4.1-flash';
-const CHECK_B = 'z-ai/glm-5.3';
+const CHECK_B = 'mistralai/mistral-large-4-1t-a52b';
 const JUDGE_CHARS = 40000;
 const SKILL_CHARS = 7000;
 
@@ -125,8 +126,8 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
     + ' List each problem sentence in lesson_problems.';
   const user = `PASSAGES:\n${passagesText}\n\nLESSON:\n${lesson.paragraphs.join('\n')}${lesson.key_points && lesson.key_points.length ? `\nKey points: ${lesson.key_points.join(' | ')}` : ''}\n\nITEMS:\n${items.map((q, i) => describe(q, i + 1)).join('\n')}`;
   const call = checker === 'A'
-    ? () => nvidia.structured({ models: [CHECK_A], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000 })
-    : () => nvidia.structured({ models: [CHECK_B], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000 });
+    ? () => nvidia.structured({ models: [CHECK_A], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 })
+    : () => nvidia.structured({ models: [CHECK_B], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 });
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       // eslint-disable-next-line no-await-in-loop
