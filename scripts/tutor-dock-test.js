@@ -164,9 +164,12 @@ function serve(router) {
   check('full mode has the hints-not-answers rule', /HINTS, NOT ANSWERS/.test(dock.MODE_NOTE.full) && /just tell me/.test(dock.MODE_NOTE.full));
   const src = read('services/tutor-context.js');
   check('the answer rule comes after the notes in the prompt', src.indexOf('RULE FOR EVERY REPLY') > src.indexOf('WHAT YOU KNOW (notes'));
-  check('the dock asks for a 4 s hedge and no extra effort', /hedgeAfterMs: 4000/.test(src) && !/effort: 'low'/.test(src));
-  const plan = require('../services/providers/nvidia').plan('fast', 'assist_help');
-  check('the dock plan is the 550B model with reasoning off, nothing weaker behind it', plan.entries.length === 1 && /ultra-550b/.test(plan.entries[0].model) && plan.entries[0].effort === 'off', plan);
+  check('the dock asks for a 4 s hedge, a 15 s cap and no extra effort', /hedgeAfterMs: 4000, timeoutMs: 15000/.test(src) && !/effort: 'low'/.test(src));
+  check('a proposed answer gets "why?", not right or wrong', /is it B\?/.test(dock.MODE_NOTE.full));
+  const nvPlan = require('../services/providers/nvidia').plan;
+  const plan = nvPlan('fast', 'dock_help');
+  check('the dock plan is the 550B model with reasoning off, nothing weaker behind it', /task: 'dock_help'/.test(src) && plan.entries.length === 1 && /ultra-550b/.test(plan.entries[0].model) && plan.entries[0].effort === 'off', plan);
+  check('the other assist_help callers keep the full light tier', nvPlan('fast', 'assist_help').entries.length > 1);
   let touched = '';
   try { touched = execSync('git diff --name-only HEAD -- spanish-check spanish-check-lc routes/spanish-check.js routes/spanish-check-lc.js public/spanish-check.html public/spanish-listening.html public/js/spanish-check.js public/js/spanish-listening.js', { cwd: root }).toString().trim(); } catch { touched = ''; }
   check('no sealed Spanish file is modified', touched === '', touched);

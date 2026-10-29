@@ -1,5 +1,5 @@
 {
-  "_doc": "Which NVIDIA build model answers which work. Read by services/providers/nvidia.js on every call (cached, re-read when the file changes). Tiers are the owner's lineup; roles map the app's provider roles to a tier; tasks override a role for one call site and are written by scripts/model-lineup-eval.js from measured results. Each model entry is {model, effort}; effort is off|low|medium|high|max. Env overrides: NVIDIA_TIER_<TIER>, NVIDIA_ROLE_<ROLE>, NVIDIA_TASK_<TASK> as 'model@effort,model@effort' (or a tier name for roles). See curriculum-build/MODEL-LINEUP.md.",
+  "_doc": "Which NVIDIA build model answers which work. Read by services/providers/nvidia.js on every call (cached, re-read when the file changes). Tiers are the owner's lineup; roles map the app's provider roles to a tier; tasks override a role for one call site and are written by scripts/model-lineup-eval.js from measured results. Each model entry is {model, effort}; effort is off|low|medium|high|max. Env overrides: NVIDIA_TIER_<TIER>, NVIDIA_ROLE_<ROLE>, NVIDIA_TASK_<TASK> as 'model@effort,model@effort' (or a tier name for roles). A task may set \"only\": true to use just its own models, with no tier or spill behind them (the NVIDIA_TASK_ env override ignores it). See curriculum-build/MODEL-LINEUP.md.",
   "version": 1,
   "source": "scripts/model-lineup-eval.js run 2026-10-23T01:39:31.990Z (curriculum-build/model-lineup/EVAL-REPORT.md)",
   "updated_at": "2026-10-23T01:39:32.332Z",
@@ -107,6 +107,9 @@
       "tier": "light"
     },
     "assist_help": {
+      "tier": "light"
+    },
+    "dock_help": {
       "tier": "light",
       "only": true,
       "models": [

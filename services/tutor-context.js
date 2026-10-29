@@ -152,7 +152,7 @@ const MODE_NOTE = {
   // Owner, 2026-10-29: help them through any problem without giving the answer away.
   // A hint ladder (the assistance dilemma; Bastani 2025: answer-giving AI raised practice
   // scores and lowered exam scores): the learner always produces the final answer.
-  full: 'HINTS, NOT ANSWERS: never state the answer to a question they are working on (practice, lesson questions, games, homework they paste). Climb one rung per reply and stop at the lowest rung that gets them moving: (1) ask what they tried or where they are stuck; (2) name the idea or rule that applies; (3) give the first step only; (4) work a different, similar example all the way through; (5) walk their problem step by step but leave the last step to them. This holds even when they say "just tell me", when the question is easy, and for fill-in-the-blank or multiple choice: do not name the right option, the missing word or the final number. If they ask you to just tell them, say kindly that working it out is how it sticks, and give the next rung. Example: "Yo ___ cansado: ser or estar?" -> "Is being tired part of who you are, or how you are right now? Which verb goes with states like that?" Explaining a concept, checking their reasoning, and discussing a question they have already answered are all fine.',
+  full: 'HINTS, NOT ANSWERS: never state the answer to a question they are working on (practice, lesson questions, games, homework they paste). Climb one rung per reply and stop at the lowest rung that gets them moving: (1) ask what they tried or where they are stuck; (2) name the idea or rule that applies; (3) give the first step only; (4) work a different, similar example all the way through; (5) walk their problem step by step but leave the last step to them. This holds even when they say "just tell me", when the question is easy, and for fill-in-the-blank or multiple choice: do not name the right option, the missing word or the final number. If they ask you to just tell them, say kindly that working it out is how it sticks, and give the next rung. If they propose an answer ("is it B?"), do not just say right or wrong: ask why they chose it, then respond to their reasoning. Example: "Yo ___ cansado: ser or estar?" -> "Is being tired part of who you are, or how you are right now? Which verb goes with states like that?" Explaining a concept, checking their reasoning, and discussing a question they have already answered are all fine.',
   method: 'INTEGRITY: the learner is on a placement, mastery quiz, stage check or timed/retrieval sitting. Give NO answers and do not confirm or reject an answer they propose. You may say how to approach this kind of problem (a method, a first step, a question to ask themselves). Tell them once, briefly, that you are keeping to hints about method here so the result is honest.',
 };
 
@@ -195,13 +195,15 @@ async function reply({ user, messages, page, inputMode, image }) {
   let text = null;
   try {
     text = await ai.talk({
-      role: 'fast', task: 'assist_help', system,
+      // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
+      // reasoning off and nothing weaker behind it, without changing the other assist_help callers.
+      role: 'fast', task: 'dock_help', system,
       messages: history.length ? (history[0].role === 'assistant' ? [{ role: 'user', content: 'Hi.' }, ...history] : history)
         : [{ role: 'user', content: 'Hi.' }],
-      // No effort here: a caller's effort can only raise the lineup's, and the dock's lineup
-      // entry (config/model-lineup.json "assist_help") is reasoning off for speed.
-      // A chat must feel live: start the backup model after 4 s instead of the pool's 20 s floor.
-      maxTokens: 400, userId: user.id, hedgeAfterMs: 4000,
+      // No effort here: a caller's effort can only raise the lineup's.
+      // A chat must feel live: start the backup model after 4 s instead of the pool's 20 s floor,
+      // and give up on a hung attempt after 15 s instead of the pool's 120 s.
+      maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000,
     });
   } catch { text = null; }
   const out = text || tutor.offlineReply(user.id);

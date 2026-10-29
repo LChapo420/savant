@@ -128,7 +128,8 @@ The task names are passed as `task:` at each call, and `config/model-lineup.json
 | `services/ai.js` coachReply / coachReplyStream (the coach) | fast / `coach_turn` | light | Live conversation, so latency matters. Must not mislead, and the leak guard still runs. |
 | `services/ai.js` tutorReply (explain an answered item) | fast / `tutor_explain` | light | Same as the coach. |
 | `services/ai.js` remediationTeachReply | fast / `remediation_teach` | light | Conversational teaching. |
-| `services/assist.js` onBlock / onPage (help on a lesson part) | fast / `assist_help` | light | Conversational help. |
+| `services/assist.js` onBlock / onPage (help on a lesson part); `services/tutor.js` home chat and memory fold | fast / `assist_help` | light | Conversational help. |
+| `services/tutor-context.js` reply (the tutor dock on every page) | fast / `dock_help` | **Ultra @off only** (`"only": true`: no tier or spill behind it; a 429 or cooldown goes to the next provider, OpenRouter's free route of the same model) | Owner, 2026-10-29: fast with full context. Reasoning on took 2-35 s; off answers in 1-3 s with the same content. 4 s hedge, 15 s cap per attempt. |
 | `services/ai.js` gradeFreeResponse (`services/grading.js` `needsAi`: short_answer the rules reject; called from `services/sessions.js`) | fast / `grade_free_response` | **hard: GLM 5.3 @max (eval winner)**, then Ultra, then GLM Flash | A false accept teaches a wrong answer, so it needs real judgement. Measured below (0.938, 71 s median: see open questions). |
 | `services/spanish/ai-activities.js` conversationRubric, writing feedback, writing and speaking rubrics | fast / `spanish_rubric` | fast_thinking | Scores and corrections a learner acts on. |
 | `services/ai.js` regenerateItems (remake a failed quiz) | regen / `regen_items` | fast_thinking | Bulk authoring against a fixed spec, validated in code. Learner waiting. |
