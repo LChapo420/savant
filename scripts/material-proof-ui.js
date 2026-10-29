@@ -220,6 +220,7 @@ async function run(browser, label, viewport, input) {
     await stopServer();
   }
   fs.writeFileSync(path.join(SHOTS, 'ui-results.json'), JSON.stringify(results, null, 1));
+  fs.writeFileSync(path.join(SHOTS, 'server.log'), log);
   const failed = results.filter((r) => !r.ok).length;
   console.log(failed ? `\n${failed} step(s) failed` : '\nall UI steps passed');
   process.exit(failed ? 1 : 0);
