@@ -132,6 +132,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 ## Blocked
 
+- 2026-10-29 · 0c(c) third slice built and its own tests pass, but `npm test` fails on `scripts/scorecard-evidence-test.js`: "review today() for a learner on the Final stays under 4 s" measures 4.0-4.7 s on the cloud container. It fails the same way with my change stashed, so it is a pre-existing wall-clock threshold, not my change. The code is on branch `yc-next-wip-tutor-player` (commit ad64792; client-only: `Player.shown()` in `public/js/player.js`, fallback in `public/js/tutor-dock.js`, checks in `scripts/tutor-dock-test.js`). Owner: loosen/skip that timing check on slow hosts (or make `review today()` faster), then merge that branch into `yc-next`.
+
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
