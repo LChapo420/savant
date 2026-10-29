@@ -591,7 +591,7 @@ function summary(c) {
   if (!c) return null;
   const stale = c.status === 'building' && Date.now() - Date.parse(c.started_at) > STALE_BUILD_MS && !inflight.has(`${c.user_id}:${c.material_id}`);
   return {
-    id: c.id, material_id: c.material_id, title: c.title, status: stale ? 'failed' : c.status, truncated: !!c.truncated,
+    id: c.id, material_id: c.material_id, title: c.title, status: stale ? ((c.skills || []).length ? 'partial' : 'failed') : c.status, truncated: !!c.truncated,
     units: c.units || [],
     planned: (c.outline || []).length,
     skills: (c.skills || []).map((s) => ({

@@ -265,6 +265,10 @@ function mockLlm(mode = 'good') {
   out = await cb.build(u.id, mr.id, { llm: twoStep, concurrency: 1 });
   check('resuming builds the missing skill and keeps the edge to it (b still needs a)', out.course && out.course.status === 'ready' && out.course.skills.find((k) => k.id === 'b').prerequisites.join() === 'a', out.course && out.course.skills.map((k) => [k.id, k.prerequisites]));
 
+  const staleRow = cb.get(u.id, mf.id);
+  const stale = cb.summary({ ...staleRow, status: 'building', started_at: new Date(Date.now() - 60 * 60 * 1000).toISOString() });
+  check('a build that died with skills built shows as partial (studyable, and Make a course finishes it), not failed', stale.status === 'partial', stale.status);
+
   console.log('safety');
   check('someone else\'s material is refused', (await cb.build(other.id, m.id, { llm: mockLlm() })).code === 'not_found');
   const slow = mockLlm();

@@ -65,13 +65,32 @@ async function run(browser, label, viewport, input) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   const shot = async (name) => page.screenshot({ path: path.join(SHOTS, `${label}-${name}.png`), fullPage: false });
-  const email = `ui-proof-${label}-${Date.now()}@test.invalid`;
   const password = 'proof-pass-12345';
-  const reg = await page.request.post(`${BASE}/api/auth/register`, { data: { email, password, display_name: `Proof ${label}`, birth_year: 1995, birth_month: 6, country: 'US' } });
-  step(`${label}: sign up an adult account`, reg.ok(), reg.status());
+  // --existing-email: sign in to an account an earlier run created (its upload and build already went through the UI)
+  // and carry on from placement; used when the free tier's build outlasted the earlier run's clock.
+  const email = input.existing || `ui-proof-${label}-${Date.now()}@test.invalid`;
+  if (input.existing) {
+    const login = await page.request.post(`${BASE}/api/auth/login`, { data: { email, password } });
+    step(`${label}: sign in to the account the earlier run built its course in`, login.ok(), login.status());
+  } else {
+    const reg = await page.request.post(`${BASE}/api/auth/register`, { data: { email, password, display_name: `Proof ${label}`, birth_year: 1995, birth_month: 6, country: 'US' } });
+    step(`${label}: sign up an adult account`, reg.ok(), reg.status());
+  }
   const me = await (await page.request.get(`${BASE}/api/auth/me`)).json().catch(() => ({}));
   const userId = (me.user && me.user.id) || me.id;
 
+  let mid;
+  let course = null;
+  if (input.existing) {
+    const list = (await (await page.request.get(`${BASE}/api/materials`)).json()).materials;
+    mid = list[0].id;
+    course = (await (await page.request.get(`${BASE}/api/materials/${mid}/course`)).json()).course;
+    await page.goto(`${BASE}/my-material`);
+    await page.waitForSelector(`#course-note-${mid}`);
+    await delay(1500);
+    await shot('2-built');
+    step(`${label}: course from the earlier UI build is there`, course && course.skills.length > 0, course ? `${course.status}, ${course.skills.length} skills` : 'none');
+  } else {
   // Upload
   await page.goto(`${BASE}/my-material`);
   await page.waitForSelector('#upload, #paste');
@@ -88,10 +107,9 @@ async function run(browser, label, viewport, input) {
   step(`${label}: upload`, await page.locator('[data-course]').count() === 1);
 
   // Build
-  const mid = await page.locator('[data-course]').first().getAttribute('data-course');
+  mid = await page.locator('[data-course]').first().getAttribute('data-course');
   await page.click(`#course-${mid}`);
   const t0 = Date.now();
-  let course = null;
   while (Date.now() - t0 < 60 * 60 * 1000) {
     await delay(10000);
     course = (await (await page.request.get(`${BASE}/api/materials/${mid}/course`)).json()).course;
@@ -103,6 +121,7 @@ async function run(browser, label, viewport, input) {
   await shot('2-built');
   step(`${label}: build`, course && ['ready', 'partial'].includes(course.status), course ? `${course.status}, ${course.skills.length} skills in ${course.units.length} units, ${Math.round((Date.now() - t0) / 1000)} s` : 'no course');
   if (!course || !['ready', 'partial'].includes(course.status)) { await ctx.close(); return; }
+  }
 
   await delay(3000); // let the server finish writing before the one read of the key
   loadKeys(userId);
@@ -215,7 +234,7 @@ async function run(browser, label, viewport, input) {
   const browser = await chromium.launch();
   try {
     if (arg('phone-paste')) await run(browser, 'phone', { width: 375, height: 812 }, { paste: arg('phone-paste'), title: arg('phone-title', 'My notes') });
-    if (arg('desktop-file')) await run(browser, 'desktop', { width: 1280, height: 900 }, { file: arg('desktop-file') });
+    if (arg('desktop-file') || arg('desktop-existing')) await run(browser, 'desktop', { width: 1280, height: 900 }, { file: arg('desktop-file'), existing: arg('desktop-existing') });
   } catch (err) {
     step('run', false, err.message);
     console.log(log.slice(-1500));
