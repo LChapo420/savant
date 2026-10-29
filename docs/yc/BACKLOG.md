@@ -56,7 +56,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      one only if needed), stored per user under the db layer (private to that user, never shared, deleted for
      real on delete). Rate limits. Tests.
    - **(b) DONE, see Done.** (was: Course builder.)
-   - **(c) Teach it with the engine.** [needs a UI trigger too: no button calls `POST /api/materials/:id/course` yet] The built course appears as a subject on the learner's home and path, with
+   - **(c) Teach it with the engine.** [claimed 2026-10-29 00:16 UTC] [needs a UI trigger too: no button calls `POST /api/materials/:id/course` yet] The built course appears as a subject on the learner's home and path, with
      a short diagnostic from the material, lessons, practice, mastery quizzes, remediation and the retention
      scheduler, exactly like the built-in subjects. Done when a learner can upload a PDF, get a course, study
      it, and see review come back on schedule (end-to-end test on the fixture db with the mocked provider).
