@@ -31,7 +31,6 @@
   $('#flag').innerHTML = icon('flag');
   $('#stat-streak').innerHTML = `${icon('flame')}12`;
   $('#stat-gems').innerHTML = `${icon('gem')}480`;
-  $('#stat-hearts').innerHTML = `${icon('heart')}5`;
   $$('.es-stat').forEach((b) => b.addEventListener('click', () => {
     b.dataset.bump = 'false'; void b.offsetWidth; b.dataset.bump = 'true'; sfx.play('tap');
   }));
@@ -84,7 +83,6 @@
 
   // ── lesson top ─────────────────────────────────────────────────────
   $('#quit').innerHTML = icon('x');
-  $('#lesson-hearts').innerHTML = `${icon('heart')}4`;
   const prog = $('#prog');
   $('#combo-toggle').addEventListener('click', () => {
     const on = prog.dataset.combo !== 'true';

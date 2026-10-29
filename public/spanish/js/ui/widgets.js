@@ -1,4 +1,4 @@
-/* Shared lesson UI: the frame (quit / progress / hearts), the footer with its
+/* Shared lesson UI: the frame (quit / progress), the footer with its
  * feedback sheet, modals, interstitials, the complete + streak screens, the
  * talking-character bubble and the mic. Engines and exercises build on these.
  */
@@ -24,7 +24,7 @@
   ui.onKeys = (fn) => { keyHandler = fn; };
 
   // ── lesson frame ─────────────────────────────────────────────────────
-  ui.frame = function frame(root, { hearts = null, onQuit, timer = null } = {}) {
+  ui.frame = function frame(root, { onQuit, timer = null } = {}) {
     root.innerHTML = '';
     const wrap = h('div', { class: 'es-lesson' });
     const top = h('div', { class: 'es-lesson__top' });
@@ -38,8 +38,7 @@
     root.append(wrap);
     quit.addEventListener('click', () => ui.confirmQuit().then((yes) => { if (yes && onQuit) onQuit(); }));
 
-    let heartsEl = null; let timerEl = null;
-    if (hearts !== null) { heartsEl = h('span', { class: 'es-stat es-stat--hearts', 'aria-label': `${hearts} hearts` }, `${icon('heart')}<b>${hearts}</b>`); right.append(heartsEl); }
+    let timerEl = null;
     if (timer !== null) { timerEl = h('span', { class: 'es-stat es-timer', 'aria-live': 'off' }, `${icon('clock')}<b>${ES.fmtTime(timer * 1000)}</b>`); right.append(timerEl); }
 
     const api = {
@@ -50,12 +49,6 @@
         prog.dataset.combo = String(combo >= 5);
         const old = prog.querySelector('.es-combo'); if (old) old.remove();
         if (combo >= 5) prog.append(h('span', { class: 'es-combo' }, `${combo} in a row`));
-      },
-      hearts(n) {
-        if (!heartsEl) return;
-        heartsEl.querySelector('b').textContent = n;
-        heartsEl.setAttribute('aria-label', `${n} hearts`);
-        heartsEl.dataset.bump = 'false'; void heartsEl.offsetWidth; heartsEl.dataset.bump = 'true';
       },
       timer(msLeft) {
         if (!timerEl) return;
@@ -157,15 +150,6 @@
     title: "Wait, don't go! You'll lose your progress if you quit now",
     actions: [{ label: 'Keep learning', value: false, tone: 'es-btn--secondary' }, { label: 'End session', value: true, tone: 'es-btn--plain es-btn--danger-text' }],
   });
-  ui.outOfHearts = () => (ES.flow && ES.flow.host ? ui.modal({
-    char: 'axo', title: 'You ran out of hearts!',
-    body: 'Mistakes cost hearts. They refill now so you can keep practising, and the exercises you missed come back at the end.',
-    actions: [{ label: 'Refill and keep going', value: 'refill', tone: 'es-btn--danger' }, { label: 'End for now', value: 'quit' }],
-  }) : ui.modal({
-    char: 'axo', title: 'You ran out of hearts!',
-    body: 'Mistakes cost hearts. In the real app you refill with gems, a practice lesson, or a subscription. This test lab refills for free.',
-    actions: [{ label: 'Refill hearts (test)', value: 'refill', tone: 'es-btn--danger' }, { label: 'No thanks', value: 'quit' }],
-  }));
   ui.report = () => ui.modal({
     char: null, title: 'Report a problem',
     body: 'What went wrong with this exercise?',

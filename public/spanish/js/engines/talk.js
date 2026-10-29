@@ -211,7 +211,7 @@
       bullets: level.errorLog.map((e) => `<b>${esc(e.contrast)}</b> — ${e.count} errors (${esc(e.examples.join('; '))})`),
       start: 'Start drills',
     });
-    const frame = ui.frame(root, { hearts: null, onQuit: quit });
+    const frame = ui.frame(root, { onQuit: quit });
     const r = await ES.session.run(frame, { levelId: level.id, items: [...level.drills, ...level.record], practice: true, encourage: false });
     if (r.quit) return quit();
     await ui.complete(root, { title: 'Sounds refreshed!', xp: 6, accuracy: r.accuracy, timeMs: r.timeMs });
