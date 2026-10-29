@@ -70,7 +70,7 @@ const WHY_MIN = 0;
 const WHY_MAX = 1000;
 const WHY_QUESTION = 'Why should we pick you?';
 // The subject chips on the beta form (the nine subjects), plus a free-text "Something else".
-const SUBJECTS = ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball'];
+const SUBJECTS = ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball', 'nursing', 'medicine', 'prehealth'];
 const INTEREST_OTHER_MAX = 120;
 const PHONE_MAX = 30;
 // Which form on the page an application came from: the hero, the sticky bar's jump to the hero, or the form lower down.

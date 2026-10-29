@@ -173,7 +173,7 @@ test('beta: the hero has the first step (email and the two ticks), the lower for
   assert.ok(/id="hero-consent" name="consent" type="checkbox"[^>]*\brequired\b/.test(hero) && hero.includes('Savant may email me about the beta.'));
   assert.ok(html.indexOf('id="hero-form"') < html.indexOf('class="twin"'), 'the form is in the hero, before the example');
   for (const p of ['hero', 'beta']) {
-    for (const v of ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball']) {
+    for (const v of ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball', 'nursing', 'medicine', 'prehealth']) {
       assert.ok(html.includes(`<input type="checkbox" name="interests" value="${v}">`), `${p}: ${v} chip`);
     }
     assert.ok(html.includes(`name="interests_other"`) && html.includes(`id="${p}-other"`), `${p}: something else`);
@@ -233,7 +233,7 @@ test('beta: step 1 keeps the email at once as "started"; step 2 completes the sa
   assert.ok(!('name' in rows[0]) && !('role' in rows[0]) && !('token' in rows[0]) && !JSON.stringify(rows[0]).includes(s1.json.token));
   const id = rows[0].id;
 
-  const s2 = await post('/api/beta', { step: 2, token: s1.json.token, email, name: 'Tay', role: 'learner', interests: ['chess', 'math', 'chess', 'astrology'], interests_other: ' rocketry ', why: '', ...human });
+  const s2 = await post('/api/beta', { step: 2, token: s1.json.token, email, name: 'Tay', role: 'learner', interests: ['chess', 'math', 'chess', 'astrology', 'nursing', 'medicine', 'prehealth'], interests_other: ' rocketry ', why: '', ...human });
   assert.strictEqual(s2.status, 200);
   rows = readAll('beta').filter((x) => x.email === email);
   assert.strictEqual(rows.length, 1, 'the same record, not a second one');
@@ -241,7 +241,7 @@ test('beta: step 1 keeps the email at once as "started"; step 2 completes the sa
   assert.strictEqual(rows[0].status, 'applied');
   assert.strictEqual(rows[0].name, 'Tay');
   assert.strictEqual(rows[0].role, 'learner');
-  assert.deepStrictEqual(rows[0].interests, ['chess', 'math'], 'only the known subjects, once each');
+  assert.deepStrictEqual(rows[0].interests, ['chess', 'math', 'nursing', 'medicine', 'prehealth'], 'only the known subjects, once each');
   assert.strictEqual(rows[0].interests_other, 'rocketry');
   assert.strictEqual(rows[0].why, '');
   assert.strictEqual(rows[0].source, 'hero', 'source and ref from step 1 are kept');
