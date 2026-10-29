@@ -135,6 +135,10 @@ function serve(router) {
   check('a huge question, passage or choice list is clipped', qm.length < 2200, qm.length);
   check('the session page reports its question to the dock (no answer key)', /window\.tutorPageInfo\s*=/.test(read('public/js/session.js')) && !/tutorPageInfo[\s\S]{0,400}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/session.js')));
   check('the game lab reports the open game to the dock (no answer key)', /window\.tutorPageInfo\s*=/.test(read('public/games/lab.js')) && !/tutorPageInfo[\s\S]{0,700}(answer_key|correct_answer|\.answer\b)/.test(read('public/games/lab.js')));
+  {
+    const src = read('public/spanish/js/core/session.js');
+    check('the Spanish path session reports its exercise to the dock, with no body text for listening, speaking or exams and no solution', /window\.tutorPageInfo\s*=/.test(src) && /hideBody:\s*exam \|\| SPEAK\.has\(item\.kind\) \|\| LISTEN\.has\(item\.kind\)/.test(src) && !/tutorPageInfo = [\s\S]*?\n  \};/.exec(src)[0].match(/solution|answer_key|correct_answer|\.answer\b/));
+  }
   for (const f of ['public/js/base-lesson.js', 'public/js/skill-practice.js']) {
     const src = read(f);
     check(`${f} reports what is on screen to the dock (no answer key)`, /window\.tutorPageInfo\s*=/.test(src) && !/tutorPageInfo[\s\S]{0,700}(answer_key|correct_answer|\.answer\b)/.test(src));

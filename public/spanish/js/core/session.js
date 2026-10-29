@@ -22,6 +22,19 @@
     10: ['¡Diez seguidas! ¡Increíble!', 'Ten in a row! Incredible!'],
   };
 
+  // What the tutor dock may read about this page (js/tutor-dock.js): the instruction and the text the learner can see.
+  // Never the item's data or the solution, and no body text for listening, speaking or exam items (the text would give it away).
+  let onScreen = null;
+  window.tutorPageInfo = () => {
+    if (!onScreen) return {};
+    const { kind, header, el, hideBody, done, total, phase } = onScreen;
+    const seen = hideBody || !el ? '' : String(el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 600);
+    return {
+      question: `Spanish path, ${phase === 'review' ? 'reviewing a missed ' : ''}${String(kind).replace(/_/g, ' ')} exercise (${done} of ${total} done)${header ? `: ${header}` : ''}`,
+      passage: seen,
+    };
+  };
+
   async function check(levelId, item, response) {
     try {
       return await ES.api.post('/api/es/check', { levelId, itemId: item.id, response });
@@ -60,6 +73,7 @@
         const builder = ES.ex[item.kind];
         if (!builder) { resolve({ correct: true, skipped: true }); return; }
         const ex = builder(item, ctx);
+        onScreen = { kind: item.kind, header: typeof ex.header === 'string' ? ex.header.slice(0, 200) : '', el: ex.el, hideBody: exam || SPEAK.has(item.kind) || LISTEN.has(item.kind), done, total, phase };
         frame.setBody(ui.header(ex.header, tag), ex.el);
         ui.onKeys(ex.keys || null);
 
@@ -146,6 +160,7 @@
       }
     }
     frame.footer.hide();
+    onScreen = null;
     const graded = results.filter((r) => !(r.skipped === 'speak' || r.skipped === 'listen'));
     const right = graded.filter((r) => r.correct).length;
     const accuracy = graded.length ? Math.round((right / graded.length) * 100) : 100;
