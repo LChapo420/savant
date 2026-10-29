@@ -116,7 +116,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 12b. **Record the demo** [local only]: the owner records the 60-second and 3-minute cuts from `docs/yc/DEMO-SCRIPT.md` on a seeded demo account with live model keys, then checks every click at 375 px; fix the script where the real screens differ. Reason: a cloud run has no signed-in session or `data/`, so the clicks were checked against the code, not the screen.
 13. [slices DONE: gap 4 adult deletion, gap 3 vendor list, gap 8 Spanish upload deletion, gap 5 written security programme and retention schedule, see Done; rest needs the owner (gaps 1, 2, 6, 7, 9, 10) or is open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
     goes to which provider), one gap per run.
-13b. **Tie Spanish uploads to the account** so account deletion removes them at once (`routes/spanish/index.js` `/upload`, `services/account-deletion.js`). Reason: today only the 7-day sweep bounds them.
+13b. [claimed 2026-10-29T18:20Z] **Tie Spanish uploads to the account** so account deletion removes them at once (`routes/spanish/index.js` `/upload`, `services/account-deletion.js`). Reason: today only the 7-day sweep bounds them.
 14. **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
 15. **ACT Reading passage sets** (item 9), the player and schema.
