@@ -115,7 +115,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
     the founder must fill in from his own experience.
 12. **Demo script: DONE, see Done.** (Leftover 12b below.)
 12b. **Record the demo** [local only]: the owner records the 60-second and 3-minute cuts from `docs/yc/DEMO-SCRIPT.md` on a seeded demo account with live model keys, then checks every click at 375 px; fix the script where the real screens differ. Reason: a cloud run has no signed-in session or `data/`, so the clicks were checked against the code, not the screen.
-13. [first slice DONE (gap 4, adult deletion), see Done; rest still open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
+13. [claimed 2026-10-29T13:50Z, gap 3 vendor list] [first slice DONE (gap 4, adult deletion), see Done; rest still open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
     goes to which provider), one gap per run.
 14. **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
