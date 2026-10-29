@@ -100,7 +100,7 @@ function runAdaptive(profile, seed, days, perDay) {
       const st = study.state(user.id, mid, now);
       const n = st.next;
       if (out.steps_to_mastery === null && st.mastered === N) {
-        out.steps_to_mastery = out.steps; out.day_mastered = d; out.true_at_mastery = L.share(now);
+        out.steps_to_mastery = out.steps; out.day_mastered = d; out.true_at_mastery = L.share(now); out.review_steps_at_mastery = out.review_steps;
       }
       if (n.kind === 'done' || n.kind === 'wait') break;
       if (n.kind === 'placement') {
@@ -145,7 +145,7 @@ function runLinear(profile, seed, days, perDay) {
   const rnd = rng(seed * 31 + 7);
   const LADDER = [1, 3, 7, 14, 30];
   const st = SKILLS.map(() => ({ mastered: false, step: 0, due: null }));
-  const out = { steps: 0, steps_to_mastery: null, day_mastered: null, true_at_mastery: null, reviews: 0 };
+  const out = { steps: 0, steps_to_mastery: null, day_mastered: null, true_at_mastery: null, reviews: 0, review_steps: 0, review_steps_at_mastery: null };
   const pick = (s, n) => s.questions.map((q) => ({ q, k: rnd() })).sort((a, b) => a.k - b.k).slice(0, n).map((x) => x.q);
   const grade = (q, a) => (q.type === 'multiple_choice' ? a === q.answer_index : a === q.answer);
   let cursor = 0;
@@ -157,13 +157,13 @@ function runLinear(profile, seed, days, perDay) {
       if (!st[i].mastered || !st[i].due || st[i].due > now) continue;
       const qs = pick(SKILLS[i], 2);
       const right = qs.filter((q) => grade(q, L.answer(q.id, now))).length;
-      out.steps += qs.length; used += qs.length; out.reviews++;
+      out.steps += qs.length; used += qs.length; out.reviews++; out.review_steps += qs.length;
       if (right === 0) { st[i].mastered = false; st[i].due = null; cursor = Math.min(cursor, i); L.feedback(i, now, 0.3); } else { st[i].step = Math.min(st[i].step + 1, LADDER.length - 1); st[i].due = now + LADDER[st[i].step] * DAY; }
     }
     while (used < perDay) {
       while (cursor < N && st[cursor].mastered) cursor++;
       if (cursor >= N) {
-        if (out.steps_to_mastery === null) { out.steps_to_mastery = out.steps; out.day_mastered = d; out.true_at_mastery = L.share(now); }
+        if (out.steps_to_mastery === null) { out.steps_to_mastery = out.steps; out.day_mastered = d; out.true_at_mastery = L.share(now); out.review_steps_at_mastery = out.review_steps; }
         break;
       }
       const s = SKILLS[cursor];
@@ -195,6 +195,8 @@ for (const profile of Object.keys(PROFILES)) {
   report.profiles[profile] = {
     adaptive: {
       reached_mastery: `${fin(a)}/${seeds}`, steps_to_mastery: r2(mean(a.map((x) => x.steps_to_mastery))), day_mastered: r2(mean(a.map((x) => x.day_mastered))),
+      learning_steps_to_mastery: r2(mean(a.map((x) => (x.steps_to_mastery === null ? null : x.steps_to_mastery - x.review_steps_at_mastery)))),
+      review_steps_before_mastery: r2(mean(a.map((x) => x.review_steps_at_mastery))),
       true_known_at_mastery: r2(mean(a.map((x) => x.true_at_mastery))), true_known_at_end: r2(mean(a.map((x) => x.true_at_end))),
       placement_questions: r2(mean(a.map((x) => x.placement_q))), skipped_by_placement: r2(mean(a.map((x) => x.skipped))),
       skipped_truly_known_share: r2(mean(a.filter((x) => x.skipped).map((x) => x.skipped_truly_known / x.skipped))),
@@ -208,11 +210,14 @@ for (const profile of Object.keys(PROFILES)) {
     },
     linear: {
       reached_mastery: `${fin(l)}/${seeds}`, steps_to_mastery: r2(mean(l.map((x) => x.steps_to_mastery))), day_mastered: r2(mean(l.map((x) => x.day_mastered))),
+      learning_steps_to_mastery: r2(mean(l.map((x) => (x.steps_to_mastery === null ? null : x.steps_to_mastery - x.review_steps_at_mastery)))),
+      review_steps_before_mastery: r2(mean(l.map((x) => x.review_steps_at_mastery))),
       true_known_at_mastery: r2(mean(l.map((x) => x.true_at_mastery))), true_known_at_end: r2(mean(l.map((x) => x.true_at_end))), reviews: r2(mean(l.map((x) => x.reviews))), total_steps: r2(mean(l.map((x) => x.steps))),
     },
     paired: {
       adaptive_fewer_steps: `${a.filter((x, i) => x.steps_to_mastery !== null && (l[i].steps_to_mastery === null || x.steps_to_mastery < l[i].steps_to_mastery)).length}/${seeds}`,
       step_ratio: r2(mean(a.map((x, i) => (x.steps_to_mastery !== null && l[i].steps_to_mastery ? x.steps_to_mastery / l[i].steps_to_mastery : null)))),
+      learning_step_ratio: r2(mean(a.map((x, i) => (x.steps_to_mastery !== null && l[i].steps_to_mastery ? (x.steps_to_mastery - x.review_steps_at_mastery) / (l[i].steps_to_mastery - l[i].review_steps_at_mastery) : null)))),
     },
   };
 }

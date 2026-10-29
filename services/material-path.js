@@ -235,8 +235,18 @@ function pickForTier(skill, tier, n, wrongIds, avoid, rnd) {
 
 // ── spaced review, fitted to this learner ─────────────────────────────────────────
 /** Predicted recall of a skill after `days`, from the forgetting curve, its right/wrong counts and the learner's m. */
-function recall(days, right, wrong, m) {
-  return forgetting.recallAt(null, { days, right, wrong, fresh: 0.95, guess: 0, m });
+function recall(days, right, wrong, m, fresh = 0.95) {
+  return forgetting.recallAt(null, { days, right, wrong, fresh, guess: 0, m });
+}
+
+/**
+ * How often this learner answers right on a skill they have just shown they know (their checks that passed): the
+ * "fresh" accuracy of services/scorecard/forgetting.js. A careless learner's slips are then not read as forgetting.
+ * Shrunk toward 0.95 by 20 answers' worth.
+ */
+function freshAccuracy(fresh) {
+  const f = fresh || { right: 0, total: 0 };
+  return clamp((f.right + 19) / (f.total + 20), 0.5, 0.99);
 }
 
 /** Days until the next review: the last whole day predicted recall is still at or above TARGET_RECALL. */
@@ -247,8 +257,8 @@ function intervalDays(right, wrong, m) {
 }
 
 /** Move the learner's half-life multiplier after a review: by how far the curve's prediction missed. */
-function updateForgetting(m, days, right, wrong, score) {
-  const predicted = recall(days, right, wrong, m || 0);
+function updateForgetting(m, days, right, wrong, score, fresh = 0.95) {
+  const predicted = recall(days, right, wrong, m || 0, fresh);
   return clamp((m || 0) + M_RATE * (score - predicted), -M_LIMIT, M_LIMIT);
 }
 
@@ -256,5 +266,5 @@ module.exports = {
   PASS, KNOWN_AT, UNKNOWN_AT, TARGET_RECALL, TIER_B,
   guessOf, answerModel, belief, nextPlacement, placementResult, placementCap,
   updatePace, startTier, practiceCount, tierAfter, pickForTier,
-  recall, intervalDays, updateForgetting, rng,
+  recall, intervalDays, updateForgetting, freshAccuracy, rng,
 };

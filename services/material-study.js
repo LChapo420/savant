@@ -19,8 +19,9 @@
  *               moves the skill up a tier, a failed one down, and marks it for remediation.
  *   remediation for each miss: the right answer, why, the misunderstanding behind the choice picked, and the passage.
  *   review      the due skills, interleaved, two questions each at tier 2 or above. 2 of 2 stretches the interval
- *               (the forgetting curve with this learner's multiplier), 1 of 2 brings it back tomorrow, 0 of 2 reopens
- *               the skill for remediation. Every review moves the learner's multiplier.
+ *               (the forgetting curve with this learner's multiplier), 1 of 2 halves the interval, 0 of 2 reopens
+ *               the skill for remediation. Every review moves the learner's multiplier, read against their own
+ *               accuracy on skills they had just mastered (so slips are not taken for forgetting).
  *
  * Quizzes are one-shot: the server remembers which questions it sent, grades from its own copy of the key, and
  * discards the quiz on submit. The client never receives answers, explanations or quotes before answering.
@@ -126,7 +127,7 @@ function skillState(r, id) {
 }
 function save(r) {
   return db.update('material_progress', r.id, {
-    skills: r.skills, placed: r.placed, placement: r.placement, pending: r.pending, pace: r.pace || 0, forget_m: r.forget_m || 0,
+    skills: r.skills, placed: r.placed, placement: r.placement, pending: r.pending, pace: r.pace || 0, forget_m: r.forget_m || 0, fresh: r.fresh || null,
     steps: r.steps, updated_at: new Date().toISOString(),
   });
 }
@@ -412,6 +413,8 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
       st.tier = path.tierAfter(st.tier, score);
       entry.tier = st.tier;
       if (entry.passed) {
+        // A passed check is an answer on a skill the learner knows right now: it measures their slips.
+        r.fresh = { right: ((r.fresh && r.fresh.right) || 0) + t.right, total: ((r.fresh && r.fresh.total) || 0) + t.total };
         st.status = 'mastered'; st.via = 'quiz'; st.remediate = false; st.last_tested = new Date(now).toISOString();
         entry.next_in_days = scheduleReview(r, st, now);
       } else {
@@ -419,7 +422,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
       }
     } else if (quiz.mode === 'review') {
       const days = st.last_tested ? Math.max(0, (now - Date.parse(st.last_tested)) / DAY) : 1;
-      r.forget_m = path.updateForgetting(r.forget_m, days, st.right, st.wrong_n, score);
+      r.forget_m = path.updateForgetting(r.forget_m, days, st.right, st.wrong_n, score, path.freshAccuracy(r.fresh));
       st.right += t.right; st.wrong_n += t.total - t.right;
       st.last_tested = new Date(now).toISOString();
       if (t.right === t.total) {
@@ -427,9 +430,11 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
         st.tier = Math.min(3, Math.max(st.tier, 2));
         entry.next_in_days = scheduleReview(r, st, now);
       } else if (t.right > 0) {
+        // Half the last interval (at least a day): one miss in two is a wobble, not a reset.
         entry.passed = false; entry.shaky = true;
-        st.due = dueAt(now, 1); st.interval_days = 1;
-        entry.next_in_days = 1;
+        const half = Math.max(1, Math.floor((st.interval_days || 1) / 2));
+        st.due = dueAt(now, half); st.interval_days = half;
+        entry.next_in_days = half;
       } else {
         entry.passed = false;
         st.status = 'learning'; st.remediate = true; st.tier = Math.max(1, st.tier - 1); st.due = null;
@@ -447,7 +452,8 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
     if (mis) st.misconceptions = [...st.misconceptions.filter((m) => m !== mis), mis].slice(-6);
     if (x.role === 'mix') {
       // The interleaved question is a memory test of an earlier skill: a miss brings that skill's review forward.
-      if (x.ok) st.right++; else { st.wrong_n++; if (st.status === 'mastered') st.due = new Date(now).toISOString(); }
+      // A right answer is a successful retrieval of that skill, so it counts as its review: the clock restarts from now.
+      if (x.ok) { st.right++; if (st.status === 'mastered') { st.last_tested = new Date(now).toISOString(); scheduleReview(r, st, now); } } else { st.wrong_n++; if (st.status === 'mastered') st.due = new Date(now).toISOString(); }
     }
   }
   save(r);

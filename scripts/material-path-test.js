@@ -78,5 +78,9 @@ check('a fast forgetter (lower multiplier) gets shorter intervals; a slow one lo
 check('at the interval, predicted recall is still at the target', mp.recall(mp.intervalDays(11, 0, 0), 11, 0, 0) >= mp.TARGET_RECALL - 1e-9);
 check('forgetting more than predicted lowers the multiplier; remembering raises it', mp.updateForgetting(0, 5, 9, 0, 0) < 0 && mp.updateForgetting(0, 5, 9, 0, 1) > 0);
 
+check('a careless learner (fresh accuracy 75%) scoring 75% on a review is not read as forgetting; the same score from an accurate learner is',
+  Math.abs(mp.updateForgetting(0, 1, 9, 0, mp.recall(1, 9, 0, 0, 0.75), 0.75)) < 1e-9 && mp.updateForgetting(0, 1, 9, 0, mp.recall(1, 9, 0, 0, 0.75), 0.95) < 0);
+check('fresh accuracy starts near 0.95 and follows the learner\'s checks', Math.abs(mp.freshAccuracy(null) - 0.95) < 1e-9 && mp.freshAccuracy({ right: 60, total: 80 }) < 0.85);
+
 if (failures) { console.log(`\n${failures} check(s) failed`); process.exit(1); }
 console.log('\nall checks passed');
