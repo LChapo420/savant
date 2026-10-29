@@ -90,7 +90,7 @@
       <div class="tdock-log" aria-live="polite"></div>
       <form class="tdock-form">
         <input type="text" maxlength="600" placeholder="Ask anything" aria-label="Your message">
-        ${Recog || canRecord ? '<button type="button" class="mic" aria-pressed="false" title="Hold to talk" aria-label="Push to talk">Hold to talk</button>' : ''}
+        ${Recog || canRecord ? '<button type="button" class="mic" aria-pressed="false" title="Tap to speak, tap Send when you are done" aria-label="Speak: tap to start, tap again to send">Speak</button>' : ''}
         <button class="go" type="submit">Send</button>
       </form>`;
     document.body.append(panel, btn);
@@ -159,8 +159,10 @@
         });
         const out = await r.json();
         if (!r.ok) throw new Error(out.error || 'That did not go through.');
-        pending.textContent = out.reply || 'No reply just now. Try again in a moment.';
-        if (out.reply) { messages.push({ role: 'assistant', content: out.reply }); say(out.reply); }
+        // The chat shows plain text: markdown emphasis the model sometimes adds (**estar**, *ser*) is dropped.
+        const reply = String(out.reply || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1$2');
+        pending.textContent = reply || 'No reply just now. Try again in a moment.';
+        if (reply) { messages.push({ role: 'assistant', content: reply }); say(reply); }
       } catch (err) {
         pending.textContent = err.message || 'That did not go through. Try again.';
       } finally { busy = false; }
@@ -178,56 +180,91 @@
     if (speakBtn) speakBtn.addEventListener('click', () => { speakOn = !speakOn; speakBtn.setAttribute('aria-pressed', String(speakOn)); if (!speakOn) stopSpeech(); });
 
     if (mic) {
+      // Tap to start, tap again to send. Nothing is sent while the learner is still talking: a pause is not the
+      // end (owner, 29 Oct 2026: the old hold-to-talk sent the words at the first pause, or when a finger slid off).
       let rec = null;
       let recorder = null;
+      let listening = false; // the learner's choice; the browser recognizer may stop on its own and is restarted
+      let heard = '';
       let sttOff = !canRecord; // set when the better listening answers no once; the browser recognizer takes over
-      const pressed = (on) => mic.setAttribute('aria-pressed', String(on));
-      const stop = () => {
-        if (recorder) { try { recorder.stop(); } catch { /* already stopped */ } }
-        if (rec) { try { rec.stop(); } catch { /* already stopped */ } }
+      const show = (on) => {
+        mic.setAttribute('aria-pressed', String(on));
+        mic.textContent = on ? 'Send' : 'Speak';
+        input.placeholder = on ? 'Listening… tap Send when you are done' : 'Ask anything';
       };
-      // Push-to-talk through /api/tutor/transcribe: the clip is sent once and dropped by the server.
+      const send = (text) => { input.value = ''; if (text) ask(text.trim(), 'voice'); };
+      // The better listening through /api/tutor/transcribe: the whole clip is sent once, after the second tap.
       const record = async () => {
         let stream;
-        try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { sttOff = true; pressed(false); return; }
+        try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch {
+          sttOff = true;
+          if (Recog && listening) { recognize(); return; } // the browser's recognizer, without a second tap
+          listening = false; show(false); return;
+        }
         const chunks = [];
         const r = new MediaRecorder(stream);
         recorder = r;
         r.ondataavailable = (ev) => { if (ev.data && ev.data.size) chunks.push(ev.data); };
         r.onstop = async () => {
           recorder = null;
-          pressed(false);
+          show(false);
           stream.getTracks().forEach((t) => t.stop());
           const blob = new Blob(chunks, { type: r.mimeType || 'audio/webm' });
-          if (blob.size < 1500 || blob.size > 1024 * 1024) return; // a tap, or too long to send
+          if (blob.size < 1500) return; // nothing said
+          if (blob.size > 1024 * 1024) { line('bot', 'That was too long for one message. Try a shorter one.'); return; }
           try {
             const res = await fetch(`/api/tutor/transcribe?lang=${lang.slice(0, 2)}`, { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/octet-stream' }, body: blob });
             if (!res.ok) { sttOff = true; throw new Error('browser listening'); }
             const out = await res.json();
-            if (out.text) ask(out.text.trim(), 'voice');
-          } catch { line('bot', Recog ? 'I could not hear that. Try once more.' : 'I could not hear that. Type it instead.'); }
+            send(out.text);
+          } catch { line('bot', Recog ? 'I could not hear that. Tap Speak and try once more.' : 'I could not hear that. Type it instead.'); }
         };
-        pressed(true);
         r.start();
       };
-      const begin = () => {
-        if (rec || recorder) return;
-        if (!sttOff) { record(); return; }
-        if (!Recog) return;
+      // The browser's recognizer: continuous, with the words shown in the box as they are heard. It can end by
+      // itself after a silence; while the learner has not tapped Send it is started again and the text kept.
+      const recognize = () => {
         rec = new Recog();
         rec.lang = lang;
-        rec.interimResults = false;
-        rec.onresult = (ev) => { const t = ev.results[0][0].transcript; if (t) ask(t.trim(), 'voice'); };
-        rec.onend = () => { rec = null; pressed(false); };
-        rec.onerror = () => { rec = null; pressed(false); };
-        pressed(true);
-        try { rec.start(); } catch { rec = null; }
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.onresult = (ev) => {
+          let live = '';
+          for (let i = ev.resultIndex; i < ev.results.length; i++) {
+            const res = ev.results[i];
+            if (res.isFinal) heard += `${res[0].transcript} `; else live += res[0].transcript;
+          }
+          input.value = `${heard}${live}`.trim();
+        };
+        rec.onerror = (ev) => { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { listening = false; line('bot', 'The microphone is blocked. Type instead, or allow it in the browser.'); } };
+        rec.onend = () => {
+          rec = null;
+          if (listening) { try { recognize(); } catch { listening = false; } return; } // stopped on its own: keep listening
+          show(false);
+          send(input.value || heard);
+          heard = '';
+        };
+        try { rec.start(); } catch { rec = null; listening = false; show(false); }
       };
-      mic.addEventListener('pointerdown', begin);
-      mic.addEventListener('pointerup', stop);
-      mic.addEventListener('pointerleave', stop);
-      mic.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); begin(); } });
-      mic.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+      const begin = () => {
+        stopSpeech(); // never listen to the tutor's own voice
+        listening = true;
+        heard = '';
+        input.value = '';
+        show(true);
+        if (!sttOff) { record(); return; }
+        if (!Recog) { listening = false; show(false); return; }
+        recognize();
+      };
+      const finish = () => {
+        listening = false;
+        if (recorder) { try { recorder.stop(); } catch { /* already stopped */ } return; }
+        if (rec) { try { rec.stop(); } catch { /* already stopped */ } return; } // onend sends
+        show(false);
+        send(input.value || heard);
+        heard = '';
+      };
+      mic.addEventListener('click', () => { if (listening || rec || recorder) finish(); else begin(); });
     }
   }
 

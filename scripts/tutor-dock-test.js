@@ -170,6 +170,14 @@ function serve(router) {
   const plan = nvPlan('fast', 'dock_help');
   check('the dock plan is the 550B model with reasoning off, nothing weaker behind it', /task: 'dock_help'/.test(src) && plan.entries.length === 1 && /ultra-550b/.test(plan.entries[0].model) && plan.entries[0].effort === 'off', plan);
   check('the other assist_help callers keep the full light tier', nvPlan('fast', 'assist_help').entries.length > 1);
+
+  // Talk mode (owner, 29 Oct 2026: the words were sent before they had finished talking): tap Speak to start and
+  // Send to finish, the browser recognizer listens continuously and is restarted after a pause, nothing is sent
+  // on pointer events. The browser run is scratchpad tutor-check/talk-ui.js (Playwright, a stand-in recognizer).
+  const dockJs = read('public/js/tutor-dock.js');
+  check('talk mode is tap to start, tap Send to finish', /mic\.addEventListener\('click'/.test(dockJs) && !/mic\.addEventListener\('pointer(down|up|leave)'/.test(dockJs) && />Speak<\/button>/.test(dockJs));
+  check('the browser recognizer listens continuously and restarts after a pause', /rec\.continuous = true/.test(dockJs) && /if \(listening\) \{ try \{ recognize\(\); \}/.test(dockJs));
+  check('replies are shown without markdown asterisks', /replace\(\/\\\*\\\*\(\[\^\*\]\+\)\\\*\\\*\/g/.test(dockJs));
   let touched = '';
   try { touched = execSync('git diff --name-only HEAD -- spanish-check spanish-check-lc routes/spanish-check.js routes/spanish-check-lc.js public/spanish-check.html public/spanish-listening.html public/js/spanish-check.js public/js/spanish-listening.js', { cwd: root }).toString().trim(); } catch { touched = ''; }
   check('no sealed Spanish file is modified', touched === '', touched);

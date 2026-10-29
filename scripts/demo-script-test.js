@@ -26,7 +26,7 @@ for (const label of ['Your subjects', 'Recent sessions', 'Due for review']) {
 }
 check('dashboard has "Start level"', dash.includes('Start level') && doc.includes('Start level N'));
 const dock = js('tutor-dock.js');
-for (const label of ['Ask tutor', 'Type', 'Talk', 'Hold to talk']) {
+for (const label of ['Ask tutor', 'Type', 'Talk', 'Speak', 'Send']) {
   check(`tutor dock has "${label}"`, doc.includes(`**${label}**`) && dock.includes(label));
 }
 const mat = js('my-material.js');
