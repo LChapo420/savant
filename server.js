@@ -144,6 +144,7 @@ app.use('/api/act', require('./routes/act')); // ACT score entry: test date, tar
 app.use('/api/materials', require('./routes/materials')); // learn from your own material: upload, paste, list, delete (services/materials.js)
 app.use('/api/act-study', require('./routes/act-study')); // the ACT measurement study: counterbalanced practice-test order, admin before/after (services/act-study.js)
 app.use('/api/spanish-study', require('./routes/spanish-study')); // Savant vs Duolingo beginner-Spanish study (services/spanish-study.js)
+app.use('/api/spanish-study-test', require('./routes/spanish-study-tests')); // sealed pre/post tests for study participants (spanish-study-tests/)
 app.use('/api', require('./routes/coverage'));
 // Generated base-lesson pages, and the one way a generated page changes anything.
 app.use('/api', require('./routes/base-lessons'));

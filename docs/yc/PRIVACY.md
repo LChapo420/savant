@@ -209,7 +209,7 @@ https://studentprivacy.ed.gov. Savant has no school accounts today: "school-mana
    every box is open.
 7. **Signed-form checks depend on one person.** The founder checks every signed consent form by hand. That
    is fine for a few families and doesn't scale.
-8. **Spanish uploads: CLOSED in code 2026-10-29** (`services/upload-retention.js`: files in `data/spanish-uploads` are deleted after `UPLOAD_RETENTION_DAYS`, default 7, swept at start and hourly; the policy's retention table says so). Still open: server backups of `data/`, and the uploads are not tied to an account, so account deletion cannot find them (the 7-day sweep bounds that). Original gap: **Spanish recordings and project files have no deletion schedule** (`KIDS-CONSENT-IMPLEMENTATION.md`
+8. **Spanish uploads: CLOSED in code 2026-10-29** (`services/upload-retention.js`: files in `data/spanish-uploads` are deleted after `UPLOAD_RETENTION_DAYS`, default 7, swept at start and hourly; the policy's retention table says so). Uploads are now named by owner (`u<id>-…`) and removed with the account (adult deletion and a parent deleting a child). Still open: server backups of `data/`, and files written before 2026-10-29 carry no owner (the 7-day sweep bounds those). Original gap: **Spanish recordings and project files have no deletion schedule** (`KIDS-CONSENT-IMPLEMENTATION.md`
    section 9, notice and policy items).
 9. **Admin rights follow an unverified email address.** Whoever registers the admin address first on a new
    server is admin (`curriculum-build/BETA-LAUNCH-KIT.md`, environment table). The beta kit's mitigation is to

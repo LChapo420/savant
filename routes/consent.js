@@ -368,6 +368,9 @@ function deleteChild(consent, reason, by) {
     const n = db.remove(name, (r) => r && r.user_id === childId);
     if (n) removed[name] = n;
   }
+  const files = require('../services/upload-retention').removeForUser(childId);
+  if (files) removed.spanish_upload_files = files;
+  require('../services/spanish-study-tests').removeForUser(childId);
   removed.users = db.remove('users', (u) => u.id === childId);
   const stub = {
     status: reason === 'expired' ? 'expired' : reason === 'declined' ? 'declined' : 'deleted',
