@@ -57,7 +57,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      real on delete). Rate limits. Tests.
    - **(b) DONE, see Done.** (was: Course builder.)
    - **(c) DONE as a first slice, see Done.** Remaining, now item 0b(c2) below.
-   - **(c2) Join the built-in machinery.** The course is studied on its own page (`/my-material-study`) with its own
+   - **(c2) [claimed 2026-10-29T00:00Z] Join the built-in machinery.** The course is studied on its own page (`/my-material-study`) with its own
      per-skill ladder; it does not yet appear on the learner's home and path, and review is not yet part of "today"
      or the retention enforcers (`services/retention-schedule.js`, `services/enforcers.js`). Surface the due-review
      count on home, feed material skills into `services/review-session.js` / the day plan, and decide with the owner
