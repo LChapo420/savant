@@ -495,7 +495,7 @@ async function build(userId, materialId, opts = {}) {
         const share = Math.max(1, Math.round((most * win.chars) / Math.max(1, mat.text.length)));
         const earlier = raw.length ? `Skills already planned from earlier parts (use their ids as prerequisites when they really are; do not repeat them):\n${raw.map((k) => `${k.id}: ${k.title}`).join('\n')}\n\n` : '';
         let out = null;
-        for (let attempt = 0; attempt < 2 && !(out && out.res && out.res.data); attempt++) {
+        for (let attempt = 0; attempt < 3 && !(out && out.res && out.res.data); attempt++) {
           // eslint-disable-next-line no-await-in-loop
           out = await ask(llm, ctx.budget, userId, {
             role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
