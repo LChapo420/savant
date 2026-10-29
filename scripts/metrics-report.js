@@ -6,8 +6,8 @@
  *   node scripts/metrics-report.js --data data/db.json
  *   node scripts/metrics-report.js --data data/db.json --csv-dir <folder> [--days 60] [--ledgers data] [--json]
  *
- * --csv-dir writes metrics-daily.csv, metrics-cohorts.csv, metrics-monthly.csv and
- * metrics-excluded.csv there. --ledgers is the folder holding the *ledger*.json
+ * --csv-dir writes metrics-daily.csv, metrics-cohorts.csv, metrics-monthly.csv,
+ * metrics-funnel.csv and metrics-excluded.csv there. --ledgers is the folder holding the *ledger*.json
  * files (default: the data file's folder). The rules are in docs/METRICS.md.
  */
 const fs = require('fs');
@@ -54,6 +54,10 @@ if (process.argv.includes('--json')) {
   console.log(`Real-user metrics, ${m.today} (UTC days)`);
   console.log(`  accounts: ${m.accounts.total} in all; ${m.accounts.real} real; excluded ${m.accounts.excluded} (founder ${m.accounts.founder}, test ${m.accounts.test}, demo ${m.accounts.demo})`);
   console.log(`  real users who did anything: ${h.ever_active}; active on 2+ distinct days: ${h.active_2plus_days}`);
+  console.log('  activation funnel (real users):');
+  for (const f of m.funnel.steps) console.log(`    ${f.label}: ${f.users} of ${f.of}${f.rate === null ? '' : ` (${(f.rate * 100).toFixed(1)}%)`}`);
+  const mpd = m.funnel.minutes_per_active_day;
+  console.log(`    minutes per active day: ${mpd.measured_study ?? '-'} measured, ${mpd.sitting_upper ?? '-'} sitting (upper), over ${m.funnel.active_days_total} active days`);
   console.log(`  day-1 return: ${pct(h.day1_return)}`);
   console.log(`  day-7 return: ${pct(h.day7_return)}`);
   console.log(`  back within days 1-7: ${pct(h.week1_return)}`);

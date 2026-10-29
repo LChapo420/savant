@@ -273,6 +273,45 @@ function compute(store, opts = {}) {
     return { eligible_users: size, returned: back, rate: size ? round(back / size, 4) : null };
   };
 
+  // ── activation funnel (real users only) ────────────────────────────────────
+  // Each step is a count of real users; "of_signed_up" is the share of all real
+  // sign-ups. The two return steps count only users whose window is over, so
+  // they carry their own denominator instead of pulling the rate down.
+  const sessionKind = new Map(sessionsAll.map((x) => [x.id, x.kind]));
+  const startedLearning = new Set();
+  for (const it of store.all('items') || []) {
+    if (!realIds.has(it.user_id) || !it.answered_at) continue;
+    if (sessionKind.get(it.session_id) === 'placement') continue; // a placement is a test, not a lesson
+    startedLearning.add(it.user_id);
+  }
+  const cameBack = groups.real.filter((u) => {
+    const sd = signupDay.get(u.id);
+    return sd && [...daysFor(u.id)].some((d) => d > sd);
+  }).length;
+  const signedUp = groups.real.length;
+  const step = (key, label, count, of = signedUp) => ({ key, label, users: count, of, rate: round(ratio(count, of), 4), of_signed_up: round(ratio(count, signedUp), 4) });
+  const d1 = pooled('day1_returned', 'day1_complete');
+  const w1 = pooled('week1_returned', 'day7_complete');
+  const realIdList = [...realIds];
+  const activeDayCounts = realIdList.map((id) => daysFor(id).size).filter((n) => n >= 1);
+  const everStudy = periodStats(realIdList, () => true, null);
+  const totalActiveDays = activeDayCounts.reduce((t, n) => t + n, 0);
+  const funnel = {
+    steps: [
+      step('signed_up', 'Signed up', signedUp),
+      step('onboarded', 'Finished onboarding', groups.real.filter((u) => u.onboarded === true).length),
+      step('first_lesson', 'Answered a first question outside placement', startedLearning.size),
+      step('came_back', 'Active on any day after sign-up day', cameBack),
+      step('day1', 'Came back the next day (cohorts old enough)', d1.returned, d1.eligible_users),
+      step('week1', 'Came back within days 1-7 (cohorts old enough)', w1.returned, w1.eligible_users),
+    ],
+    active_days_total: totalActiveDays,
+    minutes_per_active_day: {
+      measured_study: round(ratio(everStudy.study_minutes, totalActiveDays), 1),
+      sitting_upper: round(ratio(everStudy.sitting_minutes, totalActiveDays), 1),
+    },
+  };
+
   // ── per month: active learners, sessions, minutes, AI cost ─────────────────
   const monthsSeen = new Set([monthOf(today)]);
   for (const u of users) if (signupDay.get(u.id)) monthsSeen.add(monthOf(signupDay.get(u.id)));
@@ -369,6 +408,7 @@ function compute(store, opts = {}) {
       week1_return: pooled('week1_returned', 'day7_complete'),
       last_30_days: last30,
     },
+    funnel,
     daily,
     cohorts,
     months,
@@ -378,6 +418,7 @@ function compute(store, opts = {}) {
     notes: [
       'Days are UTC calendar days. Sign-up day is the day the account was created.',
       'Day-1 / day-7 return: share of a sign-up-day cohort with any activity exactly 1 / 7 days later. Week-1 return: any activity on days 1 to 7. A cohort is counted only once that day is over.',
+      'Funnel: every step counts real users only. "First lesson" is a question the learner answered in a sitting that is not a placement. The next-day and week-1 steps use only sign-up cohorts whose window is over, so their percentage is of that smaller group (shown as "of"). Minutes per active day divide all-time minutes by all-time active days; measured study time undercounts, sitting time overcounts.',
       'Active learner: a real user with at least one activity on a day in the period. Signing in alone is not activity.',
       `Study minutes are the app's measured active time (Start session to End session, idle gaps capped at 5 minutes); learners who never press Start session have none. Sitting minutes are start-to-finish of finished sittings, each capped at ${SITTING_CAP_MIN} minutes, so they are an upper estimate.`,
       'AI cost per learner is an ESTIMATE: the app records token counts times list prices per call (ai_usage); free-tier providers (NVIDIA, free fallbacks) record $0.',
@@ -413,6 +454,12 @@ const TABLES = {
       x.study_minutes, x.study_minutes_per_active, x.sitting_minutes, x.sitting_minutes_per_active,
       x.ai_calls, x.ai_cost_usd_estimate, x.ai_cost_per_active_usd_estimate, x.ledger_usd, x.ledger_usd_per_active_upper_bound, x.ledger_partial,
       x.founder.active, x.founder.sittings, x.founder.study_minutes, x.founder.ai_cost_usd_estimate]),
+  ],
+  funnel: (m) => [
+    ['step', 'label', 'users', 'out_of', 'rate', 'share_of_all_signups'],
+    ...m.funnel.steps.map((x) => [x.key, x.label, x.users, x.of, x.rate, x.of_signed_up]),
+    ['minutes_per_active_day_measured', 'Measured study minutes per active day', m.funnel.minutes_per_active_day.measured_study, '', '', ''],
+    ['minutes_per_active_day_sitting_upper', 'Sitting minutes per active day (upper)', m.funnel.minutes_per_active_day.sitting_upper, '', '', ''],
   ],
   excluded: (m) => [
     ['user_id', 'email', 'username', 'name', 'group', 'rule', 'joined'],

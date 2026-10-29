@@ -51,6 +51,7 @@ const fresh = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
 check('it is an empty store with every collection', Array.isArray(fresh.users) && fresh.users.length === 0 && Array.isArray(fresh.ai_usage) && Array.isArray(fresh.study_sessions));
 
 const metrics = require('../services/real-user-metrics');
+const round1 = (n) => Number(n.toFixed(1));
 
 // ── 2. the fixture ───────────────────────────────────────────────────────────
 function user(doc) { return db.insert('users', { display_name: doc.email || doc.username, xp: 0, streak: 0, onboarded: true, account_type: 'standard', ...doc }); }
@@ -196,6 +197,42 @@ check('the founder is reported apart with their own activity', m.founder.length 
 check('the month row reports the founder separately', mon && mon.founder.active === true && mon.founder.ai_cost_usd_estimate === 10, mon && mon.founder);
 check('every note says which costs are estimates', m.notes.some((n) => /ESTIMATE/.test(n)) && m.notes.some((n) => /upper bound/.test(n)));
 
+// ── 4b. the activation funnel ────────────────────────────────────────────────
+console.log('\nThe activation funnel');
+const fstep = (k) => m.funnel.steps.find((x) => x.key === k);
+check('funnel: 4 signed up, 4 onboarded', fstep('signed_up').users === 4 && fstep('onboarded').users === 4, m.funnel.steps);
+check('funnel: 3 answered a first question (the child only talked to the tutor)', fstep('first_lesson').users === 3 && fstep('first_lesson').of_signed_up === 0.75, fstep('first_lesson'));
+check('funnel: 2 came back on a later day (alice and the child)', fstep('came_back').users === 2, fstep('came_back'));
+check('funnel: next-day and week-1 steps match the pooled cohort figures', fstep('day1').users === m.headline.day1_return.returned && fstep('day1').of === m.headline.day1_return.eligible_users
+  && fstep('week1').users === m.headline.week1_return.returned && fstep('week1').of === m.headline.week1_return.eligible_users, m.funnel.steps);
+check('funnel: no excluded account leaks in', fstep('signed_up').users === m.accounts.real && fstep('came_back').users <= 4);
+check('funnel: minutes per active day = minutes / active days', m.funnel.active_days_total === 6 && m.funnel.minutes_per_active_day.measured_study === round1(25 / 6) && m.funnel.minutes_per_active_day.sitting_upper === round1(170 / 6), m.funnel);
+{
+  // A stand-in store: placement only, onboarded with a lesson, never onboarded with an unanswered question.
+  const rows = {
+    users: [
+      { id: 1, email: 'p@gmail.com', created_at: '2026-10-01T10:00:00Z', onboarded: true },
+      { id: 2, email: 'l@gmail.com', created_at: '2026-10-01T10:00:00Z', onboarded: true },
+      { id: 3, email: 'n@gmail.com', created_at: '2026-10-01T10:00:00Z', onboarded: false },
+    ],
+    sessions: [
+      { id: 10, user_id: 1, kind: 'placement', started_at: '2026-10-01T11:00:00Z' },
+      { id: 11, user_id: 2, kind: 'lesson', started_at: '2026-10-01T11:00:00Z' },
+    ],
+    items: [
+      { user_id: 1, session_id: 10, created_at: '2026-10-01T11:00:00Z', answered_at: '2026-10-01T11:01:00Z' },
+      { user_id: 2, session_id: 11, created_at: '2026-10-01T11:00:00Z', answered_at: '2026-10-01T11:01:00Z' },
+      { user_id: 3, session_id: 12, created_at: '2026-10-01T11:00:00Z', answered_at: null },
+    ],
+  };
+  const fm = metrics.compute({ all: (n) => rows[n] || [] }, { now: Date.parse('2026-10-20T12:00:00Z'), ledgerDir: LEDGERS });
+  const f = Object.fromEntries(fm.funnel.steps.map((x) => [x.key, x]));
+  check('a placement-only user is onboarded but has no first lesson; an unanswered question is not one either', f.onboarded.users === 2 && f.first_lesson.users === 1, fm.funnel.steps);
+  check('nobody came back: 0 of 3, rates are 0 not null', f.came_back.users === 0 && f.day1.rate === 0 && f.day1.of === 3 && f.week1.of === 3, f);
+  const empty = metrics.compute({ all: () => [] }, { now: NOW, ledgerDir: LEDGERS });
+  check('with no users every rate is null, not NaN', empty.funnel.steps.every((x) => x.rate === null) && empty.funnel.minutes_per_active_day.measured_study === null);
+}
+
 // ── 5. the CSV ───────────────────────────────────────────────────────────────
 console.log('\nCSV');
 const csvDaily = metrics.toCsv(m, 'daily').trim().split('\n');
@@ -207,6 +244,7 @@ check('monthly CSV names estimate and upper-bound columns', /ai_cost_per_active_
 const csvExcluded = metrics.toCsv(m, 'excluded');
 check('excluded CSV: one row per excluded account', csvExcluded.trim().split('\n').length === excluded.length + 1);
 check('a cell starting with = is defused in the CSV', csvExcluded.includes(`'=cmd|calc`) && !/(^|,)=cmd/m.test(csvExcluded));
+check('funnel CSV: a header, six steps and two minutes rows', metrics.toCsv(m, 'funnel').trim().split('\n').length === 9 && metrics.toCsv(m, 'funnel').startsWith('step,label,users,out_of,rate,share_of_all_signups'));
 let threw = false;
 try { metrics.toCsv(m, 'nope'); } catch { threw = true; }
 check('an unknown table is refused', threw);
@@ -219,7 +257,8 @@ const csvDir = path.join(SCRATCH, 'csv');
 const out = execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'metrics-report.js'), '--data', DB_FILE, '--ledgers', LEDGERS, '--csv-dir', csvDir],
   { env: { ...process.env, DB_FILE: '' }, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 check('it prints the real-user count and the exclusions', out.includes(`4 real; excluded ${excluded.length} (founder 2, test ${excluded.length - 4}, demo 2)`), out);
-check('it writes the four CSV files', metrics.TABLES.every((t) => fs.existsSync(path.join(csvDir, `metrics-${t}.csv`))));
+check('it prints the funnel', /activation funnel/.test(out) && /Signed up: 4 of 4/.test(out) && /minutes per active day/.test(out), out);
+check('it writes every CSV file', metrics.TABLES.every((t) => fs.existsSync(path.join(csvDir, `metrics-${t}.csv`))));
 check('the data file is byte-identical afterwards', Buffer.compare(before, fs.readFileSync(DB_FILE)) === 0);
 
 // ── 7. the admin routes on a running server ──────────────────────────────────

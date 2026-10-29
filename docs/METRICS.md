@@ -1,7 +1,7 @@
 # Real-user metrics: what is counted, and how
 
 The admin area's **Real-user metrics** view (`/admin#metrics`), its CSV export
-(`/api/admin/metrics.csv?table=daily|cohorts|monthly|excluded`) and
+(`/api/admin/metrics.csv?table=daily|cohorts|monthly|funnel|excluded`) and
 `scripts/metrics-report.js` all come from one module, `services/real-user-metrics.js`. This page
 is the plain-language version of its rules. If the two ever disagree, the code is what ran; fix
 whichever is wrong.
@@ -60,6 +60,12 @@ on Tuesday (UTC). The page says so.
 | Day-7 return | Of the real users who signed up on day D, the share active on day D+7 (exactly that day). |
 | Back within days 1–7 | Of the same cohort, the share active on any of days D+1 to D+7. |
 | Cohorts | One per sign-up day. A cohort counts toward a return rate only once that day is over (D+1, or D+7, before today), so a cohort that has not had the chance to return does not pull the rate down. The pooled rate is all returners over all eligible users, not an average of daily rates. |
+| Funnel: signed up | All real accounts. Every later step is a count of real users out of this. |
+| Funnel: finished onboarding | Real users whose account has `onboarded` set. |
+| Funnel: first lesson | Real users who answered at least one question in a sitting that is not a placement (a placement is a test, not a lesson). |
+| Funnel: came back | Real users active on any day after their sign-up day. |
+| Funnel: next day / week 1 | Same as day-1 return and back-within-days-1-7, over the cohorts old enough to have had the chance, so the denominator is smaller than the sign-up count and is printed beside it. |
+| Minutes per active day | All-time measured study minutes (and, separately, the capped sitting minutes) divided by all-time active days of real users. The first undercounts, the second overcounts. |
 | Active learners (a period) | Real users active on at least one day in the period (the last 30 days, or a calendar month). |
 | Sittings per active learner | Sittings (`sessions` rows, placements included) started in the period by active real users, divided by the active learners. |
 | Measured study minutes | The app's own clock: active time inside Start session / End session (idle gaps count at most 5 minutes). Learners who never press Start session have none, so this undercounts. |
@@ -73,7 +79,7 @@ The founder's own sittings, minutes and AI cost are shown beside each month, nev
 
 - **Admin page:** `/admin#metrics` (admins only; everyone else gets 404). The day range can be
   14 to 365 days.
-- **CSV:** the four buttons on that page, or `/api/admin/metrics.csv?table=daily|cohorts|monthly|excluded&days=N`.
+- **CSV:** the four buttons on that page, or `/api/admin/metrics.csv?table=daily|cohorts|monthly|funnel|excluded&days=N`.
   Cells that start with `=`, `+`, `-`, `@` are prefixed with `'` so a spreadsheet does not run them.
 - **Without the server:** `node scripts/metrics-report.js --data data/db.json [--csv-dir out] [--days 60] [--ledgers data] [--json]`.
   Read-only: the data file is never written (`DB_READONLY=1`), and an unreadable file is refused
