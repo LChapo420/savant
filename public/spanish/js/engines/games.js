@@ -34,18 +34,19 @@
     // 3-2-1
     for (const n of ['3', '2', '1']) { frame.setBody(h('div', { class: 'es-countdown' }, n)); sfx.play('tick'); await ES.wait(650); }
 
+    ES.board.set({ kind: 'quick game', rule: RULES[level.game], progress: `${seconds} second game, score 0` });
     const g = { score: 0, combo: 0, right: 0, wrong: 0, misses: [], times: [], over: false, frame };
     const mult = () => (g.combo >= 5 ? 2 : 1);
     g.hit = (ms = 3000) => {
       g.combo++; g.right++; g.times.push(ms);
       const pts = 10 * mult() + Math.max(0, Math.round((4000 - ms) / 800));
-      g.score += pts; scoreEl.querySelector('b').textContent = g.score;
+      g.score += pts; ES.board.set({ progress: `${seconds} second game, score ${g.score}, ${g.right} right, ${g.wrong} missed` }); scoreEl.querySelector('b').textContent = g.score;
       scoreEl.dataset.bump = 'false'; void scoreEl.offsetWidth; scoreEl.dataset.bump = 'true';
       frame.progress(Math.min(1, g.right / 20), g.combo);
       sfx.play(g.combo === 5 ? 'combo' : 'correct');
       return pts;
     };
-    g.miss = (label) => { g.combo = 0; g.wrong++; if (label && !g.misses.includes(label)) g.misses.push(label); frame.progress(Math.min(1, g.right / 20), 0); sfx.play('wrong'); };
+    g.miss = (label) => { g.combo = 0; g.wrong++; ES.board.set({ progress: `${seconds} second game, score ${g.score}, ${g.right} right, ${g.wrong} missed` }); if (label && !g.misses.includes(label)) g.misses.push(label); frame.progress(Math.min(1, g.right / 20), 0); sfx.play('wrong'); };
 
     const t0 = Date.now(); const endAt = t0 + seconds * 1000;
     const timeUp = new Promise((resolve) => {

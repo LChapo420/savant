@@ -139,6 +139,24 @@ function serve(router) {
     const src = read('public/spanish/js/core/session.js');
     check('the Spanish path session reports its exercise to the dock, with no body text for listening, speaking or exams and no solution', /window\.tutorPageInfo\s*=/.test(src) && /hideBody:\s*exam \|\| SPEAK\.has\(item\.kind\) \|\| LISTEN\.has\(item\.kind\)/.test(src) && !/tutorPageInfo = [\s\S]*?\n  \};/.exec(src)[0].match(/solution|answer_key|correct_answer|\.answer\b/));
   }
+  {
+    // The Spanish boards outside the session loop (quick games, stories, dictation, talk) report title, rule and progress only.
+    const vm = require('vm');
+    const src = read('public/spanish/js/core/session.js');
+    const ctx = { window: {}, document: { addEventListener() {} }, console, setTimeout, clearTimeout };
+    ctx.window.ES = { ui: {}, sfx: {} };
+    ctx.window.window = ctx.window;
+    let ran = true;
+    try { vm.runInNewContext(src, { ...ctx, window: ctx.window, ES: undefined }); } catch { ran = false; }
+    const w = ctx.window;
+    check('the Spanish boards set ES.board and the dock fallback has no item text', /ES\.board\s*=/.test(src) && /ES\.board\.set/.test(read('public/spanish/js/engines/games.js')) && /ES\.board\.set/.test(read('public/spanish/js/engines/talk.js')) && /ES\.board\.set/.test(read('public/spanish/js/play.js')) && /ES\.board\.set/.test(read('public/spanish/js/learn.js')));
+    if (ran && w.ES && w.ES.board && typeof w.tutorPageInfo === 'function') {
+      check('no board set: nothing reported', Object.keys(w.tutorPageInfo()).length === 0);
+      w.ES.board.set({ kind: 'quick game', title: 'Word race', rule: 'Type the Spanish.', progress: '180 second game, score 20' });
+      const info = w.tutorPageInfo();
+      check('board set: title, rule and progress reach the dock', /quick game/.test(info.question) && /Word race/.test(info.question) && /score 20/.test(info.question) && !('passage' in info));
+    } else check('the session script runs in a stub (board fallback)', false);
+  }
   for (const f of ['public/js/base-lesson.js', 'public/js/skill-practice.js']) {
     const src = read(f);
     check(`${f} reports what is on screen to the dock (no answer key)`, /window\.tutorPageInfo\s*=/.test(src) && !/tutorPageInfo[\s\S]{0,700}(answer_key|correct_answer|\.answer\b)/.test(src));
