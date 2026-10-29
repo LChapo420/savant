@@ -133,6 +133,22 @@ async function pool(items, limit, fn) {
 async function writeTrack(trackId, onlyGrades) {
   // eslint-disable-next-line global-require
   const mimo = require('../services/providers/mimo');
+  // UNIT_WRITER=xkiro writes with the xKiro free plan's $0 models instead (pipeline only; MiMo's key
+  // returned 401 on 2026-10-29). UNIT_WRITER_MODELS overrides the model list, first that answers wins.
+  let writer = mimo;
+  if (process.env.UNIT_WRITER === 'xkiro') {
+    process.env.XKIRO_PIPELINE = '1';
+    // eslint-disable-next-line global-require
+    const { xkiro } = require('../services/providers/xkiro');
+    const models = String(process.env.UNIT_WRITER_MODELS || 'mistralai/mistral-large-2512,cohere/command-a-reasoning').split(',');
+    writer = { structuredStream: async ({ system, user, schema, schemaName, maxTokens }) => {
+      let last = null;
+      for (const m of models) {
+        try { return await xkiro.structured({ system, user, schema, schemaName, maxTokens: Math.min(maxTokens, 16000), models: [m], timeoutMs: 10 * 60 * 1000 }); } catch (e) { last = e; }
+      }
+      throw last;
+    } };
+  }
   const bank = readBank(trackId);
   const trackName = (curriculum.getTrack(trackId) || {}).name || trackId;
   const jobs = [];
@@ -154,7 +170,7 @@ async function writeTrack(trackId, onlyGrades) {
     let reply = null;
     for (let attempt = 1; attempt <= 3 && !reply; attempt++) {
       // eslint-disable-next-line no-await-in-loop
-      reply = await mimo.structuredStream({
+      reply = await writer.structuredStream({
         role: 'placement',
         system: system(trackName),
         user: user(trackId, job.gradeId, job.units, job.wanted, Object.fromEntries(job.wanted.map((n) => [n, bank.grades[job.gradeId].units[n - 1].questions]))),
