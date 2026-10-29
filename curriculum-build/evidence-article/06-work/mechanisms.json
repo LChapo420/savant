@@ -1,0 +1,106 @@
+[
+  {
+    "id": "06-M1",
+    "name": "A tutor available on every page, on demand",
+    "does": "A tutor button sits on every page of the app (except the sealed tests). The learner opens it when they want help; it does not interrupt.",
+    "claim_topics": ["one-to-one and computer tutoring improves learning compared with no tutoring or conventional instruction", "intelligent tutoring systems raise achievement (meta-analyses)", "learners often do not seek help when they need it, or seek it poorly"],
+    "seeds": ["The relative effectiveness of human tutoring, intelligent tutoring systems, and other tutoring systems", "Effectiveness of Intelligent Tutoring Systems: A Meta-Analytic Review", "Intelligent tutoring systems and learning outcomes: A meta-analysis", "A meta-analysis of the effectiveness of intelligent tutoring systems on K-12 students' mathematical learning", "Help Seeking and Help Design in Interactive Learning Environments", "The 2 Sigma Problem"],
+    "queries": ["intelligent tutoring systems meta-analysis learning outcomes", "help seeking interactive learning environments", "on-demand help learning software students"]
+  },
+  {
+    "id": "06-M2",
+    "name": "Learner-initiated help: the tutor waits to be asked",
+    "does": "The tutor never opens itself or offers help unprompted; it answers only when the learner opens it and asks.",
+    "claim_topics": ["giving hints proactively versus waiting for the learner to ask", "students avoid help or abuse help; help-seeking skill can be tutored", "unsolicited help can reduce learner effort or be ignored"],
+    "seeds": ["Hints: Is It Better to Give or Wait to Be Asked?", "Improving students' help-seeking skills using metacognitive feedback in an intelligent tutoring system", "Help Seeking and Help Design in Interactive Learning Environments", "Off-task behavior in the cognitive tutor classroom: when students game the system", "Help seeking in academic settings"],
+    "queries": ["proactive hints versus on-demand hints tutoring system", "help avoidance students tutoring", "metacognitive help-seeking tutor"]
+  },
+  {
+    "id": "06-M3",
+    "name": "Integrity by page: no tutor on sealed tests, method hints only on placements, mastery checks and retrieval sittings",
+    "does": "The server decides the mode from the page path: off on the sealed Spanish tests; method-only (how to approach a problem, no answers, never confirms an answer) on placement, subject placement, stage checks, challenge exams, the retention enforcer, review and own-material quizzes; full elsewhere.",
+    "claim_topics": ["retrieval practice (testing without help) improves long-term retention more than restudy", "a test with outside help does not measure what the learner knows; assessment validity", "unrestricted access to a generative AI tutor during practice can harm later unaided performance"],
+    "seeds": ["Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention", "The effect of testing versus restudy on retention: A meta-analytic review of the testing effect", "Generative AI without guardrails can harm learning", "Exploring the Assistance Dilemma in Experiments with Cognitive Tutors", "Addressing the assessment challenge with an online system that tutors as it assesses"],
+    "queries": ["testing effect retrieval practice meta-analysis", "generative AI access students learning harm", "assessment validity help during test"]
+  },
+  {
+    "id": "06-M4",
+    "name": "Full mode on practice pages: the tutor may explain and give answers",
+    "does": "On lesson, practice and session pages the dock is in full mode: it sees the question and choices and has no rule against giving the answer (the separate in-question coach keeps its own leak guard).",
+    "claim_topics": ["the assistance dilemma: too much help reduces learning, too little causes floundering", "students game hints and bottom-out answers, which predicts lower learning", "guardrailed AI tutors that withhold answers protect learning compared with unrestricted chatbots", "self-explanation and generating answers produce more learning than receiving them"],
+    "seeds": ["Exploring the Assistance Dilemma in Experiments with Cognitive Tutors", "Generative AI without guardrails can harm learning", "Off-task behavior in the cognitive tutor classroom: when students game the system", "The generation effect: Delineation of a phenomenon", "Eliciting self-explanations improves understanding", "The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes"],
+    "queries": ["gaming the system hints bottom-out learning", "generation effect meta-analysis", "answer giving chatbot students learning outcomes"]
+  },
+  {
+    "id": "06-M5",
+    "name": "Reply shape: two to four short sentences, then one question or a concrete next step",
+    "does": "Every dock reply is two to four short sentences and ends with one question back to the learner or one concrete next step.",
+    "claim_topics": ["interactive tutoring dialogue in which the learner constructs answers yields more learning than tutor explanation", "tutors who ask questions and prompt learners promote learning", "segmenting information into small pieces reduces cognitive load"],
+    "seeds": ["Learning from human tutoring", "The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes", "AutoTutor: A tutor with dialogue in natural language", "Collaborative dialogue patterns in naturalistic one-to-one tutoring", "Nine Ways to Reduce Cognitive Load in Multimedia Learning"],
+    "queries": ["tutoring dialogue questions student explanation learning", "interactive versus constructive learning activities", "segmenting principle multimedia learning"]
+  },
+  {
+    "id": "06-M6",
+    "name": "Context: the learner model the tutor reads (goals, plan, mastery, weak skills, recent mistakes, misconceptions)",
+    "does": "Before each reply the tutor gets a budgeted block, in priority order: the page, what is on screen, goals, ACT dates and scores, the plan and reviews due, mastery counts and weak skills, recent mistakes, frequent misconceptions, recent and upcoming lessons, interests and measured study patterns, and own-material courses (about 900 tokens, later sections cut first).",
+    "claim_topics": ["feedback and help adapted to the learner's knowledge state improve learning", "student modeling and knowledge tracing let tutors adapt", "feedback that addresses the learner's specific misconception or error is more effective than generic feedback"],
+    "seeds": ["Knowledge tracing: Modeling the acquisition of procedural knowledge", "Focus on Formative Feedback", "The Power of Feedback", "Adaptive feedback in computer-based learning environments: a review", "Tutor CoPilot"],
+    "queries": ["adaptive feedback learner model tutoring", "misconception targeted feedback learning", "personalized tutoring student model outcomes"]
+  },
+  {
+    "id": "06-M7",
+    "name": "Interests in the learner's own words",
+    "does": "The interests the learner typed in onboarding or on their profile are given to the tutor so it can draw examples from them.",
+    "claim_topics": ["context personalization of problems to students' interests improves performance and learning", "personalized and embellished learning contexts raise motivation and learning", "situational interest supports learning"],
+    "seeds": ["Using adaptive learning technologies to personalize instruction to student interests: The impact of relevant contexts on performance and learning outcomes", "Intrinsic motivation and the process of learning: Beneficial effects of contextualization, personalization, and choice", "The role of situational interest in personalized learning", "The Four-Phase Model of Interest Development"],
+    "queries": ["context personalization interests mathematics learning", "personalization word problems student interests experiment"]
+  },
+  {
+    "id": "06-M8",
+    "name": "How they learn, from measured study behaviour, not learning-style types",
+    "does": "The tutor is told how the learner studies from their scorecard (measured from their own answers and sessions), described as still being learned. It is deliberately never told a 'visual/auditory/kinesthetic' learning style.",
+    "claim_topics": ["there is no adequate evidence that matching instruction to learning styles improves learning", "learning styles are a widespread myth among educators", "adapting to measured performance rather than self-reported preference"],
+    "seeds": ["Learning Styles: Concepts and Evidence", "Stop propagating the learning styles myth", "Matching learning style to instructional method: Effects on comprehension", "Neuromyths in education: Prevalence and predictors of misconceptions among teachers"],
+    "queries": ["learning styles meshing hypothesis evidence", "learning styles myth teachers"]
+  },
+  {
+    "id": "06-M9",
+    "name": "Page awareness: the question, passage and choices on screen, never the answer key",
+    "does": "The page tells the tutor the question, passage and answer choices the learner can see (the learner's own copy, which carries no answer key), plus what they picked, typed or were told, except on method-only pages.",
+    "claim_topics": ["contingent scaffolding that responds to the learner's current state on the task", "step-level and context-sensitive hints are more effective than general help", "tutors that see the learner's work can diagnose errors"],
+    "seeds": ["The role of tutoring in problem solving", "The Behavior of Tutoring Systems", "Scaffolding in Teacher–Student Interaction: A Decade of Research", "Contingent tutoring"],
+    "queries": ["contingent scaffolding tutoring meta-analysis", "step-based tutoring effectiveness", "scaffolding teacher student interaction review"]
+  },
+  {
+    "id": "06-M10",
+    "name": "Talk mode: push-to-talk and spoken replies of one to three sentences",
+    "does": "The learner can hold to talk; replies are read aloud and, in voice mode, kept to one to three short sentences with no lists or formulas. The browser voice is the free default; a better voice runs through a $5 ledger for listed accounts.",
+    "claim_topics": ["spoken versus typed tutoring dialogue and learning", "modality effect: spoken words with visuals can help learning", "speech recognition errors and their effect on tutoring"],
+    "seeds": ["Spoken versus typed human and computer dialogue tutoring", "Is the modality effect a robust phenomenon? A meta-analytic review", "Rethinking the modality effect", "AutoTutor and affective autotutor"],
+    "queries": ["spoken dialogue tutoring system learning gains", "modality effect meta-analysis", "speech recognition tutoring errors learning"]
+  },
+  {
+    "id": "06-M11",
+    "name": "Memory across sessions: a running summary and recent turns",
+    "does": "The tutor keeps one memory per learner: the last 14 turns verbatim, folded into a summary of at most about 120 words when they pass 14, and quotes back up to 4 earlier turns.",
+    "claim_topics": ["long-term learner models and persistence of student information across sessions", "open learner models", "conversational agents that remember the user build rapport"],
+    "seeds": ["Open Learner Models", "Personalisation and adaptation in e-learning", "Persistent learner models"],
+    "queries": ["open learner model review", "long-term student model persistence tutoring", "rapport pedagogical agent memory"]
+  },
+  {
+    "id": "06-M12",
+    "name": "Page and learner text are treated as content, never instructions",
+    "does": "The system prompt marks page text, the learner's own messages and the memory as notes, not instructions, so text on a page or in a message cannot change the tutor's rules.",
+    "claim_topics": ["indirect prompt injection through content an LLM application reads", "prompt injection is the top risk for LLM applications", "separating instructions from data"],
+    "seeds": ["Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection", "OWASP Top 10 for LLM Applications 2025: LLM01 Prompt Injection", "Formalizing and Benchmarking Prompt Injection Attacks and Defenses"],
+    "queries": ["indirect prompt injection LLM integrated applications", "prompt injection defense benchmark"]
+  },
+  {
+    "id": "06-M13",
+    "name": "Large language model tutors: what the trials show",
+    "does": "The tutor's replies come from a large language model through the app's approved provider chain; the dock is a general-purpose LLM tutor.",
+    "claim_topics": ["randomized trials of LLM-based tutors on learning outcomes", "LLM tutoring with pedagogical guardrails versus plain chat access", "hallucination risk in LLM answers"],
+    "seeds": ["AI tutoring outperforms in-class active learning: an RCT introducing a novel research-based design in an authentic educational setting", "Generative AI without guardrails can harm learning", "A Survey on Hallucination in Large Language Models", "ChatGPT for good? On opportunities and challenges of large language models for education"],
+    "queries": ["large language model tutor randomized controlled trial learning", "ChatGPT students learning experiment outcomes", "LLM tutor guardrails learning"]
+  }
+]
