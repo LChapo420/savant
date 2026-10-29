@@ -225,6 +225,12 @@ function mockLlm(mode = 'good') {
   out = await cb.build(u.id, mf.id, { llm: flaky });
   check('a skill whose items fail the checks, or whose model is busy, is tried again before it is dropped', out.course && out.course.skills.length === 1 && lessonCalls === 3 && out.course.dropped.retried === 1 && out.course.dropped.skills === 0, [lessonCalls, out.course && out.course.dropped]);
 
+  console.log('near-verbatim quotes (formulas from a PDF)');
+  const pdfText = "Notice that f \uFFFD(x0) is negative \u2014 as is the slope of the tangent line on the graph above. Hence the derivative of 1/x is -1/x0^2 at x0.";
+  const nq = cb.nearQuote(pdfText, "Notice that f'(x0) is negative, as is the slope of the tangent line on the graph above.");
+  check('a quote whose formula notation differs from the extracted PDF is accepted, and the learner sees the source\'s own words', nq && /slope of the tangent line on the graph above/.test(nq) && pdfText.includes(nq.slice(0, 20)), nq);
+  check('a quote that only shares a few words with the passage is still refused', cb.nearQuote(pdfText, 'The second derivative tells you whether the graph is concave up or down.') === null);
+
   console.log('any script, and resuming keeps every edge');
   const ru = 'Митохондрии высвобождают энергию из пищи внутри клетки, а хлоропласты строят сахар из света.';
   const ruPassage = new Map([['p1', { id: 'p1', text: `${ru} ${'Клетка состоит из частей. '.repeat(30)}` }]]);

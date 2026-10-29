@@ -56,7 +56,8 @@ const cb = require('../services/course-builder');
     const { standardCompute } = require('../services/providers/standard-compute');
     llm = async (a) => {
       try {
-        const r = await standardCompute.structured({ task: a.task, system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens, timeoutMs: 240000 });
+        // Headroom for reasoning: DeepSeek spends most of an answer budget thinking, and a cut-off JSON is unusable.
+        const r = await standardCompute.structured({ task: a.task, system: a.system, user: a.user, schema: a.schema, schemaName: a.schemaName, maxTokens: a.maxTokens + 6000, timeoutMs: 240000 });
         spent += (r.usage && r.usage.cost_usd) || 0;
         return r;
       } catch (err) { console.warn(`standard compute: ${err.message}`); return null; }

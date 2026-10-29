@@ -250,6 +250,38 @@ function layout(skills) {
 
 /** A question that is well formed AND whose quote is word for word in its passage. Returns the clean item or {drop}. */
 /**
+ * Near-verbatim grounding: the longest run of the quote's letters and digits that also runs in the passage. Formulas
+ * in a PDF often come out of extraction in another notation than a model writes them ("f'(x0)" against "f (x0)"), so
+ * an exact match drops real quotes. A quote is accepted when that shared run is at least MIN_QUOTE characters and
+ * NEAR_QUOTE of the quote; what the learner then sees is the passage's own text for that run, never the model's wording.
+ * Returns the passage text of the run, or null.
+ */
+const NEAR_QUOTE = 0.7;
+function nearQuote(passageText, quote) {
+  const src = String(passageText);
+  const pos = []; // index in src of each kept character
+  let pa = '';
+  const norm1 = (ch) => ch.toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}]+/gu, '');
+  for (let i = 0; i < src.length; i++) { const c = norm1(src[i]); for (const k of c) { pa += k; pos.push(i); } }
+  const qa = alnum(quote);
+  if (qa.length < MIN_QUOTE * 0.75 || !pa.length) return null;
+  // Longest common substring by dynamic programming on two rows (passage up to a few thousand, quote up to 400).
+  let best = 0; let bestEnd = -1;
+  let prev = new Uint16Array(qa.length + 1);
+  for (let i = 1; i <= pa.length; i++) {
+    const cur = new Uint16Array(qa.length + 1);
+    for (let j = 1; j <= qa.length; j++) {
+      if (pa[i - 1] === qa[j - 1]) { cur[j] = prev[j - 1] + 1; if (cur[j] > best) { best = cur[j]; bestEnd = i - 1; } }
+    }
+    prev = cur;
+  }
+  if (best < Math.max(MIN_QUOTE * 0.75, NEAR_QUOTE * qa.length)) return null;
+  const from = pos[bestEnd - best + 1];
+  const to = pos[bestEnd] + 1;
+  return clean(src.slice(from, to), 400);
+}
+
+/**
  * For a topic the material only names: the line of the allowed passages that names it best (most of the skill title's
  * words), or null. Syllabus lines are often table cells a model does not copy exactly, so the quote is found here.
  */
@@ -285,7 +317,11 @@ function cleanQuestion(q, passageById, allowed, opts = {}) {
   let quote = clean(q.quote, 400);
   if (!prompt || !explanation) return { drop: 'invalid' };
   let passage = passageById.get(pid);
-  const quoted = passage && allowed.has(pid) && quote.length >= MIN_QUOTE && alnum(passage.text).includes(alnum(quote)) && alnum(quote).length >= MIN_QUOTE * 0.75;
+  let quoted = passage && allowed.has(pid) && quote.length >= MIN_QUOTE && alnum(passage.text).includes(alnum(quote)) && alnum(quote).length >= MIN_QUOTE * 0.75;
+  if (!quoted && passage && allowed.has(pid)) {
+    const near = nearQuote(passage.text, quote);
+    if (near) { quote = near; quoted = true; }
+  }
   if (!quoted) {
     // A general-knowledge item is tied to the line that names its topic; any other item must quote its passage exactly.
     const named = opts.generalTitle ? namingLine(opts.generalTitle, passageById, allowed) : null;
@@ -560,5 +596,5 @@ function removeForMaterial(userId, materialId) {
 
 module.exports = {
   VERSION, TOKEN_BUDGET, MIN_QUESTIONS, MAX_SKILLS,
-  chunk, cleanOutline, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, cleanQuestion, build, summary, get, removeForMaterial,
+  chunk, cleanOutline, orderSkills, layout, outlineWindows, shuffleChoices, namingLine, nearQuote, cleanQuestion, build, summary, get, removeForMaterial,
 };
