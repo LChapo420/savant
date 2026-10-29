@@ -55,7 +55,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    route, not just Spanish. Also make every "Next level" button go to the level the server says is next, never a
    computed +1. Add a test that walks a Spanish learner through levels 26 to 31 of `entry` (vocabulary, pronunciation,
    game, story, speaking, lesson) and asserts each "next" opens.
-0-fix2. **Remove lives (hearts) from the Spanish path (owner: "there aren't lives in our app yet").** `public/spanish/js/core/session.js`
+0-fix2. [claimed 2026-10-29T03:20Z] **Remove lives (hearts) from the Spanish path (owner: "there aren't lives in our app yet").** `public/spanish/js/core/session.js`
    and any heart counter, "out of hearts" screen or refill UI in public/spanish. Wrong answers keep their feedback and
    the missed item still comes back at the end of the session. Keep the change minimal; update tests that counted hearts.
    **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
