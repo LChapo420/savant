@@ -110,7 +110,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    no levels.
 10. **Invite a friend: DONE, see Done.** (Leftover 10b below.)
 10b. **DONE with 5b, see Done.**
-11. **Interview prep, deepened.** For each of the 40 questions in `docs/yc/INTERVIEW.md`, a short answer built
+11. [claimed 2026-10-29T17:17Z] **Interview prep, deepened.** For each of the 40 questions in `docs/yc/INTERVIEW.md`, a short answer built
     only from facts in the repo and `docs/yc/`, plus the one number or demo moment that backs it. Mark what
     the founder must fill in from his own experience.
 12. **Demo script: DONE, see Done.** (Leftover 12b below.)
