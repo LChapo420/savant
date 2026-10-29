@@ -98,7 +98,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    owner decides whether to use the wait-list arm; (c) look at `/act-study` and `/act-study-admin` at 375 px in a
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
-5b. [claimed 2026-10-29T16:25Z, with 10b] **Show the funnel on the admin metrics page** (`public/js/admin.js` `renderMetrics`): a funnel table and a `table=funnel` CSV button. Reason: item 5 added the numbers to the CLI and CSV endpoint only. Keep the existing CSS variables.
+5b. **DONE, see Done.** (Funnel on the admin metrics page.)
 6. **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
    available in the weakest sections and lay out a fixed number of sessions that fits the weeks left, with
    review timed to peak at the test date. Reuse placement, mastery and the retention scheduler.
@@ -109,7 +109,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 9. **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
    no levels.
 10. **Invite a friend: DONE, see Done.** (Leftover 10b below.)
-10b. **Show invites on the admin metrics page** (`renderMetrics` in `public/js/admin.js`): `funnel.referrals` is in the JSON, CSV and CLI only. Reason: same gap as 5b; do both in one run.
+10b. **DONE with 5b, see Done.**
 11. **Interview prep, deepened.** For each of the 40 questions in `docs/yc/INTERVIEW.md`, a short answer built
     only from facts in the repo and `docs/yc/`, plus the one number or demo moment that backs it. Mark what
     the founder must fill in from his own experience.
@@ -137,6 +137,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-29: **Funnel and invites on the admin metrics page** (items 5b and 10b; commit in this push). `renderMetrics` in `public/js/admin.js` now shows the activation funnel table (users, out of, rate, share of all sign-ups, minutes per active day), an Invites block (invite sign-ups, how many answered a first question, inviters) and a "Funnel and invites" CSV button (`table=funnel`). Existing CSS variables only. Checked: two new checks in `scripts/real-user-metrics-test.js` (page wiring; funnel CSV download through the admin route), full `npm test` passed. Not looked at in a browser (a cloud run has no signed-in session).
 
 - 2026-10-29: **Privacy gap 5, written security programme and retention schedule** (item 13 fourth slice; commit in this push). `docs/SECURITY-PROGRAMME.md` (what is in place, what is not, incident steps, review log) and `docs/RETENTION-SCHEDULE.md` (every kind of stored data, how long, what deletes it, where in code), written only from the code; owner decisions are `OWNER:` lines (programme owner, review cadence, inactive-account period, backup schedule, how to take the app offline). Checked: new `scripts/security-docs-test.js` (11 checks: cookie flags, headers, bcrypt, rate limit, 14/30/7-day figures against code and `public/privacy.html`, every named file exists, no certification claims) added to `npm test`; full `npm test` passed (All steps passed). The owner still must fill the OWNER lines; no lawyer has read either document. Remaining: backups of `data/` have no schedule.
 

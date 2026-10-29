@@ -345,6 +345,9 @@ async function serverTests() {
     check('the admin page still loads', page.status === 200);
     const js = fs.readFileSync(path.join(ROOT, 'public', 'js', 'admin.js'), 'utf8');
     check('the admin page has the metrics view and the CSV links', /renderMetrics/.test(js) && /metrics\.csv\?table=/.test(js) && /href="#metrics"/.test(js));
+    check('the admin page shows the funnel, the invites and a funnel CSV button', /m\.funnel/.test(js) && /f\.referrals\.signed_up/.test(js) && /csv\('funnel'\)/.test(js));
+    const fcsv = await admin.get('/api/admin/metrics.csv?table=funnel');
+    check('the funnel CSV downloads', fcsv.status === 200 && /attachment; filename="metrics-funnel-/.test(fcsv.headers.get('content-disposition')) && fcsv.text.startsWith('step,label,users'));
   } finally {
     child.kill();
   }
