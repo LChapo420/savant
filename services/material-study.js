@@ -98,7 +98,8 @@ function publicQ(q, skillId) {
 
 function loadCourse(userId, materialId) {
   const c = courses.get(userId, materialId);
-  if (!c || !['ready', 'partial'].includes(c.status) || !(c.skills || []).length) return null;
+  // 'building' with skills: a partial course being resumed (or a build that died) stays studyable meanwhile.
+  if (!c || !['ready', 'partial', 'building'].includes(c.status) || !(c.skills || []).length) return null;
   return c;
 }
 
@@ -299,7 +300,7 @@ function lesson(userId, materialId, skillId, opts = {}) {
     skill: {
       id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: skill.lesson,
       practice: practiceQs.map((q) => publicQ(q, skill.id)),
-      remediation: remediating ? { misconceptions: st.misconceptions.slice(-3) } : null,
+      remediation: remediating ? { misconceptions: st.misconceptions.slice(-3).map((m) => (typeof m === 'object' ? m.text : m)) } : null,
     },
   };
 }
@@ -313,9 +314,15 @@ function practice(userId, materialId, skillId, qid, answer) {
   if (!q) return { error: 'No such question.', code: 'not_found' };
   const r = row(userId, materialId);
   if (!unlocked(course, r, skill)) return { error: 'Master the earlier skills first.', code: 'locked' };
+  // Only a question the lesson handed out as practice, and never one that is open in a placement or a check: otherwise
+  // this endpoint would give away the key to the question being asked.
+  const st = r.skills[skill.id] || {};
+  const pending = [...((r.pending && r.pending.qids) || []).map((x) => x[1]), (r.placement && r.placement.pending && r.placement.pending.qid) || null];
+  if (!(st.practice_ids || []).includes(qid) || pending.includes(qid)) return { error: 'That question is not open for practice.', code: 'not_practice' };
   const correct = isCorrect(q, answer);
   r.pace = path.updatePace(r.pace, q.tier || 2, correct);
   r.steps.questions++;
+  if (correct) st.misconceptions = (st.misconceptions || []).filter((m) => typeof m !== 'object' || m.q !== q.id);
   save(r);
   return { correct, answer: correctText(q), explanation: q.explanation, quote: q.quote, misconception: misconceptionOf(q, answer), source: q.source || 'material' };
 }
@@ -448,8 +455,10 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
     const wrongSet = new Set(st.wrong);
     if (x.ok) wrongSet.delete(x.q.id); else wrongSet.add(x.q.id);
     st.wrong = [...wrongSet].slice(0, 20);
+    // A misconception is kept with the question it came from, and dropped once that question is answered right.
     const mis = misconceptionOf(x.q, x.given);
-    if (mis) st.misconceptions = [...st.misconceptions.filter((m) => m !== mis), mis].slice(-6);
+    if (x.ok) st.misconceptions = st.misconceptions.filter((m) => typeof m !== 'object' || m.q !== x.q.id);
+    else if (mis) st.misconceptions = [...st.misconceptions.filter((m) => (typeof m === 'object' ? m.text : m) !== mis), { q: x.q.id, text: mis }].slice(-6);
     if (x.role === 'mix') {
       // The interleaved question is a memory test of an earlier skill: a miss brings that skill's review forward.
       // A right answer is a successful retrieval of that skill, so it counts as its review: the clock restarts from now.

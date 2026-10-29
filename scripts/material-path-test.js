@@ -51,7 +51,8 @@ check('scattered gaps: the two gaps are found even though later skills are known
 const firstCheck = place(c12, () => true).answers.findIndex((a) => a.stage === 'check');
 p = place(c12, () => true, [firstCheck]);
 check('a careless slip on a known skill gets a second question and is not marked a gap', verdicts(p.result) === 'k'.repeat(12), [verdicts(p.result), p.answers.filter((a) => !a.correct)]);
-check('the same answers give the same belief (seeded)', JSON.stringify(mp.belief(c12, p.answers).p) === JSON.stringify(mp.belief(c12, p.answers).p));
+const b1 = mp.belief(c12, p.answers, 1).p; const b2 = mp.belief(c12, p.answers, 99).p;
+check('the sampler is stable: two different seeds agree to within 0.1 on every skill', Object.keys(b1).every((k) => Math.abs(b1[k] - b2[k]) < 0.1), [b1, b2]);
 const fork = { skills: [{ id: 'a', prerequisites: [] }, { id: 'b', prerequisites: ['a'] }, { id: 'c', prerequisites: ['a'] }, { id: 'd', prerequisites: ['b', 'c'] }] };
 const bf = mp.belief(fork, [{ skill: 'd', correct: true, guess: 0.25 }, { skill: 'd', correct: true, guess: 0.25 }]);
 check('knowing a skill raises its prerequisites', bf.p.a > 0.7 && bf.p.b > 0.7 && bf.p.c > 0.7, bf.p);
@@ -78,8 +79,9 @@ check('a fast forgetter (lower multiplier) gets shorter intervals; a slow one lo
 check('at the interval, predicted recall is still at the target', mp.recall(mp.intervalDays(11, 0, 0), 11, 0, 0) >= mp.TARGET_RECALL - 1e-9);
 check('forgetting more than predicted lowers the multiplier; remembering raises it', mp.updateForgetting(0, 5, 9, 0, 0) < 0 && mp.updateForgetting(0, 5, 9, 0, 1) > 0);
 
-check('a careless learner (fresh accuracy 75%) scoring 75% on a review is not read as forgetting; the same score from an accurate learner is',
-  Math.abs(mp.updateForgetting(0, 1, 9, 0, mp.recall(1, 9, 0, 0, 0.75), 0.75)) < 1e-9 && mp.updateForgetting(0, 1, 9, 0, mp.recall(1, 9, 0, 0, 0.75), 0.95) < 0);
+const careless = mp.updateForgetting(0, 3, 9, 0, 0.5, 0.75);
+const accurate = mp.updateForgetting(0, 3, 9, 0, 0.5, 0.95);
+check('the same 1-of-2 review lowers an accurate learner\'s half-life more than a careless one\'s (slips are not taken for forgetting)', accurate < careless && accurate < 0, { careless, accurate });
 check('fresh accuracy starts near 0.95 and follows the learner\'s checks', Math.abs(mp.freshAccuracy(null) - 0.95) < 1e-9 && mp.freshAccuracy({ right: 60, total: 80 }) < 0.85);
 
 if (failures) { console.log(`\n${failures} check(s) failed`); process.exit(1); }

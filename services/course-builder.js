@@ -59,8 +59,9 @@ const estTokens = (...parts) => Math.ceil(parts.reduce((n, p) => n + String(p ||
 const hash = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const clean = (s, n) => String(s == null ? '' : s).replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
 const norm = (s) => String(s || '').toLowerCase().replace(/[“”„"‘’']/g, '').replace(/\s+/g, ' ').trim();
-// Letters and digits only: a quote from a PDF keeps its words even when the extraction mangled symbols and spacing.
-const alnum = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '');
+// Letters and digits only (any script): a quote from a PDF keeps its words even when the extraction mangled symbols
+// and spacing. Accents fall away (NFKD, then marks are dropped), so "café" matches "cafe".
+const alnum = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}]+/gu, '');
 const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40);
 
 // ── passages ────────────────────────────────────────────────────────────────────
@@ -163,7 +164,7 @@ const SKILL_SCHEMA = {
           passage_id: { type: 'string' },
           quote: { type: 'string' },
         },
-        required: ['type', 'prompt', 'explanation', 'passage_id', 'quote', 'tier'],
+        required: ['type', 'prompt', 'explanation', 'passage_id', 'quote'],
       },
     },
   },
@@ -253,7 +254,7 @@ function layout(skills) {
  * words), or null. Syllabus lines are often table cells a model does not copy exactly, so the quote is found here.
  */
 function namingLine(title, passageById, allowed) {
-  const words = norm(title).split(/[^a-z0-9]+/).filter((w) => w.length > 3);
+  const words = norm(title).split(/[^\p{L}\p{N}]+/u).filter((w) => w.length > 3);
   let best = null;
   for (const pid of allowed) {
     const p = passageById.get(pid);
@@ -359,7 +360,7 @@ async function buildSkill(skill, passageById, ctx) {
     + 'Give each a tier: 1 recalls a fact or definition, 2 uses it on a case, 3 combines it with another idea or applies it somewhere new; write at least two of each tier. '
     + 'For multiple choice give misconceptions: one entry per choice, in the same order, saying in a few words the misunderstanding that would lead a student to pick that wrong choice (an empty string for the correct choice). Make every wrong choice a mistake a real student makes.';
   const genArgs = {
-    role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 4000, dataClass: 'learner',
+    role: 'fast', task: 'material_lesson', schema: SKILL_SCHEMA, schemaName: 'material_skill', maxTokens: 7000, dataClass: 'learner',
     system: general
       ? `You write one short lesson and practice questions for a student on a topic their study material NAMES but does not explain (for example a syllabus line). ${UNTRUSTED} `
         + 'Teach exactly the topic as the material names it, at the level the material implies, from standard, uncontroversial knowledge; do not drift into other topics. Write 2 to 5 short lesson paragraphs in plain words. '
@@ -515,7 +516,8 @@ async function build(userId, materialId, opts = {}) {
       seen.add(p);
       return lift(outlineById.get(p).prerequisites, seen);
     });
-    for (const s of skills) { s.prerequisites = [...new Set(lift(s.prerequisites))]; delete s.depth; }
+    // From the outline's own edges, not the stored ones: a resumed build must not lose an edge lifted last time.
+    for (const s of skills) { s.prerequisites = [...new Set(lift(outlineById.has(s.id) ? outlineById.get(s.id).prerequisites : s.prerequisites))]; delete s.depth; }
     const units = layout(skills);
     // Skills that got no model answer at all (busy or timed out) leave the course partial, so asking again builds them.
     const status = !skills.length ? 'failed' : (stopped || ctx.unanswered ? 'partial' : 'ready');

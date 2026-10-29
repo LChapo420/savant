@@ -79,7 +79,7 @@ router.get('/:id/course', requireAuth, (req, res) => {
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
 });
 
-const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409, use_placement: 409 };
+const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
 function studyReply(res, out, key) {
   if (out.error) return res.status(STUDY_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
   return res.json(key ? { [key]: out[key] } : out);

@@ -2,8 +2,8 @@
  {
   "id": "07-M1",
   "name": "The learner's own material becomes a skill outline",
-  "does": "An uploaded PDF, Word file, text or paste is cut into passages; a model plans the course window by window, in the material's own order, as units of skills (one skill per 350 characters at most, 30 at most). Topics the material only names (a syllabus line) are marked and taught from general knowledge, labelled as such.",
-  "where": "services/course-builder.js:86-118 (chunk), 185-205 (cleanOutline), 320-332 (outlineWindows), 424-530 (build, outline stage); services/materials.js:48-66, 113-128 (extraction, upload, paste)",
+  "does": "An uploaded PDF, Word file, text or paste is cut into passages; a model plans the course window by window (each window told the skills planned so far), in the material's own order, as units of skills: at most one skill per 250 characters and 30 in all. The model is told to merge neighbouring topics rather than stop early; the code keeps at most the window's share, so a model that returns more loses its last ones. Topics the material only names (a syllabus line) are marked and taught from general knowledge, labelled as such.",
+  "where": "services/course-builder.js:87-119 (chunk), 186-206 (cleanOutline), 321-333 (outlineWindows), 425-539 (build; outline stage at about 462-492); services/materials.js:48-66, 96-128 (extraction, upload, paste)",
   "claim_topics": [
    "automatic extraction of concepts or topics from instructional text",
    "course or concept maps generated from learning materials",
@@ -25,7 +25,7 @@
   "id": "07-M2",
   "name": "A prerequisite graph orders the levels",
   "does": "Each skill lists the skills that must come first; the path puts prerequisites first and otherwise keeps the material's order, numbers the skills as levels, and opens a skill only when its prerequisites are mastered.",
-  "where": "services/course-builder.js:207-254 (orderSkills, layout); services/material-study.js:134-138 (unlocked), 147-157 (nextStep)",
+  "where": "services/course-builder.js:208-254 (orderSkills, layout), 513-521 (edges of dropped skills passed on); services/material-study.js:136-140 (unlocked), 149-159 (nextStep)",
   "claim_topics": [
    "learning hierarchies: mastering prerequisite skills before dependent ones",
    "prerequisite relations between concepts can be identified automatically",
@@ -47,8 +47,8 @@
  {
   "id": "07-M3",
   "name": "Placement over the skill graph skips what the learner already knows",
-  "does": "One question at a time, the placement keeps a belief over which skills are known (each answer read with the built-in placement model: 10% slips, guessing plus 15 points of luck; knowing a skill makes its prerequisites likely known; a shared rate of right answers), sampled by Gibbs; it asks the question expected to shrink total uncertainty most, then gives every skill it would skip a quick check (a miss earns a second question). Known skills are skipped and come back for review.",
-  "where": "services/material-path.js:66-195 (answerModel, belief, nextPlacement, placementResult); services/material-study.js:183-275 (placementNext, placementAnswer, finishPlacement); services/adaptive-placement.js:66-71 (assumed)",
+  "does": "One question at a time, the placement keeps a joint belief over which skills are known: each answer is read with the built-in placement answer model taken at its two ends (10% slips; guessing plus 15 points of luck); knowing a skill makes its prerequisites likely known; a shared rate of right answers ties untested skills together. The belief is sampled (Gibbs) and the next question is the one expected to shrink total uncertainty most: this graph belief and selection are new here, not the built-in one-dimensional walk. Every skill it would skip then gets a quick check (a miss earns a second question), like the built-in unit-skip check. Known skills are skipped and come back for review.",
+  "where": "services/material-path.js:68-196 (answerModel, belief, nextPlacement, placementResult); services/material-study.js:185-278 (placementAskable, finishPlacement, placementNext, placementAnswer); services/adaptive-placement.js:70-75 (assumed)",
   "claim_topics": [
    "adaptive testing reaches the same precision with fewer questions",
    "knowledge space theory assessment of what a learner knows",
@@ -74,7 +74,7 @@
   "id": "07-M4",
   "name": "Difficulty tiers inside a skill, harder after mastery",
   "does": "Every question has a tier (1 recall, 2 use, 3 combine or transfer). A skill starts at tier 1, or tier 2 if placement found it half known; a perfect check moves it up a tier, a failed one down; reviews ask tier 2 or above. A running Elo-style pace gives a fast learner fewer practice questions.",
-  "where": "services/material-path.js:196-237 (updatePace, startTier, practiceCount, tierAfter, pickForTier); services/material-study.js:278-305, 323-344, 374-466 (lesson, pickQuestions, submit)",
+  "where": "services/material-path.js:198-238 (updatePace, startTier, practiceCount, tierAfter, pickForTier); services/material-study.js:280-307 (lesson), 331-352 (pickQuestions), 382-482 (submit)",
   "claim_topics": [
    "adapting task difficulty to the learner's level improves learning",
    "the expertise reversal effect: less guidance for more knowledgeable learners",
@@ -98,7 +98,7 @@
   "id": "07-M5",
   "name": "Mastery before moving on (75%)",
   "does": "A skill is mastered by scoring 75% or more on a check of about five questions with no feedback until the end; the next skill opens only after its prerequisites are mastered; a failed check sends the learner back through remediation before trying again.",
-  "where": "services/material-path.js:34 (PASS); services/material-study.js:346-466 (startQuiz, submit)",
+  "where": "services/material-path.js:36 (PASS); services/material-study.js:354-482 (startQuiz, submit)",
   "claim_topics": [
    "mastery learning raises achievement (meta-analyses)",
    "mastery criteria and their thresholds",
@@ -119,8 +119,8 @@
  {
   "id": "07-M6",
   "name": "Remediation at the misconception behind a wrong answer",
-  "does": "Every wrong choice of a multiple-choice question carries the misunderstanding that leads to it. After a miss the learner sees the right answer, why, that misunderstanding, and the passage from their own material; the misconception is kept and shown again in the remediation lesson, and missed questions come first in the next check.",
-  "where": "services/course-builder.js:142-171 (SKILL_SCHEMA misconceptions), 279-318 (cleanQuestion); services/material-study.js:85-90 (misconceptionOf), 278-305 (lesson remediation), 420-462 (submit)",
+  "does": "Every wrong choice of a multiple-choice question carries the misunderstanding that leads to it. After a miss the learner sees the right answer, why, that misunderstanding, and the passage from their own material; the misconception is kept with its question, shown again in the remediation lesson, and dropped once that question is answered right; missed questions come first in the next check.",
+  "where": "services/course-builder.js:143-172 (SKILL_SCHEMA misconceptions), 273-319 (shuffleChoices, cleanQuestion); services/material-study.js:86-91 (misconceptionOf), 280-307 (lesson), 452-461 (kept and cleared in submit)",
   "claim_topics": [
    "diagnosing misconceptions from wrong answers (distractor analysis)",
    "elaborated feedback versus right/wrong feedback",
@@ -144,7 +144,7 @@
   "id": "07-M7",
   "name": "Retrieval practice with feedback",
   "does": "Lessons are followed by practice questions answered one at a time with the explanation and the quote; checks and reviews are tests, not re-reading.",
-  "where": "services/material-study.js:278-321 (lesson, practice), 346-466 (startQuiz, submit)",
+  "where": "services/material-study.js:280-329 (lesson, practice), 354-482 (startQuiz, submit)",
   "claim_topics": [
    "the testing effect: retrieval practice beats restudy",
    "feedback after retrieval practice",
@@ -164,8 +164,8 @@
  {
   "id": "07-M8",
   "name": "Interleaving earlier skills into new checks and mixing reviews",
-  "does": "Each check on a new skill mixes in one question from an earlier mastered skill (the one closest to falling due); a miss brings that skill's review forward. Reviews mix the due skills together and shuffle them.",
-  "where": "services/material-study.js:323-344 (pickQuestions), 440-450 (interleaved result handling)",
+  "does": "Each check on a new skill mixes in one question from an earlier mastered skill (the one closest to falling due). A right answer counts as that skill's review (its clock restarts); a miss brings its review forward to now. Reviews mix the due skills together and shuffle them.",
+  "where": "services/material-study.js:331-352 (pickQuestions), 462-467 (interleaved result handling)",
   "claim_topics": [
    "interleaved practice improves later performance compared with blocked practice",
    "when interleaving helps: similarity of the interleaved material",
@@ -185,8 +185,8 @@
  {
   "id": "07-M9",
   "name": "Spaced review timed to this learner's forgetting",
-  "does": "A mastered skill falls due when its predicted recall drops to 75% on a half-life forgetting curve (the app's scorecard curve) that grows with each right answer; each review moves the learner's own half-life multiplier by how far the prediction missed, so a fast forgetter gets shorter intervals. 2 of 2 right stretches the interval, 1 of 2 brings it back tomorrow, 0 of 2 reopens the skill.",
-  "where": "services/material-path.js:238-256 (recall, intervalDays, updateForgetting); services/scorecard/forgetting.js:88-110, 308-314 (predict, recallAt); services/material-study.js:139-145 (scheduleReview), 413-432 (review grading)",
+  "does": "A mastered skill falls due when its predicted recall drops to 75% on the half-life forgetting curve of the app's scorecard (its default curve, not the population fit), which grows with each right answer. Each review moves this learner's own half-life multiplier by a simple step (0.6 times how far the prediction missed), read against the learner's accuracy on skills they had just mastered so slips are not taken for forgetting. 2 of 2 right stretches the interval, 1 of 2 halves it (at least a day), 0 of 2 reopens the skill for remediation.",
+  "where": "services/material-path.js:240-268 (recall, freshAccuracy, intervalDays, updateForgetting); services/scorecard/forgetting.js:88-110, 308-314 (predict, recallAt); services/material-study.js:141-147 (scheduleReview), 430-452 (review grading)",
   "claim_topics": [
    "the spacing effect and optimal review intervals",
    "half-life regression and trainable spaced repetition",
@@ -211,7 +211,7 @@
   "id": "07-M10",
   "name": "Questions and lessons generated from the learner's text by a language model",
   "does": "For each skill a model writes a short lesson and 6 to 9 questions (mostly multiple choice, some short answer) from the skill's passages only, with an instruction to treat the material as untrusted data; choices are shuffled because models put the right answer first.",
-  "where": "services/course-builder.js:354-413 (buildSkill), 272-277 (shuffleChoices)",
+  "where": "services/course-builder.js:355-414 (buildSkill), 273-278 (shuffleChoices)",
   "claim_topics": [
    "quality of automatically generated questions for education",
    "large language models generating educational questions",
@@ -233,8 +233,8 @@
  {
   "id": "07-M11",
   "name": "Every question is tied to a quote from the source",
-  "does": "Each question must carry a quote of at least 20 characters found (letters and digits) in its own passage, or it is dropped with no model asked; a topic the material only names is tied to the line that names it. The quote is shown with every explanation and remediation.",
-  "where": "services/course-builder.js:255-318 (namingLine, cleanQuestion)",
+  "does": "Each question must carry a quote of at least 20 characters found in its own passage (compared on letters and digits of any script), or it is dropped with no model asked; a topic the material only names is tied to the line that names it. The quote is shown with every explanation and remediation.",
+  "where": "services/course-builder.js:256-319 (namingLine, shuffleChoices, cleanQuestion)",
   "claim_topics": [
    "hallucination in language model generation",
    "grounding generation in retrieved source text reduces unsupported content",
@@ -257,7 +257,7 @@
   "id": "07-M12",
   "name": "A second model checks every item before a learner sees it, and independent checkers audit the result",
   "does": "In the app, a second model pass sees only the passage and the items and keeps an item only on an explicit 'supported: true' (fail closed); a skill with fewer than 3 surviving items is regenerated once, then dropped. For the proof, two further models from other families judge items and lessons with planted wrong answers mixed in to measure their catch rate, and a third judges the skill map against the source.",
-  "where": "services/course-builder.js:390-413 (support check), 483-500 (retry of a dropped skill); scripts/material-proof-check.js (independent checkers, planted errors)",
+  "where": "services/course-builder.js:393-410 (support check inside buildSkill), 500-505 (one more attempt for a dropped skill); scripts/material-proof-check.js (independent checkers, planted errors)",
   "claim_topics": [
    "language models as judges of generated content: agreement and bias",
    "panels of diverse model judges versus a single judge",
@@ -279,8 +279,8 @@
  {
   "id": "07-M13",
   "name": "Privacy and deletion of uploaded material",
-  "does": "Only the extracted text is kept, tied to one account, never shown to other learners; deleting the material deletes its course and progress at once; outside AI sees it only when the account's consent covers outside AI (children without that consent get no outside model); answer keys never reach the browser before an answer.",
-  "where": "services/materials.js:96-140 (add, remove); services/course-builder.js:554-557 (removeForMaterial); services/typed-grading.js:579-592 (outsideAllowed); routes/materials.js (owner checks, child upload gate)",
+  "does": "Only the extracted text is kept, tied to one account, never shown to other learners; deleting the material deletes its course and progress at once; outside AI sees it only when the account's consent covers outside AI (children without that consent get no outside model); answer keys never reach the browser before an answer (practice answers only for questions the lesson handed out, never for one open in a placement or check).",
+  "where": "services/materials.js:96-140 (add, remove); services/course-builder.js:556-559 (removeForMaterial); services/typed-grading.js:579-592 (outsideAllowed); services/material-study.js:92-97 (publicQ), 309-329 (practice gate); routes/materials.js (owner checks, child upload gate)",
   "claim_topics": [
    "student data privacy in learning analytics",
    "data minimisation and deletion in educational technology",

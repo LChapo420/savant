@@ -23,16 +23,16 @@ const path = require('path');
 const nvidia = require('../services/providers/nvidia');
 const { xkiro } = require('../services/providers/xkiro');
 const { standardCompute } = require('../services/providers/standard-compute');
+const modelflare = require('../services/providers/modelflare');
 const { rng } = require('../services/material-path');
 const { chunk } = require('../services/course-builder');
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const JUDGE = 'qwen/qwen3.8-max:free';
-// The two item checkers, each a model family other than the generator's. Defaults: Mistral Large 4 and MiniMax M3.1 Flash on
-// NVIDIA (free). PROOF_CHECK_A / PROOF_CHECK_B name another NVIDIA model, or "sc" for DeepSeek V4.1 Flash on Standard
-// Compute (paid, inside services/standard-compute-ledger.js) when the free tier keeps timing out.
-const CHECK_A = process.env.PROOF_CHECK_A || 'mistralai/mistral-large-4-1t-a52b';
-const CHECK_B = process.env.PROOF_CHECK_B || 'minimaxai/minimax-m3.1-flash';
+// The two item checkers, each a model family other than the generator's. Defaults: Modelflare GPT 6.1 Sol (paid; the
+// budget is on the key) and xKiro Mistral Large 2512 (free). PROOF_CHECK_A / PROOF_CHECK_B override (see checkSkill).
+const CHECK_A = process.env.PROOF_CHECK_A || 'sol';
+const CHECK_B = process.env.PROOF_CHECK_B || 'xkiro:mistralai/mistral-large-2512';
 const JUDGE_CHARS = 40000;
 const SKILL_CHARS = 7000;
 
@@ -130,9 +130,13 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
     + ' List each problem sentence in lesson_problems.';
   const user = `PASSAGES:\n${passagesText}\n\nLESSON:\n${lesson.paragraphs.join('\n')}${lesson.key_points && lesson.key_points.length ? `\nKey points: ${lesson.key_points.join(' | ')}` : ''}\n\nITEMS:\n${items.map((q, i) => describe(q, i + 1)).join('\n')}`;
   const model = checker === 'A' ? CHECK_A : CHECK_B;
-  const call = model === 'sc'
-    ? () => standardCompute.structured({ task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 })
-    : () => nvidia.structured({ models: [model], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 });
+  // "sc": Standard Compute; "sol": Modelflare GPT 6.1 Sol (its placement role); "xkiro:<model>": an xKiro free model;
+  // anything else: that NVIDIA model.
+  let call;
+  if (model === 'sc') call = () => standardCompute.structured({ task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 });
+  else if (model === 'sol') call = () => modelflare.structured({ role: 'placement', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000 });
+  else if (model.startsWith('xkiro:')) call = () => xkiro.structured({ models: [model.slice(6)], system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 2500 });
+  else call = () => nvidia.structured({ models: [model], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 });
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       // eslint-disable-next-line no-await-in-loop
@@ -149,6 +153,8 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
 
 (async () => {
   const course = JSON.parse(fs.readFileSync(arg('course'), 'utf8'));
+  // Only a course built from a public test input by scripts/material-proof-build.js --public: never learner data.
+  if (!course.proof || course.proof.public !== true) { console.error('Refusing: this course is not marked as a public proof input.'); process.exit(2); }
   const text = fs.readFileSync(arg('text'), 'utf8');
   const out = arg('out');
   const name = path.basename(arg('course')).replace(/\.course\.json$/, '');

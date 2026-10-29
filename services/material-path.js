@@ -2,13 +2,15 @@
  * "Learn from your own material": the per-learner path through a built course. Pure functions; the state lives in
  * services/material-study.js (material_progress rows). Nothing here touches the database or a model.
  *
- * It reuses the built-in subjects' models instead of inventing new ones:
+ * What it takes from the built-in subjects, and what is new here:
  *   - placement reads each answer with the answer model of services/adaptive-placement.js (`assumed`): a 10% chance
  *     of slipping on something known and 15 points of luck above guessing on something not, taken at its two ends
- *     (known / not known) because a material skill has no grade position;
- *   - review timing uses the half-life forgetting curve of services/scorecard/forgetting.js (`recallAt`) with THIS
- *     learner's half-life multiplier m, moved after every review by how far the curve's prediction missed, the way
- *     the scorecard reads a learner's forgetting;
+ *     (known / not known) because a material skill has no grade position. The belief over the skill graph (a Gibbs
+ *     sampler) and the choice of question by expected information gain are new: the built-in walk is one-dimensional;
+ *   - review timing uses the half-life forgetting curve of services/scorecard/forgetting.js (`recallAt`, its default
+ *     curve: the population fit and the scorecard's own learner estimate are not used here) with THIS learner's
+ *     half-life multiplier m, moved after every review by a simple step (M_RATE times how far the prediction missed),
+ *     not the scorecard's fitted estimate;
  *   - mastery is the app's 75% pass; a missed answer's misconception is kept like services/mastery.js keeps error
  *     tags (added on a miss, cleared when that question is later answered right).
  *

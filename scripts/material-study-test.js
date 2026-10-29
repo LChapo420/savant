@@ -91,13 +91,15 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('lesson has paragraphs and a few practice questions (3 at tier 1 for a new learner)', les.skill.lesson.paragraphs.length === 1 && les.skill.practice.length === 3 && les.skill.tier === 1);
   check('no answers, explanations, quotes or misconceptions before answering', !/\"(answer|answer_index|explanation|quote|misconceptions)\"/.test(JSON.stringify(les.skill.practice)));
   check('skill is now learning', ms.state(u.id, m.id).skills[0].status === 'learning');
-  const q0 = course.skills[0].questions[0];
+  const q0 = course.skills[0].questions.find((q) => q.id === les.skill.practice[0].id);
   const pr = ms.practice(u.id, m.id, 'cells', q0.id, q0.answer_index);
   check('practice is explained at once, with the quote', pr.correct === true && pr.explanation && pr.quote);
   const wrongIdx = (q0.answer_index + 1) % q0.choices.length;
   const wrongPr = ms.practice(u.id, m.id, 'cells', q0.id, wrongIdx);
   check('a wrong practice answer is not correct and names the misconception behind it', wrongPr.correct === false && wrongPr.misconception && wrongPr.misconception === q0.misconceptions[wrongIdx], wrongPr);
   check('practice does not change mastery', ms.state(u.id, m.id).skills[0].status === 'learning');
+  const notServed = course.skills[0].questions.find((q) => !les.skill.practice.some((p) => p.id === q.id));
+  check('a question the lesson did not hand out as practice gets no key', ms.practice(u.id, m.id, 'cells', notServed.id, 0).code === 'not_practice');
 
   console.log('short answer grading');
   check('exact and padded answers pass', ms.gradeShort('Sugar', 'sugar') && ms.gradeShort('it makes sugar', 'sugar'));
@@ -116,8 +118,13 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('a failed check keeps tier 1 (the floor) and marks the skill for remediation', out.report[0].tier === 1 && ms.state(u.id, m.id).skills[0].remediate === true, out.report);
   const fixLesson = ms.lesson(u.id, m.id, 'cells');
   check('the remediation lesson names the misunderstanding and gives 3 practice questions', fixLesson.skill.remediation && fixLesson.skill.remediation.misconceptions.length > 0 && fixLesson.skill.practice.length === 3, fixLesson.skill.remediation);
-  check('after the remediation lesson the next step is the check again (no lesson loop)', ms.nextStep(cb.get(u.id, m.id), db.findOne('material_progress', (p) => p.user_id === u.id), Date.now()).kind !== 'lesson' || ms.state(u.id, m.id).skills[0].remediate === false);
+  const placedView = { ...db.findOne('material_progress', (p) => p.user_id === u.id), placed: true };
+  check('after the remediation lesson the next step is the check again (no lesson loop)', ms.nextStep(cb.get(u.id, m.id), placedView, Date.now()).kind === 'quiz', ms.nextStep(cb.get(u.id, m.id), placedView, Date.now()));
   check('a quiz is one shot', ms.submit(u.id, m.id, quiz.quiz_id, {}).code === 'no_quiz');
+  const leakQuiz = ms.startQuiz(u.id, m.id, 'mastery', 'cells');
+  const leakQ = leakQuiz.questions.find((x) => (db.findOne('material_progress', (p) => p.user_id === u.id).skills.cells.practice_ids || []).includes(x.id));
+  check('a question open in a check cannot be practised for its key, even if it was practice before', !leakQ || ms.practice(u.id, m.id, 'cells', leakQ.id, 0).code === 'not_practice');
+  ms.submit(u.id, m.id, leakQuiz.quiz_id, {});
   check('the photosynthesis skill is still locked', ms.state(u.id, m.id).skills[1].open === false);
 
   quiz = ms.startQuiz(u.id, m.id, 'mastery', 'cells', { random: () => 0.5 });
@@ -191,12 +198,25 @@ function answerFrom(course, quiz, wrongN = 0) {
   const wrongOf = (x) => { const k = course.skills.flatMap((s) => s.questions).find((q) => q.id === x.id); return k.type === 'multiple_choice' ? (k.answer_index + 1) % k.choices.length : 'nothing relevant'; };
   ans[bySkill[sA][0].id] = wrongOf(bySkill[sA][0]);
   bySkill[sB].forEach((x) => { ans[x.id] = wrongOf(x); });
-  const mPrev = db.findOne('material_progress', (p) => p.user_id === u.id && p.material_id === m.id).forget_m;
+  const progA = db.findOne('material_progress', (p) => p.user_id === u.id && p.material_id === m.id);
+  // Pretend skill A had been on an 8-day interval, so halving is visible.
+  progA.skills[sA].interval_days = 8;
+  db.update('material_progress', progA.id, { skills: progA.skills });
+  const intervalA = 8;
+  const mPrev = progA.forget_m;
   out = ms.submit(u.id, m.id, rv.quiz_id, ans, { now: day4 });
   const rA = out.report.find((k) => k.skill === sA); const rB = out.report.find((k) => k.skill === sB);
-  check('1 of 2 brings the skill back tomorrow; 0 of 2 reopens it for remediation', rA.shaky && rA.next_in_days === 1 && !rB.passed && ms.state(u.id, m.id, day4).skills.find((k) => k.id === sB).remediate === true, out.report);
+  check('1 of 2 halves the interval (at least a day); 0 of 2 reopens the skill for remediation', rA.shaky && rA.next_in_days === Math.max(1, Math.floor(intervalA / 2)) && !rB.passed && ms.state(u.id, m.id, day4).skills.find((k) => k.id === sB).remediate === true, { report: out.report, intervalA });
   check('forgetting more than predicted shortens the learner\'s half-life', db.findOne('material_progress', (p) => p.user_id === u.id && p.material_id === m.id).forget_m < mPrev);
-  check('the reopened skill is the next step, as remediation', ['lesson', 'review'].includes(out.next.kind), out.next);
+  check('the reopened skill is the next step, as a remediation lesson', out.next.kind === 'lesson' && out.next.skill === sB && out.next.remediation === true, out.next);
+  const prog = db.findOne('material_progress', (p) => p.user_id === u.id && p.material_id === m.id);
+  check('a misconception is kept with its question and named in the remediation lesson', ms.lesson(u.id, m.id, sB).skill.remediation.misconceptions.length > 0 && prog.skills[sB].misconceptions.every((x) => typeof x === 'object' && x.q));
+  const misQ = prog.skills[sB].misconceptions[0].q;
+  const rq = { id: 'fake', mode: 'mastery', skill: sB, qids: [[sB, misQ, 'main']], issued_at: new Date().toISOString() };
+  db.update('material_progress', prog.id, { pending: rq });
+  const keyQ = course.skills.flatMap((k) => k.questions).find((q) => q.id === misQ);
+  ms.submit(u.id, m.id, 'fake', { [misQ]: keyQ.type === 'multiple_choice' ? keyQ.answer_index : keyQ.answer }, { now: day4 });
+  check('answering that question right clears its misconception', !db.findOne('material_progress', (p) => p.id === prog.id).skills[sB].misconceptions.some((x) => x.q === misQ));
   check('remediation lists every miss', out.remediation.length === 3, out.remediation.length);
   void gap;
 

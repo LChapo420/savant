@@ -80,7 +80,7 @@ App.mount(async () => {
       const list = (xs) => xs.map((x) => `<li>${esc(x.title)}</li>`).join('');
       root.innerHTML = `<h1>Your starting point</h1><p class="muted">${out.asked} questions.</p>
         ${out.known.length ? `<div class="card"><h2>You already know (${out.known.length})</h2><ul>${list(out.known)}</ul><p class="small">Skipped. They come back for a short review before you would forget them.</p></div>` : ''}
-        ${out.unsure.length ? `<div class="card" style="margin-top:12px"><h2>Partly known (${out.unsure.length})</h2><ul>${list(out.unsure)}</ul><p class="small">You start these a step up, with less practice.</p></div>` : ''}
+        ${out.unsure.length ? `<div class="card" style="margin-top:12px"><h2>Partly known (${out.unsure.length})</h2><ul>${list(out.unsure)}</ul><p class="small">The ones you seemed to half know start a step up, with less practice.</p></div>` : ''}
         ${out.to_learn.length ? `<div class="card" style="margin-top:12px"><h2>To learn (${out.to_learn.length})</h2><ul>${list(out.to_learn)}</ul></div>` : ''}
         <p style="margin-top:18px"><button class="btn btn-primary" id="done" type="button">See your path</button></p>`;
       document.getElementById('done').addEventListener('click', map);
@@ -155,7 +155,7 @@ App.mount(async () => {
   function result(r) {
     const days = (n) => `${n} day${n === 1 ? '' : 's'}`;
   const verdict = (k) => {
-      if (r.mode === 'review') return k.passed ? ` · back in ${days(k.next_in_days)}` : (k.shaky ? ' · back tomorrow' : ' · to go over again');
+      if (r.mode === 'review') return k.passed || k.shaky ? ` · back in ${days(k.next_in_days)}` : ' · to go over again';
       return k.passed ? ` · mastered, next review in ${days(k.next_in_days)}` : ' · not yet: go over it again';
     };
     const lines = r.report.map((k) => `<li><strong>${esc(k.title)}</strong>: ${k.right} of ${k.total}${verdict(k)}</li>`).join('');

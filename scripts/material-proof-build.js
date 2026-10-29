@@ -31,7 +31,9 @@ const cb = require('../services/course-builder');
 (async () => {
   const file = arg('file');
   const out = arg('out');
-  if (!file || !out) { console.error('usage: --file <path> --out <dir> [--paste] [--title t]'); process.exit(2); }
+  if (!file || !out) { console.error('usage: --file <path> --out <dir> --public [--paste] [--title t] [--llm sc]'); process.exit(2); }
+  // The proof sends the text to checkers that may be pipeline-only (xKiro, Standard Compute): only public test inputs.
+  if (!flag('public')) { console.error('Pass --public to confirm the file is a public test input (never learner data).'); process.exit(2); }
   fs.mkdirSync(out, { recursive: true });
   const name = path.basename(file).replace(/\.[^.]+$/, '');
   const email = `proof-${name}@test.invalid`.toLowerCase();
@@ -69,7 +71,7 @@ const cb = require('../services/course-builder');
   const qn = c.skills.reduce((n, s) => n + s.questions.length, 0);
   console.log(`built in ${secs}s: status ${c.status}, ${c.units.length} units, ${c.skills.length} skills, ${qn} questions, ~${c.tokens_used} tokens, models ${c.models.join(', ')}`);
   console.log('dropped', JSON.stringify(c.dropped));
-  fs.writeFileSync(path.join(out, `${name}.course.json`), JSON.stringify({ ...c, proof: { file: path.basename(file), user_id: user.id, material_id: mat.id, build_seconds: secs, chars: mat.text.length, pages: mat.pages || null, kind: mat.kind, generator: arg('llm') === 'sc' ? 'standard-compute deepseek-v4.1-flash' : 'app learner chain' } }, null, 1));
+  fs.writeFileSync(path.join(out, `${name}.course.json`), JSON.stringify({ ...c, proof: { file: path.basename(file), user_id: user.id, material_id: mat.id, build_seconds: secs, chars: mat.text.length, pages: mat.pages || null, kind: mat.kind, public: true, generator: arg('llm') === 'sc' ? 'standard-compute deepseek-v4.1-flash' : 'app learner chain' } }, null, 1));
   fs.writeFileSync(path.join(out, `${name}.text.txt`), mat.text);
   db.flush();
   process.exit(0);

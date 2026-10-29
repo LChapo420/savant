@@ -225,6 +225,28 @@ function mockLlm(mode = 'good') {
   out = await cb.build(u.id, mf.id, { llm: flaky });
   check('a skill whose items fail the checks, or whose model is busy, is tried again before it is dropped', out.course && out.course.skills.length === 1 && lessonCalls === 3 && out.course.dropped.retried === 1 && out.course.dropped.skills === 0, [lessonCalls, out.course && out.course.dropped]);
 
+  console.log('any script, and resuming keeps every edge');
+  const ru = 'Митохондрии высвобождают энергию из пищи внутри клетки, а хлоропласты строят сахар из света.';
+  const ruPassage = new Map([['p1', { id: 'p1', text: `${ru} ${'Клетка состоит из частей. '.repeat(30)}` }]]);
+  const ruQ = cb.cleanQuestion({ type: 'short_answer', prompt: 'Что делают митохондрии?', answer: 'высвобождают энергию', explanation: 'Так сказано в тексте.', passage_id: 'p1', quote: 'Митохондрии высвобождают энергию из пищи' }, ruPassage, new Set(['p1']));
+  const ruBad = cb.cleanQuestion({ type: 'short_answer', prompt: 'Что?', answer: 'x', explanation: 'y', passage_id: 'p1', quote: 'Этой фразы нет в тексте совсем нигде' }, ruPassage, new Set(['p1']));
+  check('a quote in another script (Cyrillic) is found in its passage; a made-up one is still dropped', ruQ.item && ruBad.drop === 'ungrounded', [ruQ, ruBad]);
+  check('a general topic named in another script is tied to its line', !!cb.namingLine('Энергия клетки и митохондрии', ruPassage, new Set(['p1'])));
+  let aCalls = 0;
+  const twoStep = async (a) => {
+    if (a.task === 'material_outline') return { model: 'mock', data: { skills: [
+      { id: 'a', title: 'Inside the cell', unit: 'U', prerequisites: [], passage_ids: ['p1'] },
+      { id: 'b', title: 'Photosynthesis', unit: 'U', prerequisites: ['a'], passage_ids: ['p2'] },
+    ] } };
+    if (a.task === 'material_lesson' && /Skill: Inside the cell/.test(a.user)) { aCalls++; if (aCalls <= 2) return null; }
+    return v2(a);
+  };
+  const mr = materials.addPaste(u.id, 'Resume edges', [para(S1), para(S2)].join('\n\n')).value;
+  out = await cb.build(u.id, mr.id, { llm: twoStep, concurrency: 1 });
+  check('a skill whose model never answered leaves the course partial', out.course && out.course.status === 'partial' && out.course.skills.map((k) => k.id).join() === 'b', out.course && [out.course.status, out.course.skills.map((k) => k.id)]);
+  out = await cb.build(u.id, mr.id, { llm: twoStep, concurrency: 1 });
+  check('resuming builds the missing skill and keeps the edge to it (b still needs a)', out.course && out.course.status === 'ready' && out.course.skills.find((k) => k.id === 'b').prerequisites.join() === 'a', out.course && out.course.skills.map((k) => [k.id, k.prerequisites]));
+
   console.log('safety');
   check('someone else\'s material is refused', (await cb.build(other.id, m.id, { llm: mockLlm() })).code === 'not_found');
   const slow = mockLlm();
