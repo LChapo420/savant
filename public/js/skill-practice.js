@@ -30,8 +30,17 @@ App.mount(async () => {
     consolidation: 'Everything is proven: spare time keeps it all standing.',
   };
   let data;
+  // What the tutor dock may read about this page (js/tutor-dock.js): the drill on screen, or the plan. No answers.
+  let current = null;
+  window.tutorPageInfo = () => {
+    if (current) return { question: `Practice set: ${current.title || name(current.name)}`, passage: current.plain || current.test || '' };
+    const p = data && data.practice;
+    if (!p) return {};
+    return { question: `Today's practice plan: ${p.left} set${p.left === 1 ? '' : 's'} left`, passage: p.practice.filter((x) => x.left).map((x) => x.title || name(x.name)).join(', ') };
+  };
 
   async function load() {
+    current = null;
     try { data = await App.api.get(api); } catch (err) {
       host.innerHTML = `<div class="notice notice-error">${esc(err.status === 404 ? 'There is no practice plan on this subject.' : err.message)}
         <div style="margin-top:10px"><a class="btn btn-sm" href="${pathHref}">Back to your path</a></div></div>`;
@@ -117,6 +126,7 @@ App.mount(async () => {
 
   async function run(metric) {
     const x = data.practice.practice.find((y) => y.metric === metric);
+    current = x;
     const runner = frame(x);
     const base = `${api}/${encodeURIComponent(metric)}`;
     const finish = async () => {

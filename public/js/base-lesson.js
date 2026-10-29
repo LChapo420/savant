@@ -531,6 +531,13 @@ App.mount(async () => {
         ${window.icon('arrow-left')}Back to your path</a>`
     : '';
 
+  // What the tutor dock may read (js/tutor-dock.js calls this). The lesson itself runs in a sandboxed frame the
+  // dock cannot see into, so it gets the topic and kind only: never a lesson's own answers.
+  window.tutorPageInfo = () => ({
+    question: `${isGame ? 'Playing the game' : 'Reading the lesson'}: ${m.topic || 'Lesson'}`,
+    passage: [m.subject, m.grade_band].filter(Boolean).join(', '),
+  });
+
   root.innerHTML = `
     <div class="row-between" style="margin-bottom:14px; align-items:flex-start">
       <div>
