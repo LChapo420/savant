@@ -241,7 +241,10 @@ withEnv({ ADAPT_REVIEW_SESSION: 'on' }, () => {
   // 1169-1869 ms), so the bar is what P8 adds, plus a ceiling that an O(N^2)
   // read (about 11 s before the fix) cannot pass.
   check('P8 adds at most 25% (or 150 ms) to review today()', onT <= Math.max(offT * 1.25, offT + 150), { on, off });
-  check('review today() for a learner on the Final stays under 4 s', onT < 4000, on);
+  // Slower hosts (the cloud container: 4.0-4.7 s on 2026-10-29) raise the ceiling with the P8-off time, so it still
+  // catches an O(N^2) read on the P8 path without failing on a slow machine.
+  const ceiling = Math.max(4000, offT * 3);
+  check(`review today() for a learner on the Final stays under ${ceiling} ms (4 s, or 3x the P8-off time)`, onT < ceiling, on);
 });
 
 try { fs.unlinkSync(tmp); } catch { /* already gone */ }
