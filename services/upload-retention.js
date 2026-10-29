@@ -6,6 +6,9 @@
 const fs = require('fs');
 const path = require('path');
 
+/** Where POST /api/es/upload writes. Files are named `u<user id>-<time>-<random>.<ext>` so they can be found by owner. */
+const UPLOAD_DIR = path.join(__dirname, '..', 'data', 'spanish-uploads');
+
 const DAY = 24 * 60 * 60 * 1000;
 
 function retentionDays() {
@@ -28,6 +31,26 @@ function sweep(dir, { days = retentionDays(), now = Date.now() } = {}) {
   return removed;
 }
 
+/** Name for a new upload, tagged with its owner so account deletion can remove it. */
+function nameFor(userId, ext, rand) {
+  return `u${Number(userId) || 0}-${Date.now()}-${rand}.${ext}`;
+}
+
+/** Delete every upload that belongs to userId. Returns how many were removed. */
+function removeForUser(userId, dir = UPLOAD_DIR) {
+  const id = Number(userId);
+  if (!Number.isInteger(id) || id < 0) return 0;
+  const prefix = `u${id}-`;
+  let removed = 0;
+  let names;
+  try { names = fs.readdirSync(dir); } catch (_) { return 0; }
+  for (const name of names) {
+    if (!name.startsWith(prefix)) continue;
+    try { fs.unlinkSync(path.join(dir, name)); removed++; } catch (_) { /* gone already */ }
+  }
+  return removed;
+}
+
 /** Sweep now and then every hour. The timer never keeps the process alive. */
 function schedule(dir) {
   sweep(dir);
@@ -36,4 +59,4 @@ function schedule(dir) {
   return timer;
 }
 
-module.exports = { sweep, schedule, retentionDays };
+module.exports = { sweep, schedule, retentionDays, nameFor, removeForUser, UPLOAD_DIR };

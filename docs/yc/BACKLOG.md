@@ -116,7 +116,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 12b. **Record the demo** [local only]: the owner records the 60-second and 3-minute cuts from `docs/yc/DEMO-SCRIPT.md` on a seeded demo account with live model keys, then checks every click at 375 px; fix the script where the real screens differ. Reason: a cloud run has no signed-in session or `data/`, so the clicks were checked against the code, not the screen.
 13. [slices DONE: gap 4 adult deletion, gap 3 vendor list, gap 8 Spanish upload deletion, gap 5 written security programme and retention schedule, see Done; rest needs the owner (gaps 1, 2, 6, 7, 9, 10) or is open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
     goes to which provider), one gap per run.
-13b. [claimed 2026-10-29T18:20Z] **Tie Spanish uploads to the account** so account deletion removes them at once (`routes/spanish/index.js` `/upload`, `services/account-deletion.js`). Reason: today only the 7-day sweep bounds them.
+13b. **DONE, see Done.** (Spanish uploads tied to the account.)
 14. **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
 15. **ACT Reading passage sets** (item 9), the player and schema.
@@ -136,6 +136,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-29: **Spanish uploads tied to the account** (item 13b; commit in this push). `POST /api/es/upload` now names files `u<id>-<time>-<random>.<ext>` (`nameFor` in `services/upload-retention.js`); `removeForUser` deletes them, called from adult account deletion (`services/account-deletion.js`) and a parent deleting a child (`deleteChild` in `routes/consent.js`). Files written before this change carry no owner and still fall to the 7-day sweep. `docs/yc/PRIVACY.md` gap 8 updated. Checked: 6 new checks in `scripts/upload-retention-test.js` (owner tag, `u7` does not match `u70`, junk ids, wiring), `account-deletion-test.js` passes; full `npm test` passed on a re-run (`self-test.js` failed once, a known flake, and passed alone and on re-run).
 
 - 2026-10-29: **Interview cards** (item 11; commit in this push). New `docs/yc/INTERVIEW-CARDS.md`: all 40 questions plus the bonus, each with a short answer, the one number or demo moment that backs it, and a `YOU FILL IN` line for what only the founder can supply (user counts, quotes, the Spanish result, YC age policy, Edit Simple lessons). Repo numbers (16 grades, 9,807 levels, 84 calibration points, 187 consent checks, $24 stop / $11.20) were re-run against the code. Checked: new `scripts/interview-cards-test.js` (41 cards complete, every named file exists, numbers match the code, no "raises scores" / "COPPA compliant" claims), added to `scripts/test-steps.json`; full `npm test` passed (one run of `self-test.js` failed once and passed on re-run alone and in the full suite; not reproduced).
 

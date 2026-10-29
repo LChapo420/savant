@@ -10,6 +10,7 @@
  */
 const db = require('../config/db');
 const consent = require('../routes/consent');
+const uploadRetention = require('./upload-retention');
 const { isAdmin } = require('../middleware/auth');
 
 function enabled() {
@@ -34,6 +35,8 @@ function deleteAccount(user) {
     if (n) removed[name] = n;
   }
   for (const u of db.find('users', (x) => x.referred_by === id)) db.update('users', u.id, { referred_by: null });
+  const files = uploadRetention.removeForUser(id);
+  if (files) removed.spanish_upload_files = files;
   removed.users = db.remove('users', (u) => u.id === id);
   return removed;
 }

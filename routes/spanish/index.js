@@ -17,8 +17,9 @@ const acts = require('../../services/spanish/ai-activities');
 const ai = require('../../services/ai');
 
 const router = express.Router();
-const UPLOAD_DIR = path.join(__dirname, '..', '..', 'data', 'spanish-uploads');
-require('../../services/upload-retention').schedule(UPLOAD_DIR);
+const uploadRetention = require('../../services/upload-retention');
+const UPLOAD_DIR = uploadRetention.UPLOAD_DIR;
+uploadRetention.schedule(UPLOAD_DIR);
 
 const labOn = () => process.env.NODE_ENV !== 'production' || process.env.SPANISH_LAB === 'on';
 const esPath = require('../../services/spanish/path');
@@ -120,7 +121,7 @@ router.post('/asr', limit('es-asr', 120, 10 * 60 * 1000), audioBody, async (req,
 router.post('/upload', limit('es-upload', 30, 10 * 60 * 1000), audioBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return bad(res, 'Send the file as the request body.');
   const ext = String(req.query.ext || 'bin').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5) || 'bin';
-  const name = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}.${ext}`;
+  const name = uploadRetention.nameFor(uid(req), ext, crypto.randomBytes(6).toString('hex'));
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
   fs.writeFileSync(path.join(UPLOAD_DIR, name), req.body);
   let transcript = null; let note = null;
