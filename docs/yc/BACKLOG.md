@@ -82,7 +82,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 0d-b. **Tutor sees the screen, leftovers (from 0d).** (1) The server-side "what should be on the screen" (current item and its answer key, never in method mode): not built; the snapshot is client-side only. (2) No slot in `config/model-lineup.json` declares `vision`, so the picture path (`services/tutor-vision.js`) returns null and the tutor asks the learner to describe it; register a learner-class vision slot when one exists (owner decision, no paid spend). (3) The client captures only the first `<canvas>`; chess/piano pages may need a per-page capture hook. (4) Look at the dock toggle at 375 px in a signed-in real browser. (5) Add `/timed`, final and study-test paths to `METHOD_ONLY` once those pages exist (shared with 0c (c)).
 
-0a. **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
+0a. **[claimed 2026-10-29T20:25Z]** **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
    - **(b) DONE as a first slice, see Done.** Remaining: the participant page that runs a sitting (item 0a(c)), the owner sealing it (below), and a real-network run on the owner's machine.
      `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
      draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening). Pre-test day 0,
