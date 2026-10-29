@@ -252,6 +252,6 @@ function mine(userId, now = Date.now()) {
 }
 
 module.exports = {
-  ARMS, TESTS, PHASES, DAYS, DAILY_MINUTES, shuffleFrom, nextAssignment, cleanJoin, getEntry, join, leave, checkin, recordTest, corrected,
+  ARMS, TESTS, PHASES, DAYS, DAILY_MINUTES, windowOf, isoDay, shuffleFrom, nextAssignment, cleanJoin, getEntry, join, leave, checkin, recordTest, corrected,
   tCrit, summarize, diffCI, minSamplePerArm, report, toCsv, csvCell, mine,
 };

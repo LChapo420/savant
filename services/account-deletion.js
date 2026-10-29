@@ -37,6 +37,7 @@ function deleteAccount(user) {
   for (const u of db.find('users', (x) => x.referred_by === id)) db.update('users', u.id, { referred_by: null });
   const files = uploadRetention.removeForUser(id);
   if (files) removed.spanish_upload_files = files;
+  require('./spanish-study-tests').removeForUser(id);
   removed.users = db.remove('users', (u) => u.id === id);
   return removed;
 }
