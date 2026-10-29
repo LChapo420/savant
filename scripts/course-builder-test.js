@@ -68,6 +68,9 @@ function mockLlm(mode = 'good') {
   check('three or more passages', ps.length >= 3, ps.length);
   check('each passage within the cap and ids run p1..', ps.every((p, i) => p.id === `p${i + 1}` && p.text.length <= 2600), ps.map((p) => p.text.length));
   check('offsets point at the passage in the text', ps.every((p) => TEXT.slice(p.start, p.start + 30) === p.text.slice(0, 30)));
+  const messy = `TITLE\n\n\n${'A line of a list\n  indented item\n'.repeat(30)}\n\n\n\n${para(S2)}\n   \n\n${para(S3)}`;
+  const mp = cb.chunk(messy);
+  check('offsets are exact even with odd blank lines: each passage spans its own text in the original', mp.every((p) => messy.slice(p.start, p.end).replace(/\s+/g, ' ') === p.text.replace(/\s+/g, ' ')), mp.map((p) => [p.start, p.end]));
   const long = cb.chunk('Word one. '.repeat(1000));
   check('one huge paragraph is cut', long.length > 3 && long.every((p) => p.text.length <= 2500), long.length);
 

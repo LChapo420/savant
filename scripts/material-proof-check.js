@@ -23,11 +23,16 @@ const fs = require('fs');
 const path = require('path');
 const nvidia = require('../services/providers/nvidia');
 const { xkiro } = require('../services/providers/xkiro');
+const { standardCompute } = require('../services/providers/standard-compute');
 const { rng } = require('../services/material-path');
+const { chunk } = require('../services/course-builder');
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const JUDGE = 'qwen/qwen3.8-max:free';
-const CHECK_A = 'deepseek-ai/deepseek-v4.1-flash';
+// Checker A runs DeepSeek V4.1 Flash on NVIDIA (free), or, with PROOF_CHECK_A=sc, the same model on Standard Compute
+// (paid, inside services/standard-compute-ledger.js) when the free tier keeps timing out.
+const A_ON_SC = process.env.PROOF_CHECK_A === 'sc';
+const CHECK_A = A_ON_SC ? 'deepseek/deepseek-v4.1-flash-1017 (Standard Compute)' : 'deepseek-ai/deepseek-v4.1-flash';
 const CHECK_B = 'mistralai/mistral-large-4-1t-a52b';
 const JUDGE_CHARS = 40000;
 const SKILL_CHARS = 7000;
@@ -60,9 +65,9 @@ const ITEM_SCHEMA = {
 
 function sourceView(text, course) {
   if (text.length <= JUDGE_CHARS) return { view: text, note: 'whole text' };
-  const ps = course.passages || [];
+  const ps = chunk(text); // the same passages the builder cut, from the text itself (not from stored offsets)
   const per = Math.floor(JUDGE_CHARS / Math.max(1, ps.length));
-  const view = ps.map((p) => `[${p.id}] ${text.slice(p.start, p.end).slice(0, per)}`).join('\n');
+  const view = ps.map((p) => `[${p.id}] ${p.text.slice(0, per)}`).join('\n');
   return { view, note: `the opening ${per} characters of each of ${ps.length} passages (${view.length} of ${text.length} characters)` };
 }
 
@@ -126,7 +131,9 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
     + ' List each problem sentence in lesson_problems.';
   const user = `PASSAGES:\n${passagesText}\n\nLESSON:\n${lesson.paragraphs.join('\n')}${lesson.key_points && lesson.key_points.length ? `\nKey points: ${lesson.key_points.join(' | ')}` : ''}\n\nITEMS:\n${items.map((q, i) => describe(q, i + 1)).join('\n')}`;
   const call = checker === 'A'
-    ? () => nvidia.structured({ models: [CHECK_A], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 })
+    ? () => (A_ON_SC
+      ? standardCompute.structured({ task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 })
+      : nvidia.structured({ models: [CHECK_A], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 }))
     : () => nvidia.structured({ models: [CHECK_B], role: 'fast', task: 'material_proof_check', system, user, schema: ITEM_SCHEMA, schemaName: 'item_check', maxTokens: 3000, timeoutMs: 240000 });
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
@@ -165,8 +172,9 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
     const sample = course.skills.length <= nSkills ? course.skills.slice()
       : course.skills.map((s) => ({ s, k: rand() })).sort((a, b) => a.k - b.k).slice(0, nSkills).map((x) => x.s).sort((a, b) => a.level - b.level);
     const rows = [];
+    const passageText = new Map(chunk(text).map((p) => [p.id, p.text]));
     for (const skill of sample) {
-      const passagesText = skill.passage_ids.map((id) => { const p = course.passages.find((x) => x.id === id); return `[${id}]\n${text.slice(p.start, p.end)}`; }).join('\n\n').slice(0, SKILL_CHARS);
+      const passagesText = skill.passage_ids.map((id) => `[${id}]\n${passageText.get(id) || ''}`).join('\n\n').slice(0, SKILL_CHARS);
       // Genuine items, plus planted copies of a share of them, shuffled together.
       let items = skill.questions.map((q) => ({ ...q, planted: false }));
       const toPlant = items.filter(() => rand() < share);
@@ -181,7 +189,7 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
       const row = {
         skill: skill.id, title: skill.title, source: skill.source || 'material', lesson_planted: plantedLesson, planted_sentence: pl.planted_sentence,
         lesson_a: a.error ? null : a.lesson_ok, lesson_b: b.error ? null : b.lesson_ok, lesson_problems_a: a.lesson_problems, lesson_problems_b: b.lesson_problems,
-        error_a: a.error || null, error_b: b.error || null, model_a: a.model, model_b: b.model,
+        error_a: a.error || null, error_b: b.error || null, model_a: a.model, model_b: b.model, usage_a: a.usage || null,
         items: items.map((q, i) => ({ id: q.id, planted: q.planted, tier: q.tier, a: verdict(a, i), b: verdict(b, i),
           problem_a: ((a.items || []).find((x) => Number(x.n) === i + 1) || {}).problem || null,
           problem_b: ((b.items || []).find((x) => Number(x.n) === i + 1) || {}).problem || null,
@@ -191,6 +199,7 @@ async function checkSkill(checker, skill, passagesText, items, lesson) {
       const g = row.items.filter((x) => !x.planted); const p = row.items.filter((x) => x.planted);
       console.log(`  ${skill.id}: genuine ok A ${g.filter((x) => x.a).length}/${g.length} B ${g.filter((x) => x.b).length}/${g.length}; planted caught A ${p.filter((x) => x.a === false).length}/${p.length} B ${p.filter((x) => x.b === false).length}/${p.length}; lesson ${plantedLesson ? 'PLANTED' : 'genuine'} A ${row.lesson_a} B ${row.lesson_b}${a.error ? ` [A error ${a.error}]` : ''}${b.error ? ` [B error ${b.error}]` : ''}`);
     }
+    result.paid_usd_checker_a = rows.reduce((n, r) => n + ((r.usage_a && r.usage_a.cost_usd) || 0), 0);
     result.sampled_skills = sample.length;
     result.total_skills = course.skills.length;
     result.rows = rows;

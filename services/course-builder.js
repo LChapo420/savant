@@ -78,34 +78,42 @@ function splitLong(par) {
   return out;
 }
 
-/** Cut the text into passages of about 1,200 to 2,400 characters at paragraph breaks. [{id, start, end, text}] */
+/**
+ * Cut the text into passages of about 1,200 to 2,400 characters at paragraph breaks. [{id, start, end, text}]
+ * start and end are exact offsets into the stored text (the passage runs from its first piece to its last); the
+ * passage text joins its pieces with blank lines, so it can differ from the slice only in the whitespace between them.
+ */
 function chunk(text) {
-  const pieces = [];
+  const src = String(text);
+  const pieces = []; // { text, start, end }
+  const sep = /\n{2,}/g;
   let at = 0;
-  for (const par of String(text).split(/\n{2,}/)) {
-    const start = String(text).indexOf(par, at);
-    if (start >= 0) at = start + par.length;
-    if (!par.trim()) continue;
-    for (const part of splitLong(par.trim())) pieces.push(part);
+  const addParagraph = (from, to) => {
+    const par = src.slice(from, to);
+    let local = 0;
+    for (const part of splitLong(par.trim())) {
+      const i = par.indexOf(part, local);
+      const start = from + (i >= 0 ? i : local);
+      pieces.push({ text: part, start, end: start + part.length });
+      local = (i >= 0 ? i : local) + part.length;
+    }
+  };
+  for (let m = sep.exec(src); m; m = sep.exec(src)) {
+    if (src.slice(at, m.index).trim()) addParagraph(at, m.index);
+    at = m.index + m[0].length;
   }
+  if (src.slice(at).trim()) addParagraph(at, src.length);
   const passages = [];
-  let cur = '';
-  const flush = () => { if (cur.trim()) passages.push(cur.trim()); cur = ''; };
+  let cur = null;
+  const flush = () => { if (cur) passages.push(cur); cur = null; };
   for (const p of pieces) {
-    if (cur && cur.length + p.length + 2 > PASSAGE_MAX) flush();
-    cur += (cur ? '\n\n' : '') + p;
-    if (cur.length >= PASSAGE_MIN) flush();
+    if (cur && cur.text.length + p.text.length + 2 > PASSAGE_MAX) flush();
+    if (!cur) cur = { text: p.text, start: p.start, end: p.end };
+    else { cur.text += `\n\n${p.text}`; cur.end = p.end; }
+    if (cur.text.length >= PASSAGE_MIN) flush();
   }
   flush();
-  // Offsets into the stored text, so a pointer can be shown beside the original.
-  let cursor = 0;
-  return passages.map((t, i) => {
-    const head = t.slice(0, 40);
-    const start = String(text).indexOf(head, cursor);
-    const s = start >= 0 ? start : cursor;
-    cursor = s + Math.min(t.length, 40);
-    return { id: `p${i + 1}`, start: s, end: s + t.length, text: t };
-  });
+  return passages.map((p, i) => ({ id: `p${i + 1}`, start: p.start, end: p.end, text: p.text }));
 }
 
 // ── prompts and schemas ─────────────────────────────────────────────────────────
