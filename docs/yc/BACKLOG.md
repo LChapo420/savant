@@ -50,7 +50,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 0-fix1. **DONE, see Done.** (Spanish path: finishing a level opens the next one.)
 0-fix2. **DONE, see Done.** (Hearts removed from the Spanish path.)
    **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
-0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
+0b. **[OWNED BY A LOCAL SESSION from 2026-10-29 17:30 UTC, branch own-material-paths: cloud runs SKIP every 0b slice until this note is removed]** **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
    it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
    remediation of the misunderstanding behind wrong answers, interleaving, and spaced review timed to the
@@ -98,7 +98,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    owner decides whether to use the wait-list arm; (c) look at `/act-study` and `/act-study-admin` at 375 px in a
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
-5b. **Show the funnel on the admin metrics page** (`public/js/admin.js` `renderMetrics`): a funnel table and a `table=funnel` CSV button. Reason: item 5 added the numbers to the CLI and CSV endpoint only. Keep the existing CSS variables.
+5b. **DONE, see Done.** (Funnel on the admin metrics page.)
 6. **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
    available in the weakest sections and lay out a fixed number of sessions that fits the weeks left, with
    review timed to peak at the test date. Reuse placement, mastery and the retention scheduler.
@@ -109,10 +109,9 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 9. **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
    no levels.
 10. **Invite a friend: DONE, see Done.** (Leftover 10b below.)
-10b. **Show invites on the admin metrics page** (`renderMetrics` in `public/js/admin.js`): `funnel.referrals` is in the JSON, CSV and CLI only. Reason: same gap as 5b; do both in one run.
-11. **Interview prep, deepened.** For each of the 40 questions in `docs/yc/INTERVIEW.md`, a short answer built
-    only from facts in the repo and `docs/yc/`, plus the one number or demo moment that backs it. Mark what
-    the founder must fill in from his own experience.
+10b. **DONE with 5b, see Done.**
+11. **Interview prep, deepened: DONE, see Done.** (Leftover 11b below.)
+11b. **Fill the cards** [local only]: the owner fills every `YOU FILL IN` line in `docs/yc/INTERVIEW-CARDS.md` (real user counts, quotes, the Spanish result, YC age policy) and rehearses the 30-second answers aloud. Reason: those facts exist only with the founder, and none may be invented.
 12. **Demo script: DONE, see Done.** (Leftover 12b below.)
 12b. **Record the demo** [local only]: the owner records the 60-second and 3-minute cuts from `docs/yc/DEMO-SCRIPT.md` on a seeded demo account with live model keys, then checks every click at 375 px; fix the script where the real screens differ. Reason: a cloud run has no signed-in session or `data/`, so the clicks were checked against the code, not the screen.
 13. [slices DONE: gap 4 adult deletion, gap 3 vendor list, gap 8 Spanish upload deletion, gap 5 written security programme and retention schedule, see Done; rest needs the owner (gaps 1, 2, 6, 7, 9, 10) or is open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
@@ -137,6 +136,10 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-29: **Interview cards** (item 11; commit in this push). New `docs/yc/INTERVIEW-CARDS.md`: all 40 questions plus the bonus, each with a short answer, the one number or demo moment that backs it, and a `YOU FILL IN` line for what only the founder can supply (user counts, quotes, the Spanish result, YC age policy, Edit Simple lessons). Repo numbers (16 grades, 9,807 levels, 84 calibration points, 187 consent checks, $24 stop / $11.20) were re-run against the code. Checked: new `scripts/interview-cards-test.js` (41 cards complete, every named file exists, numbers match the code, no "raises scores" / "COPPA compliant" claims), added to `scripts/test-steps.json`; full `npm test` passed (one run of `self-test.js` failed once and passed on re-run alone and in the full suite; not reproduced).
+
+- 2026-10-29: **Funnel and invites on the admin metrics page** (items 5b and 10b; commit in this push). `renderMetrics` in `public/js/admin.js` now shows the activation funnel table (users, out of, rate, share of all sign-ups, minutes per active day), an Invites block (invite sign-ups, how many answered a first question, inviters) and a "Funnel and invites" CSV button (`table=funnel`). Existing CSS variables only. Checked: two new checks in `scripts/real-user-metrics-test.js` (page wiring; funnel CSV download through the admin route), full `npm test` passed. Not looked at in a browser (a cloud run has no signed-in session).
 
 - 2026-10-29: **Privacy gap 5, written security programme and retention schedule** (item 13 fourth slice; commit in this push). `docs/SECURITY-PROGRAMME.md` (what is in place, what is not, incident steps, review log) and `docs/RETENTION-SCHEDULE.md` (every kind of stored data, how long, what deletes it, where in code), written only from the code; owner decisions are `OWNER:` lines (programme owner, review cadence, inactive-account period, backup schedule, how to take the app offline). Checked: new `scripts/security-docs-test.js` (11 checks: cookie flags, headers, bcrypt, rate limit, 14/30/7-day figures against code and `public/privacy.html`, every named file exists, no certification claims) added to `npm test`; full `npm test` passed (All steps passed). The owner still must fill the OWNER lines; no lawyer has read either document. Remaining: backups of `data/` have no schedule.
 

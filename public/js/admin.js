@@ -337,6 +337,7 @@ App.mount(async () => {
     const csv = (table) => `/api/admin/metrics.csv?table=${table}&days=${days}`;
     const stat = (value, label) => `<div class="card card-tight stat-block"><span class="value">${value}</span><span class="label">${label}</span></div>`;
     const a = m.accounts;
+    const f = m.funnel;
     const maxActive = Math.max(1, ...m.daily.map((d) => d.active_learners));
 
     root.innerHTML = `
@@ -371,6 +372,27 @@ App.mount(async () => {
         ${stat(usd(l30.ai_cost_per_active_usd_estimate), 'AI cost each <span class="tiny muted">(estimate)</span>')}
         ${stat(l30.ai_calls, 'AI calls for real users')}
       </div>
+
+      <h2 class="section-title">${window.icon('layers')}Activation funnel (real users)</h2>
+      <div class="card">
+        <div class="table-scroll"><table class="data"><thead><tr><th>Step</th><th>Users</th><th>Out of</th><th>Rate</th><th>Of all sign-ups</th></tr></thead><tbody>
+          ${f.steps.map((x) => `<tr>
+            <td class="small">${esc(x.label)}</td>
+            <td class="small">${x.users}</td>
+            <td class="small">${x.of}</td>
+            <td class="small">${rate({ rate: x.rate })}</td>
+            <td class="small">${rate({ rate: x.of_signed_up })}</td></tr>`).join('')}
+        </tbody></table></div>
+        <p class="tiny muted" style="margin:10px 0 0">Per active day: ${num(f.minutes_per_active_day.measured_study, ' min')} measured study, ${num(f.minutes_per_active_day.sitting_upper, ' min')} sitting (upper), over ${f.active_days_total} active days.</p>
+      </div>
+
+      <h2 class="section-title">${window.icon('user')}Invites</h2>
+      <div class="grid grid-3">
+        ${stat(f.referrals.signed_up, 'Real sign-ups from an invite link')}
+        ${stat(f.referrals.started_learning, 'Of those, answered a first question')}
+        ${stat(f.referrals.inviters, 'Learners who brought someone')}
+      </div>
+      <p class="tiny muted" style="margin:6px 0 0">${rate({ rate: f.referrals.share_of_signups })} of all real sign-ups came from an invite.</p>
 
       <div class="row-between" style="margin-top:22px; flex-wrap:wrap; gap:8px">
         <h2 class="section-title" style="margin:0">${window.icon('chart')}Sign-ups and active learners per day</h2>
@@ -427,6 +449,7 @@ App.mount(async () => {
         <a class="btn btn-sm" href="${csv('daily')}" download>Per day</a>
         <a class="btn btn-sm" href="${csv('cohorts')}" download>Return cohorts</a>
         <a class="btn btn-sm" href="${csv('monthly')}" download>Per month</a>
+        <a class="btn btn-sm" href="${csv('funnel')}" download>Funnel and invites</a>
         <a class="btn btn-sm" href="${csv('excluded')}" download>Excluded accounts</a>
       </div>
 
