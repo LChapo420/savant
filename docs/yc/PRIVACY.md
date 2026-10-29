@@ -201,8 +201,7 @@ https://studentprivacy.ed.gov. Savant has no school accounts today: "school-mana
    (for example: no training ever, no recording uploads, no social features), and write them into the policy.
 3. **The privacy policy is unfinished:** placeholders (section 1.6), LLM Gateway missing from the vendor list,
    and Modelflare listed without saying whose models it resells.
-4. **Adult deletion is off during the beta** (`docs/PRODUCT-DECISIONS.md` line 72), while the policy promises
-   deletion "within 30 days" of a request (`public/privacy.html` line 132). Turn it on, or change the promise.
+4. **Adult deletion: CLOSED in code 2026-10-29.** Profile page "Delete my account" (password plus the word DELETE) calls `POST /api/account/delete` (`services/account-deletion.js`), which removes the user and every learner row at once and keeps no stub. `ACCOUNT_DELETE=off` switches it off (`docs/PRODUCT-DECISIONS.md` said deletion would be off during the beta; the owner may set that). The policy's retention row now says "deleted at once". Not covered: copies in server backups of `data/` (no schedule is written; open item 8).
 5. **No written information security programme and no written retention policy** (both reportedly required by
    the 2025 COPPA amendments; UNVERIFIED). The policy lists security measures that exist (hashed passwords and
    tokens, a strict CSP, rate limits), but there is no document with an owner and a review schedule.

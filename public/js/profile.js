@@ -307,7 +307,35 @@ App.mount(async () => {
     <div class="card">
       <p class="small muted">Everything the app holds on you, as one JSON file: your profile, every session, every answer, and every event.</p>
       <a class="btn btn-sm" href="/api/account/export" download>Download my data</a>
-    </div>`;
+    </div>
+    ${user.under_13 || user.audience === 'kids' || user.is_admin ? '' : `
+    <div class="card" id="delete-card">
+      <p class="small muted">Delete your account and everything tied to it: your profile, answers, essays, uploaded material and invites. This cannot be undone. Download your data first if you want a copy.</p>
+      <form id="delete-form" class="stack" autocomplete="off">
+        <label class="small" for="delete-password">Your password</label>
+        <input class="input" id="delete-password" type="password" autocomplete="current-password" required>
+        <label class="small" for="delete-confirm">Type DELETE to confirm</label>
+        <input class="input" id="delete-confirm" type="text" autocomplete="off" required>
+        <button class="btn btn-sm" type="submit">Delete my account</button>
+      </form>
+    </div>`}`;
+
+  const deleteForm = document.getElementById('delete-form');
+  if (deleteForm) deleteForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = deleteForm.querySelector('button');
+    btn.disabled = true;
+    try {
+      await App.api.post('/api/account/delete', {
+        password: document.getElementById('delete-password').value,
+        confirm: document.getElementById('delete-confirm').value,
+      });
+      window.location.href = '/';
+    } catch (err) {
+      App.toast(err.message, 'error');
+      btn.disabled = false;
+    }
+  });
 
   // ── display and wellbeing ────────────────────────────────────────────────────
   async function savePref(input, patch, done) {

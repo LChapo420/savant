@@ -3,6 +3,7 @@
  * built, the dashboard summary, and the account data they can take with them.
  */
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const baseLessons = require('../config/base-lessons');
@@ -18,6 +19,8 @@ const translate = require('../services/scorecard/translate');
 const summary = require('../services/scorecard/summary');
 const { requireAuth, publicUser } = require('../middleware/auth');
 const { enrollmentView } = require('./catalog');
+const accountDeletion = require('../services/account-deletion');
+const { limit } = require('../utils/rate-limit');
 // The write-ahead (WRITE_AHEAD): opening the dashboard writes ahead of where the learner is.
 const writeAhead = require('../services/write-ahead');
 
@@ -294,6 +297,21 @@ router.get('/account/export', requireAuth, (req, res) => {
     age_check: req.user.age_check || null,
     ...Object.fromEntries(EXPORT_MORE.map((name) => [name, db.find(name, (r) => r && r.user_id === userId)])),
   });
+});
+
+/**
+ * Delete your own account and everything tied to it (services/account-deletion.js). Asks for the
+ * password and the word DELETE, so a stolen session or a stray click cannot do it.
+ */
+router.post('/account/delete', requireAuth, limit('account-delete', 10, 60 * 60 * 1000), async (req, res) => {
+  const why = accountDeletion.refusal(req.user);
+  if (why) return res.status(403).json({ error: why });
+  if (String((req.body && req.body.confirm) || '').trim() !== 'DELETE') return res.status(400).json({ error: 'Type DELETE to confirm.' });
+  const ok = await bcrypt.compare(String((req.body && req.body.password) || ''), req.user.password_hash || '');
+  if (!ok) return res.status(401).json({ error: 'That password is not right.' });
+  accountDeletion.deleteAccount(req.user);
+  const done = () => { res.clearCookie('polymath.sid'); res.json({ ok: true }); };
+  if (req.session && req.session.destroy) req.session.destroy(done); else done();
 });
 
 /**

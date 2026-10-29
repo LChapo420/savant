@@ -1045,6 +1045,8 @@ module.exports = {
   requestConsent,
   sweep,
   deleteChild,
+  collectionNames,
+  SHARED,
   minimumAge,
   CONSENT_AGE,
   DEFAULT_CONSENT_AGE,
