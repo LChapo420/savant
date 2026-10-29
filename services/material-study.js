@@ -55,9 +55,23 @@ function gradeShort(given, key) {
   return g.split(' ').length <= k.split(' ').length * 3 + 2 && words.every((w) => gw.has(w));
 }
 
+/**
+ * The certain, free checks from services/typed-grading.js (preJudge): a number written in words, a contraction,
+ * an answer that talks to the grader. They only ever settle what is certain; no model is called and nothing is spent.
+ */
+function certain(q, answer) {
+  try {
+    // eslint-disable-next-line global-require
+    return require('./typed-grading').preJudge({ prompt: q.prompt, answer: q.answer }, answer);
+  } catch { return null; }
+}
+
 function isCorrect(q, answer) {
   if (q.type === 'multiple_choice') return Number.isInteger(answer) && answer === q.answer_index;
-  return typeof answer === 'string' && gradeShort(answer, q.answer);
+  if (typeof answer !== 'string') return false;
+  const v = certain(q, answer);
+  if (v && v.injection) return false;
+  return gradeShort(answer, q.answer) || !!(v && v.verdict === 'correct');
 }
 
 function correctText(q) { return q.type === 'multiple_choice' ? q.choices[q.answer_index] : q.answer; }
@@ -268,4 +282,4 @@ function dueSummary(userId, now = Date.now()) {
   return { total: items.reduce((n, i) => n + i.due_count, 0), materials: items };
 }
 
-module.exports = { dueSummary, PASS, QUIZ_SIZE, INTERVALS_DAYS, gradeShort, state, lesson, practice, startQuiz, submit, removeForMaterial };
+module.exports = { dueSummary, PASS, QUIZ_SIZE, INTERVALS_DAYS, gradeShort, isCorrect, state, lesson, practice, startQuiz, submit, removeForMaterial };
