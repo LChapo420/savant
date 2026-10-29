@@ -13,3 +13,10 @@
 .tdock-form button[aria-pressed="true"], .tdock-head button[aria-pressed="true"] { background: var(--subj-wash, #e6edfb); border-color: var(--subj, #2b5fd9); }
 .tdock-form button.go { background: var(--action, #2b5fd9); color: var(--on-action, #fff); border-color: var(--action, #2b5fd9); }
 @media (max-width: 480px) { .tdock-panel { right: 8px; left: 8px; width: auto; } }
+.tdock-modes { display: inline-flex; gap: 0; }
+.tdock-modes button { border-radius: 0; min-width: 56px; }
+.tdock-modes button:first-child { border-radius: 8px 0 0 8px; }
+.tdock-modes button:last-child { border-radius: 0 8px 8px 0; margin-left: -1px; }
+.tdock-panel[data-mode="voice"] .tdock-form input { display: none; }
+.tdock-panel[data-mode="voice"] .tdock-form .mic { flex: 1 1 auto; min-height: 48px; }
+.tdock-panel[data-mode="text"] .tdock-form .mic { display: none; }

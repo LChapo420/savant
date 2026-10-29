@@ -20,6 +20,12 @@
   css.href = '/css/tutor-dock.css';
   document.head.appendChild(css);
 
+  const Snap = window.TutorSnapshot;
+  const MODE_KEY = 'savant.tutor.mode';
+  const storedMode = () => { try { const m = localStorage.getItem(MODE_KEY); return m === 'voice' || m === 'text' ? m : null; } catch { return null; } };
+  const keepMode = (m) => { try { localStorage.setItem(MODE_KEY, m); } catch { /* private mode */ } };
+
+  // What the tutor sees: this page only, as structured text (js/tutor-snapshot.js); a picture only when the server asks for one.
   function pageInfo() {
     const h = document.querySelector('main h1, h1');
     const main = document.querySelector('main') || document.body;
@@ -34,10 +40,23 @@
     if (fb && fb.innerText) info.feedback = fb.innerText.slice(0, 200);
     // A page can describe itself better than the generic reading (a game, a board, a passage on screen).
     try { if (typeof window.tutorPageInfo === 'function') Object.assign(info, window.tutorPageInfo() || {}); } catch { /* keep the generic reading */ }
+    try { info.snapshot = Snap ? Snap.build(main) : null; } catch { /* the generic reading still goes */ }
     return info;
   }
 
+  function loadSnapshotScript() {
+    if (window.TutorSnapshot) return Promise.resolve();
+    return new Promise((resolve) => {
+      const sc = document.createElement('script');
+      sc.src = '/js/tutor-snapshot.js';
+      sc.onload = resolve;
+      sc.onerror = resolve;
+      document.head.appendChild(sc);
+    });
+  }
+
   async function start() {
+    await loadSnapshotScript();
     let status;
     try {
       const r = await fetch(`/api/tutor/dock?path=${encodeURIComponent(location.pathname)}`, { credentials: 'same-origin' });
@@ -45,6 +64,9 @@
       status = await r.json();
     } catch { return; }
     if (status.mode === 'off') return;
+    const canTalk = !!Recog && canSpeak;
+    // The default mode is the one used for the last message: the server's memory, the local copy for an instant paint.
+    let inputMode = canTalk ? (storedMode() || (status.input_mode === 'voice' ? 'voice' : 'text')) : 'text';
     const lang = status.speech_lang === 'es' ? 'es-ES' : (document.documentElement.lang || 'en-US');
 
     const btn = document.createElement('button');
@@ -56,12 +78,13 @@
     panel.className = 'tdock-panel';
     panel.setAttribute('aria-label', 'Your tutor');
     panel.innerHTML = `
-      <div class="tdock-head"><span>Your tutor</span>${canSpeak ? '<button type="button" class="speak" aria-pressed="false" title="Read replies aloud">Voice</button>' : ''}</div>
+      <div class="tdock-head"><span>Your tutor</span>${canTalk ? '<span class="tdock-modes" role="group" aria-label="How to talk to your tutor"><button type="button" class="m-text" aria-pressed="true">Type</button><button type="button" class="m-voice" aria-pressed="false">Talk</button></span>' : (canSpeak ? '<button type="button" class="speak" aria-pressed="false" title="Read replies aloud">Voice</button>' : '')}</div>
+      <div class="tdock-note tdock-sees">The tutor can see this page.</div>
       ${status.mode === 'method' ? '<div class="tdock-note">Hints about method only on this page, so your result is honest.</div>' : ''}
       <div class="tdock-log" aria-live="polite"></div>
       <form class="tdock-form">
         <input type="text" maxlength="600" placeholder="Ask anything" aria-label="Your message">
-        ${Recog ? '<button type="button" class="mic" aria-pressed="false" title="Hold to talk" aria-label="Push to talk">Talk</button>' : ''}
+        ${Recog ? '<button type="button" class="mic" aria-pressed="false" title="Hold to talk" aria-label="Push to talk">Hold to talk</button>' : ''}
         <button class="go" type="submit">Send</button>
       </form>`;
     document.body.append(panel, btn);
@@ -70,6 +93,8 @@
     const input = panel.querySelector('input');
     const speakBtn = panel.querySelector('.speak');
     const mic = panel.querySelector('.mic');
+    const mText = panel.querySelector('.m-text');
+    const mVoice = panel.querySelector('.m-voice');
     const messages = [];
     let speakOn = false;
     let busy = false;
@@ -83,6 +108,17 @@
       return d;
     }
 
+    function setMode(m, remember) {
+      inputMode = m;
+      panel.dataset.mode = m;
+      speakOn = m === 'voice' || (!canTalk && speakOn);
+      if (mText) { mText.setAttribute('aria-pressed', String(m === 'text')); mVoice.setAttribute('aria-pressed', String(m === 'voice')); }
+      if (m === 'text' && canSpeak) speechSynthesis.cancel();
+      keepMode(m);
+      if (remember) fetch('/api/tutor/dock/mode', { method: 'PUT', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ mode: m }) }).catch(() => {});
+    }
+    setMode(inputMode, false);
+
     function say(text) {
       if (!speakOn || !canSpeak || !text) return;
       speechSynthesis.cancel();
@@ -91,16 +127,18 @@
       speechSynthesis.speak(u);
     }
 
-    async function ask(text) {
+    async function ask(text, via) {
       if (busy || !text) return;
       busy = true;
+      // A message typed or spoken sets the mode for next time; the transcript is always shown.
+      if (canTalk && via && via !== inputMode) setMode(via, false);
       messages.push({ role: 'user', content: text });
       line('me', text);
       const pending = line('bot', '…');
       try {
         const r = await fetch('/api/tutor/dock', {
           method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ messages, page: pageInfo() }),
+          body: JSON.stringify({ messages, page: pageInfo(), input_mode: via || inputMode }),
         });
         const out = await r.json();
         if (!r.ok) throw new Error(out.error || 'That did not go through.');
@@ -118,7 +156,8 @@
       if (open) input.focus(); else if (canSpeak) speechSynthesis.cancel();
     });
     panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { panel.dataset.open = 'false'; btn.setAttribute('aria-expanded', 'false'); btn.focus(); } });
-    panel.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const t = input.value.trim(); input.value = ''; ask(t); });
+    panel.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const t = input.value.trim(); input.value = ''; ask(t, 'text'); });
+    if (mText) { mText.addEventListener('click', () => setMode('text', true)); mVoice.addEventListener('click', () => setMode('voice', true)); }
     if (speakBtn) speakBtn.addEventListener('click', () => { speakOn = !speakOn; speakBtn.setAttribute('aria-pressed', String(speakOn)); if (!speakOn) speechSynthesis.cancel(); });
 
     if (mic) {
@@ -129,7 +168,7 @@
         rec = new Recog();
         rec.lang = lang;
         rec.interimResults = false;
-        rec.onresult = (ev) => { const t = ev.results[0][0].transcript; if (t) ask(t.trim()); };
+        rec.onresult = (ev) => { const t = ev.results[0][0].transcript; if (t) ask(t.trim(), 'voice'); };
         rec.onend = () => { rec = null; mic.setAttribute('aria-pressed', 'false'); };
         rec.onerror = () => { rec = null; mic.setAttribute('aria-pressed', 'false'); };
         mic.setAttribute('aria-pressed', 'true');

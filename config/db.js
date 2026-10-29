@@ -55,6 +55,7 @@ const COLLECTIONS = [
   'skill_records',           // chess, piano, basketball: one per learner per exit-battery metric, every sitting (cold/warm, day, source, confirmed) and practice set (services/skill-record.js)
   'study_sessions',          // a learner's "Start session" to "End session" span: local day, active time, pauses (services/study-sessions.js)
   'learner_goals',           // what a learner wants from a subject or grade: choice + their words, per (track, grade) (services/goals.js)
+  'tutor_modes',             // the tutor dock's voice/text choice per learner: the mode of their last message (services/tutor-mode.js)
   'tutor_memory',            // the one persistent tutor per learner: running summary + last turns (services/tutor.js)
   'enforcers',               // retention enforcers: end of session/day and scheduled ones, tier, window, questions, results (services/enforcers.js)
   'es_path_runs',            // main-path Spanish: one per level played with the Duolingo-style activities, its built level and first answers (services/spanish/path.js)
