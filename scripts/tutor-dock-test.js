@@ -134,6 +134,7 @@ function serve(router) {
   const qm = dock.pageLine({ path: '/session', question: 'Q'.repeat(2000), passage: 'P'.repeat(5000), choices: Array(30).fill('x'.repeat(500)) });
   check('a huge question, passage or choice list is clipped', qm.length < 2200, qm.length);
   check('the session page reports its question to the dock (no answer key)', /window\.tutorPageInfo\s*=/.test(read('public/js/session.js')) && !/tutorPageInfo[\s\S]{0,400}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/session.js')));
+  check('the game lab reports the open game to the dock (no answer key)', /window\.tutorPageInfo\s*=/.test(read('public/games/lab.js')) && !/tutorPageInfo[\s\S]{0,700}(answer_key|correct_answer|\.answer\b)/.test(read('public/games/lab.js')));
   for (const f of ['public/js/base-lesson.js', 'public/js/skill-practice.js']) {
     const src = read(f);
     check(`${f} reports what is on screen to the dock (no answer key)`, /window\.tutorPageInfo\s*=/.test(src) && !/tutorPageInfo[\s\S]{0,700}(answer_key|correct_answer|\.answer\b)/.test(src));

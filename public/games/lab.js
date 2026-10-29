@@ -4,6 +4,12 @@ App.mount(async () => {
   const host = document.getElementById('lab-games');
   const frame = document.getElementById('lab-frame');
   let current = null;
+  // What the tutor dock may read about this page (js/tutor-dock.js): the game open in the lab, its rule and the last result. No answers.
+  window.tutorPageInfo = () => {
+    if (!current) return { question: 'Game lab: no game open', passage: `${list.games.filter((g) => g.status === 'ready').length} rebuilt games to test` };
+    const last = document.getElementById('lab-telemetry').textContent;
+    return { question: `Game lab: ${current.name}`, passage: [current.mechanic, last && `Last result: ${last}`].filter(Boolean).join(' ') };
+  };
   function render(query = '') {
     const engines = list.games.filter((game) => game.name.toLowerCase().includes(query.toLowerCase()));
     host.replaceChildren();
