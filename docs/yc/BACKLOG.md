@@ -98,7 +98,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    owner decides whether to use the wait-list arm; (c) look at `/act-study` and `/act-study-admin` at 375 px in a
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
-5. **Activation funnel numbers.** Extend the real-user metrics (`scripts/real-user-metrics*.js`) with the
+5. **[claimed 2026-10-29T12:00Z] Activation funnel numbers.** Extend the real-user metrics (`scripts/real-user-metrics*.js`) with the
    funnel YC asks about: signed up, finished onboarding, first lesson, came back day 2, came back week 1,
    minutes per active day. Excludes test and demo accounts. Done when one command prints it, with tests.
 6. **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
