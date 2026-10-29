@@ -183,9 +183,33 @@ function nextBlock(blocks, asked, target) {
   return best;
 }
 
-/** Where the walk aims before anything is answered: what the learner said, or a third of the way in. */
+/**
+ * Where the walk aims before anything is answered: the easiest question of the grade the learner picked, or the
+ * very start of the subject. It used to aim a third of the way in, so a beginner who said "Not sure" opened on
+ * subjunctive or calculus (owner, 2026-10-28: "insanely hard questions"). ADAPTIVE_START=third restores it.
+ */
 function firstTarget(span, startHint) {
-  return Number.isFinite(startHint) ? startHint + 0.5 : span / 3;
+  if (Number.isFinite(startHint)) return startHint + BAND_AT.easy;
+  return process.env.ADAPTIVE_START === 'third' ? span / 3 : 0;
+}
+
+/**
+ * Where the walk aims next: the middle of the belief, but never more than a gallop above the hardest question
+ * answered right so far. The gallop is 1 grade after a right answer, then 2, 4, 8 ... while the right answers
+ * keep coming, and half a grade straight after a miss. A beginner only meets questions just past what they have
+ * shown they know, and one lucky guess no longer throws them to the middle of the subject; a strong learner still
+ * reaches the top of a 57-grade subject in about six right answers. Moving down is never limited.
+ * ADAPTIVE_GALLOP=0 restores the plain median.
+ */
+function nextTarget(answered, post) {
+  const m = median(post);
+  if (process.env.ADAPTIVE_GALLOP === '0') return m;
+  const right = answered.filter((a) => a.correct);
+  if (!right.length) return Math.min(m, 0);
+  let streak = 0;
+  for (let i = answered.length - 1; i >= 0 && answered[i].correct; i--) streak++;
+  const top = Math.max(...right.map((a) => a.pos));
+  return Math.min(m, top + (streak ? 2 ** (streak - 1) : 0.5));
 }
 
 /**
@@ -270,6 +294,6 @@ function recommend(span, post) {
 }
 
 module.exports = {
-  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, done,
+  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done,
   gradeMass, wholePercents, recommend,
 };
