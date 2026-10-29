@@ -44,6 +44,20 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
+   **Overnight order (owner, 2026-10-29 03:30Z, going to sleep: "I need every single thing fully built"). Take these first, in order. 0-fix1 and 0-fix2 are small; do them first. Then the tutor (0c, 0d) is the top feature: the owner said there is no AI to help anywhere on the site.**
+0-fix1. **Spanish path: finishing a level must always open the next one (owner hit it, 2026-10-29).** Repro: Spanish grade `entry`,
+   level 28 is `Game / Quick Game`. `services/spanish/path.js supports('entry', 28)` is false, so `routes/spanish/path.js`
+   GET /level sends the learner to the classic fallback. The owner finished the game, pressed "Next level", and got
+   403 "That level is not open yet." from routes/spanish/path.js line ~44, because enrollment.current_level stayed 28
+   (no session row was written for 28; level_items went to 11). Find which page and route the Quick Game level actually
+   runs on and where its finish is reported; make finishing ANY level type the learner is standing on advance
+   current_level the same way a path run does (respect goal-fit's stepOverDeferred), for every subject that uses that
+   route, not just Spanish. Also make every "Next level" button go to the level the server says is next, never a
+   computed +1. Add a test that walks a Spanish learner through levels 26 to 31 of `entry` (vocabulary, pronunciation,
+   game, story, speaking, lesson) and asserts each "next" opens.
+0-fix2. **Remove lives (hearts) from the Spanish path (owner: "there aren't lives in our app yet").** `public/spanish/js/core/session.js`
+   and any heart counter, "out of hearts" screen or refill UI in public/spanish. Wrong answers keep their feedback and
+   the missed item still comes back at the end of the session. Keep the change minimal; update tests that counted hearts.
    **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
 0b. [claimed 2026-10-29T12:00Z] **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
@@ -95,6 +109,13 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    - Tests with a mocked provider, including the mode memory, the toggle, the snapshot builder, and the
      no-answers rule during tests.
 
+0-goal. **Goal-shaped path for every learner, not just Spanish (owner: "the curriculum being able to be modified perfectly to my goal").**
+   After 0c/0d. Spanish has `services/spanish/goal-fit.js` (profiles: conversation, test, standard; read it and
+   docs/spanish-replica/GOAL-FIT.md). Add: (1) a visible "Your goal" card on each subject's path page that shows the
+   current profile, why, and a one-tap way to change the goal or add a date ("by Oct 31"); (2) a `sprint` profile for
+   goals with a date within 14 days: conversation's rules plus more `type_heard` and `listen_meaning` in each recipe and
+   the review queue first in every session; (3) for non-Spanish subjects, use the goal text to order units by the
+   skills it names, through services/learner-path.js, with a test. Never hide levels for good; they stay open.
 0a. **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
    - **(b) Sealed multi-participant tests.** Create `spanish-study-tests/` (a new module, **never edit `spanish-check/`,
      `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
