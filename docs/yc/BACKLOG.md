@@ -45,7 +45,7 @@ The wedge is **ACT prep**. What moves YC most is real outside users and honest e
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
    **Overnight order (owner, 2026-10-29 03:30Z, going to sleep: "I need every single thing fully built"). Take these first, in order. 0-fix1 and 0-fix2 are small; do them first. Then the tutor (0c, 0d) is the top feature: the owner said there is no AI to help anywhere on the site.**
-0-fix1. **Spanish path: finishing a level must always open the next one (owner hit it, 2026-10-29).** Repro: Spanish grade `entry`,
+0-fix1. [claimed 2026-10-29T13:00Z] **Spanish path: finishing a level must always open the next one (owner hit it, 2026-10-29).** Repro: Spanish grade `entry`,
    level 28 is `Game / Quick Game`. `services/spanish/path.js supports('entry', 28)` is false, so `routes/spanish/path.js`
    GET /level sends the learner to the classic fallback. The owner finished the game, pressed "Next level", and got
    403 "That level is not open yet." from routes/spanish/path.js line ~44, because enrollment.current_level stayed 28
