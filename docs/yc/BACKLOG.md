@@ -50,7 +50,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 0-fix1. **DONE, see Done.** (Spanish path: finishing a level opens the next one.)
 0-fix2. **DONE, see Done.** (Hearts removed from the Spanish path.)
    **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
-0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
+0b. **[OWNED BY A LOCAL SESSION from 2026-10-29 17:30 UTC, branch own-material-paths: cloud runs SKIP every 0b slice until this note is removed]** **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
    it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
    remediation of the misunderstanding behind wrong answers, interleaving, and spaced review timed to the
