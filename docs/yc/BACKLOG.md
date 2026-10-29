@@ -115,8 +115,9 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
     the founder must fill in from his own experience.
 12. **Demo script: DONE, see Done.** (Leftover 12b below.)
 12b. **Record the demo** [local only]: the owner records the 60-second and 3-minute cuts from `docs/yc/DEMO-SCRIPT.md` on a seeded demo account with live model keys, then checks every click at 375 px; fix the script where the real screens differ. Reason: a cloud run has no signed-in session or `data/`, so the clicks were checked against the code, not the screen.
-13. [claimed 2026-10-29T14:35Z: gap 8, Spanish upload deletion schedule] [slices DONE: gap 4 adult deletion, gap 3 vendor list, see Done; rest still open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
+13. [slices DONE: gap 4 adult deletion, gap 3 vendor list, gap 8 Spanish upload deletion, see Done; rest still open] **Privacy gaps** from `docs/yc/PRIVACY.md` that code can close (deletion, export, parental notice, what
     goes to which provider), one gap per run.
+13b. **Tie Spanish uploads to the account** so account deletion removes them at once (`routes/spanish/index.js` `/upload`, `services/account-deletion.js`). Reason: today only the 7-day sweep bounds them.
 14. **ACT Science passages with figures** (item 8): the player and schema for passage sets with a table or
     chart.
 15. **ACT Reading passage sets** (item 9), the player and schema.
@@ -136,6 +137,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-29: **Privacy gap 8, Spanish upload deletion** (item 13 third slice; commit in this push). `POST /api/es/upload` saved files to `data/spanish-uploads` forever and nothing reads them back. `services/upload-retention.js` now deletes them after `UPLOAD_RETENTION_DAYS` (default 7), at start and hourly; `public/privacy.html` retention table says so; `docs/yc/PRIVACY.md` gap 8 updated. Checked: new `scripts/upload-retention-test.js` (13 checks, in `npm test`); full `npm test` passed (84 steps). Still open: backups of `data/`; uploads are not tied to an account, so account deletion cannot find them (new item below).
 
 - 2026-10-29: **Privacy gap 3, vendor list** (item 13 second slice; commit in this push). `public/privacy.html` now names LLM Gateway (speech, listed adult accounts only, from `services/spanish/voice.js`) and says Modelflare writes only the shared placement quizzes. Checked: new `scripts/privacy-vendors-test.js` (9 checks, in `npm test`); full `npm test` passed (83 steps). Still open in gap 3: the `placeholder` spans (operator legal name and address, contact email, response time, hosting and email providers, inactive-account period, review cadence) need the owner's facts. Remaining in item 13: gaps 5 (security programme and retention schedule docs), 8 (recording deletion schedule).
 

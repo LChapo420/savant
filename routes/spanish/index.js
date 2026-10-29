@@ -18,6 +18,7 @@ const ai = require('../../services/ai');
 
 const router = express.Router();
 const UPLOAD_DIR = path.join(__dirname, '..', '..', 'data', 'spanish-uploads');
+require('../../services/upload-retention').schedule(UPLOAD_DIR);
 
 const labOn = () => process.env.NODE_ENV !== 'production' || process.env.SPANISH_LAB === 'on';
 const esPath = require('../../services/spanish/path');
@@ -115,7 +116,7 @@ router.post('/asr', limit('es-asr', 120, 10 * 60 * 1000), audioBody, async (req,
 });
 
 // Project / live-conversation / mission files. Audio is transcribed when the
-// format is one MiMo reads; video is kept for playback only.
+// format is one MiMo reads; video is kept for playback only. Files are deleted after UPLOAD_RETENTION_DAYS (7).
 router.post('/upload', limit('es-upload', 30, 10 * 60 * 1000), audioBody, async (req, res) => {
   if (!Buffer.isBuffer(req.body) || !req.body.length) return bad(res, 'Send the file as the request body.');
   const ext = String(req.query.ext || 'bin').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5) || 'bin';
