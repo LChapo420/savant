@@ -108,7 +108,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    choices, the schema, and a validator. Content is written later by the owner's local pipeline.
 9. **Fix the skill tagging** (item 7): the `act_rhetoric` fallback at `scripts/build-act-grades.js` should tag
    no levels.
-10. **Invite a friend.** A share link with a referral code, counted in the metrics. No incentives that cost
+10. [claimed 2026-10-29T12:00Z] **Invite a friend.** A share link with a referral code, counted in the metrics. No incentives that cost
     money.
 11. **Interview prep, deepened.** For each of the 40 questions in `docs/yc/INTERVIEW.md`, a short answer built
     only from facts in the repo and `docs/yc/`, plus the one number or demo moment that backs it. Mark what
