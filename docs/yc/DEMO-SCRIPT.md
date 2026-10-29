@@ -4,6 +4,8 @@ Written 2026-10-29 for the application video and the interview. Every click belo
 in the code (`scripts/demo-script-test.js` checks the page paths and the quoted labels). Nothing here quotes a
 score gain, a user count or a result: Savant has none yet, and the script says so out loud (see "Say it plainly").
 
+> **Age lines ("I'm 16", "a 16-year-old") are for the YC and speedrun application video and the interview only.** Cut them from any public version (site, social posts, creator kits): the owner's rule is no founder age in public.
+
 ## Before you record
 
 1. Stop the app. Make the demo learner on the machine that holds `data/`:
