@@ -16,6 +16,7 @@
       frame.progress(0);
       const history = [];
       const met = new Set();
+      ES.board.set({ kind: 'conversation', rule: `Talking with ${sc.partnerName} (${sc.setting})`, progress: `${sc.goals.length} goals to reach` });
       let turns = 0; let lastHint = ''; let ended = false; let busy = false;
 
       const wrap = h('div', { class: 'es-convo' });
@@ -42,6 +43,7 @@
         ids.forEach((id) => { if (!met.has(id)) { met.add(id); sfx.play('pair'); } });
         ES.$$('li', goals).forEach((li) => { li.dataset.done = String(met.has(li.dataset.id)); });
         frame.progress(met.size / sc.goals.length);
+        ES.board.set({ progress: `${met.size} of ${sc.goals.length} goals reached` });
       }
 
       // Input: mic or keyboard, plus hint and end.

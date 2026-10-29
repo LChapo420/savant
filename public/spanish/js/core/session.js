@@ -25,8 +25,18 @@
   // What the tutor dock may read about this page (js/tutor-dock.js): the instruction and the text the learner can see.
   // Never the item's data or the solution, and no body text for listening, speaking or exam items (the text would give it away).
   let onScreen = null;
+  // Boards that do not run through this session loop (quick games, stories, talk) describe themselves with ES.board.set():
+  // the level's title, engine and rule plus a progress line, never item text or answers.
+  let board = null;
+  ES.board = {
+    set(info) { board = info && typeof info === 'object' ? { ...board, ...info } : null; },
+  };
   window.tutorPageInfo = () => {
-    if (!onScreen) return {};
+    if (!onScreen) {
+      if (!board) return {};
+      const bits = [`Spanish path, ${board.kind || 'activity'}`, board.title, board.rule, board.progress].filter(Boolean);
+      return { question: bits.join(': ').replace(/\s+/g, ' ').slice(0, 400) };
+    }
     const { kind, header, el, hideBody, done, total, phase } = onScreen;
     const seen = hideBody || !el ? '' : String(el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 600);
     return {

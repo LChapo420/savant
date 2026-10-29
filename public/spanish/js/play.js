@@ -17,6 +17,7 @@
   document.title = `${level.title} · Spanish`;
   const engine = ES.engines[level.engine];
   if (!engine) return fail(`No player for "${level.engine}" yet.`);
+  ES.board.set({ kind: String(level.engine || '').replace(/_/g, ' '), title: level.title });
   try {
     await engine(level, root);
   } catch (err) {

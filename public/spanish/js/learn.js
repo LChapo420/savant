@@ -126,6 +126,7 @@
 
   const engine = ES.engines[level.engine];
   if (!engine) { location.replace(data.classic); return undefined; }
+  ES.board.set({ kind: String(level.engine || '').replace(/_/g, ' '), title: level.title });
   try {
     await engine(level, root);
   } catch (err) {
