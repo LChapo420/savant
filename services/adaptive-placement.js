@@ -294,6 +294,6 @@ function recommend(span, post) {
 }
 
 module.exports = {
-  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done,
+  questionKey, positionOf, BAND_AT, MODES, WHOLE_MINUTES, assumed, posterior, median, quantile, massWithin, blocksFor, nextBlock, firstTarget, nextTarget, done, limits,
   gradeMass, wholePercents, recommend,
 };
