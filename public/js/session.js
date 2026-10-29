@@ -747,8 +747,21 @@ function renderRubricResult(result) {
     });
   }
 
+  // What the tutor dock may read about the question on screen (js/tutor-dock.js calls this; the learner's copy has no answer key).
+  let shownItem = null;
+  window.tutorPageInfo = () => {
+    const it = shownItem;
+    if (!it) return {};
+    return {
+      question: it.prompt || '',
+      passage: it.passage || '',
+      choices: Array.isArray(it.choices) ? it.choices.map((c) => (typeof c === 'string' ? c : (c && (c.text || c.label)) || '')) : [],
+    };
+  };
+
   function show() {
     const item = items[index];
+    shownItem = item;
     const itemHost = document.getElementById('item');
     const roleLabel = { review: 'Review', stretch: 'Stretch', support: 'Foundation', focus: 'Focus', exam: 'Exam', check: 'Check' }[item.role] || 'Question';
 

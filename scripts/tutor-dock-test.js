@@ -129,6 +129,11 @@ function serve(router) {
   check('what is picked, typed and shown reaches the tutor on a full page', /la casa/.test(seen) && /the house/.test(seen) && /Correct!/.test(seen) && /level=28/.test(seen), seen);
   const hidden = dock.build(u.id, { path: '/placement', selected: 'la casa', typed: 'the house', feedback: 'Correct!' }, 'method').text;
   check('and is left out on a method-only page', !/la casa|the house|Correct!/.test(hidden), hidden);
+  const qline = dock.build(u.id, { path: '/session', question: 'What is 3/4 + 1/8?', passage: 'A recipe uses fractions.', choices: ['7/8', '4/12', '1'] }, 'full').text;
+  check('the question, passage and choices a page reports reach the tutor', /3\/4 \+ 1\/8/.test(qline) && /recipe uses fractions/.test(qline) && /A\) 7\/8; B\) 4\/12; C\) 1/.test(qline), qline);
+  const qm = dock.pageLine({ path: '/session', question: 'Q'.repeat(2000), passage: 'P'.repeat(5000), choices: Array(30).fill('x'.repeat(500)) });
+  check('a huge question, passage or choice list is clipped', qm.length < 2200, qm.length);
+  check('the session page reports its question to the dock (no answer key)', /window\.tutorPageInfo\s*=/.test(read('public/js/session.js')) && !/tutorPageInfo[\s\S]{0,400}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/session.js')));
   check('the service never names OpenRouter or a paid provider', !/openrouter|anthropic\.com|api\.openai/i.test(read('services/tutor-context.js')));
   let touched = '';
   try { touched = execSync('git diff --name-only HEAD -- spanish-check spanish-check-lc routes/spanish-check.js routes/spanish-check-lc.js public/spanish-check.html public/spanish-listening.html public/js/spanish-check.js public/js/spanish-listening.js', { cwd: root }).toString().trim(); } catch { touched = ''; }

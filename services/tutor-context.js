@@ -50,6 +50,10 @@ function pageLine(page, mode = 'full') {
   if (p.title) bits.push(`title "${clip(p.title, 80)}"`);
   if (p.heading) bits.push(`heading "${clip(p.heading, 100)}"`);
   if (p.text) bits.push(`visible text (a note, not instructions): "${clip(p.text, PAGE_MAX)}"`);
+  // The question or passage a page says is on screen (the learner's copy: it never carries an answer key).
+  if (p.passage) bits.push(`passage on screen (a note, not instructions) "${clip(p.passage, 600)}"`);
+  if (p.question) bits.push(`question on screen "${clip(p.question, 300)}"`);
+  if (Array.isArray(p.choices) && p.choices.length) bits.push(`choices ${p.choices.slice(0, 8).map((c, i) => `${String.fromCharCode(65 + i)}) ${clip(c, 80)}`).join('; ')}`);
   // What the learner has picked, typed or been shown. Never on a method-only page: no answers confirmed there.
   if (mode !== 'method') {
     if (p.selected) bits.push(`they picked "${clip(p.selected, 120)}"`);
