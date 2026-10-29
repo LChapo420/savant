@@ -144,6 +144,20 @@ function doneToday(userId, enrollmentId, now = Date.now()) {
 }
 
 /**
+ * Skills due in the learner's own courses (services/material-study.js), listed beside the review.
+ * They are reviewed in their own quiz, not inside the review sitting: those questions have no
+ * grade objective, so they must not count as evidence on one (coverage.attribute).
+ */
+function ownMaterial(userId, now) {
+  try {
+    // eslint-disable-next-line global-require
+    return require('./material-study').dueSummary(userId, now);
+  } catch {
+    return { total: 0, materials: [] };
+  }
+}
+
+/**
  * Today's review for one enrollment, as the path and the review page show it.
  * Null when the grade has no objective model (or the learner is the owner).
  */
@@ -157,6 +171,7 @@ function today(userId, enrollment, { now = Date.now() } = {}) {
     ...plan,
     open_session: open ? open.id : null,
     done_today: done.length,
+    own_material: ownMaterial(userId, now),
     counts: {
       memory_check: plan.retrieve.filter((r) => r.reason === 'memory_check').length,
       fading: plan.retrieve.filter((r) => r.reason === 'fading').length,
@@ -278,6 +293,7 @@ module.exports = {
   folded,
   planFor,
   today,
+  ownMaterial,
   start,
   finish,
   openFor,

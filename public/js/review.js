@@ -94,6 +94,19 @@ App.mount(async () => {
       </section>`;
   }
 
+  // Skills due in the learner's own courses: reviewed in their own quiz, never inside this sitting.
+  function ownMaterialSection() {
+    const m = plan && plan.own_material;
+    if (!m || !m.total) return '';
+    return `<section class="review-section" data-material-due aria-labelledby="own-h">
+      <h2 class="section-title" id="own-h">Your own material</h2>
+      <p class="small muted review-note"><span class="num">${m.total}</span> skill${m.total === 1 ? ' is' : 's are'} due for review in what you uploaded. They have their own quiz.</p>
+      <ol class="review-list">
+        ${m.materials.map((x) => `<li class="review-row"><span><a class="review-title" href="/my-material-study?id=${encodeURIComponent(x.material_id)}">${esc(x.title)}</a></span><span class="review-kind num">${x.due_count}</span></li>`).join('')}
+      </ol>
+    </section>`;
+  }
+
   function overview() {
     if (!plan) {
       host.innerHTML = `${head(reviewName())}
@@ -142,7 +155,8 @@ App.mount(async () => {
               </li>`).join('')}
           </ol>
         </section>` : ''}
-      ${reteachList(plan.reteach)}`;
+      ${reteachList(plan.reteach)}
+      ${ownMaterialSection()}`;
     const start = document.getElementById('start');
     if (start) start.addEventListener('click', () => begin(start));
   }
