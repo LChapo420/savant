@@ -185,6 +185,16 @@ function item(user, session, extra = {}) {
   check('COACH_PRIME=off primes no one', r.body.priming === false && modelCalls === n0, { body: r.body, calls: modelCalls - n0 });
   delete process.env.COACH_PRIME;
 
+  // The answer guard matches whole words (owner, 29 Oct 2026: on an item whose answer was "es", every reply
+  // was replaced by the redirect because "es" is inside "yes", "rules" and "estar").
+  const { leakGuard } = require('../services/ai');
+  const esItem = { answer: 'es', choices: ['soy', 'es', 'eres', 'son'], prompt: 'Ella ___ alta.' };
+  const coachOk = 'Yes! Think about the rules: which form of ser goes with ella, as in estar vs ser?';
+  check('a reply with "yes", "rules" and "estar" is not taken for the answer "es"', leakGuard(coachOk, esItem, []) === coachOk);
+  check('a reply that says "es" is still replaced', leakGuard('The answer is es.', esItem, []) !== 'The answer is es.');
+  check('"yes" from the learner does not count as saying "es"', leakGuard('It is es.', esItem, [{ role: 'user', content: 'yes' }]) !== 'It is es.');
+  check('a fraction is matched whole: 13/40 is not 3/4', leakGuard('Try 13/40 first.', { answer: '3/4', prompt: 'p' }, []) === 'Try 13/40 first.');
+
   close();
   try { fs.unlinkSync(tmp); } catch { /* not written */ }
   try { fs.unlinkSync(`${tmp}.tmp`); } catch { /* none */ }

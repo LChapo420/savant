@@ -290,6 +290,11 @@
    * is sent with each turn; the server holds the question and the answer and is
    * under instruction never to give the answer away.
    */
+  /** Coach text as plain words: markdown emphasis the model sometimes adds (**es**, *ser*) is dropped. */
+  function coachPlain(t) {
+    return String(t || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1$2');
+  }
+
   function mountCoach(host, item) {
     const bar = App.el('div', { class: 'coach-bar' });
     const trigger = App.el('button', { class: 'btn btn-sm', type: 'button', 'data-act': 'coach' },
@@ -342,7 +347,7 @@
         let text = '';
         const write = (chunk) => {
           text += chunk;
-          node.textContent = text;
+          node.textContent = coachPlain(text);
           log.scrollTop = log.scrollHeight;
         };
 
@@ -381,7 +386,7 @@
           try {
             const data = await App.api.post(`/api/items/${item.id}/coach`, { messages: history });
             text = data.reply;
-            node.textContent = text;
+            node.textContent = coachPlain(text);
           } catch (err) {
             node.textContent = err.message;
           }

@@ -1277,10 +1277,22 @@ How to work:
  * questions will otherwise invent a fresh problem to ask about — which strands
  * them in the chat instead of letting them finish the question on screen.
  */
+/**
+ * Does the text say the answer, as a whole word or phrase? A plain substring test
+ * found "es" inside "yes", "rules" and "estar", so on short answers every coach
+ * reply was replaced by the redirect and "yes" counted as the learner answering
+ * (owner, 29 Oct 2026). `answer` is already normalized.
+ */
+function saysAnswer(text, answer) {
+  if (!answer) return false;
+  const escaped = answer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(^|[^a-z0-9])${escaped}($|[^a-z0-9])`).test(grading.normalize(text));
+}
+
 function learnerReachedAnswer(item, history) {
   const answer = grading.normalize(item.answer);
   if (!answer || answer.length < 1) return false;
-  return (history || []).some((m) => m.role === 'user' && grading.normalize(m.content).includes(answer));
+  return (history || []).some((m) => m.role === 'user' && saysAnswer(m.content, answer));
 }
 
 const COACH_CLOSING = `--- THIS CONVERSATION IS OVER ---
@@ -1426,8 +1438,8 @@ async function coachReplyStream({ item, messages, userId, onDelta }) {
 
   const { conversation, history } = coachConversation(item, messages);
   const answer = grading.normalize(item.answer);
-  const learnerSaidIt = history.some((m) => m.role === 'user' && grading.normalize(m.content).includes(answer));
-  const wouldLeak = (text) => (answer.length >= 2 && !learnerSaidIt && grading.normalize(text).includes(answer))
+  const learnerSaidIt = history.some((m) => m.role === 'user' && saysAnswer(m.content, answer));
+  const wouldLeak = (text) => (answer.length >= 2 && !learnerSaidIt && saysAnswer(text, answer))
     || choiceLeak(text, item, history);
 
   // Long enough to hold back "the second option" until the guard has seen it.
@@ -1497,9 +1509,9 @@ function leakGuard(reply, item, history) {
   const answer = grading.normalize(item.answer);
   if (!answer || answer.length < 2) return reply;
 
-  const learnerSaidIt = history.some((m) => m.role === 'user' && grading.normalize(m.content).includes(answer));
+  const learnerSaidIt = history.some((m) => m.role === 'user' && saysAnswer(m.content, answer));
   if (learnerSaidIt) return reply;
-  if (!grading.normalize(reply).includes(answer)) return reply;
+  if (!saysAnswer(reply, answer)) return reply;
 
   return COACH_REDIRECT;
 }
