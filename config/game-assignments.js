@@ -51,8 +51,12 @@ function registeredEngines() {
   }
 }
 
-/** Does the config name any exact level of this grade (an authored set, e.g. English Proficient)? */
+/**
+ * Does the config name any exact level of this grade (an authored set, e.g. English Proficient)? A grade can hold exact level entries for only part of its path and still let the bank govern the rest: list it in
+ * the config's "bank_fallthrough" (e.g. the pre-built first levels of Calculus I): it is then not "authored".
+ */
 function authoredGrade(config, trackId, gradeId) {
+  if ((config.bank_fallthrough || []).includes(`${trackId}/${gradeId}`)) return false;
   const prefix = `${trackId}/${gradeId}/`;
   return Object.keys(config.levels || {}).some((k) => k.startsWith(prefix));
 }
@@ -121,4 +125,4 @@ function assignments() {
   return loadAssignments();
 }
 
-module.exports = { resolve, registeredEngines, assignments };
+module.exports = { resolve, registeredEngines, assignments, authoredGrade };

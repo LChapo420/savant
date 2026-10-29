@@ -42,6 +42,11 @@ const check = (name, ok, detail = '') => { if (ok) passed++; else { failed++; co
   check('math: the same answer twice is allowed', !has(mk('p one', 0, 'p two'), 'answer twice', { trackId: 'math' }));
   check('math: a real tag is still markup', has(mk('Is <b>x</b> bold?', 0, 'p two'), 'markup', { trackId: 'math' }));
   check('other subjects: < is still markup, the same answer twice still a fault', has(mk('Is x < 2?', 0, 'p two'), 'markup', { trackId: 'english' }) && has(mk('p one', 0, 'p two'), 'answer twice', {}));
+  // A grade with exact entries for only its first levels can let the bank govern the rest (bank_fallthrough).
+  const entries = { levels: { 'math/calculus_i/10': { engineId: 'tic-tac-toe' } } };
+  check('exact level entries make a grade authored', gameAssignments.authoredGrade(entries, 'math', 'calculus_i') === true);
+  check('bank_fallthrough lets the bank govern the rest of the grade', gameAssignments.authoredGrade({ ...entries, bank_fallthrough: ['math/calculus_i'] }, 'math', 'calculus_i') === false);
+  check('bank_fallthrough names one grade only', gameAssignments.authoredGrade({ levels: { 'math/algebra_1_part_a/3': { engineId: 'x' } }, bank_fallthrough: ['math/calculus_i'] }, 'math', 'algebra_1_part_a') === true);
   console.log(failed ? `${failed} FAILED, ${passed} passed` : `${passed}/${passed} passed`);
   process.exit(failed ? 1 : 0);
 })();
