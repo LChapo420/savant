@@ -134,6 +134,20 @@ function serve(router) {
   const qm = dock.pageLine({ path: '/session', question: 'Q'.repeat(2000), passage: 'P'.repeat(5000), choices: Array(30).fill('x'.repeat(500)) });
   check('a huge question, passage or choice list is clipped', qm.length < 2200, qm.length);
   check('the session page reports its question to the dock (no answer key)', /window\.tutorPageInfo\s*=/.test(read('public/js/session.js')) && !/tutorPageInfo[\s\S]{0,400}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/session.js')));
+  check('the shared question player reports the question on screen to the dock (no answer key), for placement, review, enforcer and the rest', /shown\s*\}/.test(read('public/js/player.js')) && !/function shown[\s\S]{0,500}(answer_key|correct_answer|\.answer\b)/.test(read('public/js/player.js')) && /Player\.shown/.test(read('public/js/tutor-dock.js')));
+  {
+    // Run Player.shown in a stub DOM: it reports prompt, passage and choice text of the last rendered item and nothing else.
+    const src = read('public/js/player.js');
+    const win = {};
+    const el = () => ({ appendChild() {}, setAttribute() {}, addEventListener() {}, set innerHTML(v) {}, get innerHTML() { return ''; }, querySelector() { return null; }, querySelectorAll() { return []; }, contains() { return false; }, classList: { add() {}, remove() {} } });
+    try {
+      new Function('window', 'document', 'App', src)(win, { activeElement: null, body: {}, createElement: el }, { query() { return null; }, el, escapeHtml: (x) => x });
+      check('Player.shown is empty before any question', JSON.stringify(win.Player.shown()) === '{}');
+      try { win.Player.render(el(), { id: 1, prompt: 'What is 2+2?', choices: ['3', { text: '4' }], correct: 1, answer_key: 'x' }, { onSubmit() {} }); } catch { /* the stub DOM is partial: the item is recorded first */ }
+      const s2 = win.Player.shown();
+      check('Player.shown returns prompt and choice text only', s2.question === 'What is 2+2?' && s2.choices.join('|') === '3|4' && !('answer_key' in s2) && !('correct' in s2), s2);
+    } catch (e) { check('Player.shown runs in a stub DOM', false, String(e)); }
+  }
   check('the service never names OpenRouter or a paid provider', !/openrouter|anthropic\.com|api\.openai/i.test(read('services/tutor-context.js')));
   let touched = '';
   try { touched = execSync('git diff --name-only HEAD -- spanish-check spanish-check-lc routes/spanish-check.js routes/spanish-check-lc.js public/spanish-check.html public/spanish-listening.html public/js/spanish-check.js public/js/spanish-listening.js', { cwd: root }).toString().trim(); } catch { touched = ''; }

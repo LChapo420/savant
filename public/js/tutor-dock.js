@@ -39,7 +39,10 @@
     const fb = outside('[role=status], .feedback, .es-feedback, .correct, .incorrect, .wrong');
     if (fb && fb.innerText) info.feedback = fb.innerText.slice(0, 200);
     // A page can describe itself better than the generic reading (a game, a board, a passage on screen).
-    try { if (typeof window.tutorPageInfo === 'function') Object.assign(info, window.tutorPageInfo() || {}); } catch { /* keep the generic reading */ }
+    try {
+      if (typeof window.tutorPageInfo === 'function') Object.assign(info, window.tutorPageInfo() || {});
+      else if (window.Player && typeof window.Player.shown === 'function') Object.assign(info, window.Player.shown());
+    } catch { /* keep the generic reading */ }
     try { info.snapshot = Snap ? Snap.build(main) : null; } catch { /* the generic reading still goes */ }
     return info;
   }
