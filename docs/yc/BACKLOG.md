@@ -98,7 +98,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    owner decides whether to use the wait-list arm; (c) look at `/act-study` and `/act-study-admin` at 375 px in a
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
 4. **Link the ACT page.** Add `/act` to the home page and header once the owner approves the wording (the track blurb in `config/curriculum.js` still says "under the timing the real test imposes", which the app does not do; fix with item 1).
-5b. **Show the funnel on the admin metrics page** (`public/js/admin.js` `renderMetrics`): a funnel table and a `table=funnel` CSV button. Reason: item 5 added the numbers to the CLI and CSV endpoint only. Keep the existing CSS variables.
+5b. [claimed 2026-10-29T16:25Z, with 10b] **Show the funnel on the admin metrics page** (`public/js/admin.js` `renderMetrics`): a funnel table and a `table=funnel` CSV button. Reason: item 5 added the numbers to the CLI and CSV endpoint only. Keep the existing CSS variables.
 6. **Test-date plan** (item 4): from the test date and section scores, choose the skills with the most points
    available in the weakest sections and lay out a fixed number of sessions that fits the weeks left, with
    review timed to peak at the test date. Reuse placement, mastery and the retention scheduler.
