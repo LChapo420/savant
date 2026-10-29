@@ -182,6 +182,9 @@ function plan(role = 'fast', task = null) {
   } else if (taskConf) {
     if (TIERS.includes(taskConf.tier)) tier = taskConf.tier;
     head = normalizeEntries(taskConf.models || []);
+    // "only": just these models, no tier or spill behind them, so a failure goes straight
+    // to the next provider in the chain (the tutor dock: a weak fast model is worse than Claude).
+    if (taskConf.only && head.length) return { tier, entries: head };
   }
   const spill = (lineup.spill && lineup.spill[tier]) || DEFAULT_SPILL[tier] || [];
   const all = [...head, ...tierEntries(tier), ...spill.flatMap((t) => tierEntries(t))];

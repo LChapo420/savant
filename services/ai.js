@@ -162,7 +162,8 @@ async function viaPool(userId, req, role, task, outside) {
   const trace = {};
   const res = await pool.callHedged(
     { ...req, role, task, userId: userId || null, outside, dataClass: userId ? 'learner' : (req.dataClass || 'learner') },
-    { timeoutMs: req.timeoutMs || undefined, validate: (r) => !!r, trace },
+    // hedgeAfterMs: an interactive caller (the tutor dock) may start the backup sooner than the pool's 20 s floor.
+    { timeoutMs: req.timeoutMs || undefined, hedgeAfterMs: req.hedgeAfterMs != null ? req.hedgeAfterMs : undefined, validate: (r) => !!r, trace },
   );
   if (!res) {
     console.warn(`ai: no slot gave a valid ${role}${task ? `/${task}` : ''} answer in ${Math.round((trace.elapsedMs || 0) / 1000)}s: ${(trace.attempts || []).map((a) => `${a.slot} ${a.kind}`).join(', ') || 'no slot available'}`);
@@ -255,10 +256,10 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, pipelineVariant }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant }) {
   const result = await withProviders(userId, (p) => p.chat({
     role, task, system, messages, maxTokens, effort, lane,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, pipelineVariant });
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant });
   return result ? { text: result.text, model: result.model } : null;
 }
 

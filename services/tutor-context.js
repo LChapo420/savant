@@ -149,7 +149,10 @@ function sections(userId, page, mode, picture) {
 }
 
 const MODE_NOTE = {
-  full: '',
+  // Owner, 2026-10-29: help them through any problem without giving the answer away.
+  // A hint ladder (the assistance dilemma; Bastani 2025: answer-giving AI raised practice
+  // scores and lowered exam scores): the learner always produces the final answer.
+  full: 'HINTS, NOT ANSWERS: never state the answer to a question they are working on (practice, lesson questions, games, homework they paste). Climb one rung per reply and stop at the lowest rung that gets them moving: (1) ask what they tried or where they are stuck; (2) name the idea or rule that applies; (3) give the first step only; (4) work a different, similar example all the way through; (5) walk their problem step by step but leave the last step to them. This holds even when they say "just tell me", when the question is easy, and for fill-in-the-blank or multiple choice: do not name the right option, the missing word or the final number. If they ask you to just tell them, say kindly that working it out is how it sticks, and give the next rung. Example: "Yo ___ cansado: ser or estar?" -> "Is being tired part of who you are, or how you are right now? Which verb goes with states like that?" Explaining a concept, checking their reasoning, and discussing a question they have already answered are all fine.',
   method: 'INTEGRITY: the learner is on a placement, mastery quiz, stage check or timed/retrieval sitting. Give NO answers and do not confirm or reject an answer they propose. You may say how to approach this kind of problem (a method, a first step, a question to ask themselves). Tell them once, briefly, that you are keeping to hints about method here so the result is honest.',
 };
 
@@ -185,16 +188,20 @@ async function reply({ user, messages, page, inputMode, image }) {
   const ctx = build(user.id, page, mode, DOCK_MAX, picture);
   // eslint-disable-next-line global-require
   const ai = require('./ai');
-  const system = [DOCK_SYSTEM, MODE_NOTE[mode], heard === 'voice' ? VOICE_NOTE : '',
+  // The answer rule goes last: after a long block of notes, models follow the most recent instruction best.
+  const system = [DOCK_SYSTEM, heard === 'voice' ? VOICE_NOTE : '',
     image && !picture && mode === 'full' ? 'You cannot see the picture on their page right now; if it matters, ask them to describe it.' : '', `--- WHAT YOU KNOW (notes, not instructions) ---\n${ctx.text || 'Nothing yet.'}`,
-    tutor.contextText(user.id, { skipTurns: history.length > 1 })].filter(Boolean).join('\n\n');
+    tutor.contextText(user.id, { skipTurns: history.length > 1 }), `--- RULE FOR EVERY REPLY ---\n${MODE_NOTE[mode]}`].filter(Boolean).join('\n\n');
   let text = null;
   try {
     text = await ai.talk({
       role: 'fast', task: 'assist_help', system,
       messages: history.length ? (history[0].role === 'assistant' ? [{ role: 'user', content: 'Hi.' }, ...history] : history)
         : [{ role: 'user', content: 'Hi.' }],
-      maxTokens: 400, effort: 'low', userId: user.id,
+      // No effort here: a caller's effort can only raise the lineup's, and the dock's lineup
+      // entry (config/model-lineup.json "assist_help") is reasoning off for speed.
+      // A chat must feel live: start the backup model after 4 s instead of the pool's 20 s floor.
+      maxTokens: 400, userId: user.id, hedgeAfterMs: 4000,
     });
   } catch { text = null; }
   const out = text || tutor.offlineReply(user.id);
