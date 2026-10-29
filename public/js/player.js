@@ -39,8 +39,23 @@
    * confidence ('sure' | 'think' | 'guess' | null) and, for typed answers, how
    * many times they revised it — both feed the learning scorecard.
    */
+  // The question last drawn, for the tutor dock (js/tutor-dock.js) on pages that do not define window.tutorPageInfo
+  // themselves. It is the learner's copy of the item, so it carries no answer key; only text fields are read.
+  let lastShown = null;
+  function shown() {
+    const it = lastShown;
+    if (!it) return {};
+    const text = (c) => (typeof c === 'string' ? c : (c && (c.text || c.label)) || '');
+    return {
+      question: String(it.prompt || it.question || ''),
+      passage: String(it.passage || ''),
+      choices: Array.isArray(it.choices) ? it.choices.map(text) : [],
+    };
+  }
+
   function render(host, item, opts) {
     const { onSubmit } = opts;
+    lastShown = item;
     // Where focus was before the redraw: on the answer just given (now gone),
     // or nowhere. Either way it is put back on the new question below, so a
     // keyboard is not thrown back to the top of the page after every answer.
@@ -555,5 +570,5 @@
     return box;
   }
 
-  window.Player = { render, reveal };
+  window.Player = { render, reveal, shown };
 })();
