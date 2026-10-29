@@ -147,6 +147,14 @@ function answerFrom(course, quiz, wrongN = 0) {
   check('junk answers count as wrong, not as a crash', out.overall.right === 0);
   check('a quiz id from another learner does not work', ms.submit(other.id, m.id, 'abc', {}).code === 'no_course');
 
+  console.log('tutor context');
+  const tc = require('../services/tutor-context');
+  const ctxText = tc.build(u.id, { path: '/dashboard' }).text;
+  const sumNow = ms.state(u.id, m.id);
+  check('the tutor sees the course, skills mastered and reviews due, never questions',
+    new RegExp(`${sumNow.mastered} of ${sumNow.total} skills mastered`).test(ctxText) && !/answer_index|quote/i.test(ctxText), ctxText);
+  check('another learner\'s context has no trace of it', !/skills mastered/.test(tc.build(other.id, { path: '/dashboard' }).text));
+
   console.log('delete and wiring');
   check('progress exists', !!db.findOne('material_progress', (p) => p.user_id === u.id));
   materials.remove(u.id, m.id);

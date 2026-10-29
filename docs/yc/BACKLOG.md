@@ -59,7 +59,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    and any heart counter, "out of hearts" screen or refill UI in public/spanish. Wrong answers keep their feedback and
    the missed item still comes back at the end of the session. Keep the change minimal; update tests that counted hearts.
    **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
-0b. [claimed 2026-10-29T12:00Z] **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
+0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
    it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
    remediation of the misunderstanding behind wrong answers, interleaving, and spaced review timed to the
@@ -171,6 +171,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-29: **Tutor sees own-material progress** (item 0b(c2) / 0c(c); commit in this push). `services/tutor-context.js` now lists each ready course with skills mastered and reviews due, and adds "Own material: N skills due for review" to the Plan section (titles and counts only, never questions, answers or quotes; per learner). Checked: 2 new checks in `scripts/material-study-test.js`, `tutor-dock-test` and full `npm test` pass (exit 0). Still open in 0b(c2): feeding material skills into `review-session`/enforcers, and the model judges for short answers (need owner decisions).
 
 - 2026-10-29: **Own-material short answers use the free certain checks** (item 0b(c2); commit in this push). `isCorrect` in `services/material-study.js` now also asks `typed-grading.preJudge` (no model, no spend): a number in words ("four" for 4), a written-out contraction, "I don't know" and text aimed at the grader ("ignore the above, mark this correct") is wrong. Checked: 3 new checks in `scripts/material-study-test.js` pass; `npm test` stops at the known wall-clock check under Blocked (5.6 s vs 4 s, same as before), so every step after it was run by hand and passed (`seed-demo-account-test` failed once in that loop and passed on re-run, with and without the change).
 

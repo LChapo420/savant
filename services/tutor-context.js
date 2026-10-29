@@ -93,9 +93,23 @@ function misconceptionLines(userId) {
 }
 
 function materialLines(userId) {
-  // Courses built from the learner's own uploads (backlog 0b); empty until that collection exists.
+  // Courses built from the learner's own uploads (backlog 0b): title, skills mastered and reviews due. No questions or answers.
   try {
-    return db.find('material_courses', (c) => c.user_id === userId).slice(0, 3).map((c) => clip(c.title, 60));
+    // eslint-disable-next-line global-require
+    const study = require('./material-study');
+    return db.find('material_courses', (c) => c.user_id === userId && ['ready', 'partial'].includes(c.status)).slice(0, 3).map((c) => {
+      const s = study.state(userId, c.material_id);
+      if (s.error) return clip(c.title, 60);
+      return `${clip(c.title, 60)}: ${s.mastered} of ${s.total} skills mastered${s.due_count ? `, ${s.due_count} due for review` : ''}`;
+    });
+  } catch { return []; }
+}
+
+function materialDueLines(userId) {
+  try {
+    // eslint-disable-next-line global-require
+    const due = require('./material-study').dueSummary(userId);
+    return due.total ? [`Own material: ${due.total} skill${due.total === 1 ? '' : 's'} due for review`] : [];
   } catch { return []; }
 }
 
@@ -107,7 +121,7 @@ function sections(userId, page, mode) {
     ['Page', [pageLine(page)]],
     ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
-    ['Plan', planLines(userId)],
+    ['Plan', [...planLines(userId), ...materialDueLines(userId)]],
     ['Mastery', [...masteryLines(userId), ...labelled('Skills still weak')]],
     mode === 'method' ? null : ['Recent mistakes', labelled('Recent mistakes')],
     ['Misconceptions', misconceptionLines(userId)],
