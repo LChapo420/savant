@@ -57,6 +57,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      real on delete). Rate limits. Tests.
    - **(b) DONE, see Done.** (was: Course builder.)
    - **(c) DONE as a first slice, see Done.** Remaining, now item 0b(c2) below.
+   - [claimed 2026-10-29T02:15Z] (c2) next slice: material skills in the day plan / review session
    - **(c2) Join the built-in machinery (first slice DONE: due count on home, see Done).** Remaining: feed material
      skills into `services/review-session.js` / the day plan and the retention enforcers (`services/retention-schedule.js`,
      `services/enforcers.js`); decide with the owner whether the ladder (1, 3, 7, 14, 30, 60 days) should become the
