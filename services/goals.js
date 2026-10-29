@@ -106,10 +106,35 @@ function rowFor(userId, trackId, gradeId) {
   return db.findOne('learner_goals', (r) => r.user_id === userId && r.track_id === trackId && (r.grade_id || null) === g) || null;
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+const DATE_MAX_DAYS = 366;
+
+/** Whole days from today (UTC) to a YYYY-MM-DD date, or null for no valid date. */
+function daysUntil(date, now = Date.now()) {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
+  const at = Date.parse(`${date}T00:00:00Z`);
+  if (!Number.isFinite(at)) return null;
+  return Math.round((at - Date.parse(new Date(now).toISOString().slice(0, 10))) / DAY_MS);
+}
+
+/** A target date the learner typed: '' / null clears, a good date is kept, anything else is { error }. */
+function cleanDate(raw, now = Date.now()) {
+  const text = String(raw === undefined || raw === null ? '' : raw).trim();
+  if (!text) return { date: null };
+  const days = daysUntil(text, now);
+  if (days === null || new Date(`${text}T00:00:00Z`).toISOString().slice(0, 10) !== text) return { error: 'Pick a real date.' };
+  if (days < 0) return { error: 'Pick a date that is today or later.' };
+  if (days > DATE_MAX_DAYS) return { error: 'Pick a date within the next year.' };
+  return { date: text };
+}
+
 function view(row, { inherited = false } = {}) {
   if (!row || !row.choice) return null;
   const c = CHOICES[row.choice];
+  const days = daysUntil(row.target_date);
   return {
+    target_date: days !== null && days >= 0 ? row.target_date : null,
+    days_left: days !== null && days >= 0 ? days : null,
     track_id: row.track_id,
     grade_id: row.grade_id || null,
     choice: row.choice,
@@ -147,7 +172,7 @@ function asked(userId, trackId, gradeId) {
  * { error } for a bad choice. `skipped` records "not now", so the step is not
  * shown again; the goal can still be set later.
  */
-function set(userId, { trackId, gradeId = null, choice = null, text = '', skipped = false }) {
+function set(userId, { trackId, gradeId = null, choice = null, text = '', skipped = false, targetDate }) {
   if (!userId || !trackId) return { error: 'Choose a subject first.' };
   const picked = choice ? String(choice) : null;
   if (picked && !CHOICES[picked]) return { error: 'Choose one of the goals.' };
@@ -157,8 +182,17 @@ function set(userId, { trackId, gradeId = null, choice = null, text = '', skippe
   const now = new Date().toISOString();
   const g = gradeKey(gradeId);
   const existing = rowFor(userId, trackId, g);
+  // A date belongs to a goal: undefined keeps the saved one, '' clears it, no choice drops it.
+  let date = existing ? existing.target_date || null : null;
+  if (targetDate !== undefined) {
+    const d = cleanDate(targetDate);
+    if (d.error) return { error: d.error };
+    date = d.date;
+  }
+  if (!picked) date = null;
   const patch = {
     choice: picked,
+    target_date: date,
     text: words,
     skipped: !picked && !!skipped,
     updated_at: now,
@@ -235,6 +269,6 @@ function promptLines(userId, trackId, gradeId) {
 
 module.exports = {
   CHOICES, EFFECTS, TEXT_MAX,
-  cleanText, forGrade, forEnrollment, asked, set, listFor, applies,
+  cleanText, cleanDate, daysUntil, DATE_MAX_DAYS, forGrade, forEnrollment, asked, set, listFor, applies,
   placementMode, placementLength, adjustParams, promptLines,
 };

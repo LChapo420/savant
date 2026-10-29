@@ -19,6 +19,7 @@ already had five choices. Spanish adds a sixth, shown on Spanish only:
 | Just the essentials, fast | `conversation` (for Spanish, the essentials are the most-used spoken phrases) |
 | Something specific, with text containing one of: convers, speak, talk, chat, fluent, travel, trip, vacation, holiday, everyday, survive, survival, impress, progress, fast, quick, days, week, listen, understand, hablar, conversación | `conversation` |
 | Prepare for a test or exam | `test` |
+| Any goal but a test goal, with a date 0 to 14 days away | `sprint` |
 | Learn it as deeply as possible, Enough for the next grade, anything else, or no goal | `standard` |
 
 So "Conversational in 4 days" and "the most impressive progress possible", typed into "Something
@@ -29,6 +30,15 @@ specific", both give `conversation`.
 clear on the path page, so it applies to every account by default, the owner included. Two switches:
 `SPANISH_GOAL_FIT=respect-owner-base` follows the owner rule (no goal fit for the owner), and
 `SPANISH_GOAL_FIT=off` turns goal fit off for everyone.
+
+### The sprint profile (a date within 14 days)
+
+A goal can carry a date ("by Oct 31", set on the goal card). When the date is today or up to 14 days
+away and the goal is not "Prepare for a test", the profile is `sprint`; a test goal keeps every level
+and stays `test`. A past date counts for nothing. `sprint` puts aside the same levels as `conversation`,
+takes the most frequent phrases first, recycles half of each run (`conversation`: 40%), and its recipes
+are the `conversation` recipe with two review steps first (what does this mean, and type what you hear,
+both on due phrases) and two more hearing steps at the end (`listen_meaning:any`, `type_heard:any`).
 
 ## 2. Which levels come next
 

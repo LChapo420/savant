@@ -21,6 +21,12 @@
     return api().get(`/api/goals?${qs(trackId, gradeId)}`);
   }
 
+  /** Today (or `ahead` days on) as YYYY-MM-DD in the learner's own calendar, for the date box's range. */
+  function today(ahead = 0) {
+    const d = new Date(Date.now() + ahead * 86400000);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
   function save(trackId, gradeId, body) {
     return api().request('PUT', '/api/goals', { track_id: trackId, grade_id: gradeId || null, ...body });
   }
@@ -43,12 +49,19 @@
         <input id="${uid}-t" type="text" class="input" style="width:100%;margin-top:4px" maxlength="${state.text_max}"
           placeholder="For example: finish fractions before my exam on 12 Nov" value="${esc(current.text || '')}">
       </div>
+      <div class="goal-date" style="margin-top:10px;display:none">
+        <label class="small" for="${uid}-d">Is there a date? (optional)</label>
+        <input id="${uid}-d" type="date" class="input" style="margin-top:4px" min="${today()}" max="${today(366)}" value="${esc(current.target_date || '')}">
+        <p class="tiny muted" style="margin:4px 0 0">A date within 14 days puts Spanish into a sprint: review first, then the most-used phrases.</p>
+      </div>
       <p class="small muted goal-error" role="alert" style="color:var(--danger,#b91c1c);min-height:1.2em;margin:8px 0 0"></p>
       <div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap">
         <button type="button" class="btn btn-primary goal-save">${esc(saveLabel)}</button>
         ${onSkip ? `<button type="button" class="btn btn-ghost goal-skip">${esc(skipLabel)}</button>` : ''}
       </div>`;
     const textBox = node.querySelector('.goal-text');
+    const dateBox = node.querySelector('.goal-date');
+    const dateInput = node.querySelector(`#${uid}-d`);
     const input = node.querySelector(`#${uid}-t`);
     const error = node.querySelector('.goal-error');
     const radios = [...node.querySelectorAll('input[type=radio]')];
@@ -56,6 +69,7 @@
     const sync = () => {
       // The free-text box is part of every choice (it refines it); "something specific" needs it.
       textBox.style.display = picked() ? 'block' : 'none';
+      dateBox.style.display = picked() ? 'block' : 'none';
       input.required = picked() === 'specific';
     };
     radios.forEach((r) => r.addEventListener('change', sync));
@@ -69,7 +83,7 @@
     saveButton.addEventListener('click', () => {
       const choice = picked();
       if (!choice) { error.textContent = 'Pick one, or skip for now.'; return; }
-      run(() => onSave(choice, input.value.trim()), saveButton);
+      run(() => onSave(choice, input.value.trim(), dateInput.value || ''), saveButton);
     });
     const skipButton = node.querySelector('.goal-skip');
     if (skipButton) skipButton.addEventListener('click', () => run(onSkip, skipButton));
@@ -90,7 +104,7 @@
         <div class="card" style="margin-top:12px" id="goal-form"></div>`;
       form(host.querySelector('#goal-form'), state, {
         saveLabel: 'Continue',
-        onSave: async (choice, text) => { const out = await save(trackId, gradeId, { choice, text }); resolve(out.goal); },
+        onSave: async (choice, text, target_date) => { const out = await save(trackId, gradeId, { choice, text, target_date }); resolve(out.goal); },
         onSkip: async () => { await save(trackId, gradeId, { choice: null, skipped: true }); resolve(null); },
       });
     });
@@ -109,7 +123,8 @@
       wrap.innerHTML = `
         <div class="row-between" style="gap:10px;flex-wrap:wrap">
           <div><span class="small muted">Your goal</span><br>
-            <strong>${g ? esc(g.label) : 'Not set'}</strong>${g && g.text ? `<span class="small muted"> — ${esc(g.text)}</span>` : ''}</div>
+            <strong>${g ? esc(g.label) : 'Not set'}</strong>${g && g.text ? `<span class="small muted"> — ${esc(g.text)}</span>` : ''}${g && g.target_date ? `<span class="small muted"> · by ${esc(g.target_date)} (${g.days_left === 0 ? 'today' : `${g.days_left} day${g.days_left === 1 ? '' : 's'} left`})</span>` : ''}
+            ${g && state.fit ? `<br><span class="small"><strong>${esc(state.fit.label)}.</strong> ${esc(state.fit.why)}</span>` : ''}</div>
           <button type="button" class="btn btn-ghost btn-sm" id="goal-change">${g ? 'Change' : 'Set a goal'}</button>
         </div>
         <div id="goal-edit" style="display:none;margin-top:10px"></div>`;
@@ -117,7 +132,7 @@
         const edit = wrap.querySelector('#goal-edit');
         edit.style.display = 'block';
         form(edit, state, {
-          onSave: async (choice, text) => { const out = await save(trackId, gradeId, { choice, text }); state.goal = out.goal; draw(); },
+          onSave: async (choice, text, target_date) => { const out = await save(trackId, gradeId, { choice, text, target_date }); state.goal = out.goal; state.fit = (await load(trackId, gradeId)).fit; draw(); },
           onSkip: state.goal ? async () => { await save(trackId, gradeId, { choice: null }); state.goal = null; draw(); } : null,
           skipLabel: 'Clear goal',
           saveLabel: 'Save',
@@ -152,8 +167,8 @@
         edit.style.display = 'block';
         const forTrack = data.choices.filter((c) => !c.tracks || c.tracks.includes(g.track_id));
         form(edit, { goal: g, choices: forTrack, text_max: data.text_max }, {
-          onSave: async (choice, text) => {
-            const out = await save(g.track_id, g.grade_id, { choice, text });
+          onSave: async (choice, text, target_date) => {
+            const out = await save(g.track_id, g.grade_id, { choice, text, target_date });
             Object.assign(g, out.goal);
             draw();
           },

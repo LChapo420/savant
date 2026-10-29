@@ -6,7 +6,11 @@
  * people in docs/spanish-replica/GOAL-FIT.md; scripts/spanish-path-test.js
  * checks the two agree on the examples given there.
  *
- * Three profiles:
+ * Four profiles:
+ *   sprint        a goal with a date within 14 days (SPRINT_DAYS), other than a
+ *                 test goal: conversation's rules, plus more type-what-you-hear
+ *                 and what-does-this-mean listening in every recipe, and the
+ *                 learner's review queue first in every session.
  *   conversation  "Speak and understand everyday Spanish, fast", "Just the
  *                 essentials", or a typed goal about talking / days / impressive
  *                 progress. Highest-frequency words first, listening and
@@ -33,6 +37,11 @@ const PROFILES = {
     id: 'conversation',
     label: 'Conversation, fast',
     why: 'Your goal is to talk soon, so the most-used words and phrases come first, with more listening and speaking. Culture, long writing and extra pronunciation levels are saved for later.',
+  },
+  sprint: {
+    id: 'sprint',
+    label: 'Sprint to your date',
+    why: 'Your date is close, so every session starts with what is due for review, then the most-used words and phrases, with extra listening and typing what you hear. Culture, long writing and extra pronunciation levels are saved for later.',
   },
   test: {
     id: 'test',
@@ -61,9 +70,16 @@ function appliesTo(userId) {
   return !!userId;
 }
 
+/** A date this close (days from today, inclusive) makes the goal a sprint. */
+const SPRINT_DAYS = 14;
+
+/** Profiles that walk the path the way `conversation` does. */
+const CONVERSATION_LIKE = new Set(['conversation', 'sprint']);
+
 /** The profile a goal row maps to (a goal view from goals.forGrade, or null). */
 function profileOfGoal(goal) {
   if (!goal || !goal.choice) return 'standard';
+  if (goal.choice !== 'test' && Number.isFinite(goal.days_left) && goal.days_left >= 0 && goal.days_left <= SPRINT_DAYS) return 'sprint';
   if (goal.choice === 'conversation' || goal.choice === 'essentials') return 'conversation';
   if (goal.choice === 'test') return 'test';
   if (goal.choice === 'specific') {
@@ -98,7 +114,7 @@ const DEFER_TYPES = new Set([
  * @param {string} profileId
  */
 function deferReason(row, grade, profileId) {
-  if (profileId !== 'conversation' || !row) return null;
+  if (!CONVERSATION_LIKE.has(profileId) || !row) return null;
   const key = `${row.type}/${row.activity}`;
   if (NEVER_DEFER.has(key)) return null;
   const last = grade.levels[grade.levels.length - 1];
@@ -119,7 +135,7 @@ function deferReason(row, grade, profileId) {
 /** Every level a profile puts aside on a grade: Map level -> reason. */
 function deferredLevels(grade, profileId) {
   const out = new Map();
-  if (!grade || profileId !== 'conversation') return out;
+  if (!grade || !CONVERSATION_LIKE.has(profileId)) return out;
   for (const row of grade.levels) {
     const why = deferReason(row, grade, profileId);
     if (why) out.set(row.level, why);
@@ -134,7 +150,7 @@ function deferredLevels(grade, profileId) {
 function stepOverDeferred(enrollment, grade, next) {
   if (!enrollment || enrollment.track_id !== 'spanish' || !grade || !Array.isArray(grade.levels)) return next;
   const profile = profileFor(enrollment.user_id, enrollment.grade_id);
-  if (profile.id !== 'conversation') return next;
+  if (!CONVERSATION_LIKE.has(profile.id)) return next;
   const deferred = deferredLevels(grade, profile.id);
   let at = next;
   const max = grade.pathLength || grade.levels.length;
@@ -186,9 +202,19 @@ const RECIPES = {
  * (tier 1, then 2, then 3), the others keep the unit's written order.
  */
 function orderPhrases(phrases, profileId) {
-  if (profileId !== 'conversation') return phrases;
+  if (!CONVERSATION_LIKE.has(profileId)) return phrases;
   return phrases.map((p, i) => ({ p, i })).sort((a, b) => (a.p.tier || 2) - (b.p.tier || 2) || a.i - b.i).map((x) => x.p);
 }
+
+/**
+ * The sprint recipe for a slot: the conversation recipe with the learner's
+ * review queue first (two steps drawing on due phrases) and two more hearing
+ * steps at the end. Built from RECIPES.conversation so the two never drift.
+ */
+RECIPES.sprint = Object.fromEntries(Object.entries(RECIPES.conversation).map(([slot, steps]) => [
+  slot,
+  ['listen_meaning:old', 'type_heard:old', ...steps, 'listen_meaning:any', 'type_heard:any'],
+]));
 
 function recipe(profileId, slot) {
   const table = RECIPES[profileId] || RECIPES.standard;
@@ -197,11 +223,11 @@ function recipe(profileId, slot) {
 
 /** Recycled share target: how many of a run's items reuse earlier phrases. */
 function recycleShare(profileId) {
-  return profileId === 'conversation' ? 0.4 : 0.3;
+  return profileId === 'sprint' ? 0.5 : profileId === 'conversation' ? 0.4 : 0.3;
 }
 
 module.exports = {
-  PROFILES, CONVERSATION_WORDS, RECIPES, NEVER_DEFER, DEFER_TYPES,
+  PROFILES, CONVERSATION_WORDS, SPRINT_DAYS, CONVERSATION_LIKE, RECIPES, NEVER_DEFER, DEFER_TYPES,
   appliesTo, profileOfGoal, profileFor, deferReason, deferredLevels, stepOverDeferred,
   orderPhrases, recipe, recycleShare,
 };
