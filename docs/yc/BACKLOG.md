@@ -110,7 +110,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    - Tests with a mocked provider, including the mode memory, the toggle, the snapshot builder, and the
      no-answers rule during tests.
 
-0-goal. **Goal-shaped path for every learner, not just Spanish (owner: "the curriculum being able to be modified perfectly to my goal").**
+0-goal. [claimed 2026-10-29T14:00Z] **Goal-shaped path for every learner, not just Spanish (owner: "the curriculum being able to be modified perfectly to my goal").**
    After 0c/0d. Spanish has `services/spanish/goal-fit.js` (profiles: conversation, test, standard; read it and
    docs/spanish-replica/GOAL-FIT.md). Add: (1) a visible "Your goal" card on each subject's path page that shows the
    current profile, why, and a one-tap way to change the goal or add a date ("by Oct 31"); (2) a `sprint` profile for
