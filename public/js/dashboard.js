@@ -142,6 +142,27 @@ App.mount(async () => {
     }));
   /** The held Final's line: its day, and the date it opens by (the server's label, the same one the path and the session page show). */
   const heldLine = (c, { doneNote = true } = {}) => `Before the Final: a short review each day until this grade will last. Day <span class="num">${c.day}</span> of at most <span class="num">${c.days}</span>; the Final opens by ${esc(c.opens_label || '')}, or sooner.${doneNote && c.review && !c.review.due ? ' Today\'s review is done.' : ''}`;
+  // A catch-up check not taken or not finished, per subject (GET /api/gap-scan/state): a link on the grade it
+  // belongs to (owner, 2026-10-29: the check was only on the placement result page, and could not be found).
+  const catchChecks = new Map();
+  await Promise.all([...new Set(data.enrollments.filter((e) => e.status === 'active').map((e) => e.track.id))]
+    .map(async (trackId) => {
+      try {
+        const st = await App.api.get(`/api/gap-scan/state/${encodeURIComponent(trackId)}`);
+        const q = st && st.catch_up_quiz;
+        if (q && q.available && (q.status === 'not_started' || q.status === 'running') && !(st.route && st.route.status)) catchChecks.set(trackId, q);
+      } catch { /* drawn without it */ }
+    }));
+  const catchCheckLink = (e) => {
+    const q = catchChecks.get(e.track.id);
+    // Once per subject: on its first active grade, whichever grade that is.
+    const first = data.enrollments.find((x) => x.status === 'active' && x.track.id === e.track.id);
+    if (!q || !first || first.id !== e.id) return '';
+    const href = `/subject-placement?track=${encodeURIComponent(e.track.id)}${q.status === 'running' ? '&step=catchup' : ''}`;
+    const num = String(q.grade_id || '').match(/grade_0*(\d+)/);
+    const below = num ? ` below Grade ${num[1]}` : ' below your placement';
+    return `<span class="plan-item"><a href="${href}">${q.status === 'running' ? 'Finish your catch-up check' : `Catch up: a ${q.minutes ? `${Number(q.minutes)}-minute ` : 'short '}check of the grades${below}`}</a></span>`;
+  };
   const canRetake = (e) => {
     const p = (planReplies.get(e.id) || {}).placement;
     return !!(p && p.retake_available) && e.status !== 'graduated' && e.status !== 'placement_pending';
@@ -284,7 +305,7 @@ App.mount(async () => {
   /** What the plan skips and the catch-up under way, from the reply already fetched. */
   function planSlot(e) {
     const reply = planReplies.get(e.id);
-    const line = reply ? planLine(reply.summary || reply, routeOf(e)) : '';
+    const line = (reply ? planLine(reply.summary || reply, routeOf(e)) : '') + catchCheckLink(e);
     return `<div class="small plan-line row-note" data-plan="${e.id}"${line ? '' : ' hidden'}>${line}</div>`;
   }
 

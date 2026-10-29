@@ -602,14 +602,40 @@ App.mount(async () => {
           ${step ? `<a class="btn" href="/path?enrollment=${step.enrollment_id}">Continue catch-up<span class="visually-hidden">: ${esc(nameOf(step))}</span></a>` : ''}
         </section>`;
     }
-    // A catch-up grade: find this enrollment among its subject's steps.
-    if (!isCatchUpGrade()) return '';
     let state;
     try {
       state = await App.api.get(`/api/gap-scan/state/${encodeURIComponent(track.id)}`);
     } catch (err) {
       return '';
     }
+    // The grade the placement recommended, with its catch-up check not taken or not finished
+    // (owner, 2026-10-29: the check was only on the placement result page, and could not be found).
+    const quiz = state && state.catch_up_quiz;
+    // Shown on any grade of the subject: a learner who placed at Grade 5 and chose to start lower still wants it.
+    if (!isCatchUpGrade() && quiz && quiz.available && !(state.route && state.route.status)) {
+      const num = String(quiz.grade_id || '').match(/grade_0*(\d+)/);
+      const short = quiz.grade_id === grade.id ? esc(App.gradeParts(grade.name)[0] || App.gradeLabel(grade.name))
+        : num ? `Grade ${num[1]}` : 'your placement grade';
+      const below = Number(quiz.grades_below) || 0;
+      const grades = below ? `the ${below} grade${below === 1 ? '' : 's'} below ${short}` : `the grades below ${short}`;
+      const href = `/subject-placement?track=${encodeURIComponent(track.id)}${quiz.status === 'running' ? '&step=catchup' : ''}`;
+      if (quiz.status === 'not_started' || quiz.status === 'running') {
+        return `
+          <section class="catch-banner" aria-label="Catch-up">
+            <div class="catch-text"><p><b>${quiz.status === 'running' ? 'Finish your catch-up check.' : 'Catch up first?'}</b><span class="catch-sub">A ${quiz.minutes ? `${Number(quiz.minutes)}-minute ` : 'short '}check of ${grades} finds what you missed or forgot, then gives you just those pieces to learn.</span></p></div>
+            <a class="btn" href="${href}">${quiz.status === 'running' ? 'Continue catch-up' : 'Start catch-up'}</a>
+          </section>`;
+      }
+      if (quiz.status === 'declined') {
+        return `
+          <section class="catch-banner" aria-label="Catch-up">
+            <div class="catch-text"><p><span class="catch-sub">You started without the catch-up. You can still check ${grades}.</span></p></div>
+            <a class="btn btn-text" href="${href}">Check them</a>
+          </section>`;
+      }
+    }
+    // A catch-up grade: find this enrollment among its subject's steps.
+    if (!isCatchUpGrade()) return '';
     const route = state && state.route;
     const steps = (route && route.steps) || [];
     const at = steps.findIndex((s) => s.enrollment_id === enrollment.id);
