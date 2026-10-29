@@ -100,6 +100,8 @@
     const mVoice = panel.querySelector('.m-voice');
     const messages = [];
     let speakOn = false;
+    let gatewayOff = false; // set when the better voice answers no once, so later replies skip the request
+    let audio = null;
     let busy = false;
 
     function line(cls, text) {
@@ -116,7 +118,7 @@
       panel.dataset.mode = m;
       speakOn = m === 'voice' || (!canTalk && speakOn);
       if (mText) { mText.setAttribute('aria-pressed', String(m === 'text')); mVoice.setAttribute('aria-pressed', String(m === 'voice')); }
-      if (m === 'text' && canSpeak) speechSynthesis.cancel();
+      if (m === 'text' && canSpeak) stopSpeech();
       keepMode(m);
       if (remember) fetch('/api/tutor/dock/mode', { method: 'PUT', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ mode: m }) }).catch(() => {});
     }
@@ -125,6 +127,15 @@
     function say(text) {
       if (!speakOn || !canSpeak || !text) return;
       speechSynthesis.cancel();
+      if (gatewayOff) return browserSay(text);
+      fetch('/api/tutor/speak', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text, lang: lang.slice(0, 2) }) })
+        .then((r) => { if (!r.ok) { gatewayOff = r.status !== 429 || gatewayOff; throw new Error('browser voice'); } return r.blob(); })
+        .then((b) => { if (!speakOn) return; if (audio) audio.pause(); audio = new Audio(URL.createObjectURL(b)); return audio.play(); })
+        .catch(() => browserSay(text));
+    }
+    function stopSpeech() { if (audio) audio.pause(); if (canSpeak) speechSynthesis.cancel(); }
+    function browserSay(text) {
+      if (!speakOn) return;
       const u = new SpeechSynthesisUtterance(text);
       u.lang = lang;
       speechSynthesis.speak(u);
@@ -156,12 +167,12 @@
       const open = panel.dataset.open !== 'true';
       panel.dataset.open = String(open);
       btn.setAttribute('aria-expanded', String(open));
-      if (open) input.focus(); else if (canSpeak) speechSynthesis.cancel();
+      if (open) input.focus(); else if (canSpeak) stopSpeech();
     });
     panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { panel.dataset.open = 'false'; btn.setAttribute('aria-expanded', 'false'); btn.focus(); } });
     panel.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const t = input.value.trim(); input.value = ''; ask(t, 'text'); });
     if (mText) { mText.addEventListener('click', () => setMode('text', true)); mVoice.addEventListener('click', () => setMode('voice', true)); }
-    if (speakBtn) speakBtn.addEventListener('click', () => { speakOn = !speakOn; speakBtn.setAttribute('aria-pressed', String(speakOn)); if (!speakOn) speechSynthesis.cancel(); });
+    if (speakBtn) speakBtn.addEventListener('click', () => { speakOn = !speakOn; speakBtn.setAttribute('aria-pressed', String(speakOn)); if (!speakOn) stopSpeech(); });
 
     if (mic) {
       let rec = null;

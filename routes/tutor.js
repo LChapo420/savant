@@ -16,6 +16,8 @@ const tutorMode = require('../services/tutor-mode');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 
+const voice = require('../services/spanish/voice');
+
 const router = express.Router();
 
 router.post('/tutor/chat', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
@@ -49,6 +51,17 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
   } catch (err) {
     console.warn(`tutor dock: ${err.message}`);
     res.json({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode: dock.modeFor(body.page && body.page.path) });
+  }
+});
+
+// Better voice for a reply. Any failure is a 503 with no audio: the dock then uses the browser voice (the free default).
+router.post('/tutor/speak', requireAuth, limit('tutor-speak', 60, 60 * 60 * 1000), async (req, res) => {
+  const body = req.body || {};
+  try {
+    const mp3 = await voice.tutorSpeak(body.text, { userId: req.user.id, lang: body.lang === 'es' ? 'es' : 'en' });
+    res.set('Content-Type', 'audio/mpeg').set('Cache-Control', 'private, no-store').send(mp3);
+  } catch (err) {
+    res.status(err.status === 400 ? 400 : 503).json({ error: 'Browser voice.' });
   }
 });
 

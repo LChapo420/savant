@@ -141,13 +141,13 @@ async function billed(call, fn) {
   }
 }
 
-async function gatewaySpeak(voice, line) {
+async function gatewaySpeak(voice, line, lang = 'es') {
   const model = GATEWAY_TTS_MODEL();
   return billed({ kind: 'tts', model, chars: line.length }, async () => {
     const res = await gatewayFetch('/audio/speech', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model, input: line, voice, language: 'es' }),
+      body: JSON.stringify({ model, input: line, voice, language: lang }),
     }, 45000);
     const type = String(res.headers.get('content-type') || '');
     const buf = Buffer.from(await res.arrayBuffer());
@@ -271,4 +271,33 @@ async function asr(buf, kind = 'wav', opts = {}) {
   return textOut.trim();
 }
 
-module.exports = { tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
+// ── The tutor's voice (services/tutor.js dock): the same gateway, ledger and opt-in list ──
+// Replies are personal, so nothing is cached on disk: the audio goes straight back to the one learner.
+const TUTOR_DAILY_CHARS = () => Number(process.env.TUTOR_GATEWAY_DAILY_CHARS || 3000);
+const tutorSpent = new Map(); // `${day}:${userId}` -> characters
+/**
+ * Speak a tutor reply with the gateway voice. Returns an mp3 Buffer, or throws (status 503 when this
+ * account is not on the gateway list or the gateway is cooling down, 429 past the learner's daily
+ * characters, 402 past the $5 ledger) and the page speaks with the browser's own voice instead.
+ */
+async function tutorSpeak(text, { userId, lang = 'en' } = {}) {
+  const line = String(text || '').trim().slice(0, 600);
+  if (!line) throw Object.assign(new Error('nothing to say'), { status: 400 });
+  if (!gatewayFor(userId)) throw Object.assign(new Error('gateway voice is not on for this account'), { status: 503 });
+  if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway voice cooling down'), { status: 503 });
+  const key = `${new Date().toISOString().slice(0, 10)}:${userId}`;
+  for (const k of tutorSpent.keys()) if (!k.startsWith(key.slice(0, 11))) tutorSpent.delete(k);
+  const used = tutorSpent.get(key) || 0;
+  if (used + line.length > TUTOR_DAILY_CHARS()) throw Object.assign(new Error('daily tutor voice used'), { status: 429 });
+  tutorSpent.set(key, used + line.length);
+  try {
+    return await gatewaySpeak(lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria', line, lang === 'es' ? 'es' : 'en');
+  } catch (err) {
+    tutorSpent.set(key, used);
+    noteGatewayFailure(err);
+    if (err.code === 'LEDGER_STOP') err.status = 402;
+    throw err;
+  }
+}
+
+module.exports = { tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
