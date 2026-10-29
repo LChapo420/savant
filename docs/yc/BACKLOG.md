@@ -90,7 +90,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    - **(c) Participant pages: DONE as a first slice, see Done.** Admin results page DONE (see Done). Remaining: a look at all four pages at 375 px signed in (owner's machine). Original text:
    - **(c) Participant and admin pages** (the test-taking page for `/api/spanish-study-test/*` is part of this: copy the look and flow of `public/spanish-check.html` into a new `public/spanish-study-test.html`, do not edit the sealed ones): sign-up with consent (teen parental box), daily check-in with the screenshot tick,
      and an admin results page with a per-arm bar chart of gain per hour, the CI and a CSV link (use CSS variables; redesign in progress).
-   - **(d) End-to-end fixture test** once (b) and (c) exist. Then the owner fills the `OWNER:` lines in
+   - **[claimed 2026-10-29T22:17Z] (d) End-to-end fixture test** once (b) and (c) exist. Then the owner fills the `OWNER:` lines in
      `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`, seals and time-stamps it before anyone joins.
    - [local only, later] Find Duolingo's own published efficacy studies and cite them in the protocol, marked UNVERIFIED until a person checks them.
 
