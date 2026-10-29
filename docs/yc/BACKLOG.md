@@ -71,7 +71,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    Privacy: tell the learner in plain words where their file goes and how to delete it; follow
    `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
 
-0c. **The tutor talks, remaining slices** (first slice is under Done).
+0c. **[claimed 2026-10-29T20:00Z: seventh slice, Spanish quick-game/story/talk boards report to the dock]** **The tutor talks, remaining slices** (first slice is under Done).
    **Owner, 2026-10-29: "there isn't an AI to help me anywhere on the site" — the tutor must be visible and working on every page of the live app (home, every subject path, every lesson/game/quiz, Spanish path, profile, my-material), and its context must include the learner's learning style and interests from onboarding/profile, their goal, current subject/grade/level, recent mistakes and what is on screen. Text replies must work with the app's existing providers (no new paid provider); speech uses the browser voice when the gateway is off. Check it at 375 px and in a real browser (Playwright is fine).**
    - **(b) Better voice through the ledger: DONE** (text-to-speech and speech-to-text, see Done). Remaining: look at push-to-talk on a phone with a gateway-listed account (item 0c(d)); originally: Text-to-speech and speech-to-text through LLM Gateway, only via its
      ledger ($5 total, speech only) with a per-user daily cap; the browser voice and recognizer stay the free default.
