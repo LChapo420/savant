@@ -23,7 +23,18 @@
   function pageInfo() {
     const h = document.querySelector('main h1, h1');
     const main = document.querySelector('main') || document.body;
-    return { path: location.pathname, title: document.title, heading: h ? h.textContent : '', text: (main.innerText || '').slice(0, 500) };
+    const info = { path: location.pathname, query: location.search.slice(1, 81), title: document.title, heading: h ? h.textContent : '', text: (main.innerText || '').slice(0, 500) };
+    // What the learner has picked or typed, and any feedback shown (the server drops these on method-only pages).
+    const outside = (sel) => [...document.querySelectorAll(sel)].find((n) => !n.closest('.tdock-panel'));
+    const picked = outside('[aria-checked="true"], [aria-pressed="true"], .selected, .is-selected, input[type=radio]:checked');
+    if (picked) info.selected = (picked.innerText || picked.value || '').slice(0, 120);
+    const field = outside('textarea, input[type=text]');
+    if (field && field.value) info.typed = field.value.slice(0, 160);
+    const fb = outside('[role=status], .feedback, .es-feedback, .correct, .incorrect, .wrong');
+    if (fb && fb.innerText) info.feedback = fb.innerText.slice(0, 200);
+    // A page can describe itself better than the generic reading (a game, a board, a passage on screen).
+    try { if (typeof window.tutorPageInfo === 'function') Object.assign(info, window.tutorPageInfo() || {}); } catch { /* keep the generic reading */ }
+    return info;
   }
 
   async function start() {

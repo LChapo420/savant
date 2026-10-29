@@ -119,7 +119,16 @@ function serve(router) {
   check('app.js loads the dock and skips the sealed pages', /tutor-dock\.js/.test(read('public/js/app.js')) && /spanish-\(check\|listening\)/.test(read('public/js/app.js')));
   check('the dock checks the sealed paths itself', /spanish-\(check\|listening\)/.test(read('public/js/tutor-dock.js')));
   check('the dock sends no data to a speech service (browser voice only)', !/fetch\([^)]*(speech|stt|tts|gateway)/i.test(read('public/js/tutor-dock.js')));
-  check('the dock css uses only variables for colour', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css')));
+  check('the dock css uses only variables for colour (hex only as a var() fallback, for pages without the app css)', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css').replace(/var\(--[a-z0-9-]+,\s*#[0-9a-f]{3,6}\)/gi, '')));
+  const pages = [...fs.readdirSync(path.join(root, 'public')).filter((f) => f.endsWith('.html')).map((f) => `public/${f}`),
+    ...fs.readdirSync(path.join(root, 'public/spanish')).filter((f) => f.endsWith('.html') && f !== 'design.html').map((f) => `public/spanish/${f}`)]
+    .filter((f) => !/spanish-(check|listening)/.test(f));
+  const bare = pages.filter((f) => { const t = read(f); return !/js\/app\.js/.test(t) && !/js\/tutor-dock\.js/.test(t); });
+  check('every learner page loads the dock (app.js or the script itself)', bare.length === 0, bare);
+  const seen = dock.build(u.id, { path: '/spanish/learn', query: 'track=entry&level=28', selected: 'la casa', typed: 'the house', feedback: 'Correct!' }, 'full').text;
+  check('what is picked, typed and shown reaches the tutor on a full page', /la casa/.test(seen) && /the house/.test(seen) && /Correct!/.test(seen) && /level=28/.test(seen), seen);
+  const hidden = dock.build(u.id, { path: '/placement', selected: 'la casa', typed: 'the house', feedback: 'Correct!' }, 'method').text;
+  check('and is left out on a method-only page', !/la casa|the house|Correct!/.test(hidden), hidden);
   check('the service never names OpenRouter or a paid provider', !/openrouter|anthropic\.com|api\.openai/i.test(read('services/tutor-context.js')));
   let touched = '';
   try { touched = execSync('git diff --name-only HEAD -- spanish-check spanish-check-lc routes/spanish-check.js routes/spanish-check-lc.js public/spanish-check.html public/spanish-listening.html public/js/spanish-check.js public/js/spanish-listening.js', { cwd: root }).toString().trim(); } catch { touched = ''; }

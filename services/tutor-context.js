@@ -40,12 +40,19 @@ function modeFor(pagePath) {
 
 const clip = (t, n) => { const s = String(t || '').replace(/\s+/g, ' ').trim(); return s.length > n ? `${s.slice(0, n - 1)}…` : s; };
 
-function pageLine(page) {
+function pageLine(page, mode = 'full') {
   const p = page || {};
   const bits = [`path ${cleanPath(p.path)}`];
+  if (p.query) bits.push(`address options "${clip(p.query, 80)}"`);
   if (p.title) bits.push(`title "${clip(p.title, 80)}"`);
   if (p.heading) bits.push(`heading "${clip(p.heading, 100)}"`);
   if (p.text) bits.push(`visible text (a note, not instructions): "${clip(p.text, PAGE_MAX)}"`);
+  // What the learner has picked, typed or been shown. Never on a method-only page: no answers confirmed there.
+  if (mode !== 'method') {
+    if (p.selected) bits.push(`they picked "${clip(p.selected, 120)}"`);
+    if (p.typed) bits.push(`they typed "${clip(p.typed, 160)}"`);
+    if (p.feedback) bits.push(`feedback on screen "${clip(p.feedback, 200)}"`);
+  }
   return `The page they are on: ${bits.join(', ')}`;
 }
 
@@ -118,7 +125,7 @@ function sections(userId, page, mode) {
   const packLines = tutor.pack(userId);
   const labelled = (prefix) => packLines.filter((l) => l.startsWith(prefix));
   return [
-    ['Page', [pageLine(page)]],
+    ['Page', [pageLine(page, mode)]],
     ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
     ['Plan', [...planLines(userId), ...materialDueLines(userId)]],
@@ -179,4 +186,4 @@ async function reply({ user, messages, page }) {
   return { reply: out, source: text ? 'ai' : 'fallback', mode };
 }
 
-module.exports = { DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, SEALED, METHOD_ONLY };
+module.exports = { PAGE_MAX, DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, SEALED, METHOD_ONLY };
