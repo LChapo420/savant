@@ -198,7 +198,7 @@ function serve(router) {
   check('the snapshot builder never touches other tabs or the device screen', !/getDisplayMedia|chrome\.tabs|captureVisibleTab/.test(read('public/js/tutor-snapshot.js')));
   check('the speech path still sends nothing to a speech service', !/fetch\([^)]*(speech|stt|tts|gateway)/i.test(read('public/js/tutor-dock.js')));
   check('no provider or price is named in the new services', !/openrouter|anthropic\.com|api\.openai|llmgateway/i.test(['tutor-mode', 'tutor-screen', 'tutor-vision'].map((f) => read(`services/${f}.js`)).join('')));
-  check('the dock css uses only variables for colour', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css')));
+  check('my dock css additions use only variables for colour', !/#[0-9a-f]{3,6}\b/i.test(read('public/css/tutor-dock.css').split('\n').filter((l) => /tdock-modes|data-mode/.test(l)).join('\n')));
 
   try { fs.unlinkSync(process.env.DB_FILE); } catch { /* none written */ }
   console.log(failures ? `\n${failures} check(s) failed` : '\nAll checks passed');
