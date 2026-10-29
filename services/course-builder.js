@@ -369,6 +369,7 @@ function summary(c) {
 
 function get(userId, materialId) { return row(userId, materialId); }
 function removeForMaterial(userId, materialId) {
+  require('./material-study').removeForMaterial(userId, materialId); // eslint-disable-line global-require
   return db.remove('material_courses', (c) => c.user_id === userId && c.material_id === Number(materialId));
 }
 

@@ -24,7 +24,7 @@ const DOCK_MAX = 3600;
 const PAGE_MAX = 500;
 
 const SEALED = [/^\/spanish-check/, /^\/spanish-listening/];
-const METHOD_ONLY = [/^\/placement/, /^\/subject-placement/, /^\/stage-check/, /^\/skip/, /^\/enforcer/, /^\/review/];
+const METHOD_ONLY = [/^\/placement/, /^\/subject-placement/, /^\/stage-check/, /^\/skip/, /^\/enforcer/, /^\/review/, /^\/my-material-study/];
 
 function cleanPath(p) {
   const path = String(p || '').split(/[?#]/)[0];

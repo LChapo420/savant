@@ -8,6 +8,11 @@
  *   DELETE /api/materials/:id      gone from the store and the disk copy, and its course with it
  *   POST   /api/materials/:id/course   start building the course (202; resumes a partial one)
  *   GET    /api/materials/:id/course   the course's status and skill list (no answers)
+ *   GET    /api/materials/:id/study               the map: skills, status, what is due
+ *   GET    /api/materials/:id/study/lesson/:skill  lesson and practice questions (no answers)
+ *   POST   /api/materials/:id/study/practice       { skill, question, answer } checked at once, not counted
+ *   POST   /api/materials/:id/study/quiz           { mode: placement|mastery|review, skill? } one-shot quiz, no answers
+ *   POST   /api/materials/:id/study/submit         { quiz_id, answers } graded on the server
  *
  * Child accounts cannot upload or paste (routes/consent.js CHILD_MEDIA_UPLOAD); they can still delete.
  */
@@ -16,6 +21,7 @@ const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 const materials = require('../services/materials');
 const courses = require('../services/course-builder');
+const study = require('../services/material-study');
 
 const router = express.Router();
 
@@ -66,6 +72,29 @@ router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1
 router.get('/:id/course', requireAuth, (req, res) => {
   if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
   res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
+});
+
+const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, already_placed: 409, nothing_due: 409 };
+function studyReply(res, out, key) {
+  if (out.error) return res.status(STUDY_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
+  return res.json(key ? { [key]: out[key] } : out);
+}
+const ownMaterial = (req, res, next) => (materials.get(req.user.id, req.params.id, false) ? next() : res.status(404).json({ error: 'No such material.' }));
+const studyBody = express.json({ limit: '64kb' });
+
+router.get('/:id/study', requireAuth, ownMaterial, (req, res) => studyReply(res, study.state(req.user.id, req.params.id)));
+router.get('/:id/study/lesson/:skill', requireAuth, ownMaterial, (req, res) => studyReply(res, study.lesson(req.user.id, req.params.id, req.params.skill)));
+router.post('/:id/study/practice', requireAuth, ownMaterial, limit('materials-practice', 300, 60 * 60 * 1000), studyBody, (req, res) => {
+  const b = req.body || {};
+  studyReply(res, study.practice(req.user.id, req.params.id, String(b.skill || ''), String(b.question || ''), b.answer));
+});
+router.post('/:id/study/quiz', requireAuth, ownMaterial, limit('materials-quiz', 60, 60 * 60 * 1000), studyBody, (req, res) => {
+  const b = req.body || {};
+  studyReply(res, study.startQuiz(req.user.id, req.params.id, String(b.mode || ''), String(b.skill || '')));
+});
+router.post('/:id/study/submit', requireAuth, ownMaterial, limit('materials-submit', 60, 60 * 60 * 1000), studyBody, (req, res) => {
+  const b = req.body || {};
+  studyReply(res, study.submit(req.user.id, req.params.id, b.quiz_id, b.answers));
 });
 
 router.get('/:id', requireAuth, (req, res) => {

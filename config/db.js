@@ -65,6 +65,7 @@ const COLLECTIONS = [
   'spanish_study_checkins',  // Duolingo-arm daily self-reported minutes
   'spanish_study_tests',     // pre/post scores on the sealed external tests
   'material_courses',        // courses built from a learner's material (services/course-builder.js), private to them
+  'material_progress',       // study progress on a built course: skill status, spaced-review due times, open quiz (services/material-study.js)
   'materials',               // learn from your own material: the extracted text of a learner's upload or paste, private to them (services/materials.js)
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];
