@@ -28,7 +28,7 @@ const { rng } = require('../services/material-path');
 const { chunk } = require('../services/course-builder');
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
-const JUDGE = 'qwen/qwen3.8-max:free';
+const JUDGE = process.env.PROOF_JUDGE || 'qwen/qwen3.8-max:free';
 // The two item checkers, each a model family other than the generator's. Defaults: Modelflare GPT 6.1 Sol (paid; the
 // budget is on the key) and xKiro Mistral Large 2512 (free). PROOF_CHECK_A / PROOF_CHECK_B override (see checkSkill).
 const CHECK_A = process.env.PROOF_CHECK_A || 'sol';
@@ -76,8 +76,8 @@ async function judgeMap(course, text) {
     const s = course.skills.find((k) => k.id === sid);
     return `  ${s.level}. [${s.id}] ${s.title}${s.source === 'general' ? ' (the source only names it)' : ''}: ${s.summary || ''} | prerequisites: ${s.prerequisites.join(', ') || 'none'}`;
   }).join('\n')}`).join('\n');
-  const res = await xkiro.structured({
-    models: [JUDGE], schema: JUDGE_SCHEMA, schemaName: 'skill_map_review', maxTokens: 3000,
+  const args = {
+    schema: JUDGE_SCHEMA, schemaName: 'skill_map_review', maxTokens: 3000,
     system: 'You review a course outline that a program built from a source text. Judge it ONLY against the source shown. '
       + 'For each skill: in_source is true if the source teaches or names that topic. invented_topics: topics in the outline the source does not contain. '
       + 'missing_important_topics: important topics the source teaches that no skill covers (ignore course logistics such as dates, grading, office hours). '
@@ -85,7 +85,12 @@ async function judgeMap(course, text) {
       + 'wrong_prerequisites: listed prerequisites that are not real dependencies, as "skill <- prerequisite". missing_prerequisites: real dependencies left out. '
       + 'score: 5 = faithful and complete, 4 = minor issues, 3 = noticeable gaps or errors, 2 = poor, 1 = unrelated. Be strict and specific.',
     user: `SOURCE (${note}):\n${view}\n\nOUTLINE (levels in path order):\n${map}`,
-  });
+  };
+  // The judge is xKiro Qwen by default; PROOF_JUDGE=sol uses Modelflare GPT 6.1 Sol (when xKiro's daily allowance is spent).
+  const res = JUDGE === 'sol'
+    ? await modelflare.structured({ role: 'placement', ...args, maxTokens: 4000 })
+    : await xkiro.structured({ models: [JUDGE], ...args });
+  if (!res || !res.data) throw new Error('the judge gave no usable answer');
   return { model: res.model, usage: res.usage, source_view: note, ...res.data };
 }
 
