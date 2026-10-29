@@ -51,7 +51,7 @@ const MIN_QUOTE = 20;
 const TOKEN_BUDGET = Number(process.env.MATERIAL_COURSE_TOKEN_BUDGET || 360000);
 const STALE_BUILD_MS = 30 * 60 * 1000;
 const BUILD_CONCURRENCY = Number(process.env.MATERIAL_BUILD_CONCURRENCY || 4);
-const CHARS_PER_SKILL = 350;         // at most one skill per this much text: a short note is a short course
+const CHARS_PER_SKILL = 250;         // at most one skill per this much text: a short note is a short course
 
 const inflight = new Set();
 
@@ -462,7 +462,7 @@ async function build(userId, materialId, opts = {}) {
           // eslint-disable-next-line no-await-in-loop
           out = await ask(llm, ctx.budget, userId, {
             role: 'fast', task: 'material_outline', schema: OUTLINE_SCHEMA, schemaName: 'material_outline', maxTokens: 4000, dataClass: 'learner',
-            system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. `
+            system: `You plan a course from a student's study material. ${UNTRUSTED} Split ${windows.length > 1 ? 'this part of it' : 'it'} into skills a student can learn one at a time (as many as it really covers, at most ${share}; a skill is a topic worth a short lesson and a few questions, not a single fact), grouped into units, both in the material's own order. Cover it from start to end: if it has more topics than that, merge neighbouring topics into one skill rather than stopping early. `
               + 'Use only topics the material itself covers or names; leave out course logistics (grading, dates, office hours, exams as events). '
               + 'For each skill: a short id, a title, a one-sentence summary, its unit (a short title shared by the skills of one unit), the ids of skills that must be learned first (prerequisites: only real dependencies), the passage ids that teach it (1 to 6), and taught: false when the material only names the topic (a syllabus or list line) without explaining it, otherwise true.',
             user: `Title: ${mat.title}\n${earlier}Passages${windows.length > 1 ? ` (part ${win.n} of ${windows.length})` : ''}:\n${win.text}`,

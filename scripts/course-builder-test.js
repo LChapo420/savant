@@ -195,11 +195,11 @@ function mockLlm(mode = 'good') {
   const shortSeen = [];
   const six = async (a) => {
     shortSeen.push(a);
-    if (a.task === 'material_outline') return { model: 'mock', data: { skills: Array.from({ length: 6 }, (_, i) => ({ id: `k${i}`, title: `Topic ${i}`, unit: 'One', prerequisites: [], passage_ids: ['p1'] })) } };
+    if (a.task === 'material_outline') return { model: 'mock', data: { skills: Array.from({ length: 8 }, (_, i) => ({ id: `k${i}`, title: `Topic ${i}`, unit: 'One', prerequisites: [], passage_ids: ['p1'] })) } };
     return v2(a);
   };
   out = await cb.build(u.id, shortM.id, { llm: six });
-  check('a short note is a short course: the outline is told how many skills it may have (one per 350 characters), and extra ones are cut', /at most 4;/.test(shortSeen[0].system) && cb.get(u.id, shortM.id).outline.length === 4, [shortSeen[0].system.match(/at most \d+/), cb.get(u.id, shortM.id).outline.length]);
+  check('a short note is a short course: the outline is told how many skills it may have (one per 250 characters), and extra ones are cut', /at most 6;/.test(shortSeen[0].system) && /merge neighbouring topics/.test(shortSeen[0].system) && cb.get(u.id, shortM.id).outline.length === 6, [shortSeen[0].system.match(/at most \d+/), cb.get(u.id, shortM.id).outline.length]);
   const longText = Array.from({ length: 40 }, (_, i) => para(`Topic number ${i} is described in this paragraph of the long text.`)).join('\n\n');
   const wins = cb.outlineWindows(cb.chunk(longText));
   check('a long text is outlined in windows, each under the window size, covering every passage in order', wins.length > 1 && wins.every((w) => w.text.length <= 14000 + 1300) && wins.map((w) => w.text).join('\n').match(/^\[p\d+\]/gm).length === cb.chunk(longText).length, wins.map((w) => w.text.length));
