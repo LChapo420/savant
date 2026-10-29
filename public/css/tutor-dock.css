@@ -20,3 +20,6 @@
 .tdock-panel[data-mode="voice"] .tdock-form input { display: none; }
 .tdock-panel[data-mode="voice"] .tdock-form .mic { flex: 1 1 auto; min-height: 48px; }
 .tdock-panel[data-mode="text"] .tdock-form .mic { display: none; }
+/* Above the phone tab bar (style.css sets --tabbar-h only where the bar shows), so the button never covers a tab. */
+body.has-tabbar .tdock-btn { bottom: calc(16px + var(--tabbar-h, 0px) + env(safe-area-inset-bottom, 0px)); }
+body.has-tabbar .tdock-panel { bottom: calc(70px + var(--tabbar-h, 0px) + env(safe-area-inset-bottom, 0px)); max-height: min(65vh, 520px); }
