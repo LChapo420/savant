@@ -484,6 +484,7 @@ function createApp(opts = {}) {
   '/evidence': 'evidence.html', '/evidence.html': 'evidence.html',
     '/thanks': 'thanks.html', '/thanks.html': 'thanks.html',
     '/config.js': 'config.js', '/favicon.svg': 'favicon.svg',
+    '/robots.txt': 'robots.txt', '/sitemap.xml': 'sitemap.xml',
   };
   // /beta?ref=<creator code>: the home page with the code already in the beta form
   // (also without JavaScript). The code is cleaned to a-z 0-9 . _ - so it is safe in HTML.

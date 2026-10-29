@@ -67,6 +67,23 @@ test('pages are served with security headers', async () => {
   }
 });
 
+test('robots.txt and sitemap.xml: served, and the sitemap lists only real public pages', async () => {
+  const robots = await fetch(`${base}/robots.txt`);
+  assert.strictEqual(robots.status, 200);
+  assert.match(robots.headers.get('content-type'), /text\/plain/);
+  const rt = await robots.text();
+  assert.ok(rt.includes('Sitemap: https://savantedu.com/sitemap.xml'));
+  assert.ok(!/admin/i.test(rt), 'the admin path is never named');
+  const map = await fetch(`${base}/sitemap.xml`);
+  assert.strictEqual(map.status, 200);
+  assert.match(map.headers.get('content-type'), /xml/);
+  const xml = await map.text();
+  const locs = [...xml.matchAll(/<loc>https:\/\/savantedu\.com(\/[^<]*)<\/loc>/g)].map((m) => m[1]);
+  assert.deepStrictEqual(locs, ['/', '/evidence.html', '/privacy.html']);
+  assert.deepStrictEqual([...xml.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]).filter((u) => !u.startsWith('https://savantedu.com/')), ['https://beta.savantedu.com/']);
+  for (const p of locs) assert.strictEqual((await fetch(base + p)).status, 200, p);
+});
+
 test('server code, data, docs and dotfiles are never served', async () => {
   for (const p of ['/server.js', '/test.js', '/package.json', '/README.md', '/_headers', '/.gitignore', '/data/updates.jsonl', '/assets/../server.js', '/fonts/..%2fserver.js', '/screenshots/']) {
     const r = await fetch(base + p);
@@ -829,13 +846,18 @@ test('admin: admin.env, the admin code, the audit log and data files are never s
   const paths = ['/admin.env', '/admin.env.bak', '/admin.env.example', '/ADMIN.ENV', '/admin%2eenv', '/assets/admin.env', '/fonts/admin.env',
     '/admin.js', '/admin-assets/dashboard.js', '/data/admin-audit.jsonl', '/data/investors.jsonl', '/.env', '/.git/config', '/assets/.hidden',
     '/donteventry/admin.env', '/donteventry/assets/admin.env', '/donteventry/assets/..%2f..%2fadmin.env', '/donteventry/assets/..%2fdashboard.js',
-    '/donteventry/data/admin-audit.jsonl', '/donteventry/admin.js', '/robots.txt'];
+    '/donteventry/data/admin-audit.jsonl', '/donteventry/admin.js'];
   for (const p of paths) {
     for (const j of [undefined, jar]) {
       const r = await areq(A, 'GET', p, { ip, jar: j && new Map(j) });
       assert.strictEqual(r.status, 404, p);
       assert.ok(!r.text.includes('ADMIN_') && !r.text.includes('scrypt$') && !r.text.includes('"event"'), p);
     }
+  }
+  // robots.txt and sitemap.xml are public, but never name the admin path.
+  for (const p of ['/robots.txt', '/sitemap.xml']) {
+    const r = await areq(A, 'GET', p, { ip });
+    assert.ok(!r.text.includes('donteventry'), p);
   }
   for (const p of ['/', '/privacy.html', '/evidence.html', '/thanks.html', '/no-such-page', '/config.js', '/assets/site.js', '/assets/site.css', '/assets/theme.js', '/favicon.svg']) {
     const t = await (await fetch(base + p)).text();
